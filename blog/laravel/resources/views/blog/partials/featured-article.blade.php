@@ -17,17 +17,17 @@
     <div class="blog-featured-tint absolute inset-0" aria-hidden="true"></div>
     <div class="blog-featured-shade absolute inset-x-0 bottom-0 h-[80%]" aria-hidden="true"></div>
 
-    <div class="absolute inset-x-5 bottom-5 flex flex-col items-start gap-3 lg:bottom-9 lg:left-auto lg:right-9 lg:w-[620px] lg:gap-3.5">
+    <div class="absolute inset-x-5 bottom-5 flex flex-col items-start gap-3 lg:bottom-9 lg:end-auto lg:start-9 lg:w-[620px] lg:gap-3.5">
         <span class="bg-white px-3 py-1.5 text-[13px] font-bold leading-[1.2] text-shary-navy lg:text-[14px]">{{ $article['category'] }}</span>
 
-        <h1 class="text-[25px] font-bold leading-[1.45] text-white lg:text-[40px] lg:leading-[1.4]">{{ $article['title'] }}</h1>
+        <h2 class="line-clamp-3 text-[25px] font-bold leading-[1.45] text-white lg:line-clamp-2 lg:text-[40px] lg:leading-[1.4]">{{ $article['title'] }}</h2>
 
         <p class="flex flex-wrap items-center gap-x-2 text-[13px] font-semibold leading-normal text-shary-cloud lg:text-[14px]">
             <span>{{ $article['author'] }}</span>
             <span aria-hidden="true">·</span>
             <span>{{ $article['date'] }}</span>
             <span aria-hidden="true">·</span>
-            <span>{{ $article['read_minutes'] }} دقائق قراءة</span>
+            <span>{{ __('blog.min_read', ['count' => $article['read_minutes']]) }}</span>
         </p>
     </div>
 </a>

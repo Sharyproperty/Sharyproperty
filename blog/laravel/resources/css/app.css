@@ -50,6 +50,21 @@
         }
     }
 
+    /* في النسخة الإنجليزي (ltr) الحركة في الاتجاه العكسي */
+    [dir="ltr"] .index-ticker__track {
+        animation-name: index-ticker-ltr;
+    }
+
+    @keyframes index-ticker-ltr {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-25%);
+        }
+    }
+
     /* لو المستخدم موقّف الحركة من إعدادات جهازه: سكرول يدوي بدل الحركة */
     @media (prefers-reduced-motion: reduce) {
         .index-ticker {
@@ -64,6 +79,16 @@
         .index-ticker__track {
             animation: none;
         }
+    }
+
+    /* اسم الشبكة بيظهر مكتوب لحد ما أيقونات Font Awesome تتحمل، وبعدها بيتخبى (بيفضل لقارئ الشاشة) */
+    .fontawesome-i2svg-active .social-label {
+        position: absolute;
+        height: 1px;
+        width: 1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
     }
 
     /* ---------- محتوى المقال (HTML جاي من لوحة التحكم) ---------- */
@@ -88,6 +113,49 @@
         scroll-margin-top: 16px;
     }
 
+    .article-content h3 {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.6;
+        color: #123a5c;
+    }
+
+    /* خانة رقم بيتاخد من مؤشر شاري قبل النشر */
+    .article-fill {
+        border-radius: 4px;
+        background-color: #fbf1e1;
+        padding: 2px 8px;
+        font-weight: 700;
+        color: #8a5a08;
+    }
+
+    /* الأسئلة الشائعة */
+    .article-faq {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .article-faq details {
+        border: 1px solid #e4e9ef;
+        border-radius: 6px;
+        padding: 14px 16px;
+    }
+
+    .article-faq summary {
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 1.6;
+        color: #123a5c;
+    }
+
+    .article-content .article-faq p {
+        padding-top: 8px;
+        font-size: 15px;
+        line-height: 1.85;
+    }
+
     .article-content ul,
     .article-content ol {
         display: flex;
@@ -98,21 +166,21 @@
 
     .article-content li {
         position: relative;
-        padding-right: 17px;
+        padding-inline-start: 17px;
         font-size: 16px;
         font-weight: 600;
         line-height: 1.75;
     }
 
     .article-content ol li {
-        padding-right: 23px;
+        padding-inline-start: 23px;
         counter-increment: article-item;
     }
 
     .article-content li::before {
         content: "•";
         position: absolute;
-        right: 0;
+        inset-inline-start: 0;
         top: 0;
         font-weight: 700;
         color: #1f7f72;
@@ -370,12 +438,24 @@
             font-size: 24px;
         }
 
+        .article-content h3 {
+            font-size: 20px;
+        }
+
+        .article-faq summary {
+            font-size: 17px;
+        }
+
+        .article-content .article-faq p {
+            font-size: 16px;
+        }
+
         .article-content li {
-            padding-right: 18px;
+            padding-inline-start: 18px;
         }
 
         .article-content ol li {
-            padding-right: 24px;
+            padding-inline-start: 24px;
         }
 
         .article-content .article-cta {
