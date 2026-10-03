@@ -2851,6 +2851,14 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
+/* تبديل الكروت مكانها (أرقام الصفحات على الديسك توب): القايمة بتبهت لحظة التحميل */
+
+.listing-loading {
+  opacity: 0.45;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
 /* التحميل وأنت نازل */
 
 .search-more {
@@ -51727,11 +51735,11 @@ data-sheet-open="section" data-sections="delivery" >
 <span class="mb-1.5 block text-[12px] font-bold leading-normal lg:text-[13px]">الميزانية (ج.م)</span>
 <input type="text" inputmode="numeric" dir="ltr" class="h-12 w-full rounded-xl border border-shary-line bg-white px-3.5 text-[15px] font-bold text-shary-navy focus:border-shary-link focus:outline-none text-start" value="5,000,000" data-budget-input>
 </label>
-<div class="flex flex-wrap gap-2">
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="3000000"><bdi dir="ltr">3</bdi> مليون</button>
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="5000000"><bdi dir="ltr">5</bdi> مليون</button>
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="10000000"><bdi dir="ltr">10</bdi> مليون</button>
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="20000000"><bdi dir="ltr">20</bdi> مليون</button>
+<div class="grid grid-cols-4 gap-2 lg:flex">
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="3000000"><bdi dir="ltr">3</bdi> مليون</button>
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="5000000"><bdi dir="ltr">5</bdi> مليون</button>
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="10000000"><bdi dir="ltr">10</bdi> مليون</button>
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="20000000"><bdi dir="ltr">20</bdi> مليون</button>
 </div>
 </div>
 <ul class="mt-4 grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-4" data-budget-results></ul>
@@ -54785,7 +54793,7 @@ data-sheet-open="section" data-sections="delivery" >
 </form>
 </div>
 
-<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-projects-grid>
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-projects-grid data-auto-more="3">
 <div class="" data-project data-slug="mountain-view-icity" data-developer="mountain-view" data-price="9000000">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
@@ -55348,10 +55356,9 @@ data-sheet-open="section" data-sections="delivery" >
 </div>
 <p class="hidden rounded-2xl bg-shary-soft px-4 py-8 text-center text-[14px] font-semibold text-shary-muted" data-projects-empty>مفيش مشاريع مطابقة للاختيار ده. جرّب تغيّر الفلاتر.</p>
 
-<button type="button" class="area-card mt-4 flex h-12 w-full items-center justify-center gap-2 text-[14px] font-bold text-shary-navy lg:hidden" data-more-projects data-step="3">
-<span>عرض المزيد</span>
-<svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</button>
+<div class="search-more lg:hidden" data-auto-sentinel data-state="idle" aria-live="polite">
+<span class="search-more__loading"><i class="search-more__spin" aria-hidden="true"></i>جاري تحميل نتايج أكتر…</span>
+</div>
 
 <div class="lg:pt-4">
 <nav class="hidden items-center justify-center gap-2 pt-2 text-[15px] font-bold leading-none lg:flex" aria-label="صفحات المقالات" data-pagination data-next-url="#pv:/developers/mountain-view?page=2">
@@ -108142,11 +108149,11 @@ Clear                    </button>
 <span class="mb-1.5 block text-[12px] font-bold leading-normal lg:text-[13px]">Budget (EGP)</span>
 <input type="text" inputmode="numeric" dir="ltr" class="h-12 w-full rounded-xl border border-shary-line bg-white px-3.5 text-[15px] font-bold text-shary-navy focus:border-shary-link focus:outline-none text-start" value="5,000,000" data-budget-input>
 </label>
-<div class="flex flex-wrap gap-2">
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="3000000"><bdi dir="ltr">3</bdi> million</button>
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="5000000"><bdi dir="ltr">5</bdi> million</button>
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="10000000"><bdi dir="ltr">10</bdi> million</button>
-<button type="button" class="h-12 rounded-xl border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors lg:text-[14px]" data-budget-chip="20000000"><bdi dir="ltr">20</bdi> million</button>
+<div class="grid grid-cols-4 gap-2 lg:flex">
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="3000000"><bdi dir="ltr">3</bdi> million</button>
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="5000000"><bdi dir="ltr">5</bdi> million</button>
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="10000000"><bdi dir="ltr">10</bdi> million</button>
+<button type="button" class="h-12 whitespace-nowrap rounded-xl border border-shary-line bg-white px-1 text-[13px] font-bold text-shary-navy transition-colors lg:px-4 lg:text-[14px]" data-budget-chip="20000000"><bdi dir="ltr">20</bdi> million</button>
 </div>
 </div>
 <ul class="mt-4 grid grid-cols-2 gap-2.5 lg:grid-cols-3 lg:gap-4" data-budget-results></ul>
@@ -111200,7 +111207,7 @@ Clear                    </button>
 </form>
 </div>
 
-<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-projects-grid>
+<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-projects-grid data-auto-more="3">
 <div class="" data-project data-slug="mountain-view-icity" data-developer="mountain-view" data-price="9000000">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
@@ -111763,10 +111770,9 @@ Clear                    </button>
 </div>
 <p class="hidden rounded-2xl bg-shary-soft px-4 py-8 text-center text-[14px] font-semibold text-shary-muted" data-projects-empty>No projects match this selection. Try changing the filters.</p>
 
-<button type="button" class="area-card mt-4 flex h-12 w-full items-center justify-center gap-2 text-[14px] font-bold text-shary-navy lg:hidden" data-more-projects data-step="3">
-<span>Show more</span>
-<svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</button>
+<div class="search-more lg:hidden" data-auto-sentinel data-state="idle" aria-live="polite">
+<span class="search-more__loading"><i class="search-more__spin" aria-hidden="true"></i>Loading more results…</span>
+</div>
 
 <div class="lg:pt-4">
 <nav class="hidden items-center justify-center gap-2 pt-2 text-[15px] font-bold leading-none lg:flex" aria-label="Article pages" data-pagination data-next-url="#pv:/developers/mountain-view?page=2">
@@ -122920,17 +122926,6 @@ Shary
             if (collapse) box.scrollIntoView({ block: 'nearest' });
         });
     });
-
-    document.querySelectorAll('[data-more-projects]').forEach(function (button) {
-        var grid = button.parentNode.querySelector('[data-projects-grid]');
-        if (!grid) return;
-        var step = parseInt(button.getAttribute('data-step'), 10) || 3;
-        button.addEventListener('click', function () {
-            var hidden = Array.prototype.slice.call(grid.querySelectorAll('[data-project].hidden'));
-            hidden.slice(0, step).forEach(function (card) { card.classList.remove('hidden', 'lg:block'); });
-            if (hidden.length <= step) button.classList.add('hidden');
-        });
-    });
 })();
 
 /**
@@ -123802,6 +123797,192 @@ Shary
 })();
 
 /**
+ * قوايم الكروت في الموقع كله (مشاريع المنطقة / مشاريع المطور / مقالات المدونة):
+ *
+ * ديسك توب (1024px وأكبر) — أرقام الصفحات [data-pagination]:
+ *   الضغط على رقم بيجيب الصفحة دي من السيرفر (نفس لينك ?page=N العادي) وبيبدّل الكروت وأرقام الصفحات مكانهم،
+ *   من غير ما الصفحة كلها تتحمّل ولا ترجع لفوق. اللينك في المتصفح بيتغير (pushState) وزرار الرجوع شغال.
+ *   لو التحميل فشل، اللينك بيفتح عادي.
+ *   حدث shary:page ({ url, replace(nodes, paginationHtml, nextUrl) }): امنعوه (preventDefault) لو هتجيبوا الكروت بطريقتكم ونادوا replace.
+ *
+ * موبايل وتابلت — من غير "عرض المزيد": القايمة اللي عليها data-auto-more="3" بتكمّل لوحدها وأنت نازل:
+ *   الأول بتظهر الكروت المتحمّلة والمخفية على الموبايل (class="hidden lg:block") 3 بـ 3،
+ *   وبعدها بتطلب الصفحة اللي بعدها (data-next-url اللي على [data-pagination]) وتضيف كروتها تحت.
+ *   حدث shary:load-more ({ url, append(nodes, nextUrl) }): امنعوه لو هتجيبوا الكروت بطريقتكم ونادوا append.
+ *   العنصر [data-auto-sentinel] تحت القايمة: data-state="idle | loading | done".
+ *
+ * السيرفر مش محتاج endpoint جديد: نفس الصفحة بـ ?page=N، والسكربت بياخد منها القايمة وأرقام الصفحات.
+ */
+(function () {
+    if (!window.fetch || !window.DOMParser) return;
+
+    var GRID = '[data-projects-grid], [data-articles-grid], [data-results]';
+    var desktop = window.matchMedia('(min-width: 1024px)');
+
+    function usable(url) { return !!url && url.charAt(0) !== '#'; }
+
+    // القايمة اللي تبع أرقام الصفحات دي: أقرب عنصر فوقها جواه قايمة كروت
+    function gridOf(nav) {
+        var box = nav.parentNode;
+        while (box && box.querySelector) {
+            var grid = box.querySelector(GRID);
+            if (grid) return grid;
+            box = box.parentNode;
+        }
+        return null;
+    }
+
+    function navs(doc) { return Array.prototype.slice.call(doc.querySelectorAll('[data-pagination]')); }
+
+    function load(url) {
+        return fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (response) { if (!response.ok) throw new Error(response.status); return response.text(); })
+            .then(function (html) { return new DOMParser().parseFromString(html, 'text/html'); });
+    }
+
+    function copies(grid) {
+        return Array.prototype.map.call(grid ? grid.children : [], function (node) { return document.importNode(node, true); });
+    }
+
+    // بعد تبديل الكروت: لو أول القايمة فوق الشاشة ننزّلها بهدوء لأول كارت — من غير ما نرجع لأول الصفحة
+    function settle(grid) {
+        var top = grid.getBoundingClientRect().top;
+        if (top < 96) window.scrollTo({ top: window.pageYOffset + top - 120, behavior: 'smooth' });
+    }
+
+    // ---------- ديسك توب: تبديل الكروت مكانها ----------
+    function swap(nav, url, push) {
+        var grid = gridOf(nav);
+        if (!grid || grid.__busy) return;
+        var index = navs(document).indexOf(nav);
+        grid.__busy = true;
+        grid.classList.add('listing-loading');
+
+        var detail = {
+            url: url,
+            replace: function (nodes, paginationHtml, nextUrl) {
+                grid.textContent = '';
+                Array.prototype.slice.call(nodes || []).forEach(function (node) { grid.appendChild(node); });
+                if (typeof paginationHtml === 'string') nav.innerHTML = paginationHtml;
+                nav.setAttribute('data-next-url', nextUrl || '');
+                if (window.SharyCards) window.SharyCards.refresh(grid);
+                grid.__busy = false;
+                grid.classList.remove('listing-loading');
+                if (push) history.pushState({ sharyListing: true }, '', url);
+                settle(grid);
+            }
+        };
+        if (!nav.dispatchEvent(new CustomEvent('shary:page', { bubbles: true, cancelable: true, detail: detail }))) return;
+
+        load(url)
+            .then(function (page) {
+                var nextNav = navs(page)[index];
+                var nextGrid = nextNav ? gridOf(nextNav) : null;
+                if (!nextGrid) throw new Error('no list');
+                detail.replace(copies(nextGrid), nextNav.innerHTML, nextNav.getAttribute('data-next-url'));
+            })
+            .catch(function () { window.location.href = url; });
+    }
+
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest ? event.target.closest('[data-pagination] a[href]') : null;
+        if (!link || event.defaultPrevented || !desktop.matches) return;
+        if (event.metaKey || event.ctrlKey || event.shiftKey || event.button) return;   // فتح في تاب جديد يفضل عادي
+        var url = link.getAttribute('href');
+        if (!usable(url)) return;
+        event.preventDefault();
+        swap(link.closest('[data-pagination]'), link.href, true);
+    });
+
+    // زرار الرجوع في المتصفح بعد تبديل الصفحات
+    window.addEventListener('popstate', function () {
+        var nav = navs(document)[0];
+        if (nav && desktop.matches && (history.state && history.state.sharyListing || nav.__turned)) swap(nav, window.location.href, false);
+    });
+    document.addEventListener('shary:page', function (event) { event.target.__turned = true; });
+
+    // ---------- موبايل: القايمة بتكمّل لوحدها ----------
+    document.querySelectorAll('[data-auto-more]').forEach(function (grid) {
+        var step = parseInt(grid.getAttribute('data-auto-more'), 10) || 3;
+        var box = grid.parentNode;
+        var sentinel = box.querySelector('[data-auto-sentinel]');
+        if (!sentinel) return;
+        var gridIndex = Array.prototype.indexOf.call(document.querySelectorAll('[data-auto-more]'), grid);
+        var busy = false;
+        var observer = null;
+
+        function state(name) { sentinel.setAttribute('data-state', name); }
+        function waiting() { return Array.prototype.slice.call(grid.querySelectorAll(':scope > .hidden.lg\\:block')); }
+        function nextUrl() { var nav = box.querySelector('[data-pagination]'); return nav ? nav.getAttribute('data-next-url') || '' : ''; }
+
+        function finish() {
+            state('done');
+            sentinel.classList.add('hidden');
+            if (observer) { observer.disconnect(); observer = null; }
+        }
+
+        function near() {
+            var rect = sentinel.getBoundingClientRect();
+            return rect.width + rect.height > 0 && rect.top < window.innerHeight + 300;
+        }
+
+        function again() {
+            busy = false;
+            if (!waiting().length && !usable(nextUrl())) { finish(); return; }
+            state('idle');
+            setTimeout(function () { if (near()) more(); }, 80);
+        }
+
+        function more() {
+            if (busy || desktop.matches) return;
+            var hidden = waiting();
+            if (hidden.length) {
+                busy = true;
+                state('loading');
+                setTimeout(function () {
+                    hidden.slice(0, step).forEach(function (card) { card.classList.remove('hidden', 'lg:block'); });
+                    again();
+                }, 350);
+                return;
+            }
+            var url = nextUrl();
+            if (!usable(url)) { finish(); return; }
+            busy = true;
+            state('loading');
+            var detail = {
+                url: url,
+                append: function (nodes, next) {
+                    Array.prototype.slice.call(nodes || []).forEach(function (node) {
+                        node.classList.remove('hidden', 'lg:block');
+                        grid.appendChild(node);
+                    });
+                    var nav = box.querySelector('[data-pagination]');
+                    if (nav) nav.setAttribute('data-next-url', next || '');
+                    if (window.SharyCards) window.SharyCards.refresh(grid);
+                    again();
+                }
+            };
+            if (!grid.dispatchEvent(new CustomEvent('shary:load-more', { bubbles: true, cancelable: true, detail: detail }))) return;
+            load(url)
+                .then(function (page) {
+                    var incoming = page.querySelectorAll('[data-auto-more]')[gridIndex];
+                    var nav = incoming ? incoming.parentNode.querySelector('[data-pagination]') : null;
+                    detail.append(copies(incoming), nav ? nav.getAttribute('data-next-url') : '');
+                })
+                .catch(function () { busy = false; finish(); });
+        }
+
+        if (!waiting().length && !usable(nextUrl())) { finish(); return; }
+        if ('IntersectionObserver' in window) {
+            observer = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) more(); }, { rootMargin: '300px 0px' });
+            observer.observe(sentinel);
+        } else {
+            window.addEventListener('scroll', function () { if (near()) more(); });
+        }
+    });
+})();
+
+/**
  * صفحة Shary AI (partials/ai-panel.blade.php)
  * - أي عنصر عليه data-ask-ai بيفتح الصفحة (بتطلع من تحت). القفل من السهم أو الضغط براها أو Esc.
  * - الإرسال (الكتابة أو اختيار منطقة): الرسالة بتتضاف، وبيطلع حدث shary:ai-send على الصفحة:
@@ -124353,9 +124534,15 @@ Shary
       cards.forEach(function (c, i) { if (!c.hasAttribute('data-pv-order')) c.setAttribute('data-pv-order', i); });
       cards.sort(function (x, y) { return x.getAttribute('data-pv-order') - y.getAttribute('data-pv-order'); });
       var shift = ((to - 1) * 3) % (cards.length || 1);
-      cards.slice(shift).concat(cards.slice(0, shift)).forEach(function (c) { grid.appendChild(c); });
+      // الكروت بس اللي بتتبدل (بتبهت لحظة) والصفحة واقفة مكانها — لو أول الكروت فوق الشاشة بننزل لها بهدوء
+      grid.classList.add('listing-loading');
+      setTimeout(function () {
+        cards.slice(shift).concat(cards.slice(0, shift)).forEach(function (c) { grid.appendChild(c); });
+        grid.classList.remove('listing-loading');
+        var top = grid.getBoundingClientRect().top;
+        if (top < 96) window.scrollTo({ top: window.pageYOffset + top - 150, behavior: 'smooth' });
+      }, 260);
     }
-    scrollTo(section);
   }
 
   root.addEventListener('click', function (e) {
@@ -124450,6 +124637,7 @@ Shary
   root.addEventListener('shary:load-more', function (e) {
     e.preventDefault();
     var main = e.target.closest('main');
+    if (!main || !main.__matched) { e.detail.append([], ''); return; }   // قوايم غير البحث: مفيش صفحات تانية في المعاينة
     setTimeout(function () {
       var nodes = nextCards(main);
       e.detail.append(nodes, main.__shown < main.__matched.length ? '#more' : '');
