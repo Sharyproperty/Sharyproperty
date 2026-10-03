@@ -129,6 +129,10 @@
      * - لوحة مفتوحة من جوه صفحة "تصفية" (المنطقة / المطور): "تطبيق" بيرجع للصفحة من غير إرسال، والإرسال من "عرض النتائج".
      * - التبويب (وحدات المطور / إعادة البيع / للإيجار) بيغيّر الاختيارات: أي عنصر عليه data-modes بيظهر مع تبويباته بس، وحدود السعر والمساحة بتتغير من data-bounds.
      * - قبل الإرسال بيطلع حدث shary:filter على الفورم. امنعوه (preventDefault) لو هتجيبوا النتايج AJAX.
+     * - صفحة البحث (search/partials/filters.blade.php):
+     *   - الفلاتر السريعة: [data-sheet-open="section" data-sections="bedrooms bathrooms"] بيفتح لوحة من تحت فيها الأقسام دي نفسها
+     *     (القسم [data-filter-section][data-key] بيتنقل للّوحة وبيرجع مكانه بعد القفل، فمفيش حقول متكررة). العدد: data-sheet-count="sec:bedrooms bathrooms".
+     *   - الفورم اللي عليه data-filter-sidebar: على الديسك توب صفحة "تصفية" بتبقى عمود ثابت جنب النتايج، وأي تغيير فيه بيتبعت لوحده.
      */
     document.querySelectorAll('[data-area-filters]').forEach(function (form) {
         var STEPS = 1000;
@@ -272,8 +276,14 @@
         }
 
         // ---- عدد الاختيارات جنب اسم كل فلتر
+        function section(key) { return form.querySelector('[data-filter-section][data-key="' + key + '"]'); }
         function count(name) {
             if (name === 'price') return ranges.price && active(ranges.price) ? 1 : 0;
+            if (name.indexOf('sec:') === 0) {
+                return name.slice(4).split(' ').reduce(function (total, key) {
+                    return total + (section(key) ? all('input[type="checkbox"]:checked', section(key)).length : 0);
+                }, 0);
+            }
             if (name === 'all') {
                 var page = sheet('all');
                 if (!page) return 0;
@@ -281,12 +291,16 @@
                 total += all('[data-number]', page).filter(function (el) { return el.value !== ''; }).length;
                 total += all('input[type="radio"]', page).filter(function (el, i) { return el.checked && i > 0; }).length;
                 Object.keys(ranges).forEach(function (key) { if (active(ranges[key])) total++; });
-                ['area', 'developer'].forEach(function (key) { if (sheet(key)) total += all('input:checked', sheet(key)).length; });
+                // لوحات الاختيار اللي بتتفتح من جوه الصفحة (في صفحة البحث: المشروع كمان)
+                ['area', 'developer'].concat(form.hasAttribute('data-filter-sidebar') ? ['project'] : []).forEach(function (key) { if (sheet(key)) total += all('input:checked', sheet(key)).length; });
                 return total;
             }
             return sheet(name) ? all('input[type="checkbox"]:checked', sheet(name)).length : 0;
         }
         function badges() {
+            // شريط "الأسعار حسب الفلاتر اللي اخترتها" (صفحة البحث): ظاهر طول ما فيه فلتر مختار
+            var notice = form.querySelector('[data-filter-notice]');
+            if (notice) notice.classList.toggle('hidden', count('all') === 0);
             all('[data-sheet-count]').forEach(function (badge) {
                 var name = badge.getAttribute('data-sheet-count');
                 var total = count(name);
@@ -307,6 +321,11 @@
             if (!top) { if (after) after(); return; }
             if (!keep) restore(top.saved);
             top.node.classList.add('hidden');
+            // الأقسام اللي اتنقلت للّوحة بترجع مكانها في صفحة "تصفية"
+            (top.moved || []).forEach(function (item) { item.marker.parentNode.insertBefore(item.node, item.marker); item.marker.parentNode.removeChild(item.marker); });
+            // لوحة المنطقة / المطور: البحث بيتمسح والقايمة بترجع لعمود الفلاتر (ديسك توب)
+            resetListSearch(top.node);
+            placeLists();
             top.opener.setAttribute('aria-expanded', 'false');
             if (!stack.length) document.documentElement.style.overflow = '';
             badges();
@@ -320,8 +339,25 @@
                 var node = sheet(name);
                 if (!node) return;
                 closeSort();
+                var moved = [];
+                if (name === 'section') {
+                    var body = node.querySelector('[data-section-body]');
+                    (opener.getAttribute('data-sections') || '').split(' ').forEach(function (key) {
+                        var part = key && section(key);
+                        if (!part || !body) return;
+                        var marker = document.createComment('section ' + key);
+                        part.parentNode.insertBefore(marker, part);
+                        body.appendChild(part);
+                        moved.push({ node: part, marker: marker });
+                    });
+                    if (!moved.length) return;
+                }
+                // لوحة المنطقة / المطور: القايمة بترجع جوه اللوحة (لو كانت معروضة في عمود الفلاتر) قبل ما نحفظ الاختيار
+                var listBody = form.querySelector('[data-list-body="' + name + '"]');
+                var listHome = node.querySelector('[data-list-home]');
+                if (listBody && listHome && listBody.parentNode !== listHome) listHome.appendChild(listBody);
                 // صفحة "تصفية" بتحفظ الفورم كله، واللوحة الصغيرة بتحفظ اختياراتها بس
-                stack.push({ node: node, opener: opener, saved: snapshot(name === 'all' ? form : node) });
+                stack.push({ node: node, opener: opener, moved: moved, saved: snapshot(name === 'all' ? form : node) });
                 node.classList.remove('hidden');
                 opener.setAttribute('aria-expanded', 'true');
                 document.documentElement.style.overflow = 'hidden';
@@ -368,9 +404,78 @@
                 if (first) first.checked = true;
                 applyMode();
                 badges();
+                // "مسح الفلاتر" اللي بره اللوحات (فوق النتايج) بيمسح ويبعت على طول
+                if (!button.closest('[data-filter-sheet]')) {
+                    Object.keys(ranges).forEach(function (name) { commit(ranges[name]); });
+                    submit();
+                }
             });
         });
         form.addEventListener('change', function (event) { if (event.target.type === 'checkbox' || event.target.type === 'radio' || event.target.hasAttribute('data-number')) badges(); });
+
+        // ---- خانة البحث (Enter): نفس طريق "عرض النتائج"
+        form.addEventListener('submit', function (event) { event.preventDefault(); submit(); });
+
+        // ---- عمود الفلاتر الثابت (ديسك توب): أي تغيير بيتبعت لوحده بعد لحظة
+        var sidebar = form.hasAttribute('data-filter-sidebar');
+        var applyTimer = null;
+        // عمود الفلاتر شغال لما الـ CSS يخلّي صفحة "تصفية" جزء من الصفحة (ديسك توب) بدل اللوحة اللي بتغطي الشاشة (موبايل)
+        function wide() { var page = sheet('all'); return !!page && window.getComputedStyle(page).position !== 'fixed'; }
+
+        // المنطقة / المطور: القايمة بتتعرض جوه العمود على الديسك توب، وبترجع للوحة الاختيار على الموبايل
+        function placeLists() {
+            all('[data-inline-list]').forEach(function (slot) {
+                var name = slot.getAttribute('data-inline-list');
+                var body = form.querySelector('[data-list-body="' + name + '"]');
+                var home = sheet(name) && sheet(name).querySelector('[data-list-home]');
+                if (!body || !home || !sheet(name).classList.contains('hidden')) return;   // اللوحة مفتوحة: القايمة بتفضل جواها
+                var target = wide() ? slot : home;
+                if (body.parentNode !== target) target.appendChild(body);
+                // في العمود: المختار بيتعرض الأول (أول 3 بس ظاهرين، والباقي من "عرض المزيد")
+                if (target === slot) {
+                    Array.prototype.slice.call(body.children).filter(function (row) { var box = row.querySelector('input'); return box && box.checked; })
+                        .reverse().forEach(function (row) { body.insertBefore(row, body.firstChild); });
+                }
+                var more = slot.parentNode.querySelector('[data-list-more]');
+                if (more) more.classList.toggle('hidden', body.children.length <= 3);
+            });
+        }
+
+        // خانة البحث جوه لوحة الاختيار: بتفلتر الصفوف بالاسم
+        all('[data-list-search]').forEach(function (input) {
+            input.addEventListener('input', function () {
+                var words = input.value.trim().toLowerCase();
+                all('label', input.closest('[data-filter-sheet]').querySelector('[data-list-body]') || input.closest('[data-filter-sheet]')).forEach(function (row) {
+                    row.classList.toggle('hidden', words !== '' && row.textContent.toLowerCase().indexOf(words) === -1);
+                });
+            });
+            input.addEventListener('keydown', function (event) { if (event.key === 'Enter') event.preventDefault(); });
+        });
+        function resetListSearch(node) {
+            var input = node.querySelector('[data-list-search]');
+            if (!input) return;
+            input.value = '';
+            all('label.hidden', node).forEach(function (row) { row.classList.remove('hidden'); });
+        }
+        function autoApply() {
+            if (!sidebar || !wide() || stack.length) return;
+            clearTimeout(applyTimer);
+            applyTimer = setTimeout(function () {
+                Object.keys(ranges).forEach(function (name) { commit(ranges[name]); });
+                badges();
+                submit();
+            }, 450);
+        }
+        if (sidebar) {
+            placeLists();
+            var resizeTimer = null;
+            window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(placeLists, 120); });
+            form.addEventListener('change', function (event) {
+                var page = sheet('all');
+                if (page && page.contains(event.target) && event.target.name !== 'sort') autoApply();
+            });
+            all('[data-filter-clear], [data-filter-clear-all]').forEach(function (button) { button.addEventListener('click', autoApply); });
+        }
 
         // ---- الترتيب: قايمة تحت الزرار
         var sortOpen = form.querySelector('[data-sort-open]');

@@ -82,14 +82,14 @@ return [
             'title' => 'Areas',
             'links' => [
                 ['label' => '6 October City', 'url' => url('/en/areas/1')],
-                ['label' => 'Ain Sokhna', 'url' => url('/en/areas/2')],
-                ['label' => 'Al Rehab', 'url' => url('/en/areas/3')],
+                ['label' => 'Ain Sokhna', 'url' => url('/en/areas/ain-sokhna')],
+                ['label' => 'Al Rehab', 'url' => url('/en/areas/al-rehab')],
                 ['label' => 'Alexandria', 'url' => url('/en/areas/4')],
                 ['label' => 'Badr City', 'url' => url('/en/areas/5')],
                 ['label' => 'Cairo', 'url' => url('/en/areas/6')],
                 ['label' => 'El Gouna', 'url' => url('/en/areas/7')],
-                ['label' => 'El Sheikh Zayed City', 'url' => url('/en/areas/8')],
-                ['label' => 'El Shorouk City', 'url' => url('/en/areas/9')],
+                ['label' => 'El Sheikh Zayed City', 'url' => url('/en/areas/sheikh-zayed')],
+                ['label' => 'El Shorouk City', 'url' => url('/en/areas/el-shorouk')],
             ],
         ],
         [
@@ -102,22 +102,23 @@ return [
         [
             'title' => 'Developers',
             'links' => [
-                ['label' => 'TMG Developments', 'url' => url('/en/developers/1')],
-                ['label' => 'Mountain View Developments', 'url' => url('/en/developers/2')],
-                ['label' => 'Lavista Developments', 'url' => url('/en/developers/3')],
+                ['label' => 'TMG Developments', 'url' => url('/en/developers/tmg')],
+                ['label' => 'Mountain View Developments', 'url' => url('/en/developers/mountain-view')],
+                ['label' => 'Lavista Developments', 'url' => url('/en/developers/lavista')],
             ],
         ],
         [
             'title' => 'For Sale',
             'links' => [
-                ['label' => 'Apartments for sale in New Alamein', 'url' => url('/en/for-sale/1')],
-                ['label' => 'Apartments for sale in Fifth Settlement', 'url' => url('/en/for-sale/2')],
+                ['label' => 'Apartments for sale in Fifth Settlement', 'url' => url('/en/search/apartments-for-sale-in-fifth-settlement')],
+                ['label' => 'Chalets for sale in North Coast', 'url' => url('/en/search/chalets-for-sale-in-north-coast')],
+                ['label' => 'Villas for sale in Mostakbal City', 'url' => url('/en/search/villas-for-sale-in-mostakbal-city')],
             ],
         ],
         [
             'title' => 'For Rent',
             'links' => [
-                ['label' => 'Apartments for rent in Fifth Settlement', 'url' => url('/en/for-rent/1')],
+                ['label' => 'Apartments for rent in Fifth Settlement', 'url' => url('/en/search/apartments-for-rent-in-fifth-settlement')],
             ],
         ],
     ],

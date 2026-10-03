@@ -1344,6 +1344,745 @@
         opacity: 1;
     }
 
+    /* ====================== صفحة نتايج البحث ====================== */
+    /* موبايل: الفورم وراس الصفحة من غير صندوق (contents) عشان خانة البحث تفضل ثابتة تحت الهيدر طول النتايج */
+    .search-layout > form,
+    .search-head {
+        display: contents;
+    }
+
+    .search-bar {
+        position: sticky;
+        top: 72px;
+        z-index: 20;
+        display: flex;
+        gap: 10px;
+        margin-inline: -20px;
+        background-color: #fff;
+        padding: 10px 20px;
+    }
+
+    .search-input {
+        display: flex;
+        height: 48px;
+        min-width: 0;
+        flex: 1;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #e4e9ef;
+        border-radius: 16px;
+        background-color: #f7f9fb;
+        padding-inline: 14px;
+        transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .search-input:focus-within {
+        border-color: #1f63c6;
+        box-shadow: 0 0 0 3px rgba(31, 99, 198, 0.12);
+    }
+
+    .search-input input {
+        min-width: 0;
+        flex: 1;
+        background: transparent;
+        font-size: 15px;
+        font-weight: 600;
+        color: #123a5c;
+        outline: none;
+    }
+
+    .search-input input::placeholder {
+        font-weight: 500;
+        color: #8a99a8;
+    }
+
+    .search-input input::-webkit-search-cancel-button {
+        display: none;
+    }
+
+    /* اقتراحات البحث تحت الخانة (منطقة / مطور / كمبوند) */
+    .search-suggest {
+        position: absolute;
+        inset-inline: 20px;
+        top: calc(100% - 4px);
+        z-index: 30;
+        max-height: min(60vh, 440px);
+        overflow-y: auto;
+        border: 1px solid #e4e9ef;
+        border-radius: 16px;
+        background-color: #fff;
+        padding: 6px;
+        box-shadow: 0 18px 40px -16px rgba(18, 58, 92, 0.45);
+    }
+
+    .search-suggest[hidden] {
+        display: none;
+    }
+
+    .search-suggest__row {
+        display: flex;
+        width: 100%;
+        min-height: 56px;
+        align-items: center;
+        gap: 12px;
+        border-radius: 12px;
+        padding: 6px 10px;
+        text-align: start;
+    }
+
+    .search-suggest__row:hover,
+    .search-suggest__row.is-active {
+        background-color: #f2f5f8;
+    }
+
+    .search-suggest__thumb {
+        display: flex;
+        flex-shrink: 0;
+    }
+
+    .search-suggest__thumb > * {
+        width: 40px !important;
+        height: 40px !important;
+    }
+
+    .search-suggest__name {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 15px;
+        font-weight: 700;
+        color: #123a5c;
+    }
+
+    .search-suggest__kind {
+        flex-shrink: 0;
+        border-radius: 999px;
+        background-color: #eaf2fd;
+        padding: 3px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #1f63c6;
+    }
+
+    .search-quick {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 2px;
+    }
+
+    .search-chip {
+        display: flex;
+        height: 40px;
+        flex-shrink: 0;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid transparent;
+        border-radius: 12px;
+        background-color: #f2f5f8;
+        padding-inline: 12px;
+        font-size: 13.5px;
+        font-weight: 700;
+        white-space: nowrap;
+        color: #123a5c;
+    }
+
+    .search-chip.is-active,
+    .search-chip[aria-expanded="true"] {
+        border-color: #1f63c6;
+        background-color: #f3f7fd;
+    }
+
+    .search-chip .area-filter__count:empty {
+        display: none;
+    }
+
+    .search-title {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 2px 10px;
+        margin-top: 14px;
+    }
+
+    .search-subs {
+        margin-top: 10px;
+        padding-bottom: 4px;
+    }
+
+    .search-notice {
+        margin-top: 10px;
+    }
+
+    .search-results {
+        margin-top: 14px;
+    }
+
+    /* زراير فوق النتايج (ديسك توب): عرض الخريطة / التحويل بين الوحدات والكمبوندات */
+    .search-tool {
+        display: flex;
+        height: 48px;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #e4e9ef;
+        border-radius: 12px;
+        background-color: #fff;
+        padding-inline: 16px;
+        font-size: 14px;
+        font-weight: 700;
+        white-space: nowrap;
+        color: #123a5c;
+        transition: border-color 0.15s, color 0.15s;
+    }
+
+    .search-tool:hover {
+        border-color: #1f63c6;
+        color: #1f63c6;
+    }
+
+    /* لوحة الفلتر السريع (موبايل) */
+    .search-section > .area-fsec:first-child {
+        margin-top: 10px;
+    }
+
+    /* بانر Shary AI بين الكروت */
+    .search-promo {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border: 1px solid #d3ece8;
+        border-radius: 20px;
+        background: linear-gradient(100deg, #fff 0%, #eef9f7 45%, #c9ede7 100%);
+        padding: 16px;
+        transition: box-shadow 0.15s;
+    }
+
+    [dir="rtl"] .search-promo {
+        background: linear-gradient(260deg, #fff 0%, #eef9f7 45%, #c9ede7 100%);
+    }
+
+    .search-promo:hover {
+        box-shadow: 0 12px 28px -16px rgba(18, 58, 92, 0.5);
+    }
+
+    /* لو مفيش نتايج: رسالة "مفيش نتايج" بس، من غير سطر التحميل */
+    [data-results-empty]:not(.hidden) ~ .search-more {
+        display: none;
+    }
+
+    /* التحميل وأنت نازل */
+    .search-more {
+        display: flex;
+        min-height: 72px;
+        align-items: center;
+        justify-content: center;
+        padding-top: 18px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #5b6b7c;
+    }
+
+    .search-more > * {
+        display: none;
+    }
+
+    .search-more[data-state="idle"] .search-more__loading,
+    .search-more[data-state="loading"] .search-more__loading {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .search-more[data-state="done"] .search-more__done {
+        display: block;
+    }
+
+    .search-more[data-state="error"] .search-more__error {
+        display: block;
+        color: #1f63c6;
+        text-decoration: underline;
+    }
+
+    .search-more__spin {
+        height: 20px;
+        width: 20px;
+        border: 2.5px solid #d6e2ec;
+        border-top-color: #1f63c6;
+        border-radius: 999px;
+        animation: search-spin 0.8s linear infinite;
+    }
+
+    @keyframes search-spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    /* زرار التحويل العايم (موبايل) بشكل التطبيق: عرض الخريطة —•— لوجو شاري —•— عرض الكمبوندات */
+    .search-switch {
+        position: fixed;
+        inset-inline: 0;
+        bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+        z-index: 29;
+        display: flex;
+        width: max-content;
+        max-width: calc(100vw - 16px);
+        margin-inline: auto;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #e4e9ef;
+        border-radius: 999px;
+        background-color: #f8fafc;
+        padding: 5px;
+        font-size: 12.5px;
+        font-weight: 700;
+        line-height: 1.5;
+        white-space: nowrap;
+        color: #123a5c;
+        box-shadow: 0 14px 30px -14px rgba(18, 58, 92, 0.55);
+    }
+
+    .search-switch__side {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .search-switch__icon {
+        display: flex;
+        height: 36px;
+        width: 36px;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background-color: #e3eaf3;
+        box-shadow: 0 3px 8px -3px rgba(18, 58, 92, 0.35);
+    }
+
+    .search-switch__link {
+        position: relative;
+        height: 2px;
+        width: 14px;
+        flex-shrink: 0;
+        border-radius: 2px;
+        background-color: #45b3a6;
+    }
+
+    .search-switch__link::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 6px;
+        width: 6px;
+        transform: translate(-50%, -50%);
+        border-radius: 999px;
+        background-color: #3d9bd6;
+    }
+
+    .search-switch__logo {
+        height: 28px;
+        width: auto;
+        flex-shrink: 0;
+    }
+
+    @media (max-width: 379px) {
+        .search-switch__link {
+            display: none;
+        }
+    }
+
+    /* ---- ديسك توب: عمود الفلاتر ثابت على الجنب والنتايج جنبه ---- */
+    @media (min-width: 1024px) {
+        .search-layout {
+            display: grid;
+            grid-template-columns: 290px minmax(0, 1fr);
+            column-gap: 24px;
+            align-items: start;
+        }
+
+        /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
+        .search-head {
+            display: grid;
+            grid-column: 1 / -1;
+            grid-row: 1;
+            grid-template-columns: minmax(0, 1fr) auto;
+            grid-template-areas: "bar quick" "title title" "subs subs" "notice notice";
+            align-items: center;
+            gap: 14px 16px;
+            margin-bottom: 18px;
+        }
+
+        .search-bar {
+            position: relative;
+            top: auto;
+            z-index: 25;
+            grid-area: bar;
+            margin: 0;
+            padding: 0;
+        }
+
+        .search-suggest {
+            inset-inline: 0;
+            top: calc(100% + 6px);
+        }
+
+        .search-input {
+            height: 48px;
+            border-radius: 12px;
+            background-color: #fff;
+        }
+
+        .search-sort {
+            order: 1;
+        }
+
+        .search-tools {
+            order: 2;
+        }
+
+        .search-quick {
+            grid-area: quick;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .search-title {
+            grid-area: title;
+            margin: 0;
+        }
+
+        .search-subs {
+            grid-area: subs;
+            margin: 0;
+            padding: 0;
+        }
+
+        .search-notice {
+            grid-area: notice;
+            margin: 0;
+        }
+
+        .search-results {
+            grid-column: 2;
+            grid-row: 2;
+            margin: 0;
+        }
+
+        /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
+        .search-side {
+            position: static !important;
+            inset: auto !important;
+            z-index: auto !important;
+            display: block !important;
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .search-side > .area-sheet {
+            position: static !important;
+            display: block !important;
+            background: transparent !important;
+            animation: none !important;
+        }
+
+        .search-side__scroll {
+            overflow: visible !important;
+        }
+
+        .search-side__list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ترتيب الأقسام في العمود */
+        .search-side [data-key="area-list"] { order: 1; }
+        .search-side [data-key="developer-list"] { order: 2; }
+        .search-side [data-key="project-list"] { order: 2; }
+        .search-side .area-tabs { order: 3; }
+        .search-side .area-toggle { order: 4; margin: 10px 0 0; }
+        .search-side [data-key="bedrooms"] { order: 5; }
+        .search-side [data-key="bathrooms"] { order: 6; }
+        .search-side [data-key="type"] { order: 7; }
+        .search-side [data-key="finishing"] { order: 8; }
+        .search-side [data-key="price"] { order: 9; }
+        .search-side [data-key="payment"] { order: 10; }
+        .search-side [data-key="years"] { order: 11; }
+        .search-side [data-key="delivery"] { order: 12; }
+        .search-side [data-key="size"] { order: 13; }
+        .search-side [data-key="amenities"] { order: 14; }
+
+        /* القسم: من غير كارت وأيقونة — خط فاصل بس */
+        .search-side .area-fsec {
+            margin: 0;
+            border: 0;
+            border-bottom: 1px solid #e4e9ef;
+            border-radius: 0;
+            background: transparent;
+            padding: 16px 0 18px;
+        }
+
+        .search-side [data-key="area-list"] {
+            padding-top: 0;
+        }
+
+        .search-side [data-key="amenities"] {
+            border-bottom: 0;
+        }
+
+        .search-side .area-fsec > div:first-child {
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .search-side .area-fsec > div:first-child > div > span {
+            display: none;
+        }
+
+        .search-side .area-fsec h4 {
+            padding-bottom: 0;
+            font-size: 15.5px;
+        }
+
+        .search-side .area-fsec h4::after {
+            display: none;
+        }
+
+        .search-side [data-filter-clear] {
+            margin-top: 0;
+            font-size: 13px;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* نوع البيع */
+        .search-side .area-tabs {
+            margin: 16px 0 0;
+            border-radius: 14px;
+            padding: 4px;
+        }
+
+        .search-side .area-tabs span {
+            height: 38px;
+            border-radius: 10px;
+            font-size: 13px;
+        }
+
+        .search-side .area-toggle span {
+            height: 36px;
+            font-size: 13.5px;
+        }
+
+        /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
+        .search-side [data-key="type"] .flex-wrap,
+        .search-side [data-key="finishing"] .flex-wrap,
+        .search-side [data-key="delivery"] .flex-wrap {
+            display: block;
+        }
+
+        .search-side [data-key="type"] label,
+        .search-side [data-key="finishing"] label,
+        .search-side [data-key="delivery"] label {
+            display: block;
+        }
+
+        .search-side .area-chip:not(.area-chip--box) {
+            display: flex;
+            height: auto;
+            min-height: 34px;
+            gap: 10px;
+            border: 0;
+            border-radius: 0;
+            background: transparent;
+            padding: 0;
+            font-size: 14.5px;
+            font-weight: 500;
+            color: #123a5c;
+        }
+
+        .search-side .area-chip:not(.area-chip--box)::before {
+            content: "";
+            height: 18px;
+            width: 18px;
+            flex-shrink: 0;
+            border: 1.5px solid #b9c9d8;
+            border-radius: 5px;
+            background: #fff center / 13px no-repeat;
+        }
+
+        .search-side label:hover > .area-chip:not(.area-chip--box)::before {
+            border-color: #1f63c6;
+        }
+
+        .search-side input:checked + .area-chip:not(.area-chip--box) {
+            border: 0;
+            background: transparent;
+            font-weight: 700;
+            color: #123a5c;
+        }
+
+        .search-side input:checked + .area-chip:not(.area-chip--box)::before {
+            border-color: #1f63c6;
+            background-color: #1f63c6;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+        }
+
+        /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
+        .search-side .area-fsec .flex-wrap {
+            gap: 8px;
+        }
+
+        .search-side .area-chip--box {
+            height: 36px;
+            min-width: 36px;
+            border-radius: 999px;
+            padding: 0 8px;
+            font-size: 13.5px;
+        }
+
+        .search-side .area-field {
+            height: 44px;
+            padding-inline: 10px;
+            font-size: 13px;
+        }
+
+        .search-side .area-field input {
+            font-size: 13px;
+        }
+
+        /* المرافق */
+        .search-side [data-key="amenities"] label {
+            min-height: 34px;
+            gap: 10px;
+            font-size: 14.5px;
+            font-weight: 500;
+        }
+
+        .search-side [data-key="amenities"] label input {
+            height: 18px;
+            width: 18px;
+        }
+
+        /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
+        .search-list > div {
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            overflow: visible !important;
+        }
+
+        .search-list label {
+            min-height: 34px;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 10px;
+            border-bottom: 0;
+            padding-block: 0;
+        }
+
+        .search-list label img,
+        .search-list label > span[dir="ltr"] {
+            display: none;
+        }
+
+        .search-list label > span.flex-1 {
+            flex: 0 1 auto;
+            font-size: 14.5px;
+            font-weight: 500;
+        }
+
+        .search-list label input {
+            height: 18px;
+            width: 18px;
+        }
+
+        .search-list label:nth-child(n + 4) {
+            display: none;
+        }
+
+        /* عنوان القسم زرار بيفتح نافذة الاختيار */
+        .search-list__title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #123a5c;
+            transition: color 0.15s;
+        }
+
+        .search-list__title h4 {
+            font-size: 15.5px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .search-list__title svg {
+            color: #1f63c6;
+        }
+
+        .search-list__title:hover {
+            color: #1f63c6;
+        }
+
+        .search-list__more {
+            margin-top: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1f63c6;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* "مسح كل الفلاتر": ثابت في آخر العمود */
+        .search-side__reset {
+            position: sticky;
+            bottom: 16px;
+            z-index: 2;
+            justify-content: center;
+            padding-top: 6px;
+        }
+
+        .search-side__reset button {
+            height: 42px;
+            border-radius: 12px;
+            background-color: #1e4166;
+            padding-inline: 18px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+            box-shadow: 0 10px 22px -10px rgba(18, 58, 92, 0.6);
+            transition: background-color 0.15s;
+        }
+
+        .search-side__reset button:hover {
+            background-color: #1f63c6;
+        }
+
+        .search-promo {
+            padding: 18px 22px;
+        }
+
+        /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+        .search-results [data-results] .area-card {
+            flex-direction: row;
+        }
+
+        .search-results [data-results] .area-card > div:first-child {
+            width: 42%;
+            max-width: 340px;
+            min-height: 236px;
+            flex-shrink: 0;
+            aspect-ratio: auto;
+        }
+
+        .search-results [data-results] .area-card > div:last-child {
+            min-width: 0;
+            padding: 18px 22px 20px;
+        }
+    }
+
     /* فورم طلب الاجتماع: موبايل بيطلع من تحت — ديسك توب كارت بيظهر في نص الشاشة فوق الصفحة */
     .meeting-panel {
         animation: area-sheet-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);

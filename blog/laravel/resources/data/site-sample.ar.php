@@ -82,14 +82,14 @@ return [
             'title' => 'المناطق',
             'links' => [
                 ['label' => '6 أكتوبر', 'url' => url('/areas/1')],
-                ['label' => 'العين السخنة', 'url' => url('/areas/2')],
-                ['label' => 'الرحاب', 'url' => url('/areas/3')],
+                ['label' => 'العين السخنة', 'url' => url('/areas/ain-sokhna')],
+                ['label' => 'الرحاب', 'url' => url('/areas/al-rehab')],
                 ['label' => 'الإسكندرية', 'url' => url('/areas/4')],
                 ['label' => 'مدينة بدر', 'url' => url('/areas/5')],
                 ['label' => 'القاهرة', 'url' => url('/areas/6')],
                 ['label' => 'الجونة', 'url' => url('/areas/7')],
-                ['label' => 'الشيخ زايد', 'url' => url('/areas/8')],
-                ['label' => 'الشروق', 'url' => url('/areas/9')],
+                ['label' => 'الشيخ زايد', 'url' => url('/areas/sheikh-zayed')],
+                ['label' => 'الشروق', 'url' => url('/areas/el-shorouk')],
             ],
         ],
         [
@@ -102,22 +102,23 @@ return [
         [
             'title' => 'المطورين',
             'links' => [
-                ['label' => 'طلعت مصطفى (TMG)', 'url' => url('/developers/1')],
-                ['label' => 'ماونتن ڤيو', 'url' => url('/developers/2')],
-                ['label' => 'لافيستا', 'url' => url('/developers/3')],
+                ['label' => 'طلعت مصطفى (TMG)', 'url' => url('/developers/tmg')],
+                ['label' => 'ماونتن ڤيو', 'url' => url('/developers/mountain-view')],
+                ['label' => 'لافيستا', 'url' => url('/developers/lavista')],
             ],
         ],
         [
             'title' => 'للبيع',
             'links' => [
-                ['label' => 'شقق للبيع في العلمين الجديدة', 'url' => url('/for-sale/1')],
-                ['label' => 'شقق للبيع في التجمع الخامس', 'url' => url('/for-sale/2')],
+                ['label' => 'شقق للبيع في التجمع الخامس', 'url' => url('/search/apartments-for-sale-in-fifth-settlement')],
+                ['label' => 'شاليهات للبيع في الساحل الشمالي', 'url' => url('/search/chalets-for-sale-in-north-coast')],
+                ['label' => 'فلل للبيع في مدينة المستقبل', 'url' => url('/search/villas-for-sale-in-mostakbal-city')],
             ],
         ],
         [
             'title' => 'للإيجار',
             'links' => [
-                ['label' => 'شقق للإيجار في التجمع الخامس', 'url' => url('/for-rent/1')],
+                ['label' => 'شقق للإيجار في التجمع الخامس', 'url' => url('/search/apartments-for-rent-in-fifth-settlement')],
             ],
         ],
     ],

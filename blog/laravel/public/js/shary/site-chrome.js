@@ -152,23 +152,35 @@
         });
     }
 
-    document.querySelectorAll('[data-favorite-toggle]').forEach(function (button) {
-        var id = button.getAttribute('data-favorite-id');
-        if (id && readFavorites().indexOf(id) !== -1) button.setAttribute('aria-pressed', 'true');
+    // الضغطات كلها بتتسمع من الصفحة نفسها، فالكروت اللي بتتضاف بعدين (التحميل وأنت نازل) زرايرها بتشتغل زي الباقي
+    function closest(event, selector) { return event.target.closest ? event.target.closest(selector) : null; }
 
-        button.addEventListener('click', function () {
-            var active = button.getAttribute('aria-pressed') !== 'true';
-            button.setAttribute('aria-pressed', active ? 'true' : 'false');
-            if (id) {
-                var list = readFavorites().filter(function (item) { return item !== id; });
-                if (active) list.push(id);
-                writeFavorites(list);
-            }
-            showFavorites();
-            button.dispatchEvent(new CustomEvent('shary:favorite', { bubbles: true, detail: { id: id, active: active } }));
+    // بتعلّم القلوب المحفوظة جوه جزء من الصفحة (بتتنادى للكروت الجديدة: window.SharyCards.refresh(root))
+    function markFavorites(root) {
+        var saved = readFavorites();
+        (root || document).querySelectorAll('[data-favorite-toggle]').forEach(function (button) {
+            var id = button.getAttribute('data-favorite-id');
+            if (id && saved.indexOf(id) !== -1) button.setAttribute('aria-pressed', 'true');
         });
+        showFavorites();
+    }
+    window.SharyCards = { refresh: markFavorites };
+
+    document.addEventListener('click', function (event) {
+        var button = closest(event, '[data-favorite-toggle]');
+        if (!button) return;
+        var id = button.getAttribute('data-favorite-id');
+        var active = button.getAttribute('aria-pressed') !== 'true';
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        if (id) {
+            var list = readFavorites().filter(function (item) { return item !== id; });
+            if (active) list.push(id);
+            writeFavorites(list);
+        }
+        showFavorites();
+        button.dispatchEvent(new CustomEvent('shary:favorite', { bubbles: true, detail: { id: id, active: active } }));
     });
-    showFavorites();
+    markFavorites(document);
 
     // ---- المشاركة
     // موبايل: قايمة المشاركة بتاعة الموبايل نفسه (واتساب، ماسنجر، ...). لو المتصفح مش بيدعمها أو منعها، بتطلع قايمة شاري من تحت
@@ -275,8 +287,10 @@
         }
     }
 
-    document.querySelectorAll('[data-share-url]').forEach(function (button) {
-        button.addEventListener('click', function () {
+    document.addEventListener('click', function (event) {
+        var button = closest(event, '[data-share-url]');
+        if (!button) return;
+        (function () {
             var detail = {
                 url: new URL(button.getAttribute('data-share-url'), location.href).href,
                 title: button.getAttribute('data-share-title') || document.title
@@ -302,7 +316,7 @@
                 nativeShareBlocked = true;
                 openShareSheet(url, title, en);
             }
-        });
+        })();
     });
 
     // ---- المقارنة: الضغط على "قارن" بيعلّم المشروع، وبيظهر زرار المقارنة تحت بعدد المشاريع المختارة — الضغط عليه بيفتح صفحة المقارنة
@@ -318,12 +332,12 @@
         if (base && base !== '#') bar.setAttribute('href', base + (base.indexOf('?') === -1 ? '?' : '&') + 'projects=' + ids.filter(Boolean).join(','));
         return ids;
     }
-    document.querySelectorAll('[data-compare-toggle]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            var active = button.getAttribute('aria-pressed') !== 'true';
-            button.setAttribute('aria-pressed', active ? 'true' : 'false');
-            var ids = showCompare(button.closest('main') || document);
-            button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: button.getAttribute('data-compare-id'), active: active, ids: ids } }));
-        });
+    document.addEventListener('click', function (event) {
+        var button = closest(event, '[data-compare-toggle]');
+        if (!button) return;
+        var active = button.getAttribute('aria-pressed') !== 'true';
+        button.setAttribute('aria-pressed', active ? 'true' : 'false');
+        var ids = showCompare(button.closest('main') || document);
+        button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: button.getAttribute('data-compare-id'), active: active, ids: ids } }));
     });
 })();
