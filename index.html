@@ -883,6 +883,50 @@ video {
   }
 }
 
+/* جدول أسعار المتر في صفحة المنطقة — نفس شكل جدول المقال */
+
+.area-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  border: 1px solid #e4e9ef;
+  border-radius: 12px;
+}
+
+.area-table th,
+    .area-table td {
+  border-bottom: 1px solid #e4e9ef;
+  padding: 12px 6px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.area-table th {
+  font-weight: 700;
+  color: #123a5c;
+}
+
+.area-table thead th {
+  background-color: #e3eaf3;
+}
+
+.area-table tbody tr:last-child th,
+    .area-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+@media (min-width: 1024px) {
+  .area-table th,
+        .area-table td {
+    padding: 13px 8px;
+    font-size: 14px;
+  }
+}
+
 /* إنفوجراف الأماكن */
 
 .article-places {
@@ -6147,6 +6191,10 @@ input:focus-visible + .area-chip,
     display: flex;
   }
 
+  .lg\:table-cell {
+    display: table-cell;
+  }
+
   .lg\:grid {
     display: grid;
   }
@@ -6926,6 +6974,10 @@ input:focus-visible + .area-chip,
     text-align: start;
   }
 
+  .lg\:\!text-\[12\.5px\] {
+    font-size: 12.5px !important;
+  }
+
   .lg\:text-\[10\.5px\] {
     font-size: 10.5px;
   }
@@ -7161,6 +7213,8 @@ input:focus-visible + .area-chip,
 
 /* desktop layout forced on narrow screens (preview only) */
 .pv-desktop .shary-note, .pv-desktop .dev-about p.shary-note, .pv-desktop .article-content p.article-note {padding: 14px 18px;}
+.pv-desktop .area-table th, .pv-desktop .area-table td {padding: 13px 8px;
+    font-size: 14px;}
 .pv-desktop .article-content p, .pv-desktop .article-content li {font-size: 17px;}
 .pv-desktop .article-content h2 {font-size: 24px;}
 .pv-desktop .article-content h3 {font-size: 20px;}
@@ -7824,6 +7878,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:block {display: block;}
 .pv-desktop .lg\:inline {display: inline;}
 .pv-desktop .lg\:flex {display: flex;}
+.pv-desktop .lg\:table-cell {display: table-cell;}
 .pv-desktop .lg\:grid {display: grid;}
 .pv-desktop .lg\:contents {display: contents;}
 .pv-desktop .lg\:hidden {display: none;}
@@ -8045,6 +8100,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:pt-8 {padding-top: 2rem;}
 .pv-desktop .lg\:pt-\[59px\] {padding-top: 59px;}
 .pv-desktop .lg\:text-start {text-align: start;}
+.pv-desktop .lg\:\!text-\[12\.5px\] {font-size: 12.5px !important;}
 .pv-desktop .lg\:text-\[10\.5px\] {font-size: 10.5px;}
 .pv-desktop .lg\:text-\[11\.5px\] {font-size: 11.5px;}
 .pv-desktop .lg\:text-\[12\.5px\] {font-size: 12.5px;}
@@ -13514,21 +13570,6 @@ data-sheet-open="section" data-sections="delivery" >
 </div>
 </section>
 
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في القاهرة الجديدة؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
-<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
-<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
-<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
-<a href="article-new-capital-projects-2026.html">بوينت 90</a>
-<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
-</div>
-</div>
-</section>
-
 <section id="projects-new-cairo">
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">مشاريع في القاهرة الجديدة</h2>
@@ -15585,6 +15626,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في القاهرة الجديدة</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">78,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">64,000 – 96,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">142,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">110,000 – 190,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">96,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">78,000 – 125,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">118,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">95,000 – 150,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">104,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 138,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في القاهرة الجديدة؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
+<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
+<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
+<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
+<a href="article-new-capital-projects-2026.html">بوينت 90</a>
+<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل القاهرة الجديدة</h2>
@@ -16165,21 +16269,6 @@ data-sheet-open="section" data-sections="delivery" >
 </span>
 </span>
 </a>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في مدينة المستقبل؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
-<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
-<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
-<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
-<a href="article-new-capital-projects-2026.html">بوينت 90</a>
-<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
-</div>
 </div>
 </section>
 
@@ -18042,6 +18131,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في مدينة المستقبل</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">67,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">55,000 – 83,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">122,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">95,000 – 163,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">83,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">67,000 – 108,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">101,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 129,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">89,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">74,000 – 119,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في مدينة المستقبل؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
+<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
+<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
+<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
+<a href="article-new-capital-projects-2026.html">بوينت 90</a>
+<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل مدينة المستقبل</h2>
@@ -18586,21 +18738,6 @@ data-sheet-open="section" data-sections="delivery" >
 </span>
 </span>
 </a>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في التجمع الخامس؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">شارع التسعين</a>
-<a href="article-egypt-real-estate-2026.html">الجامعة الأمريكية</a>
-<a href="article-new-cairo-prices-q3.html">كايرو فيستيفال سيتي</a>
-<a href="article-zayed-vs-october.html">بوينت 90</a>
-<a href="article-new-capital-projects-2026.html">كونكورد بلازا</a>
-<a href="article-resale-vs-developer-price.html">داون تاون القطامية</a>
-</div>
 </div>
 </section>
 
@@ -20278,6 +20415,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في التجمع الخامس</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">92,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">76,000 – 113,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">167,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">130,000 – 224,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">113,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">92,000 – 148,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">139,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">112,000 – 177,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">122,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">101,000 – 163,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في التجمع الخامس؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">شارع التسعين</a>
+<a href="article-egypt-real-estate-2026.html">الجامعة الأمريكية</a>
+<a href="article-new-cairo-prices-q3.html">كايرو فيستيفال سيتي</a>
+<a href="article-zayed-vs-october.html">بوينت 90</a>
+<a href="article-new-capital-projects-2026.html">كونكورد بلازا</a>
+<a href="article-resale-vs-developer-price.html">داون تاون القطامية</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل التجمع الخامس</h2>
@@ -20734,21 +20934,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">25</b> وحدة في <b class="text-shary-navy" data-k="projects">1</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">مدينتي</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في مدينتي؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">أوبن إير مول</a>
-<a href="article-egypt-real-estate-2026.html">كرافت زون</a>
-<a href="article-new-cairo-prices-q3.html">نادي مدينتي</a>
-<a href="article-zayed-vs-october.html">ساوث بارك</a>
-<a href="article-new-capital-projects-2026.html">أول سيزونز بارك</a>
-<a href="article-resale-vs-developer-price.html">إيست هب</a>
 </div>
 </div>
 </section>
@@ -21986,6 +22171,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في مدينتي</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">74,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">61,000 – 91,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">134,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">104,000 – 180,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">91,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">74,000 – 119,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">112,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">90,000 – 142,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">98,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 131,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في مدينتي؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">أوبن إير مول</a>
+<a href="article-egypt-real-estate-2026.html">كرافت زون</a>
+<a href="article-new-cairo-prices-q3.html">نادي مدينتي</a>
+<a href="article-zayed-vs-october.html">ساوث بارك</a>
+<a href="article-new-capital-projects-2026.html">أول سيزونز بارك</a>
+<a href="article-resale-vs-developer-price.html">إيست هب</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل مدينتي</h2>
@@ -22442,21 +22690,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">17</b> وحدة في <b class="text-shary-navy" data-k="projects">1</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">الرحاب</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الرحاب؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">السوق التجاري</a>
-<a href="article-egypt-real-estate-2026.html">نادي الرحاب</a>
-<a href="article-new-cairo-prices-q3.html">أفينيو مول</a>
-<a href="article-zayed-vs-october.html">جيت واي مول</a>
-<a href="article-new-capital-projects-2026.html">فود كورت الرحاب</a>
-<a href="article-resale-vs-developer-price.html">مول 2</a>
 </div>
 </div>
 </section>
@@ -23887,6 +24120,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في الرحاب</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">70,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">58,000 – 86,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">127,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">99,000 – 171,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">86,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 112,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">106,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 135,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">93,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">77,000 – 124,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الرحاب؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">السوق التجاري</a>
+<a href="article-egypt-real-estate-2026.html">نادي الرحاب</a>
+<a href="article-new-cairo-prices-q3.html">أفينيو مول</a>
+<a href="article-zayed-vs-october.html">جيت واي مول</a>
+<a href="article-new-capital-projects-2026.html">فود كورت الرحاب</a>
+<a href="article-resale-vs-developer-price.html">مول 2</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل الرحاب</h2>
@@ -24391,21 +24687,6 @@ data-sheet-open="section" data-sections="delivery" >
 <span>اسأل على واتساب</span>
 </a>
 </article>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الشروق؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
-<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
-<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
-<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
-<a href="article-new-capital-projects-2026.html">بوينت 90</a>
-<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
-</div>
 </div>
 </section>
 
@@ -25983,6 +26264,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في الشروق</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">48,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">40,000 – 60,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">88,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">68,000 – 118,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">59,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">48,000 – 78,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">73,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">59,000 – 93,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">64,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">53,000 – 86,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الشروق؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
+<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
+<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
+<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
+<a href="article-new-capital-projects-2026.html">بوينت 90</a>
+<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل الشروق</h2>
@@ -26437,21 +26781,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">24</b> وحدة في <b class="text-shary-navy" data-k="projects">3</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">القطامية</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في القطامية؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
-<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
-<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
-<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
-<a href="article-new-capital-projects-2026.html">بوينت 90</a>
-<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
 </div>
 </div>
 </section>
@@ -27885,6 +28214,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في القطامية</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">82,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">67,000 – 101,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">149,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">116,000 – 200,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">101,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 131,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">123,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">100,000 – 158,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">109,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">90,000 – 145,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في القطامية؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">الجامعة الأمريكية</a>
+<a href="article-egypt-real-estate-2026.html">كايرو فيستيفال سيتي</a>
+<a href="article-new-cairo-prices-q3.html">شارع التسعين</a>
+<a href="article-zayed-vs-october.html">داون تاون القطامية</a>
+<a href="article-new-capital-projects-2026.html">بوينت 90</a>
+<a href="article-resale-vs-developer-price.html">نادي بلاتينيوم</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل القطامية</h2>
@@ -28330,21 +28722,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">101</b> وحدة في <b class="text-shary-navy" data-k="projects">18</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">الشيخ زايد</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الشيخ زايد؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">أركان بلازا</a>
-<a href="article-egypt-real-estate-2026.html">مول العرب</a>
-<a href="article-new-cairo-prices-q3.html">جاليريا 40</a>
-<a href="article-zayed-vs-october.html">هايبر وان</a>
-<a href="article-new-capital-projects-2026.html">كابيتال بيزنس بارك</a>
-<a href="article-resale-vs-developer-price.html">ذا ووك أوف كايرو</a>
 </div>
 </div>
 </section>
@@ -29601,6 +29978,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في الشيخ زايد</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">80,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">65,000 – 98,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">144,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">112,000 – 194,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">98,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">80,000 – 128,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">120,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">97,000 – 153,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">106,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">88,000 – 141,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الشيخ زايد؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">أركان بلازا</a>
+<a href="article-egypt-real-estate-2026.html">مول العرب</a>
+<a href="article-new-cairo-prices-q3.html">جاليريا 40</a>
+<a href="article-zayed-vs-october.html">هايبر وان</a>
+<a href="article-new-capital-projects-2026.html">كابيتال بيزنس بارك</a>
+<a href="article-resale-vs-developer-price.html">ذا ووك أوف كايرو</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل الشيخ زايد</h2>
@@ -30168,21 +30608,6 @@ data-sheet-open="section" data-sections="delivery" >
 </span>
 </span>
 </a>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الساحل الشمالي؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
-</div>
 </div>
 </section>
 
@@ -32036,6 +32461,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في الساحل الشمالي</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">105,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 130,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">191,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">148,000 – 257,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">130,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">105,000 – 169,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">159,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">128,000 – 202,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">140,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">116,000 – 186,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الساحل الشمالي؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل الساحل الشمالي</h2>
@@ -32474,21 +32962,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">37</b> وحدة في <b class="text-shary-navy" data-k="projects">8</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">العين السخنة</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في العين السخنة؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مدينة الجلالة</a>
-<a href="article-egypt-real-estate-2026.html">تلفريك الجلالة</a>
-<a href="article-new-cairo-prices-q3.html">بورتو السخنة</a>
-<a href="article-zayed-vs-october.html">مارينا السخنة</a>
-<a href="article-new-capital-projects-2026.html">طريق الجلالة</a>
-<a href="article-resale-vs-developer-price.html">أكوا بارك الجلالة</a>
 </div>
 </div>
 </section>
@@ -33743,6 +34216,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في العين السخنة</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">58,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">47,000 – 71,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">105,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">81,000 – 141,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">71,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">58,000 – 92,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">87,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 111,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">77,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">64,000 – 102,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في العين السخنة؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مدينة الجلالة</a>
+<a href="article-egypt-real-estate-2026.html">تلفريك الجلالة</a>
+<a href="article-new-cairo-prices-q3.html">بورتو السخنة</a>
+<a href="article-zayed-vs-october.html">مارينا السخنة</a>
+<a href="article-new-capital-projects-2026.html">طريق الجلالة</a>
+<a href="article-resale-vs-developer-price.html">أكوا بارك الجلالة</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل العين السخنة</h2>
@@ -34181,21 +34717,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">141</b> وحدة في <b class="text-shary-navy" data-k="projects">27</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">العاصمة الإدارية</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في العاصمة الإدارية؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">النهر الأخضر</a>
-<a href="article-egypt-real-estate-2026.html">البرج الأيقوني</a>
-<a href="article-new-cairo-prices-q3.html">مسجد مصر</a>
-<a href="article-zayed-vs-october.html">كاتدرائية ميلاد المسيح</a>
-<a href="article-new-capital-projects-2026.html">مدينة الفنون والثقافة</a>
-<a href="article-resale-vs-developer-price.html">مدينة مصر الأولمبية</a>
 </div>
 </div>
 </section>
@@ -35452,6 +35973,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في العاصمة الإدارية</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">63,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">52,000 – 78,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">115,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">89,000 – 154,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">78,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">63,000 – 101,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">95,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">77,000 – 122,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">84,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 112,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في العاصمة الإدارية؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">النهر الأخضر</a>
+<a href="article-egypt-real-estate-2026.html">البرج الأيقوني</a>
+<a href="article-new-cairo-prices-q3.html">مسجد مصر</a>
+<a href="article-zayed-vs-october.html">كاتدرائية ميلاد المسيح</a>
+<a href="article-new-capital-projects-2026.html">مدينة الفنون والثقافة</a>
+<a href="article-resale-vs-developer-price.html">مدينة مصر الأولمبية</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل العاصمة الإدارية</h2>
@@ -35897,21 +36481,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">38</b> وحدة في <b class="text-shary-navy" data-k="projects">9</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">رأس الحكمة</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في رأس الحكمة؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
 </div>
 </div>
 </section>
@@ -37600,6 +38169,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في رأس الحكمة</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">113,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">93,000 – 139,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">205,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">160,000 – 276,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">139,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">113,000 – 181,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">171,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">138,000 – 218,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">150,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">125,000 – 200,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في رأس الحكمة؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل رأس الحكمة</h2>
@@ -38054,21 +38686,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">9</b> وحدة في <b class="text-shary-navy" data-k="projects">2</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">سيدي حنيش</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في سيدي حنيش؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
 </div>
 </div>
 </section>
@@ -39743,6 +40360,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في سيدي حنيش</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">94,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">77,000 – 115,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">170,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">132,000 – 228,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">115,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">94,000 – 150,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">141,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">114,000 – 180,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">124,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">103,000 – 166,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في سيدي حنيش؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل سيدي حنيش</h2>
@@ -40197,21 +40877,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">7</b> وحدة في <b class="text-shary-navy" data-k="projects">2</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">الضبعة</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الضبعة؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
 </div>
 </div>
 </section>
@@ -41886,6 +42551,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في الضبعة</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">86,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 106,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">156,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">121,000 – 209,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">106,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 138,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">129,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">105,000 – 165,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">114,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">95,000 – 152,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في الضبعة؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل الضبعة</h2>
@@ -42340,21 +43068,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">19</b> وحدة في <b class="text-shary-navy" data-k="projects">4</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">سيدي عبد الرحمن</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في سيدي عبد الرحمن؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
 </div>
 </div>
 </section>
@@ -44041,6 +44754,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في سيدي عبد الرحمن</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">117,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">96,000 – 144,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">213,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">165,000 – 285,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">144,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">117,000 – 188,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">177,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">142,000 – 225,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">156,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">129,000 – 207,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في سيدي عبد الرحمن؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل سيدي عبد الرحمن</h2>
@@ -44495,21 +45271,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">12</b> وحدة في <b class="text-shary-navy" data-k="projects">3</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">العلمين</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في العلمين؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
 </div>
 </div>
 </section>
@@ -46184,6 +46945,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في العلمين</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">101,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">83,000 – 125,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">184,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">143,000 – 247,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">125,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">101,000 – 162,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">153,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">124,000 – 195,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">135,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">112,000 – 179,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في العلمين؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل العلمين</h2>
@@ -46638,21 +47462,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">5</b> وحدة في <b class="text-shary-navy" data-k="projects">1</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">غزالة باي</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في غزالة باي؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
 </div>
 </div>
 </section>
@@ -48327,6 +49136,69 @@ data-sheet-open="section" data-sections="delivery" >
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في غزالة باي</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">98,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">80,000 – 120,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">177,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">138,000 – 238,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">120,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">98,000 – 156,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">147,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">119,000 – 188,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">130,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">108,000 – 172,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في غزالة باي؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">دليل غزالة باي</h2>
@@ -48781,21 +49653,6 @@ data-sheet-open="section" data-sections="delivery" >
 من <b class="text-shary-navy" data-k="units">3</b> وحدة في <b class="text-shary-navy" data-k="projects">1</b> مشاريع            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">المؤشرات المعروضة لـ <b class="text-shary-navy">علم الروم</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في علم الروم؟</h2>
-<div class="article-places__box">
-<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide.html">مارينا العلمين</a>
-<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
-<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
-<a href="article-zayed-vs-october.html">رأس الحكمة</a>
-<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
-<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
 </div>
 </div>
 </section>
@@ -50463,6 +51320,69 @@ data-sheet-open="section" data-sections="delivery" >
 <li>طريق السخنة</li>
 <li>محور بن زايد</li>
 </ul>
+</div>
+</section>
+</div>
+
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أسعار المتر في علم الروم</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">نوع الوحدة</th>
+<th scope="col">متوسط سعر المتر</th>
+<th scope="col" class="hidden lg:table-cell">نطاق السعر</th>
+<th scope="col">النمو السنوي</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">سكني</th>
+<td><bdi dir="ltr">82,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">67,000 – 101,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">تجاري</th>
+<td><bdi dir="ltr">149,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">116,000 – 200,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">إداري</th>
+<td><bdi dir="ltr">101,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 131,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">طبي</th>
+<td><bdi dir="ltr">123,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">100,000 – 158,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">فندقي</th>
+<td><bdi dir="ltr">109,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">90,000 – 145,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">الأسعار بالجنيه للمتر المربع حسب مؤشر شاري، وبتتحدث شهريًا.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">أين تذهب في علم الروم؟</h2>
+<div class="article-places__box">
+<div class="article-places__title">أهم الأماكن اللي تقدر تزورها — اضغط على المكان واقرأ عنه</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide.html">مارينا العلمين</a>
+<a href="article-egypt-real-estate-2026.html">أبراج العلمين الجديدة</a>
+<a href="article-new-cairo-prices-q3.html">سيدي عبد الرحمن</a>
+<a href="article-zayed-vs-october.html">رأس الحكمة</a>
+<a href="article-new-capital-projects-2026.html">ممشى العلمين</a>
+<a href="article-resale-vs-developer-price.html">مهرجان العلمين</a>
+</div>
 </div>
 </section>
 </div>
@@ -68016,21 +68936,6 @@ From <b class="text-shary-navy" data-k="units">412</b> units in <b class="text-s
 </div>
 </section>
 
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in New Cairo?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
-<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
-<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
-<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
-<a href="article-new-capital-projects-2026-en.html">Point 90</a>
-<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
-</div>
-</div>
-</section>
-
 <section id="projects-new-cairo-en">
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Projects in New Cairo</h2>
@@ -70087,6 +70992,69 @@ See all <b>271</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in New Cairo</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">78,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">64,000 – 96,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">142,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">110,000 – 190,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">96,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">78,000 – 125,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">118,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">95,000 – 150,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">104,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 138,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in New Cairo?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
+<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
+<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
+<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
+<a href="article-new-capital-projects-2026-en.html">Point 90</a>
+<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">New Cairo guide</h2>
@@ -70667,21 +71635,6 @@ From <b class="text-shary-navy" data-k="units">120</b> units in <b class="text-s
 </span>
 </span>
 </a>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Mostakbal City?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
-<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
-<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
-<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
-<a href="article-new-capital-projects-2026-en.html">Point 90</a>
-<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
-</div>
 </div>
 </section>
 
@@ -72544,6 +73497,69 @@ See all <b>60</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Mostakbal City</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">67,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">55,000 – 83,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">122,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">95,000 – 163,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">83,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">67,000 – 108,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">101,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 129,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">89,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">74,000 – 119,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Mostakbal City?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
+<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
+<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
+<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
+<a href="article-new-capital-projects-2026-en.html">Point 90</a>
+<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Mostakbal City guide</h2>
@@ -73088,21 +74104,6 @@ From <b class="text-shary-navy" data-k="units">191</b> units in <b class="text-s
 </span>
 </span>
 </a>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Fifth Settlement?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">90th Street</a>
-<a href="article-egypt-real-estate-2026-en.html">AUC New Cairo</a>
-<a href="article-new-cairo-prices-q3-en.html">Cairo Festival City</a>
-<a href="article-zayed-vs-october-en.html">Point 90</a>
-<a href="article-new-capital-projects-2026-en.html">Concord Plaza</a>
-<a href="article-resale-vs-developer-price-en.html">Downtown Katameya</a>
-</div>
 </div>
 </section>
 
@@ -74780,6 +75781,69 @@ See all <b>48</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Fifth Settlement</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">92,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">76,000 – 113,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">167,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">130,000 – 224,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">113,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">92,000 – 148,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">139,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">112,000 – 177,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">122,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">101,000 – 163,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Fifth Settlement?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">90th Street</a>
+<a href="article-egypt-real-estate-2026-en.html">AUC New Cairo</a>
+<a href="article-new-cairo-prices-q3-en.html">Cairo Festival City</a>
+<a href="article-zayed-vs-october-en.html">Point 90</a>
+<a href="article-new-capital-projects-2026-en.html">Concord Plaza</a>
+<a href="article-resale-vs-developer-price-en.html">Downtown Katameya</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Fifth Settlement guide</h2>
@@ -75236,21 +76300,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">61,000 – 91,00
 From <b class="text-shary-navy" data-k="units">25</b> units in <b class="text-shary-navy" data-k="projects">1</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Madinaty</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Madinaty?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Open Air Mall</a>
-<a href="article-egypt-real-estate-2026-en.html">Craft Zone</a>
-<a href="article-new-cairo-prices-q3-en.html">Madinaty Sports Club</a>
-<a href="article-zayed-vs-october-en.html">South Park</a>
-<a href="article-new-capital-projects-2026-en.html">All Seasons Park</a>
-<a href="article-resale-vs-developer-price-en.html">East Hub</a>
 </div>
 </div>
 </section>
@@ -76488,6 +77537,69 @@ Clear                    </button>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Madinaty</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">74,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">61,000 – 91,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">134,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">104,000 – 180,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">91,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">74,000 – 119,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">112,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">90,000 – 142,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">98,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 131,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Madinaty?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Open Air Mall</a>
+<a href="article-egypt-real-estate-2026-en.html">Craft Zone</a>
+<a href="article-new-cairo-prices-q3-en.html">Madinaty Sports Club</a>
+<a href="article-zayed-vs-october-en.html">South Park</a>
+<a href="article-new-capital-projects-2026-en.html">All Seasons Park</a>
+<a href="article-resale-vs-developer-price-en.html">East Hub</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Madinaty guide</h2>
@@ -76944,21 +78056,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">58,000 – 86,00
 From <b class="text-shary-navy" data-k="units">17</b> units in <b class="text-shary-navy" data-k="projects">1</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Al Rehab</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Al Rehab?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">The Souq</a>
-<a href="article-egypt-real-estate-2026-en.html">Al Rehab Club</a>
-<a href="article-new-cairo-prices-q3-en.html">Avenue Mall</a>
-<a href="article-zayed-vs-october-en.html">Gateway Mall</a>
-<a href="article-new-capital-projects-2026-en.html">Rehab Food Court</a>
-<a href="article-resale-vs-developer-price-en.html">Mall 2</a>
 </div>
 </div>
 </section>
@@ -78389,6 +79486,69 @@ Clear                    </button>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Al Rehab</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">70,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">58,000 – 86,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">127,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">99,000 – 171,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">86,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 112,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">106,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 135,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">93,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">77,000 – 124,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Al Rehab?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">The Souq</a>
+<a href="article-egypt-real-estate-2026-en.html">Al Rehab Club</a>
+<a href="article-new-cairo-prices-q3-en.html">Avenue Mall</a>
+<a href="article-zayed-vs-october-en.html">Gateway Mall</a>
+<a href="article-new-capital-projects-2026-en.html">Rehab Food Court</a>
+<a href="article-resale-vs-developer-price-en.html">Mall 2</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Al Rehab guide</h2>
@@ -78893,21 +80053,6 @@ From <b class="text-shary-navy" data-k="units">34</b> units in <b class="text-sh
 <span>Ask on WhatsApp</span>
 </a>
 </article>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in El Shorouk?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
-<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
-<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
-<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
-<a href="article-new-capital-projects-2026-en.html">Point 90</a>
-<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
-</div>
 </div>
 </section>
 
@@ -80485,6 +81630,69 @@ See all <b>11</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in El Shorouk</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">48,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">40,000 – 60,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">88,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">68,000 – 118,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">59,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">48,000 – 78,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">73,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">59,000 – 93,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">64,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">53,000 – 86,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in El Shorouk?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
+<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
+<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
+<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
+<a href="article-new-capital-projects-2026-en.html">Point 90</a>
+<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">El Shorouk guide</h2>
@@ -80939,21 +82147,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">67,000 – 101,0
 From <b class="text-shary-navy" data-k="units">24</b> units in <b class="text-shary-navy" data-k="projects">3</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Katameya</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Katameya?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
-<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
-<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
-<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
-<a href="article-new-capital-projects-2026-en.html">Point 90</a>
-<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
 </div>
 </div>
 </section>
@@ -82387,6 +83580,69 @@ See all <b>9</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Katameya</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">82,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">67,000 – 101,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">149,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">116,000 – 200,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">101,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 131,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">123,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">100,000 – 158,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">109,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">90,000 – 145,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Katameya?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">AUC New Cairo</a>
+<a href="article-egypt-real-estate-2026-en.html">Cairo Festival City</a>
+<a href="article-new-cairo-prices-q3-en.html">90th Street</a>
+<a href="article-zayed-vs-october-en.html">Downtown Katameya</a>
+<a href="article-new-capital-projects-2026-en.html">Point 90</a>
+<a href="article-resale-vs-developer-price-en.html">Platinum Club</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Katameya guide</h2>
@@ -82832,21 +84088,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">65,000 – 98,00
 From <b class="text-shary-navy" data-k="units">101</b> units in <b class="text-shary-navy" data-k="projects">18</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Sheikh Zayed</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Sheikh Zayed?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Arkan Plaza</a>
-<a href="article-egypt-real-estate-2026-en.html">Mall of Arabia</a>
-<a href="article-new-cairo-prices-q3-en.html">Galleria 40</a>
-<a href="article-zayed-vs-october-en.html">Hyper One</a>
-<a href="article-new-capital-projects-2026-en.html">Capital Business Park</a>
-<a href="article-resale-vs-developer-price-en.html">Walk of Cairo</a>
 </div>
 </div>
 </section>
@@ -84103,6 +85344,69 @@ See all <b>64</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Sheikh Zayed</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">80,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">65,000 – 98,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">144,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">112,000 – 194,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">98,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">80,000 – 128,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">120,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">97,000 – 153,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">106,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">88,000 – 141,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Sheikh Zayed?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Arkan Plaza</a>
+<a href="article-egypt-real-estate-2026-en.html">Mall of Arabia</a>
+<a href="article-new-cairo-prices-q3-en.html">Galleria 40</a>
+<a href="article-zayed-vs-october-en.html">Hyper One</a>
+<a href="article-new-capital-projects-2026-en.html">Capital Business Park</a>
+<a href="article-resale-vs-developer-price-en.html">Walk of Cairo</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Sheikh Zayed guide</h2>
@@ -84670,21 +85974,6 @@ From <b class="text-shary-navy" data-k="units">89</b> units in <b class="text-sh
 </span>
 </span>
 </a>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in North Coast?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
-</div>
 </div>
 </section>
 
@@ -86538,6 +87827,69 @@ See all <b>71</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in North Coast</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">105,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 130,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">191,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">148,000 – 257,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">130,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">105,000 – 169,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">159,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">128,000 – 202,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">140,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">116,000 – 186,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in North Coast?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">North Coast guide</h2>
@@ -86976,21 +88328,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">47,000 – 71,00
 From <b class="text-shary-navy" data-k="units">37</b> units in <b class="text-shary-navy" data-k="projects">8</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Ain Sokhna</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Ain Sokhna?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Galala City</a>
-<a href="article-egypt-real-estate-2026-en.html">Galala Cable Car</a>
-<a href="article-new-cairo-prices-q3-en.html">Porto Sokhna</a>
-<a href="article-zayed-vs-october-en.html">Sokhna Marina</a>
-<a href="article-new-capital-projects-2026-en.html">Galala Road</a>
-<a href="article-resale-vs-developer-price-en.html">Galala Aqua Park</a>
 </div>
 </div>
 </section>
@@ -88245,6 +89582,69 @@ See all <b>28</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Ain Sokhna</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">58,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">47,000 – 71,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">105,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">81,000 – 141,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">71,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">58,000 – 92,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">87,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 111,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">77,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">64,000 – 102,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Ain Sokhna?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Galala City</a>
+<a href="article-egypt-real-estate-2026-en.html">Galala Cable Car</a>
+<a href="article-new-cairo-prices-q3-en.html">Porto Sokhna</a>
+<a href="article-zayed-vs-october-en.html">Sokhna Marina</a>
+<a href="article-new-capital-projects-2026-en.html">Galala Road</a>
+<a href="article-resale-vs-developer-price-en.html">Galala Aqua Park</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Ain Sokhna guide</h2>
@@ -88683,21 +90083,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">52,000 – 78,00
 From <b class="text-shary-navy" data-k="units">141</b> units in <b class="text-shary-navy" data-k="projects">27</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">New Capital</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in New Capital?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Green River</a>
-<a href="article-egypt-real-estate-2026-en.html">Iconic Tower</a>
-<a href="article-new-cairo-prices-q3-en.html">Misr Mosque</a>
-<a href="article-zayed-vs-october-en.html">Cathedral of the Nativity</a>
-<a href="article-new-capital-projects-2026-en.html">City of Arts and Culture</a>
-<a href="article-resale-vs-developer-price-en.html">Egypt Olympic City</a>
 </div>
 </div>
 </section>
@@ -89954,6 +91339,69 @@ See all <b>96</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in New Capital</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">63,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">52,000 – 78,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">115,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">89,000 – 154,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">78,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">63,000 – 101,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">95,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">77,000 – 122,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">84,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 112,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in New Capital?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Green River</a>
+<a href="article-egypt-real-estate-2026-en.html">Iconic Tower</a>
+<a href="article-new-cairo-prices-q3-en.html">Misr Mosque</a>
+<a href="article-zayed-vs-october-en.html">Cathedral of the Nativity</a>
+<a href="article-new-capital-projects-2026-en.html">City of Arts and Culture</a>
+<a href="article-resale-vs-developer-price-en.html">Egypt Olympic City</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">New Capital guide</h2>
@@ -90399,21 +91847,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">93,000 – 139,0
 From <b class="text-shary-navy" data-k="units">38</b> units in <b class="text-shary-navy" data-k="projects">9</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Ras El Hekma</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Ras El Hekma?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
 </div>
 </div>
 </section>
@@ -92102,6 +93535,69 @@ See all <b>31</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Ras El Hekma</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">113,700</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">93,000 – 139,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">205,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">160,000 – 276,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">139,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">113,000 – 181,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">171,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">138,000 – 218,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">150,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">125,000 – 200,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Ras El Hekma?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Ras El Hekma guide</h2>
@@ -92556,21 +94052,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">77,000 – 115,0
 From <b class="text-shary-navy" data-k="units">9</b> units in <b class="text-shary-navy" data-k="projects">2</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Sidi Heneish</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Sidi Heneish?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
 </div>
 </div>
 </section>
@@ -94245,6 +95726,69 @@ See all <b>8</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Sidi Heneish</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">94,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">77,000 – 115,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">170,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">132,000 – 228,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">115,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">94,000 – 150,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">141,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">114,000 – 180,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">124,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">103,000 – 166,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Sidi Heneish?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Sidi Heneish guide</h2>
@@ -94699,21 +96243,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">70,000 – 106,0
 From <b class="text-shary-navy" data-k="units">7</b> units in <b class="text-shary-navy" data-k="projects">2</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Al Dabaa</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Al Dabaa?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
 </div>
 </div>
 </section>
@@ -96388,6 +97917,69 @@ See all <b>6</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Al Dabaa</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">86,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">70,000 – 106,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">156,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">121,000 – 209,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">106,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">86,000 – 138,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">129,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">105,000 – 165,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">114,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">95,000 – 152,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Al Dabaa?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Al Dabaa guide</h2>
@@ -96842,21 +98434,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">96,000 – 144,0
 From <b class="text-shary-navy" data-k="units">19</b> units in <b class="text-shary-navy" data-k="projects">4</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Sidi Abdel Rahman</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Sidi Abdel Rahman?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
 </div>
 </div>
 </section>
@@ -98543,6 +100120,69 @@ See all <b>14</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Sidi Abdel Rahman</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">117,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">96,000 – 144,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">213,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">165,000 – 285,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">144,800</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">117,000 – 188,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">177,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">142,000 – 225,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">156,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">129,000 – 207,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Sidi Abdel Rahman?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Sidi Abdel Rahman guide</h2>
@@ -98997,21 +100637,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">83,000 – 125,0
 From <b class="text-shary-navy" data-k="units">12</b> units in <b class="text-shary-navy" data-k="projects">3</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Al Alamein</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Al Alamein?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
 </div>
 </div>
 </section>
@@ -100686,6 +102311,69 @@ See all <b>9</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Al Alamein</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">101,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">83,000 – 125,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">184,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">143,000 – 247,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">125,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">101,000 – 162,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">153,400</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">124,000 – 195,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">135,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">112,000 – 179,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Al Alamein?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Al Alamein guide</h2>
@@ -101140,21 +102828,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">80,000 – 120,0
 From <b class="text-shary-navy" data-k="units">5</b> units in <b class="text-shary-navy" data-k="projects">1</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Ghazala Bay</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Ghazala Bay?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
 </div>
 </div>
 </section>
@@ -102829,6 +104502,69 @@ See all <b>5</b> projects                </a>
 </section>
 </div>
 
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Ghazala Bay</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">98,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">80,000 – 120,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">177,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">138,000 – 238,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">120,600</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">98,000 – 156,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">147,500</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">119,000 – 188,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">130,000</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">108,000 – 172,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Ghazala Bay?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
+</div>
+</section>
+</div>
+
 <section>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Ghazala Bay guide</h2>
@@ -103283,21 +105019,6 @@ Price range <b class="text-shary-navy" dir="ltr" data-k="range">67,000 – 101,0
 From <b class="text-shary-navy" data-k="units">3</b> units in <b class="text-shary-navy" data-k="projects">1</b> projects            </p>
 
 <p class="text-center text-[11px] font-medium leading-normal text-shary-muted lg:text-[12px]">Indicators shown for <b class="text-shary-navy">Alam Al Roum</b></p>
-</div>
-</div>
-</section>
-
-<section class="area-places">
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Alam Al Roum?</h2>
-<div class="article-places__box">
-<div class="article-places__title">Top places to visit — tap a place to read about it</div>
-<div class="article-places__list">
-<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
-<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
-<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
-<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
-<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
-<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
 </div>
 </div>
 </section>
@@ -104965,6 +106686,69 @@ Clear                    </button>
 <li>Sokhna Road</li>
 <li>Bin Zayed axis</li>
 </ul>
+</div>
+</section>
+</div>
+
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-2 lg:items-start lg:gap-6">
+<section>
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Prices per meter in Alam Al Roum</h2>
+<table class="area-table">
+<thead>
+<tr>
+<th scope="col">Unit type</th>
+<th scope="col">Average price per m²</th>
+<th scope="col" class="hidden lg:table-cell">Price range</th>
+<th scope="col">Yearly growth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">Residential</th>
+<td><bdi dir="ltr">82,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">67,000 – 101,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+21.4%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Retail</th>
+<td><bdi dir="ltr">149,100</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">116,000 – 200,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+17.8%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Office</th>
+<td><bdi dir="ltr">101,300</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">82,000 – 131,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+14.2%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Medical</th>
+<td><bdi dir="ltr">123,900</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">100,000 – 158,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+19.5%</bdi></td>
+</tr>
+<tr>
+<th scope="row">Hotel</th>
+<td><bdi dir="ltr">109,200</bdi></td>
+<td class="hidden whitespace-nowrap lg:table-cell lg:!text-[12.5px]"><bdi dir="ltr">90,000 – 145,000</bdi></td>
+<td class="text-shary-teal"><bdi dir="ltr">+11.6%</bdi></td>
+</tr>
+</tbody>
+</table>
+<p class="mt-2 text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">Prices in EGP per square meter from the Shary Index, updated monthly.</p>
+</section>
+<section class="area-places">
+<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Where to go in Alam Al Roum?</h2>
+<div class="article-places__box">
+<div class="article-places__title">Top places to visit — tap a place to read about it</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Marina El Alamein</a>
+<a href="article-egypt-real-estate-2026-en.html">New Alamein Towers</a>
+<a href="article-new-cairo-prices-q3-en.html">Sidi Abdel Rahman</a>
+<a href="article-zayed-vs-october-en.html">Ras El Hekma</a>
+<a href="article-new-capital-projects-2026-en.html">Alamein Promenade</a>
+<a href="article-resale-vs-developer-price-en.html">Alamein Festival</a>
+</div>
 </div>
 </section>
 </div>
