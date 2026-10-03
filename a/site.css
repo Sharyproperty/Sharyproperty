@@ -3271,22 +3271,26 @@ input:focus-visible + .area-chip,
   color: #123a5c;
 }
 
-/* زراير الصور / الخريطة / المخططات */
+/* زرارين فوق في المشروع والوحدة (المخطط / الصور — مخطط الوحدة / المخطط): الأيقونة جنب الاسم زي التطبيق */
+
+.prop-tiles {
+  display: flex;
+  gap: 8px;
+}
 
 .prop-tile {
   display: flex;
-  min-height: 78px;
+  min-height: 60px;
   min-width: 0;
   flex: 1 1 0%;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   border: 1px solid #e4e9ef;
   border-radius: 16px;
   background-color: #fff;
-  padding: 10px 6px;
-  font-size: 12.5px;
+  padding: 10px 8px;
+  font-size: 14.5px;
   font-weight: 700;
   line-height: 1.4;
   color: #123a5c;
@@ -3297,13 +3301,6 @@ input:focus-visible + .area-chip,
 
 .prop-tile svg {
   color: #1f63c6;
-}
-
-/* صف الزراير: المعرض / عرض على الخريطة / مخطط المشروع (+ مخطط الوحدة) — نفس الشكل في المشروع والوحدة، موبايل وديسك توب */
-
-.prop-tiles {
-  display: flex;
-  gap: 8px;
 }
 
 .prop-tile:hover {
@@ -3586,17 +3583,6 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
-/* حالة المرحلة */
-
-/* صفحة الوحدة: زرارين بس (مخطط الوحدة / المخطط) — الأيقونة جنب الاسم زي التطبيق */
-
-.prop-tiles--pair .prop-tile {
-  min-height: 60px;
-  flex-direction: row;
-  gap: 10px;
-  font-size: 14.5px;
-}
-
 /* صف صور بيتسحب بالجنب (المشروعات الجديدة + مراحل أخرى على الموبايل): بعرض الشاشة على الموبايل */
 
 .prop-rail {
@@ -3714,6 +3700,8 @@ input:focus-visible + .area-chip,
     aspect-ratio: 16 / 10;
   }
 }
+
+/* حالة المرحلة */
 
 .prop-phase {
   align-self: flex-start;
@@ -3856,11 +3844,6 @@ input:focus-visible + .area-chip,
 
   .prop-prices dd b {
     font-size: 21px;
-  }
-
-  .prop-tile {
-    min-height: 92px;
-    font-size: 14.5px;
   }
 
   .prop-utabs a {
@@ -9801,8 +9784,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .prop-prices dt {font-size: 13.5px;}
 .pv-desktop .prop-prices dd {margin-top: 0;}
 .pv-desktop .prop-prices dd b {font-size: 21px;}
-.pv-desktop .prop-tile {min-height: 92px;
-    font-size: 14.5px;}
 .pv-desktop .prop-utabs a {flex: 1 1 0%;
     padding-block: 13px;
     font-size: 16px;}
