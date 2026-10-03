@@ -3095,6 +3095,14 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
+/* المعرض اللي بيتقلّب لوحده: الشريحة بتتفتح بالراحة على الديسك توب */
+
+@media (min-width: 1024px) {
+  .rent-gallery.rent-gallery--slider .rent-gallery__item {
+    transition: flex-grow 0.9s ease;
+  }
+}
+
 @media (max-width: 1023px) {
   .rent-gallery.rent-gallery--slider {
     display: flex;
@@ -9579,6 +9587,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .dev-about h3 {margin-top: 18px;
     font-size: 18px;}
 .pv-desktop .dev-areas.is-open {grid-template-columns: repeat(5, 1fr);}
+.pv-desktop .rent-gallery.rent-gallery--slider .rent-gallery__item {transition: flex-grow 0.9s ease;}
 .pv-desktop .prop-bar {top: var(--prop-header, 76px);
     margin-top: 24px;
     border-bottom: 1px solid #e4e9ef;
@@ -138198,6 +138207,7 @@ Shary
  *   ديسك توب: الشريط كله. موبايل: سطر السعر (.prop-bar__prices) بس — السكربت بيحسب المكان من ارتفاع الهيدر. وهو ثابت بياخد class="is-stuck".
  *
  * - المعرض [data-gallery-slider] (partials/photo-gallery.blade.php مع slider): على الموبايل صورة واحدة بتتسحب بالجنب وتحتها نقط.
+ *   الصور بتتقلّب لوحدها كل 4.5 ثانية (موبايل وديسك توب)، وبتقف وقت ما العميل ماسكها أو عارض الصور مفتوح.
  *
  * - وحدات المشروع [data-project-units] (data-per-page = عدد الكروت في الصفحة على الديسك توب):
  *   كل كروت المشروع [data-unit] موجودة في [data-project-grid]، وعلى كل كارت: data-sale ، data-invest ، data-types ، data-beds ، data-baths ، data-size ،
@@ -138539,6 +138549,36 @@ Shary
         }, { passive: true });
         dots[0].setAttribute('aria-current', 'true');
         mark();
+
+        // الصور بتتقلّب لوحدها بالراحة، واحدة واحدة (كل 4.5 ثانية): موبايل بتتسحب للصورة اللي بعدها — ديسك توب الشريحة اللي بعدها هي اللي بتتفتح.
+        // بتقف طول ما العميل ماسكها أو واقف عليها بالماوس، ولو عارض الصور مفتوح، ولو المعرض مش ظاهر على الشاشة، ولو الجهاز مطفّي الحركة.
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var wrap = track.parentNode;
+        var held = false, seen = true, resume = null;
+        function hold() { held = true; if (resume) { clearTimeout(resume); resume = null; } }
+        function release(wait) { if (resume) clearTimeout(resume); resume = setTimeout(function () { held = false; resume = null; }, wait); }
+        wrap.addEventListener('mouseenter', hold);
+        wrap.addEventListener('mouseleave', function () { release(0); });
+        wrap.addEventListener('touchstart', hold, { passive: true });
+        wrap.addEventListener('touchend', function () { release(5000); }, { passive: true });
+        wrap.addEventListener('focusin', hold);
+        wrap.addEventListener('focusout', function () { release(0); });
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) { seen = entries[0].isIntersecting; }, { threshold: 0.5 }).observe(wrap);
+        }
+        window.setInterval(function () {
+            if (held || !seen || document.hidden || !track.offsetWidth) return;
+            if (document.querySelector('[data-rent-lightbox]:not(.hidden)')) return;
+            var at = 0;
+            slides.forEach(function (slide, i) { if (slide.getAttribute('data-active') === '1') at = i; });
+            var next = (at + 1) % slides.length;
+            if (narrow.matches) {
+                var left = track.scrollLeft + slides[next].getBoundingClientRect().left - track.getBoundingClientRect().left;
+                track.scrollTo({ left: left, behavior: 'smooth' });
+            } else {
+                slides.forEach(function (slide, i) { slide.setAttribute('data-active', i === next ? '1' : '0'); });
+            }
+        }, 4500);
     });
 
     // ---------- وحدات المشروع: التبويب + الترتيب + الصفحات ----------
