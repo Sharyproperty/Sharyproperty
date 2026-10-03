@@ -2920,9 +2920,20 @@ input:focus-visible + .area-chip,
 
 /* شريط الملخص: موبايل — اللوجو + العنوان + الزراير، وتحتهم الأسعار. ديسك توب — سطر واحد ثابت تحت الهيدر وفي آخره اتصال / واتساب */
 
+/* الشريط ثابت تحت الهيدر وأنت نازل (js/shary/property-page.js بيحط top): على الموبايل سطر السعر هو اللي بيفضل ظاهر */
+
 .prop-bar {
+  position: sticky;
+  top: auto;
+  z-index: 25;
   background-color: #fff;
   padding-top: 20px;
+  padding-bottom: 12px;
+  transition: box-shadow 0.2s ease;
+}
+
+.prop-bar.is-stuck {
+  box-shadow: 0 12px 18px -14px rgba(18, 58, 92, 0.4);
 }
 
 .prop-bar__in {
@@ -3567,12 +3578,14 @@ input:focus-visible + .area-chip,
 
 @media (min-width: 1024px) {
   .prop-bar {
-    position: sticky;
     top: var(--prop-header, 76px);
-    z-index: 25;
     margin-top: 24px;
     border-bottom: 1px solid #e4e9ef;
     padding-block: 12px;
+  }
+
+  .prop-bar.is-stuck {
+    box-shadow: 0 10px 18px -16px rgba(18, 58, 92, 0.35);
   }
 
   .prop-bar__in {
@@ -9585,12 +9598,11 @@ input:focus-visible + .area-chip,
 .pv-desktop .dev-about h3 {margin-top: 18px;
     font-size: 18px;}
 .pv-desktop .dev-areas.is-open {grid-template-columns: repeat(5, 1fr);}
-.pv-desktop .prop-bar {position: sticky;
-    top: var(--prop-header, 76px);
-    z-index: 25;
+.pv-desktop .prop-bar {top: var(--prop-header, 76px);
     margin-top: 24px;
     border-bottom: 1px solid #e4e9ef;
     padding-block: 12px;}
+.pv-desktop .prop-bar.is-stuck {box-shadow: 0 10px 18px -16px rgba(18, 58, 92, 0.35);}
 .pv-desktop .prop-bar__in {grid-template-columns: auto minmax(0, 1fr) auto auto;
     grid-template-areas: "logo head actions contact" "logo prices actions contact";
     -moz-column-gap: 16px;
@@ -57737,7 +57749,7 @@ data-sheet-open="section" data-sections="delivery" >
 </div>
 </div>
 
-<div class="site-container pb-10 pt-5 lg:pb-16 lg:pt-8">
+<div class="site-container pb-10 pt-2 lg:pb-16 lg:pt-8">
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-10">
 <div class="flex min-w-0 flex-col gap-6 lg:gap-9">
 
@@ -59046,7 +59058,7 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </div>
 
-<div class="site-container grid grid-cols-1 gap-8 pb-10 pt-5 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-x-10 lg:gap-y-12 lg:pb-16 lg:pt-8">
+<div class="site-container grid grid-cols-1 gap-8 pb-10 pt-2 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-x-10 lg:gap-y-12 lg:pb-16 lg:pt-8">
 
 <div class="flex min-w-0 flex-col gap-3 lg:order-2 lg:gap-4">
 <h2 class="hidden text-[24px] font-bold leading-[1.35] lg:block">التفاصيل</h2>
@@ -119808,7 +119820,7 @@ Furnished                                </dd>
 </div>
 </div>
 
-<div class="site-container pb-10 pt-5 lg:pb-16 lg:pt-8">
+<div class="site-container pb-10 pt-2 lg:pb-16 lg:pt-8">
 <div class="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-10">
 <div class="flex min-w-0 flex-col gap-6 lg:gap-9">
 
@@ -121117,7 +121129,7 @@ Verified                </span>
 </div>
 </div>
 
-<div class="site-container grid grid-cols-1 gap-8 pb-10 pt-5 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-x-10 lg:gap-y-12 lg:pb-16 lg:pt-8">
+<div class="site-container grid grid-cols-1 gap-8 pb-10 pt-2 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-x-10 lg:gap-y-12 lg:pb-16 lg:pt-8">
 
 <div class="flex min-w-0 flex-col gap-3 lg:order-2 lg:gap-4">
 <h2 class="hidden text-[24px] font-bold leading-[1.35] lg:block">Details</h2>
@@ -137230,6 +137242,9 @@ Shary
  *   الجدول [data-insight-table] (sr-only) بيتحدّث مع التبويب لقارئ الشاشة.
  *   لو البيانات اتغيرت بعد التحميل: window.SharyProperty.refresh(root) بيعيد قراية البيانات ويرسم من جديد.
  *
+ * - شريط الملخص [data-prop-bar] (property/partials/summary-bar.blade.php): بيفضل ثابت تحت الهيدر وأنت نازل.
+ *   ديسك توب: الشريط كله. موبايل: سطر السعر (.prop-bar__prices) بس — السكربت بيحسب المكان من ارتفاع الهيدر. وهو ثابت بياخد class="is-stuck".
+ *
  * - المعرض [data-gallery-slider] (partials/photo-gallery.blade.php مع slider): على الموبايل صورة واحدة بتتسحب بالجنب وتحتها نقط.
  *
  * - وحدات المشروع [data-project-units] (data-per-page = عدد الكروت في الصفحة على الديسك توب):
@@ -137511,6 +137526,37 @@ Shary
     }
     window.SharyProperty = { refresh: refresh };
     refresh(document);
+
+    // ---------- شريط الملخص [data-prop-bar]: بيفضل ثابت تحت الهيدر وأنت نازل ----------
+    // ديسك توب: الشريط كله ثابت. موبايل: سطر العنوان بيطلع مع الصفحة وسطر السعر هو اللي بيفضل ثابت تحت الهيدر.
+    document.querySelectorAll('[data-prop-bar]').forEach(function (bar) {
+        var prices = bar.querySelector('.prop-bar__prices');
+        var scope = bar.closest('[lang]') || document;
+        var wide = window.matchMedia('(min-width: 1024px)');
+        var top = null;
+        function place() {
+            if (!bar.offsetHeight) return;   // الصفحة مخفية دلوقتي
+            var header = scope.querySelector('header');
+            var base = header ? (parseFloat(window.getComputedStyle(header).top) || 0) + header.offsetHeight : 0;
+            var shift = wide.matches || !prices ? 0 : prices.getBoundingClientRect().top - bar.getBoundingClientRect().top - 10;
+            top = Math.round(base - shift);
+            bar.style.top = top + 'px';
+            stuck();
+        }
+        function stuck() {
+            if (top === null) return;
+            bar.classList.toggle('is-stuck', bar.getBoundingClientRect().top <= top + 1 && window.pageYOffset > 0);
+        }
+        var waiting = false;
+        window.addEventListener('scroll', function () {
+            if (waiting) return;
+            waiting = true;
+            window.requestAnimationFrame(function () { waiting = false; stuck(); });
+        }, { passive: true });
+        window.addEventListener('resize', place);
+        if (window.ResizeObserver) new ResizeObserver(place).observe(bar);
+        place();
+    });
 
     // ---------- المعرض على الموبايل [data-gallery-slider]: صورة واحدة بتتسحب بالجنب وتحتها نقط ----------
     // الصورة اللي قدام العميل بتبقى هي المفتوحة (data-active="1")، فالضغط عليها بيفتح عارض الصور على طول
