@@ -2983,17 +2983,25 @@ input:focus-visible + .area-chip,
 
 .prop-pill {
   display: inline-flex;
-  min-height: 54px;
+  min-height: 50px;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   border: 1px solid #e4e9ef;
   border-radius: 9999px;
   background-color: #fff;
-  padding: 6px 20px;
+  padding: 6px 14px;
+  white-space: nowrap;
   box-shadow: 0 1px 2px rgba(18, 58, 92, 0.04), 0 10px 22px -16px rgba(18, 58, 92, 0.35);
 }
 
+.prop-pill--price {
+  flex: 1 1 auto;
+  justify-content: center;
+}
+
 .prop-pill--roi {
+  flex: 0 1 auto;
+  justify-content: center;
   border-color: #cfe9e2;
   background-color: #e7f5f1;
   color: #1f7f72;
@@ -3053,6 +3061,174 @@ input:focus-visible + .area-chip,
   font-size: 12.5px;
   font-weight: 600;
   color: #8a99a8;
+}
+
+/* صفحة الوحدة على الموبايل: من غير لوجو المطور في سطر العنوان (زي التطبيق) */
+
+.prop-bar--unit .prop-bar__logo {
+  display: none;
+}
+
+.prop-bar--unit .prop-bar__in {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "head actions" "prices prices";
+}
+
+/* المعرض على الموبايل (الوحدة / المشروع): صورة واحدة بتتسحب بالجنب وتحتها نقط */
+
+.rent-gallery-wrap {
+  position: relative;
+}
+
+.rent-gallery__dots {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .rent-gallery.rent-gallery--slider {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    border-radius: 14px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .rent-gallery.rent-gallery--slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .rent-gallery.rent-gallery--slider .rent-gallery__item,
+        .rent-gallery.rent-gallery--slider .rent-gallery__item[data-active="1"] {
+    order: 0;
+    flex: 0 0 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: 0;
+    scroll-snap-align: center;
+  }
+
+  .rent-gallery__dots {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    pointer-events: none;
+  }
+
+  .rent-gallery__dots i {
+    height: 7px;
+    width: 7px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 1px 3px rgba(13, 36, 58, 0.45);
+    transition: background-color 0.2s ease, width 0.2s ease;
+  }
+
+  .rent-gallery__dots i[aria-current="true"] {
+    width: 18px;
+    border-radius: 9999px;
+    background-color: #fff;
+  }
+}
+
+/* جدول التفاصيل: صفوف أزرق فاتح — الاسم وجنبه القيمة */
+
+.prop-rows {
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.prop-rows > div {
+  display: grid;
+  grid-template-columns: minmax(0, 42%) minmax(0, 1fr);
+  min-height: 46px;
+  align-items: center;
+  -moz-column-gap: 12px;
+       column-gap: 12px;
+  background-color: #e6f2fa;
+  padding: 8px 16px;
+}
+
+.prop-rows > div:nth-child(even) {
+  background-color: #f1f8fc;
+}
+
+.prop-rows dt {
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.prop-rows dd {
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+/* خطط السداد: شريط رمادي فاتح بعرض الشاشة على الموبايل، وكارت على الديسك توب */
+
+.prop-band {
+  margin-inline: -20px;
+  background-color: #f2f5f8;
+  padding: 18px 20px 20px;
+}
+
+/* عنوان مؤشرات الاستثمار: كبسولة بيضا بأيقونة */
+
+.prop-title {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e4e9ef;
+  border-radius: 9999px;
+  background-color: #fff;
+  padding: 6px 18px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: 0 1px 2px rgba(18, 58, 92, 0.04), 0 10px 22px -16px rgba(18, 58, 92, 0.35);
+}
+
+/* مؤشر السعر / الطلب / النمو */
+
+.prop-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 12px 6px;
+  text-align: center;
+  color: #1f7f72;
+}
+
+.prop-stat--1 {
+  color: #b7770d;
+}
+
+/* نص دايرة المؤشر */
+
+.prop-gauge {
+  position: relative;
+  width: 92px;
+}
+
+.prop-gauge svg {
+  display: block;
+  width: 100%;
+}
+
+.prop-gauge b {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #123a5c;
 }
 
 /* زراير الصور / الخريطة / المخططات */
@@ -3219,7 +3395,7 @@ input:focus-visible + .area-chip,
 .prop-plan {
   border: 1px solid #d3e6ee;
   border-radius: 16px;
-  background-color: #eaf5f9;
+  background-color: #e6f2fa;
 }
 
 .prop-plan__head {
@@ -3276,23 +3452,6 @@ input:focus-visible + .area-chip,
 
 .prop-key--market {
   background-color: #e9a23b;
-}
-
-.prop-dot {
-  display: inline-block;
-  height: 8px;
-  width: 8px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background-color: #2a9d8f;
-}
-
-.prop-dot--1 {
-  background-color: #e9a23b;
-}
-
-.prop-dot--2 {
-  background-color: #1f63c6;
 }
 
 /* رسم نمو السعر */
@@ -3439,6 +3598,67 @@ input:focus-visible + .area-chip,
     min-height: 40px;
     padding: 3px 16px;
     box-shadow: none;
+  }
+
+  .prop-pill--price,
+        .prop-pill--roi {
+    flex: 0 0 auto;
+  }
+
+  .prop-bar--unit .prop-bar__logo {
+    display: block;
+  }
+
+  .prop-bar--unit .prop-bar__in {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "logo head actions contact" "logo prices actions contact";
+  }
+
+  .prop-rows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    overflow: visible;
+    border-radius: 0;
+  }
+
+  .prop-rows > div,
+        .prop-rows > div:nth-child(even) {
+    min-height: 48px;
+    border-radius: 10px;
+    background-color: #edf6fb;
+  }
+
+  .prop-rows dt,
+        .prop-rows dd {
+    font-size: 14.5px;
+  }
+
+  .prop-band {
+    margin-inline: 0;
+    border-radius: 18px;
+    padding: 22px 24px 24px;
+  }
+
+  .prop-title {
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    font-size: 24px;
+    box-shadow: none;
+  }
+
+  .prop-stat {
+    padding-block: 16px;
+  }
+
+  .prop-gauge {
+    width: 140px;
+  }
+
+  .prop-gauge b {
+    font-size: 36px;
   }
 
   .prop-prices {
@@ -5536,10 +5756,6 @@ input:focus-visible + .area-chip,
   height: 84px;
 }
 
-.h-\[88px\] {
-  height: 88px;
-}
-
 .h-\[92px\] {
   height: 92px;
 }
@@ -5702,10 +5918,6 @@ input:focus-visible + .area-chip,
 
 .w-\[84px\] {
   width: 84px;
-}
-
-.w-\[88px\] {
-  width: 88px;
 }
 
 .w-\[92px\] {
@@ -5895,12 +6107,12 @@ input:focus-visible + .area-chip,
   grid-template-columns: auto minmax(0,1fr);
 }
 
-.grid-cols-\[minmax\(0\2c 1\.15fr\)_minmax\(0\2c 1fr\)_30px\] {
-  grid-template-columns: minmax(0,1.15fr) minmax(0,1fr) 30px;
+.grid-cols-\[minmax\(0\2c 1\.15fr\)_32px_minmax\(0\2c 1fr\)_26px\] {
+  grid-template-columns: minmax(0,1.15fr) 32px minmax(0,1fr) 26px;
 }
 
-.grid-cols-\[minmax\(0\2c 1\.25fr\)_32px_minmax\(0\2c 1fr\)_26px\] {
-  grid-template-columns: minmax(0,1.25fr) 32px minmax(0,1fr) 26px;
+.grid-cols-\[minmax\(0\2c 1\.15fr\)_minmax\(0\2c 1fr\)_30px\] {
+  grid-template-columns: minmax(0,1.15fr) minmax(0,1fr) 30px;
 }
 
 .grid-cols-\[minmax\(0\2c 112px\)_34px_minmax\(0\2c 1fr\)_26px\] {
@@ -6064,11 +6276,6 @@ input:focus-visible + .area-chip,
 .gap-x-4 {
   -moz-column-gap: 1rem;
        column-gap: 1rem;
-}
-
-.gap-x-5 {
-  -moz-column-gap: 1.25rem;
-       column-gap: 1.25rem;
 }
 
 .gap-y-0\.5 {
@@ -6253,6 +6460,11 @@ input:focus-visible + .area-chip,
   border-color: rgb(246 226 184 / var(--tw-border-opacity, 1));
 }
 
+.border-\[\#c5dde6\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(197 221 230 / var(--tw-border-opacity, 1));
+}
+
 .border-shary-cloud {
   --tw-border-opacity: 1;
   border-color: rgb(214 226 236 / var(--tw-border-opacity, 1));
@@ -6423,10 +6635,6 @@ input:focus-visible + .area-chip,
 
 .bg-white\/10 {
   background-color: rgb(255 255 255 / 0.1);
-}
-
-.bg-white\/15 {
-  background-color: rgb(255 255 255 / 0.15);
 }
 
 .bg-white\/20 {
@@ -6687,6 +6895,10 @@ input:focus-visible + .area-chip,
   padding-inline-start: 0.75rem;
 }
 
+.ps-3\.5 {
+  padding-inline-start: 0.875rem;
+}
+
 .ps-4 {
   padding-inline-start: 1rem;
 }
@@ -6837,6 +7049,10 @@ input:focus-visible + .area-chip,
 
 .text-\[26px\] {
   font-size: 26px;
+}
+
+.text-\[27px\] {
+  font-size: 27px;
 }
 
 .text-\[28px\] {
@@ -7543,6 +7759,11 @@ input:focus-visible + .area-chip,
   border-color: rgb(31 99 198 / var(--tw-border-opacity, 1));
 }
 
+.hover\:border-shary-teal:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(31 127 114 / var(--tw-border-opacity, 1));
+}
+
 .hover\:border-white:hover {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
@@ -7753,6 +7974,10 @@ input:focus-visible + .area-chip,
 }
 
 @media (min-width: 380px) {
+  .min-\[380px\]\:block {
+    display: block;
+  }
+
   .min-\[380px\]\:h-\[30px\] {
     height: 30px;
   }
@@ -7785,16 +8010,8 @@ input:focus-visible + .area-chip,
     height: 1.25rem;
   }
 
-  .min-\[400px\]\:h-\[100px\] {
-    height: 100px;
-  }
-
   .min-\[400px\]\:w-5 {
     width: 1.25rem;
-  }
-
-  .min-\[400px\]\:w-\[100px\] {
-    width: 100px;
   }
 
   .min-\[400px\]\:gap-1\.5 {
@@ -7808,10 +8025,6 @@ input:focus-visible + .area-chip,
 
   .min-\[400px\]\:text-\[13px\] {
     font-size: 13px;
-  }
-
-  .min-\[400px\]\:text-\[27px\] {
-    font-size: 27px;
   }
 }
 
@@ -8078,10 +8291,6 @@ input:focus-visible + .area-chip,
     margin-top: 0.5rem;
   }
 
-  .lg\:mt-2\.5 {
-    margin-top: 0.625rem;
-  }
-
   .lg\:mt-3 {
     margin-top: 0.75rem;
   }
@@ -8188,10 +8397,6 @@ input:focus-visible + .area-chip,
 
   .lg\:h-\[124px\] {
     height: 124px;
-  }
-
-  .lg\:h-\[140px\] {
-    height: 140px;
   }
 
   .lg\:h-\[176px\] {
@@ -8317,10 +8522,6 @@ input:focus-visible + .area-chip,
 
   .lg\:w-\[124px\] {
     width: 124px;
-  }
-
-  .lg\:w-\[140px\] {
-    width: 140px;
   }
 
   .lg\:w-\[150px\] {
@@ -8509,6 +8710,10 @@ input:focus-visible + .area-chip,
     grid-template-columns: 320px minmax(0,1fr) 48px;
   }
 
+  .lg\:grid-cols-\[minmax\(0\2c 1\.1fr\)_48px_minmax\(0\2c 1fr\)_40px\] {
+    grid-template-columns: minmax(0,1.1fr) 48px minmax(0,1fr) 40px;
+  }
+
   .lg\:grid-cols-\[minmax\(0\2c 130px\)_minmax\(0\2c 1fr\)_72px\] {
     grid-template-columns: minmax(0,130px) minmax(0,1fr) 72px;
   }
@@ -8535,10 +8740,6 @@ input:focus-visible + .area-chip,
 
   .lg\:grid-cols-\[minmax\(0\2c 220px\)_minmax\(0\2c 1fr\)_110px\] {
     grid-template-columns: minmax(0,220px) minmax(0,1fr) 110px;
-  }
-
-  .lg\:grid-cols-\[minmax\(0\2c 300px\)_48px_minmax\(0\2c 1fr\)_40px\] {
-    grid-template-columns: minmax(0,300px) 48px minmax(0,1fr) 40px;
   }
 
   .lg\:grid-rows-\[auto_auto\] {
@@ -9114,12 +9315,12 @@ input:focus-visible + .area-chip,
     font-size: 22px;
   }
 
-  .lg\:text-\[23px\] {
-    font-size: 23px;
-  }
-
   .lg\:text-\[24px\] {
     font-size: 24px;
+  }
+
+  .lg\:text-\[25px\] {
+    font-size: 25px;
   }
 
   .lg\:text-\[26px\] {
@@ -9144,10 +9345,6 @@ input:focus-visible + .area-chip,
 
   .lg\:text-\[36px\] {
     font-size: 36px;
-  }
-
-  .lg\:text-\[38px\] {
-    font-size: 38px;
   }
 
   .lg\:text-\[42px\] {
@@ -9407,6 +9604,31 @@ input:focus-visible + .area-chip,
 .pv-desktop .prop-pill {min-height: 40px;
     padding: 3px 16px;
     box-shadow: none;}
+.pv-desktop .prop-pill--price, .pv-desktop .prop-pill--roi {flex: 0 0 auto;}
+.pv-desktop .prop-bar--unit .prop-bar__logo {display: block;}
+.pv-desktop .prop-bar--unit .prop-bar__in {grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "logo head actions contact" "logo prices actions contact";}
+.pv-desktop .prop-rows {display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 16px;
+    overflow: visible;
+    border-radius: 0;}
+.pv-desktop .prop-rows > div, .pv-desktop .prop-rows > div:nth-child(even) {min-height: 48px;
+    border-radius: 10px;
+    background-color: #edf6fb;}
+.pv-desktop .prop-rows dt, .pv-desktop .prop-rows dd {font-size: 14.5px;}
+.pv-desktop .prop-band {margin-inline: 0;
+    border-radius: 18px;
+    padding: 22px 24px 24px;}
+.pv-desktop .prop-title {min-height: 0;
+    border: 0;
+    border-radius: 0;
+    padding: 0;
+    font-size: 24px;
+    box-shadow: none;}
+.pv-desktop .prop-stat {padding-block: 16px;}
+.pv-desktop .prop-gauge {width: 140px;}
+.pv-desktop .prop-gauge b {font-size: 36px;}
 .pv-desktop .prop-prices {display: flex;
     border: 0;
     border-radius: 0;
@@ -10097,7 +10319,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:mt-10 {margin-top: 2.5rem;}
 .pv-desktop .lg\:mt-14 {margin-top: 3.5rem;}
 .pv-desktop .lg\:mt-2 {margin-top: 0.5rem;}
-.pv-desktop .lg\:mt-2\.5 {margin-top: 0.625rem;}
 .pv-desktop .lg\:mt-3 {margin-top: 0.75rem;}
 .pv-desktop .lg\:mt-3\.5 {margin-top: 0.875rem;}
 .pv-desktop .lg\:mt-4 {margin-top: 1rem;}
@@ -10125,7 +10346,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:h-\[10px\] {height: 10px;}
 .pv-desktop .lg\:h-\[11px\] {height: 11px;}
 .pv-desktop .lg\:h-\[124px\] {height: 124px;}
-.pv-desktop .lg\:h-\[140px\] {height: 140px;}
 .pv-desktop .lg\:h-\[176px\] {height: 176px;}
 .pv-desktop .lg\:h-\[220px\] {height: 220px;}
 .pv-desktop .lg\:h-\[300px\] {height: 300px;}
@@ -10158,7 +10378,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:w-6 {width: 1.5rem;}
 .pv-desktop .lg\:w-7 {width: 1.75rem;}
 .pv-desktop .lg\:w-\[124px\] {width: 124px;}
-.pv-desktop .lg\:w-\[140px\] {width: 140px;}
 .pv-desktop .lg\:w-\[150px\] {width: 150px;}
 .pv-desktop .lg\:w-\[176px\] {width: 176px;}
 .pv-desktop .lg\:w-\[280px\] {width: 280px;}
@@ -10207,6 +10426,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:grid-cols-\[240px_240px_240px_48px_48px\] {grid-template-columns: 240px 240px 240px 48px 48px;}
 .pv-desktop .lg\:grid-cols-\[300px_minmax\(0\2c 1fr\)\] {grid-template-columns: 300px minmax(0,1fr);}
 .pv-desktop .lg\:grid-cols-\[320px_minmax\(0\2c 1fr\)_48px\] {grid-template-columns: 320px minmax(0,1fr) 48px;}
+.pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1\.1fr\)_48px_minmax\(0\2c 1fr\)_40px\] {grid-template-columns: minmax(0,1.1fr) 48px minmax(0,1fr) 40px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 130px\)_minmax\(0\2c 1fr\)_72px\] {grid-template-columns: minmax(0,130px) minmax(0,1fr) 72px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 150px\)_34px_minmax\(0\2c 1fr\)_26px\] {grid-template-columns: minmax(0,150px) 34px minmax(0,1fr) 26px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 170px\)_38px_minmax\(0\2c 1fr\)_26px\] {grid-template-columns: minmax(0,170px) 38px minmax(0,1fr) 26px;}
@@ -10214,7 +10434,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_400px\] {grid-template-columns: minmax(0,1fr) 400px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_440px\] {grid-template-columns: minmax(0,1fr) 440px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 220px\)_minmax\(0\2c 1fr\)_110px\] {grid-template-columns: minmax(0,220px) minmax(0,1fr) 110px;}
-.pv-desktop .lg\:grid-cols-\[minmax\(0\2c 300px\)_48px_minmax\(0\2c 1fr\)_40px\] {grid-template-columns: minmax(0,300px) 48px minmax(0,1fr) 40px;}
 .pv-desktop .lg\:grid-rows-\[auto_auto\] {grid-template-rows: auto auto;}
 .pv-desktop .lg\:flex-row {flex-direction: row;}
 .pv-desktop .lg\:flex-row-reverse {flex-direction: row-reverse;}
@@ -10383,15 +10602,14 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:text-\[20px\] {font-size: 20px;}
 .pv-desktop .lg\:text-\[21px\] {font-size: 21px;}
 .pv-desktop .lg\:text-\[22px\] {font-size: 22px;}
-.pv-desktop .lg\:text-\[23px\] {font-size: 23px;}
 .pv-desktop .lg\:text-\[24px\] {font-size: 24px;}
+.pv-desktop .lg\:text-\[25px\] {font-size: 25px;}
 .pv-desktop .lg\:text-\[26px\] {font-size: 26px;}
 .pv-desktop .lg\:text-\[28px\] {font-size: 28px;}
 .pv-desktop .lg\:text-\[30px\] {font-size: 30px;}
 .pv-desktop .lg\:text-\[32px\] {font-size: 32px;}
 .pv-desktop .lg\:text-\[34px\] {font-size: 34px;}
 .pv-desktop .lg\:text-\[36px\] {font-size: 36px;}
-.pv-desktop .lg\:text-\[38px\] {font-size: 38px;}
 .pv-desktop .lg\:text-\[42px\] {font-size: 42px;}
 .pv-desktop .lg\:text-\[44px\] {font-size: 44px;}
 .pv-desktop .lg\:text-\[48px\] {font-size: 48px;}
@@ -56806,7 +57024,8 @@ data-sheet-open="section" data-sections="delivery" >
 
 <div class="site-container pb-10 pt-3 lg:pb-16 lg:pt-5" data-rent-unit>
 
-<div class="rent-gallery" data-rent-gallery aria-label="الصور">
+<div class="rent-gallery-wrap">
+<div class="rent-gallery " data-rent-gallery  aria-label="الصور">
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="1" aria-label="صورة 1 من 5">
 <img data-img="images/shary/area-samples/project-city-gate.jpg" alt="شقة للإيجار، افيلين"  data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
@@ -56822,6 +57041,7 @@ data-sheet-open="section" data-sections="delivery" >
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="0" aria-label="صورة 5 من 5">
 <img data-img="images/shary/area-samples/project-galleria.jpg" alt="شقة للإيجار، افيلين"   data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
+</div>
 <button type="button" class="rent-gallery__all" data-lightbox-open="gallery">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
 <span>كل الصور (<bdi>5</bdi>)</span>
@@ -57430,7 +57650,8 @@ data-sheet-open="section" data-sections="delivery" >
 <div data-unit-page>
 
 <div class="site-container pt-3 lg:pt-5">
-<div class="rent-gallery" data-rent-gallery aria-label="الصور">
+<div class="rent-gallery-wrap">
+<div class="rent-gallery rent-gallery--slider" data-rent-gallery  data-gallery-slider  aria-label="الصور">
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="1" aria-label="صورة 1 من 5">
 <img data-img="images/shary/area-samples/project-city-gate.jpg" alt="تاون هاوس، سينز"  data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
@@ -57446,14 +57667,17 @@ data-sheet-open="section" data-sections="delivery" >
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="0" aria-label="صورة 5 من 5">
 <img data-img="images/shary/area-samples/project-galleria.jpg" alt="تاون هاوس، سينز"   data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
+</div>
 <button type="button" class="rent-gallery__all" data-lightbox-open="gallery">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
 <span>كل الصور (<bdi>5</bdi>)</span>
 </button>
+
+<div class="rent-gallery__dots" data-gallery-dots aria-hidden="true"></div>
 </div>
 </div>
 
-<div class="prop-bar" data-prop-bar>
+<div class="prop-bar prop-bar--unit" data-prop-bar>
 <div class="site-container prop-bar__in">
 <a href="#pv:/developers/tatweer-misr" class="prop-bar__logo" aria-label="تطوير مصر" data-bar-field="developer-link">
 <img src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="تطوير مصر" class="h-12 w-12 rounded-full border border-shary-line bg-white object-contain lg:h-[60px] lg:w-[60px]" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
@@ -57485,16 +57709,17 @@ data-sheet-open="section" data-sections="delivery" >
 
 <div class="prop-bar__prices">
 
-<div class="flex flex-wrap items-stretch gap-2.5">
+<div class="flex flex-wrap items-stretch gap-2">
 <p class="prop-pill prop-pill--price">
-<svg class="shrink-0 text-shary-hint" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v5M17.5 9.5v5"/></svg>
+<svg class="hidden shrink-0 text-shary-hint min-[380px]:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v5M17.5 9.5v5"/></svg>
 <span class="sr-only">السعر</span>
-<b class="text-[24px] font-extrabold leading-none lg:text-[22px]" dir="ltr" data-bar-field="price" data-money>48,830,000</b>
+<b class="text-[21px] font-extrabold leading-none lg:text-[22px]" dir="ltr" data-bar-field="price" data-money>48,830,000</b>
 <span class="text-[13px] font-bold leading-none text-shary-muted">ج.م</span>
 </p>
 <p class="prop-pill prop-pill--roi">
-<span class="text-[13px] font-bold leading-[1.3]">العائد على الاستثمار</span>
-<b class="text-[19px] font-extrabold leading-none lg:text-[18px]" dir="ltr">20%</b>
+
+<span class="text-[13px] font-bold leading-[1.3]"><span class="lg:hidden">العائد</span><span class="hidden lg:inline">العائد على الاستثمار</span></span>
+<b class="text-[18px] font-extrabold leading-none" dir="ltr">20%</b>
 </p>
 </div>
 </div>
@@ -57541,62 +57766,62 @@ data-sheet-open="section" data-sections="delivery" >
 </div>
 </dl>
 
-<dl class="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-4 lg:mt-4">
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">سعر البداية</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="start">
+<dl class="prop-rows mt-3 lg:mt-4">
+<div>
+<dt>سعر البداية</dt>
+<dd data-detail="start">
 <bdi dir="ltr" data-money>27,160,000</bdi> ج.م                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">التسليم</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="delivery">
+<div>
+<dt>التسليم</dt>
+<dd data-detail="delivery">
 استلام فوري                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">نوع البيع</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="sale">
+<div>
+<dt>نوع البيع</dt>
+<dd data-detail="sale">
 من المطور                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">الكمبوند</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="compound">
-<a href="#pv:/projects/scenes"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>الكمبوند</dt>
+<dd data-detail="compound">
+<a href="#pv:/projects/scenes"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>كمبوند سينز</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">المطور</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="developer">
-<a href="#pv:/developers/tatweer-misr"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>المطور</dt>
+<dd data-detail="developer">
+<a href="#pv:/developers/tatweer-misr"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>تطوير مصر</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">الخريطة</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="map">
-<a href="https://maps.google.com/?q=Scenes"  target="_blank" rel="noopener"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>الخريطة</dt>
+<dd data-detail="map">
+<a href="https://maps.google.com/?q=Scenes"  target="_blank" rel="noopener"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>مدينة المستقبل</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">الفيديو</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="video">
-<a href="#pv:/units/scenes-1#video"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>الفيديو</dt>
+<dd data-detail="video">
+<a href="#pv:/units/scenes-1#video"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>افتح</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">جولة VR</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="vr">
-<a href="#pv:/units/scenes-1#vr"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>جولة VR</dt>
+<dd data-detail="vr">
+<a href="#pv:/units/scenes-1#vr"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>استكشف الآن</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
@@ -57629,24 +57854,29 @@ data-sheet-open="section" data-sections="delivery" >
 </div>
 </section>
 
-<section>
+<section class="prop-band">
 <h2 class="mb-3 text-[20px] font-bold leading-[1.35] lg:mb-4 lg:text-[24px]">خطط السداد</h2>
 <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:items-start lg:gap-4">
 <details class="prop-plan group"  open >
 <summary class="prop-plan__head">
-<span class="flex items-center justify-between gap-3">
-<span class="flex min-w-0 items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
+<span class="flex items-stretch gap-3.5">
+<span class="min-w-0 flex-1">
+<span class="flex items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
 <svg class="shrink-0 text-shary-teal" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 14.5h4"/></svg>
 <span>الخطة الأصلية</span>
 </span>
-<span class="shrink-0 whitespace-nowrap text-[14px] font-bold leading-normal lg:text-[14.5px]"><b class="text-[17px] font-extrabold lg:text-[18px]">10</b> سنين</span>
-</span>
 <span class="mt-1.5 flex flex-wrap items-baseline gap-x-1.5 leading-[1.35]">
-<b class="text-[22px] font-extrabold lg:text-[23px]" dir="ltr" data-money>1,953,200</b>
+<b class="text-[22px] font-extrabold lg:text-[22px]" dir="ltr" data-money>1,953,200</b>
 <span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">ج.م / نصف سنوي</span>
 </span>
-<span class="mt-1 flex items-end justify-between gap-2">
-<span class="text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>4,884,000</bdi> ج.م مقدم</span>
+<span class="block text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>4,884,000</bdi> ج.م مقدم</span>
+</span>
+<span class="flex shrink-0 flex-col items-center justify-center border-s border-[#c5dde6] ps-3.5 leading-none">
+<b class="text-[24px] font-extrabold lg:text-[25px]">10</b>
+<span class="mt-1 text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">سنين</span>
+</span>
+</span>
+<span class="mt-2 flex justify-end">
 <span class="prop-plan__toggle">
 <span>التفاصيل</span>
 <svg class="transition-transform group-open:rotate-180" width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -57692,19 +57922,24 @@ data-sheet-open="section" data-sections="delivery" >
 </details>
 <details class="prop-plan group" >
 <summary class="prop-plan__head">
-<span class="flex items-center justify-between gap-3">
-<span class="flex min-w-0 items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
+<span class="flex items-stretch gap-3.5">
+<span class="min-w-0 flex-1">
+<span class="flex items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
 <svg class="shrink-0 text-shary-teal" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 14.5h4"/></svg>
 <span>خطة ممتدة</span>
 </span>
-<span class="shrink-0 whitespace-nowrap text-[14px] font-bold leading-normal lg:text-[14.5px]"><b class="text-[17px] font-extrabold lg:text-[18px]">12</b> سنين</span>
-</span>
 <span class="mt-1.5 flex flex-wrap items-baseline gap-x-1.5 leading-[1.35]">
-<b class="text-[22px] font-extrabold lg:text-[23px]" dir="ltr" data-money>864,700</b>
+<b class="text-[22px] font-extrabold lg:text-[22px]" dir="ltr" data-money>864,700</b>
 <span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">ج.م / ربع سنوي</span>
 </span>
-<span class="mt-1 flex items-end justify-between gap-2">
-<span class="text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>2,442,000</bdi> ج.م مقدم</span>
+<span class="block text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>2,442,000</bdi> ج.م مقدم</span>
+</span>
+<span class="flex shrink-0 flex-col items-center justify-center border-s border-[#c5dde6] ps-3.5 leading-none">
+<b class="text-[24px] font-extrabold lg:text-[25px]">12</b>
+<span class="mt-1 text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">سنين</span>
+</span>
+</span>
+<span class="mt-2 flex justify-end">
 <span class="prop-plan__toggle">
 <span>التفاصيل</span>
 <svg class="transition-transform group-open:rotate-180" width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -57749,16 +57984,17 @@ data-sheet-open="section" data-sections="delivery" >
 </dl>
 </details>
 </div>
+</section>
 
-<a href="#pv:/meetings/request" data-meeting-open class="mt-4 flex h-[52px] items-center justify-center gap-2 rounded-xl bg-shary-action text-[15.5px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy lg:hidden">
+<a href="#pv:/meetings/request" data-meeting-open class="flex h-[52px] items-center justify-center gap-2 rounded-xl bg-shary-action text-[15.5px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy lg:hidden">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
 <span>طلب اجتماع</span>
 </a>
-</section>
 
 <section data-insights>
-<h2 class="mb-3 flex items-center gap-2 text-[20px] font-bold leading-[1.35] lg:mb-4 lg:text-[24px]">
-<svg class="shrink-0 text-shary-teal" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
+
+<h2 class="prop-title mb-3 lg:mb-4">
+<svg class="shrink-0 text-shary-teal" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
 <span>مؤشرات الاستثمار</span>
 </h2>
 
@@ -57811,137 +58047,142 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 
 <ul class="mt-3 grid grid-cols-3 gap-2.5 lg:mt-4 lg:gap-4">
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--0" aria-hidden="true"></i>مؤشر السعر                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+7%</b>
+<li class="prop-stat prop-stat--0 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.3 2.3 4.7-5"/>
+</svg>
+<span>مؤشر السعر</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+7%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--1" aria-hidden="true"></i>مؤشر الطلب                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+9%</b>
+<li class="prop-stat prop-stat--1 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 3c1 3.5 5 5.2 5 10a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4 .4 1.5 1.2 2.2 2 2.5C10.5 9 11 6 12 3Z"/>
+</svg>
+<span>مؤشر الطلب</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+9%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--2" aria-hidden="true"></i>معدل النمو                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+14%</b>
+<li class="prop-stat prop-stat--2 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>
+</svg>
+<span>معدل النمو</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+14%</b>
 </li>
 </ul>
 
-<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"غير متشطب"},{"key":"finished","label":"متشطب"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[48830000,56640000,67400000,82230000,94570000,104970000,113370000],"market":[47370000,53520000,61550000,71400000,80680000,88750000,95850000],"delivery":0,"rental":{"monthly":"253,900","yield":"6.2%"},"resale":{"after":"56,640,000","profit":"7,810,000"}},"finished":{"unit":[54690000,63440000,75490000,92100000,105920000,117570000,126970000],"market":[53050000,59950000,68940000,79970000,90360000,99400000,107350000],"delivery":0,"rental":{"monthly":"350,000","yield":"7.7%"},"resale":{"after":"63,440,000","profit":"8,750,400"}}},"chips":[{"label":"مؤشر السعر","value":"+7%"},{"label":"مؤشر الطلب","value":"+9%"},{"label":"معدل النمو","value":"+14%"}]}</script>
+<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"غير متشطب"},{"key":"finished","label":"متشطب"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[48830000,56640000,67400000,82230000,94570000,104970000,113370000],"market":[47370000,53520000,61550000,71400000,80680000,88750000,95850000],"delivery":0,"market_mark":2,"rental":{"monthly":"253,900","yield":"6.2%"},"resale":{"after":"56,640,000","profit":"7,810,000"}},"finished":{"unit":[54690000,63440000,75490000,92100000,105920000,117570000,126970000],"market":[53050000,59950000,68940000,79970000,90360000,99400000,107350000],"delivery":0,"market_mark":2,"rental":{"monthly":"350,000","yield":"7.7%"},"resale":{"after":"63,440,000","profit":"8,750,400"}}},"chips":[{"label":"مؤشر السعر","value":"+7%"},{"label":"مؤشر الطلب","value":"+9%"},{"label":"معدل النمو","value":"+14%"}]}</script>
 </section>
 <section>
-<div class="area-card px-4 py-5 lg:px-8 lg:py-7">
-<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[24px]">تحليل مؤشر شاري</h2>
-<div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
+
+<div class="area-card px-4 py-4 lg:px-7 lg:py-6">
+<h2 class="text-[19px] font-bold leading-[1.35] lg:text-[24px]">تحليل مؤشر شاري</h2>
+<div class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
 <span class="flex items-center gap-2">
 <span>تقييم السوق</span>
 <span class="flex items-center gap-0.5" role="img" aria-label="3 من 5">
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
 </span>
 </span>
-<span class="flex items-center gap-1.5">
+<span class="flex items-center gap-1.5 border-s border-shary-line ps-4">
 <span>النمو المتوقع</span>
 <b class="font-extrabold text-shary-teal" dir="ltr">+7%</b>
 </span>
 </div>
-
-<div class="mt-4 border-t border-shary-line pt-4 text-center">
-<p class="text-[12.5px] font-semibold leading-normal text-shary-muted lg:text-[14px]">نطاق سعر المتر</p>
-<p class="flex flex-wrap items-baseline justify-center gap-x-1.5 leading-[1.3]">
-<bdi class="text-[26px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>220,000 – 275,000</bdi>
+<p class="mt-3 flex flex-wrap items-baseline justify-center gap-x-1.5 border-t border-shary-line pt-3 leading-[1.3]">
+<span class="sr-only">نطاق سعر المتر</span>
+<bdi class="text-[27px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>220,000 – 275,000</bdi>
 <span class="text-[12px] font-semibold text-shary-muted lg:text-[14px]">ج.م/م²</span>
 </p>
 </div>
 
 <ul class="mt-5 grid grid-cols-3 gap-2 lg:mt-7 lg:gap-6">
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="183.8 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="78 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">78</b>
+<b dir="ltr">78</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">مؤشر شاري</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">مؤشر شاري</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="131.9 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="56 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">+14%</b>
+<b dir="ltr">+14%</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">معدل النمو</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">معدل النمو</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="197.9 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="84 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">84</b>
+<b dir="ltr">84</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">الملاءة القانونية</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">الملاءة القانونية</span>
 </li>
 </ul>
 
 <p class="mt-3 lg:mt-4">
-<a href="shary-index.html" class="inline-flex items-center gap-1 text-[13px] font-bold leading-normal text-shary-teal hover:underline lg:text-[14.5px]">
+<a href="shary-index.html" class="inline-flex h-9 items-center gap-1 rounded-full border border-shary-line bg-white px-3.5 text-[12.5px] font-bold leading-normal text-shary-teal transition-colors hover:border-shary-teal lg:text-[14px]">
 <span>إزاي اتحسب؟</span>
 <svg class="ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </p>
 
-<h3 class="mt-4 border-t border-shary-line pt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:pt-5 lg:text-[18px]">مكونات مؤشر شاري</h3>
-<div class="mt-1.5 lg:mt-2.5">
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<h3 class="mt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:text-[18px]">مكونات مؤشر شاري</h3>
+<div class="mt-1 lg:mt-2">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">متوسط السعر مقارنة بالمنطقة</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="70 من 100"><i class="dev-bar block h-full rounded-full" style="width: 70%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">70</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">نمو سعر المشروع</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="77 من 100"><i class="dev-bar block h-full rounded-full" style="width: 77%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">77</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">نمو المنطقة</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="84 من 100"><i class="dev-bar block h-full rounded-full" style="width: 84%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">84</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">الالتزام بالتسليم في الميعاد</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="91 من 100"><i class="dev-bar block h-full rounded-full" style="width: 91%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">91</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">الخدمات والمرافق</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="72 من 100"><i class="dev-bar block h-full rounded-full" style="width: 72%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">72</b>
 </div>
 </div>
-<p class="mt-3 border-t border-shary-line pt-3 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-4 lg:pt-4 lg:text-[13px]">المؤشر بيتحدّث كل شهر من بيانات المبيعات والعروض والسوق على شاري.</p>
-</div>
+<p class="mt-2 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-3 lg:text-[13px]">المؤشر بيتحدّث كل شهر من بيانات المبيعات والعروض والسوق على شاري.</p>
 </section>
-<aside class="prop-advice flex items-start gap-3.5 rounded-[18px] px-4 py-4 text-white lg:gap-5 lg:px-7 lg:py-6">
-<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-14 lg:w-14" aria-hidden="true">
-<svg class="h-[22px] w-[22px] lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3Z"/></svg>
-</span>
-<div class="min-w-0">
+<aside class="prop-advice rounded-[18px] px-5 py-4 text-white lg:px-7 lg:py-6">
 <h2 class="text-[17px] font-bold leading-[1.4] lg:text-[21px]">استنى لربح أحسن</h2>
 <p class="mt-0.5 text-[13.5px] font-medium leading-[1.8] text-shary-cloud lg:text-[15.5px]">السعر هنا أقل من متوسط السوق بـ 4%، ومتوقع يزيد مع قرب الاستلام.</p>
-</div>
 </aside>
 
 <section>
@@ -58718,7 +58959,8 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 <div data-project-page data-project-slug="scenes">
 
 <div class="site-container pt-3 lg:pt-5">
-<div class="rent-gallery" data-rent-gallery aria-label="الصور">
+<div class="rent-gallery-wrap">
+<div class="rent-gallery rent-gallery--slider" data-rent-gallery  data-gallery-slider  aria-label="الصور">
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="1" aria-label="صورة 1 من 5">
 <img data-img="images/shary/area-samples/project-nova.jpg" alt="كمبوند سينز"  data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 </button>
@@ -58734,14 +58976,17 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="0" aria-label="صورة 5 من 5">
 <img data-img="images/shary/area-samples/project-ark.jpg" alt="كمبوند سينز"   data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 </button>
+</div>
 <button type="button" class="rent-gallery__all" data-lightbox-open="gallery">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
 <span>كل الصور (<bdi>5</bdi>)</span>
 </button>
+
+<div class="rent-gallery__dots" data-gallery-dots aria-hidden="true"></div>
 </div>
 </div>
 
-<div class="prop-bar" data-prop-bar>
+<div class="prop-bar prop-bar--project" data-prop-bar>
 <div class="site-container prop-bar__in">
 <a href="#pv:/developers/tatweer-misr" class="prop-bar__logo" aria-label="تطوير مصر" data-bar-field="developer-link">
 <img src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="تطوير مصر" class="h-12 w-12 rounded-full border border-shary-line bg-white object-contain lg:h-[60px] lg:w-[60px]" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
@@ -60106,8 +60351,9 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 
 <div class="flex min-w-0 flex-col gap-6 lg:order-3 lg:gap-9">
 <section data-insights>
-<h2 class="mb-3 flex items-center gap-2 text-[20px] font-bold leading-[1.35] lg:mb-4 lg:text-[24px]">
-<svg class="shrink-0 text-shary-teal" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
+
+<h2 class="prop-title mb-3 lg:mb-4">
+<svg class="shrink-0 text-shary-teal" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
 <span>مؤشرات الاستثمار</span>
 </h2>
 
@@ -60160,137 +60406,142 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 
 <ul class="mt-3 grid grid-cols-3 gap-2.5 lg:mt-4 lg:gap-4">
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--0" aria-hidden="true"></i>مؤشر السعر                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
+<li class="prop-stat prop-stat--0 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.3 2.3 4.7-5"/>
+</svg>
+<span>مؤشر السعر</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--1" aria-hidden="true"></i>مؤشر الطلب                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
+<li class="prop-stat prop-stat--1 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 3c1 3.5 5 5.2 5 10a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4 .4 1.5 1.2 2.2 2 2.5C10.5 9 11 6 12 3Z"/>
+</svg>
+<span>مؤشر الطلب</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--2" aria-hidden="true"></i>معدل النمو                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+16%</b>
+<li class="prop-stat prop-stat--2 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>
+</svg>
+<span>معدل النمو</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+16%</b>
 </li>
 </ul>
 
-<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"غير متشطب"},{"key":"finished","label":"متشطب"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[27160000,31510000,37490000,45740000,52600000,58390000,63060000],"market":[26350000,29770000,34240000,39710000,44880000,49360000,53310000],"delivery":1,"rental":{"monthly":"141,200","yield":"6.2%"},"resale":{"after":"31,510,000","profit":"4,350,000"}},"finished":{"unit":[30420000,35290000,41990000,51230000,58910000,65390000,70620000],"market":[29510000,33340000,38340000,44480000,50260000,55290000,59710000],"delivery":1,"rental":{"monthly":"194,700","yield":"7.7%"},"resale":{"after":"35,290,000","profit":"4,870,800"}}},"chips":[{"label":"مؤشر السعر","value":"+11%"},{"label":"مؤشر الطلب","value":"+11%"},{"label":"معدل النمو","value":"+16%"}]}</script>
+<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"غير متشطب"},{"key":"finished","label":"متشطب"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[27160000,31510000,37490000,45740000,52600000,58390000,63060000],"market":[26350000,29770000,34240000,39710000,44880000,49360000,53310000],"delivery":1,"market_mark":3,"rental":{"monthly":"141,200","yield":"6.2%"},"resale":{"after":"31,510,000","profit":"4,350,000"}},"finished":{"unit":[30420000,35290000,41990000,51230000,58910000,65390000,70620000],"market":[29510000,33340000,38340000,44480000,50260000,55290000,59710000],"delivery":1,"market_mark":3,"rental":{"monthly":"194,700","yield":"7.7%"},"resale":{"after":"35,290,000","profit":"4,870,800"}}},"chips":[{"label":"مؤشر السعر","value":"+11%"},{"label":"مؤشر الطلب","value":"+11%"},{"label":"معدل النمو","value":"+16%"}]}</script>
 </section>
 <section>
-<div class="area-card px-4 py-5 lg:px-8 lg:py-7">
-<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[24px]">تحليل مؤشر شاري</h2>
-<div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
+
+<div class="area-card px-4 py-4 lg:px-7 lg:py-6">
+<h2 class="text-[19px] font-bold leading-[1.35] lg:text-[24px]">تحليل مؤشر شاري</h2>
+<div class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
 <span class="flex items-center gap-2">
 <span>تقييم السوق</span>
 <span class="flex items-center gap-0.5" role="img" aria-label="3 من 5">
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
 </span>
 </span>
-<span class="flex items-center gap-1.5">
+<span class="flex items-center gap-1.5 border-s border-shary-line ps-4">
 <span>النمو المتوقع</span>
 <b class="font-extrabold text-shary-teal" dir="ltr">+11%</b>
 </span>
 </div>
-
-<div class="mt-4 border-t border-shary-line pt-4 text-center">
-<p class="text-[12.5px] font-semibold leading-normal text-shary-muted lg:text-[14px]">نطاق سعر المتر</p>
-<p class="flex flex-wrap items-baseline justify-center gap-x-1.5 leading-[1.3]">
-<bdi class="text-[26px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>122,000 – 152,500</bdi>
+<p class="mt-3 flex flex-wrap items-baseline justify-center gap-x-1.5 border-t border-shary-line pt-3 leading-[1.3]">
+<span class="sr-only">نطاق سعر المتر</span>
+<bdi class="text-[27px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>122,000 – 152,500</bdi>
 <span class="text-[12px] font-semibold text-shary-muted lg:text-[14px]">ج.م/م²</span>
 </p>
 </div>
 
 <ul class="mt-5 grid grid-cols-3 gap-2 lg:mt-7 lg:gap-6">
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="214.4 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="91 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">91</b>
+<b dir="ltr">91</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">مؤشر شاري</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">مؤشر شاري</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="150.8 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="64 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">+16%</b>
+<b dir="ltr">+16%</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">معدل النمو</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">معدل النمو</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="197.9 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="84 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">84</b>
+<b dir="ltr">84</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">الملاءة القانونية</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">الملاءة القانونية</span>
 </li>
 </ul>
 
 <p class="mt-3 lg:mt-4">
-<a href="shary-index.html" class="inline-flex items-center gap-1 text-[13px] font-bold leading-normal text-shary-teal hover:underline lg:text-[14.5px]">
+<a href="shary-index.html" class="inline-flex h-9 items-center gap-1 rounded-full border border-shary-line bg-white px-3.5 text-[12.5px] font-bold leading-normal text-shary-teal transition-colors hover:border-shary-teal lg:text-[14px]">
 <span>إزاي اتحسب؟</span>
 <svg class="ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </p>
 
-<h3 class="mt-4 border-t border-shary-line pt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:pt-5 lg:text-[18px]">مكونات مؤشر شاري</h3>
-<div class="mt-1.5 lg:mt-2.5">
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<h3 class="mt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:text-[18px]">مكونات مؤشر شاري</h3>
+<div class="mt-1 lg:mt-2">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">متوسط السعر مقارنة بالمنطقة</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="88 من 100"><i class="dev-bar block h-full rounded-full" style="width: 88%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">88</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">نمو سعر المشروع</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="95 من 100"><i class="dev-bar block h-full rounded-full" style="width: 95%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">95</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">نمو المنطقة</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="76 من 100"><i class="dev-bar block h-full rounded-full" style="width: 76%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">76</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">الالتزام بالتسليم في الميعاد</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="83 من 100"><i class="dev-bar block h-full rounded-full" style="width: 83%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">83</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">الخدمات والمرافق</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="الوزن">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="90 من 100"><i class="dev-bar block h-full rounded-full" style="width: 90%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">90</b>
 </div>
 </div>
-<p class="mt-3 border-t border-shary-line pt-3 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-4 lg:pt-4 lg:text-[13px]">المؤشر بيتحدّث كل شهر من بيانات المبيعات والعروض والسوق على شاري.</p>
-</div>
+<p class="mt-2 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-3 lg:text-[13px]">المؤشر بيتحدّث كل شهر من بيانات المبيعات والعروض والسوق على شاري.</p>
 </section>
-<aside class="prop-advice flex items-start gap-3.5 rounded-[18px] px-4 py-4 text-white lg:gap-5 lg:px-7 lg:py-6">
-<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-14 lg:w-14" aria-hidden="true">
-<svg class="h-[22px] w-[22px] lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3Z"/></svg>
-</span>
-<div class="min-w-0">
+<aside class="prop-advice rounded-[18px] px-5 py-4 text-white lg:px-7 lg:py-6">
 <h2 class="text-[17px] font-bold leading-[1.4] lg:text-[21px]">استنى لربح أحسن</h2>
 <p class="mt-0.5 text-[13.5px] font-medium leading-[1.8] text-shary-cloud lg:text-[15.5px]">السعر هنا أقل من متوسط السوق بـ 4%، ومتوقع يزيد مع قرب الاستلام.</p>
-</div>
 </aside>
 
 <section>
@@ -118844,7 +119095,8 @@ Clear                    </button>
 
 <div class="site-container pb-10 pt-3 lg:pb-16 lg:pt-5" data-rent-unit>
 
-<div class="rent-gallery" data-rent-gallery aria-label="Photos">
+<div class="rent-gallery-wrap">
+<div class="rent-gallery " data-rent-gallery  aria-label="Photos">
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="1" aria-label="Photo 1 of 5">
 <img data-img="images/shary/area-samples/project-city-gate.jpg" alt="Apartment for rent, Avelin"  data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
@@ -118860,6 +119112,7 @@ Clear                    </button>
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="0" aria-label="Photo 5 of 5">
 <img data-img="images/shary/area-samples/project-galleria.jpg" alt="Apartment for rent, Avelin"   data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
+</div>
 <button type="button" class="rent-gallery__all" data-lightbox-open="gallery">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
 <span>All photos (<bdi>5</bdi>)</span>
@@ -119468,7 +119721,8 @@ Furnished                                </dd>
 <div data-unit-page>
 
 <div class="site-container pt-3 lg:pt-5">
-<div class="rent-gallery" data-rent-gallery aria-label="Photos">
+<div class="rent-gallery-wrap">
+<div class="rent-gallery rent-gallery--slider" data-rent-gallery  data-gallery-slider  aria-label="Photos">
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="1" aria-label="Photo 1 of 5">
 <img data-img="images/shary/area-samples/project-city-gate.jpg" alt="Townhouse, Scenes"  data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
@@ -119484,14 +119738,17 @@ Furnished                                </dd>
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="0" aria-label="Photo 5 of 5">
 <img data-img="images/shary/area-samples/project-galleria.jpg" alt="Townhouse, Scenes"   data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
+</div>
 <button type="button" class="rent-gallery__all" data-lightbox-open="gallery">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
 <span>All photos (<bdi>5</bdi>)</span>
 </button>
+
+<div class="rent-gallery__dots" data-gallery-dots aria-hidden="true"></div>
 </div>
 </div>
 
-<div class="prop-bar" data-prop-bar>
+<div class="prop-bar prop-bar--unit" data-prop-bar>
 <div class="site-container prop-bar__in">
 <a href="#pv:/developers/tatweer-misr" class="prop-bar__logo" aria-label="Tatweer Misr" data-bar-field="developer-link">
 <img src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="Tatweer Misr" class="h-12 w-12 rounded-full border border-shary-line bg-white object-contain lg:h-[60px] lg:w-[60px]" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
@@ -119523,16 +119780,17 @@ Furnished                                </dd>
 
 <div class="prop-bar__prices">
 
-<div class="flex flex-wrap items-stretch gap-2.5">
+<div class="flex flex-wrap items-stretch gap-2">
 <p class="prop-pill prop-pill--price">
-<svg class="shrink-0 text-shary-hint" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v5M17.5 9.5v5"/></svg>
+<svg class="hidden shrink-0 text-shary-hint min-[380px]:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v5M17.5 9.5v5"/></svg>
 <span class="sr-only">Price</span>
-<b class="text-[24px] font-extrabold leading-none lg:text-[22px]" dir="ltr" data-bar-field="price" data-money>48,830,000</b>
+<b class="text-[21px] font-extrabold leading-none lg:text-[22px]" dir="ltr" data-bar-field="price" data-money>48,830,000</b>
 <span class="text-[13px] font-bold leading-none text-shary-muted">EGP</span>
 </p>
 <p class="prop-pill prop-pill--roi">
-<span class="text-[13px] font-bold leading-[1.3]">ROI</span>
-<b class="text-[19px] font-extrabold leading-none lg:text-[18px]" dir="ltr">20%</b>
+
+<span class="text-[13px] font-bold leading-[1.3]"><span class="lg:hidden">ROI</span><span class="hidden lg:inline">ROI</span></span>
+<b class="text-[18px] font-extrabold leading-none" dir="ltr">20%</b>
 </p>
 </div>
 </div>
@@ -119579,62 +119837,62 @@ Furnished                                </dd>
 </div>
 </dl>
 
-<dl class="mt-3 grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-4 lg:mt-4">
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Start price</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="start">
+<dl class="prop-rows mt-3 lg:mt-4">
+<div>
+<dt>Start price</dt>
+<dd data-detail="start">
 <bdi dir="ltr" data-money>27,160,000</bdi> EGP                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Delivery in</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="delivery">
+<div>
+<dt>Delivery in</dt>
+<dd data-detail="delivery">
 Ready to move                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Sale type</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="sale">
+<div>
+<dt>Sale type</dt>
+<dd data-detail="sale">
 From developer                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Compound</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="compound">
-<a href="#pv:/projects/scenes"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>Compound</dt>
+<dd data-detail="compound">
+<a href="#pv:/projects/scenes"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>Scenes</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Developer</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="developer">
-<a href="#pv:/developers/tatweer-misr"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>Developer</dt>
+<dd data-detail="developer">
+<a href="#pv:/developers/tatweer-misr"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>Tatweer Misr</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Map</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="map">
-<a href="https://maps.google.com/?q=Scenes"  target="_blank" rel="noopener"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>Map</dt>
+<dd data-detail="map">
+<a href="https://maps.google.com/?q=Scenes"  target="_blank" rel="noopener"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>Mostakbal City</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Video</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="video">
-<a href="#pv:/units/scenes-1#video"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>Video</dt>
+<dd data-detail="video">
+<a href="#pv:/units/scenes-1#video"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>Open</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">Explore VR</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="vr">
-<a href="#pv:/units/scenes-1#vr"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>Explore VR</dt>
+<dd data-detail="vr">
+<a href="#pv:/units/scenes-1#vr"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>Explore now</span>
 <svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
@@ -119667,24 +119925,29 @@ From developer                                </dd>
 </div>
 </section>
 
-<section>
+<section class="prop-band">
 <h2 class="mb-3 text-[20px] font-bold leading-[1.35] lg:mb-4 lg:text-[24px]">Payment plans</h2>
 <div class="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:items-start lg:gap-4">
 <details class="prop-plan group"  open >
 <summary class="prop-plan__head">
-<span class="flex items-center justify-between gap-3">
-<span class="flex min-w-0 items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
+<span class="flex items-stretch gap-3.5">
+<span class="min-w-0 flex-1">
+<span class="flex items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
 <svg class="shrink-0 text-shary-teal" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 14.5h4"/></svg>
 <span>Original plan</span>
 </span>
-<span class="shrink-0 whitespace-nowrap text-[14px] font-bold leading-normal lg:text-[14.5px]"><b class="text-[17px] font-extrabold lg:text-[18px]">10</b> years</span>
-</span>
 <span class="mt-1.5 flex flex-wrap items-baseline gap-x-1.5 leading-[1.35]">
-<b class="text-[22px] font-extrabold lg:text-[23px]" dir="ltr" data-money>1,953,200</b>
+<b class="text-[22px] font-extrabold lg:text-[22px]" dir="ltr" data-money>1,953,200</b>
 <span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">EGP / semi-annually</span>
 </span>
-<span class="mt-1 flex items-end justify-between gap-2">
-<span class="text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>4,884,000</bdi> EGP down payment</span>
+<span class="block text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>4,884,000</bdi> EGP down payment</span>
+</span>
+<span class="flex shrink-0 flex-col items-center justify-center border-s border-[#c5dde6] ps-3.5 leading-none">
+<b class="text-[24px] font-extrabold lg:text-[25px]">10</b>
+<span class="mt-1 text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">years</span>
+</span>
+</span>
+<span class="mt-2 flex justify-end">
 <span class="prop-plan__toggle">
 <span>Details</span>
 <svg class="transition-transform group-open:rotate-180" width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -119730,19 +119993,24 @@ From developer                                </dd>
 </details>
 <details class="prop-plan group" >
 <summary class="prop-plan__head">
-<span class="flex items-center justify-between gap-3">
-<span class="flex min-w-0 items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
+<span class="flex items-stretch gap-3.5">
+<span class="min-w-0 flex-1">
+<span class="flex items-center gap-2 text-[15px] font-bold leading-normal lg:text-[15.5px]">
 <svg class="shrink-0 text-shary-teal" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 14.5h4"/></svg>
 <span>Extended plan</span>
 </span>
-<span class="shrink-0 whitespace-nowrap text-[14px] font-bold leading-normal lg:text-[14.5px]"><b class="text-[17px] font-extrabold lg:text-[18px]">12</b> years</span>
-</span>
 <span class="mt-1.5 flex flex-wrap items-baseline gap-x-1.5 leading-[1.35]">
-<b class="text-[22px] font-extrabold lg:text-[23px]" dir="ltr" data-money>864,700</b>
+<b class="text-[22px] font-extrabold lg:text-[22px]" dir="ltr" data-money>864,700</b>
 <span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">EGP / quarterly</span>
 </span>
-<span class="mt-1 flex items-end justify-between gap-2">
-<span class="text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>2,442,000</bdi> EGP down payment</span>
+<span class="block text-[12.5px] font-semibold leading-[1.5] text-shary-muted lg:text-[13px]"><bdi dir="ltr" data-money>2,442,000</bdi> EGP down payment</span>
+</span>
+<span class="flex shrink-0 flex-col items-center justify-center border-s border-[#c5dde6] ps-3.5 leading-none">
+<b class="text-[24px] font-extrabold lg:text-[25px]">12</b>
+<span class="mt-1 text-[12.5px] font-semibold text-shary-muted lg:text-[13px]">years</span>
+</span>
+</span>
+<span class="mt-2 flex justify-end">
 <span class="prop-plan__toggle">
 <span>Details</span>
 <svg class="transition-transform group-open:rotate-180" width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -119787,16 +120055,17 @@ From developer                                </dd>
 </dl>
 </details>
 </div>
+</section>
 
-<a href="#pv:/meetings/request" data-meeting-open class="mt-4 flex h-[52px] items-center justify-center gap-2 rounded-xl bg-shary-action text-[15.5px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy lg:hidden">
+<a href="#pv:/meetings/request" data-meeting-open class="flex h-[52px] items-center justify-center gap-2 rounded-xl bg-shary-action text-[15.5px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy lg:hidden">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
 <span>Request meeting</span>
 </a>
-</section>
 
 <section data-insights>
-<h2 class="mb-3 flex items-center gap-2 text-[20px] font-bold leading-[1.35] lg:mb-4 lg:text-[24px]">
-<svg class="shrink-0 text-shary-teal" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
+
+<h2 class="prop-title mb-3 lg:mb-4">
+<svg class="shrink-0 text-shary-teal" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
 <span>Investment insights</span>
 </h2>
 
@@ -119849,137 +120118,142 @@ data-label-million="M" data-label-egp="EGP" data-alt="Expected price by year (EG
 </div>
 
 <ul class="mt-3 grid grid-cols-3 gap-2.5 lg:mt-4 lg:gap-4">
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--0" aria-hidden="true"></i>Price index                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+7%</b>
+<li class="prop-stat prop-stat--0 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.3 2.3 4.7-5"/>
+</svg>
+<span>Price index</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+7%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--1" aria-hidden="true"></i>Demand index                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+9%</b>
+<li class="prop-stat prop-stat--1 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 3c1 3.5 5 5.2 5 10a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4 .4 1.5 1.2 2.2 2 2.5C10.5 9 11 6 12 3Z"/>
+</svg>
+<span>Demand index</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+9%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--2" aria-hidden="true"></i>Growth rate                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+14%</b>
+<li class="prop-stat prop-stat--2 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>
+</svg>
+<span>Growth rate</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+14%</b>
 </li>
 </ul>
 
-<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"Unfinished"},{"key":"finished","label":"Finished"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[48830000,56640000,67400000,82230000,94570000,104970000,113370000],"market":[47370000,53520000,61550000,71400000,80680000,88750000,95850000],"delivery":0,"rental":{"monthly":"253,900","yield":"6.2%"},"resale":{"after":"56,640,000","profit":"7,810,000"}},"finished":{"unit":[54690000,63440000,75490000,92100000,105920000,117570000,126970000],"market":[53050000,59950000,68940000,79970000,90360000,99400000,107350000],"delivery":0,"rental":{"monthly":"350,000","yield":"7.7%"},"resale":{"after":"63,440,000","profit":"8,750,400"}}},"chips":[{"label":"Price index","value":"+7%"},{"label":"Demand index","value":"+9%"},{"label":"Growth rate","value":"+14%"}]}</script>
+<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"Unfinished"},{"key":"finished","label":"Finished"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[48830000,56640000,67400000,82230000,94570000,104970000,113370000],"market":[47370000,53520000,61550000,71400000,80680000,88750000,95850000],"delivery":0,"market_mark":2,"rental":{"monthly":"253,900","yield":"6.2%"},"resale":{"after":"56,640,000","profit":"7,810,000"}},"finished":{"unit":[54690000,63440000,75490000,92100000,105920000,117570000,126970000],"market":[53050000,59950000,68940000,79970000,90360000,99400000,107350000],"delivery":0,"market_mark":2,"rental":{"monthly":"350,000","yield":"7.7%"},"resale":{"after":"63,440,000","profit":"8,750,400"}}},"chips":[{"label":"Price index","value":"+7%"},{"label":"Demand index","value":"+9%"},{"label":"Growth rate","value":"+14%"}]}</script>
 </section>
 <section>
-<div class="area-card px-4 py-5 lg:px-8 lg:py-7">
-<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[24px]">Shary Index analysis</h2>
-<div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
+
+<div class="area-card px-4 py-4 lg:px-7 lg:py-6">
+<h2 class="text-[19px] font-bold leading-[1.35] lg:text-[24px]">Shary Index analysis</h2>
+<div class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
 <span class="flex items-center gap-2">
 <span>Market score</span>
 <span class="flex items-center gap-0.5" role="img" aria-label="3 out of 5">
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
 </span>
 </span>
-<span class="flex items-center gap-1.5">
+<span class="flex items-center gap-1.5 border-s border-shary-line ps-4">
 <span>Expected growth</span>
 <b class="font-extrabold text-shary-teal" dir="ltr">+7%</b>
 </span>
 </div>
-
-<div class="mt-4 border-t border-shary-line pt-4 text-center">
-<p class="text-[12.5px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Price per meter range</p>
-<p class="flex flex-wrap items-baseline justify-center gap-x-1.5 leading-[1.3]">
-<bdi class="text-[26px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>220,000 – 275,000</bdi>
+<p class="mt-3 flex flex-wrap items-baseline justify-center gap-x-1.5 border-t border-shary-line pt-3 leading-[1.3]">
+<span class="sr-only">Price per meter range</span>
+<bdi class="text-[27px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>220,000 – 275,000</bdi>
 <span class="text-[12px] font-semibold text-shary-muted lg:text-[14px]">EGP/m²</span>
 </p>
 </div>
 
 <ul class="mt-5 grid grid-cols-3 gap-2 lg:mt-7 lg:gap-6">
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="183.8 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="78 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">78</b>
+<b dir="ltr">78</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Shary Index</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Shary Index</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="131.9 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="56 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">+14%</b>
+<b dir="ltr">+14%</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Growth rate</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Growth rate</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="197.9 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="84 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">84</b>
+<b dir="ltr">84</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Legal solvency</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Legal solvency</span>
 </li>
 </ul>
 
 <p class="mt-3 lg:mt-4">
-<a href="shary-index-en.html" class="inline-flex items-center gap-1 text-[13px] font-bold leading-normal text-shary-teal hover:underline lg:text-[14.5px]">
+<a href="shary-index-en.html" class="inline-flex h-9 items-center gap-1 rounded-full border border-shary-line bg-white px-3.5 text-[12.5px] font-bold leading-normal text-shary-teal transition-colors hover:border-shary-teal lg:text-[14px]">
 <span>How is it calculated?</span>
 <svg class="ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </p>
 
-<h3 class="mt-4 border-t border-shary-line pt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:pt-5 lg:text-[18px]">Shary Index components</h3>
-<div class="mt-1.5 lg:mt-2.5">
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<h3 class="mt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:text-[18px]">Shary Index components</h3>
+<div class="mt-1 lg:mt-2">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Average price vs. region</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="70 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 70%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">70</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Project price growth</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="77 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 77%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">77</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Region growth</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="84 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 84%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">84</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Commitment to on-time delivery</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="91 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 91%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">91</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Services and facilities</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="72 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 72%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">72</b>
 </div>
 </div>
-<p class="mt-3 border-t border-shary-line pt-3 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-4 lg:pt-4 lg:text-[13px]">The index is updated monthly from sales, offers and market data on Shary.</p>
-</div>
+<p class="mt-2 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-3 lg:text-[13px]">The index is updated monthly from sales, offers and market data on Shary.</p>
 </section>
-<aside class="prop-advice flex items-start gap-3.5 rounded-[18px] px-4 py-4 text-white lg:gap-5 lg:px-7 lg:py-6">
-<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-14 lg:w-14" aria-hidden="true">
-<svg class="h-[22px] w-[22px] lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3Z"/></svg>
-</span>
-<div class="min-w-0">
+<aside class="prop-advice rounded-[18px] px-5 py-4 text-white lg:px-7 lg:py-6">
 <h2 class="text-[17px] font-bold leading-[1.4] lg:text-[21px]">Hold for better profit</h2>
 <p class="mt-0.5 text-[13.5px] font-medium leading-[1.8] text-shary-cloud lg:text-[15.5px]">The price here is 4% below the market average and is expected to rise closer to delivery.</p>
-</div>
 </aside>
 
 <section>
@@ -120756,7 +121030,8 @@ Verified                </span>
 <div data-project-page data-project-slug="scenes">
 
 <div class="site-container pt-3 lg:pt-5">
-<div class="rent-gallery" data-rent-gallery aria-label="Photos">
+<div class="rent-gallery-wrap">
+<div class="rent-gallery rent-gallery--slider" data-rent-gallery  data-gallery-slider  aria-label="Photos">
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="1" aria-label="Photo 1 of 5">
 <img data-img="images/shary/area-samples/project-nova.jpg" alt="Scenes"  data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 </button>
@@ -120772,14 +121047,17 @@ Verified                </span>
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="0" aria-label="Photo 5 of 5">
 <img data-img="images/shary/area-samples/project-ark.jpg" alt="Scenes"   data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 </button>
+</div>
 <button type="button" class="rent-gallery__all" data-lightbox-open="gallery">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
 <span>All photos (<bdi>5</bdi>)</span>
 </button>
+
+<div class="rent-gallery__dots" data-gallery-dots aria-hidden="true"></div>
 </div>
 </div>
 
-<div class="prop-bar" data-prop-bar>
+<div class="prop-bar prop-bar--project" data-prop-bar>
 <div class="site-container prop-bar__in">
 <a href="#pv:/developers/tatweer-misr" class="prop-bar__logo" aria-label="Tatweer Misr" data-bar-field="developer-link">
 <img src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="Tatweer Misr" class="h-12 w-12 rounded-full border border-shary-line bg-white object-contain lg:h-[60px] lg:w-[60px]" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
@@ -122144,8 +122422,9 @@ Verified                </span>
 
 <div class="flex min-w-0 flex-col gap-6 lg:order-3 lg:gap-9">
 <section data-insights>
-<h2 class="mb-3 flex items-center gap-2 text-[20px] font-bold leading-[1.35] lg:mb-4 lg:text-[24px]">
-<svg class="shrink-0 text-shary-teal" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
+
+<h2 class="prop-title mb-3 lg:mb-4">
+<svg class="shrink-0 text-shary-teal" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>
 <span>Investment insights</span>
 </h2>
 
@@ -122198,137 +122477,142 @@ data-label-million="M" data-label-egp="EGP" data-alt="Expected price by year (EG
 </div>
 
 <ul class="mt-3 grid grid-cols-3 gap-2.5 lg:mt-4 lg:gap-4">
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--0" aria-hidden="true"></i>Price index                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
+<li class="prop-stat prop-stat--0 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/><path d="m8.5 12.5 2.3 2.3 4.7-5"/>
+</svg>
+<span>Price index</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--1" aria-hidden="true"></i>Demand index                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
+<li class="prop-stat prop-stat--1 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 3c1 3.5 5 5.2 5 10a5 5 0 0 1-10 0c0-1.8.8-3 1.8-4 .4 1.5 1.2 2.2 2 2.5C10.5 9 11 6 12 3Z"/>
+</svg>
+<span>Demand index</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+11%</b>
 </li>
-<li class="area-card flex flex-col items-center gap-0.5 px-1.5 py-3 text-center lg:py-4">
-<span class="flex items-center gap-1 text-[11.5px] font-semibold leading-[1.4] text-shary-muted lg:text-[13.5px]">
-<i class="prop-dot prop-dot--2" aria-hidden="true"></i>Growth rate                    </span>
-<b class="text-[18px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+16%</b>
+<li class="prop-stat prop-stat--2 area-card">
+<span class="flex items-center justify-center gap-1 text-[11.5px] font-bold leading-[1.4] lg:text-[13.5px]">
+<svg class="shrink-0" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>
+</svg>
+<span>Growth rate</span>
+</span>
+<b class="text-[19px] font-extrabold leading-[1.3] lg:text-[24px]" dir="ltr">+16%</b>
 </li>
 </ul>
 
-<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"Unfinished"},{"key":"finished","label":"Finished"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[27160000,31510000,37490000,45740000,52600000,58390000,63060000],"market":[26350000,29770000,34240000,39710000,44880000,49360000,53310000],"delivery":1,"rental":{"monthly":"141,200","yield":"6.2%"},"resale":{"after":"31,510,000","profit":"4,350,000"}},"finished":{"unit":[30420000,35290000,41990000,51230000,58910000,65390000,70620000],"market":[29510000,33340000,38340000,44480000,50260000,55290000,59710000],"delivery":1,"rental":{"monthly":"194,700","yield":"7.7%"},"resale":{"after":"35,290,000","profit":"4,870,800"}}},"chips":[{"label":"Price index","value":"+11%"},{"label":"Demand index","value":"+11%"},{"label":"Growth rate","value":"+16%"}]}</script>
+<script type="application/json" data-insight-data>{"tabs":[{"key":"unfinished","label":"Unfinished"},{"key":"finished","label":"Finished"}],"years":["2026","2027","2028","2029","2030","2031","2032"],"sets":{"unfinished":{"unit":[27160000,31510000,37490000,45740000,52600000,58390000,63060000],"market":[26350000,29770000,34240000,39710000,44880000,49360000,53310000],"delivery":1,"market_mark":3,"rental":{"monthly":"141,200","yield":"6.2%"},"resale":{"after":"31,510,000","profit":"4,350,000"}},"finished":{"unit":[30420000,35290000,41990000,51230000,58910000,65390000,70620000],"market":[29510000,33340000,38340000,44480000,50260000,55290000,59710000],"delivery":1,"market_mark":3,"rental":{"monthly":"194,700","yield":"7.7%"},"resale":{"after":"35,290,000","profit":"4,870,800"}}},"chips":[{"label":"Price index","value":"+11%"},{"label":"Demand index","value":"+11%"},{"label":"Growth rate","value":"+16%"}]}</script>
 </section>
 <section>
-<div class="area-card px-4 py-5 lg:px-8 lg:py-7">
-<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[24px]">Shary Index analysis</h2>
-<div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
+
+<div class="area-card px-4 py-4 lg:px-7 lg:py-6">
+<h2 class="text-[19px] font-bold leading-[1.35] lg:text-[24px]">Shary Index analysis</h2>
+<div class="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] font-semibold leading-normal text-shary-muted lg:text-[15px]">
 <span class="flex items-center gap-2">
 <span>Market score</span>
 <span class="flex items-center gap-0.5" role="img" aria-label="3 out of 5">
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-yellow" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
-<svg class="text-shary-cloud" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-yellow" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
+<svg class="text-shary-cloud" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.9 6.4.9-4.6 4.6 1.1 6.4L12 17.6l-5.7 3 1.1-6.4-4.6-4.6 6.4-.9L12 2.8Z"/></svg>
 </span>
 </span>
-<span class="flex items-center gap-1.5">
+<span class="flex items-center gap-1.5 border-s border-shary-line ps-4">
 <span>Expected growth</span>
 <b class="font-extrabold text-shary-teal" dir="ltr">+11%</b>
 </span>
 </div>
-
-<div class="mt-4 border-t border-shary-line pt-4 text-center">
-<p class="text-[12.5px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Price per meter range</p>
-<p class="flex flex-wrap items-baseline justify-center gap-x-1.5 leading-[1.3]">
-<bdi class="text-[26px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>122,000 – 152,500</bdi>
+<p class="mt-3 flex flex-wrap items-baseline justify-center gap-x-1.5 border-t border-shary-line pt-3 leading-[1.3]">
+<span class="sr-only">Price per meter range</span>
+<bdi class="text-[27px] font-extrabold lg:text-[36px]" dir="ltr" data-money-range>122,000 – 152,500</bdi>
 <span class="text-[12px] font-semibold text-shary-muted lg:text-[14px]">EGP/m²</span>
 </p>
 </div>
 
 <ul class="mt-5 grid grid-cols-3 gap-2 lg:mt-7 lg:gap-6">
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="214.4 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="91 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">91</b>
+<b dir="ltr">91</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Shary Index</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Shary Index</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="150.8 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="64 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">+16%</b>
+<b dir="ltr">+16%</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Growth rate</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Growth rate</span>
 </li>
-<li class="flex flex-col items-center gap-1.5 text-center">
-<div class="relative h-[88px] w-[88px] min-[400px]:h-[100px] min-[400px]:w-[100px] lg:h-[140px] lg:w-[140px]">
-<svg class="h-full w-full" viewBox="0 0 120 120" aria-hidden="true">
-<circle cx="60" cy="60" r="50" fill="none" stroke="#e6ecf1" stroke-width="9" stroke-linecap="round" stroke-dasharray="235.6 314.2" transform="rotate(135 60 60)"/>
-<circle cx="60" cy="60" r="50" fill="none" stroke="#3aaa9b" stroke-width="9" stroke-linecap="round" stroke-dasharray="197.9 314.2" transform="rotate(135 60 60)"/>
+<li class="flex flex-col items-center text-center">
+<div class="prop-gauge">
+<svg viewBox="0 0 120 76" aria-hidden="true">
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#dfe7ee" stroke-width="6" stroke-linecap="round"/>
+<path d="M10 70 A50 50 0 0 1 110 70" fill="none" stroke="#2a9d8f" stroke-width="6" stroke-linecap="round" pathLength="100" stroke-dasharray="84 100"/>
 </svg>
-<b class="absolute inset-0 flex items-center justify-center text-[24px] font-extrabold leading-none min-[400px]:text-[27px] lg:text-[38px]" dir="ltr">84</b>
+<b dir="ltr">84</b>
 </div>
-<span class="text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Legal solvency</span>
+<span class="mt-1 text-[12.5px] font-bold leading-[1.4] lg:text-[16px]">Legal solvency</span>
 </li>
 </ul>
 
 <p class="mt-3 lg:mt-4">
-<a href="shary-index-en.html" class="inline-flex items-center gap-1 text-[13px] font-bold leading-normal text-shary-teal hover:underline lg:text-[14.5px]">
+<a href="shary-index-en.html" class="inline-flex h-9 items-center gap-1 rounded-full border border-shary-line bg-white px-3.5 text-[12.5px] font-bold leading-normal text-shary-teal transition-colors hover:border-shary-teal lg:text-[14px]">
 <span>How is it calculated?</span>
 <svg class="ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </p>
 
-<h3 class="mt-4 border-t border-shary-line pt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:pt-5 lg:text-[18px]">Shary Index components</h3>
-<div class="mt-1.5 lg:mt-2.5">
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<h3 class="mt-4 text-[15px] font-bold leading-normal lg:mt-5 lg:text-[18px]">Shary Index components</h3>
+<div class="mt-1 lg:mt-2">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Average price vs. region</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="88 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 88%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">88</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Project price growth</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="95 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 95%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">95</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Region growth</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="76 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 76%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">76</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Commitment to on-time delivery</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="83 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 83%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">83</b>
 </div>
-<div class="grid grid-cols-[minmax(0,1.25fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,300px)_48px_minmax(0,1fr)_40px] lg:gap-6 lg:py-2.5">
+<div class="grid grid-cols-[minmax(0,1.15fr)_32px_minmax(0,1fr)_26px] items-center gap-2.5 py-2 lg:grid-cols-[minmax(0,1.1fr)_48px_minmax(0,1fr)_40px] lg:gap-5 lg:py-2.5">
 <p class="text-[13px] font-bold leading-[1.5] lg:text-[15.5px]">Services and facilities</p>
 <span class="text-[12px] font-semibold leading-none text-shary-hint lg:text-[14px]" dir="ltr" title="Weight">20%</span>
 <span class="h-[7px] overflow-hidden rounded-full bg-[#e9eef3] lg:h-[10px]" role="img" aria-label="90 out of 100"><i class="dev-bar block h-full rounded-full" style="width: 90%"></i></span>
 <b class="text-end text-[14px] font-extrabold leading-none text-shary-teal lg:text-[17px]">90</b>
 </div>
 </div>
-<p class="mt-3 border-t border-shary-line pt-3 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-4 lg:pt-4 lg:text-[13px]">The index is updated monthly from sales, offers and market data on Shary.</p>
-</div>
+<p class="mt-2 text-center text-[11.5px] font-medium leading-[1.8] text-shary-muted lg:mt-3 lg:text-[13px]">The index is updated monthly from sales, offers and market data on Shary.</p>
 </section>
-<aside class="prop-advice flex items-start gap-3.5 rounded-[18px] px-4 py-4 text-white lg:gap-5 lg:px-7 lg:py-6">
-<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 lg:h-14 lg:w-14" aria-hidden="true">
-<svg class="h-[22px] w-[22px] lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.7.6 1.1 1.3 1.1 2.2h5c0-.9.4-1.6 1.1-2.2A6 6 0 0 0 12 3Z"/></svg>
-</span>
-<div class="min-w-0">
+<aside class="prop-advice rounded-[18px] px-5 py-4 text-white lg:px-7 lg:py-6">
 <h2 class="text-[17px] font-bold leading-[1.4] lg:text-[21px]">Hold for better profit</h2>
 <p class="mt-0.5 text-[13.5px] font-medium leading-[1.8] text-shary-cloud lg:text-[15.5px]">The price here is 4% below the market average and is expected to rise closer to delivery.</p>
-</div>
 </aside>
 
 <section>
@@ -136940,9 +137224,13 @@ Shary
  *   البيانات في <script type="application/json" data-insight-data> بنفس شكل $insights.
  *   التبويب [data-insight-tab="unfinished | finished"] بيبدّل الرسم وأرقام الإيجار وإعادة البيع
  *   ([data-insight="monthly | yield | after | profit"]) من غير تحميل.
- *   الرسم [data-insight-chart]: خطين (بعد الاستلام / سعر السوق) + علامة سنة الاستلام. الماوس أو الصباع على الرسم بيظهر أرقام السنة.
+ *   الرسم [data-insight-chart] (زي التطبيق): خطين ناعمين (بعد الاستلام / سعر السوق)، وعلى كل خط سنة معلّمة بعمود ملوّن وقيمتها بالمليون:
+ *   sets[..].delivery = سنة الاستلام على خط "بعد الاستلام" ، sets[..].market_mark = السنة المعلّمة على خط "سعر السوق" (اختياري).
+ *   الماوس أو الصباع على الرسم بيظهر أرقام السنة.
  *   الجدول [data-insight-table] (sr-only) بيتحدّث مع التبويب لقارئ الشاشة.
  *   لو البيانات اتغيرت بعد التحميل: window.SharyProperty.refresh(root) بيعيد قراية البيانات ويرسم من جديد.
+ *
+ * - المعرض [data-gallery-slider] (partials/photo-gallery.blade.php مع slider): على الموبايل صورة واحدة بتتسحب بالجنب وتحتها نقط.
  *
  * - وحدات المشروع [data-project-units] (data-per-page = عدد الكروت في الصفحة على الديسك توب):
  *   كل كروت المشروع [data-unit] موجودة في [data-project-grid]، وعلى كل كارت data-sale و data-invest و data-price و data-delivery و data-order.
@@ -136988,6 +137276,30 @@ Shary
         return out;
     }
 
+    // خط ناعم بيعدّي على كل النقط من غير ما يطلع أو ينزل عن قيمها (monotone cubic)
+    function smooth(points) {
+        var n = points.length;
+        if (n < 3) return points.map(function (p, i) { return (i ? 'L' : 'M') + p[0].toFixed(1) + ' ' + p[1].toFixed(1); }).join(' ');
+        var slopes = [], tangents = [], i;
+        for (i = 0; i < n - 1; i++) slopes.push((points[i + 1][1] - points[i][1]) / (points[i + 1][0] - points[i][0]));
+        tangents.push(slopes[0]);
+        for (i = 1; i < n - 1; i++) tangents.push(slopes[i - 1] * slopes[i] <= 0 ? 0 : (slopes[i - 1] + slopes[i]) / 2);
+        tangents.push(slopes[n - 2]);
+        for (i = 0; i < n - 1; i++) {
+            if (slopes[i] === 0) { tangents[i] = 0; tangents[i + 1] = 0; continue; }
+            var a = tangents[i] / slopes[i], b = tangents[i + 1] / slopes[i], h = a * a + b * b;
+            if (h > 9) { var t = 3 / Math.sqrt(h); tangents[i] = t * a * slopes[i]; tangents[i + 1] = t * b * slopes[i]; }
+        }
+        var d = 'M' + points[0][0].toFixed(1) + ' ' + points[0][1].toFixed(1);
+        for (i = 0; i < n - 1; i++) {
+            var dx = (points[i + 1][0] - points[i][0]) / 3;
+            d += ' C' + (points[i][0] + dx).toFixed(1) + ' ' + (points[i][1] + tangents[i] * dx).toFixed(1) + ' ' +
+                (points[i + 1][0] - dx).toFixed(1) + ' ' + (points[i + 1][1] - tangents[i + 1] * dx).toFixed(1) + ' ' +
+                points[i + 1][0].toFixed(1) + ' ' + points[i + 1][1].toFixed(1);
+        }
+        return d;
+    }
+
     function draw(section) {
         var state = section.__insights;
         var box = section.querySelector('[data-insight-chart]');
@@ -136998,23 +137310,40 @@ Shary
         var width = Math.round(box.clientWidth);
         if (!width) return;   // الصفحة مخفية دلوقتي — هيترسم أول ما تظهر
         var height = width < 480 ? 230 : 280;
-        var pad = { top: 30, right: 50, bottom: 30, left: 34 };
+        var pad = { top: 34, right: 18, bottom: 32, left: 34 };
         var all = set.unit.concat(set.market);
         var scale = ticks(Math.min.apply(null, all), Math.max.apply(null, all));
         var low = scale[0], high = scale[scale.length - 1];
         var plotW = width - pad.left - pad.right;
         var plotH = height - pad.top - pad.bottom;
-        function x(i) { return pad.left + (years.length > 1 ? plotW * i / (years.length - 1) : plotW / 2); }
+        var floor = height - pad.bottom;
+        var last = years.length - 1;
+        function x(i) { return pad.left + (last > 0 ? plotW * i / last : plotW / 2); }
         function y(v) { return pad.top + plotH * (1 - (v - low) / (high - low)); }
-        function path(values) { return values.map(function (v, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }).join(' '); }
+        function line(values) { return smooth(values.map(function (v, i) { return [x(i), y(v)]; })); }
+        function clamp(i) { return Math.max(0, Math.min(last, i)); }
 
         box.textContent = '';
         var svg = el('svg', { viewBox: '0 0 ' + width + ' ' + height, width: width, height: height, role: 'img', 'aria-label': box.getAttribute('data-alt') || '' }, box);
         var defs = el('defs', {}, svg);
-        var fillId = 'prop-fill-' + (state.id);
-        var grad = el('linearGradient', { id: fillId, x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
-        el('stop', { offset: '0', 'stop-color': UNIT_COLOR, 'stop-opacity': '0.2' }, grad);
-        el('stop', { offset: '1', 'stop-color': UNIT_COLOR, 'stop-opacity': '0' }, grad);
+        function gradient(name, color, from, to) {
+            var id = 'prop-' + name + '-' + state.id;
+            var grad = el('linearGradient', { id: id, x1: 0, y1: 0, x2: 0, y2: 1 }, defs);
+            el('stop', { offset: '0', 'stop-color': color, 'stop-opacity': from }, grad);
+            el('stop', { offset: '1', 'stop-color': color, 'stop-opacity': to }, grad);
+            return 'url(#' + id + ')';
+        }
+        var areaFill = gradient('area', UNIT_COLOR, 0.16, 0);
+        var unitBar = gradient('unit', UNIT_COLOR, 0.08, 0.6);
+        var marketBar = gradient('market', MARKET_COLOR, 0.08, 0.6);
+
+        // السنة المعلّمة على كل خط: الاستلام على خط "بعد الاستلام" ، و market_mark على خط "سعر السوق"
+        var d = clamp(set.delivery);
+        var marks = [{ at: d, value: set.unit[d], color: UNIT_COLOR, bar: unitBar, ink: '#1F7F72' }];
+        if (set.market_mark != null && clamp(set.market_mark) !== d) {
+            var m = clamp(set.market_mark);
+            marks.unshift({ at: m, value: set.market[m], color: MARKET_COLOR, bar: marketBar, ink: '#B7770D' });
+        }
 
         // خطوط المحور وأرقامه (مليون)
         scale.forEach(function (v) {
@@ -137022,42 +137351,43 @@ Shary
             var label = el('text', { x: pad.left - 8, y: y(v) + 4, 'text-anchor': 'end', 'font-size': 11, 'font-weight': 600, fill: MUTED }, svg);
             label.textContent = millions(v).replace(/\.0$/, '');
         });
-        years.forEach(function (year, i) {
-            var label = el('text', { x: x(i), y: height - 9, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': 600, fill: MUTED }, svg);
-            label.textContent = width < 360 && i % 2 ? '' : year;
-        });
 
-        // سنة الاستلام: خط رأسي منقّط + اسمها فوق
-        var d = Math.max(0, Math.min(years.length - 1, set.delivery));
-        el('line', { x1: x(d), x2: x(d), y1: pad.top - 6, y2: height - pad.bottom, stroke: '#9FB0C0', 'stroke-width': 1, 'stroke-dasharray': '4 4' }, svg);
-        var mark = el('text', { x: x(d), y: pad.top - 12, 'text-anchor': d === 0 ? 'start' : d === years.length - 1 ? 'end' : 'middle', 'font-size': 11.5, 'font-weight': 700, fill: INK }, svg);
-        mark.textContent = box.getAttribute('data-label-delivery') || '';
+        // العمود الملوّن تحت كل نقطة معلّمة + مربع سنتها على المحور
+        marks.forEach(function (mark) {
+            el('rect', { x: x(mark.at) - 12, y: y(mark.value), width: 24, height: floor - y(mark.value), fill: mark.bar, rx: 3 }, svg);
+            el('rect', { x: x(mark.at) - 17, y: floor + 5, width: 34, height: 19, rx: 5, fill: mark.color, opacity: 0.22 }, svg);
+        });
+        years.forEach(function (year, i) {
+            var marked = marks.some(function (mark) { return mark.at === i; });
+            var label = el('text', { x: x(i), y: floor + 18.5, 'text-anchor': 'middle', 'font-size': 11, 'font-weight': marked ? 800 : 600, fill: marked ? INK : MUTED }, svg);
+            label.textContent = !marked && width < 360 && i % 2 ? '' : year;
+        });
 
         // المساحة تحت خط "بعد الاستلام" + الخطين
-        el('path', { d: path(set.unit) + ' L' + x(years.length - 1).toFixed(1) + ' ' + (height - pad.bottom) + ' L' + x(0).toFixed(1) + ' ' + (height - pad.bottom) + ' Z', fill: 'url(#' + fillId + ')' }, svg);
-        el('path', { d: path(set.market), fill: 'none', stroke: MARKET_COLOR, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
-        el('path', { d: path(set.unit), fill: 'none', stroke: UNIT_COLOR, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
-        el('circle', { cx: x(d), cy: y(set.unit[d]), r: 5, fill: UNIT_COLOR, stroke: '#fff', 'stroke-width': 2 }, svg);
+        el('path', { d: line(set.unit) + ' L' + x(last).toFixed(1) + ' ' + floor + ' L' + x(0).toFixed(1) + ' ' + floor + ' Z', fill: areaFill }, svg);
+        el('path', { d: line(set.market), fill: 'none', stroke: MARKET_COLOR, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
+        el('path', { d: line(set.unit), fill: 'none', stroke: UNIT_COLOR, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
 
-        // آخر قيمة لكل خط مكتوبة جنبه (بالمليون) — لو قريبين من بعض بيتباعدوا
-        var last = years.length - 1;
-        var ends = [{ v: set.unit[last], color: UNIT_COLOR }, { v: set.market[last], color: MARKET_COLOR }];
-        ends.forEach(function (e) { e.y = y(e.v); });
-        if (Math.abs(ends[0].y - ends[1].y) < 15) {
-            var mid = (ends[0].y + ends[1].y) / 2;
-            var upper = ends[0].y <= ends[1].y ? ends[0] : ends[1];
-            var lower = upper === ends[0] ? ends[1] : ends[0];
-            upper.y = mid - 7.5;
-            lower.y = mid + 7.5;
-        }
-        ends.forEach(function (e) {
-            el('circle', { cx: x(last), cy: y(e.v), r: 4, fill: e.color, stroke: '#fff', 'stroke-width': 2 }, svg);
-            var label = el('text', { x: x(last) + 9, y: e.y + 4, 'font-size': 12, 'font-weight': 800, fill: INK }, svg);
-            label.textContent = millions(e.v);
+        // النقطة المعلّمة: خط رأسي + نقطة + القيمة بالمليون جنبها
+        marks.forEach(function (mark) {
+            var px = x(mark.at), py = y(mark.value);
+            el('line', { x1: px, x2: px, y1: py, y2: floor, stroke: INK, 'stroke-width': 1.5 }, svg);
+            el('circle', { cx: px, cy: py, r: 5, fill: INK, stroke: '#fff', 'stroke-width': 2 }, svg);
+            var text = millions(mark.value);
+            var w = text.length * 7.2 + 14;
+            var left = px - 10 - w >= pad.left;   // القيمة على شمال النقطة، ولو مفيش مكان تبقى على يمينها
+            var bx = left ? px - 10 - w : px + 10;
+            var by = Math.max(4, py - 24);
+            el('rect', { x: bx, y: by, width: w, height: 20, rx: 6, fill: '#fff', stroke: mark.color, 'stroke-width': 1 }, svg);
+            var label = el('text', { x: bx + w / 2, y: by + 14, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 800, fill: mark.ink }, svg);
+            label.textContent = text;
         });
+        // اسم علامة الاستلام فوق عمودها
+        var caption = el('text', { x: x(d), y: 12, 'text-anchor': d === 0 ? 'start' : d === last ? 'end' : 'middle', 'font-size': 11, 'font-weight': 700, fill: MUTED }, svg);
+        caption.textContent = box.getAttribute('data-label-delivery') || '';
 
         // الماوس / الصباع: خط رأسي + نقطتين + كارت فيه أرقام السنة
-        var cross = el('line', { y1: pad.top - 6, y2: height - pad.bottom, stroke: INK, 'stroke-width': 1, opacity: 0 }, svg);
+        var cross = el('line', { y1: pad.top - 6, y2: floor, stroke: INK, 'stroke-width': 1, opacity: 0 }, svg);
         var dotUnit = el('circle', { r: 5, fill: UNIT_COLOR, stroke: '#fff', 'stroke-width': 2, opacity: 0 }, svg);
         var dotMarket = el('circle', { r: 5, fill: MARKET_COLOR, stroke: '#fff', 'stroke-width': 2, opacity: 0 }, svg);
         var tip = document.createElement('div');
@@ -137106,7 +137436,7 @@ Shary
             var rect = svg.getBoundingClientRect();
             var point = event.touches ? event.touches[0] : event;
             var ratio = (point.clientX - rect.left - pad.left) / plotW;
-            show(Math.max(0, Math.min(years.length - 1, Math.round(ratio * (years.length - 1)))));
+            show(clamp(Math.round(ratio * last)));
         }
         svg.addEventListener('mousemove', at);
         svg.addEventListener('mouseleave', hide);
@@ -137181,6 +137511,35 @@ Shary
     }
     window.SharyProperty = { refresh: refresh };
     refresh(document);
+
+    // ---------- المعرض على الموبايل [data-gallery-slider]: صورة واحدة بتتسحب بالجنب وتحتها نقط ----------
+    // الصورة اللي قدام العميل بتبقى هي المفتوحة (data-active="1")، فالضغط عليها بيفتح عارض الصور على طول
+    var narrow = window.matchMedia('(max-width: 1023px)');
+    document.querySelectorAll('[data-gallery-slider]').forEach(function (track) {
+        var slides = Array.prototype.slice.call(track.querySelectorAll('[data-gallery-item]'));
+        var holder = track.parentNode.querySelector('[data-gallery-dots]');
+        if (slides.length < 2 || !holder) return;
+        var dots = slides.map(function () { return holder.appendChild(document.createElement('i')); });
+        function mark() {
+            if (!narrow.matches || !track.offsetWidth) return;
+            var box = track.getBoundingClientRect();
+            var best = 0, gap = Infinity;
+            slides.forEach(function (slide, i) {
+                var d = Math.abs(slide.getBoundingClientRect().left - box.left);
+                if (d < gap) { gap = d; best = i; }
+            });
+            slides.forEach(function (slide, i) { slide.setAttribute('data-active', i === best ? '1' : '0'); });
+            dots.forEach(function (dot, i) { dot.setAttribute('aria-current', i === best ? 'true' : 'false'); });
+        }
+        var waiting = false;
+        track.addEventListener('scroll', function () {
+            if (waiting) return;
+            waiting = true;
+            window.requestAnimationFrame(function () { waiting = false; mark(); });
+        }, { passive: true });
+        dots[0].setAttribute('aria-current', 'true');
+        mark();
+    });
 
     // ---------- وحدات المشروع: التبويب + الترتيب + الصفحات ----------
     var desktop = window.matchMedia('(min-width: 1024px)');
@@ -138038,6 +138397,7 @@ Shary
       price: toNumber(view.querySelector('[data-bar-field="price"]').textContent)
     });
     view.querySelectorAll('[data-gallery-item]').forEach(function (tile, i) { tile.setAttribute('data-active', i === 0 ? '1' : '0'); });
+    view.querySelectorAll('[data-gallery-slider]').forEach(function (track) { track.scrollLeft = 0; });
     if (!info || !info.title) return true;
     var project = String(slug || '').replace(/-\d+$/, '');
     var compoundCard = poolCard('compounds', project);
@@ -138078,6 +138438,7 @@ Shary
       short: ((view.querySelector('[data-project-grid] h3') || view).textContent.split(/[،,]\s*/)[1] || '').trim()
     });
     view.querySelectorAll('[data-gallery-item]').forEach(function (tile, i) { tile.setAttribute('data-active', i === 0 ? '1' : '0'); });
+    view.querySelectorAll('[data-gallery-slider]').forEach(function (track) { track.scrollLeft = 0; });
     var units = view.querySelector('[data-project-units]');
     // بيرجّع التبويب والترتيب لأول حالة
     view.querySelectorAll('[data-unit-tab], [data-unit-sort]').forEach(function (item) { item.setAttribute('aria-current', item.getAttribute('data-unit-tab') === '' ? 'true' : 'false'); });
