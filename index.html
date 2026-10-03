@@ -1095,6 +1095,58 @@ a.index-budget__name:hover {
   color: #ffffff;
 }
 
+/* أرقام الاقتصاد: التغير بسهم ولون محايد (الزيادة مش دايمًا خبر كويس) */
+
+.index-move {
+  display: inline-block;
+  white-space: nowrap;
+  border-radius: 9999px;
+  background-color: #e3eaf3;
+  padding: 1px 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #123a5c;
+}
+
+.index-move[data-dir="up"]::before {
+  content: "▲ ";
+  font-size: 9px;
+}
+
+.index-move[data-dir="down"]::before {
+  content: "▼ ";
+  font-size: 9px;
+}
+
+/* أخبار السوق: نوع الخبر + زرار التصفية المختار */
+
+.index-tag {
+  display: inline-block;
+  white-space: nowrap;
+  border-radius: 9999px;
+  background-color: #e3eaf3;
+  padding: 0 9px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.8;
+  color: #123a5c;
+}
+
+[data-news-filter][aria-pressed="true"] {
+  border-color: #1e4166;
+  background-color: #1e4166;
+  color: #ffffff;
+}
+
+.index-news__filters {
+  scrollbar-width: none;
+}
+
+.index-news__filters::-webkit-scrollbar {
+  display: none;
+}
+
 /* بدائل الاستثمار: العقار بلون شاري والبدائل رمادي — المقارنة بالطول والرقم جنب كل شريط */
 
 .index-alt__bar {
@@ -4294,6 +4346,10 @@ input:focus-visible + .area-chip,
   width: 3rem;
 }
 
+.w-14 {
+  width: 3.5rem;
+}
+
 .w-4 {
   width: 1rem;
 }
@@ -4461,6 +4517,10 @@ input:focus-visible + .area-chip,
 
 .shrink-0 {
   flex-shrink: 0;
+}
+
+.grow {
+  flex-grow: 1;
 }
 
 .-translate-y-1\/2 {
@@ -5515,6 +5575,10 @@ input:focus-visible + .area-chip,
 
 .leading-\[1\.6\] {
   line-height: 1.6;
+}
+
+.leading-\[1\.75\] {
+  line-height: 1.75;
 }
 
 .leading-\[1\.7\] {
@@ -52437,6 +52501,373 @@ data-sheet-open="section" data-sections="delivery" >
 </tbody>
 </table>
 </div>
+</section>
+
+<section data-index-economy>
+<div class="mb-3.5 lg:mb-5">
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">أرقام الاقتصاد اللي بتحرّك العقار</h2>
+<p class="text-[12px] font-medium text-shary-muted lg:text-[13px]">ستة أرقام بتأثر على سعر المتر وقرار الشراء — والتغير في آخر سنة</p>
+</div>
+<div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">سعر الدولار</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+1.2%</bdi>  في سنة</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">48.60</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">ج.م</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">تأثيره على العقار:</span> استقرار الدولار بيثبّت تكلفة البناء وأسعار الطروحات الجديدة.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">المصدر: البنك المركزي المصري</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">سعر الفايدة على الإيداع</h3>
+
+<span class="index-move" data-dir="down"><bdi dir="ltr">−2.25</bdi> نقطة في سنة</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">21.00%</b>
+</p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">تأثيره على العقار:</span> نزول الفايدة بيحوّل جزء من فلوس الشهادات ناحية العقار.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">المصدر: البنك المركزي المصري</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">معدل التضخم السنوي</h3>
+
+<span class="index-move" data-dir="down"><bdi dir="ltr">−3.1</bdi> نقطة في سنة</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">12.4%</b>
+</p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">تأثيره على العقار:</span> طول ما زيادة سعر المتر أعلى من التضخم، العقار بيحافظ على قيمة الفلوس.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">المصدر: الجهاز المركزي للإحصاء</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">الدهب عيار 21</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+24.0%</bdi>  في سنة</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">5,150</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">ج.م/جرام</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">تأثيره على العقار:</span> الدهب أقرب بديل للعقار كمخزن قيمة، وقارنّا بينهم فوق.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">المصدر: شعبة الذهب</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">طن الحديد</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+6.5%</bdi>  في سنة</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">38,500</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">ج.م</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">تأثيره على العقار:</span> الحديد من أكبر بنود تكلفة الإنشاء، وزيادته بتظهر في أسعار المراحل الجديدة.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">المصدر: وزارة الإسكان</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">طن الأسمنت</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+4.0%</bdi>  في سنة</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">3,900</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">ج.م</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">تأثيره على العقار:</span> زيادة الأسمنت بتأثر أكتر على المشاريع اللي لسه في أول الإنشاء.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">المصدر: وزارة الإسكان</small>
+</div>
+</div>
+<p class="shary-note mt-3 text-[13.5px] font-semibold leading-[1.8] lg:mt-5 lg:text-[15px]">الخلاصة للمستثمر: الفايدة والتضخم بينزلوا وتكلفة البناء بتزيد بهدوء — وده معناه إن أسعار الطروحات الجديدة غالبًا مش هتنزل.</p>
+<p class="mt-2 text-[11.5px] font-medium leading-[1.7] text-shary-muted lg:text-[12.5px]">الأرقام هنا تجريبية للشكل، وفي الموقع بتتاخد من مصدرها المكتوب تحت كل رقم.</p>
+</section>
+
+<section data-index-developers>
+<div class="mb-3.5 flex items-end justify-between gap-2.5 lg:mb-5">
+<div>
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">تقرير المطورين</h2>
+<p class="text-[12px] font-medium text-shary-muted lg:text-[13px]">ترتيب المطورين حسب مؤشر شاري: الأسعار، النمو، والالتزام بالتسليم</p>
+</div>
+<a href="#pv:/developers" class="whitespace-nowrap text-[13px] font-semibold text-shary-link hover:underline lg:text-[14px]">كل المطورين</a>
+</div>
+<div class="area-card overflow-hidden">
+<table class="index-table">
+<thead>
+<tr>
+<th scope="col" class="index-table__rank">#</th>
+<th scope="col" class="index-table__name">المطور</th>
+<th scope="col">مؤشر شاري</th>
+<th scope="col">سنوي</th>
+<th scope="col" class="hidden md:table-cell">سعر المتر</th>
+<th scope="col" class="hidden md:table-cell">الالتزام بالتسليم</th>
+<th scope="col" class="hidden lg:table-cell">مشاريع</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="index-table__rank">1</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/emaar" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة إعمار مصر">
+
+<img src="https://shary.eg/images/developers/67a7f596d9099IMG_4573.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">EM</span>
+<span class="min-w-0 truncate">إعمار مصر</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 94%"></i></span>
+<b>94</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+24.5%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">142,000</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">96%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">9</td>
+</tr>
+<tr>
+<td class="index-table__rank">2</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/tmg" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة طلعت مصطفى">
+
+<img src="https://shary.eg/images/developers/67ea9431c84fddownload.jpg.jpg" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">TMG</span>
+<span class="min-w-0 truncate">طلعت مصطفى</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 93%"></i></span>
+<b>93</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+22.8%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">96,500</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">95%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">12</td>
+</tr>
+<tr>
+<td class="index-table__rank">3</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/sodic" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة سوديك">
+
+<img src="https://shary.eg/images/developers/67f85409473dc%D8%B3%D9%88%D8%AF%D9%8A%D9%83.jpg.jpg" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">SD</span>
+<span class="min-w-0 truncate">سوديك</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 91%"></i></span>
+<b>91</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+21.9%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">118,400</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">93%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">14</td>
+</tr>
+<tr>
+<td class="index-table__rank">4</td>
+<th scope="row" class="index-table__name">
+<a href="developer-mountain-view.html" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة ماونتن فيو">
+
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">MV</span>
+<span class="min-w-0 truncate">ماونتن فيو</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 90%"></i></span>
+<b>90</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+23.6%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">104,200</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">91%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">16</td>
+</tr>
+<tr>
+<td class="index-table__rank">5</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/hassan-allam" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة حسن علام">
+
+<img src="https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">HA</span>
+<span class="min-w-0 truncate">حسن علام</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 88%"></i></span>
+<b>88</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+19.4%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">112,800</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">92%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">8</td>
+</tr>
+<tr>
+<td class="index-table__rank">6</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/tatweer-misr" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة تطوير مصر">
+
+<img src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">TM</span>
+<span class="min-w-0 truncate">تطوير مصر</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 87%"></i></span>
+<b>87</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+20.7%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">88,600</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">89%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">7</td>
+</tr>
+<tr>
+<td class="index-table__rank">7</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/madinet-masr" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة مدينة مصر">
+
+<img src="https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">MM</span>
+<span class="min-w-0 truncate">مدينة مصر</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 85%"></i></span>
+<b>85</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+18.2%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">71,300</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">90%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">10</td>
+</tr>
+<tr>
+<td class="index-table__rank">8</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/lavista" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="افتح صفحة لافيستا">
+
+<img src="https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">LV</span>
+<span class="min-w-0 truncate">لافيستا</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 84%"></i></span>
+<b>84</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+17.5%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">124,900</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">87%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section data-index-news>
+<div class="mb-3.5 flex items-end justify-between gap-2.5 lg:mb-5">
+<div>
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">أخبار السوق والمطورين</h2>
+<p class="text-[12px] font-medium text-shary-muted lg:text-[13px]">آخر الطروحات وزيادات الأسعار والتسليمات والقرارات</p>
+</div>
+<a href="blog.html" class="whitespace-nowrap text-[13px] font-semibold text-shary-link hover:underline lg:text-[14px]">كل الأخبار</a>
+</div>
+<div class="index-news__filters mb-3 flex gap-2 overflow-x-auto pb-1 lg:mb-4">
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="all" aria-pressed="true">الكل</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="launch" aria-pressed="false">طروحات جديدة</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="price" aria-pressed="false">أسعار</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="delivery" aria-pressed="false">تسليمات</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="decision" aria-pressed="false">قرارات</button>
+</div>
+<ul class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-5" data-news-list>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="launch">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">طروحات جديدة</span>
+<time>24 أغسطس 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog.html" class="card-link hover:text-shary-link">ماونتن فيو تطرح مرحلة جديدة في الساحل الشمالي</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">شاليهات وتاون هاوس بمقدم 5% وتقسيط حتى 10 سنين.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="ماونتن فيو" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">MV</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="price">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">أسعار</span>
+<time>20 أغسطس 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog.html" class="card-link hover:text-shary-link">سوديك ترفع أسعار مشروعها في الشيخ زايد 7%</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">الزيادة على الوحدات الجديدة بس، والتعاقدات القديمة بنفس سعرها.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="سوديك" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">SD</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="decision">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">قرارات</span>
+<time>18 أغسطس 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog.html" class="card-link hover:text-shary-link">البنك المركزي يخفّض سعر الفايدة 1%</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">الخفض بيقلل عائد الشهادات، وبيزوّد الطلب على العقار كاستثمار.</p>
+</div>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="delivery">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">تسليمات</span>
+<time>14 أغسطس 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog.html" class="card-link hover:text-shary-link">إعمار مصر تبدأ تسليم مرحلة جديدة في مراسي</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">التسليم في ميعاده حسب العقد، وده بيرفع ترتيب المطور في المؤشر.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="إعمار مصر" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">EM</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="launch">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">طروحات جديدة</span>
+<time>10 أغسطس 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog.html" class="card-link hover:text-shary-link">طلعت مصطفى تعلن مشروع جديد شرق القاهرة</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">مدينة متكاملة فيها سكني وتجاري وإداري، والحجز يبدأ الشهر الجاي.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="طلعت مصطفى" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">TMG</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="decision">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">قرارات</span>
+<time>6 أغسطس 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog.html" class="card-link hover:text-shary-link">قرار جديد لتنظيم البيع على الخريطة</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">المطور لازم يخلّص نسبة من الإنشاء قبل ما يبدأ البيع.</p>
+</div>
+</li>
+</ul>
+<p class="mt-3 hidden rounded-xl bg-shary-soft px-4 py-5 text-center text-[14px] font-semibold text-shary-muted" data-news-empty>مفيش أخبار في التصنيف ده الشهر ده.</p>
+<p class="mt-2 text-[11.5px] font-medium leading-[1.7] text-shary-muted lg:text-[12.5px]">الأخبار هنا أمثلة تجريبية للشكل، وفي الموقع بتتسحب من المدونة بتصنيف «أخبار».</p>
 </section>
 
 <section>
@@ -108388,6 +108819,373 @@ Clear                    </button>
 </div>
 </section>
 
+<section data-index-economy>
+<div class="mb-3.5 lg:mb-5">
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Economy figures that move property</h2>
+<p class="text-[12px] font-medium text-shary-muted lg:text-[13px]">Six figures that affect the price per meter and the buying decision — with the change over the last year</p>
+</div>
+<div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3 lg:gap-5">
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">US dollar</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+1.2%</bdi>  in a year</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">48.60</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">EGP</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">Effect on property:</span> A stable dollar steadies building costs and new launch prices.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">Source: Central Bank of Egypt</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Deposit interest rate</h3>
+
+<span class="index-move" data-dir="down"><bdi dir="ltr">−2.25</bdi> pts in a year</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">21.00%</b>
+</p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">Effect on property:</span> Lower rates move part of certificate savings toward property.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">Source: Central Bank of Egypt</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Yearly inflation</h3>
+
+<span class="index-move" data-dir="down"><bdi dir="ltr">−3.1</bdi> pts in a year</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">12.4%</b>
+</p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">Effect on property:</span> While prices per meter grow faster than inflation, property keeps the value of money.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">Source: CAPMAS</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">21K gold</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+24.0%</bdi>  in a year</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">5,150</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">EGP/gram</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">Effect on property:</span> Gold is the closest alternative to property as a store of value — compared above.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">Source: Gold Division</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Steel (ton)</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+6.5%</bdi>  in a year</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">38,500</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">EGP</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">Effect on property:</span> Steel is one of the biggest construction costs; rises show up in new phase prices.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">Source: Ministry of Housing</small>
+</div>
+<div class="area-card flex flex-col px-4 py-4 lg:px-5 lg:py-5">
+<div class="flex items-center justify-between gap-2">
+<h3 class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Cement (ton)</h3>
+
+<span class="index-move" data-dir="up"><bdi dir="ltr">+4.0%</bdi>  in a year</span>
+</div>
+<p class="mt-1 flex items-baseline gap-1.5">
+<b class="text-[26px] font-bold leading-[1.25] text-shary-navy lg:text-[30px]" dir="ltr">3,900</b>
+<span class="text-[12.5px] font-semibold text-shary-muted lg:text-[13.5px]">EGP</span>                            </p>
+<p class="mt-2 flex-1 border-t border-shary-line pt-2 text-[13px] font-medium leading-[1.75] lg:text-[14px]"><span class="font-bold">Effect on property:</span> Cement rises weigh most on projects still early in construction.</p>
+<small class="mt-2 block text-[11px] font-medium text-shary-muted lg:text-[12px]">Source: Ministry of Housing</small>
+</div>
+</div>
+<p class="shary-note mt-3 text-[13.5px] font-semibold leading-[1.8] lg:mt-5 lg:text-[15px]">For investors: interest and inflation are easing while building costs rise slowly — new launch prices are unlikely to drop.</p>
+<p class="mt-2 text-[11.5px] font-medium leading-[1.7] text-shary-muted lg:text-[12.5px]">These are sample figures for layout; on the live site each comes from the source named under it.</p>
+</section>
+
+<section data-index-developers>
+<div class="mb-3.5 flex items-end justify-between gap-2.5 lg:mb-5">
+<div>
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Developers report</h2>
+<p class="text-[12px] font-medium text-shary-muted lg:text-[13px]">Developers ranked by the Shary Index: prices, growth and on-time delivery</p>
+</div>
+<a href="#pv:/developers" class="whitespace-nowrap text-[13px] font-semibold text-shary-link hover:underline lg:text-[14px]">All developers</a>
+</div>
+<div class="area-card overflow-hidden">
+<table class="index-table">
+<thead>
+<tr>
+<th scope="col" class="index-table__rank">#</th>
+<th scope="col" class="index-table__name">Developer</th>
+<th scope="col">Shary Index</th>
+<th scope="col">Yearly</th>
+<th scope="col" class="hidden md:table-cell">Price per m²</th>
+<th scope="col" class="hidden md:table-cell">On-time delivery</th>
+<th scope="col" class="hidden lg:table-cell">Projects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="index-table__rank">1</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/emaar" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the Emaar Misr page">
+
+<img src="https://shary.eg/images/developers/67a7f596d9099IMG_4573.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">EM</span>
+<span class="min-w-0 truncate">Emaar Misr</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 94%"></i></span>
+<b>94</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+24.5%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">142,000</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">96%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">9</td>
+</tr>
+<tr>
+<td class="index-table__rank">2</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/tmg" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the TMG page">
+
+<img src="https://shary.eg/images/developers/67ea9431c84fddownload.jpg.jpg" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">TMG</span>
+<span class="min-w-0 truncate">TMG</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 93%"></i></span>
+<b>93</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+22.8%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">96,500</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">95%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">12</td>
+</tr>
+<tr>
+<td class="index-table__rank">3</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/sodic" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the SODIC page">
+
+<img src="https://shary.eg/images/developers/67f85409473dc%D8%B3%D9%88%D8%AF%D9%8A%D9%83.jpg.jpg" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">SD</span>
+<span class="min-w-0 truncate">SODIC</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 91%"></i></span>
+<b>91</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+21.9%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">118,400</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">93%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">14</td>
+</tr>
+<tr>
+<td class="index-table__rank">4</td>
+<th scope="row" class="index-table__name">
+<a href="developer-mountain-view-en.html" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the Mountain View page">
+
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">MV</span>
+<span class="min-w-0 truncate">Mountain View</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 90%"></i></span>
+<b>90</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+23.6%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">104,200</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">91%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">16</td>
+</tr>
+<tr>
+<td class="index-table__rank">5</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/hassan-allam" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the Hassan Allam page">
+
+<img src="https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">HA</span>
+<span class="min-w-0 truncate">Hassan Allam</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 88%"></i></span>
+<b>88</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+19.4%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">112,800</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">92%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">8</td>
+</tr>
+<tr>
+<td class="index-table__rank">6</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/tatweer-misr" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the Tatweer Misr page">
+
+<img src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">TM</span>
+<span class="min-w-0 truncate">Tatweer Misr</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 87%"></i></span>
+<b>87</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+20.7%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">88,600</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">89%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">7</td>
+</tr>
+<tr>
+<td class="index-table__rank">7</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/madinet-masr" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the Madinet Masr page">
+
+<img src="https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">MM</span>
+<span class="min-w-0 truncate">Madinet Masr</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 85%"></i></span>
+<b>85</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+18.2%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">71,300</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">90%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">10</td>
+</tr>
+<tr>
+<td class="index-table__rank">8</td>
+<th scope="row" class="index-table__name">
+<a href="#pv:/developers/lavista" class="flex items-center gap-2.5 font-bold text-shary-navy hover:text-shary-link" aria-label="Open the La Vista page">
+
+<img src="https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="" class="h-9 w-9 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-10 lg:w-10" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[10px] font-bold leading-none text-white lg:h-10 lg:w-10" dir="ltr">LV</span>
+<span class="min-w-0 truncate">La Vista</span>
+</a>
+</th>
+<td>
+<span class="flex items-center gap-2">
+<span class="hidden h-2 w-14 overflow-hidden rounded-full bg-shary-soft lg:block"><i class="area-bar block h-full rounded-full" style="width: 84%"></i></span>
+<b>84</b>
+</span>
+</td>
+<td><span class="index-change" data-sign="up" dir="ltr">+17.5%</span></td>
+<td class="hidden md:table-cell"><b dir="ltr">124,900</b></td>
+<td class="hidden md:table-cell"><b dir="ltr">87%</b></td>
+<td class="hidden text-shary-muted lg:table-cell">11</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section data-index-news>
+<div class="mb-3.5 flex items-end justify-between gap-2.5 lg:mb-5">
+<div>
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Market and developer news</h2>
+<p class="text-[12px] font-medium text-shary-muted lg:text-[13px]">Latest launches, price rises, deliveries and decisions</p>
+</div>
+<a href="blog-en.html" class="whitespace-nowrap text-[13px] font-semibold text-shary-link hover:underline lg:text-[14px]">All news</a>
+</div>
+<div class="index-news__filters mb-3 flex gap-2 overflow-x-auto pb-1 lg:mb-4">
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="all" aria-pressed="true">All</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="launch" aria-pressed="false">New launches</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="price" aria-pressed="false">Prices</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="delivery" aria-pressed="false">Deliveries</button>
+<button type="button" class="h-10 shrink-0 rounded-full border border-shary-line bg-white px-4 text-[13px] font-bold text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link" data-news-filter="decision" aria-pressed="false">Decisions</button>
+</div>
+<ul class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:gap-5" data-news-list>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="launch">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">New launches</span>
+<time>24 August 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog-en.html" class="card-link hover:text-shary-link">Mountain View launches a new phase on the North Coast</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">Chalets and townhouses with a 5% down payment and up to 10 years of installments.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="Mountain View" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">MV</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="price">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">Prices</span>
+<time>20 August 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog-en.html" class="card-link hover:text-shary-link">SODIC raises prices at its Sheikh Zayed project by 7%</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">The rise applies to new units only; existing contracts keep their price.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="SODIC" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">SD</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="decision">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">Decisions</span>
+<time>18 August 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog-en.html" class="card-link hover:text-shary-link">The Central Bank cuts interest rates by 1%</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">The cut lowers certificate returns and lifts demand for property as an investment.</p>
+</div>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="delivery">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">Deliveries</span>
+<time>14 August 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog-en.html" class="card-link hover:text-shary-link">Emaar Misr starts handing over a new phase in Marassi</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">Handover is on schedule, which lifts the developer’s rank in the index.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="Emaar Misr" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">EM</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="launch">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">New launches</span>
+<time>10 August 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog-en.html" class="card-link hover:text-shary-link">TMG announces a new project in East Cairo</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">An integrated city with residential, commercial and office space; booking opens next month.</p>
+</div>
+<img data-img="images/shary/developer-samples/mountain-view-mark.png" alt="TMG" class="h-11 w-11 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-12 lg:w-12" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[11px] font-bold leading-none text-white lg:h-12 lg:w-12" dir="ltr">TMG</span>
+</li>
+<li class="area-card relative flex items-start gap-3 px-4 py-4 lg:px-5 lg:py-5" data-news-kind="decision">
+<div class="min-w-0 flex-1">
+<p class="mb-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11.5px] font-medium text-shary-muted lg:text-[12.5px]">
+<span class="index-tag">Decisions</span>
+<time>6 August 2026</time>
+</p>
+<h3 class="text-[15px] font-bold leading-[1.5] lg:text-[17px]"><a href="blog-en.html" class="card-link hover:text-shary-link">A new rule to regulate off-plan sales</a></h3>
+<p class="mt-1 text-[13px] font-medium leading-[1.75] text-shary-muted lg:text-[14px]">Developers must complete part of construction before selling.</p>
+</div>
+</li>
+</ul>
+<p class="mt-3 hidden rounded-xl bg-shary-soft px-4 py-5 text-center text-[14px] font-semibold text-shary-muted" data-news-empty>No news in this category this month.</p>
+<p class="mt-2 text-[11.5px] font-medium leading-[1.7] text-shary-muted lg:text-[12.5px]">These are sample news items for layout; on the live site they come from the blog’s “News” category.</p>
+</section>
+
 <section>
 <div class="mb-3.5 flex items-baseline justify-between gap-2.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Market reports</h2>
@@ -122442,6 +123240,27 @@ Shary
                     if (label) label.textContent = radio.parentNode.querySelector('span').textContent;
                     closeSort();
                     sort.dispatchEvent(new Event('change'));
+                });
+            });
+        }
+
+        // ---------- أخبار السوق: تصفية بنوع الخبر (الكل / طروحات / أسعار / تسليمات / قرارات) ----------
+        var newsFilters = page.querySelectorAll('[data-news-filter]');
+        if (newsFilters.length) {
+            var newsItems = page.querySelectorAll('[data-news-kind]');
+            var newsEmpty = page.querySelector('[data-news-empty]');
+            newsFilters.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    var kind = button.getAttribute('data-news-filter');
+                    var shown = 0;
+                    newsFilters.forEach(function (other) { other.setAttribute('aria-pressed', other === button ? 'true' : 'false'); });
+                    newsItems.forEach(function (item) {
+                        var match = kind === 'all' || item.getAttribute('data-news-kind') === kind;
+                        item.classList.toggle('hidden', !match);
+                        if (match) shown += 1;
+                    });
+                    if (newsEmpty) newsEmpty.classList.toggle('hidden', shown > 0);
+                    document.dispatchEvent(new CustomEvent('shary:news-filter', { detail: { kind: kind } }));
                 });
             });
         }
