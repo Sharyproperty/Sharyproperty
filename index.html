@@ -1302,44 +1302,39 @@ video {
   box-shadow: 0 6px 16px -10px rgba(18, 58, 92, 0.45);
 }
 
-/* صورة المنطقة — موبايل: الاسم والأرقام على شريط زجاجي فوق الصورة من تحت. ديسك توب: تحت الصورة في صف واحد */
+/* صورة المنطقة: الاسم والأرقام على شريط زجاجي صغير فوق الصورة من تحت — موبايل: شريط رفيع بعرض الصورة ، ديسك توب: كارت صغير في الركن */
 
 .area-photo__info {
   position: absolute;
-  inset-inline: 12px;
-  bottom: 12px;
+  inset-inline: 10px;
+  bottom: 10px;
   border: 1px solid rgba(255, 255, 255, 0.65);
-  border-radius: 16px;
-  background-color: rgba(255, 255, 255, 0.72);
-  padding: 12px 14px 10px;
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 8px 12px;
   -webkit-backdrop-filter: blur(14px) saturate(1.5);
   backdrop-filter: blur(14px) saturate(1.5);
   box-shadow: 0 10px 28px -16px rgba(18, 58, 92, 0.5);
 }
 
 .area-photo__stats {
+  margin-top: 5px;
   border-top: 1px solid rgba(18, 58, 92, 0.12);
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 @media (min-width: 1024px) {
   .area-photo__info {
-    position: static;
-    margin-top: 24px;
-    border: 0;
-    border-radius: 0;
-    background-color: transparent;
-    padding: 0;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    box-shadow: none;
+    inset-inline: 24px auto;
+    bottom: 24px;
+    width: 430px;
+    border-radius: 18px;
+    padding: 16px 22px 14px;
   }
 
   .area-photo__stats {
-    border-top: 0;
-    border-radius: 16px;
-    background-color: #e3eaf3;
-    padding-top: 0;
+    margin-top: 10px;
+    padding-top: 10px;
   }
 }
 
@@ -3847,8 +3842,8 @@ input:focus-visible + .area-chip,
   height: 280px;
 }
 
-.h-\[320px\] {
-  height: 320px;
+.h-\[290px\] {
+  height: 290px;
 }
 
 .h-\[38px\] {
@@ -4090,6 +4085,10 @@ input:focus-visible + .area-chip,
 
 .max-w-\[620px\] {
   max-width: 620px;
+}
+
+.max-w-\[720px\] {
+  max-width: 720px;
 }
 
 .max-w-\[calc\(100\%-150px\)\] {
@@ -6138,10 +6137,6 @@ input:focus-visible + .area-chip,
     display: block;
   }
 
-  .lg\:inline-block {
-    display: inline-block;
-  }
-
   .lg\:inline {
     display: inline;
   }
@@ -6196,10 +6191,6 @@ input:focus-visible + .area-chip,
 
   .lg\:h-\[340px\] {
     height: 340px;
-  }
-
-  .lg\:h-\[360px\] {
-    height: 360px;
   }
 
   .lg\:h-\[380px\] {
@@ -6681,11 +6672,6 @@ input:focus-visible + .area-chip,
     border-color: rgb(228 233 239 / var(--tw-border-opacity, 1));
   }
 
-  .lg\:border-white {
-    --tw-border-opacity: 1;
-    border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
-  }
-
   .lg\:bg-\[\#f4f7fa\] {
     --tw-bg-opacity: 1;
     background-color: rgb(244 247 250 / var(--tw-bg-opacity, 1));
@@ -6986,6 +6972,10 @@ input:focus-visible + .area-chip,
     font-size: 20px;
   }
 
+  .lg\:text-\[21px\] {
+    font-size: 21px;
+  }
+
   .lg\:text-\[22px\] {
     font-size: 22px;
   }
@@ -7014,10 +7004,6 @@ input:focus-visible + .area-chip,
     font-size: 42px;
   }
 
-  .lg\:text-\[44px\] {
-    font-size: 44px;
-  }
-
   .lg\:text-\[48px\] {
     font-size: 48px;
   }
@@ -7030,21 +7016,16 @@ input:focus-visible + .area-chip,
     font-weight: 700;
   }
 
-  .lg\:font-medium {
-    font-weight: 500;
-  }
-
   .lg\:leading-\[1\.2\] {
     line-height: 1.2;
   }
 
-  .lg\:leading-\[1\.45\] {
-    line-height: 1.45;
+  .lg\:leading-\[1\.3\] {
+    line-height: 1.3;
   }
 
-  .lg\:text-shary-muted {
-    --tw-text-opacity: 1;
-    color: rgb(91 107 124 / var(--tw-text-opacity, 1));
+  .lg\:leading-\[1\.45\] {
+    line-height: 1.45;
   }
 
   .lg\:shadow-\[0_-20px_60px_-10px_rgba\(18\2c 58\2c 92\2c 0\.38\)\] {
@@ -7184,19 +7165,13 @@ input:focus-visible + .area-chip,
 .pv-desktop .article-content .article-related__image img {height: 100%;
     min-height: 180px;}
 .pv-desktop .area-offers.is-open > * {width: auto;}
-.pv-desktop .area-photo__info {position: static;
-    margin-top: 24px;
-    border: 0;
-    border-radius: 0;
-    background-color: transparent;
-    padding: 0;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    box-shadow: none;}
-.pv-desktop .area-photo__stats {border-top: 0;
-    border-radius: 16px;
-    background-color: #e3eaf3;
-    padding-top: 0;}
+.pv-desktop .area-photo__info {inset-inline: 24px auto;
+    bottom: 24px;
+    width: 430px;
+    border-radius: 18px;
+    padding: 16px 22px 14px;}
+.pv-desktop .area-photo__stats {margin-top: 10px;
+    padding-top: 10px;}
 .pv-desktop .area-fsec {margin-top: 0;
     margin-bottom: 20px;
     -moz-column-break-inside: avoid;
@@ -7813,7 +7788,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:mt-7 {margin-top: 1.75rem;}
 .pv-desktop .lg\:mt-8 {margin-top: 2rem;}
 .pv-desktop .lg\:block {display: block;}
-.pv-desktop .lg\:inline-block {display: inline-block;}
 .pv-desktop .lg\:inline {display: inline;}
 .pv-desktop .lg\:flex {display: flex;}
 .pv-desktop .lg\:grid {display: grid;}
@@ -7828,7 +7802,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:h-\[176px\] {height: 176px;}
 .pv-desktop .lg\:h-\[220px\] {height: 220px;}
 .pv-desktop .lg\:h-\[340px\] {height: 340px;}
-.pv-desktop .lg\:h-\[360px\] {height: 360px;}
 .pv-desktop .lg\:h-\[380px\] {height: 380px;}
 .pv-desktop .lg\:h-\[400px\] {height: 400px;}
 .pv-desktop .lg\:h-\[46px\] {height: 46px;}
@@ -7957,8 +7930,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:border-t-0 {border-top-width: 0px;}
 .pv-desktop .lg\:border-shary-line {--tw-border-opacity: 1;
     border-color: rgb(228 233 239 / var(--tw-border-opacity, 1));}
-.pv-desktop .lg\:border-white {--tw-border-opacity: 1;
-    border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));}
 .pv-desktop .lg\:bg-\[\#f4f7fa\] {--tw-bg-opacity: 1;
     background-color: rgb(244 247 250 / var(--tw-bg-opacity, 1));}
 .pv-desktop .lg\:bg-shary-link {--tw-bg-opacity: 1;
@@ -8052,6 +8023,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:text-\[17px\] {font-size: 17px;}
 .pv-desktop .lg\:text-\[18px\] {font-size: 18px;}
 .pv-desktop .lg\:text-\[20px\] {font-size: 20px;}
+.pv-desktop .lg\:text-\[21px\] {font-size: 21px;}
 .pv-desktop .lg\:text-\[22px\] {font-size: 22px;}
 .pv-desktop .lg\:text-\[24px\] {font-size: 24px;}
 .pv-desktop .lg\:text-\[26px\] {font-size: 26px;}
@@ -8059,15 +8031,12 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:text-\[32px\] {font-size: 32px;}
 .pv-desktop .lg\:text-\[34px\] {font-size: 34px;}
 .pv-desktop .lg\:text-\[42px\] {font-size: 42px;}
-.pv-desktop .lg\:text-\[44px\] {font-size: 44px;}
 .pv-desktop .lg\:text-\[48px\] {font-size: 48px;}
 .pv-desktop .lg\:text-\[56px\] {font-size: 56px;}
 .pv-desktop .lg\:font-bold {font-weight: 700;}
-.pv-desktop .lg\:font-medium {font-weight: 500;}
 .pv-desktop .lg\:leading-\[1\.2\] {line-height: 1.2;}
+.pv-desktop .lg\:leading-\[1\.3\] {line-height: 1.3;}
 .pv-desktop .lg\:leading-\[1\.45\] {line-height: 1.45;}
-.pv-desktop .lg\:text-shary-muted {--tw-text-opacity: 1;
-    color: rgb(91 107 124 / var(--tw-text-opacity, 1));}
 .pv-desktop .lg\:shadow-\[0_-20px_60px_-10px_rgba\(18\2c 58\2c 92\2c 0\.38\)\] {--tw-shadow: 0 -20px 60px -10px rgba(18,58,92,0.38);
     --tw-shadow-colored: 0 -20px 60px -10px var(--tw-shadow-color);
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);}
@@ -13033,35 +13002,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d4514935a3eTagmoa.webp.webp" alt="القاهرة الجديدة" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">القاهرة الجديدة</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">القاهرة الجديدة</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">1,240</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">1,240</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">271</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">271</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">أكبر تجمع مشاريع في شرق القاهرة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">أكبر تجمع مشاريع في شرق القاهرة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -15915,35 +15879,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d451145b033mostakbal-city-e1654434561138.jpg.jpg" alt="مدينة المستقبل" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">مدينة المستقبل</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">مدينة المستقبل</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">1,329</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">1,329</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">60</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">60</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع مدينة المستقبل في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع مدينة المستقبل في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -18341,35 +18300,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d4516969e6bTagmoa.webp.webp" alt="التجمع الخامس" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">التجمع الخامس</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">التجمع الخامس</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">2,104</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">2,104</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">48</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">48</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع التجمع الخامس في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع التجمع الخامس في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -20582,35 +20536,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d457c1118951738229445_om7LpVzr.jpg.jpg" alt="مدينتي" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">مدينتي</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">مدينتي</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">281</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">281</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">2</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">2</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع مدينتي في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع مدينتي في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -22295,35 +22244,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d458662b483%D9%85%D8%AF%D9%8A%D9%86%D8%A9-%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8.jpg.jpg" alt="الرحاب" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">الرحاب</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">الرحاب</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">192</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">192</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">3</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">3</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع الرحاب في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع الرحاب في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -24201,35 +24145,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d745ca7254d1-3.png.png" alt="الشروق" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-eastvale.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">الشروق</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">الشروق</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">374</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">374</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">11</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">11</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع الشروق في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع الشروق في القاهرة الجديدة — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -29902,35 +29841,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/684efc4286b8a6800123426027pngtree-tropical-island-with-palms-banner-image_1739922.jpg.jpg.jpg" alt="الساحل الشمالي" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">الساحل الشمالي</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">الساحل الشمالي</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">980</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">980</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">71</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">71</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع الساحل الشمالي في مصر — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع الساحل الشمالي في مصر — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -32342,35 +32276,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d4546ba2409%D9%82%D8%B1%D9%89-%D8%A7%D9%84%D8%B9%D9%8A%D9%86-%D8%A7%D9%84%D8%B3%D8%AE%D9%86%D8%A9.jpg.jpg" alt="العين السخنة" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">العين السخنة</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">العين السخنة</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">410</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">410</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">28</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">28</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع العين السخنة في مصر — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع العين السخنة في مصر — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -34054,35 +33983,30 @@ data-sheet-open="section" data-sections="delivery" >
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/68000cfa80ba6W020201013583251989242.jpg.jpg" alt="العاصمة الإدارية" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">منطقة</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">العاصمة الإدارية</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">العاصمة الإدارية</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">معدل النمو السنوي</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">معدل النمو السنوي</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">وحدة متاحة</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">1,560</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">وحدة متاحة</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">1,560</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">مشروع</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">96</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">مشروع</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">96</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">مشاريع العاصمة الإدارية في مصر — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">مشاريع العاصمة الإدارية في مصر — قارن الأسعار وخطط السداد من كل المطورين في مكان واحد.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -67580,35 +67504,30 @@ Filter                </h3>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d4514935a3eTagmoa.webp.webp" alt="New Cairo" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">New Cairo</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">New Cairo</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">1,240</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">1,240</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">271</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">271</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">The largest cluster of projects in East Cairo — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">The largest cluster of projects in East Cairo — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -70462,35 +70381,30 @@ See all <b>271</b> projects                </a>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d451145b033mostakbal-city-e1654434561138.jpg.jpg" alt="Mostakbal City" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">Mostakbal City</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">Mostakbal City</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">1,329</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">1,329</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">60</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">60</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">Mostakbal City projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">Mostakbal City projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -72888,35 +72802,30 @@ See all <b>60</b> projects                </a>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d4516969e6bTagmoa.webp.webp" alt="Fifth Settlement" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">Fifth Settlement</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">Fifth Settlement</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">2,104</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">2,104</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">48</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">48</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">Fifth Settlement projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">Fifth Settlement projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -75129,35 +75038,30 @@ See all <b>48</b> projects                </a>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d457c1118951738229445_om7LpVzr.jpg.jpg" alt="Madinaty" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">Madinaty</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">Madinaty</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">281</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">281</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">2</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">2</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">Madinaty projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">Madinaty projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -76842,35 +76746,30 @@ Clear                    </button>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d458662b483%D9%85%D8%AF%D9%8A%D9%86%D8%A9-%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8.jpg.jpg" alt="Al Rehab" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">Al Rehab</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">Al Rehab</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">192</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">192</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">3</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">3</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">Al Rehab projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">Al Rehab projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -78748,35 +78647,30 @@ Clear                    </button>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d745ca7254d1-3.png.png" alt="El Shorouk" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-eastvale.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">El Shorouk</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">El Shorouk</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">374</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">374</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">11</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">11</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">El Shorouk projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">El Shorouk projects in New Cairo — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -84449,35 +84343,30 @@ See all <b>64</b> projects                </a>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/684efc4286b8a6800123426027pngtree-tropical-island-with-palms-banner-image_1739922.jpg.jpg.jpg" alt="North Coast" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">North Coast</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">North Coast</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">980</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">980</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">71</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">71</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">North Coast projects in Egypt — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">North Coast projects in Egypt — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -86889,35 +86778,30 @@ See all <b>71</b> projects                </a>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/67d4546ba2409%D9%82%D8%B1%D9%89-%D8%A7%D9%84%D8%B9%D9%8A%D9%86-%D8%A7%D9%84%D8%B3%D8%AE%D9%86%D8%A9.jpg.jpg" alt="Ain Sokhna" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">Ain Sokhna</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">Ain Sokhna</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">410</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">410</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">28</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">28</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">Ain Sokhna projects in Egypt — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">Ain Sokhna projects in Egypt — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
@@ -88601,35 +88485,30 @@ See all <b>28</b> projects                </a>
 </nav>
 </div>
 <header class="site-container pt-1 lg:pt-2">
-<div class="relative">
-<div class="relative h-[320px] overflow-hidden rounded-2xl bg-shary-image lg:h-[360px]">
+<div class="relative h-[290px] overflow-hidden rounded-2xl bg-shary-image lg:h-[400px]">
 <img src="https://shary.eg/images/countries/cities/68000cfa80ba6W020201013583251989242.jpg.jpg" alt="New Capital" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
-</div>
 
-<div class="area-photo__info lg:flex lg:items-end lg:justify-between lg:gap-8">
-<div class="min-w-0">
-<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12px] font-semibold leading-normal text-shary-navy lg:inline-block">Area</span>
-<h1 class="text-[22px] font-extrabold leading-[1.3] lg:mt-2 lg:text-[44px] lg:leading-[1.2]">New Capital</h1>
-</div>
+<div class="area-photo__info">
+<h1 class="truncate text-[18px] font-extrabold leading-[1.35] lg:text-[28px] lg:leading-[1.3]">New Capital</h1>
 
-<dl class="area-photo__stats mt-2 grid shrink-0 grid-cols-3 lg:mt-0 lg:w-[460px]">
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 ">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">annual growth</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">+21.4%</dd>
+<dl class="area-photo__stats grid grid-cols-3">
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">annual growth</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">+21.4%</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">units available</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">1,560</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">units available</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">1,560</dd>
 </div>
-<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-3 lg:py-4 border-s border-shary-navy/15 lg:border-white">
-<dt class="text-[10.5px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[13px] lg:font-medium lg:text-shary-muted">projects</dt>
-<dd class="text-[18px] font-bold leading-[1.3] text-shary-teal lg:text-[26px]" dir="ltr">96</dd>
+<div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 border-s border-shary-navy/15">
+<dt class="text-[10px] font-semibold leading-normal text-shary-navy/70 min-[360px]:whitespace-nowrap lg:text-[12px]">projects</dt>
+<dd class="text-[15px] font-bold leading-[1.3] text-shary-teal lg:text-[21px]" dir="ltr">96</dd>
 </div>
 </dl>
 </div>
 </div>
 
-<p class="mt-3 max-w-[620px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-2 lg:text-[16px]">New Capital projects in Egypt — compare prices and payment plans from every developer in one place.</p>
+<p class="mt-3 max-w-[720px] text-[14px] font-medium leading-[1.7] text-shary-muted lg:mt-4 lg:text-[16px]">New Capital projects in Egypt — compare prices and payment plans from every developer in one place.</p>
 </header>
 
 <div class="site-container flex flex-col gap-8 pb-10 pt-4 lg:gap-14 lg:pb-16 lg:pt-5">
