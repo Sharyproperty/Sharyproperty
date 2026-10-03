@@ -3131,10 +3131,26 @@ input:focus-visible + .area-chip,
 
 /* عارض الصور (بنفس شكل تطبيق شاري): الصفحة بتغمق، الصورة في النص، وصف الصور الصغيرة تحت */
 
+/* الخلفية: زجاج فاتح مبلور (مش كحلي) — الصفحة باينة من وراه مغبشة */
+
 .rent-viewer__dim {
-  background-color: rgba(84, 99, 120, 0.9);
-  -webkit-backdrop-filter: blur(3px);
-  backdrop-filter: blur(3px);
+  background-color: rgba(243, 246, 250, 0.62);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  backdrop-filter: blur(18px) saturate(1.15);
+}
+
+/* متصفح من غير بلور: الخلفية أغمق شوية عشان الصورة تفضل واضحة */
+
+@supports not (((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) or (-webkit-backdrop-filter: blur(1px))) {
+  .rent-viewer__dim {
+    background-color: rgba(236, 241, 246, 0.96);
+  }
+}
+
+.rent-viewer [data-lightbox-count],
+    .rent-viewer__frame,
+    .rent-viewer__thumbs button {
+  box-shadow: 0 10px 28px -14px rgba(18, 58, 92, 0.55);
 }
 
 .rent-viewer__stage {
@@ -3195,14 +3211,14 @@ input:focus-visible + .area-chip,
   width: 64px;
   flex-shrink: 0;
   overflow: hidden;
-  border: 2px solid rgba(255, 255, 255, 0.75);
+  border: 2px solid #ffffff;
   border-radius: 14px;
   background-color: #e3eaf3;
 }
 
 .rent-viewer__thumbs button[aria-current="true"] {
   border-color: #4fc1ae;
-  box-shadow: 0 0 0 2px #4fc1ae;
+  box-shadow: 0 0 0 2px #4fc1ae, 0 10px 28px -14px rgba(18, 58, 92, 0.55);
 }
 
 .rent-viewer__thumbs img {
