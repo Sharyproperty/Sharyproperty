@@ -5815,7 +5815,17 @@ window.addEventListener('load', function () {
     return { title: text('[data-detail="compound"]'), location: text('[data-bar-field="location"]'), price: toNumber(text('[data-detail="start"]')), stats: [],
       developer: text('[data-unit-field="developer"]'), short: '', photo: image('[data-gallery-item] img'), logo: image('[data-bar-field="developer-link"] img') };
   }
+  // كارت صورة (المشروعات الجديدة في صفحة المشروع): الاسم والصورة من الكارت، والمكان من الصفحة المفتوحة
+  function shotInfo(link, shot) {
+    var img = shot.querySelector('img.card-photo');
+    var view = shot.closest('[data-view]');
+    var place = view ? view.querySelector('[data-bar-field="location"]') : null;
+    return { title: link.textContent.trim().replace(/\s+/g, ' '), location: place ? place.textContent.trim() : '', price: 0, stats: [], developer: '', short: '', logo: null,
+      photo: img ? { src: img.currentSrc || img.getAttribute('src') || '', img: img.getAttribute('data-img') || '', key: img.getAttribute('data-img-key') || '', fallback: img.getAttribute('data-fallback-key') || '' } : null };
+  }
   function openProject(link, slug, given) {
+    var shot = !given && link && link.closest ? link.closest('.prop-shot') : null;
+    if (shot) given = shotInfo(link, shot);
     var source = link && link.closest('article') ? link : null;
     var pooled = poolCard('compounds', slug);
     var info = given || (source ? cardInfo(source) : pooled ? cardInfo(pooled.querySelector('a')) : projectFromUnit(link));
@@ -5825,6 +5835,7 @@ window.addEventListener('load', function () {
     }
     if (!inDoc('project')) return go('project', { fn: 'project', slug: slug, info: info });
     if (!show('project')) return false;
+    if (shot) window.scrollTo(0, 0);
     fills.project = info ? { fn: 'project', slug: slug, info: info } : null;
     remember(false);
     var view = wraps[lang].querySelector('[data-view="project"]');

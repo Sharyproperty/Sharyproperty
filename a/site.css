@@ -3579,6 +3579,124 @@ input:focus-visible + .area-chip,
 
 /* حالة المرحلة */
 
+/* صف صور بيتسحب بالجنب (المشروعات الجديدة + مراحل أخرى على الموبايل): بعرض الشاشة على الموبايل */
+
+.prop-rail {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  margin-inline: -20px;
+  padding-inline: 20px;
+  padding-bottom: 4px;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 20px;
+  scrollbar-width: none;
+}
+
+.prop-rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* كارت صورة وعليه الاسم (إعلان مشروع / مرحلة) */
+
+.prop-shot {
+  position: relative;
+  flex: 0 0 62%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: #dfe7ef;
+  scroll-snap-align: start;
+}
+
+.prop-rail--phases .prop-shot {
+  flex-basis: 68%;
+  aspect-ratio: 3 / 2;
+}
+
+.prop-shot > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.prop-shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(9, 26, 43, 0.82), rgba(9, 26, 43, 0) 58%);
+  pointer-events: none;
+}
+
+.prop-shot__name {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 10px 14px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #fff;
+}
+
+.prop-shot__name a {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prop-shot__name small {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.prop-shot__logo {
+  position: absolute;
+  top: 10px;
+  inset-inline-start: 10px;
+  z-index: 1;
+  display: flex;
+  height: 44px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #123a5c;
+  box-shadow: 0 4px 12px -4px rgba(9, 26, 43, 0.5);
+}
+
+.prop-shot__logo img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+@media (min-width: 1024px) {
+  .prop-rail {
+    margin-inline: 0;
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+  }
+
+  .prop-shot {
+    flex-basis: calc((100% - 24px) / 3);
+    aspect-ratio: 16 / 10;
+  }
+}
+
 .prop-phase {
   align-self: flex-start;
   border-radius: 9999px;
@@ -8229,6 +8347,14 @@ input:focus-visible + .area-chip,
     grid-row-start: 6;
   }
 
+  .lg\:row-start-7 {
+    grid-row-start: 7;
+  }
+
+  .lg\:row-start-8 {
+    grid-row-start: 8;
+  }
+
   .lg\:m-auto {
     margin: auto;
   }
@@ -9590,6 +9716,11 @@ input:focus-visible + .area-chip,
     font-size: 18px;}
 .pv-desktop .dev-areas.is-open {grid-template-columns: repeat(5, 1fr);}
 .pv-desktop .rent-gallery.rent-gallery--slider .rent-gallery__item {transition: flex-grow 0.9s ease;}
+.pv-desktop .prop-rail {margin-inline: 0;
+    padding-inline: 0;
+    scroll-padding-inline: 0;}
+.pv-desktop .prop-shot {flex-basis: calc((100% - 24px) / 3);
+    aspect-ratio: 16 / 10;}
 .pv-desktop .prop-bar {top: var(--prop-header, 76px);
     margin-top: 24px;
     border-bottom: 1px solid #e4e9ef;
@@ -10297,6 +10428,8 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:row-start-4 {grid-row-start: 4;}
 .pv-desktop .lg\:row-start-5 {grid-row-start: 5;}
 .pv-desktop .lg\:row-start-6 {grid-row-start: 6;}
+.pv-desktop .lg\:row-start-7 {grid-row-start: 7;}
+.pv-desktop .lg\:row-start-8 {grid-row-start: 8;}
 .pv-desktop .lg\:m-auto {margin: auto;}
 .pv-desktop .lg\:mx-0 {margin-left: 0px;
     margin-right: 0px;}
