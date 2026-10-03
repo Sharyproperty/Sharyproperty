@@ -2851,6 +2851,50 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
+/* نص بيتقصّر ويتفرد (مفتوح في الأول): وهو مقفول بيظهر أول كام سطر وآخرهم بيبهت */
+
+.shary-collapsible.is-collapsed {
+  max-height: 124px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 55%, transparent);
+  mask-image: linear-gradient(#000 55%, transparent);
+}
+
+/* نص قصير (عن الوحدة): وهو مقفول سطرين بس */
+
+.shary-collapsible--short.is-collapsed {
+  max-height: 60px;
+}
+
+.shary-collapsible__toggle {
+  margin-top: 10px;
+  display: inline-flex;
+  height: 40px;
+  align-items: center;
+  gap: 6px;
+  border-radius: 9999px;
+  border: 1px solid #d6dfe8;
+  background-color: #ffffff;
+  padding-inline: 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #123a5c;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.shary-collapsible__toggle:hover {
+  border-color: #1f63c6;
+  color: #1f63c6;
+}
+
+.shary-collapsible__toggle svg {
+  transition: transform 0.2s ease;
+}
+
+.shary-collapsible__toggle[aria-expanded="false"] svg {
+  transform: rotate(180deg);
+}
+
 /* ====================== صفحات الإيجار ====================== */
 
 /* شريط الفلاتر: موبايل — تبويب الفرش بعرض الصف، تحته المنطقة / النوع / السعر (كل واحد بسهم)، وتحتهم "مسح" + الترتيب.
@@ -55645,7 +55689,9 @@ data-sheet-open="section" data-sections="delivery" >
 </div>
 </div>
 </div>
-<div class="flex flex-col gap-7 lg:order-1 lg:gap-9">
+
+<div class="lg:order-1">
+<div class="shary-collapsible flex flex-col gap-7 lg:gap-9" data-collapsible>
 <div>
 <h2 class="mb-2.5 text-[20px] font-bold leading-[1.35] lg:mb-3.5 lg:text-[26px]">عن الإيجار مع شاري</h2>
 <p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">تجربة الإيجار في مصر متعبة: مفيش شفافية كفاية، وصور الإعلانات كتير منها مش حقيقي، فالعميل بيتوقع حاجة ويلاقي حاجة تانية. الإيجار مع شاري بيحل ده بأسعار واضحة وصور حقيقية لكل وحدة، وكل الوحدات المعروضة بجودة عالية. من غير عمولة سمسرة، والإيجار بيتم بسهولة ووضوح. هتلاقي شقق وفلل واستوديوهات وأنواع تانية في أهم المناطق: القاهرة، الساحل، وغيرهم.</p>
@@ -55654,6 +55700,11 @@ data-sheet-open="section" data-sections="delivery" >
 <h2 class="mb-2.5 text-[20px] font-bold leading-[1.35] lg:mb-3.5 lg:text-[26px]">يعني إيه الإيجار مع شاري؟</h2>
 <p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">خدمة من شاري لتأجير الوحدات في أرقى الكمبوندات: بتختار الوحدة من صور حقيقية وسعر شهري واضح، وبتعرف شروط الإيجار قبل ما تتواصل (التأمين، الزيادة السنوية، وأقل مدة). مستشار شاري بيرتب لك المعاينة ويمشي معاك لحد توقيع العقد.</p>
 </div>
+</div>
+<button type="button" class="shary-collapsible__toggle" data-collapsible-toggle aria-expanded="true" data-more="عرض المزيد" data-less="عرض أقل">
+<span data-label>عرض أقل</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+</button>
 </div>
 </section>
 
@@ -55845,10 +55896,7 @@ data-sheet-open="section" data-sections="delivery" >
 </button>
 </div>
 
-<div class="mt-5 grid grid-cols-1 gap-8 lg:mt-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-10">
-<div class="flex min-w-0 flex-col gap-6 lg:gap-9">
-
-<div class="flex items-center gap-3">
+<div class="mt-5 flex items-center gap-3 lg:mt-8">
 <img src="https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png" alt="تايمز" class="h-12 w-12 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-14 lg:w-14" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="hidden flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white lg:h-14 lg:w-14" dir="ltr">TD</span>
 <div class="min-w-0">
@@ -55859,6 +55907,9 @@ data-sheet-open="section" data-sections="delivery" >
 </p>
 </div>
 </div>
+
+<div class="mt-5 grid grid-cols-1 gap-8 lg:mt-7 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-10">
+<div class="flex min-w-0 flex-col gap-6 lg:gap-9">
 
 <div>
 <p class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]">سعر الإيجار</p>
@@ -56004,7 +56055,14 @@ data-sheet-open="section" data-sections="delivery" >
 
 <section>
 <h2 class="mb-2.5 text-[20px] font-bold leading-[1.35] lg:mb-3.5 lg:text-[24px]">عن الوحدة</h2>
-<p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">شقة للإيجار مفروشة في افيلين. المساحة 110 م²، 2 غرف نوم و2 حمام، والوحدة مجهزة بتكييفات ومطبخ. متاحة للإيجار دلوقتي — عيش في التجمع الخامس، واحدة من أهم مناطق مصر.</p>
+
+<div class="shary-collapsible shary-collapsible--short" data-collapsible>
+<p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">شقة للإيجار مفروشة في افيلين. المساحة 110 م²، 2 غرف نوم و2 حمام، والوحدة مجهزة بتكييفات ومطبخ. متاحة للإيجار دلوقتي — عيش في التجمع الخامس، واحدة من أهم مناطق مصر. الكمبوند فيه أمن وحراسة على مدار اليوم، مساحات خضرا، ومنطقة خدمات قريبة فيها محلات ومطاعم. المعاينة بتتحدد مع مستشار شاري في الميعاد اللي يناسبك، وشروط الإيجار مكتوبة فوق.</p>
+</div>
+<button type="button" class="shary-collapsible__toggle" data-collapsible-toggle aria-expanded="true" data-more="عرض المزيد" data-less="عرض أقل">
+<span data-label>عرض أقل</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+</button>
 </section>
 </div>
 
@@ -114163,7 +114221,9 @@ Clear                    </button>
 </div>
 </div>
 </div>
-<div class="flex flex-col gap-7 lg:order-1 lg:gap-9">
+
+<div class="lg:order-1">
+<div class="shary-collapsible flex flex-col gap-7 lg:gap-9" data-collapsible>
 <div>
 <h2 class="mb-2.5 text-[20px] font-bold leading-[1.35] lg:mb-3.5 lg:text-[26px]">About renting with Shary</h2>
 <p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">Renting in Egypt is frustrating: there is little transparency and many listings use inaccurate photos, so expectations are not met. Renting with Shary fixes this with clear prices and real photos for every unit, and every listed unit is of high quality. There is no broker fee, and the process is simple and transparent. You will find apartments, villas, studios and other property types in the top areas: Cairo, the North Coast and more.</p>
@@ -114172,6 +114232,11 @@ Clear                    </button>
 <h2 class="mb-2.5 text-[20px] font-bold leading-[1.35] lg:mb-3.5 lg:text-[26px]">What is renting with Shary?</h2>
 <p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">A Shary service for renting units in the best compounds: you choose a unit from real photos and a clear monthly price, and you see the rental terms before you get in touch (deposit, yearly increase and minimum stay). A Shary advisor arranges the viewing and stays with you until the contract is signed.</p>
 </div>
+</div>
+<button type="button" class="shary-collapsible__toggle" data-collapsible-toggle aria-expanded="true" data-more="Show more" data-less="Show less">
+<span data-label>Show less</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+</button>
 </div>
 </section>
 
@@ -114363,10 +114428,7 @@ Clear                    </button>
 </button>
 </div>
 
-<div class="mt-5 grid grid-cols-1 gap-8 lg:mt-8 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-10">
-<div class="flex min-w-0 flex-col gap-6 lg:gap-9">
-
-<div class="flex items-center gap-3">
+<div class="mt-5 flex items-center gap-3 lg:mt-8">
 <img src="https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png" alt="Times Developments" class="h-12 w-12 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-14 lg:w-14" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="hidden flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white lg:h-14 lg:w-14" dir="ltr">TD</span>
 <div class="min-w-0">
@@ -114377,6 +114439,9 @@ Clear                    </button>
 </p>
 </div>
 </div>
+
+<div class="mt-5 grid grid-cols-1 gap-8 lg:mt-7 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-10">
+<div class="flex min-w-0 flex-col gap-6 lg:gap-9">
 
 <div>
 <p class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]">Rental price</p>
@@ -114522,7 +114587,14 @@ Furnished                                </dd>
 
 <section>
 <h2 class="mb-2.5 text-[20px] font-bold leading-[1.35] lg:mb-3.5 lg:text-[24px]">About the unit</h2>
-<p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">Apartment for rent, furnished, in Avelin. The size is 110 m², with 2 bedrooms and 2 bathrooms, and the unit comes with air conditioning and a kitchen. Available for rent now — live in Fifth Settlement, one of Egypt’s prime areas.</p>
+
+<div class="shary-collapsible shary-collapsible--short" data-collapsible>
+<p class="text-[14.5px] font-medium leading-[1.95] text-shary-muted lg:text-[16px]">Apartment for rent, furnished, in Avelin. The size is 110 m², with 2 bedrooms and 2 bathrooms, and the unit comes with air conditioning and a kitchen. Available for rent now — live in Fifth Settlement, one of Egypt’s prime areas. The compound has round-the-clock security, green spaces and a nearby services area with shops and restaurants. Viewings are arranged with a Shary advisor at a time that suits you, and the rental terms are listed above.</p>
+</div>
+<button type="button" class="shary-collapsible__toggle" data-collapsible-toggle aria-expanded="true" data-more="Show more" data-less="Show less">
+<span data-label>Show less</span>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 15 6-6 6 6"/></svg>
+</button>
 </section>
 </div>
 
@@ -126950,6 +127022,20 @@ Shary
         var ids = showCompare(button.closest('main') || document);
         button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: button.getAttribute('data-compare-id'), active: active, ids: ids } }));
     });
+    // ---------- نص بيتقصّر ويتفرد [data-collapsible] ("عن المطور" ، "عن الإيجار" ، "عن الوحدة") ----------
+    // النص مفتوح في الأول. الزرار [data-collapsible-toggle] اللي جنبه بيقصّره (is-collapsed) ويفرده، ونصه بيتبدّل بين data-less و data-more.
+    document.querySelectorAll('[data-collapsible]').forEach(function (box) {
+        var toggle = box.parentNode.querySelector('[data-collapsible-toggle]');
+        if (!toggle) return;
+        toggle.addEventListener('click', function () {
+            var collapse = !box.classList.contains('is-collapsed');
+            box.classList.toggle('is-collapsed', collapse);
+            toggle.setAttribute('aria-expanded', collapse ? 'false' : 'true');
+            var label = toggle.querySelector('[data-label]');
+            (label || toggle).textContent = toggle.getAttribute(collapse ? 'data-more' : 'data-less');
+            if (collapse) box.scrollIntoView({ block: 'nearest' });
+        });
+    });
 })();
 
 /**
@@ -127710,7 +127796,7 @@ Shary
 /**
  * صفحة المطور (developers/show.blade.php)
  * - "عرض الكل / عرض أقل" في مناطق المطور: بيفرد المناطق كلها بدل السحب الأفقي.
- * - "عرض أقل / عرض المزيد" في "عن المطور": النص مفتوح في الأول، والزرار بيقصّره ويفرده.
+ * - "عرض أقل / عرض المزيد" في "عن المطور" بقى في js/shary/site-chrome.js (مشترك لكل الصفحات).
  * - "عرض المزيد" تحت المشاريع (موبايل): بيظهر 3 مشاريع كمان كل مرة.
  */
 (function () {
@@ -127724,19 +127810,6 @@ Shary
             toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
             toggle.querySelector('[data-label]').textContent = toggle.getAttribute(open ? 'data-less' : 'data-more');
             toggle.querySelector('svg').style.transform = open ? 'rotate(180deg)' : '';
-        });
-    });
-
-    // النص مفتوح في الأول، والزرار بيقصّره ويفرده
-    document.querySelectorAll('[data-collapsible]').forEach(function (box) {
-        var toggle = box.parentNode.querySelector('[data-collapsible-toggle]');
-        if (!toggle) return;
-        toggle.addEventListener('click', function () {
-            var collapse = !box.classList.contains('is-collapsed');
-            box.classList.toggle('is-collapsed', collapse);
-            toggle.setAttribute('aria-expanded', collapse ? 'false' : 'true');
-            toggle.textContent = toggle.getAttribute(collapse ? 'data-more' : 'data-less');
-            if (collapse) box.scrollIntoView({ block: 'nearest' });
         });
     });
 })();
