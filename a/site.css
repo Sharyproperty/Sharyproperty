@@ -3700,6 +3700,26 @@ input:focus-visible + .area-chip,
     aspect-ratio: 16 / 10;
   }
 
+  /* مراحل أخرى على الديسك توب: كروت مستطيلة عريضة (العرض أكبر من الارتفاع) من أول الصف */
+
+  .prop-rail--phases {
+    gap: 20px;
+  }
+
+  .prop-rail--phases .prop-shot {
+    flex: 0 0 330px;
+    aspect-ratio: 3 / 2;
+  }
+
+  .prop-rail--phases .prop-shot__name {
+    padding: 14px 18px 16px;
+    font-size: 17px;
+  }
+
+  .prop-rail--phases .prop-shot__name small {
+    font-size: 13.5px;
+  }
+
   /* الزراير على الديسك توب (زي تنظيم ناوي): مربعات صغيرة في أول الصف، الأيقونة فوق الاسم */
 
   .prop-tiles {
@@ -3724,27 +3744,6 @@ input:focus-visible + .area-chip,
 }
 
 /* حالة المرحلة */
-
-.prop-phase {
-  align-self: flex-start;
-  border-radius: 9999px;
-  background-color: #e3eaf3;
-  padding: 3px 11px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #123a5c;
-}
-
-.prop-phase--open {
-  background-color: #e7f5f1;
-  color: #1f7f72;
-}
-
-.prop-phase--soon {
-  background-color: #fdf1dc;
-  color: #9a6408;
-}
 
 @media (min-width: 1024px) {
   .prop-bar {
@@ -8391,6 +8390,10 @@ input:focus-visible + .area-chip,
     margin-right: auto;
   }
 
+  .lg\:mb-1 {
+    margin-bottom: 0.25rem;
+  }
+
   .lg\:mb-2 {
     margin-bottom: 0.5rem;
   }
@@ -9732,6 +9735,14 @@ input:focus-visible + .area-chip,
     scroll-padding-inline: 0;}
 .pv-desktop .prop-shot {flex-basis: calc((100% - 24px) / 3);
     aspect-ratio: 16 / 10;}
+.pv-desktop /* مراحل أخرى على الديسك توب: كروت مستطيلة عريضة (العرض أكبر من الارتفاع) من أول الصف */
+
+  .prop-rail--phases {gap: 20px;}
+.pv-desktop .prop-rail--phases .prop-shot {flex: 0 0 330px;
+    aspect-ratio: 3 / 2;}
+.pv-desktop .prop-rail--phases .prop-shot__name {padding: 14px 18px 16px;
+    font-size: 17px;}
+.pv-desktop .prop-rail--phases .prop-shot__name small {font-size: 13.5px;}
 .pv-desktop /* الزراير على الديسك توب (زي تنظيم ناوي): مربعات صغيرة في أول الصف، الأيقونة فوق الاسم */
 
   .prop-tiles {justify-content: flex-start;
@@ -10456,6 +10467,7 @@ input:focus-visible + .area-chip,
     margin-right: 0px;}
 .pv-desktop .lg\:mx-auto {margin-left: auto;
     margin-right: auto;}
+.pv-desktop .lg\:mb-1 {margin-bottom: 0.25rem;}
 .pv-desktop .lg\:mb-2 {margin-bottom: 0.5rem;}
 .pv-desktop .lg\:mb-2\.5 {margin-bottom: 0.625rem;}
 .pv-desktop .lg\:mb-3 {margin-bottom: 0.75rem;}
