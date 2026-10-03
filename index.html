@@ -1303,7 +1303,7 @@ video {
 }
 
 /* صورة المنطقة — موبايل: الاسم والأرقام بالأبيض على الصورة نفسها من تحت (تدريج خفيف ورا الكلام بس، من غير مربع).
-       ديسك توب: كارت زجاجي صغير في ركن الصورة */
+       ديسك توب: شريط زجاجي بعرض الصورة */
 
 .area-photo__info {
   position: absolute;
@@ -1320,24 +1320,31 @@ video {
 }
 
 @media (min-width: 1024px) {
+  /* ديسك توب: شريط زجاجي بعرض الصورة كلها من تحت — الاسم في أول الشريط والـ 3 أرقام في آخره */
+
   .area-photo__info {
-    inset-inline: 24px auto;
-    bottom: 24px;
-    width: 430px;
+    inset-inline: 20px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
     border: 1px solid rgba(255, 255, 255, 0.65);
     border-radius: 18px;
     background-color: rgba(255, 255, 255, 0.7);
     background-image: none;
-    padding: 16px 22px 14px;
+    padding: 14px 26px;
     -webkit-backdrop-filter: blur(14px) saturate(1.5);
     backdrop-filter: blur(14px) saturate(1.5);
     box-shadow: 0 10px 28px -16px rgba(18, 58, 92, 0.5);
   }
 
   .area-photo__stats {
-    margin-top: 10px;
-    border-top-color: rgba(18, 58, 92, 0.12);
-    padding-top: 10px;
+    flex: none;
+    width: 520px;
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 0;
   }
 }
 
@@ -7178,20 +7185,27 @@ input:focus-visible + .area-chip,
 .pv-desktop .article-content .article-related__image img {height: 100%;
     min-height: 180px;}
 .pv-desktop .area-offers.is-open > * {width: auto;}
-.pv-desktop .area-photo__info {inset-inline: 24px auto;
-    bottom: 24px;
-    width: 430px;
+.pv-desktop /* ديسك توب: شريط زجاجي بعرض الصورة كلها من تحت — الاسم في أول الشريط والـ 3 أرقام في آخره */
+
+  .area-photo__info {inset-inline: 20px;
+    bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
     border: 1px solid rgba(255, 255, 255, 0.65);
     border-radius: 18px;
     background-color: rgba(255, 255, 255, 0.7);
     background-image: none;
-    padding: 16px 22px 14px;
+    padding: 14px 26px;
     -webkit-backdrop-filter: blur(14px) saturate(1.5);
     backdrop-filter: blur(14px) saturate(1.5);
     box-shadow: 0 10px 28px -16px rgba(18, 58, 92, 0.5);}
-.pv-desktop .area-photo__stats {margin-top: 10px;
-    border-top-color: rgba(18, 58, 92, 0.12);
-    padding-top: 10px;}
+.pv-desktop .area-photo__stats {flex: none;
+    width: 520px;
+    margin-top: 0;
+    border-top: 0;
+    padding-top: 0;}
 .pv-desktop .area-fsec {margin-top: 0;
     margin-bottom: 20px;
     -moz-column-break-inside: avoid;
@@ -13032,7 +13046,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/67d4514935a3eTagmoa.webp.webp" alt="القاهرة الجديدة" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">القاهرة الجديدة</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">القاهرة الجديدة</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -15909,7 +15923,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/67d451145b033mostakbal-city-e1654434561138.jpg.jpg" alt="مدينة المستقبل" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">مدينة المستقبل</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">مدينة المستقبل</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -18330,7 +18344,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/67d4516969e6bTagmoa.webp.webp" alt="التجمع الخامس" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">التجمع الخامس</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">التجمع الخامس</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -20566,7 +20580,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/67d457c1118951738229445_om7LpVzr.jpg.jpg" alt="مدينتي" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">مدينتي</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">مدينتي</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -22274,7 +22288,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/67d458662b483%D9%85%D8%AF%D9%8A%D9%86%D8%A9-%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8.jpg.jpg" alt="الرحاب" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">الرحاب</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">الرحاب</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -24175,7 +24189,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/67d745ca7254d1-3.png.png" alt="الشروق" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-eastvale.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">الشروق</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">الشروق</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -29871,7 +29885,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/684efc4286b8a6800123426027pngtree-tropical-island-with-palms-banner-image_1739922.jpg.jpg.jpg" alt="الساحل الشمالي" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">الساحل الشمالي</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">الساحل الشمالي</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -32306,7 +32320,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/67d4546ba2409%D9%82%D8%B1%D9%89-%D8%A7%D9%84%D8%B9%D9%8A%D9%86-%D8%A7%D9%84%D8%B3%D8%AE%D9%86%D8%A9.jpg.jpg" alt="العين السخنة" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">العين السخنة</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">العين السخنة</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -34013,7 +34027,7 @@ data-sheet-open="section" data-sections="delivery" >
 <img src="https://shary.eg/images/countries/cities/68000cfa80ba6W020201013583251989242.jpg.jpg" alt="العاصمة الإدارية" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">العاصمة الإدارية</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">العاصمة الإدارية</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -67534,7 +67548,7 @@ Filter                </h3>
 <img src="https://shary.eg/images/countries/cities/67d4514935a3eTagmoa.webp.webp" alt="New Cairo" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">New Cairo</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">New Cairo</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -70411,7 +70425,7 @@ See all <b>271</b> projects                </a>
 <img src="https://shary.eg/images/countries/cities/67d451145b033mostakbal-city-e1654434561138.jpg.jpg" alt="Mostakbal City" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Mostakbal City</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Mostakbal City</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -72832,7 +72846,7 @@ See all <b>60</b> projects                </a>
 <img src="https://shary.eg/images/countries/cities/67d4516969e6bTagmoa.webp.webp" alt="Fifth Settlement" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Fifth Settlement</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Fifth Settlement</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -75068,7 +75082,7 @@ See all <b>48</b> projects                </a>
 <img src="https://shary.eg/images/countries/cities/67d457c1118951738229445_om7LpVzr.jpg.jpg" alt="Madinaty" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Madinaty</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Madinaty</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -76776,7 +76790,7 @@ Clear                    </button>
 <img src="https://shary.eg/images/countries/cities/67d458662b483%D9%85%D8%AF%D9%8A%D9%86%D8%A9-%D8%A7%D9%84%D8%B1%D8%AD%D8%A7%D8%A8.jpg.jpg" alt="Al Rehab" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Al Rehab</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Al Rehab</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -78677,7 +78691,7 @@ Clear                    </button>
 <img src="https://shary.eg/images/countries/cities/67d745ca7254d1-3.png.png" alt="El Shorouk" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-eastvale.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">El Shorouk</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">El Shorouk</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -84373,7 +84387,7 @@ See all <b>64</b> projects                </a>
 <img src="https://shary.eg/images/countries/cities/684efc4286b8a6800123426027pngtree-tropical-island-with-palms-banner-image_1739922.jpg.jpg.jpg" alt="North Coast" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">North Coast</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">North Coast</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -86808,7 +86822,7 @@ See all <b>71</b> projects                </a>
 <img src="https://shary.eg/images/countries/cities/67d4546ba2409%D9%82%D8%B1%D9%89-%D8%A7%D9%84%D8%B9%D9%8A%D9%86-%D8%A7%D9%84%D8%B3%D8%AE%D9%86%D8%A9.jpg.jpg" alt="Ain Sokhna" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Ain Sokhna</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">Ain Sokhna</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
@@ -88515,7 +88529,7 @@ See all <b>28</b> projects                </a>
 <img src="https://shary.eg/images/countries/cities/68000cfa80ba6W020201013583251989242.jpg.jpg" alt="New Capital" class="absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 
 <div class="area-photo__info">
-<h1 class="truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">New Capital</h1>
+<h1 class="min-w-0 truncate text-[22px] font-extrabold leading-[1.35] text-white lg:text-[28px] lg:leading-[1.3] lg:text-shary-navy">New Capital</h1>
 
 <dl class="area-photo__stats grid grid-cols-3">
 <div class="flex flex-col-reverse justify-end px-1 text-center lg:px-2 ">
