@@ -1,0 +1,2142 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<title>معاينة موقع شاري</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="a/site.css">
+</head><body>
+
+
+<div class="pv-stage">
+<script>
+// صور المشاريع والمناطق بتيجي من shary.eg مباشرة. لو اللينك ما فتحش هنا، بتظهر صورة تجريبية بدلها
+window.pvFallback = function (img) {
+  img.onerror = null;
+  var key = img.getAttribute('data-fallback-key');
+  function apply() { var s = key && document.querySelector('[data-fallback-store] img[data-img-key="' + key + '"], img[data-img-key="' + key + '"]'); if (s) img.src = s.getAttribute('src'); else if (key && window.PV_ASSETS) img.src = window.PV_ASSETS + key; }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply); else apply();
+};
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    document.querySelectorAll('img[data-fallback-key]').forEach(function (img) { if (!img.naturalWidth && img.src.indexOf('data:') !== 0) window.pvFallback(img); });
+  }, 6000);
+});
+</script>
+<div id="shary-preview" class="bg-white font-cairo text-shary-navy antialiased">
+<div data-lang="ar" hidden></div>
+<div data-lang="en" lang="en" dir="ltr">
+
+<header class="sticky top-0 z-30 rounded-b-[28px] bg-white shadow-[0_6px_18px_rgba(18,58,92,0.10)] lg:rounded-none lg:shadow-[0_2px_10px_rgba(18,58,92,0.06)]">
+<div class="site-container flex items-center justify-between py-3.5 lg:justify-start lg:py-4">
+<a href="#pv:/app" class="flex h-11 shrink-0 items-center rounded-full bg-shary-action px-3 text-[13px] font-bold leading-normal text-white shadow-[0_4px_10px_rgba(18,58,92,0.28)] min-[380px]:px-4 min-[380px]:text-[14px] lg:hidden">Open App</a>
+
+<a href="#pv:/" class="shrink-0" aria-label="Shary — Home">
+<img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="125" height="30" class="h-[22px] w-auto min-[360px]:h-[26px] min-[380px]:h-[30px] lg:h-9">
+</a>
+
+<nav class="hidden items-center gap-6 lg:me-auto lg:ms-10 lg:flex" aria-label="Main menu">
+<a href="#pv:/" class="text-[16px] font-semibold leading-normal transition-colors text-shary-navy hover:text-shary-link active:text-shary-link">Home</a>
+<a href="#pv:/developers" class="text-[16px] font-semibold leading-normal transition-colors text-shary-navy hover:text-shary-link active:text-shary-link">Developers</a>
+<a href="#pv:/projects" class="text-[16px] font-semibold leading-normal transition-colors text-shary-navy hover:text-shary-link active:text-shary-link">Projects</a>
+<a href="search-all-en.html" class="text-[16px] font-semibold leading-normal transition-colors text-shary-link">Search</a>
+<a href="blog-en.html" class="text-[16px] font-semibold leading-normal transition-colors text-shary-navy hover:text-shary-link active:text-shary-link">Blogs</a>
+<a href="#pv:/about" class="text-[16px] font-semibold leading-normal transition-colors text-shary-navy hover:text-shary-link active:text-shary-link">About Us</a>
+<a href="#pv:/contact" class="text-[16px] font-semibold leading-normal transition-colors text-shary-navy hover:text-shary-link active:text-shary-link">Contact Us</a>
+<div class="relative" data-nav-dropdown>
+<button type="button" class="flex items-center gap-1 text-[16px] font-semibold leading-normal text-shary-navy transition-colors hover:text-shary-link active:text-shary-link aria-expanded:text-shary-link" aria-haspopup="true" aria-expanded="false" data-nav-dropdown-toggle>
+<span>Agents</span>
+<svg class="transition-transform duration-200" data-nav-dropdown-arrow width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="absolute end-0 top-full z-40 mt-4 hidden min-w-[190px] rounded-[12px] border border-shary-line bg-white p-2 shadow-[0_10px_24px_rgba(18,58,92,0.14)]" data-nav-dropdown-menu>
+<a href="#pv:/verified-agents" class="block whitespace-nowrap rounded-[8px] px-3 py-2.5 text-[15px] font-semibold leading-normal text-shary-navy transition-colors hover:bg-shary-form hover:text-shary-link active:text-shary-link">Verified Agents</a>
+</div>
+</div>
+</nav>
+
+<div class="flex shrink-0 items-center gap-1 min-[380px]:gap-3">
+
+<a href="#" class="group relative hidden h-11 w-11 items-center justify-center rounded-full text-shary-navy transition-colors hover:bg-shary-form hover:text-shary-link data-[active=true]:text-red-600 data-[active=true]:hover:text-red-600 lg:flex" data-favorites-indicator data-active="false" aria-label="Favorites">
+<svg class="transition-colors group-data-[active=true]:fill-current" width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+<span class="absolute -end-0.5 -top-0.5 hidden h-[18px] min-w-[18px] items-center justify-center rounded-full bg-white px-1 text-center text-[11px] font-bold leading-[18px] text-red-600 shadow-[0_1px_4px_rgba(18,58,92,0.3)]" data-favorites-count></span>
+</a>
+
+<a href="search-all.html" data-lang-toggle class="flex h-10 w-10 items-center justify-center rounded-full bg-shary-action text-[13px] font-bold leading-none text-white transition-colors duration-300 hover:bg-shary-navy active:bg-shary-navy lg:w-auto lg:min-w-[84px] lg:px-4 lg:text-[14px]" aria-label="Change language">
+<span class="lg:hidden">EN</span>
+<span class="hidden lg:inline">English</span>
+</a>
+
+<button type="button" class="flex h-10 w-10 items-center justify-center lg:hidden" data-nav-toggle aria-controls="mobile-nav-en" aria-expanded="false" aria-label="Menu">
+<img loading="lazy" src="a/images/shary/icons/menu.svg" data-img="images/shary/icons/menu.svg" alt="" width="28" height="28">
+</button>
+</div>
+</div>
+
+<nav id="mobile-nav-en" class="hidden border-t border-shary-line lg:hidden" aria-label="Main menu">
+<div class="site-container flex flex-col py-2">
+<a href="#pv:/" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">Home</a>
+<a href="#pv:/developers" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">Developers</a>
+<a href="#pv:/projects" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">Projects</a>
+<a href="search-all-en.html" class="py-3 text-[16px] font-bold leading-normal text-shary-link">Search</a>
+<a href="blog-en.html" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">Blogs</a>
+<a href="#pv:/about" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">About Us</a>
+<a href="#pv:/contact" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">Contact Us</a>
+<div data-nav-dropdown>
+<button type="button" class="flex w-full items-center justify-between py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link aria-expanded:text-shary-link" aria-expanded="false" data-nav-dropdown-toggle>
+<span>Agents</span>
+<svg class="transition-transform duration-200" data-nav-dropdown-arrow width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="hidden flex-col pb-2 ps-4" data-nav-dropdown-menu>
+<a href="#pv:/verified-agents" class="py-2.5 text-[15px] font-semibold leading-normal text-shary-navy active:text-shary-link">Verified Agents</a>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<main data-view="article-zayed-vs-october"><div class="site-container pt-3 lg:pt-4" data-breadcrumb>
+<nav aria-label="Breadcrumb">
+<ol class="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold leading-normal lg:text-[14px]">
+
+<li class="shrink-0">
+<a href="#pv:/" class="flex min-w-0 items-center gap-1.5 text-shary-link hover:underline">
+
+<svg class="shrink-0 text-shary-hint" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 9.2L10 3l7 6.2V16a1 1 0 0 1-1 1h-3.5v-4.5h-5V17H4a1 1 0 0 1-1-1V9.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+<span class="truncate">Home</span>
+</a>
+</li>
+<li class="shrink-0 text-shary-hint" aria-hidden="true">
+<svg class="ltr:rotate-180" width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</li>
+
+<li class="shrink-0">
+<a href="blog-en.html" class="flex min-w-0 items-center gap-1.5 text-shary-link hover:underline">
+<span class="truncate">Blog</span>
+</a>
+</li>
+<li class="shrink-0 text-shary-hint" aria-hidden="true">
+<svg class="ltr:rotate-180" width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</li>
+<li class="min-w-0 truncate text-shary-muted" aria-current="page">Sheikh Zayed or 6 October? A full comparison before you buy</li>
+</ol>
+</nav>
+</div>
+
+<div class="site-container pt-3 lg:pt-4">
+<div class="flex h-[52px] items-center overflow-hidden rounded-full bg-shary-deep p-1.5 text-[12px] font-bold leading-[1.4] text-white">
+<a href="shary-index-en.html" class="flex h-10 shrink-0 items-center gap-[5px] whitespace-nowrap rounded-full bg-white pe-1.5 ps-2.5 text-[12px] text-shary-navy">
+<span class="h-1.5 w-1.5 rounded-full bg-shary-teal ring-[3px] ring-shary-teal/20" aria-hidden="true"></span>
+<span>Shary Index</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-left.svg" data-img="images/shary/icons/chevron-left.svg" alt="" width="11" height="11" class="ltr:rotate-180">
+</a>
+
+<div class="index-ticker ms-2 min-w-0 flex-1 border-s border-white/30">
+<div class="index-ticker__track flex w-max items-center whitespace-nowrap">
+<div class="flex shrink-0 items-center" >
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Sheikh Zayed</span>
+<span>88,100 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+4.2%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">New Capital</span>
+<span>74,600 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+3.1%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">North Coast</span>
+<span>115,300 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+6.8%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Fifth Settlement</span>
+<span>92,400 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+2.4%</bdi></span>
+</span>
+</div>
+<div class="flex shrink-0 items-center"  aria-hidden="true" >
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Sheikh Zayed</span>
+<span>88,100 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+4.2%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">New Capital</span>
+<span>74,600 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+3.1%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">North Coast</span>
+<span>115,300 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+6.8%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Fifth Settlement</span>
+<span>92,400 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+2.4%</bdi></span>
+</span>
+</div>
+<div class="flex shrink-0 items-center"  aria-hidden="true" >
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Sheikh Zayed</span>
+<span>88,100 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+4.2%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">New Capital</span>
+<span>74,600 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+3.1%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">North Coast</span>
+<span>115,300 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+6.8%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Fifth Settlement</span>
+<span>92,400 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+2.4%</bdi></span>
+</span>
+</div>
+<div class="flex shrink-0 items-center"  aria-hidden="true" >
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Sheikh Zayed</span>
+<span>88,100 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+4.2%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">New Capital</span>
+<span>74,600 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+3.1%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">North Coast</span>
+<span>115,300 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+6.8%</bdi></span>
+</span>
+<span class="flex flex-col border-e border-white/30 px-3.5">
+<span class="flex items-center gap-2">
+<span class="font-semibold text-shary-mist">Fifth Settlement</span>
+<span>92,400 EGP</span>
+</span>
+<span class="flex text-shary-mint"><bdi dir="ltr">+2.4%</bdi></span>
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="site-container grid grid-cols-1 gap-y-[18px] pb-8 pt-6 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-x-10 lg:pb-16 lg:pt-10">
+<header class="flex flex-col gap-[18px] lg:col-start-1 lg:row-start-1">
+<h1 class="text-[26px] font-bold leading-[1.45] lg:text-[34px]">Sheikh Zayed or 6 October? A full comparison before you buy</h1>
+
+<p class="flex flex-wrap items-center gap-x-2.5 text-[13px] leading-normal">
+<span class="font-bold text-shary-teal">Shary Team</span>
+<span class="font-bold text-shary-muted" aria-hidden="true">·</span>
+<span class="font-semibold text-shary-muted">Last updated 31 July 2026</span>
+</p>
+</header>
+
+<article class="article-content min-w-0 lg:col-start-1 lg:row-start-2">
+<figure>
+<img loading="lazy" src="a/images/shary/blog-samples/cover-areas.jpg" data-img="images/shary/blog-samples/cover-areas.jpg" alt="West Cairo — comparing Sheikh Zayed and 6 October" class="h-[220px] w-full rounded bg-shary-image object-cover lg:h-[380px]" data-fallback-key="" onerror="pvFallback(this)">
+<figcaption>West Cairo — comparing Sheikh Zayed and 6 October</figcaption>
+</figure>
+
+<p><strong>Sheikh Zayed or 6 October</strong> is the question for anyone looking for a home in West Cairo. The two cities are neighbours in Giza Governorate, but each has a different character in housing, prices and services. This comparison lays out the differences so you can choose what fits your family and budget.</p>
+
+<h2 id="location-article-zayed-vs-october-en">Location and access</h2>
+
+<p>Both cities lie west of Cairo along the 26th of July Corridor and are served by a network of main roads:</p>
+
+<ul>
+<li>The 26th of July Corridor, linking them to Mohandessin and central Cairo.</li>
+<li>The Cairo–Alexandria Desert Road and the Rod El Farag–Dabaa axis.</li>
+<li>Al Wahat Road and the Middle Ring Road.</li>
+<li>The West Nile monorail, linking 6 October to Giza.</li>
+</ul>
+
+<h2 id="compare-article-zayed-vs-october-en">A quick comparison</h2>
+
+<table>
+<thead>
+<tr><th>Point</th><th>Sheikh Zayed</th><th>6 October</th></tr>
+</thead>
+<tbody>
+<tr><th>Character</th><td>A quiet city, mostly compounds and low-density districts</td><td>A larger, mixed city: districts, compounds, universities and an industrial zone</td></tr>
+<tr><th>Average price per meter</th><td><span class="article-index" data-index="price">EGP 88,100</span> <span class="article-change" data-index="change" dir="ltr">+4.2%</span></td><td><span class="article-index" data-index="price">EGP 61,500</span> <span class="article-change" data-index="change" dir="ltr">+3.4%</span></td></tr>
+<tr><th>Shopping and leisure</th><td>Arkan Plaza and the Al Bostan Street centres</td><td>Mall of Egypt and Mall of Arabia</td></tr>
+<tr><th>Education</th><td>Nile University and international schools</td><td>6th of October University, MUST and MSA University</td></tr>
+<tr><th>Jobs</th><td>Companies and office headquarters</td><td>The industrial zone and Media Production City</td></tr>
+</tbody>
+</table>
+
+<a href="shary-index-en.html" class="article-cta">Compare the average price per meter in Sheikh Zayed and 6 October on the Shary Index</a>
+
+<h2 id="zayed-article-zayed-vs-october-en">Why live in Sheikh Zayed</h2>
+
+<ul>
+<li><strong>Quiet and privacy</strong> <span>Lower density and more green space.</span></li>
+<li><strong>Closer to central Cairo</strong> <span>Nearer to Mohandessin via the 26th of July Corridor.</span></li>
+<li><strong>Established compounds</strong> <span>Projects lived in for years with complete services.</span></li>
+</ul>
+
+<figure class="article-places" id="places-sheikh-zayed-article-zayed-vs-october-en">
+
+<div class="article-places__box">
+<div class="article-places__title">Where to go in Sheikh Zayed?</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Arkan Plaza</a>
+<a href="article-egypt-real-estate-2026-en.html">Mall of Arabia</a>
+<a href="article-new-cairo-prices-q3-en.html">Galleria 40</a>
+<a href="article-new-capital-projects-2026-en.html">Hyper One</a>
+<a href="article-resale-vs-developer-price-en.html">Capital Business Park</a>
+<a href="article-new-capital-guide-en.html">Walk of Cairo</a>
+</div>
+</div>
+<figcaption>Main places in Sheikh Zayed</figcaption>
+</figure>
+
+<h2 id="october-article-zayed-vs-october-en">Why live in 6 October</h2>
+
+<ul>
+<li><strong>A range of prices</strong> <span>Units for different budgets, from residential districts to compounds.</span></li>
+<li><strong>Complete services</strong> <span>Universities, hospitals and major malls inside the city.</span></li>
+<li><strong>Jobs</strong> <span>Close to the industrial zone and Media Production City.</span></li>
+</ul>
+
+<figure class="article-places" id="places-6-october-article-zayed-vs-october-en">
+
+<div class="article-places__box">
+<div class="article-places__title">Where to go in 6th of October?</div>
+<div class="article-places__list">
+<a href="article-new-capital-guide-en.html">Mall of Egypt</a>
+<a href="article-egypt-real-estate-2026-en.html">Dream Park</a>
+<a href="article-new-cairo-prices-q3-en.html">Media Production City</a>
+<a href="article-new-capital-projects-2026-en.html">El Hosary Square</a>
+<a href="article-resale-vs-developer-price-en.html">October 6 University</a>
+<a href="article-new-capital-guide-en.html">Dreamland</a>
+</div>
+</div>
+<figcaption>Main places in 6th of October</figcaption>
+</figure>
+
+<h2 id="who-article-zayed-vs-october-en">Who does each city suit?</h2>
+
+<p>Sheikh Zayed suits families who want a quiet home in a compound and have a higher budget. 6 October suits buyers who want a wider choice of prices, or whose work or children’s studies are in the city. Either way, compare the unit with the average price per meter in its area before negotiating.</p>
+
+<aside class="article-related">
+<a href="article-new-cairo-prices-q3-en.html" class="article-related__image" tabindex="-1" aria-hidden="true">
+<img loading="lazy" src="a/images/shary/blog-samples/card-prices.jpg" data-img="images/shary/blog-samples/card-prices.jpg" alt="">
+</a>
+<div class="article-related__body">
+<h3><a href="article-new-cairo-prices-q3-en.html">Price per meter in New Cairo: Q3 2026 report</a></h3>
+<p>Shary’s report on prices per meter in New Cairo in Q3 2026: the average by area and unit type, and the factors behind the differences.</p>
+<a href="article-new-cairo-prices-q3-en.html" class="article-related__more">Continue reading ...</a>
+<div class="article-related__footer">
+<span class="article-related__brand">
+<img loading="lazy" src="a/images/shary/logo-mark.svg" data-img="images/shary/logo-mark.svg" alt="" width="22" height="18">
+Shary
+</span>
+<button type="button" class="article-related__share" data-share-url="article-new-cairo-prices-q3-en.html" data-share-title="Price per meter in New Cairo: Q3 2026 report" aria-label="Share article">
+<img loading="lazy" src="a/images/shary/icons/share.svg" data-img="images/shary/icons/share.svg" alt="" width="20" height="20">
+</button>
+</div>
+</div>
+</aside>
+
+<h2 id="faq-article-zayed-vs-october-en">Frequently asked questions about Sheikh Zayed and 6 October</h2>
+<div class="article-faq">
+<details>
+<summary>Which is more expensive: Sheikh Zayed or 6 October?</summary>
+<p>The average price per meter is usually higher in Sheikh Zayed, although some 6 October compounds come close. Check the Shary Index for updated figures.</p>
+</details>
+<details>
+<summary>How far apart are the two cities?</summary>
+<p>They are next to each other, linked by the 26th of July Corridor and local roads, minutes apart.</p>
+</details>
+<details>
+<summary>Which is better for rental investment?</summary>
+<p>6 October suits rentals to students and workers because of its universities and industrial zone, while Sheikh Zayed suits family rentals.</p>
+</details>
+</div>
+
+<div class="flex flex-wrap items-center gap-2">
+<span class="bg-shary-navy px-3 py-1.5 text-[13px] font-bold leading-normal text-white">Tags</span>
+<a href="blog-en.html#tag" class="border border-shary-line px-3 py-1.5 text-[13px] font-bold leading-normal text-shary-navy hover:border-shary-link hover:text-shary-link">Sheikh Zayed</a>
+<a href="blog-en.html#tag" class="border border-shary-line px-3 py-1.5 text-[13px] font-bold leading-normal text-shary-navy hover:border-shary-link hover:text-shary-link">6 October</a>
+<a href="blog-en.html#tag" class="border border-shary-line px-3 py-1.5 text-[13px] font-bold leading-normal text-shary-navy hover:border-shary-link hover:text-shary-link">Area guides</a>
+</div>
+</article>
+
+<aside class="mt-3.5 flex flex-col gap-8 lg:col-start-2 lg:row-start-2 lg:mt-0">
+
+<div class="mx-auto flex w-full max-w-[480px] flex-col gap-3.5">
+<form novalidate data-consult class="flex flex-col items-center gap-3.5 rounded-xl bg-shary-form px-4 pb-[18px] pt-6">
+
+<div class="flex flex-col items-center gap-1 text-center">
+<img loading="lazy" src="a/images/shary/icons/headset.svg" data-img="images/shary/icons/headset.svg" alt="" width="34" height="34">
+<h2 class="text-[21px] font-bold leading-normal lg:text-[20px]">Need real estate advice?</h2>
+<p class="text-[14px] font-semibold leading-normal text-shary-muted lg:text-[13px]">Leave your details and an advisor will contact you</p>
+</div>
+
+<input type="text" name="name" placeholder="Name" aria-label="Name" required class="h-[54px] w-full rounded-[10px] border-0 bg-white px-4 text-start text-[16px] font-bold text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal">
+
+<div class="relative w-full">
+<select name="area" aria-label="Area" class="h-[54px] w-full appearance-none rounded-[10px] border-0 bg-white px-4 text-[16px] font-bold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-teal">
+<option value="Fifth Settlement">Fifth Settlement</option>
+<option value="Sheikh Zayed">Sheikh Zayed</option>
+<option value="New Capital">New Capital</option>
+<option value="North Coast">North Coast</option>
+</select>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none absolute end-4 top-[18px]">
+</div>
+
+<div class="relative w-full" data-phone-field>
+<div class="flex h-[54px] w-full items-center rounded-[10px] bg-white focus-within:ring-2 focus-within:ring-shary-teal ltr:flex-row-reverse">
+<input type="tel" name="phone" dir="ltr" placeholder="Phone number" aria-label="Phone number" required class="h-full min-w-0 flex-1 rounded-[10px] border-0 bg-transparent px-4 text-left rtl:text-right text-[16px] font-bold text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none">
+
+<button type="button" class="flex h-full shrink-0 items-center gap-1.5 rounded-[10px] pe-4 ps-2 ltr:flex-row-reverse ltr:pe-2 ltr:ps-4" data-phone-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="Country code">
+<span class="text-[15px] font-bold leading-normal text-shary-navy" dir="ltr" data-phone-code>+20</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="14" height="14">
+<img loading="lazy" src="a/images/shary/flags/eg.svg" data-img="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] rounded-[3px] border border-shary-line object-cover" data-phone-flag>
+</button>
+</div>
+
+<input type="hidden" name="country_code" value="+20" data-phone-value>
+
+<ul class="shary-scroll absolute inset-x-0 top-[60px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[10px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="Country code" data-phone-list>
+<li role="option" tabindex="-1" data-code="+20" aria-selected="true" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/eg.svg" data-img="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Egypt</span>
+<span class="text-shary-muted" dir="ltr">+20</span>
+</li>
+<li role="option" tabindex="-1" data-code="+966" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/sa.svg" data-img="images/shary/flags/sa.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Saudi Arabia</span>
+<span class="text-shary-muted" dir="ltr">+966</span>
+</li>
+<li role="option" tabindex="-1" data-code="+971" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ae.svg" data-img="images/shary/flags/ae.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">UAE</span>
+<span class="text-shary-muted" dir="ltr">+971</span>
+</li>
+<li role="option" tabindex="-1" data-code="+965" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/kw.svg" data-img="images/shary/flags/kw.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Kuwait</span>
+<span class="text-shary-muted" dir="ltr">+965</span>
+</li>
+<li role="option" tabindex="-1" data-code="+974" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/qa.svg" data-img="images/shary/flags/qa.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Qatar</span>
+<span class="text-shary-muted" dir="ltr">+974</span>
+</li>
+<li role="option" tabindex="-1" data-code="+973" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/bh.svg" data-img="images/shary/flags/bh.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Bahrain</span>
+<span class="text-shary-muted" dir="ltr">+973</span>
+</li>
+<li role="option" tabindex="-1" data-code="+968" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/om.svg" data-img="images/shary/flags/om.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Oman</span>
+<span class="text-shary-muted" dir="ltr">+968</span>
+</li>
+<li role="option" tabindex="-1" data-code="+962" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/jo.svg" data-img="images/shary/flags/jo.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Jordan</span>
+<span class="text-shary-muted" dir="ltr">+962</span>
+</li>
+<li role="option" tabindex="-1" data-code="+961" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/lb.svg" data-img="images/shary/flags/lb.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Lebanon</span>
+<span class="text-shary-muted" dir="ltr">+961</span>
+</li>
+<li role="option" tabindex="-1" data-code="+964" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/iq.svg" data-img="images/shary/flags/iq.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Iraq</span>
+<span class="text-shary-muted" dir="ltr">+964</span>
+</li>
+<li role="option" tabindex="-1" data-code="+218" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ly.svg" data-img="images/shary/flags/ly.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Libya</span>
+<span class="text-shary-muted" dir="ltr">+218</span>
+</li>
+<li role="option" tabindex="-1" data-code="+249" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/sd.svg" data-img="images/shary/flags/sd.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Sudan</span>
+<span class="text-shary-muted" dir="ltr">+249</span>
+</li>
+<li role="option" tabindex="-1" data-code="+212" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ma.svg" data-img="images/shary/flags/ma.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Morocco</span>
+<span class="text-shary-muted" dir="ltr">+212</span>
+</li>
+<li role="option" tabindex="-1" data-code="+213" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/dz.svg" data-img="images/shary/flags/dz.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Algeria</span>
+<span class="text-shary-muted" dir="ltr">+213</span>
+</li>
+<li role="option" tabindex="-1" data-code="+216" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/tn.svg" data-img="images/shary/flags/tn.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Tunisia</span>
+<span class="text-shary-muted" dir="ltr">+216</span>
+</li>
+<li role="option" tabindex="-1" data-code="+970" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ps.svg" data-img="images/shary/flags/ps.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Palestine</span>
+<span class="text-shary-muted" dir="ltr">+970</span>
+</li>
+<li role="option" tabindex="-1" data-code="+967" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ye.svg" data-img="images/shary/flags/ye.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Yemen</span>
+<span class="text-shary-muted" dir="ltr">+967</span>
+</li>
+<li role="option" tabindex="-1" data-code="+963" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/sy.svg" data-img="images/shary/flags/sy.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Syria</span>
+<span class="text-shary-muted" dir="ltr">+963</span>
+</li>
+<li role="option" tabindex="-1" data-code="+90" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/tr.svg" data-img="images/shary/flags/tr.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Turkey</span>
+<span class="text-shary-muted" dir="ltr">+90</span>
+</li>
+<li role="option" tabindex="-1" data-code="+44" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/gb.svg" data-img="images/shary/flags/gb.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">United Kingdom</span>
+<span class="text-shary-muted" dir="ltr">+44</span>
+</li>
+<li role="option" tabindex="-1" data-code="+1" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/us.svg" data-img="images/shary/flags/us.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">United States</span>
+<span class="text-shary-muted" dir="ltr">+1</span>
+</li>
+<li role="option" tabindex="-1" data-code="+1" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ca.svg" data-img="images/shary/flags/ca.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Canada</span>
+<span class="text-shary-muted" dir="ltr">+1</span>
+</li>
+<li role="option" tabindex="-1" data-code="+49" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/de.svg" data-img="images/shary/flags/de.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Germany</span>
+<span class="text-shary-muted" dir="ltr">+49</span>
+</li>
+<li role="option" tabindex="-1" data-code="+33" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/fr.svg" data-img="images/shary/flags/fr.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">France</span>
+<span class="text-shary-muted" dir="ltr">+33</span>
+</li>
+<li role="option" tabindex="-1" data-code="+39" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/it.svg" data-img="images/shary/flags/it.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Italy</span>
+<span class="text-shary-muted" dir="ltr">+39</span>
+</li>
+<li role="option" tabindex="-1" data-code="+31" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/nl.svg" data-img="images/shary/flags/nl.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Netherlands</span>
+<span class="text-shary-muted" dir="ltr">+31</span>
+</li>
+<li role="option" tabindex="-1" data-code="+61" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/au.svg" data-img="images/shary/flags/au.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Australia</span>
+<span class="text-shary-muted" dir="ltr">+61</span>
+</li>
+<li role="option" tabindex="-1" data-code="+41" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ch.svg" data-img="images/shary/flags/ch.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Switzerland</span>
+<span class="text-shary-muted" dir="ltr">+41</span>
+</li>
+<li role="option" tabindex="-1" data-code="+46" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/se.svg" data-img="images/shary/flags/se.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Sweden</span>
+<span class="text-shary-muted" dir="ltr">+46</span>
+</li>
+</ul>
+</div>
+
+<textarea name="message" placeholder="Your message" aria-label="Your message" class="h-24 w-full resize-none rounded-[10px] border-0 bg-white px-4 pt-3.5 text-start text-[16px] font-bold leading-[1.3] text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal"></textarea>
+
+<button type="submit" class="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[18px] font-bold leading-[1.2] text-white">
+<img loading="lazy" src="a/images/shary/icons/send.svg" data-img="images/shary/icons/send.svg" alt="" width="20" height="20">
+<span>Send</span>
+</button>
+</form>
+
+<div class="flex flex-col gap-3">
+
+<a href="#pv:/meetings/request" data-meeting-open class="flex h-[54px] items-center justify-center gap-2.5 rounded-[10px] border-[1.5px] border-shary-navy bg-white text-[18px] font-bold leading-[1.2] text-shary-navy">
+<img loading="lazy" src="a/images/shary/icons/calendar.svg" data-img="images/shary/icons/calendar.svg" alt="" width="20" height="20">
+<span>Request a meeting</span>
+</a>
+
+<div class="flex gap-3">
+<a href="tel:+201000730208" class="flex h-[54px] min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[18px] font-bold leading-[1.2] text-white">
+<img loading="lazy" src="a/images/shary/icons/phone.svg" data-img="images/shary/icons/phone.svg" alt="" width="20" height="20">
+<span>Call</span>
+</a>
+<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="flex h-[54px] min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[10px] bg-shary-whatsapp text-[18px] font-bold leading-[1.2] text-white">
+
+<i class="fa-brands fa-whatsapp text-[24px] leading-none" aria-hidden="true"></i>
+<span>WhatsApp</span>
+</a>
+</div>
+</div>
+</div>
+
+<section class="flex flex-col gap-3.5">
+<h2 class="text-[21px] font-bold leading-normal lg:text-[20px]">Most read</h2>
+<a href="article-new-capital-guide-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="https://shary.eg/images/countries/cities/68000cfa80ba6W020201013583251989242.jpg.jpg" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="images/shary/blog-samples/article-new-capital.jpg" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">New Administrative Capital: compounds and prices guide</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">4 August 2026</time>
+</span>
+</a>
+<a href="article-new-cairo-prices-q3-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="https://shary.eg/images/countries/cities/67d4514935a3eTagmoa.webp.webp" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="images/shary/blog-samples/card-prices.jpg" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">Price per meter in New Cairo: Q3 2026</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">2 August 2026</time>
+</span>
+</a>
+<a href="article-mortgage-types-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="a/images/shary/blog-samples/card-finance.jpg" data-img="images/shary/blog-samples/card-finance.jpg" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">Types of mortgage finance and how to choose</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">3 August 2026</time>
+</span>
+</a>
+<a href="article-egypt-real-estate-2026-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="a/images/shary/blog-samples/featured-bright.jpg" data-img="images/shary/blog-samples/featured-bright.jpg" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="images/shary/blog-samples/featured-bright.jpg" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">Egypt real estate market 2026: how to read the market</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">4 August 2026</time>
+</span>
+</a>
+</section>
+
+<section class="flex flex-col gap-3.5">
+<h2 class="text-[21px] font-bold leading-normal lg:text-[20px]">Latest articles</h2>
+<a href="article-egypt-real-estate-2026-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="a/images/shary/blog-samples/featured-bright.jpg" data-img="images/shary/blog-samples/featured-bright.jpg" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="images/shary/blog-samples/featured-bright.jpg" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">Egypt real estate market 2026: how to read the market</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">4 August 2026</time>
+</span>
+</a>
+<a href="article-new-capital-guide-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="https://shary.eg/images/countries/cities/68000cfa80ba6W020201013583251989242.jpg.jpg" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="images/shary/blog-samples/article-new-capital.jpg" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">New Administrative Capital: compounds and prices guide</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">4 August 2026</time>
+</span>
+</a>
+<a href="article-mortgage-types-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="a/images/shary/blog-samples/card-finance.jpg" data-img="images/shary/blog-samples/card-finance.jpg" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">Types of mortgage finance and how to choose</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">3 August 2026</time>
+</span>
+</a>
+<a href="article-new-cairo-prices-q3-en.html" class="group flex items-center gap-3">
+<img loading="lazy" src="https://shary.eg/images/countries/cities/67d4514935a3eTagmoa.webp.webp" alt="" class="h-[80px] w-[96px] shrink-0 rounded-lg bg-shary-image object-cover lg:h-[70px] lg:w-[84px]" data-fallback-key="images/shary/blog-samples/card-prices.jpg" onerror="pvFallback(this)">
+
+<span class="flex min-w-0 flex-1 flex-col gap-0.5">
+<span class="line-clamp-2 text-[15px] font-bold leading-normal group-hover:text-shary-link lg:text-[14px]">Price per meter in New Cairo: Q3 2026</span>
+<time class="text-[12px] font-semibold leading-normal text-shary-muted">2 August 2026</time>
+</span>
+</a>
+</section>
+</aside>
+</div>
+</main>
+<footer class="bg-white mt-6 border-t border-shary-line">
+<div class="site-container pb-8 lg:pb-14 lg:pt-12">
+
+<div class="lg:flex lg:flex-wrap lg:gap-x-16 lg:gap-y-8">
+<div class="border-b border-shary-line lg:shrink-0 lg:border-b-0">
+<button type="button" class="flex w-full items-center justify-between py-3.5 text-start text-[17px] font-bold leading-normal lg:pointer-events-none lg:py-0 lg:text-[16px]" data-footer-toggle aria-expanded="false">
+<span>Areas</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="lg:hidden">
+</button>
+
+<ul class="hidden flex-col gap-2.5 pb-4 text-[14px] font-semibold leading-normal text-shary-muted lg:pb-0 lg:pt-4 lg:flex lg:gap-3">
+<li class="lg:whitespace-nowrap"><a href="#pv:/areas/1" class="hover:text-shary-link active:text-shary-link">6 October City</a></li>
+<li class="lg:whitespace-nowrap"><a href="area-ain-sokhna-en.html" class="hover:text-shary-link active:text-shary-link">Ain Sokhna</a></li>
+<li class="lg:whitespace-nowrap"><a href="area-al-rehab-en.html" class="hover:text-shary-link active:text-shary-link">Al Rehab</a></li>
+<li class="lg:whitespace-nowrap"><a href="#pv:/areas/4" class="hover:text-shary-link active:text-shary-link">Alexandria</a></li>
+<li class="lg:whitespace-nowrap"><a href="#pv:/areas/5" class="hover:text-shary-link active:text-shary-link">Badr City</a></li>
+<li class="lg:whitespace-nowrap"><a href="#pv:/areas/6" class="hover:text-shary-link active:text-shary-link">Cairo</a></li>
+<li class="lg:whitespace-nowrap"><a href="#pv:/areas/7" class="hover:text-shary-link active:text-shary-link">El Gouna</a></li>
+<li class="lg:whitespace-nowrap"><a href="area-sheikh-zayed-en.html" class="hover:text-shary-link active:text-shary-link">El Sheikh Zayed City</a></li>
+<li class="lg:whitespace-nowrap"><a href="area-el-shorouk-en.html" class="hover:text-shary-link active:text-shary-link">El Shorouk City</a></li>
+</ul>
+</div>
+<div class="border-b border-shary-line lg:shrink-0 lg:border-b-0">
+<button type="button" class="flex w-full items-center justify-between py-3.5 text-start text-[17px] font-bold leading-normal lg:pointer-events-none lg:py-0 lg:text-[16px]" data-footer-toggle aria-expanded="false">
+<span>Compounds</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="lg:hidden">
+</button>
+
+<ul class="hidden flex-col gap-2.5 pb-4 text-[14px] font-semibold leading-normal text-shary-muted lg:pb-0 lg:pt-4 lg:flex lg:gap-3">
+<li class="lg:whitespace-nowrap"><a href="#pv:/compounds/1" class="hover:text-shary-link active:text-shary-link">The Spine TMG New Cairo</a></li>
+<li class="lg:whitespace-nowrap"><a href="#pv:/compounds/2" class="hover:text-shary-link active:text-shary-link">Creekview New Cairo</a></li>
+</ul>
+</div>
+<div class="border-b border-shary-line lg:shrink-0 lg:border-b-0">
+<button type="button" class="flex w-full items-center justify-between py-3.5 text-start text-[17px] font-bold leading-normal lg:pointer-events-none lg:py-0 lg:text-[16px]" data-footer-toggle aria-expanded="false">
+<span>Developers</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="lg:hidden">
+</button>
+
+<ul class="hidden flex-col gap-2.5 pb-4 text-[14px] font-semibold leading-normal text-shary-muted lg:pb-0 lg:pt-4 lg:flex lg:gap-3">
+<li class="lg:whitespace-nowrap"><a href="#pv:/developers/tmg" class="hover:text-shary-link active:text-shary-link">TMG Developments</a></li>
+<li class="lg:whitespace-nowrap"><a href="developer-mountain-view-en.html" class="hover:text-shary-link active:text-shary-link">Mountain View Developments</a></li>
+<li class="lg:whitespace-nowrap"><a href="#pv:/developers/lavista" class="hover:text-shary-link active:text-shary-link">Lavista Developments</a></li>
+</ul>
+</div>
+<div class="border-b border-shary-line lg:shrink-0 lg:border-b-0">
+<button type="button" class="flex w-full items-center justify-between py-3.5 text-start text-[17px] font-bold leading-normal lg:pointer-events-none lg:py-0 lg:text-[16px]" data-footer-toggle aria-expanded="false">
+<span>Top Searches</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="lg:hidden">
+</button>
+
+<ul class="hidden flex-col gap-2.5 pb-4 text-[14px] font-semibold leading-normal text-shary-muted lg:pb-0 lg:pt-4 lg:grid lg:grid-cols-2 lg:gap-x-12 lg:gap-y-3">
+<li class="lg:whitespace-nowrap"><a href="search-properties-for-sale-in-north-coast-en.html" class="hover:text-shary-link active:text-shary-link">Properties for sale in North Coast</a></li>
+<li class="lg:whitespace-nowrap"><a href="search-properties-for-sale-in-new-cairo-en.html" class="hover:text-shary-link active:text-shary-link">Properties for sale in New Cairo</a></li>
+<li class="lg:whitespace-nowrap"><a href="search-chalets-for-sale-in-north-coast-en.html" class="hover:text-shary-link active:text-shary-link">Chalets for sale in North Coast</a></li>
+<li class="lg:whitespace-nowrap"><a href="search-chalets-for-sale-in-ras-el-hekma-en.html" class="hover:text-shary-link active:text-shary-link">Chalets for sale in Ras El Hekma</a></li>
+<li class="lg:whitespace-nowrap"><a href="search-apartments-for-sale-in-fifth-settlement-en.html" class="hover:text-shary-link active:text-shary-link">Apartments for sale in Fifth Settlement</a></li>
+<li class="lg:whitespace-nowrap"><a href="search-villas-for-sale-in-mostakbal-city-en.html" class="hover:text-shary-link active:text-shary-link">Villas for sale in Mostakbal City</a></li>
+</ul>
+</div>
+</div>
+
+<div class="flex flex-col items-center gap-5 pt-7 text-center lg:flex-row lg:items-end lg:justify-between lg:gap-6 lg:pt-12 lg:text-start">
+<div class="flex flex-col items-center gap-3 lg:items-start lg:gap-2.5">
+<a href="#pv:/" aria-label="Shary — Home">
+<img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="158" height="38" class="h-[38px] w-auto lg:h-[52px]">
+</a>
+<p class="text-[15px] font-medium leading-normal lg:text-[14px]">Real Estate Company</p>
+<p class="text-[15px] font-medium leading-normal lg:text-[14px]">Contact us: <a href="tel:+201000730208" class="hover:text-shary-link active:text-shary-link" dir="ltr">+201000730208</a></p>
+<p class="text-[15px] font-medium leading-normal lg:text-[14px]">Email address: <a href="mailto:info@shary.eg" class="hover:text-shary-link active:text-shary-link" dir="ltr">info@shary.eg</a></p>
+
+<ul class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-2 min-[380px]:gap-x-5 lg:justify-start lg:gap-x-4 lg:pt-1">
+<li>
+<a href="#" class="social-link flex h-9 items-center text-[26px] leading-none transition-colors duration-200 hover:text-shary-link active:text-shary-link lg:text-[22px]" target="_blank" rel="noopener" aria-label="Facebook">
+<i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">Facebook</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-9 items-center text-[26px] leading-none transition-colors duration-200 hover:text-shary-link active:text-shary-link lg:text-[22px]" target="_blank" rel="noopener" aria-label="Instagram">
+<i class="fa-brands fa-instagram" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">Instagram</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-9 items-center text-[26px] leading-none transition-colors duration-200 hover:text-shary-link active:text-shary-link lg:text-[22px]" target="_blank" rel="noopener" aria-label="X">
+<i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">X</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-9 items-center text-[26px] leading-none transition-colors duration-200 hover:text-shary-link active:text-shary-link lg:text-[22px]" target="_blank" rel="noopener" aria-label="YouTube">
+<i class="fa-brands fa-youtube" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">YouTube</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-9 items-center text-[26px] leading-none transition-colors duration-200 hover:text-shary-link active:text-shary-link lg:text-[22px]" target="_blank" rel="noopener" aria-label="LinkedIn">
+<i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">LinkedIn</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-9 items-center text-[26px] leading-none transition-colors duration-200 hover:text-shary-link active:text-shary-link lg:text-[22px]" target="_blank" rel="noopener" aria-label="Snapchat">
+<i class="fa-brands fa-snapchat" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">Snapchat</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-9 items-center text-[26px] leading-none transition-colors duration-200 hover:text-shary-link active:text-shary-link lg:text-[22px]" target="_blank" rel="noopener" aria-label="TikTok">
+<i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">TikTok</span>
+</a>
+</li>
+</ul>
+</div>
+
+<div class="flex flex-col items-center gap-3 lg:items-end">
+<p class="text-[16px] font-medium leading-normal lg:text-[15px] lg:font-bold">Download Our App</p>
+
+<div class="flex gap-3" dir="ltr">
+<a href="#" class="flex h-[46px] items-center gap-2 rounded-lg border-[1.5px] border-shary-navy bg-white px-3 transition-colors duration-200 hover:bg-shary-form" aria-label="Download on the App Store">
+<i class="fa-brands fa-apple text-[26px] leading-none" aria-hidden="true"></i>
+<span class="flex flex-col text-left">
+<span class="text-[8px] font-semibold uppercase leading-[1.3] tracking-wide">Download on the</span>
+<span class="text-[15px] font-bold leading-[1.2]">App Store</span>
+</span>
+</a>
+<a href="#" class="flex h-[46px] items-center gap-2 rounded-lg border-[1.5px] border-shary-navy bg-white px-3 transition-colors duration-200 hover:bg-shary-form" aria-label="Get it on Google Play">
+<i class="fa-brands fa-google-play text-[21px] leading-none" aria-hidden="true"></i>
+<span class="flex flex-col text-left">
+<span class="text-[8px] font-semibold uppercase leading-[1.3] tracking-wide">Get it on</span>
+<span class="text-[15px] font-bold leading-[1.2]">Google Play</span>
+</span>
+</a>
+</div>
+</div>
+</div>
+
+<div class="site-footer__bottom mt-8 hidden items-center justify-between border-t border-shary-line pt-6 font-semibold leading-normal lg:flex">
+<p class="shrink-0 whitespace-nowrap">© Copyright 2026 – Shary.</p>
+<nav class="site-footer__links flex min-w-0 flex-nowrap items-center justify-end whitespace-nowrap" aria-label="Site links">
+<a href="#pv:/" class="hover:text-shary-link active:text-shary-link">Home</a>
+<a href="#pv:/developers" class="hover:text-shary-link active:text-shary-link">Developers</a>
+<a href="#pv:/projects" class="hover:text-shary-link active:text-shary-link">Projects</a>
+<a href="search-all-en.html" class="hover:text-shary-link active:text-shary-link">Search</a>
+<a href="blog-en.html" class="hover:text-shary-link active:text-shary-link">Blogs</a>
+<a href="#pv:/about" class="hover:text-shary-link active:text-shary-link">About Us</a>
+<a href="#pv:/contact" class="hover:text-shary-link active:text-shary-link">Contact Us</a>
+<a href="#pv:/terms" class="hover:text-shary-link active:text-shary-link">Terms &amp; Conditions</a>
+<a href="#pv:/privacy" class="hover:text-shary-link active:text-shary-link">Privacy Policy</a>
+<a href="#pv:/agents" class="hover:text-shary-link active:text-shary-link">Agents</a>
+</nav>
+</div>
+</div>
+</footer>
+<!-- meeting-modal -->
+<div class="fixed inset-0 z-50 hidden" data-meeting-modal role="dialog" aria-modal="true" aria-labelledby="meeting-title-en">
+
+<div class="absolute inset-0 bg-shary-navy/60 lg:bg-transparent" data-meeting-close></div>
+
+<div class="meeting-panel shary-scroll absolute inset-x-0 bottom-0 max-h-[92vh] overflow-y-auto rounded-t-[28px] bg-white px-5 pb-6 pt-3 lg:inset-0 lg:m-auto lg:h-fit lg:max-h-[calc(100vh-48px)] lg:w-[560px] lg:rounded-[24px] lg:px-7 lg:pb-7 lg:pt-6 lg:shadow-[0_40px_110px_-24px_rgba(15,47,75,0.6),0_0_0_1px_rgba(18,58,92,0.1)]">
+<span class="mx-auto mb-3 block h-1.5 w-11 rounded-full bg-shary-line lg:hidden" aria-hidden="true"></span>
+
+<div class="flex items-center justify-between">
+<h2 id="meeting-title-en" class="text-[22px] font-semibold leading-normal">Request a meeting</h2>
+<button type="button" class="flex h-10 w-10 items-center justify-center rounded-full text-shary-action transition-colors hover:text-shary-link" data-meeting-close aria-label="Close">
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><circle cx="15" cy="15" r="13" stroke="currentColor" stroke-width="2"/><path d="M10.5 10.5L19.5 19.5M19.5 10.5L10.5 19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+</button>
+</div>
+
+<form novalidate class="mt-4 flex flex-col gap-4" data-meeting-form>
+<input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+<input type="hidden" name="meeting_date" value="" data-meeting-date>
+<input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
+
+<div class="grid grid-cols-2 gap-1 rounded-[16px] bg-shary-form p-1.5" role="group" aria-label="Request a meeting">
+<button type="button" class="h-11 rounded-[12px] text-[15px] font-bold leading-normal text-shary-navy transition-colors aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-type-option="zoom" aria-pressed="true">Zoom</button>
+<button type="button" class="h-11 rounded-[12px] text-[15px] font-bold leading-normal text-shary-navy transition-colors aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-type-option="in_person" aria-pressed="false">In-person meeting</button>
+</div>
+
+<label class="flex flex-col gap-2">
+<span class="text-[15px] font-bold leading-normal">Name <span class="text-red-600" aria-hidden="true">*</span></span>
+<input type="text" name="name" required autocomplete="name" class="h-[52px] w-full rounded-full border border-shary-cloud bg-shary-form px-5 text-start text-[16px] font-semibold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-link">
+</label>
+
+<div class="flex flex-col gap-2">
+<span class="text-[15px] font-bold leading-normal">Phone <span class="text-red-600" aria-hidden="true">*</span></span>
+
+<div class="relative flex gap-2.5" data-phone-field>
+<button type="button" class="flex h-[52px] shrink-0 items-center gap-2 rounded-full border border-shary-cloud bg-shary-form px-4" data-phone-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="Country code">
+<img loading="lazy" src="a/images/shary/flags/eg.svg" data-img="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] rounded-[3px] border border-shary-line object-cover" data-phone-flag>
+<span class="text-[15px] font-bold leading-normal text-shary-navy" dir="ltr" data-phone-code>+20</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="14" height="14">
+</button>
+
+<input type="tel" name="phone" dir="ltr" required autocomplete="tel-national" aria-label="Phone number" class="h-[52px] min-w-0 flex-1 rounded-full border border-shary-cloud bg-shary-form px-5 text-left text-[16px] font-semibold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-link rtl:text-right">
+
+<input type="hidden" name="country_code" value="+20" data-phone-value>
+
+<ul class="shary-scroll absolute inset-x-0 top-[58px] z-10 hidden max-h-[200px] overflow-y-auto rounded-[14px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="Country code" data-phone-list>
+<li role="option" tabindex="-1" data-code="+20" aria-selected="true" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/eg.svg" data-img="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Egypt</span>
+<span class="text-shary-muted" dir="ltr">+20</span>
+</li>
+<li role="option" tabindex="-1" data-code="+966" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/sa.svg" data-img="images/shary/flags/sa.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Saudi Arabia</span>
+<span class="text-shary-muted" dir="ltr">+966</span>
+</li>
+<li role="option" tabindex="-1" data-code="+971" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ae.svg" data-img="images/shary/flags/ae.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">UAE</span>
+<span class="text-shary-muted" dir="ltr">+971</span>
+</li>
+<li role="option" tabindex="-1" data-code="+965" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/kw.svg" data-img="images/shary/flags/kw.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Kuwait</span>
+<span class="text-shary-muted" dir="ltr">+965</span>
+</li>
+<li role="option" tabindex="-1" data-code="+974" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/qa.svg" data-img="images/shary/flags/qa.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Qatar</span>
+<span class="text-shary-muted" dir="ltr">+974</span>
+</li>
+<li role="option" tabindex="-1" data-code="+973" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/bh.svg" data-img="images/shary/flags/bh.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Bahrain</span>
+<span class="text-shary-muted" dir="ltr">+973</span>
+</li>
+<li role="option" tabindex="-1" data-code="+968" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/om.svg" data-img="images/shary/flags/om.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Oman</span>
+<span class="text-shary-muted" dir="ltr">+968</span>
+</li>
+<li role="option" tabindex="-1" data-code="+962" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/jo.svg" data-img="images/shary/flags/jo.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Jordan</span>
+<span class="text-shary-muted" dir="ltr">+962</span>
+</li>
+<li role="option" tabindex="-1" data-code="+961" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/lb.svg" data-img="images/shary/flags/lb.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Lebanon</span>
+<span class="text-shary-muted" dir="ltr">+961</span>
+</li>
+<li role="option" tabindex="-1" data-code="+964" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/iq.svg" data-img="images/shary/flags/iq.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Iraq</span>
+<span class="text-shary-muted" dir="ltr">+964</span>
+</li>
+<li role="option" tabindex="-1" data-code="+218" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ly.svg" data-img="images/shary/flags/ly.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Libya</span>
+<span class="text-shary-muted" dir="ltr">+218</span>
+</li>
+<li role="option" tabindex="-1" data-code="+249" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/sd.svg" data-img="images/shary/flags/sd.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Sudan</span>
+<span class="text-shary-muted" dir="ltr">+249</span>
+</li>
+<li role="option" tabindex="-1" data-code="+212" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ma.svg" data-img="images/shary/flags/ma.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Morocco</span>
+<span class="text-shary-muted" dir="ltr">+212</span>
+</li>
+<li role="option" tabindex="-1" data-code="+213" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/dz.svg" data-img="images/shary/flags/dz.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Algeria</span>
+<span class="text-shary-muted" dir="ltr">+213</span>
+</li>
+<li role="option" tabindex="-1" data-code="+216" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/tn.svg" data-img="images/shary/flags/tn.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Tunisia</span>
+<span class="text-shary-muted" dir="ltr">+216</span>
+</li>
+<li role="option" tabindex="-1" data-code="+970" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ps.svg" data-img="images/shary/flags/ps.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Palestine</span>
+<span class="text-shary-muted" dir="ltr">+970</span>
+</li>
+<li role="option" tabindex="-1" data-code="+967" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ye.svg" data-img="images/shary/flags/ye.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Yemen</span>
+<span class="text-shary-muted" dir="ltr">+967</span>
+</li>
+<li role="option" tabindex="-1" data-code="+963" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/sy.svg" data-img="images/shary/flags/sy.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Syria</span>
+<span class="text-shary-muted" dir="ltr">+963</span>
+</li>
+<li role="option" tabindex="-1" data-code="+90" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/tr.svg" data-img="images/shary/flags/tr.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Turkey</span>
+<span class="text-shary-muted" dir="ltr">+90</span>
+</li>
+<li role="option" tabindex="-1" data-code="+44" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/gb.svg" data-img="images/shary/flags/gb.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">United Kingdom</span>
+<span class="text-shary-muted" dir="ltr">+44</span>
+</li>
+<li role="option" tabindex="-1" data-code="+1" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/us.svg" data-img="images/shary/flags/us.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">United States</span>
+<span class="text-shary-muted" dir="ltr">+1</span>
+</li>
+<li role="option" tabindex="-1" data-code="+1" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ca.svg" data-img="images/shary/flags/ca.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Canada</span>
+<span class="text-shary-muted" dir="ltr">+1</span>
+</li>
+<li role="option" tabindex="-1" data-code="+49" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/de.svg" data-img="images/shary/flags/de.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Germany</span>
+<span class="text-shary-muted" dir="ltr">+49</span>
+</li>
+<li role="option" tabindex="-1" data-code="+33" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/fr.svg" data-img="images/shary/flags/fr.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">France</span>
+<span class="text-shary-muted" dir="ltr">+33</span>
+</li>
+<li role="option" tabindex="-1" data-code="+39" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/it.svg" data-img="images/shary/flags/it.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Italy</span>
+<span class="text-shary-muted" dir="ltr">+39</span>
+</li>
+<li role="option" tabindex="-1" data-code="+31" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/nl.svg" data-img="images/shary/flags/nl.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Netherlands</span>
+<span class="text-shary-muted" dir="ltr">+31</span>
+</li>
+<li role="option" tabindex="-1" data-code="+61" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/au.svg" data-img="images/shary/flags/au.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Australia</span>
+<span class="text-shary-muted" dir="ltr">+61</span>
+</li>
+<li role="option" tabindex="-1" data-code="+41" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/ch.svg" data-img="images/shary/flags/ch.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Switzerland</span>
+<span class="text-shary-muted" dir="ltr">+41</span>
+</li>
+<li role="option" tabindex="-1" data-code="+46" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+<img loading="lazy" src="a/images/shary/flags/se.svg" data-img="images/shary/flags/se.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover">
+<span class="min-w-0 flex-1">Sweden</span>
+<span class="text-shary-muted" dir="ltr">+46</span>
+</li>
+</ul>
+</div>
+</div>
+
+<div class="flex flex-col gap-2">
+<span class="text-[15px] font-bold leading-normal">Choose an available date</span>
+<div class="shary-scroll flex gap-2 overflow-x-auto pb-2.5 lg:grid lg:grid-cols-7 lg:gap-1.5 lg:overflow-visible lg:pb-0" data-meeting-days data-count="7"></div>
+<template data-meeting-day-template>
+<button type="button" class="flex h-[64px] min-w-[76px] shrink-0 lg:min-w-0 flex-col items-center justify-center gap-0.5 rounded-[16px] border border-shary-line bg-white px-2 text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" aria-pressed="false">
+<span class="text-[14px] font-bold leading-normal" data-meeting-day-name></span>
+<span class="text-[12px] font-semibold leading-normal opacity-70" data-meeting-day-date></span>
+</button>
+</template>
+</div>
+
+<div class="flex flex-col gap-2">
+<span class="text-[15px] font-bold leading-normal">Available time</span>
+<div class="shary-scroll flex gap-2 overflow-x-auto pb-2.5 lg:grid lg:grid-cols-4 lg:gap-2 lg:overflow-visible lg:pb-0">
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="10:00" aria-pressed="true">10:00 AM</button>
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="11:00" aria-pressed="false">11:00 AM</button>
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="12:00" aria-pressed="false">12:00 PM</button>
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="13:00" aria-pressed="false">01:00 PM</button>
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="14:00" aria-pressed="false">02:00 PM</button>
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="15:00" aria-pressed="false">03:00 PM</button>
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="16:00" aria-pressed="false">04:00 PM</button>
+<button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="17:00" aria-pressed="false">05:00 PM</button>
+</div>
+</div>
+
+<button type="submit" class="mt-1 flex h-[54px] w-full items-center justify-center rounded-full bg-shary-action text-[18px] font-bold leading-[1.2] text-white transition-colors hover:bg-shary-link ">
+<span>Send</span>
+</button>
+</form>
+</div>
+</div>
+<!-- /meeting-modal -->
+
+</div>
+
+</div>
+</div>
+
+<div class="pv-bar pv-bar--site" dir="rtl" lang="ar" role="group" aria-label="أدوات المعاينة" hidden>
+  <button type="button" class="pv-back" hidden data-ar="‹ رجوع" data-en="‹ Back">‹ رجوع</button><button type="button" data-go="search-all" data-ar="بحث" data-en="Search">بحث</button><button type="button" data-go="new-cairo" data-ar="منطقة" data-en="Area">منطقة</button><button type="button" data-go="mountain-view" data-ar="مطور" data-en="Developer">مطور</button><button type="button" data-go="blog" data-ar="مدونة" data-en="Blog">مدونة</button><button type="button" data-go="shary-index" data-ar="المؤشر" data-en="Index">المؤشر</button><button type="button" data-go="rent" data-ar="إيجار" data-en="Rent">إيجار</button><button type="button" data-go="project" data-ar="مشروع" data-en="Project">مشروع</button><button type="button" data-go="unit" data-ar="وحدة" data-en="Unit">وحدة</button><button type="button" data-desktop aria-pressed="false" data-ar="ديسك توب" data-en="Desktop">ديسك توب</button>
+  <button type="button" data-zoom aria-pressed="false" hidden data-ar="تكبير" data-en="Zoom">تكبير</button>
+</div>
+<div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
+
+<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en";</script>
+<!--pv-scripts-->
+<script>
+// الصور مكتوبة مرة واحدة، وأي استخدام تاني لنفس الصورة بياخدها منها
+(function () {
+  var map = {};
+  document.querySelectorAll('img[data-img-key]').forEach(function (img) { map[img.getAttribute('data-img-key')] = img.getAttribute('src'); });
+  document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
+})();
+</script>
+<script src="a/site.js"></script>
+<script>
+(function () {
+  var root = document.getElementById('shary-preview');
+  var wraps = { ar: root.querySelector('[data-lang="ar"]'), en: root.querySelector('[data-lang="en"]') };
+  var bar = document.querySelector('.pv-bar');
+  var toastEl = document.querySelector('.pv-toast');
+  var toastTimer = null;
+  var lang = 'ar';
+  var current = 'article-zayed-vs-october';     // المنطقة المفتوحة
+  var LIVE = {"scenes": "Mostakbal-City/scenes-mostakbal-city", "bloomfields": "Mostakbal-City/bloomfields-mostakbal-city", "el-patio-sola": "El-Shorouk-City/el-patio-sola-el-shorouk", "privado": "Madinaty-62/privado-madinaty", "xchange-hap-town": "Mostakbal-City/xchange-hap-town-mostakbal-city", "il-bosco-city": "Mostakbal-City/il-bosco-city-new-cairo", "the-butterfly": "Mostakbal-City/the-butterfly-mostakbel-city", "mivida-gardens": "Mostakbal-City/mivida-gardens-mostakbal-city", "aliva": "Mostakbal-City/aliva-mountain-view-mostakbal-city", "eastvale": "Mostakbal-City/eastvale-mostakbal-city", "el-patio-prime": "El-Shorouk-City/el-patio-prime-el-shorouk", "el-patio-casa": "El-Shorouk-City/el-patio-casa-el-shorouk", "el-patio-5-east": "El-Shorouk-City/el-patio-5-east-el-shorouk", "el-shorouk-springs": "El-Shorouk-City/el-shorouk-springs-compound", "avelin": "Fifth-Settlement/avelin-compound-new-cairo", "blue-walk": "Fifth-Settlement/blue-walk-new-cairo", "garnet": "Fifth-Settlement/garnet-new-cairo", "blue-tree": "Fifth-Settlement/blue-tree-new-cairo", "vie-halo": "Fifth-Settlement/vie-halo-new-cairo", "jeel-plaza": "Fifth-Settlement/jeel-plaza-new-cairo", "etaje": "New-Cairo/etaje-madinet-masr", "the-pulse": "New-Cairo/the-Pulse-new-cairo", "la-vista-bay": "North-Coast/la-vista-bay-north-coast", "beyond-blue": "North-Coast/beyond-blue-north-coast", "telal": "North-Coast/telal-north-coast", "four": "North-Coast/four-north-coast", "la-vista-bay-east": "North-Coast/la-vista-bay-east-north-coast", "marsa": "North-Coast/marsa-north-coast"};
+  var LIVE_AREAS = {"new-cairo": "New-Cairo", "fifth-settlement": "Fifth-Settlement", "mostakbal-city": "Mostakbal-City", "madinaty": "Madinaty", "al-rehab": "Al-Rehab", "el-shorouk": "Shorouk-City"};
+  var VIEWS = {"area-new-cairo": "new-cairo", "area-mostakbal-city": "mostakbal-city", "area-fifth-settlement": "fifth-settlement", "area-madinaty": "madinaty", "area-al-rehab": "al-rehab", "area-el-shorouk": "el-shorouk", "area-katameya": "katameya", "area-sheikh-zayed": "sheikh-zayed", "area-north-coast": "north-coast", "area-ain-sokhna": "ain-sokhna", "area-new-capital": "new-capital", "area-ras-el-hekma": "ras-el-hekma", "area-sidi-heneish": "sidi-heneish", "area-al-dabaa": "al-dabaa", "area-sidi-abdel-rahman": "sidi-abdel-rahman", "area-al-alamein": "al-alamein", "area-ghazala-bay": "ghazala-bay", "area-alam-al-roum": "alam-al-roum", "developer-mountain-view": "mountain-view", "areas": "areas", "shary-index": "shary-index", "rent": "rent", "rent-unit": "rent-unit", "unit": "unit", "project": "project", "blog": "blog", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026", "article-mortgage-types": "article-mortgage-types", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3", "article-new-capital-guide": "article-new-capital-guide", "article-new-capital-projects-2026": "article-new-capital-projects-2026", "article-resale-vs-developer-price": "article-resale-vs-developer-price", "article-reservation-contract-checklist": "article-reservation-contract-checklist", "article-zayed-vs-october": "article-zayed-vs-october"};
+  var SEARCH = {"ar": {"types": {"chalets": {"key": "chalet", "label": "شاليهات"}, "villas": {"key": "villa", "label": "فلل"}, "apartments": {"key": "apartment", "label": "شقق"}, "twin-houses": {"key": "twin-house", "label": "توين هاوس"}, "townhouses": {"key": "townhouse", "label": "تاون هاوس"}, "duplexes": {"key": "duplex", "label": "دوبلكس"}, "penthouses": {"key": "penthouse", "label": "بنتهاوس"}, "studios": {"key": "studio", "label": "استوديوهات"}, "hotel-apartments": {"key": "hotel-apartment", "label": "شقق فندقية"}, "offices": {"key": "office", "label": "مكاتب إدارية"}, "shops": {"key": "retail", "label": "محلات تجارية"}, "clinics": {"key": "medical", "label": "عيادات"}, "properties": {"key": null, "label": "وحدات"}}, "areas": {"north-coast": {"label": "الساحل الشمالي", "parent": null}, "ras-el-hekma": {"label": "رأس الحكمة", "parent": "north-coast"}, "al-dabaa": {"label": "الضبعة", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "سيدي عبد الرحمن", "parent": "north-coast"}, "al-alamein": {"label": "العلمين", "parent": "north-coast"}, "ghazala-bay": {"label": "غزالة باي", "parent": "north-coast"}, "new-cairo": {"label": "القاهرة الجديدة", "parent": null}, "sheikh-zayed": {"label": "الشيخ زايد", "parent": null}, "ain-sokhna": {"label": "العين السخنة", "parent": null}, "new-capital": {"label": "العاصمة الإدارية", "parent": null}, "mostakbal-city": {"label": "مدينة المستقبل", "parent": "new-cairo"}, "fifth-settlement": {"label": "التجمع الخامس", "parent": "new-cairo"}, "madinaty": {"label": "مدينتي", "parent": "new-cairo"}, "el-shorouk": {"label": "الشروق", "parent": "new-cairo"}}, "general": {"h1": "عقارات مصر", "h1_compounds": "كمبوندات مصر", "meta_title": "عقارات للبيع في مصر: وحدات وكمبوندات بالتقسيط | شاري", "meta_description": "ابحث في كل الوحدات والكمبوندات المتاحة في مصر: فلتر بالمنطقة، المطور، السعر، المساحة ونظام السداد."}, "text": {"sale": {"name": "%s للبيع في %s", "h1": "%s للبيع في %s", "meta_title": "%s للبيع في %s بالتقسيط | شاري", "meta_description": "كل %s المتاحة للبيع في %s: الأسعار، المساحات، أنظمة السداد والمطورين — فلتر وقارن واختار."}, "rent": {"name": "%s للإيجار في %s", "h1": "%s للإيجار في %s", "meta_title": "%s للإيجار في %s | شاري", "meta_description": "كل %s المتاحة للإيجار في %s: الأسعار والمساحات — فلتر وقارن واختار."}, "all": "كل %s", "compounds": "كمبوندات %s", "crumb": "عقارات مصر"}, "promo": {"title": "حدّد ميزانيتك و Shary AI يرشّحلك", "text": "اكتب المبلغ والمنطقة وهيطلعلك الوحدات المناسبة ليك."}, "perPage": 12}, "en": {"types": {"chalets": {"key": "chalet", "label": "Chalets"}, "villas": {"key": "villa", "label": "Villas"}, "apartments": {"key": "apartment", "label": "Apartments"}, "twin-houses": {"key": "twin-house", "label": "Twin houses"}, "townhouses": {"key": "townhouse", "label": "Townhouses"}, "duplexes": {"key": "duplex", "label": "Duplexes"}, "penthouses": {"key": "penthouse", "label": "Penthouses"}, "studios": {"key": "studio", "label": "Studios"}, "hotel-apartments": {"key": "hotel-apartment", "label": "Hotel apartments"}, "offices": {"key": "office", "label": "Offices"}, "shops": {"key": "retail", "label": "Shops"}, "clinics": {"key": "medical", "label": "Clinics"}, "properties": {"key": null, "label": "Properties"}}, "areas": {"north-coast": {"label": "North Coast", "parent": null}, "ras-el-hekma": {"label": "Ras El Hekma", "parent": "north-coast"}, "al-dabaa": {"label": "Al Dabaa", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "Sidi Abdel Rahman", "parent": "north-coast"}, "al-alamein": {"label": "Al Alamein", "parent": "north-coast"}, "ghazala-bay": {"label": "Ghazala Bay", "parent": "north-coast"}, "new-cairo": {"label": "New Cairo", "parent": null}, "sheikh-zayed": {"label": "Sheikh Zayed", "parent": null}, "ain-sokhna": {"label": "Ain Sokhna", "parent": null}, "new-capital": {"label": "New Capital", "parent": null}, "mostakbal-city": {"label": "Mostakbal City", "parent": "new-cairo"}, "fifth-settlement": {"label": "Fifth Settlement", "parent": "new-cairo"}, "madinaty": {"label": "Madinaty", "parent": "new-cairo"}, "el-shorouk": {"label": "El Shorouk", "parent": "new-cairo"}}, "general": {"h1": "Properties in Egypt", "h1_compounds": "Compounds in Egypt", "meta_title": "Properties for sale in Egypt: units and compounds in installments | Shary", "meta_description": "Search every unit and compound available in Egypt: filter by area, developer, price, size and payment plan."}, "text": {"sale": {"name": "%s for sale in %s", "h1": "%s for sale in %s", "meta_title": "%s for sale in %s in installments | Shary", "meta_description": "Every listing of %s for sale in %s: prices, sizes, payment plans and developers — filter, compare and choose."}, "rent": {"name": "%s for rent in %s", "h1": "%s for rent in %s", "meta_title": "%s for rent in %s | Shary", "meta_description": "Every listing of %s for rent in %s: prices and sizes — filter, compare and choose."}, "all": "All %s", "compounds": "Compounds in %s", "crumb": "Properties in Egypt"}, "promo": {"title": "Tell us your budget and Shary AI will shortlist for you", "text": "Type the amount and the area to get the units that fit you."}, "perPage": 12}};
+  var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var T = {
+    ar: {
+      phoneCopied: function (n) { return 'رقم شاري ' + n + ' — اتنسخ. على الموقع الزرار بيفتح الاتصال مباشرة'; },
+      phone: function (n) { return 'رقم شاري ' + n + ' — على الموقع الزرار بيفتح الاتصال مباشرة'; },
+      copied: ' — اتنسخ', opens: 'في الموقع اللينك ده بيفتح: ',
+      shareCopied: 'تم نسخ الرابط', share: 'على الموقع الزرار ده بيفتح قايمة المشاركة أو بينسخ لينك المشروع',
+      desktop: 'دي نسخة الديسك توب مصغّرة على قد الشاشة. اضغط "تكبير" عشان تقرا التفاصيل وحرّك يمين وشمال',
+      nameError: 'اكتب اسمك', phoneErrorEg: 'اكتب رقم موبايل مصري صحيح، مثال: 01000730208', phoneError: 'اكتب رقم الموبايل بالأرقام من غير كود الدولة',
+      sent: 'تم الإرسال', received: 'تم استلام طلبك، ومستشار شاري هيتواصل معاك. (معاينة: مفيش بيانات اتبعتت فعلًا)',
+      meetingSent: function (type, day, time) { return 'تم استلام طلب الاجتماع (' + type + ' — ' + day + ' ' + time + '). (معاينة: مفيش بيانات اتبعتت فعلًا)'; },
+      favoriteOn: 'اتحفظ في المفضلة', favoriteOff: 'اتشال من المفضلة', compareOn: 'اتضاف للمقارنة', compareOff: 'اتشال من المقارنة',
+      filtered: function (n) { return n + ' نتيجة مطابقة'; },
+      ai: 'في الموقع الزرار ده بيفتح محادثة Shary AI', switched: 'الصفحة دلوقتي بالعربي'
+    },
+    en: {
+      phoneCopied: function (n) { return 'Shary number ' + n + ' — copied. On the live site this button starts the call'; },
+      phone: function (n) { return 'Shary number ' + n + ' — on the live site this button starts the call'; },
+      copied: ' — copied', opens: 'On the live site this link opens: ',
+      shareCopied: 'Link copied', share: 'On the live site this button opens the share sheet or copies the project link',
+      desktop: 'This is the desktop version scaled to fit. Press "Zoom" to read the details and scroll sideways',
+      nameError: 'Enter your name', phoneErrorEg: 'Enter a valid Egyptian mobile number, e.g. 01000730208', phoneError: 'Enter the mobile number in digits, without the country code',
+      sent: 'Sent', received: 'Your request was received and a Shary advisor will contact you. (Preview: no data was actually sent)',
+      meetingSent: function (type, day, time) { return 'Meeting request received (' + type + ' — ' + day + ' ' + time + '). (Preview: no data was actually sent)'; },
+      favoriteOn: 'Saved to favorites', favoriteOff: 'Removed from favorites', compareOn: 'Added to compare', compareOff: 'Removed from compare',
+      filtered: function (n) { return n + ' matching results'; },
+      ai: 'On the live site this button opens the Shary AI chat', switched: 'The page is now in English'
+    }
+  };
+  function t(key) { return T[lang][key]; }
+
+  function toast(text) {
+    toastEl.textContent = text;
+    toastEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    toastEl.lang = lang;
+    toastEl.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.hidden = true; }, 4200);
+  }
+
+  function scrollTo(el) { el.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' }); }
+
+  // تاريخ المتصفح: كل صفحة بتتفتح جوه المعاينة بتتسجل، فزرار الرجوع بيرجّع للصفحة اللي قبلها (وفي نفس المكان) بدل ما يخرج من المعاينة
+  var ready = false;
+  var scrolls = {};
+  try { history.scrollRestoration = 'manual'; } catch (e) {}   // المعاينة هي اللي بترجّع مكان الصفحة
+  // المعاينة المتقسّمة (كل صفحة ملف لوحده — window.PV_DOCS): الصفحة اللي مش في الملف ده بتتفتح من ملفها،
+  // واللي الصفحة محتاجاه (الكارت المضغوط / اختيارات البحث) بيتنقل معاها في sessionStorage وبيتحفظ في تاريخ المتصفح عشان الرجوع يرجّع نفس الصفحة
+  var DOCS = window.PV_DOCS || null;
+  var fills = {};   // view -> { fn, slug, info } اللي الصفحة اتملت بيه
+  var entered = false;
+  try { entered = !!DOCS && sessionStorage.getItem('pv:nav') === '1'; } catch (e) {}
+  // المعاينة الخفيفة: كل ملف فيه لغة واحدة (page.html عربي ، page-en.html إنجليزي)
+  var DOC_LANG = window.PV_LANG || null;
+  function langFile(file, language) { file = file.replace(/-en\.html$/, '.html'); return language === 'en' ? file.replace(/\.html$/, '-en.html') : file; }
+  function inDoc(slug) { return !!wraps[DOC_LANG || 'ar'].querySelector('[data-view="' + slug + '"]'); }
+  function go(slug, payload) {
+    if (!DOCS || !DOCS[slug]) return false;
+    try {
+      sessionStorage.setItem('pv:nav', '1');
+      if (payload) sessionStorage.setItem('pv:pending', JSON.stringify(payload)); else sessionStorage.removeItem('pv:pending');
+    } catch (e) {}
+    try { history.replaceState(Object.assign({}, history.state || {}, { pvScroll: window.scrollY }), ''); } catch (e) {}
+    location.href = (DOC_LANG ? langFile(DOCS[slug], lang) : DOCS[slug]) + '#' + slug + (lang === 'en' ? '/en' : '');
+    return true;
+  }
+  function takePending() {
+    try {
+      var raw = sessionStorage.getItem('pv:pending');
+      sessionStorage.removeItem('pv:pending');
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function remember(push) {
+    var method = push ? 'pushState' : 'replaceState';
+    var state = { pvView: current };
+    if (fills[current]) state.pvFill = fills[current];
+    try { history[method](state, '', '#' + current + (lang === 'en' ? '/en' : '')); }
+    catch (e) { try { history[method](state, ''); } catch (e2) {} }
+  }
+  window.addEventListener('popstate', function (e) {
+    var slug = (e.state && e.state.pvView) || (e.state && e.state.sharyOverlay ? current : firstView);
+    if (slug === current) return;
+    if (stack.length && stack[stack.length - 1] === slug) stack.pop(); else stack.push(current);   // رجوع المتصفح / تقدّم المتصفح
+    show(slug, true);
+    syncBack();
+  });
+
+  // بيفتح صفحة منطقة (المنطقة الكبيرة أو منطقة فرعية جواها)
+  var firstView = current;
+  // زرار "رجوع" بتاع المعاينة: بيرجّع للصفحة اللي قبلها جوه المعاينة (قايمة خاصة بالمعاينة، مش معتمدة على تاريخ المتصفح) فمش بيخرج بره أبدًا
+  var stack = [];
+  var backButton = document.querySelector('.pv-back');
+  function syncBack() { if (backButton) backButton.hidden = !stack.length && !entered; }
+  // لينك الهيدر النشط بيتبع الصفحة المفتوحة (بحث / المشاريع / المطورين / المدونة)
+  function navGroup(href) {
+    if (/^search-all(-en)?\.html$/.test(href)) return 'search';
+    if (/^blog(-en)?\.html$/.test(href)) return 'blog';
+    if (/^developer-/.test(href) || /\/developers$/.test(href)) return 'developers';
+    if (/\/projects$/.test(href)) return 'projects';
+    return '';
+  }
+  function syncNav() {
+    var search = parseSearchKey(current);
+    var group = search ? (search.mode === 'compounds' ? 'projects' : 'search') : (current === 'blog' || current.indexOf('article-') === 0) ? 'blog' : current === 'mountain-view' ? 'developers' : '';
+    root.querySelectorAll('header nav a').forEach(function (a) {
+      var mine = navGroup(a.getAttribute('href') || '');
+      if (!mine && !a.classList.contains('text-shary-link')) return;
+      a.classList.toggle('text-shary-link', !!group && mine === group);
+      a.classList.toggle('text-shary-navy', !(group && mine === group));
+    });
+    bar.querySelectorAll('[data-go]').forEach(function (b) {
+      var go = b.getAttribute('data-go');
+      var on = go === 'search-all' ? !!search : go === 'blog' ? group === 'blog' : go === 'mountain-view' ? group === 'developers' : go === 'shary-index' ? current === 'shary-index' : go === 'rent' ? current.indexOf('rent') === 0 : go === 'unit' || go === 'project' ? current === go : !search && group === '' && current !== 'shary-index' && current.indexOf('rent') !== 0 && current !== 'unit' && current !== 'project';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+  function closeMenus() { root.querySelectorAll('[id^="mobile-nav"]').forEach(function (nav) { nav.classList.add('hidden'); }); }
+  if (backButton) backButton.addEventListener('click', function () {
+    var previous = stack.pop();
+    if (!previous) { if (entered) history.back(); return; }
+    show(previous, true);
+    remember(false);
+    syncBack();
+  });
+
+  function show(slug, fromHistory) {
+    var search = parseSearchKey(slug);
+    if (search) return showSearch(search.slug, search.mode, fromHistory);
+    if (!inDoc(slug)) return go(slug);
+    var changed = slug !== current;
+    scrolls[current] = window.scrollY;
+    if (!fromHistory && changed && ready) stack.push(current);
+    current = slug;
+    syncBack();
+    closeMenus();
+    syncNav();
+    root.classList.remove('pv-search');
+    root.querySelectorAll('[data-view]').forEach(function (v) { v.hidden = v.getAttribute('data-view') !== slug; });
+    window.scrollTo(0, fromHistory ? (scrolls[slug] || 0) : 0);
+    if (!fromHistory) remember(ready && changed);
+    return true;
+  }
+
+
+  // ===================== صفحة البحث في المعاينة =====================
+  // نفس اللي SearchController بيعمله على السيرفر: كل صفحة بحث = كل الوحدات / الكمبوندات التجريبية متفلترة بفورم الفلاتر وخانة البحث،
+  // 12 في الصفحة والباقي بيتحمل وأنت نازل. العنوان ولينكات المناطق وعمليات البحث المشابهة بتتكوّن من النوع والمنطقة اللي في اللينك.
+  var pools = {};
+  ['ar', 'en'].forEach(function (language) {
+    pools[language] = {};
+    ['units', 'compounds'].forEach(function (mode) {
+      var holder = wraps[language].querySelector('[data-pool="' + mode + '"]');
+      pools[language][mode] = holder ? Array.prototype.filter.call(holder.children, function (card) { return card.hasAttribute('data-unit') || card.hasAttribute('data-project'); }) : [];
+      pools[language][mode].forEach(function (card, i) { card.setAttribute('data-order', i); });
+    });
+  });
+  function searchKey(slug, mode) { return 'search~' + slug + (mode === 'compounds' ? '~compounds' : ''); }
+  function parseSearchKey(key) {
+    if (key === 'search-all' || key === 'search-all-compounds') return { slug: 'all', mode: key === 'search-all' ? 'units' : 'compounds' };
+    var parts = String(key || '').split('~');
+    return parts[0] === 'search' && parts[1] ? { slug: parts[1], mode: parts[2] === 'compounds' ? 'compounds' : 'units' } : null;
+  }
+  function searchTarget(href) {
+    var m = /^#pv:(?:\/en)?\/search(?:\/([a-z0-9-]+))?(?:\?view=(compounds))?$/.exec(href);
+    if (!m) { m = /^search-([a-z0-9-]+?)(?:-(compounds))?(?:-en)?\.html$/.exec(href); }
+    if (!m) return null;
+    var slug = m[1] || 'all';
+    return searchEntry(slug, lang) ? { slug: slug, mode: m[2] ? 'compounds' : 'units' } : null;
+  }
+  function fill(pattern) { var args = arguments, n = 0; return pattern.replace(/%s/g, function () { n++; return args[n]; }); }
+  function tokens(card, name) { return (card.getAttribute(name) || '').split(' ').filter(Boolean); }
+  function plain(text) { return String(text || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/[-_،,]/g, ' ').replace(/\s+/g, ' ').trim(); }
+
+  // فيه وحدات للنوع ده في المنطقة دي؟ (لينكات المناطق وعمليات البحث المشابهة بتظهر للي له نتايج بس)
+  function has(language, typeKey, area, offer) {
+    return pools[language].units.some(function (card) {
+      return (card.getAttribute('data-offer') === 'rent') === (offer === 'rent') && (!typeKey || card.getAttribute('data-types') === typeKey) && tokens(card, 'data-areas').indexOf(area) > -1;
+    });
+  }
+  function searchEntry(slug, language) {
+    var meta = SEARCH[language];
+    function similar(typeSlug, area, offer) {
+      var out = [], seen = {};
+      function add(type, where) {
+        if (out.length >= 8 || seen[type + where] || !has(language, meta.types[type].key, where, offer)) return;
+        seen[type + where] = true;
+        out.push({ label: fill(meta.text[offer].name, meta.types[type].label, meta.areas[where].label), slug: type + '-for-' + offer + '-in-' + where });
+      }
+      var parent = area ? (meta.areas[area].parent || area) : null;
+      if (!area) {
+        ['chalets', 'villas', 'apartments', 'twin-houses'].forEach(function (type) { Object.keys(meta.areas).forEach(function (where) { if (!meta.areas[where].parent) add(type, where); }); });
+      } else {
+        Object.keys(meta.types).forEach(function (type) { if (type !== typeSlug && out.length < 4) add(type, area); });
+        Object.keys(meta.areas).forEach(function (where) { if (where !== area && where !== parent && meta.areas[where].parent !== parent) add(typeSlug, where); });
+      }
+      return out;
+    }
+    if (slug === 'all') return { slug: 'all', h1: meta.general.h1, h1c: meta.general.h1_compounds, parent: null, defaults: {}, subs: [], similar: similar(null, null, 'sale') };
+    var m = /^([a-z-]+)-for-(sale|rent)-in-([a-z0-9-]+)$/.exec(slug);
+    if (!m || !meta.types[m[1]] || !meta.areas[m[3]]) return null;
+    var type = meta.types[m[1]], offer = m[2], area = meta.areas[m[3]], text = meta.text[offer];
+    var parent = area.parent || m[3];
+    function link(where) { return m[1] + '-for-' + offer + '-in-' + where; }
+    var subs = area.parent ? [{ label: fill(meta.text.all, meta.areas[parent].label), slug: link(parent) }] : [];
+    Object.keys(meta.areas).forEach(function (where) {
+      if (meta.areas[where].parent === parent && (where === m[3] || has(language, type.key, where, offer))) subs.push({ label: meta.areas[where].label, slug: link(where), current: where === m[3] });
+    });
+    var defaults = { area: [m[3]] };
+    if (type.key) defaults.type = [type.key];
+    if (offer === 'rent') defaults.offer = 'rent';
+    return {
+      slug: slug, h1: fill(text.h1, type.label, area.label), h1c: fill(meta.text.compounds, area.label), crumb: meta.text.crumb,
+      parent: area.parent ? { label: fill(text.h1, type.label, meta.areas[parent].label), slug: link(parent) } : null,
+      defaults: defaults, subs: subs.length > 1 ? subs : [], similar: similar(m[1], m[3], offer)
+    };
+  }
+
+  function criteria(form) {
+    function picked(name) { return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '[]"]:checked:not(:disabled)'), function (box) { return box.value; }); }
+    function field(selector) { var el = form.querySelector(selector); return el && el.value !== '' ? Number(String(el.value).replace(/,/g, '')) : null; }
+    var q = form.querySelector('input[name="q"]');
+    var sort = form.querySelector('input[name="sort"]:checked');
+    return {
+      type: picked('type'), area: picked('area'), developer: picked('developer'), project: picked('project'), beds: picked('bedrooms'), baths: picked('bathrooms'),
+      finishing: picked('finishing'), delivery: picked('delivery'), years: picked('years'), offer: (form.querySelector('input[name="offer"]:checked') || {}).value || 'developer',
+      low: field('[data-range-min="price"]'), high: field('[data-range-max="price"]'), sizeLow: field('[data-range-min="size"]'), sizeHigh: field('[data-range-max="size"]'),
+      words: plain(q && q.value).split(' ').filter(Boolean), sort: sort ? sort.value : '', form: form
+    };
+  }
+  function haystack(card, form) {
+    if (card.__hay) return card.__hay;
+    var bits = [card.textContent, card.getAttribute('data-slug'), card.getAttribute('data-developer')];
+    // اسم المطور والمنطقة من قوايم الفلتر (عشان البحث بالاسم حتى لو مش مكتوب على الكارت)
+    var dev = form.querySelector('input[name="developer[]"][value="' + card.getAttribute('data-developer') + '"]');
+    if (dev && dev.closest('label')) bits.push(dev.closest('label').textContent);
+    tokens(card, 'data-areas').forEach(function (slug) {
+      var box = form.querySelector('input[name="area[]"][value="' + slug + '"]');
+      bits.push(slug, box && box.closest('label') ? box.closest('label').textContent : '');
+    });
+    Array.prototype.forEach.call(card.querySelectorAll('img[alt]'), function (img) { bits.push(img.alt); });
+    return (card.__hay = plain(bits.join(' ')));
+  }
+  function matches(card, c, mode) {
+    function any(chosen, have) { return !chosen.length || chosen.some(function (v) { return have.indexOf(v) > -1; }); }
+    var units = mode === 'units';
+    var price = Number(card.getAttribute('data-price'));
+    if (!any(c.type, tokens(card, 'data-types')) || !any(c.area, tokens(card, 'data-areas')) || !any(c.developer, [card.getAttribute('data-developer')]) ||
+        !any(c.project, [card.getAttribute(units ? 'data-project-slug' : 'data-slug')])) return false;
+    if ((c.low !== null && price < c.low) || (c.high !== null && price > c.high)) return false;
+    if (c.words.length) { var text = haystack(card, c.form); if (!c.words.every(function (word) { return text.indexOf(word) > -1; })) return false; }
+    if (!units) return true;
+    var rent = card.getAttribute('data-offer') === 'rent';
+    if (c.offer === 'rent' ? !rent : (rent || (c.offer === 'resale' && card.getAttribute('data-resale') !== '1'))) return false;
+    var size = Number(card.getAttribute('data-size')), years = Number(card.getAttribute('data-years'));
+    if ((c.sizeLow !== null && size < c.sizeLow) || (c.sizeHigh !== null && size > c.sizeHigh)) return false;
+    return any(c.beds, [card.getAttribute('data-beds')]) && any(c.baths, [card.getAttribute('data-baths')]) && any(c.finishing, [card.getAttribute('data-finishing')]) &&
+      any(c.delivery, [card.getAttribute('data-delivery')]) && (!c.years.length || c.years.some(function (v) { return v === '9+' ? years >= 9 : Number(v) === years; }));
+  }
+  function nextCards(main) {
+    var nodes = main.__matched.slice(main.__shown, main.__shown + SEARCH[lang].perPage).map(function (card) { return card.cloneNode(true); });
+    main.__shown += nodes.length;
+    return nodes;
+  }
+  function runSearch(main) {
+    var state = main.__search;
+    var form = main.querySelector('form[data-area-filters]');
+    var grid = main.querySelector('[data-results]');
+    var c = criteria(form);
+    var list = pools[state.lang][state.mode].filter(function (card) { return matches(card, c, state.mode); });
+    function num(card, name) { return Number(card.getAttribute(name)) || 0; }
+    var by = { price_asc: ['data-price', 1], price_desc: ['data-price', -1], installment_asc: ['data-installment', 1], installment_desc: ['data-installment', -1] }[c.sort];
+    if (by && (state.mode === 'units' || by[0] === 'data-price')) list.sort(function (a, b) { return (num(a, by[0]) - num(b, by[0])) * by[1] || num(a, 'data-order') - num(b, 'data-order'); });
+    else if (c.sort === 'delivery' && state.mode === 'units') list.sort(function (a, b) { return num(a, 'data-delivery') - num(b, 'data-delivery') || num(a, 'data-order') - num(b, 'data-order'); });
+    main.__matched = list;
+    main.__shown = 0;
+    if (grid.__promo === undefined) grid.__promo = grid.querySelector('[data-promo]') || null;
+    grid.textContent = '';
+    var first = nextCards(main);
+    first.forEach(function (card) { grid.appendChild(card); });
+    if (grid.__promo && first.length) grid.insertBefore(grid.__promo, first[2] || null);   // البانر بعد تاني نتيجة
+    if (window.SharyCards) window.SharyCards.refresh(grid);
+    var count = main.querySelector('[data-results-count]');
+    if (count) count.textContent = list.length.toLocaleString('en-US');
+    main.querySelector('[data-results-empty]').classList.toggle('hidden', list.length > 0);
+    var sentinel = main.querySelector('[data-infinite]');
+    if (sentinel) sentinel.dispatchEvent(new CustomEvent('shary:infinite-reset', { detail: { nextUrl: main.__shown < list.length ? '#more' : '' } }));
+  }
+
+  // بيجهّز القالب على صفحة البحث المطلوبة: العنوان، مسار الصفحة، لينكات المناطق، عمليات البحث المشابهة، والفلاتر اللي الصفحة مفتوحة عليها
+  function applySearch(main, entry, mode, extra) {
+    var title = mode === 'compounds' && entry.h1c ? entry.h1c : entry.h1;
+    main.querySelector('.search-title h1').textContent = title;
+    var crumbs = main.querySelectorAll('[data-breadcrumb] ol > li');
+    if (crumbs.length) {
+      var last = crumbs[crumbs.length - 1];
+      (last.querySelector('span') || last).textContent = title;
+      if (crumbs.length >= 7) {   // قالب بحث المنطقة: ... ‹ بحث المنطقة الأم ‹ اسم البحث
+        crumbs[4].hidden = crumbs[5].hidden = !entry.parent;
+        if (entry.parent) { crumbs[4].querySelector('span').textContent = entry.parent.label; crumbs[4].querySelector('a').setAttribute('href', '#pv:/search/' + entry.parent.slug); }
+      }
+    }
+    var subs = main.querySelector('.search-subs');
+    if (subs) {
+      if (!main.__subClass) main.__subClass = { link: subs.querySelector('a').className, current: subs.querySelector('[aria-current]').className };
+      subs.textContent = '';
+      entry.subs.forEach(function (sub) {
+        var node = document.createElement(sub.current ? 'span' : 'a');
+        node.className = main.__subClass[sub.current ? 'current' : 'link'];
+        node.textContent = sub.label;
+        if (sub.current) node.setAttribute('aria-current', 'page'); else node.setAttribute('href', '#pv:/search/' + sub.slug + (mode === 'compounds' ? '?view=compounds' : ''));
+        subs.appendChild(node);
+      });
+      subs.hidden = !entry.subs.length;
+      subs.style.display = entry.subs.length ? '' : 'none';
+    }
+    var grid = main.querySelector('[data-results]');
+    var more = grid.parentNode.querySelector('section');   // عمليات بحث مشابهة
+    if (more) {
+      var links = more.querySelector('div');
+      if (!main.__similarClass) main.__similarClass = links.querySelector('a').className;
+      links.textContent = '';
+      entry.similar.forEach(function (item) {
+        var a = document.createElement('a');
+        a.className = main.__similarClass;
+        a.textContent = item.label;
+        a.setAttribute('href', '#pv:/search/' + item.slug);
+        links.appendChild(a);
+      });
+      more.style.display = entry.similar.length ? '' : 'none';
+    }
+    var base = '#pv:/search' + (entry.slug === 'all' ? '' : '/' + entry.slug);
+    main.querySelectorAll('[data-mode-switch]').forEach(function (a) { a.setAttribute('href', base + (mode === 'compounds' ? '' : '?view=compounds')); });
+
+    // الفلاتر: مسح الكل ثم تعليم فلاتر الصفحة (النوع + المنطقة ، وللإيجار تبويب الإيجار)
+    var form = main.querySelector('form[data-area-filters]');
+    form.__pvQuiet = true;
+    var clear = form.querySelector('.search-notice [data-filter-clear-all]') || form.querySelector('[data-filter-clear-all]');
+    if (clear) clear.click();
+    var q = form.querySelector('input[name="q"]');
+    if (q) q.value = '';
+    form.querySelectorAll('input[name="sort"]').forEach(function (radio) { radio.checked = false; });
+    var chosen = {};
+    Object.keys(entry.defaults).forEach(function (name) { chosen[name] = entry.defaults[name]; });
+    Object.keys(extra || {}).forEach(function (name) { chosen[name] = extra[name]; });
+    var touched = null;
+    if (chosen.offer) {
+      var offer = form.querySelector('input[name="offer"][value="' + chosen.offer + '"]');
+      if (offer) { offer.checked = true; offer.dispatchEvent(new Event('change', { bubbles: true })); }
+    }
+    ['type', 'area', 'developer', 'project'].forEach(function (name) {
+      (chosen[name] || []).forEach(function (value) {
+        var box = form.querySelector('input[name="' + name + '[]"][value="' + value + '"]');
+        if (box && !box.disabled) { box.checked = true; touched = box; }
+      });
+    });
+    if (touched) touched.dispatchEvent(new Event('change', { bubbles: true }));
+    clearTimeout(form.__pvTimer);
+    form.__pvTimer = setTimeout(function () { form.__pvQuiet = false; }, 650);
+    runSearch(main);
+  }
+
+  function showSearch(slug, mode, fromHistory) {
+    var extra = fromHistory && typeof fromHistory === 'object' ? fromHistory : null;
+    if (extra) fromHistory = false;
+    var entry = searchEntry(slug, lang);
+    var template = slug === 'all' ? (mode === 'compounds' ? 'search-all-compounds' : 'search-all') : (mode === 'compounds' ? 'search-compounds' : 'search-units');
+    var main = wraps[lang].querySelector('[data-view="' + template + '"]');
+    if (entry && !main && DOCS) return go(template, { fn: 'search', slug: slug, mode: mode, extra: extra });
+    if (!entry || !main) return false;
+    var key = searchKey(slug, mode);
+    var changed = key !== current;
+    scrolls[current] = window.scrollY;
+    if (!fromHistory && changed && ready) stack.push(current);
+    current = key;
+    syncBack();
+    closeMenus();
+    syncNav();
+    root.classList.add('pv-search');
+    root.querySelectorAll('[data-view]').forEach(function (v) { v.hidden = v.getAttribute('data-view') !== template; });
+    if (main.__searchKey !== key || extra) {
+      main.__searchKey = key;
+      main.__search = { slug: slug, mode: mode, lang: lang };
+      applySearch(main, entry, mode, extra);
+    }
+    window.scrollTo(0, fromHistory ? (scrolls[key] || 0) : 0);
+    if (!fromHistory) remember(ready && changed);
+    setTimeout(function () { window.dispatchEvent(new Event('resize')); }, 30);   // عمود الفلاتر بيرتّب قوايمه (المختار الأول)
+    return true;
+  }
+
+  // تغيير اللغة: الصفحة كلها بتتحول (عربي RTL / إنجليزي LTR)
+  function setLang(next) {
+    if (DOC_LANG && next !== DOC_LANG) {   // اللغة التانية في ملف تاني: بنفتحه على نفس الصفحة
+      try { sessionStorage.setItem('pv:nav', '1'); sessionStorage.removeItem('pv:pending'); } catch (e) {}
+      location.replace(langFile(location.pathname.split('/').pop() || 'search.html', next) + '#' + current + (next === 'en' ? '/en' : ''));
+      return;
+    }
+    lang = next;
+    wraps.ar.hidden = next !== 'ar';
+    wraps.en.hidden = next !== 'en';
+    document.documentElement.lang = next;
+    document.title = next === 'ar' ? 'معاينة موقع شاري' : 'Shary website preview';
+    bar.dir = next === 'ar' ? 'rtl' : 'ltr';
+    bar.querySelectorAll('[data-ar]').forEach(function (el) { el.textContent = el.getAttribute('data-' + next); });
+    if (backButton) { backButton.textContent = backButton.getAttribute('data-' + next); backButton.dir = next === 'ar' ? 'rtl' : 'ltr'; }
+    root.querySelectorAll('[id^="mobile-nav"]').forEach(function (nav) { nav.classList.add('hidden'); });
+    var search = parseSearchKey(current);
+    if (search) showSearch(search.slug, search.mode, true);
+    remember();
+  }
+
+  function copy(text, done, fallback) {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+    else fallback();
+  }
+
+  // أرقام الصفحات في المعاينة: الرقم بيتعلّم، كروت المشاريع بتتبدل، والصفحة بتطلع لأول المشاريع (في الموقع اللينك بيفتح ?page=N من السيرفر)
+  function turnPage(link) {
+    var nav = link.closest('[data-pagination]');
+    var active = nav.querySelector('[aria-current="page"]');
+    var now = parseInt(active.textContent, 10) || 1;
+    var to = link.rel === 'next' ? now + 1 : link.rel === 'prev' ? now - 1 : parseInt(link.textContent, 10);
+    var target = Array.prototype.filter.call(nav.querySelectorAll('a'), function (a) { return !a.rel && parseInt(a.textContent, 10) === to; })[0];
+    if (!target || to === now) return;
+    var label = target.getAttribute('aria-label') || '';
+    var was = document.createElement('a');
+    was.className = target.className; was.textContent = now;
+    was.setAttribute('href', '#');
+    was.setAttribute('aria-label', label.replace(String(to), String(now)));
+    var is = document.createElement('span');
+    is.className = active.className; is.textContent = to; is.setAttribute('aria-current', 'page');
+    active.parentNode.replaceChild(was, active);
+    target.parentNode.replaceChild(is, target);
+    var section = nav.closest('section') || nav.parentNode;
+    var grid = section.querySelector('[data-projects-grid], [data-articles-grid], [data-results]');
+    if (grid) {
+      var articles = grid.hasAttribute('data-articles-grid');
+      var cards = Array.prototype.filter.call(grid.children, function (c) { return articles || c.hasAttribute('data-project') || c.hasAttribute('data-unit'); });
+      cards.forEach(function (c, i) { if (!c.hasAttribute('data-pv-order')) c.setAttribute('data-pv-order', i); });
+      cards.sort(function (x, y) { return x.getAttribute('data-pv-order') - y.getAttribute('data-pv-order'); });
+      var shift = ((to - 1) * 3) % (cards.length || 1);
+      // الكروت بس اللي بتتبدل (بتبهت لحظة) والصفحة واقفة مكانها — لو أول الكروت فوق الشاشة بننزل لها بهدوء
+      grid.classList.add('listing-loading');
+      setTimeout(function () {
+        var turned = cards.slice(shift).concat(cards.slice(0, shift));
+        turned.forEach(function (c) { grid.appendChild(c); });
+        var ad = grid.querySelector('[data-promo]');   // شريط الإعلانات يفضل مكانه وسط الكروت
+        if (ad) grid.insertBefore(ad, turned[Number(ad.getAttribute('data-promo-after')) || 2] || null);
+        grid.classList.remove('listing-loading');
+        var top = grid.getBoundingClientRect().top;
+        if (top < 96) window.scrollTo({ top: window.pageYOffset + top - 150, behavior: 'smooth' });
+      }, 260);
+    }
+  }
+
+  // صفحة وحدة الإيجار في المعاينة: قالب واحد، والعنوان / المكان / السعر / المساحة / الغرف / الفرش بيتاخدوا من الكارت المضغوط
+  function openRentUnit(link) {
+    var card = link.closest('[data-unit]');
+    var row = link.closest('li');
+    var title = (card ? card.querySelector('h3') : link).textContent.trim();
+    var data = card ? {
+      location: card.querySelector('small span') ? card.querySelector('small span').textContent.trim() : '', price: Number(card.getAttribute('data-price')).toLocaleString('en-US'),
+      area: card.getAttribute('data-size'), beds: card.getAttribute('data-beds'), baths: card.getAttribute('data-baths'), furnished: card.getAttribute('data-furnished') === 'furnished',
+      pill: (card.querySelector('.area-card__price span.ms-auto') || {}).textContent
+    } : null;
+    if (!show('rent-unit')) return false;
+    var view = wraps[lang].querySelector('[data-view="rent-unit"]');
+    function set(name, text) { if (text == null || text === '') return; view.querySelectorAll('[data-unit-field="' + name + '"]').forEach(function (n) { n.textContent = text; }); }
+    set('title', title);
+    var crumb = view.querySelector('[data-breadcrumb] [aria-current="page"]');
+    if (crumb) crumb.textContent = title;
+    if (data) {
+      ['location', 'price', 'area', 'beds', 'baths'].forEach(function (name) { set(name, data[name]); });
+      view.querySelectorAll('[data-unit-pill]').forEach(function (pill) {
+        if (data.pill) pill.textContent = data.pill.trim();
+        pill.classList.toggle('bg-shary-whatsapp', data.furnished); pill.classList.toggle('text-white', data.furnished);
+        pill.classList.toggle('bg-shary-form', !data.furnished); pill.classList.toggle('text-shary-navy', !data.furnished);
+      });
+      view.querySelectorAll('[data-unit-flag]').forEach(function (flag) { flag.textContent = flag.getAttribute(data.furnished ? 'data-yes' : 'data-no'); });
+      if (data.pill) view.querySelectorAll('[data-detail="delivery"]').forEach(function (cell) { cell.textContent = data.pill.trim(); });
+    } else if (row) {
+      var price = row.querySelector('bdi[dir="ltr"]');
+      if (price) set('price', price.textContent.trim());
+    }
+    view.querySelectorAll('[data-gallery-item]').forEach(function (tile, i) { tile.setAttribute('data-active', i === 0 ? '1' : '0'); });
+    return true;
+  }
+
+  // ===================== صفحة الوحدة وصفحة المشروع في المعاينة =====================
+  // قالب واحد لكل صفحة (أول وحدة / أول مشروع في البيانات التجريبية). لما كارت تاني يتضغط: الاسم والمكان واللوجو والصورة بيتاخدوا من الكارت،
+  // وكل أرقام الفلوس في الصفحة (data-money) والرسم بيتظبطوا بنسبة سعر الكارت لسعر القالب — عشان الصفحة تفضل متماسكة.
+  function groupDigits(value) { return Math.round(value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function toNumber(text) { return parseFloat(String(text || '').replace(/[^0-9.]/g, '')) || 0; }
+  function roundMoney(value) { var step = value >= 1000000 ? 10000 : value >= 100000 ? 1000 : 100; return Math.round(value / step) * step; }
+  function cardInfo(link) {
+    var card = link.closest('article');
+    if (!card) return null;
+    var logo = card.querySelector('img.rounded-full');
+    var photo = card.querySelector('img.card-photo');
+    var price = card.querySelector('.area-card__price p > span') || card.querySelector('.area-card__price b');
+    var stats = Array.prototype.map.call(card.querySelectorAll('ul li b'), function (b) { return b.textContent.trim(); });
+    var place = card.querySelector('small span');
+    var wrap = card.closest('[data-price]');
+    function pick(el) { return el ? { src: el.currentSrc || el.getAttribute('src') || '', img: el.getAttribute('data-img') || '', key: el.getAttribute('data-img-key') || '', fallback: el.getAttribute('data-fallback-key') || '' } : null; }
+    return {
+      title: (card.querySelector('h3') || link).textContent.trim().replace(/\s+/g, ' '), location: place ? place.textContent.trim() : '',
+      price: wrap ? Number(wrap.getAttribute('data-price')) : price ? toNumber(price.textContent) : 0, stats: stats, photo: pick(photo), logo: pick(logo),
+      developer: logo ? logo.getAttribute('alt') || '' : '', short: (card.querySelector('span.rounded-full[dir="ltr"]') || {}).textContent || ''
+    };
+  }
+  function copyImage(from, to) {
+    if (!from || !to || !from.src) return;
+    [['data-img', from.img], ['data-img-key', from.key], ['data-fallback-key', from.fallback]].forEach(function (pair) {
+      if (pair[1]) to.setAttribute(pair[0], pair[1]); else to.removeAttribute(pair[0]);
+    });
+    to.src = from.src;
+    to.classList.remove('hidden');
+    if (to.nextElementSibling && to.nextElementSibling.getAttribute('dir') === 'ltr') to.nextElementSibling.classList.add('hidden');
+  }
+  // بيبدّل اسم القالب بالاسم الجديد في كل نصوص الصفحة (العناوين، الوصف، الأسئلة، لينكات "عقارات أكتر")
+  function renameIn(view, pairs) {
+    // كل الأسماء بتتبدّل في مرور واحد على النص الأصلي (الأطول الأول) عشان الاسم الجديد ما يتبدّلش تاني
+    var map = {};
+    pairs.forEach(function (pair) { if (pair[0] && pair[1] && pair[0] !== pair[1] && map[pair[0]] === undefined) map[pair[0]] = pair[1]; });
+    var keys = Object.keys(map).sort(function (x, y) { return y.length - x.length; });
+    var pattern = keys.length ? new RegExp(keys.map(function (key) { return key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|'), 'g') : null;
+    var walker = document.createTreeWalker(view, NodeFilter.SHOW_TEXT, null);
+    var node;
+    while ((node = walker.nextNode())) {
+      if (node.parentNode && /^(SCRIPT|STYLE)$/.test(node.parentNode.nodeName)) continue;
+      if (node.__pvText == null) node.__pvText = node.nodeValue;
+      var text = pattern ? node.__pvText.replace(pattern, function (found) { return map[found]; }) : node.__pvText;
+      if (text !== node.nodeValue) node.nodeValue = text;
+    }
+  }
+  // بيظبط كل أرقام الفلوس في الصفحة والرسم بنسبة السعر الجديد لسعر القالب
+  function rescale(view, factor, keep) {
+    view.querySelectorAll('[data-money]').forEach(function (node) {
+      if (keep && keep.indexOf(node) !== -1) return;
+      if (node.__pvMoney == null) node.__pvMoney = toNumber(node.textContent);
+      node.textContent = groupDigits(roundMoney(node.__pvMoney * factor));
+    });
+    view.querySelectorAll('[data-money-range], [data-plan-note]').forEach(function (node) {
+      if (node.__pvText == null) node.__pvText = node.textContent;
+      node.textContent = node.__pvText.replace(/\d[\d,]*/g, function (m) { return toNumber(m) < 1000 ? m : groupDigits(roundMoney(toNumber(m) * factor)); });
+    });
+    view.querySelectorAll('[data-unit][data-price]').forEach(function (card) {
+      if (card.__pvPrice == null) card.__pvPrice = Number(card.getAttribute('data-price'));
+      card.setAttribute('data-price', Math.round(card.__pvPrice * factor));
+    });
+    view.querySelectorAll('[data-insight-data]').forEach(function (source) {
+      if (source.__pvJson == null) source.__pvJson = source.textContent;
+      var data = JSON.parse(source.__pvJson);
+      Object.keys(data.sets).forEach(function (key) {
+        var set = data.sets[key];
+        set.unit = set.unit.map(function (v) { return roundMoney(v * factor); });
+        set.market = set.market.map(function (v) { return roundMoney(v * factor); });
+        ['monthly'].forEach(function (name) { set.rental[name] = groupDigits(roundMoney(toNumber(set.rental[name]) * factor)); });
+        ['after', 'profit'].forEach(function (name) { set.resale[name] = groupDigits(roundMoney(toNumber(set.resale[name]) * factor)); });
+      });
+      source.textContent = JSON.stringify(data);
+    });
+    if (window.SharyProperty) window.SharyProperty.refresh(view);
+  }
+  function poolCard(mode, slug) {
+    return (pools[lang][mode] || []).filter(function (card) { return card.getAttribute('data-slug') === slug; })[0] || null;
+  }
+  function templateNames(view, key) {
+    if (!view.__pvNames) view.__pvNames = {};
+    return view.__pvNames;
+  }
+
+  function openUnit(link, slug, given) {
+    var info = given || (link ? cardInfo(link) : null);
+    if (info && !given) {   // اسم الكمبوند الكامل من كارت الكمبوند (لو موجود في الملف ده)
+      var own = poolCard('compounds', String(slug || '').replace(/-\d+$/, ''));
+      if (own) info.compound = own.querySelector('h3').textContent.trim();
+    }
+    if (!inDoc('unit')) return go('unit', { fn: 'unit', slug: slug, info: info });
+    if (!show('unit')) return false;
+    fills.unit = info ? { fn: 'unit', slug: slug, info: info } : null;
+    remember(false);
+    var view = wraps[lang].querySelector('[data-view="unit"]');
+    var names = view.__pvNames || (view.__pvNames = {
+      title: view.querySelector('[data-bar-field="title"]').textContent.trim(),
+      compound: (view.querySelector('[data-detail="compound"]') || view).textContent.trim(),
+      developer: (view.querySelector('[data-unit-field="developer"]') || view).textContent.trim(),
+      location: view.querySelector('[data-bar-field="location"]').textContent.trim(),
+      price: toNumber(view.querySelector('[data-bar-field="price"]').textContent)
+    });
+    view.querySelectorAll('[data-gallery-item]').forEach(function (tile, i) { tile.setAttribute('data-active', i === 0 ? '1' : '0'); });
+    view.querySelectorAll('[data-gallery-slider]').forEach(function (track) { track.scrollLeft = 0; });
+    if (!info || !info.title) return true;
+    var project = String(slug || '').replace(/-\d+$/, '');
+    var parts = info.title.split(/[،,]\s*/);
+    var compound = info.compound || parts[1] || names.compound;
+    var oldShort = names.title.split(/[،,]\s*/)[1] || '';
+    renameIn(view, [[names.title, info.title], [names.compound, compound], [oldShort, parts[1] || ''], [names.developer, info.developer], [names.location, info.location]]);
+    var price = view.querySelector('[data-bar-field="price"]');
+    if (info.price) { rescale(view, info.price / names.price, [price]); price.textContent = groupDigits(info.price); }
+    function set(name, text) { if (text) view.querySelectorAll('[data-unit-field="' + name + '"]').forEach(function (n) { n.textContent = text; }); }
+    set('type', parts[0]);
+    var stats = info.stats;   // غرف ، حمامات ، مساحة (الغرف ممكن تبقى مش موجودة)
+    var hasBeds = stats.length > 2;
+    set('area', stats[stats.length - 1]); set('baths', stats[stats.length - 2]);
+    if (hasBeds) set('beds', stats[0]);
+    view.querySelectorAll('[data-unit-beds]').forEach(function (cell) { cell.classList.toggle('hidden', !hasBeds); });
+    view.querySelectorAll('[data-unit-specs]').forEach(function (grid) { grid.classList.toggle('grid-cols-4', hasBeds); grid.classList.toggle('grid-cols-3', !hasBeds); });
+    copyImage(info.photo, view.querySelector('[data-gallery-item] img'));
+    view.querySelectorAll('[data-bar-field="developer-link"] img, [data-unit-developer] img').forEach(function (img) { copyImage(info.logo, img); });
+    view.querySelectorAll('[data-detail="compound"] a').forEach(function (a) { a.setAttribute('href', '#pv:/projects/' + project); });
+    return true;
+  }
+
+  // لينك الكمبوند من جوه صفحة الوحدة: بيانات المشروع من الصفحة نفسها
+  function projectFromUnit(link) {
+    var view = link && link.closest ? link.closest('[data-view="unit"]') : null;
+    if (!view) return null;
+    function text(selector) { var node = view.querySelector(selector); return node ? node.textContent.trim() : ''; }
+    function image(selector) { var el = view.querySelector(selector); return el ? { src: el.currentSrc || el.getAttribute('src') || '', img: '', key: '', fallback: el.getAttribute('data-fallback-key') || '' } : null; }
+    return { title: text('[data-detail="compound"]'), location: text('[data-bar-field="location"]'), price: toNumber(text('[data-detail="start"]')), stats: [],
+      developer: text('[data-unit-field="developer"]'), short: '', photo: image('[data-gallery-item] img'), logo: image('[data-bar-field="developer-link"] img') };
+  }
+  // كارت صورة (المشروعات الجديدة في صفحة المشروع): الاسم والصورة من الكارت، والمكان من الصفحة المفتوحة
+  function shotInfo(link, shot) {
+    var img = shot.querySelector('img.card-photo');
+    var view = shot.closest('[data-view]');
+    var place = view ? view.querySelector('[data-bar-field="location"]') : null;
+    return { title: link.textContent.trim().replace(/\s+/g, ' '), location: place ? place.textContent.trim() : '', price: 0, stats: [], developer: '', short: '', logo: null,
+      photo: img ? { src: img.currentSrc || img.getAttribute('src') || '', img: img.getAttribute('data-img') || '', key: img.getAttribute('data-img-key') || '', fallback: img.getAttribute('data-fallback-key') || '' } : null };
+  }
+  function openProject(link, slug, given) {
+    var shot = !given && link && link.closest ? link.closest('.prop-shot') : null;
+    if (shot) given = shotInfo(link, shot);
+    var source = link && link.closest('article') ? link : null;
+    var pooled = poolCard('compounds', slug);
+    var info = given || (source ? cardInfo(source) : pooled ? cardInfo(pooled.querySelector('a')) : projectFromUnit(link));
+    if (info && !given) {   // الاسم المختصر اللي بيتكتب على كروت الوحدات (من وحدات المشروع لو موجودة في الملف ده)
+      var sample = (pools[lang].units || []).filter(function (card) { return card.getAttribute('data-project-slug') === slug; })[0];
+      if (sample) info.unitShort = (sample.querySelector('h3').textContent.split(/[،,]\s*/)[1] || '').trim();
+    }
+    if (!inDoc('project')) return go('project', { fn: 'project', slug: slug, info: info });
+    if (!show('project')) return false;
+    if (shot) window.scrollTo(0, 0);
+    fills.project = info ? { fn: 'project', slug: slug, info: info } : null;
+    remember(false);
+    var view = wraps[lang].querySelector('[data-view="project"]');
+    var page = view.querySelector('[data-project-page]');
+    var names = view.__pvNames || (view.__pvNames = {
+      slug: page.getAttribute('data-project-slug'),
+      title: view.querySelector('[data-bar-field="title"]').textContent.trim(),
+      name: (view.querySelector('[data-breadcrumb] [aria-current="page"]') || view).textContent.trim(),
+      developer: view.querySelector('[data-bar-field="developer-link"]').getAttribute('aria-label') || '',
+      location: view.querySelector('[data-bar-field="location"]').textContent.trim(),
+      price: toNumber(view.querySelector('[data-bar-field="developer-price"]').textContent),
+      short: ((view.querySelector('[data-project-grid] h3') || view).textContent.split(/[،,]\s*/)[1] || '').trim()
+    });
+    view.querySelectorAll('[data-gallery-item]').forEach(function (tile, i) { tile.setAttribute('data-active', i === 0 ? '1' : '0'); });
+    view.querySelectorAll('[data-gallery-slider]').forEach(function (track) { track.scrollLeft = 0; });
+    var units = view.querySelector('[data-project-units]');
+    // بيرجّع التبويب والترتيب لأول حالة
+    view.querySelectorAll('[data-unit-tab], [data-unit-sort]').forEach(function (item) { item.setAttribute('aria-current', item.getAttribute('data-unit-tab') === '' ? 'true' : 'false'); });
+    if (!info || !info.title || !slug) { if (units && units.__renderUnits) units.__renderUnits(); return true; }
+    var short = info.unitShort || info.title.replace(/^(كمبوند|قرية|مشروع|Compound|Village)\s+/i, '');
+    var title = !info.developer ? info.title : lang === 'ar' ? info.developer + ' - ' + info.title : info.title + ' — ' + info.developer;
+    renameIn(view, [[names.title, title], [names.name, info.title], [names.short, short], [names.developer, info.developer], [names.location, info.location]]);
+    var price = view.querySelector('[data-bar-field="developer-price"]');
+    if (info.price) { rescale(view, info.price / names.price, [price]); price.textContent = groupDigits(info.price); }
+    copyImage(info.photo, view.querySelector('[data-gallery-item] img'));
+    view.querySelectorAll('[data-bar-field="developer-link"] img, [data-project-grid] img.rounded-full').forEach(function (img) { copyImage(info.logo, img); });
+    view.querySelectorAll('[data-project-grid] h3 a, [data-project-grid] a[tabindex="-1"]').forEach(function (a) { a.setAttribute('href', '#pv:/units/' + slug + '-1'); });
+    page.setAttribute('data-project-slug', slug);
+    // خريطة جوجل على المشروع المفتوح
+    view.querySelectorAll('[data-map-frame]').forEach(function (frame) {
+      var src = 'https://maps.google.com/maps?q=' + encodeURIComponent(info.title + '، ' + info.location) + '&t=&z=14&ie=UTF8&iwloc=&hl=' + lang + '&output=embed';
+      frame.setAttribute('data-src', src);
+      if (frame.getAttribute('src') && frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+    });
+    if (units && units.__renderUnits) units.__renderUnits();
+    return true;
+  }
+
+  root.addEventListener('click', function (e) {
+    var link = e.target.closest ? e.target.closest('a') : null;
+    if (!link || !root.contains(link)) return;
+    var href = link.getAttribute('href') || '';
+    if (link.hasAttribute('data-meeting-open')) return;   // "احجز العرض" و"طلب مقابلة": بيفتحوا فورم طلب الاجتماع
+    if (link.hasAttribute('data-unit-tab') || link.hasAttribute('data-unit-sort')) return;   // تبويب وترتيب وحدات المشروع: سكربت الصفحة بيبدّل الكروت
+    var pageView = VIEWS[href.replace(/#.*$/, '').replace(/(-en)?\.html$/, '')];   // صفحة موجودة جوه المعاينة (منطقة / مطور / بحث)
+
+    if (link.hasAttribute('data-lang-toggle')) {
+      e.preventDefault();
+      setLang(lang === 'ar' ? 'en' : 'ar');
+      window.scrollTo(0, 0);
+      toast(t('switched'));
+    } else if (searchTarget(href)) {   // أي لينك لصفحة بحث (عام / نوع + منطقة / وحدات ⇄ كمبوندات)
+      e.preventDefault();
+      var to = searchTarget(href);
+      showSearch(to.slug, to.mode);
+    } else if (pageView && show(pageView)) {   // كارت منطقة فرعية أو لينك المنطقة الأم في مسار الصفحة
+      e.preventDefault();
+    } else if (link.closest('[data-pagination]') && !parseSearchKey(current)) {   // أرقام الصفحات (مشاريع المنطقة / المطور)
+      e.preventDefault();
+      turnPage(link);
+    } else if (link.hasAttribute('data-ask-ai')) {
+      return;   // السكربت بيفتح صفحة Shary AI
+    } else if (href.indexOf('#pv:') === 0) {   // صفحات لسه مش متنفذة: اللي له صفحة في المعاينة بيفتحها، والباقي بيقول هيفتح إيه
+      e.preventDefault();
+      var path = href.slice(4).replace(/^\/en(?=\/|$)/, '') || '/';
+      if (path === '/' && show(DOCS ? 'search-all' : firstView)) return;   // الرئيسية واللوجو: أول صفحة في المعاينة (الرئيسية نفسها مش من الصفحات المتنفذة)
+      if (path === '/developers' && show('mountain-view')) return;
+      if (path === '/projects' && showSearch('all', 'compounds')) return;   // "المشاريع" في الهيدر: البحث العام على الكمبوندات
+      var developer = /^\/developers\/([a-z0-9-]+)$/.exec(path);   // مطور مالوش صفحة في المعاينة: البحث العام على وحداته
+      if (developer && showSearch('all', 'units', { developer: [developer[1]] })) return;
+      if (/^\/rent\/[a-z0-9-]+$/.test(path) && openRentUnit(link)) return;   // وحدة إيجار: قالب واحد بيتملى من الكارت
+      var searchQuery = /^\/search\?(.+)$/.exec(path);   // لينك بحث باختيارات جاهزة (مثلاً "عقارات أكتر في المشروع"): البحث العام بنفس الاختيارات
+      if (searchQuery) {
+        var preset = {};
+        searchQuery[1].split('&').forEach(function (pair) {
+          var parts = pair.split('=');
+          var name = decodeURIComponent(parts[0]).replace(/\[\]$/, '');
+          if (name && name !== 'view') (preset[name] = preset[name] || []).push(decodeURIComponent(parts[1] || ''));
+        });
+        if (showSearch('all', 'units', preset)) return;
+      }
+      var unitPage = /^\/units\/([a-z0-9-]+)$/.exec(path);   // وحدة بيع: قالب واحد بيتملى من الكارت
+      if (unitPage && openUnit(link, unitPage[1])) return;
+      var projectPage = /^\/(?:projects|compounds)\/([a-z0-9-]+)$/.exec(path);   // مشروع: قالب واحد بيتملى من الكارت
+      if (projectPage && openProject(link, projectPage[1])) return;
+      if (/^\/rent(\?.*)?$/.test(path) && show('rent')) return;
+      if (path === '/areas' && show('areas')) return;
+      if (/^\/areas\/[a-z0-9-]+$/.test(path) && show('areas')) return;   // منطقة مالهاش صفحة في المعاينة: صفحة كل المناطق
+      var name = (link.getAttribute('aria-label') || link.textContent).trim().replace(/\s+/g, ' ');
+      toast(t('opens') + name.replace('شاري — ', '').replace('Shary — ', ''));
+    } else if (href.charAt(0) === '#' && href.length > 1) {   // لينك لجزء جوه الصفحة (محتويات الدليل)
+      e.preventDefault();
+      var target = document.getElementById(href.slice(1));
+      if (target) scrollTo(target);
+    } else if (href.indexOf('tel:') === 0) {
+      e.preventDefault();
+      var phone = href.slice(4);
+      var shown = '⁦' + phone + '⁩';
+      copy(phone, function () { toast(t('phoneCopied')(shown)); }, function () { toast(t('phone')(shown)); });
+    } else if (href.indexOf('mailto:') === 0) {
+      e.preventDefault();
+      var mail = href.slice(7);
+      copy(mail, function () { toast(mail + t('copied')); }, function () { toast(mail); });
+    } else if (window.PV_PAGES && /^(blog|article-[a-z0-9-]+?)(-en)?\.html(#.*)?$/.test(href)) {   // المدونة والمقالات: صفحة لوحدها في لينك المعاينة
+      e.preventDefault();
+      var article = /^article-([a-z0-9-]+?)(-en)?\.html/.exec(href);
+      location.href = 'blog.html#' + (article ? 'a/' + article[1] : 'blog') + (lang === 'en' ? '/en' : '');
+    } else if (href === '#' || /\.html(#.*)?$/.test(href)) {   // باقي لينكات الصفحة: بتفتح صفحات تانية على الموقع
+      e.preventDefault();
+      var label = (link.getAttribute('aria-label') || link.textContent).trim().replace(/\s+/g, ' ');
+      toast(t('opens') + label.replace('شاري — ', '').replace('Shary — ', ''));
+    }
+    // واتساب: لينك حقيقي بيفتح في تبويب جديد
+  });
+
+  root.querySelectorAll('[data-pagination] a').forEach(function (a) { a.setAttribute('href', '#'); });
+
+  // لينكات المشاريع والرئيسية: بتفتح الصفحة الحقيقية على shary.eg في تبويب جديد
+  // المشاريع اللي مالهاش صفحة معروفة (عينات ماونتن فيو) بتروح على صفحة المطور الحقيقية
+  var LIVE_DEVELOPER = 'https://shary.eg/ar/developer-details/' + encodeURIComponent('ماونتن-فيو-للتطوير-العقاري');
+  function liveProject(slug, language) {
+    var path = LIVE[slug] || LIVE[String(slug || '').replace(/-\d+$/, '')];   // الوحدة بتفتح صفحة الكمبوند بتاعها
+    return path ? 'https://shary.eg/' + language + '/project/' + path : (slug ? LIVE_DEVELOPER : '');
+  }
+  // المشاركة: السكربت بتاع الموقع هو اللي بيشارك — المعاينة بس بتحط لينك المشروع الحقيقي على shary.eg
+  root.addEventListener('shary:share', function (e) {
+    var holder = e.target.closest ? e.target.closest('[data-project], [data-unit]') : null;
+    var slug = holder ? holder.getAttribute('data-slug') : '';
+    e.detail.url = liveProject(slug, lang) || 'https://shary.eg/' + lang;
+  });
+
+  // التحميل وأنت نازل: الصفحة اللي بعدها من النتايج المطابقة
+  root.addEventListener('shary:load-more', function (e) {
+    e.preventDefault();
+    var main = e.target.closest('main');
+    if (!main || !main.__matched) { e.detail.append([], ''); return; }   // قوايم غير البحث: مفيش صفحات تانية في المعاينة
+    setTimeout(function () {
+      var nodes = nextCards(main);
+      e.detail.append(nodes, main.__shown < main.__matched.length ? '#more' : '');
+    }, 450);
+  });
+
+  root.addEventListener('shary:favorite', function (e) { toast(t(e.detail.active ? 'favoriteOn' : 'favoriteOff')); });
+  root.addEventListener('shary:ai-send', function (e) {
+    e.preventDefault();
+    var reply = e.detail.reply;
+    setTimeout(function () { reply(lang === 'ar' ? 'دي معاينة للشكل بس — رد Shary AI الحقيقي بيظهر هنا بعد ربط الصفحة بالباك إند.' : 'This is a design preview — the real Shary AI answer appears here once the page is connected to the back end.'); }, 700);
+  });
+  root.addEventListener('shary:compare', function (e) { toast(t(e.detail.active ? 'compareOn' : 'compareOff')); });
+
+  // الفلاتر في المعاينة: بتفلتر وترتّب المشاريع التجريبية مكانها (على الموقع الباك إند هو اللي بيرجّع النتايج)
+  root.addEventListener('shary:filter', function (e) {
+    e.preventDefault();
+    var form = e.target.form || e.target;
+    var searchMain = form.closest('main');
+    if (searchMain && searchMain.__search) { if (!form.__pvQuiet) runSearch(searchMain); return; }
+    var section = form.closest('section') || form.parentElement;
+    var grid = section.querySelector('[data-projects-grid]') || section.querySelector('[data-results]');
+    var searching = grid.hasAttribute('data-results');   // صفحة البحث: وحدات أو كمبوندات، من غير حد "أول 3"
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('[data-project], [data-unit]'));
+    function values(name) { return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '[]"]:checked'), function (box) { return box.value; }); }
+    function field(selector) { var el = form.querySelector(selector); return el && el.value !== '' ? Number(el.value) : null; }
+    var beds = values('bedrooms'), baths = values('bathrooms');
+    var sizeLow = field('[data-range-min="size"]'), sizeHigh = field('[data-range-max="size"]');
+    var offer = (form.querySelector('input[name="offer"]:checked') || {}).value;
+    var furnishedTab = (form.querySelector('input[name="furnished"]:checked') || {}).value || '';
+    function picked(name) { return Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '[]"]:checked'), function (box) { return box.value; }); }
+    var developers = picked('developer');
+    var projects = picked('project');
+    var types = picked('type'), finishing = picked('finishing'), delivery = picked('delivery'), years = picked('years');
+    // المنطقة: بتتطبق لما العميل يغيّر اختيار المنطقة عن اللي الصفحة مفتوحة عليه (الكروت تجريبية ومش لكل منطقة كروتها)
+    var areas = picked('area');
+    if (form.__areas0 === undefined) form.__areas0 = (form.getAttribute('data-pv-areas') || '');
+    if (areas.slice().sort().join(' ') === form.__areas0) areas = [];
+    // خانة البحث: اسم الكمبوند أو المطور أو المنطقة (عربي أو إنجليزي)
+    function plain(text) { return String(text || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/[-_،,]/g, ' ').replace(/\s+/g, ' ').trim(); }
+    var qField = form.querySelector('input[name="q"]');
+    var words = plain(qField && qField.value).split(' ').filter(Boolean);
+    var names = {};   // اسم المطور / المنطقة من قوايم الفلتر (عشان البحث بالاسم حتى لو مش مكتوب على الكارت)
+    ['developer', 'area'].forEach(function (name) {
+      Array.prototype.forEach.call(form.querySelectorAll('input[name="' + name + '[]"]'), function (box) { var row = box.closest('label'); names[name + ':' + box.value] = row ? row.textContent : ''; });
+    });
+    function hay(card) {
+      if (card.__hay) return card.__hay;
+      var bits = [card.textContent, card.getAttribute('data-slug'), card.getAttribute('data-developer'), names['developer:' + card.getAttribute('data-developer')]];
+      Array.prototype.forEach.call(card.querySelectorAll('img[alt]'), function (img) { bits.push(img.alt); });
+      tokens(card, 'data-areas').forEach(function (slug) { bits.push(slug, names['area:' + slug]); });
+      return (card.__hay = plain(bits.join(' ')));
+    }
+    function tokens(card, name) { return (card.getAttribute(name) || '').split(' ').filter(Boolean); }
+    function any(list, have) { return !list.length || !have.length || list.some(function (v) { return have.indexOf(v) > -1; }); }
+    var minField = form.querySelector('[data-range-min="price"]');
+    var maxField = form.querySelector('[data-range-max="price"]');
+    var low = Number(minField && minField.value) || 0;
+    var high = Number(maxField && maxField.value) || Infinity;
+    var sortField = form.querySelector('input[name="sort"]:checked');
+    var sort = sortField ? sortField.value : 'newest';
+    var shown = 0;
+    cards.forEach(function (card) {
+      var value = Number(card.getAttribute('data-price'));
+      var ok = (!developers.length || developers.indexOf(card.getAttribute('data-developer')) > -1) && (!projects.length || projects.indexOf(card.hasAttribute('data-unit') ? card.getAttribute('data-slug').replace(/-\d+$/, '') : card.getAttribute('data-slug')) > -1) &&
+        value >= low && value <= high &&
+        any(types, tokens(card, 'data-types')) && any(areas, tokens(card, 'data-areas')) &&
+        words.every(function (word) { return hay(card).indexOf(word) > -1; });
+      if (ok && card.hasAttribute('data-unit') && card.hasAttribute('data-finishing')) {
+        var y = Number(card.getAttribute('data-years'));
+        ok = any(finishing, tokens(card, 'data-finishing')) && any(delivery, tokens(card, 'data-delivery')) &&
+          (!years.length || years.some(function (v) { return v === '9+' ? y >= 9 : Number(v) === y; }));
+      }
+      if (ok && card.hasAttribute('data-unit')) {
+        var size = Number(card.getAttribute('data-size'));
+        ok = (!beds.length || beds.indexOf(card.getAttribute('data-beds')) > -1) && (!baths.length || baths.indexOf(card.getAttribute('data-baths')) > -1) &&
+          (sizeLow === null || size >= sizeLow) && (sizeHigh === null || size <= sizeHigh) &&
+          (offer !== 'resale' || card.getAttribute('data-resale') === '1') && (offer === 'rent') === (card.getAttribute('data-offer') === 'rent') &&
+          (!furnishedTab || card.getAttribute('data-furnished') === furnishedTab);
+      }
+      card.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    if (sort === 'price_asc' || sort === 'price_desc') {
+      cards.slice().sort(function (a, b) { return (Number(a.getAttribute('data-price')) - Number(b.getAttribute('data-price'))) * (sort === 'price_asc' ? 1 : -1); })
+        .forEach(function (card) { grid.appendChild(card); });
+    } else {
+      cards.slice().sort(function (a, b) { return Number(a.getAttribute('data-order')) - Number(b.getAttribute('data-order')); }).forEach(function (card) { grid.appendChild(card); });
+    }
+    // على الموبايل بيظهر أول 3 مطابقين
+    var visible = 0;
+    Array.prototype.slice.call(grid.querySelectorAll('[data-project]')).forEach(function (card) {
+      if (searching || card.style.display === 'none') return;
+      card.classList.toggle('hidden', visible >= 3);
+      card.classList.toggle('lg:block', visible >= 3);
+      visible++;
+    });
+    var promo = grid.querySelector('[data-promo]');
+    if (promo) {   // البانر بيفضل بعد تاني نتيجة ظاهرة
+      grid.removeChild(promo);
+      var visibleCards = cards.map(function () { return null; }) && Array.prototype.filter.call(grid.children, function (card) { return card.style.display !== 'none' && (card.hasAttribute('data-unit') || card.hasAttribute('data-project')); });
+      grid.insertBefore(promo, visibleCards[Number(promo.getAttribute('data-promo-after')) || 2] || null);
+    }
+    section.querySelector('[data-projects-empty], [data-results-empty]').classList.toggle('hidden', shown > 0);
+    toast(t('filtered')(shown));
+  });
+  root.querySelectorAll('[data-project]').forEach(function (card, i) { card.setAttribute('data-order', i % 9); });
+  root.querySelectorAll('[data-results]').forEach(function (grid) {
+    Array.prototype.forEach.call(grid.querySelectorAll('[data-project], [data-unit]'), function (card, i) { card.setAttribute('data-order', i); });
+  });
+  root.querySelectorAll('form[data-area-filters]').forEach(function (form) {
+    form.setAttribute('data-pv-areas', Array.prototype.map.call(form.querySelectorAll('input[name="area[]"]:checked'), function (box) { return box.value; }).sort().join(' '));
+  });
+  // البحث في المعاينة لايف وهو بيكتب (على الموقع: حدث shary:search للباك إند، و Enter بيبعت الفورم)
+  root.addEventListener('shary:search', function (e) {
+    e.target.dispatchEvent(new CustomEvent('shary:filter', { bubbles: true, cancelable: true }));
+  });
+
+  // عرض نسخة الديسك توب على شاشة صغيرة: نفس الصفحة بعرض 1440 ومصغّرة على قد الشاشة
+  var stage = document.querySelector('.pv-stage');
+  var desktopBtn = bar.querySelector('[data-desktop]');
+  var zoomBtn = bar.querySelector('[data-zoom]');
+  var desktopOn = false;
+  var zoomedIn = false;
+
+  function layout() {
+    var narrow = stage.clientWidth < 1024;
+    if (!narrow) { desktopOn = false; zoomedIn = false; }
+    var site = !!bar.querySelector('[data-go]');   // معاينة الموقع كله: الشريط ظاهر على أي مقاس
+    bar.hidden = !narrow && !site;
+    desktopBtn.hidden = !narrow;
+    zoomBtn.hidden = !desktopOn;
+    desktopBtn.setAttribute('aria-pressed', desktopOn ? 'true' : 'false');
+    zoomBtn.setAttribute('aria-pressed', zoomedIn ? 'true' : 'false');
+    stage.classList.toggle('pv-zoomed', desktopOn && zoomedIn);
+    var wasDesktop = root.classList.contains('pv-desktop');
+    root.classList.toggle('pv-desktop', desktopOn);
+    // السكربتات اللي بتعتمد على شكل الديسك توب (عمود الفلاتر) تعيد الحساب — مرة واحدة لما الشكل يتغير فعلًا
+    if (wasDesktop !== desktopOn) setTimeout(function () { window.dispatchEvent(new Event('resize')); }, 0);
+    if (desktopOn) {
+      var fit = stage.clientWidth / 1440;
+      root.style.setProperty('--pv-zoom', String(zoomedIn ? Math.min(1, fit * 2.2) : fit));
+    } else {
+      root.style.removeProperty('--pv-zoom');
+    }
+  }
+
+  desktopBtn.addEventListener('click', function () {
+    desktopOn = !desktopOn;
+    zoomedIn = false;
+    layout();
+    window.scrollTo(0, 0);
+    stage.scrollLeft = 0;
+    if (desktopOn) toast(t('desktop'));
+  });
+  zoomBtn.addEventListener('click', function () { zoomedIn = !zoomedIn; layout(); });
+  window.addEventListener('resize', layout);
+  layout();
+
+  function setError(field, text) {
+    var anchor = field.closest('[data-phone-field]') || field;
+    var box = anchor === field || !anchor.firstElementChild.contains(field) ? field : anchor.firstElementChild;
+    var old = anchor.parentNode.querySelector('.pv-error[data-for="' + field.name + '"]');
+    if (old) old.remove();
+    if (!text) { field.removeAttribute('aria-invalid'); box.removeAttribute('data-invalid'); return; }
+    field.setAttribute('aria-invalid', 'true');
+    box.setAttribute('data-invalid', '');
+    var p = document.createElement('p');
+    p.className = 'pv-error';
+    p.setAttribute('data-for', field.name);
+    p.textContent = text;
+    anchor.insertAdjacentElement('afterend', p);
+  }
+
+  function check(form) {
+    var name = form.querySelector('[name="name"]');
+    var phone = form.querySelector('[name="phone"]');
+    var digits = phone.value.replace(/[\s\-()]/g, '');
+    var country = form.querySelector('[name="country_code"]').value;
+    var nameOk = name.value.trim().length >= 2;
+    var phoneOk = country === '+20' ? /^0?1[0125]\d{8}$/.test(digits) : /^\d{6,14}$/.test(digits);
+    setError(name, nameOk ? '' : t('nameError'));
+    setError(phone, phoneOk ? '' : (country === '+20' ? t('phoneErrorEg') : t('phoneError')));
+    if (!nameOk) { name.focus(); return false; }
+    if (!phoneOk) { phone.focus(); return false; }
+    return true;
+  }
+
+  root.querySelectorAll('form[data-consult], [data-meeting-form]').forEach(function (form) {
+    ['name', 'phone'].forEach(function (key) {
+      var field = form.querySelector('[name="' + key + '"]');
+      field.addEventListener('input', function () { setError(field, ''); });
+    });
+  });
+
+  root.querySelectorAll('form[data-consult]').forEach(function (form) {
+    var label = form.querySelector('button[type="submit"] span');
+    var sendText = label.textContent;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!check(form)) return;
+      form.reset();
+      form.querySelector('[name="country_code"]').value = form.querySelector('[data-phone-code]').textContent;
+      label.textContent = t('sent');
+      setTimeout(function () { label.textContent = sendText; }, 3500);
+      toast(t('received'));
+    });
+  });
+
+  root.querySelectorAll('[data-meeting-form]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!check(form)) return;
+      var type = form.querySelector('[data-meeting-type-option][aria-pressed="true"]').textContent.trim();
+      var day = form.querySelector('[data-meeting-day][aria-pressed="true"]');
+      var time = form.querySelector('[data-meeting-time-option][aria-pressed="true"]').textContent.trim();
+      var dayText = day ? day.querySelector('[data-meeting-day-name]').textContent + ' ' + day.querySelector('[data-meeting-day-date]').textContent : '';
+      form.querySelector('[name="name"]').value = ''; form.querySelector('[name="phone"]').value = '';
+      form.closest('[data-meeting-modal]').querySelector('button[data-meeting-close]').click();
+      toast(t('meetingSent')(type, dayText, time));
+    });
+  });
+
+  // لينك مباشر: #<slug> وبعدها /en للإنجليزي
+  var start = (location.hash || '').slice(1).split('/');
+  var wantEn = start[start.length - 1] === 'en';
+  if (wantEn) start.pop();
+  if (DOC_LANG === 'en' || wantEn) setLang('en');
+  if (parseSearchKey(current)) { show(current, true); firstView = current; }
+  bar.querySelectorAll('[data-go]').forEach(function (b) { b.addEventListener('click', function () { show(b.getAttribute('data-go')); }); });
+  if (bar.querySelector('[data-go]')) document.documentElement.classList.add('pv-strip');   // معاينة البحث بتفتح على البحث العام
+  var ALIAS = { search: 'search-all', area: 'new-cairo', developer: 'mountain-view' };   // لينكات المعاينة القديمة
+  var pending = takePending();
+  var saved = null;
+  try { saved = history.state; } catch (e) {}
+  function fillFrom(job) {
+    if (!job) return false;
+    if (job.fn === 'unit') return openUnit(null, job.slug, job.info || null);
+    if (job.fn === 'project') return openProject(null, job.slug, job.info || null);
+    if (job.fn === 'search') return showSearch(job.slug, job.mode, job.extra || true);
+    return false;
+  }
+  if (pending && fillFrom(pending)) { /* الصفحة اتفتحت من ملف تاني بالكارت / البحث المطلوب */ }
+  else if (DOCS && saved && saved.pvFill && fillFrom(saved.pvFill)) { /* رجوع لصفحة اتملت قبل كده */ }
+  else if (DOCS && saved && saved.pvView && (parseSearchKey(saved.pvView) || inDoc(saved.pvView))) show(saved.pvView, true);
+  else if (start[0]) show(ALIAS[start[0]] || start[0]);
+  if (DOCS && saved && saved.pvScroll && !pending) setTimeout(function () { window.scrollTo(0, saved.pvScroll); }, 60);
+  if (DOCS) window.addEventListener('pagehide', function () {
+    try { history.replaceState(Object.assign({}, history.state || {}, { pvScroll: window.scrollY }), ''); } catch (e) {}
+  });
+  syncBack();
+  remember(false);
+  syncNav();
+  ready = true;
+})();
+</script>
+</body></html>

@@ -9,7 +9,7 @@ a{display:inline-flex;align-items:center;height:48px;padding:0 28px;border-radiu
   hash = hash.replace(/\/en$/, '');
   var slug = FIXED || ALIAS[hash] || hash;
   if (!DOCS[slug]) slug = /^search/.test(slug) ? 'search-all' : 'search-all';
-  var to = DOCS[slug] + '#' + (FIXED ? slug : (ALIAS[hash] || hash || slug)) + (en ? '/en' : '');
+  var to = (en ? DOCS[slug].replace(/\.html$/, '-en.html') : DOCS[slug]) + '#' + (FIXED ? slug : (ALIAS[hash] || hash || slug)) + (en ? '/en' : '');
   document.getElementById('open').setAttribute('href', to);
   location.replace(to);
 })();
