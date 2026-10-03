@@ -3337,28 +3337,6 @@ input:focus-visible + .area-chip,
   color: #1f7f72;
 }
 
-.prop-sort__item {
-  display: flex;
-  min-height: 44px;
-  align-items: center;
-  border-radius: 12px;
-  padding: 6px 12px;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 1.5;
-  color: #123a5c;
-}
-
-.prop-sort__item:hover {
-  background-color: #f2f5f8;
-  color: #1f63c6;
-}
-
-.prop-sort__item[aria-current="true"] {
-  background-color: #e3eaf3;
-  font-weight: 700;
-}
-
 /* أرقام صفحات وحدات المشروع (ديسك توب بس) */
 
 .prop-pages {
@@ -8026,10 +8004,6 @@ input:focus-visible + .area-chip,
 }
 
 @media (min-width: 400px) {
-  .min-\[400px\]\:inline {
-    display: inline;
-  }
-
   .min-\[400px\]\:h-5 {
     height: 1.25rem;
   }
@@ -59108,26 +59082,469 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 <h2 class="text-[21px] font-bold leading-[1.35] lg:text-[24px]" data-project-field="units-title"><span class="lg:hidden">الوحدات</span><span class="hidden lg:inline">استكشف العقارات في كمبوند سينز</span></h2>
 <p class="text-[13px] font-medium leading-normal text-shary-muted lg:text-[14.5px]"><bdi data-units-count>14</bdi> نتائج متاحة</p>
 </div>
-<div class="flex shrink-0 items-center gap-2">
 
-<a href="#pv:/search?project[]=scenes" class="flex h-11 items-center justify-center gap-1.5 rounded-xl bg-shary-link px-3.5 text-[14px] font-bold leading-normal text-white transition-colors hover:bg-shary-action lg:h-12 lg:px-5" data-project-field="units-filter" aria-label="تصفية">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
-<span class="hidden min-[400px]:inline">تصفية</span>
-</a>
+<form class="flex shrink-0 items-center gap-2 lg:gap-3" data-area-filters>
 
-<div class="relative" data-unit-sort-box>
-<button type="button" class="flex h-11 items-center justify-center gap-1.5 rounded-xl border border-shary-line bg-white px-3.5 text-[14px] font-bold leading-normal text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link lg:h-12 lg:px-5" data-unit-sort-open aria-haspopup="true" aria-expanded="false" aria-label="ترتيب">
-<span class="hidden min-[400px]:inline">ترتيب</span>
-<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M8 19l-3-3M8 19l3-3M16 19V5M16 5l-3 3M16 5l3 3"/></svg>
+<button type="button" class="relative flex h-11 items-center justify-center gap-2 rounded-xl text-white transition-colors lg:h-12 bg-shary-link px-3 text-[14px] font-bold hover:bg-shary-action lg:px-5 lg:text-[15px]" data-sheet-open="all" aria-haspopup="dialog" aria-expanded="false" aria-label="تصفية">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+<span>تصفية</span>
+<span class="area-filter__count absolute -end-1 -top-1" data-sheet-count="all"></span>
 </button>
-<div class="absolute end-0 top-full z-20 mt-2 hidden w-[230px] rounded-2xl border border-shary-line bg-white p-1.5 shadow-[0_14px_34px_-14px_rgba(18,58,92,0.45)]" data-unit-sort-menu>
-<a href="#pv:/projects/scenes?sort=price_asc" class="prop-sort__item" data-unit-sort="price_asc" aria-current="false">أقل سعر</a>
-<a href="#pv:/projects/scenes?sort=price_desc" class="prop-sort__item" data-unit-sort="price_desc" aria-current="false">أعلى سعر</a>
-<a href="#pv:/projects/scenes?sort=delivery" class="prop-sort__item" data-unit-sort="delivery" aria-current="false">تاريخ التسليم</a>
-<a href="#pv:/projects/scenes?sort=newest" class="prop-sort__item" data-unit-sort="newest" aria-current="false">الأحدث</a>
+
+<div class="relative">
+<button type="button" class="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl transition-colors lg:h-12  border border-shary-line bg-white px-2.5 text-[14px] font-bold text-shary-navy hover:border-shary-link hover:text-shary-link lg:w-12 lg:px-0" data-sort-open aria-haspopup="true" aria-expanded="false" aria-label="ترتيب">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M8 19l-3-3M8 19l3-3M16 19V5M16 5l-3 3M16 5l3 3"/></svg>
+<span class="lg:hidden">ترتيب</span>
+</button>
+<div class="absolute end-0 top-full z-30 mt-2 hidden w-[230px] rounded-2xl border border-shary-line bg-white px-4 py-1.5 shadow-[0_14px_34px_-14px_rgba(18,58,92,0.45)]" data-sort-menu>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="price_asc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أقل سعر</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="price_desc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أعلى سعر</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="delivery" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>تاريخ التسليم</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="newest" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>الأحدث</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="installment_asc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أقل قسط</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="installment_desc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أعلى قسط</span>
+</label>
+</div>
+</div>
+
+<input type="hidden" name="price_min" value="" data-range-min="price">
+<input type="hidden" name="price_max" value="" data-range-max="price">
+<input type="hidden" name="size_min" value="" data-range-min="size">
+<input type="hidden" name="size_max" value="" data-range-max="size">
+
+<div class="fixed inset-0 z-50 hidden" data-filter-sheet="all" role="dialog" aria-modal="true" aria-label="تصفية">
+
+<div class="area-sheet absolute inset-0 flex flex-col bg-[#fafafa] lg:bg-[#f4f7fa]">
+<div class="shrink-0 lg:border-b lg:border-shary-line lg:bg-white">
+<div class="relative flex h-16 items-center justify-center px-5 lg:mx-auto lg:h-[76px] lg:max-w-[1240px] lg:justify-between lg:px-10">
+
+<button type="button" class="absolute start-3 flex h-11 w-11 items-center justify-center rounded-full text-shary-navy hover:text-shary-link lg:hidden" data-sheet-close aria-label="إغلاق">
+<svg class="ltr:rotate-180" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</button>
+<h3 class="flex items-center gap-2.5 text-[20px] font-bold leading-normal lg:gap-3 lg:text-[24px]">
+<span class="flex h-9 w-9 items-center justify-center rounded-xl bg-shary-link text-white lg:h-11 lg:w-11" aria-hidden="true">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+</span>
+تصفية                    </h3>
+
+<button type="button" class="hidden h-11 items-center gap-2 rounded-full border border-shary-line bg-white px-5 text-[15px] font-bold leading-normal text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link lg:flex" data-sheet-close>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+إغلاق                    </button>
+</div>
+</div>
+
+<div class="shary-scroll min-h-0 flex-1 overflow-y-auto">
+<div class="px-5 pb-6 lg:mx-auto lg:max-w-[1240px] lg:px-10 lg:pb-10">
+
+<input type="radio" name="offer" value="developer" class="hidden" checked>
+
+<div class="lg:mt-7 lg:columns-2 lg:gap-5">
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V6l8-3v18M12 9l8 2v10M4 21h16M7.5 9v.01M7.5 12.5v.01M7.5 16v.01M15.5 13.5v.01M15.5 17v.01"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">نوع العقار</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="type[]" value="villa" class="sr-only" >
+<span class="area-chip ">فلل</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="type[]" value="twin-house" class="sr-only" >
+<span class="area-chip ">توين هاوس</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="type[]" value="townhouse" class="sr-only" >
+<span class="area-chip ">تاون هاوس</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M6 10V7.5A1.5 1.5 0 0 1 7.5 6h9A1.5 1.5 0 0 1 18 7.5V10"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">غرف النوم</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bedrooms[]" value="0" class="sr-only" >
+<span class="area-chip area-chip--box">0</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="1" class="sr-only" >
+<span class="area-chip area-chip--box">1</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bedrooms[]" value="2" class="sr-only" >
+<span class="area-chip area-chip--box">2</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bedrooms[]" value="3" class="sr-only" >
+<span class="area-chip area-chip--box">3</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="4" class="sr-only" >
+<span class="area-chip area-chip--box">4</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="5" class="sr-only" >
+<span class="area-chip area-chip--box">5</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="6" class="sr-only" >
+<span class="area-chip area-chip--box">6</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="7" class="sr-only" >
+<span class="area-chip area-chip--box">7</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="8" class="sr-only" >
+<span class="area-chip area-chip--box">8</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM6 12V6.5A2.5 2.5 0 0 1 8.5 4c1.1 0 2 .7 2.3 1.7M7 19l-1 2M17 19l1 2"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">الحمامات</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bathrooms[]" value="0" class="sr-only" >
+<span class="area-chip area-chip--box">0</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="1" class="sr-only" >
+<span class="area-chip area-chip--box">1</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bathrooms[]" value="2" class="sr-only" >
+<span class="area-chip area-chip--box">2</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bathrooms[]" value="3" class="sr-only" >
+<span class="area-chip area-chip--box">3</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="4" class="sr-only" >
+<span class="area-chip area-chip--box">4</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="5" class="sr-only" >
+<span class="area-chip area-chip--box">5</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="6" class="sr-only" >
+<span class="area-chip area-chip--box">6</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="7" class="sr-only" >
+<span class="area-chip area-chip--box">7</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="8" class="sr-only" >
+<span class="area-chip area-chip--box">8</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="9" class="sr-only" >
+<span class="area-chip area-chip--box">9</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="10" class="sr-only" >
+<span class="area-chip area-chip--box">10</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section data-modes="developer resale">
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5l5 5L9 20H4v-5L14.5 4.5ZM12 7l5 5"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">التشطيب</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="finishing[]" value="semi" class="sr-only" >
+<span class="area-chip ">نص تشطيب</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="core" class="sr-only" >
+<span class="area-chip ">بدون تشطيب</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="finishing[]" value="full" class="sr-only" >
+<span class="area-chip ">تشطيب كامل</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="deluxe" class="sr-only" >
+<span class="area-chip ">تشطيب فاخر</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="super-lux" class="sr-only" >
+<span class="area-chip ">تشطيب سوبر لوكس</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="ultra-super-lux" class="sr-only" >
+<span class="area-chip ">تشطيب الترا سوبر لوكس</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="furnished" class="sr-only" >
+<span class="area-chip ">مفروش</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="turnkey" class="sr-only" >
+<span class="area-chip ">تشطيب مفتاح -جاهز للسكن</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="flexi" class="sr-only" >
+<span class="area-chip ">فليكسي</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section data-modes="developer resale">
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16M9 14.5l2 2 4-4"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">التسليم في</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="ready" class="sr-only" >
+<span class="area-chip ">جاهز التسليم</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2026" class="sr-only" >
+<span class="area-chip ">2026</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2027" class="sr-only" >
+<span class="area-chip ">2027</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2028" class="sr-only" >
+<span class="area-chip ">2028</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2029" class="sr-only" >
+<span class="area-chip ">2029</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2030" class="sr-only" >
+<span class="area-chip ">2030</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2031" class="sr-only" >
+<span class="area-chip ">2031</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">نطاق السعر</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div data-range="price" data-min="100000" data-max="100000000" data-scale="log" data-bounds="{&quot;rent&quot;:{&quot;min&quot;:500,&quot;max&quot;:25000}}">
+<div class="area-range">
+<span class="area-range__rail" aria-hidden="true"><i class="area-range__fill" data-range-fill></i></span>
+<input type="range" min="0" max="1000" step="1" value="0" aria-label="من" data-range-low>
+<input type="range" min="0" max="1000" step="1" value="1000" aria-label="إلى" data-range-high>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<label class="area-field">
+<span class="sr-only">من</span>
+<span class="shrink-0">ج.م</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-low-text>
+</label>
+<label class="area-field">
+<span class="sr-only">إلى</span>
+<span class="shrink-0">ج.م</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-high-text>
+</label>
+</div>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V5l15 15H4ZM8 20v-5.5h5.5"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">مساحة الوحدة</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div data-range="size" data-min="0" data-max="8975" data-scale="linear" data-bounds="{&quot;rent&quot;:{&quot;min&quot;:23,&quot;max&quot;:333}}">
+<div class="area-range">
+<span class="area-range__rail" aria-hidden="true"><i class="area-range__fill" data-range-fill></i></span>
+<input type="range" min="0" max="1000" step="1" value="0" aria-label="من" data-range-low>
+<input type="range" min="0" max="1000" step="1" value="1000" aria-label="إلى" data-range-high>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<label class="area-field">
+<span class="sr-only">من</span>
+<span class="shrink-0">المساحة</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-low-text>
+</label>
+<label class="area-field">
+<span class="sr-only">إلى</span>
+<span class="shrink-0">المساحة</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-high-text>
+</label>
+</div>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section data-modes="developer resale">
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">سنوات التقسيط</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>مسح</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="0" class="sr-only" >
+<span class="area-chip area-chip--box">0</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="1" class="sr-only" >
+<span class="area-chip area-chip--box">1</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="2" class="sr-only" >
+<span class="area-chip area-chip--box">2</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="3" class="sr-only" >
+<span class="area-chip area-chip--box">3</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="4" class="sr-only" >
+<span class="area-chip area-chip--box">4</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="5" class="sr-only" >
+<span class="area-chip area-chip--box">5</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="6" class="sr-only" >
+<span class="area-chip area-chip--box">6</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="7" class="sr-only" >
+<span class="area-chip area-chip--box">7</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="8" class="sr-only" >
+<span class="area-chip area-chip--box">8</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="9+" class="sr-only" >
+<span class="area-chip area-chip--box">+9</span>
+</label>
+</div>
+</section>
+
+</div>
+
+</div>
+</div>
+
+<div class="shrink-0 rounded-t-[26px] bg-white shadow-[0_-8px_24px_-14px_rgba(18,58,92,0.35)] lg:rounded-none lg:border-t lg:border-shary-line lg:shadow-none">
+<div class="flex gap-3 px-5 pb-5 pt-4 lg:mx-auto lg:max-w-[1240px] lg:flex-row-reverse lg:items-center lg:justify-between lg:px-10 lg:py-4">
+<button type="button" class="flex h-14 flex-[2] items-center justify-center gap-2.5 rounded-full bg-shary-link text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-action lg:h-[52px] lg:w-[300px] lg:flex-none lg:rounded-2xl" data-sheet-apply>
+عرض النتائج                        <svg class="hidden ltr:rotate-180 lg:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+</button>
+<button type="button" class="flex h-14 flex-1 items-center justify-center gap-2.5 rounded-full bg-shary-form text-[17px] font-bold leading-normal text-shary-navy transition-colors hover:bg-shary-cloud lg:h-[52px] lg:w-auto lg:flex-none lg:rounded-2xl lg:border lg:border-shary-line lg:bg-white lg:px-6 lg:text-[16px] lg:hover:border-shary-link lg:hover:bg-white lg:hover:text-shary-link" data-filter-clear-all>
+<svg class="hidden lg:block" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+مسح                    </button>
 </div>
 </div>
 </div>
+</div>
+
+<div class="fixed inset-0 z-[60] hidden" data-filter-sheet="price" role="dialog" aria-modal="true" aria-label="السعر">
+
+<div class="absolute inset-0 bg-shary-navy/60 lg:bg-transparent" data-sheet-close></div>
+<div class="area-sheet lg:border lg:border-b-0 lg:border-shary-line lg:shadow-[0_-20px_60px_-10px_rgba(18,58,92,0.38)] absolute inset-x-0 bottom-0 flex flex-col rounded-t-[28px] bg-white px-5 pb-5 pt-3 lg:mx-auto lg:w-[720px] lg:px-10 lg:pb-9 lg:pt-4">
+<span class="mx-auto mb-3 block h-1.5 w-11 shrink-0 rounded-full bg-shary-form" aria-hidden="true"></span>
+<h3 class="mb-5 text-[20px] font-semibold leading-normal lg:mb-7 lg:text-[24px]">السعر</h3>
+<div data-range="price" data-min="100000" data-max="100000000" data-scale="log" data-bounds="{&quot;rent&quot;:{&quot;min&quot;:500,&quot;max&quot;:25000}}">
+<div class="area-range">
+<span class="area-range__rail" aria-hidden="true"><i class="area-range__fill" data-range-fill></i></span>
+<input type="range" min="0" max="1000" step="1" value="0" aria-label="من" data-range-low>
+<input type="range" min="0" max="1000" step="1" value="1000" aria-label="إلى" data-range-high>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<label class="area-field">
+<span class="sr-only">من</span>
+<span class="shrink-0">ج.م</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-low-text>
+</label>
+<label class="area-field">
+<span class="sr-only">إلى</span>
+<span class="shrink-0">ج.م</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-high-text>
+</label>
+</div>
+</div>
+<button type="button" class="mt-5 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-8 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>تطبيق</button>
+</div>
+</div>
+</form>
 </div>
 
 <div class="prop-utabs mt-3.5 lg:mt-5" role="group" aria-label="نوع البيع">
@@ -59138,7 +59555,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 
 <div class="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:mt-6 lg:grid-cols-3 lg:gap-6" data-project-grid>
-<div class="" data-unit data-slug="scenes-1" data-sale="developer" data-invest="1" data-price="48830000" data-delivery="0" data-order="0">
+<div class="" data-unit data-slug="scenes-1"
+data-sale="developer" data-invest="1"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="200" data-finishing="full"
+data-delivery="ready" data-years="10" data-price="48830000" data-installment="1159700" data-order="0">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59228,7 +59648,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="" data-unit data-slug="scenes-2" data-sale="developer" data-invest="0" data-price="65510000" data-delivery="0" data-order="1">
+<div class="" data-unit data-slug="scenes-2"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="240" data-finishing="super-lux"
+data-delivery="ready" data-years="10" data-price="65510000" data-installment="1555900" data-order="1">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59314,7 +59737,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="" data-unit data-slug="scenes-3" data-sale="developer" data-invest="0" data-price="67470000" data-delivery="2028" data-order="2">
+<div class="" data-unit data-slug="scenes-3"
+data-sale="developer" data-invest="0"
+data-types="villa" data-beds="4" data-baths="4" data-size="280" data-finishing="semi"
+data-delivery="2028" data-years="10" data-price="67470000" data-installment="1602400" data-order="2">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59400,7 +59826,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-4" data-sale="developer" data-invest="1" data-price="51760000" data-delivery="2028" data-order="3">
+<div class="hidden lg:block" data-unit data-slug="scenes-4"
+data-sale="developer" data-invest="1"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="212" data-finishing="full"
+data-delivery="2028" data-years="10" data-price="51760000" data-installment="1164600" data-order="3">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59489,7 +59918,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-5" data-sale="developer" data-invest="0" data-price="73370000" data-delivery="0" data-order="4">
+<div class="hidden lg:block" data-unit data-slug="scenes-5"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="268" data-finishing="super-lux"
+data-delivery="ready" data-years="10" data-price="73370000" data-installment="1650800" data-order="4">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59575,7 +60007,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-6" data-sale="resale" data-invest="0" data-price="79610000" data-delivery="2029" data-order="5">
+<div class="hidden lg:block" data-unit data-slug="scenes-6"
+data-sale="resale" data-invest="0"
+data-types="villa" data-beds="4" data-baths="4" data-size="330" data-finishing="semi"
+data-delivery="2029" data-years="10" data-price="79610000" data-installment="1791200" data-order="5">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59662,7 +60097,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-7" data-sale="developer" data-invest="0" data-price="60550000" data-delivery="2030" data-order="6">
+<div class="hidden lg:block" data-unit data-slug="scenes-7"
+data-sale="developer" data-invest="0"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="248" data-finishing="full"
+data-delivery="2030" data-years="10" data-price="60550000" data-installment="1362400" data-order="6">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59748,7 +60186,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-8" data-sale="developer" data-invest="1" data-price="85160000" data-delivery="2027" data-order="7">
+<div class="hidden lg:block" data-unit data-slug="scenes-8"
+data-sale="developer" data-invest="1"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="312" data-finishing="super-lux"
+data-delivery="2027" data-years="10" data-price="85160000" data-installment="1916100" data-order="7">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59837,7 +60278,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-9" data-sale="resale" data-invest="0" data-price="91760000" data-delivery="2028" data-order="8">
+<div class="hidden lg:block" data-unit data-slug="scenes-9"
+data-sale="resale" data-invest="0"
+data-types="villa" data-beds="4" data-baths="4" data-size="380" data-finishing="semi"
+data-delivery="2028" data-years="10" data-price="91760000" data-installment="2064600" data-order="8">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -59924,7 +60368,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-10" data-sale="developer" data-invest="0" data-price="69340000" data-delivery="0" data-order="9">
+<div class="hidden" data-unit data-slug="scenes-10"
+data-sale="developer" data-invest="0"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="284" data-finishing="full"
+data-delivery="ready" data-years="10" data-price="69340000" data-installment="1560200" data-order="9">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -60010,7 +60457,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-11" data-sale="developer" data-invest="0" data-price="96950000" data-delivery="2029" data-order="10">
+<div class="hidden" data-unit data-slug="scenes-11"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="355" data-finishing="super-lux"
+data-delivery="2029" data-years="10" data-price="96950000" data-installment="2181400" data-order="10">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -60096,7 +60546,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-12" data-sale="resale" data-invest="1" data-price="103900000" data-delivery="2030" data-order="11">
+<div class="hidden" data-unit data-slug="scenes-12"
+data-sale="resale" data-invest="1"
+data-types="villa" data-beds="4" data-baths="4" data-size="431" data-finishing="semi"
+data-delivery="2030" data-years="10" data-price="103900000" data-installment="2337800" data-order="11">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -60186,7 +60639,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-13" data-sale="developer" data-invest="0" data-price="78130000" data-delivery="2027" data-order="12">
+<div class="hidden" data-unit data-slug="scenes-13"
+data-sale="developer" data-invest="0"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="320" data-finishing="full"
+data-delivery="2027" data-years="10" data-price="78130000" data-installment="1757900" data-order="12">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -60272,7 +60728,10 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-14" data-sale="developer" data-invest="0" data-price="108750000" data-delivery="2028" data-order="13">
+<div class="hidden" data-unit data-slug="scenes-14"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="398" data-finishing="super-lux"
+data-delivery="2028" data-years="10" data-price="108750000" data-installment="2446900" data-order="13">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121180,26 +121639,469 @@ Verified                </span>
 <h2 class="text-[21px] font-bold leading-[1.35] lg:text-[24px]" data-project-field="units-title"><span class="lg:hidden">Units</span><span class="hidden lg:inline">Explore properties in Scenes</span></h2>
 <p class="text-[13px] font-medium leading-normal text-shary-muted lg:text-[14.5px]"><bdi data-units-count>14</bdi> results available</p>
 </div>
-<div class="flex shrink-0 items-center gap-2">
 
-<a href="#pv:/search?project[]=scenes" class="flex h-11 items-center justify-center gap-1.5 rounded-xl bg-shary-link px-3.5 text-[14px] font-bold leading-normal text-white transition-colors hover:bg-shary-action lg:h-12 lg:px-5" data-project-field="units-filter" aria-label="Filter">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
-<span class="hidden min-[400px]:inline">Filter</span>
-</a>
+<form class="flex shrink-0 items-center gap-2 lg:gap-3" data-area-filters>
 
-<div class="relative" data-unit-sort-box>
-<button type="button" class="flex h-11 items-center justify-center gap-1.5 rounded-xl border border-shary-line bg-white px-3.5 text-[14px] font-bold leading-normal text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link lg:h-12 lg:px-5" data-unit-sort-open aria-haspopup="true" aria-expanded="false" aria-label="Sort">
-<span class="hidden min-[400px]:inline">Sort</span>
-<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M8 19l-3-3M8 19l3-3M16 19V5M16 5l-3 3M16 5l3 3"/></svg>
+<button type="button" class="relative flex h-11 items-center justify-center gap-2 rounded-xl text-white transition-colors lg:h-12 bg-shary-link px-3 text-[14px] font-bold hover:bg-shary-action lg:px-5 lg:text-[15px]" data-sheet-open="all" aria-haspopup="dialog" aria-expanded="false" aria-label="Filter">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+<span>Filter</span>
+<span class="area-filter__count absolute -end-1 -top-1" data-sheet-count="all"></span>
 </button>
-<div class="absolute end-0 top-full z-20 mt-2 hidden w-[230px] rounded-2xl border border-shary-line bg-white p-1.5 shadow-[0_14px_34px_-14px_rgba(18,58,92,0.45)]" data-unit-sort-menu>
-<a href="#pv:/projects/scenes?sort=price_asc" class="prop-sort__item" data-unit-sort="price_asc" aria-current="false">Lowest price</a>
-<a href="#pv:/projects/scenes?sort=price_desc" class="prop-sort__item" data-unit-sort="price_desc" aria-current="false">Highest price</a>
-<a href="#pv:/projects/scenes?sort=delivery" class="prop-sort__item" data-unit-sort="delivery" aria-current="false">Delivery date</a>
-<a href="#pv:/projects/scenes?sort=newest" class="prop-sort__item" data-unit-sort="newest" aria-current="false">Newest</a>
+
+<div class="relative">
+<button type="button" class="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl transition-colors lg:h-12  border border-shary-line bg-white px-2.5 text-[14px] font-bold text-shary-navy hover:border-shary-link hover:text-shary-link lg:w-12 lg:px-0" data-sort-open aria-haspopup="true" aria-expanded="false" aria-label="Sort">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M8 19l-3-3M8 19l3-3M16 19V5M16 5l-3 3M16 5l3 3"/></svg>
+<span class="lg:hidden">Sort</span>
+</button>
+<div class="absolute end-0 top-full z-30 mt-2 hidden w-[230px] rounded-2xl border border-shary-line bg-white px-4 py-1.5 shadow-[0_14px_34px_-14px_rgba(18,58,92,0.45)]" data-sort-menu>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="price_asc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>Lowest price</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="price_desc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>Highest price</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="delivery" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>Delivery date</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="newest" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>Newest</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="installment_asc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>Lowest installment</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="installment_desc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>Highest installment</span>
+</label>
+</div>
+</div>
+
+<input type="hidden" name="price_min" value="" data-range-min="price">
+<input type="hidden" name="price_max" value="" data-range-max="price">
+<input type="hidden" name="size_min" value="" data-range-min="size">
+<input type="hidden" name="size_max" value="" data-range-max="size">
+
+<div class="fixed inset-0 z-50 hidden" data-filter-sheet="all" role="dialog" aria-modal="true" aria-label="Filter">
+
+<div class="area-sheet absolute inset-0 flex flex-col bg-[#fafafa] lg:bg-[#f4f7fa]">
+<div class="shrink-0 lg:border-b lg:border-shary-line lg:bg-white">
+<div class="relative flex h-16 items-center justify-center px-5 lg:mx-auto lg:h-[76px] lg:max-w-[1240px] lg:justify-between lg:px-10">
+
+<button type="button" class="absolute start-3 flex h-11 w-11 items-center justify-center rounded-full text-shary-navy hover:text-shary-link lg:hidden" data-sheet-close aria-label="Close">
+<svg class="ltr:rotate-180" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</button>
+<h3 class="flex items-center gap-2.5 text-[20px] font-bold leading-normal lg:gap-3 lg:text-[24px]">
+<span class="flex h-9 w-9 items-center justify-center rounded-xl bg-shary-link text-white lg:h-11 lg:w-11" aria-hidden="true">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
+</span>
+Filter                    </h3>
+
+<button type="button" class="hidden h-11 items-center gap-2 rounded-full border border-shary-line bg-white px-5 text-[15px] font-bold leading-normal text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link lg:flex" data-sheet-close>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+Close                    </button>
+</div>
+</div>
+
+<div class="shary-scroll min-h-0 flex-1 overflow-y-auto">
+<div class="px-5 pb-6 lg:mx-auto lg:max-w-[1240px] lg:px-10 lg:pb-10">
+
+<input type="radio" name="offer" value="developer" class="hidden" checked>
+
+<div class="lg:mt-7 lg:columns-2 lg:gap-5">
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V6l8-3v18M12 9l8 2v10M4 21h16M7.5 9v.01M7.5 12.5v.01M7.5 16v.01M15.5 13.5v.01M15.5 17v.01"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Property type</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="type[]" value="villa" class="sr-only" >
+<span class="area-chip ">Villas</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="type[]" value="twin-house" class="sr-only" >
+<span class="area-chip ">Twin house</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="type[]" value="townhouse" class="sr-only" >
+<span class="area-chip ">Townhouse</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M6 10V7.5A1.5 1.5 0 0 1 7.5 6h9A1.5 1.5 0 0 1 18 7.5V10"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Bedrooms</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bedrooms[]" value="0" class="sr-only" >
+<span class="area-chip area-chip--box">0</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="1" class="sr-only" >
+<span class="area-chip area-chip--box">1</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bedrooms[]" value="2" class="sr-only" >
+<span class="area-chip area-chip--box">2</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bedrooms[]" value="3" class="sr-only" >
+<span class="area-chip area-chip--box">3</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="4" class="sr-only" >
+<span class="area-chip area-chip--box">4</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="5" class="sr-only" >
+<span class="area-chip area-chip--box">5</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="6" class="sr-only" >
+<span class="area-chip area-chip--box">6</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="7" class="sr-only" >
+<span class="area-chip area-chip--box">7</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bedrooms[]" value="8" class="sr-only" >
+<span class="area-chip area-chip--box">8</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16v3a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-3ZM6 12V6.5A2.5 2.5 0 0 1 8.5 4c1.1 0 2 .7 2.3 1.7M7 19l-1 2M17 19l1 2"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Bathrooms</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bathrooms[]" value="0" class="sr-only" >
+<span class="area-chip area-chip--box">0</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="1" class="sr-only" >
+<span class="area-chip area-chip--box">1</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bathrooms[]" value="2" class="sr-only" >
+<span class="area-chip area-chip--box">2</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="bathrooms[]" value="3" class="sr-only" >
+<span class="area-chip area-chip--box">3</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="4" class="sr-only" >
+<span class="area-chip area-chip--box">4</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="5" class="sr-only" >
+<span class="area-chip area-chip--box">5</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="6" class="sr-only" >
+<span class="area-chip area-chip--box">6</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="7" class="sr-only" >
+<span class="area-chip area-chip--box">7</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="8" class="sr-only" >
+<span class="area-chip area-chip--box">8</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="9" class="sr-only" >
+<span class="area-chip area-chip--box">9</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="bathrooms[]" value="10" class="sr-only" >
+<span class="area-chip area-chip--box">10</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section data-modes="developer resale">
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4.5l5 5L9 20H4v-5L14.5 4.5ZM12 7l5 5"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Finishing</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="finishing[]" value="semi" class="sr-only" >
+<span class="area-chip ">Semi-finished</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="core" class="sr-only" >
+<span class="area-chip ">Unfinished</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="finishing[]" value="full" class="sr-only" >
+<span class="area-chip ">Fully finished</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="deluxe" class="sr-only" >
+<span class="area-chip ">Deluxe finishing</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="super-lux" class="sr-only" >
+<span class="area-chip ">Super lux</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="ultra-super-lux" class="sr-only" >
+<span class="area-chip ">Ultra super lux</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="furnished" class="sr-only" >
+<span class="area-chip ">Furnished</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="turnkey" class="sr-only" >
+<span class="area-chip ">Turnkey - ready to move</span>
+</label>
+<label class="cursor-pointer" data-modes="developer resale">
+<input type="checkbox" name="finishing[]" value="flexi" class="sr-only" >
+<span class="area-chip ">Flexi</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section data-modes="developer resale">
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16M9 14.5l2 2 4-4"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Delivery in</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="ready" class="sr-only" >
+<span class="area-chip ">Ready to move</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2026" class="sr-only" >
+<span class="area-chip ">2026</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2027" class="sr-only" >
+<span class="area-chip ">2027</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2028" class="sr-only" >
+<span class="area-chip ">2028</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2029" class="sr-only" >
+<span class="area-chip ">2029</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2030" class="sr-only" >
+<span class="area-chip ">2030</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="delivery[]" value="2031" class="sr-only" >
+<span class="area-chip ">2031</span>
+</label>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Price range</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div data-range="price" data-min="100000" data-max="100000000" data-scale="log" data-bounds="{&quot;rent&quot;:{&quot;min&quot;:500,&quot;max&quot;:25000}}">
+<div class="area-range">
+<span class="area-range__rail" aria-hidden="true"><i class="area-range__fill" data-range-fill></i></span>
+<input type="range" min="0" max="1000" step="1" value="0" aria-label="From" data-range-low>
+<input type="range" min="0" max="1000" step="1" value="1000" aria-label="To" data-range-high>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<label class="area-field">
+<span class="sr-only">From</span>
+<span class="shrink-0">EGP</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-low-text>
+</label>
+<label class="area-field">
+<span class="sr-only">To</span>
+<span class="shrink-0">EGP</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-high-text>
+</label>
+</div>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section>
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V5l15 15H4ZM8 20v-5.5h5.5"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Unit area</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div data-range="size" data-min="0" data-max="8975" data-scale="linear" data-bounds="{&quot;rent&quot;:{&quot;min&quot;:23,&quot;max&quot;:333}}">
+<div class="area-range">
+<span class="area-range__rail" aria-hidden="true"><i class="area-range__fill" data-range-fill></i></span>
+<input type="range" min="0" max="1000" step="1" value="0" aria-label="From" data-range-low>
+<input type="range" min="0" max="1000" step="1" value="1000" aria-label="To" data-range-high>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<label class="area-field">
+<span class="sr-only">From</span>
+<span class="shrink-0">Area</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-low-text>
+</label>
+<label class="area-field">
+<span class="sr-only">To</span>
+<span class="shrink-0">Area</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-high-text>
+</label>
+</div>
+</div>
+</section>
+
+<section class="area-fsec" data-filter-section data-modes="developer resale">
+<div class="mb-4 flex items-start justify-between gap-3">
+<div class="flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01"/></svg>
+</span>
+<h4 class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">Installment years</h4>
+</div>
+<button type="button" class="mt-1.5 text-[14px] font-medium leading-normal text-shary-link hover:underline" data-filter-clear>Clear</button>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="0" class="sr-only" >
+<span class="area-chip area-chip--box">0</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="1" class="sr-only" >
+<span class="area-chip area-chip--box">1</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="2" class="sr-only" >
+<span class="area-chip area-chip--box">2</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="3" class="sr-only" >
+<span class="area-chip area-chip--box">3</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="4" class="sr-only" >
+<span class="area-chip area-chip--box">4</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="5" class="sr-only" >
+<span class="area-chip area-chip--box">5</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="6" class="sr-only" >
+<span class="area-chip area-chip--box">6</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="7" class="sr-only" >
+<span class="area-chip area-chip--box">7</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="8" class="sr-only" >
+<span class="area-chip area-chip--box">8</span>
+</label>
+<label class="cursor-pointer" data-modes="">
+<input type="checkbox" name="years[]" value="9+" class="sr-only" >
+<span class="area-chip area-chip--box">+9</span>
+</label>
+</div>
+</section>
+
+</div>
+
+</div>
+</div>
+
+<div class="shrink-0 rounded-t-[26px] bg-white shadow-[0_-8px_24px_-14px_rgba(18,58,92,0.35)] lg:rounded-none lg:border-t lg:border-shary-line lg:shadow-none">
+<div class="flex gap-3 px-5 pb-5 pt-4 lg:mx-auto lg:max-w-[1240px] lg:flex-row-reverse lg:items-center lg:justify-between lg:px-10 lg:py-4">
+<button type="button" class="flex h-14 flex-[2] items-center justify-center gap-2.5 rounded-full bg-shary-link text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-action lg:h-[52px] lg:w-[300px] lg:flex-none lg:rounded-2xl" data-sheet-apply>
+Show results                        <svg class="hidden ltr:rotate-180 lg:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+</button>
+<button type="button" class="flex h-14 flex-1 items-center justify-center gap-2.5 rounded-full bg-shary-form text-[17px] font-bold leading-normal text-shary-navy transition-colors hover:bg-shary-cloud lg:h-[52px] lg:w-auto lg:flex-none lg:rounded-2xl lg:border lg:border-shary-line lg:bg-white lg:px-6 lg:text-[16px] lg:hover:border-shary-link lg:hover:bg-white lg:hover:text-shary-link" data-filter-clear-all>
+<svg class="hidden lg:block" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>
+Clear                    </button>
 </div>
 </div>
 </div>
+</div>
+
+<div class="fixed inset-0 z-[60] hidden" data-filter-sheet="price" role="dialog" aria-modal="true" aria-label="Price">
+
+<div class="absolute inset-0 bg-shary-navy/60 lg:bg-transparent" data-sheet-close></div>
+<div class="area-sheet lg:border lg:border-b-0 lg:border-shary-line lg:shadow-[0_-20px_60px_-10px_rgba(18,58,92,0.38)] absolute inset-x-0 bottom-0 flex flex-col rounded-t-[28px] bg-white px-5 pb-5 pt-3 lg:mx-auto lg:w-[720px] lg:px-10 lg:pb-9 lg:pt-4">
+<span class="mx-auto mb-3 block h-1.5 w-11 shrink-0 rounded-full bg-shary-form" aria-hidden="true"></span>
+<h3 class="mb-5 text-[20px] font-semibold leading-normal lg:mb-7 lg:text-[24px]">Price</h3>
+<div data-range="price" data-min="100000" data-max="100000000" data-scale="log" data-bounds="{&quot;rent&quot;:{&quot;min&quot;:500,&quot;max&quot;:25000}}">
+<div class="area-range">
+<span class="area-range__rail" aria-hidden="true"><i class="area-range__fill" data-range-fill></i></span>
+<input type="range" min="0" max="1000" step="1" value="0" aria-label="From" data-range-low>
+<input type="range" min="0" max="1000" step="1" value="1000" aria-label="To" data-range-high>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<label class="area-field">
+<span class="sr-only">From</span>
+<span class="shrink-0">EGP</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-low-text>
+</label>
+<label class="area-field">
+<span class="sr-only">To</span>
+<span class="shrink-0">EGP</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-high-text>
+</label>
+</div>
+</div>
+<button type="button" class="mt-5 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-8 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>Apply</button>
+</div>
+</div>
+</form>
 </div>
 
 <div class="prop-utabs mt-3.5 lg:mt-5" role="group" aria-label="Sale type">
@@ -121210,7 +122112,10 @@ Verified                </span>
 </div>
 
 <div class="mt-4 grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:mt-6 lg:grid-cols-3 lg:gap-6" data-project-grid>
-<div class="" data-unit data-slug="scenes-1" data-sale="developer" data-invest="1" data-price="48830000" data-delivery="0" data-order="0">
+<div class="" data-unit data-slug="scenes-1"
+data-sale="developer" data-invest="1"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="200" data-finishing="full"
+data-delivery="ready" data-years="10" data-price="48830000" data-installment="1159700" data-order="0">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121300,7 +122205,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="" data-unit data-slug="scenes-2" data-sale="developer" data-invest="0" data-price="65510000" data-delivery="0" data-order="1">
+<div class="" data-unit data-slug="scenes-2"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="240" data-finishing="super-lux"
+data-delivery="ready" data-years="10" data-price="65510000" data-installment="1555900" data-order="1">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121386,7 +122294,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="" data-unit data-slug="scenes-3" data-sale="developer" data-invest="0" data-price="67470000" data-delivery="2028" data-order="2">
+<div class="" data-unit data-slug="scenes-3"
+data-sale="developer" data-invest="0"
+data-types="villa" data-beds="4" data-baths="4" data-size="280" data-finishing="semi"
+data-delivery="2028" data-years="10" data-price="67470000" data-installment="1602400" data-order="2">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121472,7 +122383,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-4" data-sale="developer" data-invest="1" data-price="51760000" data-delivery="2028" data-order="3">
+<div class="hidden lg:block" data-unit data-slug="scenes-4"
+data-sale="developer" data-invest="1"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="212" data-finishing="full"
+data-delivery="2028" data-years="10" data-price="51760000" data-installment="1164600" data-order="3">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121561,7 +122475,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-5" data-sale="developer" data-invest="0" data-price="73370000" data-delivery="0" data-order="4">
+<div class="hidden lg:block" data-unit data-slug="scenes-5"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="268" data-finishing="super-lux"
+data-delivery="ready" data-years="10" data-price="73370000" data-installment="1650800" data-order="4">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121647,7 +122564,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-6" data-sale="resale" data-invest="0" data-price="79610000" data-delivery="2029" data-order="5">
+<div class="hidden lg:block" data-unit data-slug="scenes-6"
+data-sale="resale" data-invest="0"
+data-types="villa" data-beds="4" data-baths="4" data-size="330" data-finishing="semi"
+data-delivery="2029" data-years="10" data-price="79610000" data-installment="1791200" data-order="5">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121734,7 +122654,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-7" data-sale="developer" data-invest="0" data-price="60550000" data-delivery="2030" data-order="6">
+<div class="hidden lg:block" data-unit data-slug="scenes-7"
+data-sale="developer" data-invest="0"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="248" data-finishing="full"
+data-delivery="2030" data-years="10" data-price="60550000" data-installment="1362400" data-order="6">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121820,7 +122743,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-8" data-sale="developer" data-invest="1" data-price="85160000" data-delivery="2027" data-order="7">
+<div class="hidden lg:block" data-unit data-slug="scenes-8"
+data-sale="developer" data-invest="1"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="312" data-finishing="super-lux"
+data-delivery="2027" data-years="10" data-price="85160000" data-installment="1916100" data-order="7">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121909,7 +122835,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden lg:block" data-unit data-slug="scenes-9" data-sale="resale" data-invest="0" data-price="91760000" data-delivery="2028" data-order="8">
+<div class="hidden lg:block" data-unit data-slug="scenes-9"
+data-sale="resale" data-invest="0"
+data-types="villa" data-beds="4" data-baths="4" data-size="380" data-finishing="semi"
+data-delivery="2028" data-years="10" data-price="91760000" data-installment="2064600" data-order="8">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -121996,7 +122925,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-10" data-sale="developer" data-invest="0" data-price="69340000" data-delivery="0" data-order="9">
+<div class="hidden" data-unit data-slug="scenes-10"
+data-sale="developer" data-invest="0"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="284" data-finishing="full"
+data-delivery="ready" data-years="10" data-price="69340000" data-installment="1560200" data-order="9">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -122082,7 +123014,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-11" data-sale="developer" data-invest="0" data-price="96950000" data-delivery="2029" data-order="10">
+<div class="hidden" data-unit data-slug="scenes-11"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="355" data-finishing="super-lux"
+data-delivery="2029" data-years="10" data-price="96950000" data-installment="2181400" data-order="10">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -122168,7 +123103,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-12" data-sale="resale" data-invest="1" data-price="103900000" data-delivery="2030" data-order="11">
+<div class="hidden" data-unit data-slug="scenes-12"
+data-sale="resale" data-invest="1"
+data-types="villa" data-beds="4" data-baths="4" data-size="431" data-finishing="semi"
+data-delivery="2030" data-years="10" data-price="103900000" data-installment="2337800" data-order="11">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -122258,7 +123196,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-13" data-sale="developer" data-invest="0" data-price="78130000" data-delivery="2027" data-order="12">
+<div class="hidden" data-unit data-slug="scenes-13"
+data-sale="developer" data-invest="0"
+data-types="townhouse" data-beds="3" data-baths="3" data-size="320" data-finishing="full"
+data-delivery="2027" data-years="10" data-price="78130000" data-installment="1757900" data-order="12">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -122344,7 +123285,10 @@ Verified                </span>
 </div>
 </article>
 </div>
-<div class="hidden" data-unit data-slug="scenes-14" data-sale="developer" data-invest="0" data-price="108750000" data-delivery="2028" data-order="13">
+<div class="hidden" data-unit data-slug="scenes-14"
+data-sale="developer" data-invest="0"
+data-types="twin-house" data-beds="4" data-baths="3" data-size="398" data-finishing="super-lux"
+data-delivery="2028" data-years="10" data-price="108750000" data-installment="2446900" data-order="13">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/units/scenes-1" tabindex="-1" aria-hidden="true">
@@ -137256,12 +138200,14 @@ Shary
  * - المعرض [data-gallery-slider] (partials/photo-gallery.blade.php مع slider): على الموبايل صورة واحدة بتتسحب بالجنب وتحتها نقط.
  *
  * - وحدات المشروع [data-project-units] (data-per-page = عدد الكروت في الصفحة على الديسك توب):
- *   كل كروت المشروع [data-unit] موجودة في [data-project-grid]، وعلى كل كارت data-sale و data-invest و data-price و data-delivery و data-order.
- *   التبويب [data-unit-tab=" | developer | resale | invest"] بيظهر كروت النوع ده بس، والترتيب [data-unit-sort="price_asc | price_desc | newest | delivery"] بيرتّبها.
+ *   كل كروت المشروع [data-unit] موجودة في [data-project-grid]، وعلى كل كارت: data-sale ، data-invest ، data-types ، data-beds ، data-baths ، data-size ،
+ *   data-finishing ، data-delivery ، data-years ، data-price ، data-installment ، data-order.
+ *   التبويب [data-unit-tab=" | developer | resale | invest"] بيظهر كروت النوع ده بس.
+ *   "تصفية" والترتيب: نفس فورم فلاتر الموقع (areas/partials/filters.blade.php مع projectFilters) — صفحة الفلاتر بتفتح من js/shary/area-page.js،
+ *   و"عرض النتائج" بيفلتر كروت الصفحة هنا من غير تحميل (type[] ، bedrooms[] ، bathrooms[] ، finishing[] ، delivery[] ، years[] ، السعر ، المساحة ، sort).
  *   ديسك توب: أرقام الصفحات [data-units-pages] بتبدّل الكروت مكانها (من غير تحميل ولا رجوع لأول الصفحة).
  *   موبايل: 3 كروت والباقي بيكمّل لوحده وأنت نازل ([data-units-sentinel]) — من غير "عرض المزيد".
- *   اللينك في المتصفح بيتغير (?tab= & sort=) من غير تحميل. من غير السكربت اللينكات بتفتح نفس الصفحة بالاختيار.
- *   حدث shary:project-units ({ tab, sort, url }) قبل التبديل: امنعوه (preventDefault) لو هتجيبوا الكروت من السيرفر بطريقتكم،
+ *   حدث shary:project-units ({ tab, sort, filters, url }) قبل التبديل: امنعوه (preventDefault) لو هتجيبوا الكروت من السيرفر بطريقتكم،
  *   وبعد ما تحطوا الكروت الجديدة في [data-project-grid] نادوا section.__renderUnits().
  */
 (function () {
@@ -137601,13 +138547,11 @@ Shary
         var grid = section.querySelector('[data-project-grid]');
         if (!grid) return;
         var tabs = Array.prototype.slice.call(section.querySelectorAll('[data-unit-tab]'));
-        var sorts = Array.prototype.slice.call(section.querySelectorAll('[data-unit-sort]'));
+        var form = section.querySelector('form[data-area-filters]');   // فورم الفلاتر والترتيب (areas/partials/filters.blade.php)
         var count = section.querySelector('[data-units-count]');
         var empty = section.querySelector('[data-units-empty]');
         var pages = section.querySelector('[data-units-pages]');
         var sentinel = section.querySelector('[data-units-sentinel]');
-        var sortOpen = section.querySelector('[data-unit-sort-open]');
-        var sortMenu = section.querySelector('[data-unit-sort-menu]');
         var perPage = parseInt(section.getAttribute('data-per-page'), 10) || 9;
         var STEP = 3;          // موبايل: 3 كروت في كل مرة
         var page = 1;
@@ -137620,17 +138564,45 @@ Shary
         }
         function number(card, name) { return parseFloat(card.getAttribute(name)) || 0; }
 
-        // الكروت اللي تبع التبويب المفتوح، مترتبة بالترتيب المختار
+        // اختيارات فورم الفلاتر: type[] ، bedrooms[] ، bathrooms[] ، finishing[] ، delivery[] ، years[] ، السعر والمساحة (من – إلى) ، sort
+        function picked(name) {
+            return form ? Array.prototype.map.call(form.querySelectorAll('input[name="' + name + '[]"]:checked'), function (box) { return box.value; }) : [];
+        }
+        function field(selector) {
+            var input = form ? form.querySelector(selector) : null;
+            return input && input.value !== '' ? Number(String(input.value).replace(/,/g, '')) : null;
+        }
+        function sortValue() {
+            var radio = form ? form.querySelector('input[name="sort"]:checked') : null;
+            return radio ? radio.value : '';
+        }
+
+        // الكروت اللي تبع التبويب المفتوح والفلاتر المختارة، مترتبة بالترتيب المختار
         function matching() {
             var tab = current(tabs, 'data-unit-tab');
-            var sort = current(sorts, 'data-unit-sort');
+            var sort = sortValue();
+            var types = picked('type'), beds = picked('bedrooms'), baths = picked('bathrooms'), finishing = picked('finishing'), delivery = picked('delivery'), years = picked('years');
+            var priceLow = field('[data-range-min="price"]'), priceHigh = field('[data-range-max="price"]');
+            var sizeLow = field('[data-range-min="size"]'), sizeHigh = field('[data-range-max="size"]');
+            function has(list, value) { return !list.length || list.indexOf(String(value)) > -1; }
+            function deliveryYear(card) { return card.getAttribute('data-delivery') === 'ready' ? 0 : number(card, 'data-delivery'); }
             var by = {
                 price_asc: function (a, b) { return number(a, 'data-price') - number(b, 'data-price'); },
                 price_desc: function (a, b) { return number(b, 'data-price') - number(a, 'data-price'); },
-                delivery: function (a, b) { return number(a, 'data-delivery') - number(b, 'data-delivery'); }
+                installment_asc: function (a, b) { return number(a, 'data-installment') - number(b, 'data-installment'); },
+                installment_desc: function (a, b) { return number(b, 'data-installment') - number(a, 'data-installment'); },
+                delivery: function (a, b) { return deliveryYear(a) - deliveryYear(b); }
             }[sort] || function () { return 0; };
             return Array.prototype.slice.call(grid.querySelectorAll(':scope > [data-unit]'))
-                .filter(function (card) { return !tab || (tab === 'invest' ? card.getAttribute('data-invest') === '1' : card.getAttribute('data-sale') === tab); })
+                .filter(function (card) {
+                    var price = number(card, 'data-price'), size = number(card, 'data-size'), y = number(card, 'data-years');
+                    return (!tab || (tab === 'invest' ? card.getAttribute('data-invest') === '1' : card.getAttribute('data-sale') === tab)) &&
+                        has(types, card.getAttribute('data-types')) && has(beds, card.getAttribute('data-beds')) && has(baths, card.getAttribute('data-baths')) &&
+                        has(finishing, card.getAttribute('data-finishing')) && has(delivery, card.getAttribute('data-delivery')) &&
+                        (!years.length || years.indexOf(y >= 9 ? '9+' : String(y)) > -1) &&
+                        (priceLow === null || price >= priceLow) && (priceHigh === null || price <= priceHigh) &&
+                        (sizeLow === null || size >= sizeLow) && (sizeHigh === null || size <= sizeHigh);
+                })
                 .sort(function (a, b) { return by(a, b) || number(a, 'data-order') - number(b, 'data-order'); });
         }
 
@@ -137708,52 +138680,41 @@ Shary
         }
         if (desktop.addEventListener) desktop.addEventListener('change', render);
 
-        function choose(list, link) {
-            var name = list === tabs ? 'tab' : 'sort';
-            var detail = { tab: current(tabs, 'data-unit-tab'), sort: current(sorts, 'data-unit-sort'), url: link.href };
-            detail[name] = link.getAttribute('data-unit-' + name);
+        // قبل أي تبديل: حدث shary:project-units ({ tab, sort, filters, url }) — امنعوه لو الكروت هتيجي من السيرفر
+        function apply(url) {
+            var filters = {};
+            if (form && window.FormData) new FormData(form).forEach(function (value, key) { if (value !== '') (filters[key] = filters[key] || []).push(value); });
+            var detail = { tab: current(tabs, 'data-unit-tab'), sort: sortValue(), filters: filters, url: url || '' };
             if (!section.dispatchEvent(new CustomEvent('shary:project-units', { bubbles: true, cancelable: true, detail: detail }))) return;
-            list.forEach(function (item) { item.setAttribute('aria-current', item === link ? 'true' : 'false'); });
             page = 1;
             shown = STEP;
             render();
-            var href = link.getAttribute('href') || '';
-            if (href && href.charAt(0) !== '#' && window.history && history.replaceState) {
-                try { history.replaceState(history.state, '', link.href); } catch (error) { /* file:// */ }
-            }
         }
 
         tabs.forEach(function (link) {
             link.addEventListener('click', function (event) {
                 if (event.metaKey || event.ctrlKey || event.shiftKey || event.button) return;
                 event.preventDefault();
-                choose(tabs, link);
+                tabs.forEach(function (item) { item.setAttribute('aria-current', item === link ? 'true' : 'false'); });
+                apply(link.href);
+                var href = link.getAttribute('href') || '';
+                if (href && href.charAt(0) !== '#' && window.history && history.replaceState) {
+                    try { history.replaceState(history.state, '', link.href); } catch (error) { /* file:// */ }
+                }
             });
         });
 
-        function closeSort() {
-            if (!sortMenu || sortMenu.classList.contains('hidden')) return;
-            sortMenu.classList.add('hidden');
-            sortOpen.setAttribute('aria-expanded', 'false');
-        }
-        if (sortOpen && sortMenu) {
-            sortOpen.addEventListener('click', function () {
-                var closed = sortMenu.classList.toggle('hidden');
-                sortOpen.setAttribute('aria-expanded', closed ? 'false' : 'true');
-            });
-            document.addEventListener('click', function (event) {
-                if (!sortMenu.contains(event.target) && !sortOpen.contains(event.target)) closeSort();
-            });
-            document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeSort(); });
-        }
-        sorts.forEach(function (link) {
-            link.addEventListener('click', function (event) {
-                if (event.metaKey || event.ctrlKey || event.shiftKey || event.button) return;
+        // فورم الفلاتر والترتيب: "عرض النتائج" / "مسح" / اختيار ترتيب بيطلعوا حدث shary:filter (js/shary/area-page.js) —
+        // هنا الفلترة بتتم على كروت الصفحة من غير ما الفورم يتبعت ولا الصفحة تتحمّل
+        if (form) {
+            form.addEventListener('shary:filter', function (event) {
                 event.preventDefault();
-                closeSort();
-                choose(sorts, link);
+                event.stopPropagation();
+                apply(form.getAttribute('action') || '');
+                var top = section.getBoundingClientRect().top;
+                if (top < 0) window.scrollTo({ top: window.pageYOffset + top - 150, behavior: 'smooth' });
             });
-        });
+        }
 
         // لو الكروت اتبدّلت من بره (مثلاً من السيرفر): section.__renderUnits() بيعيد العرض من أول صفحة
         section.__renderUnits = function () { page = 1; shown = STEP; render(); };
@@ -138549,6 +139510,16 @@ Shary
       var developer = /^\/developers\/([a-z0-9-]+)$/.exec(path);   // مطور مالوش صفحة في المعاينة: البحث العام على وحداته
       if (developer && showSearch('all', 'units', { developer: [developer[1]] })) return;
       if (/^\/rent\/[a-z0-9-]+$/.test(path) && openRentUnit(link)) return;   // وحدة إيجار: قالب واحد بيتملى من الكارت
+      var searchQuery = /^\/search\?(.+)$/.exec(path);   // لينك بحث باختيارات جاهزة (مثلاً "عقارات أكتر في المشروع"): البحث العام بنفس الاختيارات
+      if (searchQuery) {
+        var preset = {};
+        searchQuery[1].split('&').forEach(function (pair) {
+          var parts = pair.split('=');
+          var name = decodeURIComponent(parts[0]).replace(/\[\]$/, '');
+          if (name && name !== 'view') (preset[name] = preset[name] || []).push(decodeURIComponent(parts[1] || ''));
+        });
+        if (showSearch('all', 'units', preset)) return;
+      }
       var unitPage = /^\/units\/([a-z0-9-]+)$/.exec(path);   // وحدة بيع: قالب واحد بيتملى من الكارت
       if (unitPage && openUnit(link, unitPage[1])) return;
       var projectPage = /^\/projects\/([a-z0-9-]+)$/.exec(path);   // مشروع: قالب واحد بيتملى من الكارت
