@@ -3333,8 +3333,8 @@ input:focus-visible + .area-chip,
 }
 
 .prop-utabs a[aria-current="true"] {
-  border-bottom-color: #1f63c6;
-  color: #1f63c6;
+  border-bottom-color: #2a9d8f;
+  color: #1f7f72;
 }
 
 .prop-sort__item {
@@ -3536,6 +3536,17 @@ input:focus-visible + .area-chip,
 
 .prop-advice {
   background-image: linear-gradient(135deg, #1e4166 0%, #14385a 100%);
+}
+
+/* خريطة المشروع: مستطيل عريض زي التطبيق (العرض 2.45 × الارتفاع) */
+
+.prop-map {
+  aspect-ratio: 700 / 285;
+  box-shadow: 0 1px 2px rgba(18, 58, 92, 0.04), 0 12px 26px -18px rgba(18, 58, 92, 0.35);
+}
+
+.prop-map.is-expanded {
+  aspect-ratio: auto;
 }
 
 /* علامة مكان المشروع فوق الخريطة المرسومة (بتختفي لما خريطة جوجل تحمّل) */
@@ -8420,10 +8431,6 @@ input:focus-visible + .area-chip,
     height: 220px;
   }
 
-  .lg\:h-\[300px\] {
-    height: 300px;
-  }
-
   .lg\:h-\[340px\] {
     height: 340px;
   }
@@ -10360,7 +10367,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:h-\[124px\] {height: 124px;}
 .pv-desktop .lg\:h-\[176px\] {height: 176px;}
 .pv-desktop .lg\:h-\[220px\] {height: 220px;}
-.pv-desktop .lg\:h-\[300px\] {height: 300px;}
 .pv-desktop .lg\:h-\[340px\] {height: 340px;}
 .pv-desktop .lg\:h-\[380px\] {height: 380px;}
 .pv-desktop .lg\:h-\[400px\] {height: 400px;}
@@ -59078,12 +59084,12 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 </a>
 </div>
 
-<div class="area-map prop-map relative h-[220px] overflow-hidden rounded-[14px] lg:h-[300px]">
-<svg class="absolute inset-0 h-full w-full" viewBox="0 0 400 220" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 58 L410 30" stroke="#CBD5DE" stroke-width="12" fill="none"/><path d="M-10 175 L410 140" stroke="#CBD5DE" stroke-width="12" fill="none"/><path d="M150 -10 L185 230" stroke="#D3DCE4" stroke-width="9" fill="none"/><path d="M-10 110 Q120 95 230 120 T410 100" stroke="#DCE3EA" stroke-width="5" fill="none"/></svg>
+<div class="area-map prop-map relative overflow-hidden rounded-[16px]">
+<svg class="absolute inset-0 h-full w-full" viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 42 L410 22" stroke="#CBD5DE" stroke-width="10" fill="none"/><path d="M-10 128 L410 102" stroke="#CBD5DE" stroke-width="10" fill="none"/><path d="M150 -10 L185 170" stroke="#D3DCE4" stroke-width="8" fill="none"/><path d="M-10 80 Q120 70 230 88 T410 74" stroke="#DCE3EA" stroke-width="5" fill="none"/></svg>
 <span class="prop-map__pin" aria-hidden="true">
 <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
 </span>
-<iframe class="area-map__frame absolute inset-0 h-full w-full border-0" data-map-frame data-src="https://maps.google.com/maps?q=Scenes%20Mostakbal%20City%2C%20Egypt&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=&amp;hl=ar&amp;output=embed" title="مكان كمبوند سينز على الخريطة" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<iframe class="area-map__frame absolute inset-0 h-full w-full border-0" data-map-frame src="https://maps.google.com/maps?q=Scenes%20Mostakbal%20City%2C%20Egypt&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;hl=ar&amp;output=embed" data-src="https://maps.google.com/maps?q=Scenes%20Mostakbal%20City%2C%20Egypt&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;hl=ar&amp;output=embed" title="مكان كمبوند سينز على الخريطة" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 <button type="button" class="area-map__zoom absolute start-3 top-3 z-10 flex items-center justify-center" data-map-expand aria-expanded="false" aria-label="كبّر الخريطة" data-expand="كبّر الخريطة" data-close="صغّر الخريطة">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
 </button>
@@ -59098,7 +59104,8 @@ data-label-million="مليون" data-label-egp="ج.م" data-alt="السعر ال
 <section class="min-w-0 lg:order-1 lg:col-span-2" data-project-units data-per-page="9">
 <div class="flex items-center justify-between gap-3">
 <div class="min-w-0">
-<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[24px]" data-project-field="units-title">استكشف العقارات في كمبوند سينز</h2>
+
+<h2 class="text-[21px] font-bold leading-[1.35] lg:text-[24px]" data-project-field="units-title"><span class="lg:hidden">الوحدات</span><span class="hidden lg:inline">استكشف العقارات في كمبوند سينز</span></h2>
 <p class="text-[13px] font-medium leading-normal text-shary-muted lg:text-[14.5px]"><bdi data-units-count>14</bdi> نتائج متاحة</p>
 </div>
 <div class="flex shrink-0 items-center gap-2">
@@ -121149,12 +121156,12 @@ Verified                </span>
 </a>
 </div>
 
-<div class="area-map prop-map relative h-[220px] overflow-hidden rounded-[14px] lg:h-[300px]">
-<svg class="absolute inset-0 h-full w-full" viewBox="0 0 400 220" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 58 L410 30" stroke="#CBD5DE" stroke-width="12" fill="none"/><path d="M-10 175 L410 140" stroke="#CBD5DE" stroke-width="12" fill="none"/><path d="M150 -10 L185 230" stroke="#D3DCE4" stroke-width="9" fill="none"/><path d="M-10 110 Q120 95 230 120 T410 100" stroke="#DCE3EA" stroke-width="5" fill="none"/></svg>
+<div class="area-map prop-map relative overflow-hidden rounded-[16px]">
+<svg class="absolute inset-0 h-full w-full" viewBox="0 0 400 160" preserveAspectRatio="none" aria-hidden="true"><path d="M-10 42 L410 22" stroke="#CBD5DE" stroke-width="10" fill="none"/><path d="M-10 128 L410 102" stroke="#CBD5DE" stroke-width="10" fill="none"/><path d="M150 -10 L185 170" stroke="#D3DCE4" stroke-width="8" fill="none"/><path d="M-10 80 Q120 70 230 88 T410 74" stroke="#DCE3EA" stroke-width="5" fill="none"/></svg>
 <span class="prop-map__pin" aria-hidden="true">
 <svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
 </span>
-<iframe class="area-map__frame absolute inset-0 h-full w-full border-0" data-map-frame data-src="https://maps.google.com/maps?q=Scenes%20Mostakbal%20City%2C%20Egypt&amp;t=&amp;z=12&amp;ie=UTF8&amp;iwloc=&amp;hl=en&amp;output=embed" title="Scenes on the map" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<iframe class="area-map__frame absolute inset-0 h-full w-full border-0" data-map-frame src="https://maps.google.com/maps?q=Scenes%20Mostakbal%20City%2C%20Egypt&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;hl=en&amp;output=embed" data-src="https://maps.google.com/maps?q=Scenes%20Mostakbal%20City%2C%20Egypt&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=&amp;hl=en&amp;output=embed" title="Scenes on the map" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 <button type="button" class="area-map__zoom absolute start-3 top-3 z-10 flex items-center justify-center" data-map-expand aria-expanded="false" aria-label="Expand the map" data-expand="Expand the map" data-close="Shrink the map">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
 </button>
@@ -121169,7 +121176,8 @@ Verified                </span>
 <section class="min-w-0 lg:order-1 lg:col-span-2" data-project-units data-per-page="9">
 <div class="flex items-center justify-between gap-3">
 <div class="min-w-0">
-<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[24px]" data-project-field="units-title">Explore properties in Scenes</h2>
+
+<h2 class="text-[21px] font-bold leading-[1.35] lg:text-[24px]" data-project-field="units-title"><span class="lg:hidden">Units</span><span class="hidden lg:inline">Explore properties in Scenes</span></h2>
 <p class="text-[13px] font-medium leading-normal text-shary-muted lg:text-[14.5px]"><bdi data-units-count>14</bdi> results available</p>
 </div>
 <div class="flex shrink-0 items-center gap-2">
@@ -138499,6 +138507,11 @@ Shary
     view.querySelectorAll('[data-bar-field="developer-link"] img, [data-project-grid] img.rounded-full').forEach(function (img) { copyImage(info.logo, img); });
     view.querySelectorAll('[data-project-grid] h3 a, [data-project-grid] a[tabindex="-1"]').forEach(function (a) { a.setAttribute('href', '#pv:/units/' + slug + '-1'); });
     page.setAttribute('data-project-slug', slug);
+    // خريطة جوجل على المشروع المفتوح
+    view.querySelectorAll('[data-map-frame]').forEach(function (frame) {
+      var src = 'https://maps.google.com/maps?q=' + encodeURIComponent(info.title + '، ' + info.location) + '&t=&z=14&ie=UTF8&iwloc=&hl=' + lang + '&output=embed';
+      if (frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+    });
     if (units && units.__renderUnits) units.__renderUnits();
     return true;
   }
