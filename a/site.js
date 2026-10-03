@@ -2703,7 +2703,8 @@
         window.addEventListener('scroll', function () {
             if (waiting) return;
             waiting = true;
-            window.requestAnimationFrame(function () { waiting = false; stuck(); });
+            // مكان الشريط بيتحسب تاني مع السكرول: لو ارتفاع أو مكان الهيدر اتغير بعد التحميل (شريط فوقه، خط اتحمّل) الشريط ما يتغطاش بالهيدر
+            window.requestAnimationFrame(function () { waiting = false; place(); });
         }, { passive: true });
         window.addEventListener('resize', place);
         if (window.ResizeObserver) new ResizeObserver(place).observe(bar);
@@ -2771,6 +2772,14 @@
                 slides.forEach(function (slide, i) { slide.setAttribute('data-active', i === next ? '1' : '0'); });
             }
         }, 4500);
+    });
+
+    // ---------- زرار "الخريطة" على الديسك توب [data-map-open]: بيفتح خريطة المشروع على الشاشة كلها (نفس زرار التكبير في js/shary/area-page.js) ----------
+    document.querySelectorAll('[data-map-open]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var expand = document.querySelector('.prop-map [data-map-expand]');
+            if (expand) expand.click();
+        });
     });
 
     // ---------- خطط الدفع في المشروع [data-plan-list]: "عرض كل الخطط" بيفرد باقي الخطط على الموبايل ويقفلها ----------

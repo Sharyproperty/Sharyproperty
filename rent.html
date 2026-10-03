@@ -1,7 +1,7 @@
 <!doctype html><html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=614c17f0">
+<link rel="stylesheet" href="a/site.css?v=14ef4cff">
 </head><body>
 
 
@@ -1590,10 +1590,11 @@ window.addEventListener('load', function () {
 </nav>
 </div>
 
-<div class="site-container pb-10 pt-3 lg:pb-16 lg:pt-5" data-rent-unit>
+<div data-rent-unit>
 
+<div class="site-container pt-3 lg:pt-5">
 <div class="rent-gallery-wrap">
-<div class="rent-gallery " data-rent-gallery  aria-label="الصور">
+<div class="rent-gallery rent-gallery--slider" data-rent-gallery  data-gallery-slider  aria-label="الصور">
 <button type="button" class="rent-gallery__item" data-gallery-item data-active="1" aria-label="صورة 1 من 5">
 <img loading="lazy" src="a/images/shary/area-samples/project-city-gate.jpg" data-img="images/shary/area-samples/project-city-gate.jpg" alt="شقة للإيجار، افيلين"  data-lightbox-item="gallery" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 </button>
@@ -1614,33 +1615,90 @@ window.addEventListener('load', function () {
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="9" r="1.5"/></svg>
 <span>كل الصور (<bdi>5</bdi>)</span>
 </button>
+
+<div class="rent-gallery__dots" data-gallery-dots aria-hidden="true"></div>
+</div>
 </div>
 
-<div class="mt-5 flex items-center gap-3 lg:mt-8">
-<img loading="lazy" src="https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png" alt="تايمز" class="h-12 w-12 shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-14 lg:w-14" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
-<span class="hidden flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white lg:h-14 lg:w-14" dir="ltr">TD</span>
-<div class="min-w-0">
-<h1 class="text-[20px] font-bold leading-[1.4] lg:text-[26px]" data-unit-field="title">شقة للإيجار، افيلين</h1>
-<p class="flex items-center gap-1 text-[13px] font-medium leading-normal text-shary-muted lg:text-[14.5px]">
-<svg class="shrink-0 text-shary-link" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0" data-unit-field="location">التجمع الخامس، القاهرة الجديدة، مصر</span>
+<div class="prop-bar prop-bar--unit" data-prop-bar>
+<div class="site-container prop-bar__in">
+<a href="#" class="prop-bar__logo" aria-label="تايمز" data-bar-field="developer-link">
+<img loading="lazy" src="https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png" alt="تايمز" class="h-12 w-12 rounded-full border border-shary-line bg-white object-contain lg:h-[60px] lg:w-[60px]" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-12 w-12 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white lg:h-[60px] lg:w-[60px]" dir="ltr">TD</span>
+</a>
+
+<div class="prop-bar__head">
+<div class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+<h1 class="text-[19px] font-bold leading-[1.4] lg:text-[21px]" data-bar-field="title" data-unit-field="title">شقة للإيجار، افيلين</h1>
+<span class="hidden rounded-full bg-shary-form px-3 py-[3px] text-[12.5px] font-bold leading-normal text-shary-navy lg:inline-flex">للإيجار</span>
+</div>
+<p class="flex items-center gap-1 text-[13px] font-medium leading-normal text-shary-muted lg:text-[13.5px]">
+<svg class="shrink-0 text-shary-link" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+<span class="min-w-0" data-bar-field="location" data-unit-field="location">التجمع الخامس، القاهرة الجديدة، مصر</span>
 </p>
 </div>
+
+<div class="prop-bar__actions">
+<button type="button" class="area-action prop-action" data-compare-toggle data-compare-id="avelin-rent-1-rent-unit" aria-pressed="false" aria-label="قارن">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15V5Z" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action prop-action group" data-favorite-toggle aria-pressed="false" aria-label="أضف للمفضلة">
+<svg class="group-aria-pressed:fill-current" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action prop-action" data-share-url="#pv:/rent/avelin-rent-1" data-share-title="شقة للإيجار، افيلين" aria-label="شارك">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
 </div>
 
-<div class="mt-5 grid grid-cols-1 gap-8 lg:mt-7 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-10">
+<div class="prop-bar__prices">
+
+<div class="flex flex-wrap items-stretch gap-2">
+<p class="prop-pill prop-pill--price">
+<svg class="hidden shrink-0 text-shary-hint min-[380px]:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6.5 9.5v5M17.5 9.5v5"/></svg>
+<span class="sr-only">سعر الإيجار</span>
+<b class="text-[21px] font-extrabold leading-none lg:text-[22px]" dir="ltr" data-bar-field="price" data-unit-field="price" data-money>12,500</b>
+<span class="text-[13px] font-bold leading-none text-shary-muted">ج.م / شهريًا</span>
+</p>
+
+<span class="self-center whitespace-nowrap rounded-full px-3 py-1.5 text-[12.5px] font-bold leading-normal bg-shary-whatsapp text-white" data-unit-pill>مفروش</span>
+</div>
+</div>
+
+<div class="prop-bar__contact">
+<a href="tel:+201000730208" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-form px-5 text-[15px] font-bold leading-normal text-shary-navy transition-colors hover:bg-shary-cloud">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg>
+<span>اتصال</span>
+</a>
+<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-whatsapp px-5 text-[15px] font-bold leading-normal text-white transition-[filter] hover:brightness-95">
+<i class="fa-brands fa-whatsapp text-[21px] leading-none" aria-hidden="true"></i>
+<span>واتساب</span>
+</a>
+</div>
+</div>
+</div>
+
+<div class="site-container pb-10 pt-2 lg:pb-16 lg:pt-8">
+<div class="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_400px] lg:items-start lg:gap-x-10 lg:gap-y-10">
+
+<div class="min-w-0 lg:col-span-2">
+<div class="prop-tiles" data-prop-tiles>
+<button type="button" class="prop-tile" data-lightbox-open="floor">
+<svg class="shrink-0" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M3.5 10h7V3.5M10.5 10v4M14 20.5V15h6.5M14 15h-2"/></svg>
+<span>مخطط الوحدة</span>
+</button>
+<img loading="lazy" src="a/images/shary/area-samples/project-eastvale.jpg" data-img="images/shary/area-samples/project-eastvale.jpg" alt="مخطط الوحدة" class="hidden" data-lightbox-item="floor">
+<button type="button" class="prop-tile" data-lightbox-open="master">
+<svg class="shrink-0" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 6.5 5.5-2 6 2 5.5-2v13l-5.5 2-6-2-5.5 2v-13Z"/><path d="M9 4.5v13M15 6.5v13"/></svg>
+<span>المخطط</span>
+</button>
+<img loading="lazy" src="a/images/shary/area-samples/project-ark.jpg" data-img="images/shary/area-samples/project-ark.jpg" alt="المخطط" class="hidden" data-lightbox-item="master">
+
+</div>
+</div>
+
 <div class="flex min-w-0 flex-col gap-6 lg:gap-9">
 
-<div>
-<p class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]">سعر الإيجار</p>
-<p class="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-<b class="text-[28px] font-extrabold leading-[1.3] text-shary-navy lg:text-[36px]" dir="ltr" data-unit-field="price">12,500</b>
-<span class="text-[14px] font-semibold text-shary-muted lg:text-[16px]">ج.م / شهريًا</span>
-<span class="self-center whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-bold leading-normal lg:text-[13px] bg-shary-whatsapp text-white" data-unit-pill>مفروش</span>
-</p>
-</div>
-
-<dl class="area-card grid grid-cols-4 divide-x divide-shary-line rtl:divide-x-reverse">
+<dl class="area-card grid grid-cols-4 divide-x divide-shary-line rtl:divide-x-reverse" data-unit-specs>
 <div class="flex flex-col items-center gap-1 px-1 py-3.5 text-center lg:py-4">
 <svg class="h-6 w-6 text-shary-hint lg:h-7 lg:w-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.66 17.66l-1.06 1.06-.71-.71 1.06-1.06-1.94-1.94-1.06 1.06-.71-.71 1.06-1.06-1.94-1.94-1.06 1.06-.71-.71 1.06-1.06L9.7 9.7l-1.06 1.06-.71-.71 1.06-1.06-1.94-1.94-1.06 1.06-.71-.71 1.06-1.06L4 4v14c0 1.1.9 2 2 2h14l-2.34-2.34zM7 17v-5.76L12.76 17H7z"/></svg>
 <dt class="text-[11.5px] font-medium leading-normal text-shary-muted lg:text-[13px]">المساحة</dt>
@@ -1663,67 +1721,54 @@ window.addEventListener('load', function () {
 </div>
 </dl>
 
-<div class="grid grid-cols-2 gap-3 lg:flex">
-<button type="button" class="flex h-[72px] flex-col items-center justify-center gap-1.5 rounded-xl bg-shary-form px-4 text-[13px] font-bold leading-normal text-shary-navy transition-colors hover:bg-shary-cloud lg:h-20 lg:w-[150px] lg:text-[14px]" data-lightbox-open="floor">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M3.5 10h7V3.5M10.5 10v4M14 20.5V15h6.5M14 15h-2"/></svg>
-<span>مخطط الوحدة</span>
-</button>
-<img loading="lazy" src="a/images/shary/area-samples/project-eastvale.jpg" data-img="images/shary/area-samples/project-eastvale.jpg" alt="مخطط الوحدة" class="hidden" data-lightbox-item="floor">
-<button type="button" class="flex h-[72px] flex-col items-center justify-center gap-1.5 rounded-xl bg-shary-form px-4 text-[13px] font-bold leading-normal text-shary-navy transition-colors hover:bg-shary-cloud lg:h-20 lg:w-[150px] lg:text-[14px]" data-lightbox-open="master">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M3.5 10h7V3.5M10.5 10v4M14 20.5V15h6.5M14 15h-2"/></svg>
-<span>المخطط العام</span>
-</button>
-<img loading="lazy" src="a/images/shary/area-samples/project-ark.jpg" data-img="images/shary/area-samples/project-ark.jpg" alt="المخطط العام" class="hidden" data-lightbox-item="master">
-</div>
-
 <section>
 <h2 class="mb-3 text-[20px] font-bold leading-[1.35] lg:mb-4 lg:text-[24px]">التفاصيل</h2>
-<dl class="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-x-4">
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">الغرض</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="reason">
+<dl class="prop-rows">
+<div>
+<dt>الغرض</dt>
+<dd data-detail="reason">
 للإيجار                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">النوع</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="type">
+<div>
+<dt>النوع</dt>
+<dd data-detail="type">
 شقة                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">الدور</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="floor">
+<div>
+<dt>الدور</dt>
+<dd data-detail="floor">
 الأرضي                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">حالة السكن</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="ownership">
+<div>
+<dt>حالة السكن</dt>
+<dd data-detail="ownership">
 أول سكن                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">حالة العقار</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="condition">
+<div>
+<dt>حالة العقار</dt>
+<dd data-detail="condition">
 جاهز للسكن                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">الخريطة</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="map">
-<a href="https://maps.google.com/?q=Avelin"  target="_blank" rel="noopener"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>الخريطة</dt>
+<dd data-detail="map">
+<a href="https://maps.google.com/?q=Avelin"  target="_blank" rel="noopener"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>التجمع الخامس</span>
-<svg class="ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">حالة الفرش</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="delivery">
+<div>
+<dt>حالة الفرش</dt>
+<dd data-detail="delivery">
 مفروش                                </dd>
 </div>
-<div class="flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] bg-shary-soft px-3.5 py-2 lg:min-h-[48px] lg:px-4">
-<dt class="text-[13.5px] font-bold leading-normal lg:text-[14.5px]">الفيديو</dt>
-<dd class="text-end text-[13.5px] font-semibold leading-normal text-shary-muted lg:text-[14.5px]" data-detail="video">
-<a href="#pv:/rent/avelin-rent-1#video"  class="inline-flex items-center gap-1 font-bold text-shary-link hover:underline">
+<div>
+<dt>الفيديو</dt>
+<dd data-detail="video">
+<a href="#pv:/rent/avelin-rent-1#video"  class="inline-flex items-center gap-1.5 font-bold text-shary-link hover:underline">
 <span>عرض</span>
-<svg class="ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<svg class="shrink-0 ltr:rotate-180" width="13" height="13" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </dd>
 </div>
@@ -1786,7 +1831,7 @@ window.addEventListener('load', function () {
 </section>
 </div>
 
-<aside class="flex min-w-0 flex-col gap-8 lg:sticky lg:top-24">
+<aside class="prop-aside flex min-w-0 flex-col gap-8">
 
 <div class="mx-auto flex w-full max-w-[480px] flex-col gap-3.5">
 <form novalidate data-consult class="flex flex-col items-center gap-3.5 rounded-xl bg-shary-form px-4 pb-[18px] pt-6">
@@ -2053,6 +2098,7 @@ window.addEventListener('load', function () {
 </ul>
 </section>
 </aside>
+</div>
 </div>
 </div>
 
@@ -2571,7 +2617,7 @@ window.addEventListener('load', function () {
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "614c17f0";</script>
+<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "14ef4cff";</script>
 <!--pv-scripts-->
 <script>
 // الصور مكتوبة مرة واحدة، وأي استخدام تاني لنفس الصورة بياخدها منها
@@ -2581,7 +2627,7 @@ window.addEventListener('load', function () {
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=614c17f0"></script>
+<script src="a/site.js?v=14ef4cff"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
