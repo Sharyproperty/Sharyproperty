@@ -399,6 +399,79 @@
             if (collapse) box.scrollIntoView({ block: 'nearest' });
         });
     });
+
+    // ---- صف كروت بيتحرك لوحده [data-auto-rail] (المشروعات الجديدة في صفحة المنطقة وصفحة المشروع):
+    // موبايل وتابلت بس: الصف بيتحرك بالراحة كارت كارت (كل 3.5 ثانية) ولما يوصل للآخر بيرجع للأول. ديسك توب: مش بيتحرك لوحده.
+    // بيقف طول ما العميل ماسكه، ولو مش ظاهر على الشاشة، ولو الجهاز مطفّي الحركة.
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        var railNarrow = window.matchMedia('(max-width: 1023px)');
+        document.querySelectorAll('[data-auto-rail]').forEach(function (rail) {
+            var cards = Array.prototype.slice.call(rail.children);
+            if (cards.length < 2) return;
+            var at = 0, held = false, seen = false, resume = null;
+            function hold() { held = true; if (resume) { clearTimeout(resume); resume = null; } }
+            function release(wait) { if (resume) clearTimeout(resume); resume = setTimeout(function () { held = false; resume = null; }, wait); }
+            rail.addEventListener('touchstart', hold, { passive: true });
+            rail.addEventListener('touchend', function () { release(5000); }, { passive: true });
+            rail.addEventListener('focusin', hold);
+            rail.addEventListener('focusout', function () { release(0); });
+            if ('IntersectionObserver' in window) new IntersectionObserver(function (entries) { seen = entries[0].isIntersecting; }, { threshold: 0.6 }).observe(rail);
+            else seen = true;
+            function offset(card) {   // المسافة بين أول الكارت وأول الصف (حسب اتجاه الصفحة)
+                var box = rail.getBoundingClientRect(), r = card.getBoundingClientRect();
+                var style = window.getComputedStyle(rail);
+                var rtl = style.direction === 'rtl';
+                var pad = parseFloat(rtl ? style.paddingRight : style.paddingLeft) || 0;
+                return rtl ? r.right - (box.right - pad) : r.left - (box.left + pad);
+            }
+            window.setInterval(function () {
+                if (!railNarrow.matches || held || !seen || document.hidden || !rail.offsetWidth) return;
+                at = (at + 1) % cards.length;
+                var room = rail.scrollWidth - rail.clientWidth - Math.abs(rail.scrollLeft);
+                if (at === 0 || room < 2) { at = 0; rail.scrollTo({ left: 0, behavior: 'smooth' }); return; }
+                rail.scrollTo({ left: rail.scrollLeft + offset(cards[at]), behavior: 'smooth' });
+            }, 3500);
+        });
+    }
+
+    // ---- شريط الإعلانات [data-ad-strip] (partials/ad-strip.blade.php): إعلان واحد ظاهر في البوكس، بيتسحب بالجنب وبيتبدّل لوحده كل 5 ثواني ----------
+    document.querySelectorAll('[data-ad-strip]').forEach(function (strip) {
+        var track = strip.querySelector('[data-ad-track]');
+        var slides = track ? Array.prototype.slice.call(track.children) : [];
+        var dots = Array.prototype.slice.call(strip.querySelectorAll('[data-ad-dots] button'));
+        if (slides.length < 2) return;
+        var at = 0;
+        var seen = false;
+        var held = false;
+
+        function go(index, smooth) {
+            at = (index + slides.length) % slides.length;
+            var left = track.scrollLeft + slides[at].getBoundingClientRect().left - track.getBoundingClientRect().left;
+            track.scrollTo({ left: left, behavior: smooth === false ? 'auto' : 'smooth' });
+        }
+        function mark() {
+            var box = track.getBoundingClientRect();
+            var best = 0, gap = Infinity;
+            slides.forEach(function (slide, i) {
+                var d = Math.abs(slide.getBoundingClientRect().left - box.left);
+                if (d < gap) { gap = d; best = i; }
+            });
+            at = best;
+            dots.forEach(function (dot, i) { dot.setAttribute('aria-current', i === at ? 'true' : 'false'); });
+        }
+
+        track.addEventListener('scroll', function () { window.requestAnimationFrame(mark); }, { passive: true });
+        dots.forEach(function (dot, i) { dot.addEventListener('click', function () { go(i); }); });
+        ['mouseenter', 'touchstart', 'focusin'].forEach(function (name) { strip.addEventListener(name, function () { held = true; }, { passive: true }); });
+        ['mouseleave', 'touchend', 'focusout'].forEach(function (name) { strip.addEventListener(name, function () { held = false; }, { passive: true }); });
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) { seen = entries[0].isIntersecting; }, { threshold: 0.6 }).observe(strip);
+        } else {
+            seen = true;
+        }
+        // بيتبدّل لوحده بس والشريط ظاهر على الشاشة والعميل مش واقف عليه
+        window.setInterval(function () { if (seen && !held && !document.hidden) go(at + 1); }, 5000);
+    });
 })();
 
 /**
@@ -2065,7 +2138,7 @@
  *   حدث shary:load-more ({ url, append(nodes, nextUrl) }): امنعوه لو هتجيبوا الكروت بطريقتكم ونادوا append.
  *   العنصر [data-auto-sentinel] تحت القايمة: data-state="idle | loading | done".
  *
- * شريط الإعلانات [data-ad-strip] (partials/ad-strip.blade.php): إعلان واحد ظاهر، بيتسحب بالجنب وبيتبدّل لوحده كل 5 ثواني، والنقط بتتضغط.
+ * (شريط الإعلانات [data-ad-strip] بقى في js/shary/site-chrome.js عشان يشتغل في كل الصفحات.)
  *
  * السيرفر مش محتاج endpoint جديد: نفس الصفحة بـ ?page=N، والسكربت بياخد منها القايمة وأرقام الصفحات.
  */
@@ -2235,44 +2308,6 @@
         } else {
             window.addEventListener('scroll', function () { if (near()) more(); });
         }
-    });
-    // ---------- شريط الإعلانات [data-ad-strip]: إعلان واحد ظاهر في البوكس، بيتسحب بالجنب وبيتبدّل لوحده كل 5 ثواني ----------
-    document.querySelectorAll('[data-ad-strip]').forEach(function (strip) {
-        var track = strip.querySelector('[data-ad-track]');
-        var slides = track ? Array.prototype.slice.call(track.children) : [];
-        var dots = Array.prototype.slice.call(strip.querySelectorAll('[data-ad-dots] button'));
-        if (slides.length < 2) return;
-        var at = 0;
-        var seen = false;
-        var held = false;
-
-        function go(index, smooth) {
-            at = (index + slides.length) % slides.length;
-            var left = track.scrollLeft + slides[at].getBoundingClientRect().left - track.getBoundingClientRect().left;
-            track.scrollTo({ left: left, behavior: smooth === false ? 'auto' : 'smooth' });
-        }
-        function mark() {
-            var box = track.getBoundingClientRect();
-            var best = 0, gap = Infinity;
-            slides.forEach(function (slide, i) {
-                var d = Math.abs(slide.getBoundingClientRect().left - box.left);
-                if (d < gap) { gap = d; best = i; }
-            });
-            at = best;
-            dots.forEach(function (dot, i) { dot.setAttribute('aria-current', i === at ? 'true' : 'false'); });
-        }
-
-        track.addEventListener('scroll', function () { window.requestAnimationFrame(mark); }, { passive: true });
-        dots.forEach(function (dot, i) { dot.addEventListener('click', function () { go(i); }); });
-        ['mouseenter', 'touchstart', 'focusin'].forEach(function (name) { strip.addEventListener(name, function () { held = true; }, { passive: true }); });
-        ['mouseleave', 'touchend', 'focusout'].forEach(function (name) { strip.addEventListener(name, function () { held = false; }, { passive: true }); });
-        if ('IntersectionObserver' in window) {
-            new IntersectionObserver(function (entries) { seen = entries[0].isIntersecting; }, { threshold: 0.6 }).observe(strip);
-        } else {
-            seen = true;
-        }
-        // بيتبدّل لوحده بس والشريط ظاهر على الشاشة والعميل مش واقف عليه
-        window.setInterval(function () { if (seen && !held && !document.hidden) go(at + 1); }, 5000);
     });
 })();
 
@@ -2719,8 +2754,10 @@
         var holder = track.parentNode.querySelector('[data-gallery-dots]');
         if (slides.length < 2 || !holder) return;
         var dots = slides.map(function () { return holder.appendChild(document.createElement('i')); });
+        // thumbs (وحدة البيع على الموبايل): صورة كبيرة وتحتها صور صغيرة — مفيش سحب، الصورة المفتوحة بتتبدّل مكانها زي الديسك توب
+        var thumbs = track.classList.contains('rent-gallery--thumbs');
         function mark() {
-            if (!narrow.matches || !track.offsetWidth) return;
+            if (!narrow.matches || thumbs || !track.offsetWidth) return;
             var box = track.getBoundingClientRect();
             var middle = box.left + box.width / 2;
             var best = 0, gap = Infinity;
@@ -2764,7 +2801,7 @@
             var at = 0;
             slides.forEach(function (slide, i) { if (slide.getAttribute('data-active') === '1') at = i; });
             var next = (at + 1) % slides.length;
-            if (narrow.matches) {
+            if (narrow.matches && !thumbs) {
                 var to = slides[next].getBoundingClientRect(), frame = track.getBoundingClientRect();
                 var left = track.scrollLeft + (to.left + to.width / 2) - (frame.left + frame.width / 2);
                 track.scrollTo({ left: left, behavior: 'smooth' });
