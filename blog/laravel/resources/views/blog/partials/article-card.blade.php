@@ -13,7 +13,7 @@
     </div>
 
     <h3 class="line-clamp-3 text-[19px] font-bold leading-[1.55]">
-        <a href="{{ $article['url'] }}" class="hover:text-shary-teal">{{ $article['title'] }}</a>
+        <a href="{{ $article['url'] }}" class="hover:text-shary-link">{{ $article['title'] }}</a>
     </h3>
 
     <div class="mt-auto flex items-center justify-between text-[13px] font-bold leading-normal">

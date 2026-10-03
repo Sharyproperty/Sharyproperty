@@ -61,7 +61,7 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <span class="bg-shary-navy px-3 py-1.5 text-[13px] font-bold leading-normal text-white">{{ __('blog.tags') }}</span>
                     @foreach ($article['tags'] as $tag)
-                        <a href="{{ $tag['url'] }}" class="border border-shary-line px-3 py-1.5 text-[13px] font-bold leading-normal text-shary-navy hover:border-shary-teal hover:text-shary-teal">{{ $tag['name'] }}</a>
+                        <a href="{{ $tag['url'] }}" class="border border-shary-line px-3 py-1.5 text-[13px] font-bold leading-normal text-shary-navy hover:border-shary-link hover:text-shary-link">{{ $tag['name'] }}</a>
                     @endforeach
                 </div>
             @endif

@@ -1,0 +1,63 @@
+{{--
+    New Administrative Capital projects in 2026 and their payment plans
+    Sample article body (English) — stands for the HTML saved in the dashboard’s article content field.
+--}}
+<p><strong>New Capital projects</strong> range from residential compounds to office towers, shopping centres and medical buildings, and developers compete for buyers with long payment plans. This article reviews the types of projects on offer in 2026 by area, the common payment plans, and how to compare offers before you reserve.</p>
+
+<h2 id="types">Types of projects in the New Capital</h2>
+
+<ul>
+    <li><strong>Residential compounds</strong> <span>Concentrated in districts R7 and R8, with apartments, duplexes and villas in a range of sizes.</span></li>
+    <li><strong>Central Business District towers</strong> <span>Office, hotel and residential towers around the Iconic Tower.</span></li>
+    <li><strong>Downtown projects</strong> <span>Retail, office and medical buildings with small units that suit investors.</span></li>
+    <li><strong>Green River projects</strong> <span>Towers and units directly overlooking the Green River parks.</span></li>
+</ul>
+
+<h2 id="known">Well-known residential projects</h2>
+
+<p>The residential projects buyers ask about most include Al Maqsad in R3, Midtown, IL Bosco and The Capital Way in R7, La Vista City and Celia. Build and delivery stages differ from one project to another, so check each project’s current status before you reserve.</p>
+
+<h2 id="payment">Common payment plans in 2026</h2>
+
+<table>
+    <thead>
+        <tr><th>Payment plan</th><th>How it works</th><th>Best for</th></tr>
+    </thead>
+    <tbody>
+        <tr><th>Down payment and equal installments</th><td>5% to 10% down and the rest in quarterly installments</td><td>Buyers with a steady income</td></tr>
+        <tr><th>Delivery payment</th><td>Lower installments with a larger payment on delivery</td><td>Buyers expecting future liquidity</td></tr>
+        <tr><th>Long installments</th><td>Up to 8 or 10 years at a higher total price</td><td>Buyers who want the lowest installment</td></tr>
+        <tr><th>Cash discount</th><td>A discount on the price for paying upfront</td><td>Buyers who have the full amount</td></tr>
+    </tbody>
+</table>
+
+<h2 id="compare">How to compare offers</h2>
+
+<ol>
+    <li>Compare the total unit price under each plan, not just the installment.</li>
+    <li>Ask about the maintenance deposit, when it is due, and parking and club fees.</li>
+    <li>Check actual build progress and the delivery date written in the contract.</li>
+    <li>Compare the price per meter with the district average on the Shary Index.</li>
+</ol>
+
+<a href="{{ url('/en/shary-index') }}" class="article-cta">Follow the New Capital price per meter on the Shary Index</a>
+
+<aside class="article-related">
+    <a href="{{ url('/en/blog/new-capital-guide') }}" class="article-related__image" tabindex="-1" aria-hidden="true">
+        <img src="{{ asset('images/shary/blog-samples/article-new-capital.jpg') }}" alt="" loading="lazy">
+    </a>
+    <div class="article-related__body">
+        <h3><a href="{{ url('/en/blog/new-capital-guide') }}">New Administrative Capital: a guide to compounds, services and price per meter in 2026</a></h3>
+        <p>A complete guide to Egypt’s New Administrative Capital: location and access, residential districts, best compounds, services, average price per meter and payment plans in 2026.</p>
+        <a href="{{ url('/en/blog/new-capital-guide') }}" class="article-related__more">Continue reading ...</a>
+        <div class="article-related__footer">
+            <span class="article-related__brand">
+                <img src="{{ asset('images/shary/logo-mark.svg') }}" alt="" width="22" height="18">
+                Shary
+            </span>
+            <button type="button" class="article-related__share" data-share-url="{{ url('/en/blog/new-capital-guide') }}" data-share-title="New Administrative Capital: a guide to compounds, services and price per meter in 2026" aria-label="Share article">
+                <img src="{{ asset('images/shary/icons/share.svg') }}" alt="" width="20" height="20">
+            </button>
+        </div>
+    </div>
+</aside>

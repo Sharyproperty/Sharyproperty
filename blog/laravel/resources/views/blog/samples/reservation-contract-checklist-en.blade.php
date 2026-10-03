@@ -1,0 +1,52 @@
+{{--
+    7 clauses to review in a unit reservation contract before signing
+    Sample article body (English) — stands for the HTML saved in the dashboard’s article content field.
+--}}
+<p>A <strong>unit reservation contract</strong> is the first paper you sign with the developer, and your rights until delivery rest on it. Many disputes start from a clause that was not read carefully or wording that was unclear. Before you sign, review the seven clauses below and ask for written clarification of anything vague.</p>
+
+<h2 id="difference">Reservation form vs preliminary sale contract</h2>
+
+<p>A reservation form records your intent to buy and holds the unit for a set period against a reservation payment. The preliminary sale contract is the binding agreement with every detail: price, payment schedule, delivery date and specifications. The clauses below apply to both.</p>
+
+<h2 id="clauses">The seven clauses to review</h2>
+
+<ol>
+    <li><strong>Unit details</strong> <span>Unit number, floor and building, the net and gross areas and the load factor.</span></li>
+    <li><strong>Price and payment plan</strong> <span>The total price, the installment schedule with dates, the maintenance deposit and any extra fees such as parking, club and meters.</span></li>
+    <li><strong>Delivery date</strong> <span>The handover date, the grace period and the delay penalty the developer accepts.</span></li>
+    <li><strong>Finishing specifications</strong> <span>An annex that sets the delivery condition, finishing type and materials, not general phrases.</span></li>
+    <li><strong>Cancellation and refunds</strong> <span>The share deducted if you withdraw, how long refunds take, and what happens if an installment is late.</span></li>
+    <li><strong>Assignment and resale</strong> <span>The conditions for assigning the unit to someone else and the fees the company charges.</span></li>
+    <li><strong>Ownership and licences</strong> <span>The land title, the ministerial decree and the building permit, and the developer’s commitment to transfer ownership and register the unit.</span></li>
+</ol>
+
+<h2 id="before">Before you sign</h2>
+
+<ul>
+    <li>Ask for a copy of the contract to read calmly, and do not sign in the same meeting.</li>
+    <li>Check the unit details in the contract against the approved plan.</li>
+    <li>Keep receipts for every payment and a signed copy of the contract.</li>
+    <li>Use a lawyer who specialises in property contracts when a clause is unclear.</li>
+</ul>
+
+<a href="{{ url('/en/shary-index') }}" class="article-cta">Make sure the unit price is close to the area’s average price per meter</a>
+
+<aside class="article-related">
+    <a href="{{ url('/en/blog/mortgage-types') }}" class="article-related__image" tabindex="-1" aria-hidden="true">
+        <img src="{{ asset('images/shary/blog-samples/card-finance.jpg') }}" alt="" loading="lazy">
+    </a>
+    <div class="article-related__body">
+        <h3><a href="{{ url('/en/blog/mortgage-types') }}">Types of mortgage finance in Egypt and how to choose the right one</a></h3>
+        <p>A simple explanation of the types of mortgage finance in Egypt, the conditions and documents for each, and how to compare them to find the one that fits your income.</p>
+        <a href="{{ url('/en/blog/mortgage-types') }}" class="article-related__more">Continue reading ...</a>
+        <div class="article-related__footer">
+            <span class="article-related__brand">
+                <img src="{{ asset('images/shary/logo-mark.svg') }}" alt="" width="22" height="18">
+                Shary
+            </span>
+            <button type="button" class="article-related__share" data-share-url="{{ url('/en/blog/mortgage-types') }}" data-share-title="Types of mortgage finance in Egypt and how to choose the right one" aria-label="Share article">
+                <img src="{{ asset('images/shary/icons/share.svg') }}" alt="" width="20" height="20">
+            </button>
+        </div>
+    </div>
+</aside>

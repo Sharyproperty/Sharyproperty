@@ -1,0 +1,75 @@
+{{--
+    سوق العقارات في مصر 2026: دليل شاري لقراءة السوق قبل الشراء
+    محتوى مقال تجريبي مكتوب بالفصحى المبسطة ومجهّز للـ SEO — بيمثّل الـ HTML اللي بيتحفظ في لوحة التحكم في حقل محتوى المقال.
+--}}
+<p><strong>سوق العقارات في مصر</strong> من أكثر الأسواق حركةً في المنطقة، وتتغير أسعاره وأنظمة السداد فيه من فترة لأخرى. قبل أن تقرر الشراء تحتاج إلى قراءة هادئة للسوق: ما المؤشرات التي تستحق المتابعة، وما الذي يحرك الأسعار، وأي المناطق يناسب هدفك. هذا الدليل يضع أمامك طريقة عملية لقراءة السوق في 2026.</p>
+
+<h2 id="indicators">مؤشرات تساعدك على قراءة سوق العقارات</h2>
+
+<ul>
+    <li><strong>متوسط سعر المتر</strong> <span>يعطيك مرجعًا للمقارنة بين المناطق وبين الوحدات داخل المنطقة الواحدة.</span></li>
+    <li><strong>اتجاه السعر</strong> <span>ارتفاع أو استقرار المتوسط خلال الأرباع الأخيرة أهم من الرقم نفسه.</span></li>
+    <li><strong>حجم المعروض</strong> <span>كثرة المشروعات المطروحة في منطقة واحدة تمنح المشتري مساحة أكبر للتفاوض.</span></li>
+    <li><strong>أنظمة السداد</strong> <span>طول مدة التقسيط وقيمة المقدم يعكسان مستوى المنافسة بين المطورين.</span></li>
+    <li><strong>نسب التنفيذ والتسليم</strong> <span>المناطق التي تُسلَّم مشروعاتها في مواعيدها يزداد عليها الطلب في إعادة البيع والإيجار.</span></li>
+</ul>
+
+<h2 id="drivers">ما الذي يحرك أسعار العقارات في مصر؟</h2>
+
+<p>تتأثر الأسعار بمجموعة من العوامل التي تعمل معًا، وأهمها:</p>
+
+<ul>
+    <li><strong>تكلفة البناء</strong> <span>أسعار مواد البناء وسعر الصرف ينعكسان مباشرة على تكلفة المشروعات الجديدة.</span></li>
+    <li><strong>أسعار الفائدة</strong> <span>تؤثر في تكلفة التمويل العقاري وفي إقبال المدخرين على العقار كوعاء للادخار.</span></li>
+    <li><strong>البنية الأساسية</strong> <span>الطرق والمحاور ووسائل النقل الجديدة ترفع قيمة المناطق التي تخدمها.</span></li>
+    <li><strong>المدن الجديدة</strong> <span>توسع الدولة في المدن الجديدة يضيف معروضًا ويخلق مراكز طلب جديدة.</span></li>
+</ul>
+
+<h2 id="map">خريطة أهم المناطق في 2026</h2>
+
+<p>يوضح الجدول التالي أبرز مناطق الطلب ومتوسط سعر المتر فيها وفق أحدث بيانات مؤشر شاري:</p>
+
+<table>
+    <thead>
+        <tr><th>المنطقة</th><th>متوسط سعر المتر</th><th>يناسب</th></tr>
+    </thead>
+    <tbody>
+        <tr><th>القاهرة الجديدة</th><td><span class="article-index" data-index="price">92,400 ج.م</span> <span class="article-change" data-index="change" dir="ltr">+2.4%</span></td><td>السكن العائلي والاستثمار الإيجاري</td></tr>
+        <tr><th>العاصمة الإدارية الجديدة</th><td><span class="article-index" data-index="price">74,600 ج.م</span> <span class="article-change" data-index="change" dir="ltr">+3.1%</span></td><td>الاستثمار طويل الأجل</td></tr>
+        <tr><th>الشيخ زايد و6 أكتوبر</th><td><span class="article-index" data-index="price">61,500 – 88,100 ج.م</span> <span class="article-change" data-index="change" dir="ltr">+4.2%</span></td><td>السكن الهادئ غرب القاهرة</td></tr>
+        <tr><th>الساحل الشمالي</th><td><span class="article-index" data-index="price">115,300 ج.م</span> <span class="article-change" data-index="change" dir="ltr">+6.8%</span></td><td>المصيف والاستثمار الموسمي</td></tr>
+        <tr><th>العين السخنة</th><td><span class="article-index" data-index="price">68,900 ج.م</span> <span class="article-change" data-index="change" dir="ltr">+2.9%</span></td><td>المصيف القريب من القاهرة</td></tr>
+    </tbody>
+</table>
+
+<a href="{{ url('/shary-index') }}" class="article-cta">تابع متوسط سعر المتر في كل منطقة على مؤشر شاري</a>
+
+<h2 id="tips">نصائح قبل قرار الشراء</h2>
+
+<ol>
+    <li>حدد هدفك أولًا: سكن، استثمار إيجاري، أو إعادة بيع، فلكل هدف منطقة ونوع وحدة مختلف.</li>
+    <li>قارن سعر المتر في الوحدة بمتوسط المنطقة، لا بسعر مشروع واحد.</li>
+    <li>راجع سابقة أعمال المطور والتزامه بمواعيد التسليم.</li>
+    <li>احسب إجمالي ما ستدفعه، لا قيمة القسط فقط.</li>
+    <li>اترك هامشًا في ميزانيتك لمصروفات التشطيب والصيانة والتسجيل.</li>
+</ol>
+
+<aside class="article-related">
+    <a href="{{ url('/blog/new-capital-guide') }}" class="article-related__image" tabindex="-1" aria-hidden="true">
+        <img src="{{ asset('images/shary/blog-samples/article-new-capital.jpg') }}" alt="" loading="lazy">
+    </a>
+    <div class="article-related__body">
+        <h3><a href="{{ url('/blog/new-capital-guide') }}">العاصمة الإدارية الجديدة: دليل الكمبوندات والخدمات وأسعار المتر 2026</a></h3>
+        <p>دليل شامل عن العاصمة الإدارية الجديدة: الموقع وطرق الوصول، الأحياء السكنية، أفضل الكمبوندات، الخدمات، ومتوسط سعر المتر وأنظمة السداد في 2026.</p>
+        <a href="{{ url('/blog/new-capital-guide') }}" class="article-related__more">... تابع قراءة</a>
+        <div class="article-related__footer">
+            <span class="article-related__brand">
+                <img src="{{ asset('images/shary/logo-mark.svg') }}" alt="" width="22" height="18">
+                شاري
+            </span>
+            <button type="button" class="article-related__share" data-share-url="{{ url('/blog/new-capital-guide') }}" data-share-title="العاصمة الإدارية الجديدة: دليل الكمبوندات والخدمات وأسعار المتر 2026" aria-label="مشاركة المقال">
+                <img src="{{ asset('images/shary/icons/share.svg') }}" alt="" width="20" height="20">
+            </button>
+        </div>
+    </div>
+</aside>

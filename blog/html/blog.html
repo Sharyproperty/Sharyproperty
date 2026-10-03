@@ -35,7 +35,7 @@
                     <div class="relative" data-nav-dropdown>
                         <button type="button" class="flex items-center gap-1 text-[16px] font-semibold leading-normal text-shary-navy transition-colors hover:text-shary-link active:text-shary-link aria-expanded:text-shary-link" aria-haspopup="true" aria-expanded="false" data-nav-dropdown-toggle>
                             <span>الوكلاء</span>
-                            <svg class="transition-transform duration-200" width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <svg class="transition-transform duration-200" data-nav-dropdown-arrow width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
                         <div class="absolute end-0 top-full z-40 mt-4 hidden min-w-[190px] rounded-[12px] border border-shary-line bg-white p-2 shadow-[0_10px_24px_rgba(18,58,92,0.14)]" data-nav-dropdown-menu>
                                 <a href="#" class="block whitespace-nowrap rounded-[8px] px-3 py-2.5 text-[15px] font-semibold leading-normal text-shary-navy transition-colors hover:bg-shary-form hover:text-shary-link active:text-shary-link">الوكلاء المعتمدون</a>
@@ -45,6 +45,11 @@
 
         <div class="flex shrink-0 items-center gap-1 min-[380px]:gap-3">
             
+            <a href="#" class="group relative hidden h-11 w-11 items-center justify-center rounded-full text-shary-navy transition-colors hover:bg-shary-form hover:text-shary-link data-[active=true]:text-red-600 data-[active=true]:hover:text-red-600 lg:flex" data-favorites-indicator data-active="false" aria-label="المفضلة">
+                <svg class="transition-colors group-data-[active=true]:fill-current" width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                <span class="absolute -end-0.5 -top-0.5 hidden h-[18px] min-w-[18px] items-center justify-center rounded-full bg-white px-1 text-center text-[11px] font-bold leading-[18px] text-red-600 shadow-[0_1px_4px_rgba(18,58,92,0.3)]" data-favorites-count></span>
+            </a>
+
             <a href="blog-en.html" data-lang-toggle class="flex h-10 w-10 items-center justify-center rounded-full bg-shary-link text-[13px] font-bold leading-none text-white transition-colors duration-300 hover:bg-shary-action active:bg-shary-action lg:w-auto lg:min-w-[84px] lg:px-4 lg:text-[14px]" aria-label="تغيير اللغة">
                 <span class="lg:hidden">ع</span>
                 <span class="hidden lg:inline">العربية</span>
@@ -68,7 +73,7 @@
                     <div data-nav-dropdown>
                         <button type="button" class="flex w-full items-center justify-between py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link aria-expanded:text-shary-link" aria-expanded="false" data-nav-dropdown-toggle>
                             <span>الوكلاء</span>
-                            <svg class="transition-transform duration-200" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <svg class="transition-transform duration-200" data-nav-dropdown-arrow width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </button>
                         <div class="hidden flex-col pb-2 ps-4" data-nav-dropdown-menu>
                                 <a href="#" class="py-2.5 text-[15px] font-semibold leading-normal text-shary-navy active:text-shary-link">الوكلاء المعتمدون</a>
@@ -77,10 +82,17 @@
         </div>
     </nav>
 </header>
-        <div class="site-container pt-3 lg:pt-4" data-breadcrumb>
+    
+            <div class="site-container pt-3 lg:pt-4" data-breadcrumb>
         <nav aria-label="مسار الصفحة">
             <ol class="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold leading-normal lg:text-[14px]">
-                        <li class="shrink-0"><a href="#" class="text-shary-link hover:underline">الرئيسية</a></li>
+                        <li class="shrink-0">
+                            <a href="#" class="flex items-center gap-1.5 text-shary-link hover:underline">
+                                    
+                                    <svg class="shrink-0 text-shary-hint" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 9.2L10 3l7 6.2V16a1 1 0 0 1-1 1h-3.5v-4.5h-5V17H4a1 1 0 0 1-1-1V9.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                                <span>الرئيسية</span>
+                            </a>
+                        </li>
                         <li class="shrink-0 text-shary-hint" aria-hidden="true">
                             <svg class="ltr:rotate-180" width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                         </li>
@@ -89,7 +101,8 @@
         </nav>
     </div>
         <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"الرئيسية","item":"#"},{"@type":"ListItem","position":2,"name":"المدونة"}]}</script>
-    <div class="site-container pt-3 lg:pt-4">
+    
+        <div class="site-container pt-3 lg:pt-4">
     <div class="flex h-[52px] items-center overflow-hidden rounded-full bg-shary-deep p-1.5 text-[12px] font-bold leading-[1.4] text-white">
         <a href="#" class="flex h-10 shrink-0 items-center gap-[5px] whitespace-nowrap rounded-full bg-white pe-1.5 ps-2.5 text-[12px] text-shary-navy">
             <span class="h-1.5 w-1.5 rounded-full bg-shary-teal ring-[3px] ring-shary-teal/20" aria-hidden="true"></span>
@@ -229,7 +242,7 @@
         
         <h1 class="sr-only">مدونة شاري: تقارير ونصائح سوق العقارات في مصر</h1>
 
-        <a href="article.html" class="blog-featured-bg relative block h-[300px] overflow-hidden rounded lg:h-[360px]">
+        <a href="article-egypt-real-estate-2026.html" class="blog-featured-bg relative block h-[300px] overflow-hidden rounded lg:h-[360px]">
     <picture>
         <img src="images/shary/blog-samples/featured-market.jpg" alt="" class="absolute inset-0 h-full w-full object-cover">
     </picture>
@@ -257,7 +270,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 md:gap-8 lg:grid-cols-3" data-articles-grid>
                 <div class="md:h-full ">
                     <article class="flex flex-col gap-3 md:h-full">
-    <a href="article.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
+    <a href="article-mortgage-types.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
         <img src="images/shary/blog-samples/card-finance.jpg" alt="" class="h-[196px] w-full object-cover lg:h-[200px]" loading="lazy">
     </a>
 
@@ -267,18 +280,18 @@
     </div>
 
     <h3 class="line-clamp-3 text-[19px] font-bold leading-[1.55]">
-        <a href="article.html" class="hover:text-shary-teal">أنواع التمويل العقاري في مصر وكيف تختار الأنسب لك</a>
+        <a href="article-mortgage-types.html" class="hover:text-shary-link">أنواع التمويل العقاري في مصر وكيف تختار الأنسب لك</a>
     </h3>
 
     <div class="mt-auto flex items-center justify-between text-[13px] font-bold leading-normal">
         <span class="text-shary-muted">6 دقائق قراءة</span>
-        <a href="article.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: أنواع التمويل العقاري في مصر وكيف تختار الأنسب لك">اقرأ المقال ←</a>
+        <a href="article-mortgage-types.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: أنواع التمويل العقاري في مصر وكيف تختار الأنسب لك">اقرأ المقال ←</a>
     </div>
 </article>
                 </div>
                 <div class="md:h-full mt-7 border-t border-shary-line pt-7 md:mt-0 md:border-t-0 md:pt-0">
                     <article class="flex flex-col gap-3 md:h-full">
-    <a href="article.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
+    <a href="article-new-cairo-prices-q3.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
         <img src="images/shary/blog-samples/card-prices.jpg" alt="" class="h-[196px] w-full object-cover lg:h-[200px]" loading="lazy">
     </a>
 
@@ -288,18 +301,18 @@
     </div>
 
     <h3 class="line-clamp-3 text-[19px] font-bold leading-[1.55]">
-        <a href="article.html" class="hover:text-shary-teal">أسعار المتر في القاهرة الجديدة: تقرير الربع الثالث 2026</a>
+        <a href="article-new-cairo-prices-q3.html" class="hover:text-shary-link">أسعار المتر في القاهرة الجديدة: تقرير الربع الثالث 2026</a>
     </h3>
 
     <div class="mt-auto flex items-center justify-between text-[13px] font-bold leading-normal">
         <span class="text-shary-muted">5 دقائق قراءة</span>
-        <a href="article.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: أسعار المتر في القاهرة الجديدة: تقرير الربع الثالث 2026">اقرأ المقال ←</a>
+        <a href="article-new-cairo-prices-q3.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: أسعار المتر في القاهرة الجديدة: تقرير الربع الثالث 2026">اقرأ المقال ←</a>
     </div>
 </article>
                 </div>
                 <div class="md:h-full mt-7 border-t border-shary-line pt-7 md:mt-0 md:border-t-0 md:pt-0">
                     <article class="flex flex-col gap-3 md:h-full">
-    <a href="article.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
+    <a href="article-zayed-vs-october.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
         <img src="images/shary/blog-samples/card-areas.jpg" alt="" class="h-[196px] w-full object-cover lg:h-[200px]" loading="lazy">
     </a>
 
@@ -309,18 +322,18 @@
     </div>
 
     <h3 class="line-clamp-3 text-[19px] font-bold leading-[1.55]">
-        <a href="article.html" class="hover:text-shary-teal">الشيخ زايد أم 6 أكتوبر؟ مقارنة شاملة قبل الشراء</a>
+        <a href="article-zayed-vs-october.html" class="hover:text-shary-link">الشيخ زايد أم 6 أكتوبر؟ مقارنة شاملة قبل الشراء</a>
     </h3>
 
     <div class="mt-auto flex items-center justify-between text-[13px] font-bold leading-normal">
         <span class="text-shary-muted">7 دقائق قراءة</span>
-        <a href="article.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: الشيخ زايد أم 6 أكتوبر؟ مقارنة شاملة قبل الشراء">اقرأ المقال ←</a>
+        <a href="article-zayed-vs-october.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: الشيخ زايد أم 6 أكتوبر؟ مقارنة شاملة قبل الشراء">اقرأ المقال ←</a>
     </div>
 </article>
                 </div>
                 <div class="md:h-full mt-7 border-t border-shary-line pt-7 md:mt-0 md:border-t-0 md:pt-0">
                     <article class="flex flex-col gap-3 md:h-full">
-    <a href="article.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
+    <a href="article-reservation-contract-checklist.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
         <img src="images/shary/blog-samples/card-legal.jpg" alt="" class="h-[196px] w-full object-cover lg:h-[200px]" loading="lazy">
     </a>
 
@@ -330,18 +343,18 @@
     </div>
 
     <h3 class="line-clamp-3 text-[19px] font-bold leading-[1.55]">
-        <a href="article.html" class="hover:text-shary-teal">7 بنود يجب مراجعتها في عقد حجز الوحدة قبل التوقيع</a>
+        <a href="article-reservation-contract-checklist.html" class="hover:text-shary-link">7 بنود يجب مراجعتها في عقد حجز الوحدة قبل التوقيع</a>
     </h3>
 
     <div class="mt-auto flex items-center justify-between text-[13px] font-bold leading-normal">
         <span class="text-shary-muted">4 دقائق قراءة</span>
-        <a href="article.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: 7 بنود يجب مراجعتها في عقد حجز الوحدة قبل التوقيع">اقرأ المقال ←</a>
+        <a href="article-reservation-contract-checklist.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: 7 بنود يجب مراجعتها في عقد حجز الوحدة قبل التوقيع">اقرأ المقال ←</a>
     </div>
 </article>
                 </div>
                 <div class="md:h-full mt-7 border-t border-shary-line pt-7 md:mt-0 md:border-t-0 md:pt-0">
                     <article class="flex flex-col gap-3 md:h-full">
-    <a href="article.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
+    <a href="article-new-capital-projects-2026.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
         <img src="images/shary/blog-samples/card-projects.jpg" alt="" class="h-[196px] w-full object-cover lg:h-[200px]" loading="lazy">
     </a>
 
@@ -351,18 +364,18 @@
     </div>
 
     <h3 class="line-clamp-3 text-[19px] font-bold leading-[1.55]">
-        <a href="article.html" class="hover:text-shary-teal">مشاريع العاصمة الإدارية الجديدة 2026 وأنظمة السداد</a>
+        <a href="article-new-capital-projects-2026.html" class="hover:text-shary-link">مشاريع العاصمة الإدارية الجديدة 2026 وأنظمة السداد</a>
     </h3>
 
     <div class="mt-auto flex items-center justify-between text-[13px] font-bold leading-normal">
         <span class="text-shary-muted">6 دقائق قراءة</span>
-        <a href="article.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: مشاريع العاصمة الإدارية الجديدة 2026 وأنظمة السداد">اقرأ المقال ←</a>
+        <a href="article-new-capital-projects-2026.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: مشاريع العاصمة الإدارية الجديدة 2026 وأنظمة السداد">اقرأ المقال ←</a>
     </div>
 </article>
                 </div>
                 <div class="md:h-full mt-7 border-t border-shary-line pt-7 md:mt-0 md:border-t-0 md:pt-0">
                     <article class="flex flex-col gap-3 md:h-full">
-    <a href="article.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
+    <a href="article-resale-vs-developer-price.html" class="block overflow-hidden rounded bg-shary-image" tabindex="-1" aria-hidden="true">
         <img src="images/shary/blog-samples/card-resale.jpg" alt="" class="h-[196px] w-full object-cover lg:h-[200px]" loading="lazy">
     </a>
 
@@ -372,12 +385,12 @@
     </div>
 
     <h3 class="line-clamp-3 text-[19px] font-bold leading-[1.55]">
-        <a href="article.html" class="hover:text-shary-teal">إعادة البيع أم الشراء من المطور: متى يكون الريسيل أفضل؟</a>
+        <a href="article-resale-vs-developer-price.html" class="hover:text-shary-link">إعادة البيع أم الشراء من المطور: متى يكون الريسيل أفضل؟</a>
     </h3>
 
     <div class="mt-auto flex items-center justify-between text-[13px] font-bold leading-normal">
         <span class="text-shary-muted">5 دقائق قراءة</span>
-        <a href="article.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: إعادة البيع أم الشراء من المطور: متى يكون الريسيل أفضل؟">اقرأ المقال ←</a>
+        <a href="article-resale-vs-developer-price.html" class="text-shary-link hover:underline" aria-label="اقرأ المقال: إعادة البيع أم الشراء من المطور: متى يكون الريسيل أفضل؟">اقرأ المقال ←</a>
     </div>
 </article>
                 </div>
@@ -388,7 +401,7 @@
                 <svg class="rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
 
-                <span class="flex h-10 min-w-[40px] items-center justify-center rounded-[10px] bg-shary-action px-3 text-white" aria-current="page">1</span>
+                <span class="flex h-10 min-w-[40px] items-center justify-center rounded-[10px] bg-shary-form px-3 text-shary-navy" aria-current="page">1</span>
                 <a href="#" class="flex h-10 min-w-[40px] items-center justify-center rounded-[10px] border border-shary-line px-3 text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link active:border-shary-link active:text-shary-link" aria-label="صفحة 2">2</a>
                 <a href="#" class="flex h-10 min-w-[40px] items-center justify-center rounded-[10px] border border-shary-line px-3 text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link active:border-shary-link active:text-shary-link" aria-label="صفحة 3">3</a>
                 <span class="flex h-10 w-6 items-center justify-center text-shary-hint" aria-hidden="true">…</span>
@@ -436,7 +449,7 @@
 
             <input type="hidden" name="country_code" value="+20" data-phone-value>
 
-            <ul class="absolute inset-x-0 top-[60px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[10px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="كود الدولة" data-phone-list>
+            <ul class="shary-scroll absolute inset-x-0 top-[60px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[10px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="كود الدولة" data-phone-list>
                     <li role="option" tabindex="-1" data-code="+20" aria-selected="true" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
                         <img src="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
                         <span class="min-w-0 flex-1">مصر</span>
@@ -594,7 +607,8 @@
     </form>
 
     <div class="flex flex-col gap-3">
-        <a href="#" class="flex h-[54px] items-center justify-center gap-2.5 rounded-[10px] border-[1.5px] border-shary-navy bg-white text-[18px] font-bold leading-[1.2] text-shary-navy">
+        
+        <a href="#" data-meeting-open class="flex h-[54px] items-center justify-center gap-2.5 rounded-[10px] border-[1.5px] border-shary-navy bg-white text-[18px] font-bold leading-[1.2] text-shary-navy">
             <img src="images/shary/icons/calendar.svg" alt="" width="20" height="20">
             <span>طلب مقابلة</span>
         </a>
@@ -617,8 +631,8 @@
     </div>
     </main>
 
-    <footer class="mt-6 border-t border-shary-line">
-    <div class="site-container pb-8 lg:pb-6 lg:pt-10">
+    <footer class="bg-white mt-6 border-t border-shary-line">
+    <div class="site-container pb-8 lg:pb-14 lg:pt-12">
         <div class="lg:grid lg:grid-cols-5 lg:gap-8">
                 <div class="border-b border-shary-line lg:border-b-0">
                     <button type="button" class="flex w-full items-center justify-between py-3.5 text-start text-[17px] font-bold leading-normal lg:pointer-events-none lg:py-0 lg:text-[16px]" data-footer-toggle aria-expanded="false">
@@ -761,7 +775,7 @@
             </div>
         </div>
 
-        <div class="mt-6 hidden flex-wrap items-center gap-x-8 gap-y-2 border-t border-shary-line pt-5 text-[14px] font-semibold leading-normal lg:flex">
+        <div class="mt-8 hidden flex-wrap items-center gap-x-8 gap-y-2 border-t border-shary-line pt-6 text-[14px] font-semibold leading-normal lg:flex">
             <p>© حقوق النشر 2026 – شاري.</p>
                 <a href="#" class="hover:text-shary-link active:text-shary-link">الرئيسية</a>
                 <a href="#" class="hover:text-shary-link active:text-shary-link">المطورين</a>
@@ -776,22 +790,237 @@
         </div>
     </div>
 </footer>
+    <!-- meeting-modal -->
+<div class="fixed inset-0 z-50 hidden" data-meeting-modal role="dialog" aria-modal="true" aria-labelledby="meeting-title">
+    
+    <div class="absolute inset-0 bg-shary-navy/60 lg:bg-transparent" data-meeting-close></div>
+
+    <div class="meeting-panel shary-scroll absolute inset-x-0 bottom-0 max-h-[92vh] overflow-y-auto rounded-t-[28px] bg-white px-5 pb-6 pt-3 lg:inset-0 lg:m-auto lg:h-fit lg:max-h-[calc(100vh-48px)] lg:w-[560px] lg:rounded-[24px] lg:px-7 lg:pb-7 lg:pt-6 lg:shadow-[0_40px_110px_-24px_rgba(15,47,75,0.6),0_0_0_1px_rgba(18,58,92,0.1)]">
+        <span class="mx-auto mb-3 block h-1.5 w-11 rounded-full bg-shary-line lg:hidden" aria-hidden="true"></span>
+
+        <div class="flex items-center justify-between">
+            <h2 id="meeting-title" class="text-[22px] font-semibold leading-normal">طلب اجتماع</h2>
+            <button type="button" class="flex h-10 w-10 items-center justify-center rounded-full text-shary-action transition-colors hover:text-shary-link" data-meeting-close aria-label="إغلاق">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true"><circle cx="15" cy="15" r="13" stroke="currentColor" stroke-width="2"/><path d="M10.5 10.5L19.5 19.5M19.5 10.5L10.5 19.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+
+        <form action="#" method="POST" class="mt-4 flex flex-col gap-4" data-meeting-form>
+            <input type="hidden" name="_token" value="preview">
+            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+            <input type="hidden" name="meeting_date" value="" data-meeting-date>
+            <input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
+
+            <div class="grid grid-cols-2 gap-1 rounded-[16px] bg-shary-form p-1.5" role="group" aria-label="طلب اجتماع">
+                <button type="button" class="h-11 rounded-[12px] text-[15px] font-bold leading-normal text-shary-navy transition-colors aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-type-option="zoom" aria-pressed="true">زووم</button>
+                <button type="button" class="h-11 rounded-[12px] text-[15px] font-bold leading-normal text-shary-navy transition-colors aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-type-option="in_person" aria-pressed="false">اجتماع حضوري</button>
+            </div>
+
+            <label class="flex flex-col gap-2">
+                <span class="text-[15px] font-bold leading-normal">الاسم <span class="text-red-600" aria-hidden="true">*</span></span>
+                <input type="text" name="name" required autocomplete="name" class="h-[52px] w-full rounded-full border border-shary-cloud bg-shary-form px-5 text-start text-[16px] font-semibold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-link">
+            </label>
+
+            <div class="flex flex-col gap-2">
+                <span class="text-[15px] font-bold leading-normal">الهاتف <span class="text-red-600" aria-hidden="true">*</span></span>
+
+                <div class="relative flex gap-2.5" data-phone-field>
+                    <button type="button" class="flex h-[52px] shrink-0 items-center gap-2 rounded-full border border-shary-cloud bg-shary-form px-4" data-phone-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="كود الدولة">
+                        <img src="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] rounded-[3px] border border-shary-line object-cover" data-phone-flag>
+                        <span class="text-[15px] font-bold leading-normal text-shary-navy" dir="ltr" data-phone-code>+20</span>
+                        <img src="images/shary/icons/chevron-down-sm.svg" alt="" width="14" height="14">
+                    </button>
+
+                    <input type="tel" name="phone" dir="ltr" required autocomplete="tel-national" aria-label="رقم الهاتف" class="h-[52px] min-w-0 flex-1 rounded-full border border-shary-cloud bg-shary-form px-5 text-left text-[16px] font-semibold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-link rtl:text-right">
+
+                    <input type="hidden" name="country_code" value="+20" data-phone-value>
+
+                    <ul class="shary-scroll absolute inset-x-0 top-[58px] z-10 hidden max-h-[200px] overflow-y-auto rounded-[14px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="كود الدولة" data-phone-list>
+                            <li role="option" tabindex="-1" data-code="+20" aria-selected="true" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">مصر</span>
+                                <span class="text-shary-muted" dir="ltr">+20</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+966" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/sa.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">السعودية</span>
+                                <span class="text-shary-muted" dir="ltr">+966</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+971" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/ae.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">الإمارات</span>
+                                <span class="text-shary-muted" dir="ltr">+971</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+965" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/kw.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">الكويت</span>
+                                <span class="text-shary-muted" dir="ltr">+965</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+974" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/qa.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">قطر</span>
+                                <span class="text-shary-muted" dir="ltr">+974</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+973" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/bh.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">البحرين</span>
+                                <span class="text-shary-muted" dir="ltr">+973</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+968" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/om.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">عُمان</span>
+                                <span class="text-shary-muted" dir="ltr">+968</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+962" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/jo.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">الأردن</span>
+                                <span class="text-shary-muted" dir="ltr">+962</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+961" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/lb.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">لبنان</span>
+                                <span class="text-shary-muted" dir="ltr">+961</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+964" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/iq.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">العراق</span>
+                                <span class="text-shary-muted" dir="ltr">+964</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+218" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/ly.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">ليبيا</span>
+                                <span class="text-shary-muted" dir="ltr">+218</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+249" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/sd.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">السودان</span>
+                                <span class="text-shary-muted" dir="ltr">+249</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+212" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/ma.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">المغرب</span>
+                                <span class="text-shary-muted" dir="ltr">+212</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+213" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/dz.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">الجزائر</span>
+                                <span class="text-shary-muted" dir="ltr">+213</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+216" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/tn.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">تونس</span>
+                                <span class="text-shary-muted" dir="ltr">+216</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+970" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/ps.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">فلسطين</span>
+                                <span class="text-shary-muted" dir="ltr">+970</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+967" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/ye.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">اليمن</span>
+                                <span class="text-shary-muted" dir="ltr">+967</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+963" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/sy.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">سوريا</span>
+                                <span class="text-shary-muted" dir="ltr">+963</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+90" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/tr.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">تركيا</span>
+                                <span class="text-shary-muted" dir="ltr">+90</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+44" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/gb.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">بريطانيا</span>
+                                <span class="text-shary-muted" dir="ltr">+44</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+1" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/us.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">أمريكا</span>
+                                <span class="text-shary-muted" dir="ltr">+1</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+1" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/ca.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">كندا</span>
+                                <span class="text-shary-muted" dir="ltr">+1</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+49" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/de.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">ألمانيا</span>
+                                <span class="text-shary-muted" dir="ltr">+49</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+33" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/fr.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">فرنسا</span>
+                                <span class="text-shary-muted" dir="ltr">+33</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+39" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/it.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">إيطاليا</span>
+                                <span class="text-shary-muted" dir="ltr">+39</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+31" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/nl.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">هولندا</span>
+                                <span class="text-shary-muted" dir="ltr">+31</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+61" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/au.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">أستراليا</span>
+                                <span class="text-shary-muted" dir="ltr">+61</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+41" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/ch.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">سويسرا</span>
+                                <span class="text-shary-muted" dir="ltr">+41</span>
+                            </li>
+                            <li role="option" tabindex="-1" data-code="+46" aria-selected="false" class="flex cursor-pointer items-center gap-3 px-4 py-2.5 text-[15px] font-bold leading-normal text-shary-navy hover:bg-shary-form focus:bg-shary-form focus:outline-none">
+                                <img src="images/shary/flags/se.svg" alt="" width="26" height="20" class="h-5 w-[26px] shrink-0 rounded-[3px] border border-shary-line object-cover" loading="lazy">
+                                <span class="min-w-0 flex-1">السويد</span>
+                                <span class="text-shary-muted" dir="ltr">+46</span>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <span class="text-[15px] font-bold leading-normal">اختر التواريخ المتاحة</span>
+                <div class="shary-scroll flex gap-2 overflow-x-auto pb-2.5 lg:grid lg:grid-cols-7 lg:gap-1.5 lg:overflow-visible lg:pb-0" data-meeting-days data-count="7"></div>
+                <template data-meeting-day-template>
+                    <button type="button" class="flex h-[64px] min-w-[76px] shrink-0 lg:min-w-0 flex-col items-center justify-center gap-0.5 rounded-[16px] border border-shary-line bg-white px-2 text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" aria-pressed="false">
+                        <span class="text-[14px] font-bold leading-normal" data-meeting-day-name></span>
+                        <span class="text-[12px] font-semibold leading-normal opacity-70" data-meeting-day-date></span>
+                    </button>
+                </template>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <span class="text-[15px] font-bold leading-normal">الوقت المتاح</span>
+                <div class="shary-scroll flex gap-2 overflow-x-auto pb-2.5 lg:grid lg:grid-cols-4 lg:gap-2 lg:overflow-visible lg:pb-0">
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="10:00" aria-pressed="true">10:00 ص</button>
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="11:00" aria-pressed="false">11:00 ص</button>
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="12:00" aria-pressed="false">12:00 م</button>
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="13:00" aria-pressed="false">01:00 م</button>
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="14:00" aria-pressed="false">02:00 م</button>
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="15:00" aria-pressed="false">03:00 م</button>
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="16:00" aria-pressed="false">04:00 م</button>
+                        <button type="button" class="h-11 shrink-0 whitespace-nowrap rounded-full border border-shary-line bg-white px-4 lg:px-0 text-[14px] font-semibold leading-normal text-shary-navy transition-colors aria-pressed:border-shary-action aria-pressed:bg-shary-action aria-pressed:text-white" data-meeting-time-option="17:00" aria-pressed="false">05:00 م</button>
+                </div>
+            </div>
+
+            <button type="submit" class="mt-1 flex h-[54px] w-full items-center justify-center rounded-full bg-shary-action text-[18px] font-bold leading-[1.2] text-white transition-colors hover:bg-shary-link ">
+                <span>إرسال</span>
+            </button>
+        </form>
+    </div>
+</div>
+<!-- /meeting-modal -->
 
     <script src="js/shary/site-chrome.js"></script>
     <script src="js/shary/phone-country.js"></script>
+    <script src="js/shary/meeting-modal.js"></script>
         <script src="js/shary/blog-load-more.js"></script>
-    <script>
-        // زرار المشاركة في كارت "مقال مقترح": مشاركة الموبايل لو متاحة، وإلا نسخ اللينك
-        document.querySelectorAll('[data-share-url]').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var url = new URL(button.getAttribute('data-share-url'), location.href).href;
-                if (navigator.share) {
-                    navigator.share({ title: button.getAttribute('data-share-title') || document.title, url: url }).catch(function () {});
-                } else if (navigator.clipboard) {
-                    navigator.clipboard.writeText(url).then(function () { button.setAttribute('data-copied', ''); }, function () {});
-                }
-            });
-        });
-    </script>
 </body>
 </html>

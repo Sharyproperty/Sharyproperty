@@ -1,0 +1,73 @@
+{{--
+    Sheikh Zayed or 6 October? A full comparison before you buy
+    Sample article body (English) — stands for the HTML saved in the dashboard’s article content field.
+--}}
+<p><strong>Sheikh Zayed or 6 October</strong> is the question for anyone looking for a home in West Cairo. The two cities are neighbours in Giza Governorate, but each has a different character in housing, prices and services. This comparison lays out the differences so you can choose what fits your family and budget.</p>
+
+<h2 id="location">Location and access</h2>
+
+<p>Both cities lie west of Cairo along the 26th of July Corridor and are served by a network of main roads:</p>
+
+<ul>
+    <li>The 26th of July Corridor, linking them to Mohandessin and central Cairo.</li>
+    <li>The Cairo–Alexandria Desert Road and the Rod El Farag–Dabaa axis.</li>
+    <li>Al Wahat Road and the Middle Ring Road.</li>
+    <li>The West Nile monorail, linking 6 October to Giza.</li>
+</ul>
+
+<h2 id="compare">A quick comparison</h2>
+
+<table>
+    <thead>
+        <tr><th>Point</th><th>Sheikh Zayed</th><th>6 October</th></tr>
+    </thead>
+    <tbody>
+        <tr><th>Character</th><td>A quiet city, mostly compounds and low-density districts</td><td>A larger, mixed city: districts, compounds, universities and an industrial zone</td></tr>
+        <tr><th>Average price per meter</th><td><span class="article-index" data-index="price">EGP 88,100</span> <span class="article-change" data-index="change" dir="ltr">+4.2%</span></td><td><span class="article-index" data-index="price">EGP 61,500</span> <span class="article-change" data-index="change" dir="ltr">+3.4%</span></td></tr>
+        <tr><th>Shopping and leisure</th><td>Arkan Plaza and the Al Bostan Street centres</td><td>Mall of Egypt and Mall of Arabia</td></tr>
+        <tr><th>Education</th><td>Nile University and international schools</td><td>6th of October University, MUST and MSA University</td></tr>
+        <tr><th>Jobs</th><td>Companies and office headquarters</td><td>The industrial zone and Media Production City</td></tr>
+    </tbody>
+</table>
+
+<a href="{{ url('/en/shary-index') }}" class="article-cta">Compare the average price per meter in Sheikh Zayed and 6 October on the Shary Index</a>
+
+<h2 id="zayed">Why live in Sheikh Zayed</h2>
+
+<ul>
+    <li><strong>Quiet and privacy</strong> <span>Lower density and more green space.</span></li>
+    <li><strong>Closer to central Cairo</strong> <span>Nearer to Mohandessin via the 26th of July Corridor.</span></li>
+    <li><strong>Established compounds</strong> <span>Projects lived in for years with complete services.</span></li>
+</ul>
+
+<h2 id="october">Why live in 6 October</h2>
+
+<ul>
+    <li><strong>A range of prices</strong> <span>Units for different budgets, from residential districts to compounds.</span></li>
+    <li><strong>Complete services</strong> <span>Universities, hospitals and major malls inside the city.</span></li>
+    <li><strong>Jobs</strong> <span>Close to the industrial zone and Media Production City.</span></li>
+</ul>
+
+<h2 id="who">Who does each city suit?</h2>
+
+<p>Sheikh Zayed suits families who want a quiet home in a compound and have a higher budget. 6 October suits buyers who want a wider choice of prices, or whose work or children’s studies are in the city. Either way, compare the unit with the average price per meter in its area before negotiating.</p>
+
+<aside class="article-related">
+    <a href="{{ url('/en/blog/new-cairo-prices-q3') }}" class="article-related__image" tabindex="-1" aria-hidden="true">
+        <img src="{{ asset('images/shary/blog-samples/card-prices.jpg') }}" alt="" loading="lazy">
+    </a>
+    <div class="article-related__body">
+        <h3><a href="{{ url('/en/blog/new-cairo-prices-q3') }}">Price per meter in New Cairo: Q3 2026 report</a></h3>
+        <p>Shary’s report on prices per meter in New Cairo in Q3 2026: the average by area and unit type, and the factors behind the differences.</p>
+        <a href="{{ url('/en/blog/new-cairo-prices-q3') }}" class="article-related__more">Continue reading ...</a>
+        <div class="article-related__footer">
+            <span class="article-related__brand">
+                <img src="{{ asset('images/shary/logo-mark.svg') }}" alt="" width="22" height="18">
+                Shary
+            </span>
+            <button type="button" class="article-related__share" data-share-url="{{ url('/en/blog/new-cairo-prices-q3') }}" data-share-title="Price per meter in New Cairo: Q3 2026 report" aria-label="Share article">
+                <img src="{{ asset('images/shary/icons/share.svg') }}" alt="" width="20" height="20">
+            </button>
+        </div>
+    </div>
+</aside>

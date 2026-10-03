@@ -1,0 +1,64 @@
+{{--
+    Resale or buying from the developer: when is resale the better deal?
+    Sample article body (English) — stands for the HTML saved in the dashboard’s article content field.
+--}}
+<p>Many buyers are torn between <strong>resale</strong> and buying directly from the developer. Resale can give you a ready unit at a good price, while the developer offers a lower down payment and longer installments. This article compares the two and explains when resale is the better decision.</p>
+
+<h2 id="what">What is resale?</h2>
+
+<p>Resale means buying a unit from its current owner rather than from the developer. The unit may be delivered and fully paid, or still on installments, in which case the seller assigns the contract to the buyer at the developer’s office and receives what was paid plus an amount known as the over price.</p>
+
+<h2 id="compare">Resale vs buying from the developer</h2>
+
+<table>
+    <thead>
+        <tr><th>Point</th><th>Resale</th><th>From the developer</th></tr>
+    </thead>
+    <tbody>
+        <tr><th>Upfront amount</th><td>Larger: what the seller paid plus the over price</td><td>A small down payment, usually 5% to 10%</td></tr>
+        <tr><th>Delivery</th><td>Immediate or soon</td><td>Years away in new projects</td></tr>
+        <tr><th>Viewing</th><td>You see the unit and the project for real</td><td>You rely on plans and models</td></tr>
+        <tr><th>Negotiation</th><td>Room to negotiate with the owner</td><td>Set prices and offers</td></tr>
+        <tr><th>Installment period</th><td>Only what remains of the seller’s plan</td><td>A full plan of up to 10 years</td></tr>
+    </tbody>
+</table>
+
+<h2 id="when">When is resale better?</h2>
+
+<ul>
+    <li>When you want to move in soon and cannot wait years for delivery.</li>
+    <li>When you have substantial cash and want a price below the developer’s current launch.</li>
+    <li>When you want a prime location that sold out in the first launch.</li>
+    <li>When you prefer to see the unit, the neighbours and the services before paying.</li>
+</ul>
+
+<h2 id="steps">Steps to buy a resale unit safely</h2>
+
+<ol>
+    <li>Ask for the original contract and payment receipts, and check the unit and owner details.</li>
+    <li>Check with the developer that there are no late installments, penalties or unpaid maintenance deposits.</li>
+    <li>Learn the assignment conditions and fees, and complete the assignment at the developer’s office, not only through a private contract.</li>
+    <li>Inspect the unit and compare the total price with the area’s average price per meter.</li>
+</ol>
+
+<a href="{{ url('/en/shary-index') }}" class="article-cta">Compare the resale price with the area average on the Shary Index</a>
+
+<aside class="article-related">
+    <a href="{{ url('/en/blog/reservation-contract-checklist') }}" class="article-related__image" tabindex="-1" aria-hidden="true">
+        <img src="{{ asset('images/shary/blog-samples/card-legal.jpg') }}" alt="" loading="lazy">
+    </a>
+    <div class="article-related__body">
+        <h3><a href="{{ url('/en/blog/reservation-contract-checklist') }}">7 clauses to review in a unit reservation contract before signing</a></h3>
+        <p>Seven key clauses in a unit reservation contract that protect your rights: unit details, price, delivery date, finishing, cancellation, assignment and ownership.</p>
+        <a href="{{ url('/en/blog/reservation-contract-checklist') }}" class="article-related__more">Continue reading ...</a>
+        <div class="article-related__footer">
+            <span class="article-related__brand">
+                <img src="{{ asset('images/shary/logo-mark.svg') }}" alt="" width="22" height="18">
+                Shary
+            </span>
+            <button type="button" class="article-related__share" data-share-url="{{ url('/en/blog/reservation-contract-checklist') }}" data-share-title="7 clauses to review in a unit reservation contract before signing" aria-label="Share article">
+                <img src="{{ asset('images/shary/icons/share.svg') }}" alt="" width="20" height="20">
+            </button>
+        </div>
+    </div>
+</aside>

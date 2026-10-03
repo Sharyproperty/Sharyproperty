@@ -1,7 +1,7 @@
 {{--
     English version of the "New Administrative Capital" article body (same blocks as the Arabic one).
     This is the HTML stored in the dashboard's article-content field for the English locale.
-    Cells marked with class="article-fill" are prices to be taken from the Shary Index before publishing.
+    Figures with class="article-index" are sample numbers; on the site they come from the Shary Index.
 --}}
 <p>The <strong>New Administrative Capital</strong> is the largest urban project Egypt has built in recent years, and it has become a prime destination for anyone looking for a modern home or a long-term real estate investment. This guide covers where the capital is and how to get there, its main residential districts, the best compounds, the services available, the average price per meter and payment plans, plus practical tips before you buy.</p>
 
@@ -74,11 +74,11 @@
         <tr><th>Unit type</th><th>Average price per meter</th><th>Common sizes</th></tr>
     </thead>
     <tbody>
-        <tr><th>Apartment</th><td><span class="article-fill">From Shary Index</span></td><td>90 to 200 m²</td></tr>
-        <tr><th>Duplex</th><td><span class="article-fill">From Shary Index</span></td><td>200 to 300 m²</td></tr>
-        <tr><th>Townhouse</th><td><span class="article-fill">From Shary Index</span></td><td>180 to 260 m²</td></tr>
-        <tr><th>Standalone villa</th><td><span class="article-fill">From Shary Index</span></td><td>300 m² and above</td></tr>
-        <tr><th>Office or retail unit</th><td><span class="article-fill">From Shary Index</span></td><td>30 to 150 m²</td></tr>
+        <tr><th>Apartment</th><td><span class="article-index" data-index="price">EGP 68,300</span></td><td>90 to 200 m²</td></tr>
+        <tr><th>Duplex</th><td><span class="article-index" data-index="price">EGP 72,900</span></td><td>200 to 300 m²</td></tr>
+        <tr><th>Townhouse</th><td><span class="article-index" data-index="price">EGP 79,400</span></td><td>180 to 260 m²</td></tr>
+        <tr><th>Standalone villa</th><td><span class="article-index" data-index="price">EGP 91,700</span></td><td>300 m² and above</td></tr>
+        <tr><th>Office or retail unit</th><td><span class="article-index" data-index="price">EGP 118,500</span></td><td>30 to 150 m²</td></tr>
     </tbody>
 </table>
 <p>Market prices change all the time, so check the Shary Index for the latest average price per meter before you decide to buy.</p>

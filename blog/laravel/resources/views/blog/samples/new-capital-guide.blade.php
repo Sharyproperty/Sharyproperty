@@ -5,7 +5,7 @@
     p ، h2 ، h3 ، ul ، ol ، table ، figure/figcaption ،
     والبلوكات المخصوصة: a.article-cta ، figure.article-places ، aside.article-related (كارت مقال مقترح)
     الصور: كل <img> هنا بيتبدّل بالصورة اللي بتترفع من لوحة التحكم (سيبوا الـ alt زي ما هو).
-    الخانات المعلّمة بـ class="article-fill" أرقام بتتاخد من مؤشر شاري قبل النشر.
+    الأرقام اللي عليها class="article-index" أرقام تجريبية، وفي الموقع بتتاخد من مؤشر شاري.
 --}}
 <p><strong>العاصمة الإدارية الجديدة</strong> أكبر مشروع عمراني تنفذه مصر في السنوات الأخيرة، وأصبحت وجهة رئيسية لمن يبحث عن سكن حديث أو فرصة استثمار عقاري طويل الأجل. في هذا الدليل نعرض موقع العاصمة وطرق الوصول إليها، وأهم أحيائها السكنية، وأفضل الكمبوندات، والخدمات المتاحة، ومتوسط سعر المتر وأنظمة السداد، مع نصائح عملية قبل الشراء.</p>
 
@@ -78,11 +78,11 @@
         <tr><th>نوع الوحدة</th><th>متوسط سعر المتر</th><th>مساحات شائعة</th></tr>
     </thead>
     <tbody>
-        <tr><th>شقة</th><td><span class="article-fill">من مؤشر شاري</span></td><td>من 90 إلى 200 م²</td></tr>
-        <tr><th>دوبلكس</th><td><span class="article-fill">من مؤشر شاري</span></td><td>من 200 إلى 300 م²</td></tr>
-        <tr><th>تاون هاوس</th><td><span class="article-fill">من مؤشر شاري</span></td><td>من 180 إلى 260 م²</td></tr>
-        <tr><th>فيلا مستقلة</th><td><span class="article-fill">من مؤشر شاري</span></td><td>من 300 م² فأكثر</td></tr>
-        <tr><th>وحدة إدارية أو تجارية</th><td><span class="article-fill">من مؤشر شاري</span></td><td>من 30 إلى 150 م²</td></tr>
+        <tr><th>شقة</th><td><span class="article-index" data-index="price">68,300 ج.م</span></td><td>من 90 إلى 200 م²</td></tr>
+        <tr><th>دوبلكس</th><td><span class="article-index" data-index="price">72,900 ج.م</span></td><td>من 200 إلى 300 م²</td></tr>
+        <tr><th>تاون هاوس</th><td><span class="article-index" data-index="price">79,400 ج.م</span></td><td>من 180 إلى 260 م²</td></tr>
+        <tr><th>فيلا مستقلة</th><td><span class="article-index" data-index="price">91,700 ج.م</span></td><td>من 300 م² فأكثر</td></tr>
+        <tr><th>وحدة إدارية أو تجارية</th><td><span class="article-index" data-index="price">118,500 ج.م</span></td><td>من 30 إلى 150 م²</td></tr>
     </tbody>
 </table>
 <p>الأسعار في السوق تتغير باستمرار، لذلك يُفضَّل الرجوع إلى مؤشر شاري لمعرفة متوسط سعر المتر المحدَّث قبل اتخاذ قرار الشراء.</p>
