@@ -53,7 +53,9 @@
  *   بالـ data-favorite-id، وبيتبعت حدث shary:favorite ({ id, active }) عشان الباك إند يحفظها في حساب العميل.
  *   قلب الهيدر (data-favorites-indicator) بيبقى أحمر وعليه العدد طول ما فيه حاجة في المفضلة، وبيفتح صفحة المفضلة.
  * - المشاركة (data-share-url): موبايل = قايمة المشاركة بتاعة الموبايل، ولو مش متاحة بتطلع قايمة شاري من تحت (واتساب/تيليجرام/فيسبوك/X/البريد/نسخ).
- *   ديسك توب = نسخ اللينك + "تم نسخ الرابط". حدث shary:share ({ url, title }) — ممكن تغيّر detail.url أو تمنعه.
+ *   ديسك توب = قايمة صغيرة جنب الزرار (واتساب / فيسبوك / X / تيليجرام / نسخ الرابط). حدث shary:share ({ url, title }) — ممكن تغيّر detail.url أو تمنعه.
+ * - واتساب: أي لينك wa.me من غير نص بيتضاف له رسالة جاهزة (اسم الوحدة / المشروع + المكان + السعر + الكود + اللينك) من data-wa-text / data-wa-page — حدث shary:whatsapp ({ text }).
+ * - الاتصال على الديسك توب / التابلت: لينك tel: بيفتح قايمة صغيرة (اتصل / واتساب / نسخ الرقم) بدل ما يتجاهله المتصفح.
  * - زرار الرجوع (window.SharyBack): أي حاجة بتتفتح فوق الصفحة (تصفية، لوحات الفلاتر، طلب الاجتماع، Shary AI، قايمة المشاركة)
  *   بتتسجل في تاريخ المتصفح، فزرار الرجوع (أو سحبة الرجوع في الموبايل) بيقفلها والعميل بيفضل في نفس الصفحة ونفس المكان بدل ما يخرج منها.
  * - المقارنة (data-compare-toggle + data-compare-id): بتظهر زرار المقارنة تحت (data-compare-bar) بعدد المختار، وبيفتح صفحة المقارنة. حدث shary:compare.
@@ -240,9 +242,8 @@
     markFavorites(document);
 
     // ---- المشاركة
-    // موبايل: قايمة المشاركة بتاعة الموبايل نفسه (واتساب، ماسنجر، ...). لو المتصفح مش بيدعمها أو منعها، بتطلع قايمة شاري من تحت
-    //         (واتساب / تيليجرام / فيسبوك / X / البريد / نسخ الرابط) — يعني زرار المشاركة عمره ما بيبقى "نسخ بس" على الموبايل.
-    // ديسك توب: نسخ اللينك + "تم نسخ الرابط".
+    // موبايل: قايمة شاري بتطلع من تحت (واتساب / تيليجرام / فيسبوك / X / البريد / نسخ الرابط) وآخرها "المزيد" بيفتح قايمة الموبايل نفسه.
+    // ديسك توب: قايمة صغيرة جنب زرار المشاركة (واتساب / فيسبوك / منصة إكس / تيليجرام / نسخ الرابط).
     // حدث shary:share ({ url, title }): أي كود ممكن يغيّر detail.url / detail.title، أو يستلم المشاركة مكاننا بـ preventDefault().
     var nativeShareBlocked = false;
     var shareSheet = null;
@@ -250,6 +251,70 @@
     function copyText(text, done, failed) {
         if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, failed);
         else failed();
+    }
+
+    // ---- قايمة صغيرة جنب الزرار (ديسك توب): items = [[كلاس الأيقونة, أيقونة, الاسم, اللينك أو دالة], ...]
+    var floatMenu = null;
+    function closeMenu() {
+        if (!floatMenu) return;
+        floatMenu.parentNode.removeChild(floatMenu);
+        floatMenu = null;
+    }
+    document.addEventListener('click', function (event) { if (floatMenu && !floatMenu.contains(event.target)) closeMenu(); }, true);
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeMenu(); });
+    window.addEventListener('scroll', closeMenu, { passive: true });
+    window.addEventListener('resize', closeMenu);
+
+    function openMenu(anchor, items, en, heading) {
+        closeMenu();
+        var menu = document.createElement('div');
+        menu.className = 'shary-menu';
+        menu.setAttribute('role', 'menu');
+        menu.dir = en ? 'ltr' : 'rtl';
+        if (heading) {
+            var head = document.createElement('p');
+            head.className = 'shary-menu__head';
+            head.textContent = heading;
+            menu.appendChild(head);
+        }
+        items.forEach(function (item) {
+            var action = typeof item[3] === 'function';
+            var row = document.createElement(action ? 'button' : 'a');
+            row.className = 'shary-menu__item';
+            row.setAttribute('role', 'menuitem');
+            if (action) row.type = 'button';
+            else { row.href = item[3]; if (item[3].indexOf('tel:') !== 0) { row.target = '_blank'; row.rel = 'noopener'; } row.setAttribute('data-menu-link', ''); }
+            row.innerHTML = '<span class="shary-share__icon ' + item[0] + '">' + item[1] + '</span><span></span>';
+            row.lastChild.textContent = item[2];
+            row.addEventListener('click', function () { if (action) item[3](row); else setTimeout(closeMenu, 0); });
+            menu.appendChild(row);
+        });
+        document.body.appendChild(menu);
+        // مكان القايمة: تحت الزرار (أو فوقه لو مفيش مكان) وجوه حدود الشاشة
+        var box = anchor.getBoundingClientRect();
+        var width = menu.offsetWidth, height = menu.offsetHeight;
+        var left = Math.min(Math.max(8, box.left + box.width / 2 - width / 2), window.innerWidth - width - 8);
+        var top = box.bottom + 8;
+        if (top + height > window.innerHeight - 8) top = Math.max(8, box.top - height - 8);
+        menu.style.left = left + 'px';
+        menu.style.top = top + 'px';
+        floatMenu = menu;
+    }
+
+    var ICON_LINK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.400-6.400l-1 1"/><path d="M14 10a4.500 4.500 0 0 0-6.400 0l-3 3a4.500 4.500 0 0 0 6.400 6.400l1-1"/></svg>';
+    var ICON_PHONE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.250 11.400 11.400 0 0 0 3.600.570 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.200 2.450.570 3.570a1 1 0 0 1-.250 1L6.600 10.800Z"/></svg>';
+
+    function openShareMenu(button, url, title, en) {
+        var u = encodeURIComponent(url), t = encodeURIComponent(title);
+        openMenu(button, [
+            ['shary-share__icon--whatsapp', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(title + '\n' + url)],
+            ['shary-share__icon--facebook', '<i class="fa-brands fa-facebook-f" aria-hidden="true"></i>', en ? 'Facebook' : 'فيسبوك', 'https://www.facebook.com/sharer/sharer.php?u=' + u],
+            ['shary-share__icon--x', '<i class="fa-brands fa-x-twitter" aria-hidden="true"></i>', en ? 'X' : 'منصة إكس', 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t],
+            ['shary-share__icon--telegram', '<i class="fa-brands fa-telegram" aria-hidden="true"></i>', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + u + '&text=' + t],
+            ['shary-share__icon--more', ICON_LINK, en ? 'Copy link' : 'نسخ الرابط', function (row) {
+                copyText(url, function () { row.lastChild.textContent = en ? 'Link copied' : 'تم نسخ الرابط'; setTimeout(closeMenu, 900); }, function () { toast(url); closeMenu(); });
+            }]
+        ], en, en ? 'Share' : 'مشاركة');
     }
 
     function closeShareSheet() {
@@ -358,22 +423,73 @@
             var en = english(button);
             var phone = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
 
-            if (!phone) {
-                copyText(url, function () { toast(en ? 'Link copied' : 'تم نسخ الرابط'); }, function () { toast(url); });
-                return;
-            }
-            if (!navigator.share || nativeShareBlocked) { openShareSheet(url, title, en); return; }
-            try {
+            // ديسك توب: قايمة صغيرة جنب الزرار. موبايل: قايمة المشاركة بتاعة الموبايل نفسه (العنوان + لينك العنصر + نسخ + التطبيقات) ، ولو مش متاحة: قايمة شاري من تحت
+            if (!phone) { event.stopPropagation(); openShareMenu(button, url, title, en); return; }
+            if (navigator.share && !nativeShareBlocked) {
                 navigator.share({ title: title, text: title, url: url }).catch(function (error) {
-                    if (error && error.name === 'AbortError') return;   // العميل قفل القايمة
+                    if (error && error.name === 'AbortError') return;   // قفل القايمة بنفسه
                     nativeShareBlocked = true;
                     openShareSheet(url, title, en);
                 });
-            } catch (error) {
-                nativeShareBlocked = true;
-                openShareSheet(url, title, en);
+                return;
             }
+            openShareSheet(url, title, en);
         })();
+    });
+
+    // ---- واتساب: رسالة جاهزة فيها بيانات الوحدة / المشروع وكوده ولينكه (واتساب بيعرض اللينك بصورة الصفحة og:image)
+    // النص من أقرب عنصر عليه data-wa-text (كارت) ، وإلا من data-wa-page اللي على صفحة الوحدة / المشروع (لأي زرار واتساب في الصفحة) ،
+    // وإلا رسالة عامة باسم الصفحة. اللينك من data-wa-url. حدث shary:whatsapp ({ text }) — غيّروا detail.text أو امنعوه.
+    function whatsappText(link) {
+        var en = english(link);
+        var holder = link.closest('[data-wa-text]');
+        var scope = link.closest('main') || document;
+        var page = holder ? null : (link.closest('[data-wa-page]') || scope.querySelector('[data-wa-page]'));
+        var source = holder || page;
+        var absolute = function (value, web) {
+            try { var full = new URL(value, location.href).href; return (web ? /^https?:/ : /^(?!data:|javascript:|blob:)/).test(full) ? full : ''; } catch (error) { return ''; }
+        };
+        if (!source) return (en ? 'Hello Shary, I would like to ask about:' : 'مرحبًا شاري، أريد الاستفسار عن:') + '\n' + document.title + '\n' + location.href;
+        // نفس ترتيب رسالة الموقع: البيانات ، سطر اللينك ، سطر فاضي ، لينك الصورة
+        var text = (source.getAttribute(holder ? 'data-wa-text' : 'data-wa-page') || '').replace(/^\s+|\s+$/g, '');
+        var url = absolute(source.getAttribute('data-wa-url') || '') || location.href;
+        var photo = holder ? holder.querySelector('img.card-photo') : null;   // الكارت: صورته نفسها
+        var image = absolute(source.getAttribute('data-wa-image') || (photo ? photo.currentSrc || photo.getAttribute('src') : '') || '', true);
+        return text + ' ' + url + (image ? '\n\n' + image : '');
+    }
+
+    function whatsappHref(link) {
+        var href = link.getAttribute('href') || '';
+        if (/[?&]text=/.test(href)) return href;
+        var detail = { text: whatsappText(link) };
+        if (!link.dispatchEvent(new CustomEvent('shary:whatsapp', { bubbles: true, cancelable: true, detail: detail }))) return href;
+        return href + (href.indexOf('?') === -1 ? '?' : '&') + 'text=' + encodeURIComponent(detail.text);
+    }
+
+    document.addEventListener('click', function (event) {
+        var link = closest(event, 'a[href*="wa.me/"], a[href*="api.whatsapp.com/send"]');
+        if (!link || link.hasAttribute('data-share-target') || link.hasAttribute('data-menu-link')) return;
+        link.setAttribute('href', whatsappHref(link));   // قبل ما المتصفح يفتح اللينك
+    }, true);
+
+    // ---- الاتصال على الديسك توب / التابلت: قايمة صغيرة (اتصل / واتساب / نسخ الرقم) — على الموبايل لينك tel: بيفتح الاتصال عادي
+    document.addEventListener('click', function (event) {
+        var link = closest(event, 'a[href^="tel:"]');
+        if (!link || link.hasAttribute('data-menu-link')) return;
+        var touchPhone = window.matchMedia && window.matchMedia('(pointer: coarse)').matches && window.innerWidth < 768;
+        if (touchPhone) return;
+        event.preventDefault();
+        event.stopPropagation();
+        var en = english(link);
+        var number = (link.getAttribute('href') || '').slice(4);
+        var scope = link.closest('main') || document;
+        var near = (link.parentNode && link.parentNode.querySelector('a[href*="wa.me/"]')) || scope.querySelector('a[href*="wa.me/"]') || document.querySelector('a[href*="wa.me/"]');
+        var items = [['shary-share__icon--mail', ICON_PHONE, (en ? 'Call ' : 'اتصل ') + '\u2066' + number + '\u2069', 'tel:' + number]];
+        if (near) items.push(['shary-share__icon--whatsapp', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>', en ? 'WhatsApp' : 'واتساب', whatsappHref(near)]);
+        items.push(['shary-share__icon--more', ICON_LINK, en ? 'Copy number' : 'نسخ الرقم', function (row) {
+            copyText(number, function () { row.lastChild.textContent = en ? 'Number copied' : 'تم نسخ الرقم'; setTimeout(closeMenu, 900); }, function () { toast(number); closeMenu(); });
+        }]);
+        openMenu(link, items, en, en ? 'Contact us' : 'تواصل معنا');
     });
 
     // ---- المقارنة: الضغط على "قارن" بيعلّم الوحدة / المشروع وبيحفظه على الجهاز (shary-compare: units/slug ، projects/slug)،
@@ -453,6 +569,16 @@
         button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: id, active: active, ids: list } }));
     });
     markCompare(document);
+
+    // X جنب زرار المقارنة العايم [data-compare-dismiss]: بيفضّي المقارنة والزرار بيختفي. الحدث shary:compare-clear ({ ids }) عشان السيرفر يتحدّث
+    document.addEventListener('click', function (event) {
+        var dismiss = closest(event, '[data-compare-dismiss]');
+        if (!dismiss) return;
+        var ids = readCompare();
+        writeCompare([]);
+        markCompare(document);
+        dismiss.dispatchEvent(new CustomEvent('shary:compare-clear', { bubbles: true, detail: { ids: ids } }));
+    });
     // ---------- نص بيتقصّر ويتفرد [data-collapsible] ("عن المطور" ، "عن الإيجار" ، "عن الوحدة") ----------
     // النص مفتوح في الأول. الزرار [data-collapsible-toggle] اللي جنبه بيقصّره (is-collapsed) ويفرده، ونصه بيتبدّل بين data-less و data-more.
     document.querySelectorAll('[data-collapsible]').forEach(function (box) {
@@ -3502,6 +3628,17 @@
             });
         });
     });
+    // X اللي في هيدر صفحة المقارنة [data-compare-close] (بره لوحة المقارنة): بيقفل المقارنة كلها (وحدات ومشاريع) — الزرار العايم بيختفي من كل الصفحات —
+    // وبيرجّع العميل للصفحة اللي كان فيها (أو data-back لو فتح المقارنة مباشرة). الحدث shary:compare-clear ({ ids }) عشان السيرفر يتحدّث.
+    document.addEventListener('click', function (event) {
+        var closeAll = event.target.closest ? event.target.closest('[data-compare-close]') : null;
+        if (!closeAll) return;
+        var ids = window.SharyCompare ? window.SharyCompare.read() : [];
+        if (window.SharyCompare) window.SharyCompare.write([]);
+        var go = closeAll.dispatchEvent(new CustomEvent('shary:compare-clear', { bubbles: true, cancelable: true, detail: { ids: ids } }));
+        if (!go) return;   // اللي سمع الحدث هو اللي هينقل العميل
+        if (window.history.length > 1 && document.referrer) window.history.back(); else window.location.href = closeAll.getAttribute('data-back') || '/';
+    });
 })();
 
 /**
@@ -3793,11 +3930,11 @@
 
 /**
  * صفحة العروض الحصرية (resources/views/offers/index.blade.php)
- * الفلتر [data-offers-filter] فورم GET: المنطقة / المطور (اختيار واحد) والعرض (اختيار متعدد offer[]). القوايم نفسها من js/shary/form-select.js.
+ * الفلتر [data-offers-filter] فورم GET: المنطقة / المطور / العرض — التلاتة اختيار متعدد (area[] / developer[] / offer[]). القوايم نفسها من js/shary/form-select.js.
  * - تغيير أي اختيار بيطلع حدث shary:offers-filter على الفورم، وزرار "تطبيق" بيختفي:
  *       form.addEventListener('shary:offers-filter', function (event) {
  *           event.preventDefault();          // هنجيب النتايج AJAX ونبدّل الكروت بنفسنا
- *           // event.detail = { area: '', developer: '', offer: ['dp-5', 'cash'] }
+ *           // event.detail = { area: ['new-cairo'], developer: ['lavista'], offer: ['dp-5', 'cash'] }
  *       });
  *   لو الحدث ما اتمنعش الفورم بيتبعت عادي والصفحة بترجع متفلترة من السيرفر (العرض المتعدد بيتبعت لما قايمته تتقفل عشان العميل يختار أكتر من عرض).
  * - زرار "مسح" [data-offers-reset]: بيرجّع الفلاتر التلاتة للكل (نفس الحدث بقيم فاضية) — ولو الحدث ما اتمنعش بيفتح لينك الصفحة من غير فلتر.

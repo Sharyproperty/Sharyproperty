@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=fc350ee2">
+<link rel="stylesheet" href="a/site.css?v=43969393">
 </head><body>
 
 
@@ -400,8 +400,7 @@ data-compare-link data-base="compare-en.html" >
 <div class="offer-filter__box" data-select>
 <label class="offer-filter__field" data-select-native>
 <span class="sr-only">Area</span>
-<select name="area" aria-label="Area" >
-<option value="">All areas</option>
+<select name="area[]" aria-label="Area" multiple>
 <option value="mostakbal-city" >Mostakbal City</option>
 <option value="new-cairo" >New Cairo</option>
 <option value="north-coast" >North Coast</option>
@@ -423,162 +422,195 @@ data-compare-link data-base="compare-en.html" >
 <span class="min-w-0 flex-1 truncate" data-select-label data-label="All areas">All areas</span>
 <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="16" height="16" class="req-select__arrow pointer-events-none shrink-0">
 </button>
-<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="Area"  data-select-list>
-
-<li role="option" tabindex="-1" data-value="" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M5 7h14M5 12h10M5 17h7"/>
-</svg>
-</span>
-<span class="min-w-0 flex-1 truncate" data-select-name>All areas</span>
-</li>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="Area" aria-multiselectable="true" data-select-list>
 <li role="option" tabindex="-1" data-value="mostakbal-city" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-palm-hills.jpg" data-img="images/shary/area-samples/project-palm-hills.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Mostakbal City</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="new-cairo" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-city-gate.jpg" data-img="images/shary/area-samples/project-city-gate.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>New Cairo</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="north-coast" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-lake-view.jpg" data-img="images/shary/area-samples/project-lake-view.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>North Coast</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="al-dabaa" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-sky-park.jpg" data-img="images/shary/area-samples/project-sky-park.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Al Dabaa</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="fifth-settlement" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-sky-park.jpg" data-img="images/shary/area-samples/project-sky-park.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Fifth Settlement</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="ras-el-hekma" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-palm-hills.jpg" data-img="images/shary/area-samples/project-palm-hills.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Ras El Hekma</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="el-shorouk" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-galleria.jpg" data-img="images/shary/area-samples/project-galleria.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>El Shorouk</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="new-capital" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-lake-view.jpg" data-img="images/shary/area-samples/project-lake-view.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>New Capital</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="sidi-abdel-rahman" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-nova.jpg" data-img="images/shary/area-samples/project-nova.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Sidi Abdel Rahman</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="ghazala-bay" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-eastvale.jpg" data-img="images/shary/area-samples/project-eastvale.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Ghazala Bay</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="ain-sokhna" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-the-pulse.jpg" data-img="images/shary/area-samples/project-the-pulse.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Ain Sokhna</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="al-alamein" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-galleria.jpg" data-img="images/shary/area-samples/project-galleria.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Al Alamein</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="madinaty" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-nova.jpg" data-img="images/shary/area-samples/project-nova.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Madinaty</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="sheikh-zayed" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
+<img loading="lazy" src="a/images/shary/area-samples/project-ark.jpg" data-img="images/shary/area-samples/project-ark.jpg" alt="" class="req-menu__logo object-cover" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon hidden"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Sheikh Zayed</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 </ul>
 </div>
 <div class="offer-filter__box" data-select>
 <label class="offer-filter__field" data-select-native>
 <span class="sr-only">Developer</span>
-<select name="developer" aria-label="Developer" >
-<option value="">All developers</option>
+<select name="developer[]" aria-label="Developer" multiple>
 <option value="tatweer-misr" >Tatweer Misr</option>
 <option value="reedy" >Reedy Group</option>
 <option value="jadeer" >Jadeer</option>
@@ -604,155 +636,180 @@ data-compare-link data-base="compare-en.html" >
 <span class="min-w-0 flex-1 truncate" data-select-label data-label="All developers">All developers</span>
 <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="16" height="16" class="req-select__arrow pointer-events-none shrink-0">
 </button>
-<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="Developer"  data-select-list>
-
-<li role="option" tabindex="-1" data-value="" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M5 7h14M5 12h10M5 17h7"/>
-</svg>
-</span>
-<span class="min-w-0 flex-1 truncate" data-select-name>All developers</span>
-</li>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="Developer" aria-multiselectable="true" data-select-list>
 <li role="option" tabindex="-1" data-value="tatweer-misr" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">TM</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Tatweer Misr</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="reedy" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon req-menu__icon--short" dir="ltr">RG</span>
-<span class="min-w-0 flex-1 truncate" data-select-name>Reedy Group</span>
-<span class="req-menu__check" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
 </span>
+<span class="req-menu__icon req-menu__icon--short" dir="ltr">RG</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>Reedy Group</span>
 </li>
 <li role="option" tabindex="-1" data-value="jadeer" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/6a71a25a5a3a0%D8%B4%D8%B1%D9%83%D8%A9%20%D8%AC%D8%AF%D9%8A%D8%B1%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.webp.webp" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">JD</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Jadeer</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="lavista" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">LV</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>La Vista</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="sky-abu-dhabi" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/67a0a24a80473%D8%B3%D9%83%D8%A7%D9%8A%20%D8%A3%D8%A8%D9%88%20%D8%B8%D8%A8%D9%8A%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">SAD</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Sky Abu Dhabi</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="hassan-allam" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">HA</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Hassan Allam</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="emaar" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/67a7f596d9099IMG_4573.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">EM</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Emaar Misr</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="mountain-view" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="a/images/shary/developer-samples/mountain-view-mark.png" data-img="images/shary/developer-samples/mountain-view-mark.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">MV</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Mountain View</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="times" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">TD</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Times Developments</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="roya" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
 <span class="req-menu__icon req-menu__icon--short" dir="ltr">RY</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Roya</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="mercon" aria-selected="false" class="req-menu__item">
-<span class="req-menu__icon req-menu__icon--short" dir="ltr">MR</span>
-<span class="min-w-0 flex-1 truncate" data-select-name>Mercon</span>
-<span class="req-menu__check" aria-hidden="true">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
 </span>
+<span class="req-menu__icon req-menu__icon--short" dir="ltr">MR</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>Mercon</span>
 </li>
 <li role="option" tabindex="-1" data-value="sky-innovo" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/6ab3e4d9659cdSky%20Innovo%20Developments.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">SI</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Sky Innovo</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="arabco" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/679f66e30a6c0%D8%A7%D8%B1%D8%A7%D8%A8%D9%83%D9%88.jpeg.jpeg" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">AR</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Arabco</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="madinet-masr" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">MM</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Madinet Masr</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="sodic" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/67f85409473dc%D8%B3%D9%88%D8%AF%D9%8A%D9%83.jpg.jpg" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">SD</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>SODIC</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="tmg" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/67ea9431c84fddownload.jpg.jpg" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">TMG</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>TMG</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="vie" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/6aaa658432e41%D8%B4%D8%B1%D9%83%D8%A9%20%D9%81%D9%8A%20%D9%83%D9%88%D9%85%D9%8A%D9%88%D9%86%D9%8A%D8%AA%D9%8A%D8%B2%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.webp.webp" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">VIE</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Vie Communities</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 <li role="option" tabindex="-1" data-value="misr-italia" aria-selected="false" class="req-menu__item">
+
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+
 <img loading="lazy" src="https://shary.eg/images/developers/679fa50a63f8b%D9%85%D8%B9%D9%85%D8%A7%D8%B1%20%D8%AC%D8%AF%D9%8A%D8%AF%20%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
 <span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">MI</span>
 <span class="min-w-0 flex-1 truncate" data-select-name>Misr Italia</span>
-<span class="req-menu__check" aria-hidden="true">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
-</span>
 </li>
 </ul>
 </div>
@@ -771,7 +828,7 @@ data-compare-link data-base="compare-en.html" >
 <span class="min-w-0 flex-1 truncate" data-select-label data-label="All offers">All offers</span>
 <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="16" height="16" class="req-select__arrow pointer-events-none shrink-0">
 </button>
-<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="Offer" aria-multiselectable=true data-select-list>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="Offer" aria-multiselectable="true" data-select-list>
 <li role="option" tabindex="-1" data-value="dp-5" aria-selected="false" class="req-menu__item">
 
 <span class="req-menu__check req-menu__check--box" aria-hidden="true">
@@ -803,8 +860,8 @@ data-compare-link data-base="compare-en.html" >
 </ul>
 </div>
 
-<a href="offers-en.html" class="offer-filter__reset " data-offers-reset>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+<a href="offers-en.html" class="clear-btn offer-filter__reset" data-offers-reset>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
 <span>Clear</span>
 </a>
 <button type="submit" class="offer-filter__apply" data-offers-apply>Apply</button>
@@ -820,10 +877,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/tatweer-misr" aria-label="Tatweer Misr" title="Tatweer Misr" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">TM</span>
 <img loading="lazy" src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="Tatweer Misr" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -864,9 +921,9 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/reedy" aria-label="Reedy Group" title="Reedy Group" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">RG</span>
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -907,10 +964,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/jadeer" aria-label="Jadeer" title="Jadeer" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">JD</span>
 <img loading="lazy" src="https://shary.eg/images/developers/6a71a25a5a3a0%D8%B4%D8%B1%D9%83%D8%A9%20%D8%AC%D8%AF%D9%8A%D8%B1%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.webp.webp" alt="Jadeer" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -951,10 +1008,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/lavista" aria-label="La Vista" title="La Vista" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">LV</span>
 <img loading="lazy" src="https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="La Vista" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -995,10 +1052,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/lavista" aria-label="La Vista" title="La Vista" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">LV</span>
 <img loading="lazy" src="https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="La Vista" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -1039,10 +1096,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/sky-abu-dhabi" aria-label="Sky Abu Dhabi" title="Sky Abu Dhabi" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">SAD</span>
 <img loading="lazy" src="https://shary.eg/images/developers/67a0a24a80473%D8%B3%D9%83%D8%A7%D9%8A%20%D8%A3%D8%A8%D9%88%20%D8%B8%D8%A8%D9%8A%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="Sky Abu Dhabi" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -1082,10 +1139,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/hassan-allam" aria-label="Hassan Allam" title="Hassan Allam" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">HA</span>
 <img loading="lazy" src="https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png" alt="Hassan Allam" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -1125,10 +1182,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/emaar" aria-label="Emaar Misr" title="Emaar Misr" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">EM</span>
 <img loading="lazy" src="https://shary.eg/images/developers/67a7f596d9099IMG_4573.png.png" alt="Emaar Misr" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -1169,10 +1226,10 @@ data-compare-link data-base="compare-en.html" >
 <span>Exclusive offer</span>
 </span>
 
-<span class="absolute bottom-2.5 end-2.5 flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)]">
+<a href="#pv:/developers/lavista" aria-label="La Vista" title="La Vista" class="absolute bottom-2.5 end-2.5 z-[2] flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white bg-white text-[11px] font-extrabold leading-none text-shary-navy shadow-[0_2px_8px_rgba(18,58,92,0.3)] transition-transform duration-200 hover:scale-105" data-developer-logo>
 <span aria-hidden="true">LV</span>
 <img loading="lazy" src="https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="La Vista" class="absolute inset-0 h-full w-full bg-white object-contain p-1" onerror="this.remove()">
-</span>
+</a>
 </div>
 
 <div class="flex flex-1 flex-col p-4 lg:p-5">
@@ -1230,7 +1287,7 @@ data-compare-link data-base="compare-en.html" >
 </div>
 </section>
 
-<section class="-mx-5 grid grid-cols-1 gap-6 bg-shary-soft px-5 py-7 lg:mx-0 lg:grid-cols-[minmax(0,1fr)_480px] lg:items-center lg:gap-14 lg:rounded-[28px] lg:px-14 lg:py-14" data-collection-form>
+<section class="-mx-5 grid grid-cols-1 gap-6 bg-shary-soft px-5 py-7 lg:mx-0 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:gap-14 lg:rounded-[28px] lg:px-14 lg:py-14" data-collection-form>
 <div class="min-w-0">
 <div class="">
 <p class="mb-1.5 flex items-center gap-2 text-[12.5px] font-bold leading-normal text-shary-teal lg:mb-2 lg:text-[14px]">
@@ -1262,30 +1319,30 @@ data-compare-link data-base="compare-en.html" >
 </ul>
 </div>
 
-<div class="mx-auto flex w-full max-w-[480px] flex-col gap-3.5">
-<form novalidate data-consult class="flex flex-col items-center gap-3.5 rounded-xl bg-shary-form px-4 pb-[18px] pt-6">
+<div class="consult-form mx-auto flex w-full max-w-[400px] flex-col gap-3">
+<form novalidate data-consult class="flex flex-col items-center gap-3 rounded-2xl bg-shary-form px-5 pb-5 pt-6">
 
 <div class="flex flex-col items-center gap-1 text-center">
-<img loading="lazy" src="a/images/shary/icons/headset.svg" data-img="images/shary/icons/headset.svg" alt="" width="34" height="34">
-<h2 class="text-[21px] font-bold leading-normal ">Need real estate advice?</h2>
-<p class="text-[14px] font-semibold leading-normal text-shary-muted ">Leave your details and an advisor will contact you</p>
+<img loading="lazy" src="a/images/shary/icons/contact-mail.svg" data-img="images/shary/icons/contact-mail.svg" alt="" width="46" height="46" class="consult-form__icon">
+<h2 class="text-[20px] font-bold leading-normal">Need real estate advice?</h2>
+<p class="text-[13.5px] font-medium leading-[1.6] text-shary-muted">Leave your details and an advisor will contact you</p>
 </div>
 
-<input type="text" name="name" placeholder="Name" aria-label="Name" required class="h-[54px] w-full rounded-[10px] border-0 bg-white px-4 text-start text-[16px] font-bold text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal">
+<input type="text" name="name" placeholder="Name" aria-label="Name" required class="h-12 w-full rounded-[10px] border-0 bg-white px-4 text-start text-[16px] font-semibold text-shary-navy placeholder:font-medium placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal">
 
 <div class="relative w-full">
-<select name="area" aria-label="Area" class="h-[54px] w-full appearance-none rounded-[10px] border-0 bg-white px-4 text-[16px] font-bold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-teal">
+<select name="area" aria-label="Area" class="h-12 w-full appearance-none rounded-[10px] border-0 bg-white px-4 text-[16px] font-semibold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-teal">
 <option value="Fifth Settlement">Fifth Settlement</option>
 <option value="Sheikh Zayed">Sheikh Zayed</option>
 <option value="New Capital">New Capital</option>
 <option value="North Coast">North Coast</option>
 </select>
-<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none absolute end-4 top-[18px]">
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none absolute end-4 top-[15px]">
 </div>
 
 <div class="relative w-full" data-phone-field>
-<div class="flex h-[54px] w-full items-center rounded-[10px] bg-white focus-within:ring-2 focus-within:ring-shary-teal ltr:flex-row-reverse">
-<input type="tel" name="phone" dir="ltr" placeholder="Phone number" aria-label="Phone number" required class="h-full min-w-0 flex-1 rounded-[10px] border-0 bg-transparent px-4 text-left rtl:text-right text-[16px] font-bold text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none">
+<div class="flex h-12 w-full items-center rounded-[10px] bg-white focus-within:ring-2 focus-within:ring-shary-teal ltr:flex-row-reverse">
+<input type="tel" name="phone" dir="ltr" placeholder="Phone number" aria-label="Phone number" required class="h-full min-w-0 flex-1 rounded-[10px] border-0 bg-transparent px-4 text-left rtl:text-right text-[16px] font-semibold text-shary-navy placeholder:font-medium placeholder:text-shary-hint focus:outline-none">
 
 <button type="button" class="flex h-full shrink-0 items-center gap-1.5 rounded-[10px] pe-4 ps-2 ltr:flex-row-reverse ltr:pe-2 ltr:ps-4" data-phone-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="Country code">
 <span class="text-[15px] font-bold leading-normal text-shary-navy" dir="ltr" data-phone-code>+20</span>
@@ -1296,12 +1353,12 @@ data-compare-link data-base="compare-en.html" >
 
 <input type="hidden" name="country_code" value="+20" data-phone-value>
 
-<ul class="shary-scroll absolute inset-x-0 top-[60px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[10px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="Country code" data-phone-list data-phone-shared></ul>
+<ul class="shary-scroll absolute inset-x-0 top-[54px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[10px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="Country code" data-phone-list data-phone-shared></ul>
 </div>
 
-<textarea name="message" placeholder="Your message" aria-label="Your message" class="h-24 w-full resize-none rounded-[10px] border-0 bg-white px-4 pt-3.5 text-start text-[16px] font-bold leading-[1.3] text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal"></textarea>
+<textarea name="message" placeholder="Your message" aria-label="Your message" class="h-[84px] w-full resize-none rounded-[10px] border-0 bg-white px-4 pt-3.5 text-start text-[16px] font-bold leading-[1.3] text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal"></textarea>
 
-<button type="submit" class="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[18px] font-bold leading-[1.2] text-white">
+<button type="submit" class="flex h-12 w-full items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[16px] font-bold leading-[1.2] text-white">
 <img loading="lazy" src="a/images/shary/icons/send.svg" data-img="images/shary/icons/send.svg" alt="" width="20" height="20">
 <span>Send</span>
 </button>
@@ -1309,17 +1366,17 @@ data-compare-link data-base="compare-en.html" >
 
 <div class="flex flex-col gap-3">
 
-<a href="#pv:/meetings/request" data-meeting-open class="flex h-[54px] items-center justify-center gap-2.5 rounded-[10px] border-[1.5px] border-shary-navy bg-white text-[18px] font-bold leading-[1.2] text-shary-navy">
+<a href="#pv:/meetings/request" data-meeting-open class="flex h-12 items-center justify-center gap-2.5 rounded-[10px] border-[1.5px] border-shary-navy bg-white text-[16px] font-bold leading-[1.2] text-shary-navy">
 <img loading="lazy" src="a/images/shary/icons/calendar.svg" data-img="images/shary/icons/calendar.svg" alt="" width="20" height="20">
 <span>Request a meeting</span>
 </a>
 
 <div class="flex gap-3">
-<a href="tel:+201000730208" class="flex h-[54px] min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[18px] font-bold leading-[1.2] text-white">
+<a href="tel:+201000730208" class="flex h-12 min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[16px] font-bold leading-[1.2] text-white">
 <img loading="lazy" src="a/images/shary/icons/phone.svg" data-img="images/shary/icons/phone.svg" alt="" width="20" height="20">
 <span>Call</span>
 </a>
-<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="flex h-[54px] min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[10px] bg-shary-whatsapp text-[18px] font-bold leading-[1.2] text-white">
+<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="flex h-12 min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[10px] bg-shary-whatsapp text-[16px] font-bold leading-[1.2] text-white">
 
 <i class="fa-brands fa-whatsapp text-[24px] leading-none" aria-hidden="true"></i>
 <span>WhatsApp</span>
@@ -1336,11 +1393,11 @@ data-compare-link data-base="compare-en.html" >
 <span>Call</span>
 </a>
 <a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-whatsapp text-[15px] font-bold leading-normal text-white">
-<i class="fa-brands fa-whatsapp text-[21px] leading-none" aria-hidden="true"></i>
+<span class="fab-ring flex" aria-hidden="true"><i class="fa-brands fa-whatsapp text-[21px] leading-none"></i></span>
 <span>WhatsApp</span>
 </a>
-<a href="#" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#1F5FC4] to-[#5AA9EE] text-[14px] font-bold leading-normal text-white" data-ask-ai>
-<span class="flex h-[26px] w-7 shrink-0 items-center justify-center rounded-lg bg-white" aria-hidden="true">
+<a href="#" class="quick-ai flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#1F5FC4] to-[#5AA9EE] text-[14px] font-bold leading-normal text-white" data-ask-ai>
+<span class="fab-beat flex h-[26px] w-7 shrink-0 items-center justify-center rounded-lg bg-white" aria-hidden="true">
 <img loading="lazy" src="a/images/shary/logo-mark.svg" data-img="images/shary/logo-mark.svg" alt="" width="20" height="17">
 </span>
 <span dir="ltr">Shary AI</span>
@@ -1350,19 +1407,24 @@ data-compare-link data-base="compare-en.html" >
 <div class="fixed bottom-28 right-7 z-30 hidden flex-col gap-3.5 lg:flex" aria-label="Quick contact">
 <a href="#" class="area-fab area-ai" aria-label="Ask Shary AI" data-ask-ai>
 <img loading="lazy" src="a/images/shary/logo-mark.svg" data-img="images/shary/logo-mark.svg" alt="" width="38" height="31">
-<span class="area-fab__label">Ask Shary AI</span>
+
+<span class="area-fab__label area-fab__label--pop">Ask me about any property</span>
 </a>
-<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="area-fab bg-shary-whatsapp text-white" aria-label="WhatsApp">
-<i class="fa-brands fa-whatsapp text-[32px] leading-none" aria-hidden="true"></i>
+<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="area-fab area-fab--wa bg-shary-whatsapp text-white" aria-label="WhatsApp">
+<span class="fab-ring flex" aria-hidden="true"><i class="fa-brands fa-whatsapp text-[32px] leading-none"></i></span>
 <span class="area-fab__label">WhatsApp</span>
 </a>
 </div>
 
-<a href="compare-en.html" data-base="compare-en.html" class="fixed bottom-[84px] left-3 z-30 hidden h-12 items-center gap-2 rounded-full bg-shary-action pe-2 ps-4 text-[14px] font-bold leading-normal text-white shadow-[0_10px_24px_-8px_rgba(18,58,92,0.6)] transition-colors hover:bg-shary-link lg:bottom-7 lg:left-7 lg:h-[52px] lg:text-[15px]" data-compare-bar>
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15V5Z" fill="currentColor"/></svg>
-<span>Compare</span>
-<span class="flex h-8 min-w-[32px] items-center justify-center rounded-full bg-white px-2 text-[14px] font-extrabold text-shary-navy" data-compare-count>0</span>
+<div class="compare-float fixed bottom-[84px] left-3 z-30 hidden items-center gap-1 rounded-full border border-shary-line bg-white p-1.5 lg:bottom-7 lg:left-7 lg:gap-1.5" data-compare-bar>
+
+<a href="compare-en.html" data-base="compare-en.html" class="flex h-11 items-center gap-2 rounded-full bg-shary-action pe-1.5 ps-4 text-[14px] font-bold leading-normal text-white transition-colors hover:bg-shary-link lg:h-12 lg:ps-5 lg:text-[15px]" data-compare-link>
+<span>Start compare</span>
+<span class="flex h-8 min-w-[32px] items-center justify-center rounded-full bg-shary-yellow px-2 text-[14px] font-extrabold text-shary-navy" data-compare-count>0</span>
 </a>
+
+<button type="button" class="flex h-11 items-center rounded-full px-3.5 text-[14px] font-bold leading-normal text-shary-link transition-colors hover:bg-shary-form lg:h-12 lg:px-4 lg:text-[15px]" data-compare-dismiss>Cancel</button>
+</div>
 
 </main>
 <footer class="bg-white mt-6 border-t border-shary-line">
@@ -1823,7 +1885,7 @@ data-compare-link data-base="compare-en.html" >
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "fc350ee2";</script>
+<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "43969393";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -1840,7 +1902,7 @@ data-compare-link data-base="compare-en.html" >
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=fc350ee2"></script>
+<script src="a/site.js?v=43969393"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -2866,10 +2928,7 @@ data-compare-link data-base="compare-en.html" >
       var target = document.getElementById(href.slice(1));
       if (target) scrollTo(target);
     } else if (href.indexOf('tel:') === 0) {
-      e.preventDefault();
-      var phone = href.slice(4);
-      var shown = '⁦' + phone + '⁩';
-      copy(phone, function () { toast(t('phoneCopied')(shown)); }, function () { toast(t('phone')(shown)); });
+      return;   // الاتصال: الموبايل بيفتح الاتصال، والديسك توب بيطلع قايمة (اتصل / واتساب / نسخ الرقم) من js/shary/site-chrome.js
     } else if (href.indexOf('mailto:') === 0) {
       e.preventDefault();
       var mail = href.slice(7);
@@ -2942,23 +3001,32 @@ data-compare-link data-base="compare-en.html" >
     e.preventDefault();
     var page = e.target.closest('main') || root, d = e.detail, shown = 0;
     page.querySelectorAll('[data-offer-card]').forEach(function (card) {
-      var kinds = [].concat(d.offer || []);   // العرض اختيار متعدد
-      var ok = (!d.area || (' ' + card.getAttribute('data-areas') + ' ').indexOf(' ' + d.area + ' ') !== -1)
-        && (!d.developer || card.getAttribute('data-developer') === d.developer) && (!kinds.length || kinds.indexOf(card.getAttribute('data-offer')) !== -1);
+      var kinds = [].concat(d.offer || []), places = [].concat(d.area || []), makers = [].concat(d.developer || []);   // التلاتة اختيار متعدد
+      var cardAreas = (card.getAttribute('data-areas') || '').split(' ');
+      var ok = (!places.length || places.some(function (a) { return cardAreas.indexOf(a) !== -1; }))
+        && (!makers.length || makers.indexOf(card.getAttribute('data-developer')) !== -1) && (!kinds.length || kinds.indexOf(card.getAttribute('data-offer')) !== -1);
       card.style.display = ok ? '' : 'none';
       if (ok) { card.classList.remove('hidden', 'lg:block'); shown++; }
     });
     var empty = page.querySelector('[data-offers-empty]');
     if (empty) empty.classList.toggle('hidden', shown > 0);
     var count = page.querySelector('[data-offers-count]');
-    if (count) { if (!count.getAttribute('data-all')) count.setAttribute('data-all', count.textContent); count.textContent = (d.area || d.developer || kinds0(d)) ? shown : count.getAttribute('data-all'); }
+    if (count) { if (!count.getAttribute('data-all')) count.setAttribute('data-all', count.textContent); count.textContent = kinds0(d) ? shown : count.getAttribute('data-all'); }
     var nav = page.querySelector('[data-pagination]');
-    if (nav) nav.style.display = (d.area || d.developer || kinds0(d)) ? 'none' : '';
-    function kinds0(x) { return [].concat(x.offer || []).length > 0; }
+    if (nav) nav.style.display = kinds0(d) ? 'none' : '';
+    function kinds0(x) { return [].concat(x.offer || [], x.area || [], x.developer || []).length > 0; }
   });
   // الوظائف: المعاينة بترد مكان السيرفر. الإشعارات: التفعيل بيتم على طول
   root.addEventListener('shary:career-apply', function (e) { e.preventDefault(); var finish = e.detail.done; setTimeout(finish, 500); });
   root.addEventListener('shary:notifications-enable', function (e) { e.preventDefault(); e.detail.done(); toast(lang === 'ar' ? 'الإشعارات اتفعّلت' : 'Notifications are on'); });
+  // X صفحة المقارنة: المعاينة بترجّع للصفحة اللي قبلها (أو البحث)
+  root.addEventListener('shary:compare-clear', function (e) {
+    if (!e.target.closest || !e.target.closest('[data-compare-close]')) return;
+    e.preventDefault();
+    var previous = stack.pop();
+    if (previous) { show(previous, true); remember(false); syncBack(); } else show('search-all');
+    toast(lang === 'ar' ? 'المقارنة اتقفلت' : 'Compare closed');
+  });
   // شاري كارد: المعاينة بتطلّع كود تجريبي باسم العميل
   root.addEventListener('shary:card-request', function (e) {
     e.preventDefault();
