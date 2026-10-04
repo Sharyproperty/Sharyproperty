@@ -4585,19 +4585,43 @@ input:focus-visible + .area-chip,
   animation: area-sheet-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* لوحات الفلاتر والاختيار (الترتيب / السعر / المطور / المنطقة / فلتر مؤشر شاري): من غير تغميق للصفحة ولا ظل ورا اللوحة،
-       وخلفية لبني هادية بدل الأبيض الصريح + خط خفيف بيحدد اللوحة. الضغط بره اللوحة لسه بيقفلها. */
+/* كل اللوحات والفورمات اللي بتفتح فوق الصفحة (طلب المقابلة / الفلاتر / اختيار المنطقة والمطور / السعر / فلتر مؤشر شاري / المشاركة / بوب أب التطبيق):
+       الصفحة بتفضل ظاهرة وراها بتغميق شفاف خفيف + بلور ، بدل الصفحة البيضا الكاملة. الضغط بره اللوحة لسه بيقفلها. */
 
-[data-filter-sheet] > [data-sheet-close],
+[data-meeting-modal] > [data-meeting-close],
+    [data-filter-sheet] > [data-sheet-close],
     [data-index-advanced] > [data-adv-close],
-    [data-index-picker] > [data-picker-close] {
-  background-color: transparent;
+    [data-index-picker] > [data-picker-close],
+    .shary-share__dim,
+    .app-pop__backdrop {
+  background-color: rgba(13, 32, 51, 0.4) !important;
+  -webkit-backdrop-filter: blur(8px) saturate(1.15);
+  backdrop-filter: blur(8px) saturate(1.15);
 }
 
-[data-filter-sheet] > .area-sheet:not(.inset-0),
-    [data-filter-sheet] > .meeting-panel,
-    [data-index-advanced] > .meeting-panel,
-    [data-index-picker] > .meeting-panel {
+/* صفحة "تصفية" الكاملة على الموبايل: بقت لوحة طالعة من تحت — فوقها جزء من الصفحة ظاهر بنفس التغميق والبلور */
+
+@media (max-width: 1023px) {
+  [data-filter-sheet="all"] {
+    background-color: rgba(13, 32, 51, 0.4);
+    -webkit-backdrop-filter: blur(8px) saturate(1.15);
+    backdrop-filter: blur(8px) saturate(1.15);
+  }
+
+  [data-filter-sheet="all"] > .area-sheet {
+    top: 7vh !important;
+    overflow: hidden;
+    border-radius: 28px 28px 0 0;
+    box-shadow: 0 -18px 40px -18px rgba(13, 32, 51, 0.55);
+  }
+}
+
+.meeting-panel,
+    [data-filter-sheet] > .area-sheet:not(.inset-0) {
+  box-shadow: 0 -18px 44px -18px rgba(13, 32, 51, 0.5);
+}
+
+[data-index-picker] > .meeting-panel {
   border: 1px solid #c6d6ea;
   background-color: #f4f8fd;
   background-image: linear-gradient(180deg, #e9f1fb 0, #f4f8fd 120px, #f8fbfe 100%);
@@ -8241,6 +8265,34 @@ input:focus-visible + .area-chip,
   box-shadow: 0 3px 10px -3px rgba(18, 58, 92, 0.25);
 }
 
+/* السعر والتوفير ثابتين تحت الهيدر على الموبايل لما العميل ينزل في صفحة الفرصة */
+
+.opp-sticky {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 0 0 22px 22px;
+  background-color: #fff;
+  padding: 10px 20px 12px;
+  color: #123a5c;
+  box-shadow: 0 12px 24px -16px rgba(18, 58, 92, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.opp-sticky.is-on {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
 .opp-timer {
   margin-top: 14px;
   display: flex;
@@ -8524,6 +8576,132 @@ input:focus-visible + .area-chip,
 
   .opp-actions {
     max-width: 560px;
+  }
+}
+
+/* ---- نافذة الفلتر المتقدم بره صفحة البحث (الهوم + صفحة الوحدة / المشروع / الفرصة): نفس فورم فلتر البحث جوه [data-home-filter].
+            موبايل: لوحة طالعة من تحت زي صفحة البحث. ديسك توب: نافذة في نص الشاشة (الغلاف هو اللي ثابت، والفلتر نفسه زي عمود البحث). ---- */
+
+.home-filter .search-head {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .home-filter:has([data-filter-sheet="all"]:not(.hidden)) {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(13, 32, 51, 0.4);
+    -webkit-backdrop-filter: blur(8px) saturate(1.15);
+    backdrop-filter: blur(8px) saturate(1.15);
+  }
+
+  .home-filter .search-side {
+    display: flex !important;
+    width: 600px;
+    max-width: 94vw;
+    max-height: 88vh;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 24px;
+    background-color: #fff;
+    box-shadow: 0 40px 110px -24px rgba(15, 47, 75, 0.6);
+  }
+
+  .home-filter .search-side.hidden {
+    display: none !important;
+  }
+
+  .home-filter .search-side > .area-sheet {
+    display: flex !important;
+    min-height: 0;
+    max-height: 88vh;
+    flex: 1;
+    flex-direction: column;
+    background: #fff !important;
+  }
+
+  .home-filter .search-side > .area-sheet > .lg\:hidden {
+    display: flex !important;
+  }
+
+  .home-filter .search-side__scroll {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto !important;
+    padding: 0 28px 12px;
+  }
+
+  .home-filter .search-side__reset {
+    display: none !important;
+  }
+}
+
+/* ---- تنبيه سياسة الخصوصية (أول زيارة): كارت تحت — فوق شريط التواصل على الموبايل ---- */
+
+.privacy-note {
+  position: fixed;
+  inset-inline: 12px;
+  bottom: calc(84px + env(safe-area-inset-bottom, 0px));
+  z-index: 35;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 18px;
+  border: 1px solid #dfe7ef;
+  background-color: #fff;
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: #3a4c5e;
+  box-shadow: 0 18px 36px -18px rgba(13, 32, 51, 0.55);
+  animation: quick-up 0.45s ease-out backwards;
+}
+
+.privacy-note.hidden {
+  display: none;
+}
+
+.privacy-note__icon {
+  display: flex;
+  height: 38px;
+  width: 38px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #e7f6f3;
+  color: #1f8a7c;
+}
+
+.privacy-note a {
+  font-weight: 700;
+  color: #1f63c6;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.privacy-note button {
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background-color: #1e4166;
+  padding-inline: 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+}
+
+@media (min-width: 1024px) {
+  .privacy-note {
+    inset-inline: auto 28px;
+    bottom: 28px;
+    width: 460px;
+    font-size: 14px;
   }
 }
 
@@ -11815,6 +11993,28 @@ input:focus-visible + .area-chip,
   .md\:hidden.compare-table {
     display: none;
   }
+
+  @media (min-width: 1024px) {
+    .home-filter:has([data-filter-sheet="all"]:not(.md\:hidden)) {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(13, 32, 51, 0.4);
+      -webkit-backdrop-filter: blur(8px) saturate(1.15);
+      backdrop-filter: blur(8px) saturate(1.15);
+    }
+
+    .home-filter .md\:hidden.search-side {
+      display: none !important;
+    }
+  }
+
+  .md\:hidden.privacy-note {
+    display: none;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -12022,6 +12222,26 @@ input:focus-visible + .area-chip,
     /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
 
     /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    .home-filter:has([data-filter-sheet="all"]:not(.lg\:hidden)) {
+      position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(13, 32, 51, 0.4);
+      -webkit-backdrop-filter: blur(8px) saturate(1.15);
+      backdrop-filter: blur(8px) saturate(1.15);
+    }
+
+    .home-filter .lg\:hidden.search-side {
+      display: none !important;
+    }
+  }
+
+  .lg\:hidden.privacy-note {
+    display: none;
   }
 }
 
@@ -14759,6 +14979,41 @@ input:focus-visible + .area-chip,
 .pv-desktop .opp-gauge__ring b {font-size: 20px;}
 .pv-desktop .opp-gauge__label {font-size: 15px;}
 .pv-desktop .opp-actions {max-width: 560px;}
+.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.hidden)) {position: fixed;
+    inset: 0;
+    z-index: 70;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(13, 32, 51, 0.4);
+    -webkit-backdrop-filter: blur(8px) saturate(1.15);
+    backdrop-filter: blur(8px) saturate(1.15);}
+.pv-desktop .home-filter .search-side {display: flex !important;
+    width: 600px;
+    max-width: 94vw;
+    max-height: 88vh;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 24px;
+    background-color: #fff;
+    box-shadow: 0 40px 110px -24px rgba(15, 47, 75, 0.6);}
+.pv-desktop .home-filter .search-side.hidden {display: none !important;}
+.pv-desktop .home-filter .search-side > .area-sheet {display: flex !important;
+    min-height: 0;
+    max-height: 88vh;
+    flex: 1;
+    flex-direction: column;
+    background: #fff !important;}
+.pv-desktop .home-filter .search-side > .area-sheet > .lg\:hidden {display: flex !important;}
+.pv-desktop .home-filter .search-side__scroll {min-height: 0;
+    flex: 1;
+    overflow-y: auto !important;
+    padding: 0 28px 12px;}
+.pv-desktop .home-filter .search-side__reset {display: none !important;}
+.pv-desktop .privacy-note {inset-inline: auto 28px;
+    bottom: 28px;
+    width: 460px;
+    font-size: 14px;}
 .pv-desktop .area-map__rings {width: 128px;}
 .pv-desktop .area-plot {height: 150px;}
 .pv-desktop .area-filter select, .pv-desktop .area-filter button {height: 48px;
@@ -14788,6 +15043,27 @@ input:focus-visible + .area-chip,
 .pv-desktop .search-results [data-results] .area-card .unit-specs b {font-size: 16px;}
 .pv-desktop .md\:hidden.saved-empty {display: none;}
 .pv-desktop .md\:hidden.compare-table {display: none;}
+.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.md\:hidden)) {position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(13, 32, 51, 0.4);
+      -webkit-backdrop-filter: blur(8px) saturate(1.15);
+      backdrop-filter: blur(8px) saturate(1.15);}
+.pv-desktop .home-filter .md\:hidden.search-side {display: none !important;}
+.pv-desktop .md\:hidden.privacy-note {display: none;}
+.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.md\:hidden)) {position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(13, 32, 51, 0.4);
+      -webkit-backdrop-filter: blur(8px) saturate(1.15);
+      backdrop-filter: blur(8px) saturate(1.15);}
+.pv-desktop .home-filter .md\:hidden.search-side {display: none !important;}
 .pv-desktop .lg\:hidden.saved-empty {display: none;}
 .pv-desktop .lg\:hidden.compare-table {display: none;}
 .pv-desktop /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
@@ -14941,6 +15217,27 @@ input:focus-visible + .area-chip,
     .search-list label > span.lg\:flex-1 {flex: 0 1 auto;
       font-size: 14.5px;
       font-weight: 500;}
+.pv-desktop /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    .home-filter:has([data-filter-sheet="all"]:not(.lg\:hidden)) {position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(13, 32, 51, 0.4);
+      -webkit-backdrop-filter: blur(8px) saturate(1.15);
+      backdrop-filter: blur(8px) saturate(1.15);}
+.pv-desktop .home-filter .lg\:hidden.search-side {display: none !important;}
+.pv-desktop .lg\:hidden.privacy-note {display: none;}
 .pv-desktop /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
 
     /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
@@ -15092,6 +15389,26 @@ input:focus-visible + .area-chip,
     .search-list label > span.lg\:flex-1 {flex: 0 1 auto;
       font-size: 14.5px;
       font-weight: 500;}
+.pv-desktop /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    .home-filter:has([data-filter-sheet="all"]:not(.lg\:hidden)) {position: fixed;
+      inset: 0;
+      z-index: 70;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(13, 32, 51, 0.4);
+      -webkit-backdrop-filter: blur(8px) saturate(1.15);
+      backdrop-filter: blur(8px) saturate(1.15);}
+.pv-desktop .home-filter .lg\:hidden.search-side {display: none !important;}
 .pv-desktop .md\:mt-0 {margin-top: 0px;}
 .pv-desktop .md\:inline {display: inline;}
 .pv-desktop .md\:table-cell {display: table-cell;}

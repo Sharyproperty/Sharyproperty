@@ -735,7 +735,8 @@
 
 /**
  * بوب أب تحميل التطبيق [data-app-popup] (موبايل بس): بيظهر بعد data-delay من فتح الصفحة وبيدخل من الشمال.
- * - مرة كل 3 أيام على نفس الجهاز (localStorage) ، ومش بيظهر لو التطبيق متسطّب (زرار التطبيق data-state="open").
+ * - بيظهر أول ما العميل يفتح الموقع (مرة في الزيارة الواحدة — sessionStorage) ، ومش بيظهر لو التطبيق متسطّب (زرار التطبيق data-state="open").
+ *   عايزينه أقل؟ غيّروا DAYS لعدد الأيام (بيتحفظ في localStorage بدل الزيارة).
  * - القفل: × أو الضغط براه أو Esc أو الضغط على زرار التحميل. window.SharyAppPopup.open() / .close() للتحكم من أي كود.
  * - حدث shary:app-popup ({ open }) على العنصر.
  */
@@ -743,10 +744,11 @@
     var pop = document.querySelector('[data-app-popup]');
     if (!pop) return;
     var KEY = 'shary-app-popup';
-    var DAYS = 3;
+    var DAYS = 0;   // 0 = مرة في كل زيارة (sessionStorage) ، أو عدد الأيام بين كل ظهور (localStorage)
 
-    function seen() { try { var at = Number(window.localStorage.getItem(KEY)); return !!at && Date.now() - at < DAYS * 86400000; } catch (error) { return false; } }
-    function mark() { try { window.localStorage.setItem(KEY, String(Date.now())); } catch (error) { /* التخزين مقفول */ } }
+    function store() { return DAYS > 0 ? window.localStorage : window.sessionStorage; }
+    function seen() { try { var at = Number(store().getItem(KEY)); return !!at && (DAYS === 0 || Date.now() - at < DAYS * 86400000); } catch (error) { return false; } }
+    function mark() { try { store().setItem(KEY, String(Date.now())); } catch (error) { /* التخزين مقفول */ } }
 
     function close() {
         if (pop.hidden) return;
@@ -777,6 +779,26 @@
         if (button && button.getAttribute('data-state') === 'open') return;   // التطبيق متسطّب
         open();
     }, Number(pop.getAttribute('data-delay')) || 1800);
+})();
+
+/**
+ * تنبيه سياسة الخصوصية [data-privacy-note] (partials/privacy-notice.blade.php): بيظهر أول زيارة لحد ما العميل يضغط "موافق" [data-privacy-accept].
+ * الموافقة بتتحفظ على الجهاز (localStorage: shary-privacy). حدث shary:privacy-accept على العنصر — اسمعوه لو عايزين تسجلوها على السيرفر.
+ */
+(function () {
+    var note = document.querySelector('[data-privacy-note]');
+    if (!note) return;
+    var KEY = 'shary-privacy';
+    var accepted = false;
+    try { accepted = window.localStorage.getItem(KEY) === '1'; } catch (error) { /* التخزين مقفول: التنبيه بيظهر */ }
+    if (accepted || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    note.classList.remove('hidden');
+    note.addEventListener('click', function (event) {
+        if (!event.target.closest('[data-privacy-accept]')) return;
+        try { window.localStorage.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ }
+        note.classList.add('hidden');
+        note.dispatchEvent(new CustomEvent('shary:privacy-accept', { bubbles: true }));
+    });
 })();
 
 /**
@@ -2487,6 +2509,24 @@
         });
     }
     if (timers.length) { tick(); window.setInterval(tick, 60000); }
+
+    // ---- السعر والتوفير الثابتين [data-opp-sticky] (موبايل): بيظهروا تحت الهيدر لما قسم السعر (.opp-deal) يطلع بره الشاشة
+    var sticky = document.querySelector('[data-opp-sticky]');
+    var deal = document.querySelector('.opp-deal');
+    if (sticky && deal) {
+        var stickyHeader = sticky.closest('[lang]') ? sticky.closest('[lang]').querySelector('header') : document.querySelector('header');
+        var placeSticky = function () {
+            var box = deal.getBoundingClientRect();
+            var top = stickyHeader ? Math.max(0, stickyHeader.getBoundingClientRect().bottom - 18) : 0;
+            sticky.style.top = top + 'px';
+            sticky.style.paddingTop = stickyHeader ? '26px' : '';
+            // ظاهر بس لما قسم السعر يعدّي فوق (والصفحة نفسها ظاهرة)
+            sticky.classList.toggle('is-on', box.height > 0 && box.bottom < top + 10);
+        };
+        window.addEventListener('scroll', placeSticky, { passive: true });
+        window.addEventListener('resize', placeSticky);
+        placeSticky();
+    }
 
     // ---- 2) فلتر القايمة
     document.querySelectorAll('[data-opps-filter]').forEach(function (form) {
