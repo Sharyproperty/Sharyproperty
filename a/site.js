@@ -2724,7 +2724,7 @@
  * - "اختر المنطقة" [data-smap-areas-toggle] بيفتح قايمة المناطق [data-smap-areas] ، واختيار منطقة [data-smap-area] بيفلتر المشاريع.
  * - البحث [data-smap-search] ، قمر صناعي (h) / خريطة (m) [data-smap-type] ، تكبير / تصغير [data-smap-zoom] ، كل المشاريع [data-smap-reset].
  * - "عرض القائمة" [data-smap-list-link]: صفحة البحث على المنطقة المختارة (?area[]=) — التبديل وحدات ⇄ كمبوندات من جوه صفحة البحث.
- * - الاختيار بيطلع حدث shary:map-select على الصفحة: detail = بيانات المشروع. من أي كود: window.SharyMap.select('slug').
+ * - الاختيار بيطلع حدث shary:map-select على الصفحة: detail = بيانات المشروع. من أي كود: window.SharyMap.select('slug') / window.SharyMap.area('north-coast').
  *
  * الخريطة نفسها:
  *   1) Mapbox GL (لو data-mapbox-token موجود ومكتبة mapboxgl محمّلة): خريطة حقيقية بعلامة سعر لكل مشروع — نفس خريطة الموقع الحالية.
@@ -2921,6 +2921,7 @@
 
         maps.push({
             root: root,
+            area: function (slug) { setArea(slug); filter(); },
             select: function (slug) {
                 var item = bySlug(slug);
                 if (!item) return false;
@@ -2932,6 +2933,11 @@
     });
 
     window.SharyMap = {
+        // بيفلتر الخريطة الظاهرة على منطقة (slug المنطقة الرئيسية) — '' = كل المناطق
+        area: function (slug) {
+            var visible = maps.filter(function (map) { return map.root.offsetParent !== null; });
+            (visible.length ? visible : maps).forEach(function (map) { map.area(slug || ''); });
+        },
         // بيختار المشروع في الخريطة الظاهرة (أو أول خريطة)
         select: function (slug) {
             var visible = maps.filter(function (map) { return map.root.offsetParent !== null; });
