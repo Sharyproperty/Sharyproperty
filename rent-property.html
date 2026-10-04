@@ -1,7 +1,7 @@
 <!doctype html><html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=b1cd027f">
+<link rel="stylesheet" href="a/site.css?v=fc350ee2">
 </head><body>
 
 
@@ -143,6 +143,17 @@ window.addEventListener('load', function () {
 </svg>
 </span>
 <span class="min-w-0 flex-1">بيع</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="rent-property.html" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><circle cx="10.4" cy="14.2" r="1.7"/><path d="M12.1 14.2h3.9M14.6 14.2v1.7"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">أجّر</span>
 <svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </li>
@@ -396,6 +407,8 @@ data-compare-link data-base="compare.html" >
 <div class="border-s-4 border-shary-navy ps-3.5 lg:ps-4">
 <h2 class="text-[22px] font-extrabold leading-[1.35] lg:text-[28px]">أكمل الفورم</h2>
 <p class="mt-1 text-[13.5px] font-medium leading-[1.7] text-shary-muted lg:text-[15px]">خصوصيتك تهمنا. لن ننشر بياناتك ولن نشاركها مع أي جهة.</p>
+
+<p class="req-note mt-1 text-[13px] font-semibold leading-[1.7] text-shary-muted lg:text-[14px]">الخانات اللي عليها <b>*</b> مطلوبة، والباقي اختياري.</p>
 </div>
 
 <ol class="req-steps mt-5 lg:mt-7" data-steps-nav aria-hidden="true">
@@ -438,7 +451,7 @@ data-compare-link data-base="compare.html" >
 </svg>
 </span>
 <input type="text" name="name" placeholder="الاسم" aria-label="الاسم" class="req-field__control "   required>
-</label>
+<span class="req-star" aria-hidden="true">*</span>        </label>
 </div>
 <div class="min-w-0 lg:col-span-2" data-field>
 
@@ -454,7 +467,7 @@ data-compare-link data-base="compare.html" >
 </svg>
 </span>
 <input type="tel" name="phone" dir="ltr" inputmode="tel" autocomplete="tel" placeholder="رقم الهاتف" aria-label="رقم الهاتف" class="req-field__control text-left rtl:text-right" required>
-</label>
+<span class="req-star" aria-hidden="true">*</span>            </label>
 <input type="hidden" name="country_code" value="+20" data-phone-value>
 <ul class="shary-scroll absolute inset-x-0 top-[62px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[14px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="كود الدولة" data-phone-list data-phone-shared dir="rtl"></ul>
 </div>
@@ -478,12 +491,14 @@ data-compare-link data-base="compare.html" >
 </label>
 </div>
 <div class="min-w-0 lg:col-span-2" data-field>
-<label class="req-field">
+<div class="relative" data-select>
+
+<label class="req-field" data-select-native>
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/>
 </svg>
 </span>
-<select name="contact_time" aria-label="الوقت المناسب للتواصل" class="req-field__control req-field__control--select" >
+<select name="contact_time" aria-label="الوقت المناسب للتواصل" class="req-field__control req-field__control--select"  >
 <option value="" selected>الوقت المناسب للتواصل</option>
 <option value="morning">الصبح (10 ص – 1 م)</option>
 <option value="afternoon">بعد الظهر (1 م – 5 م)</option>
@@ -492,6 +507,41 @@ data-compare-link data-base="compare.html" >
 </select>
 <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
 </label>
+<button type="button" class="req-field hidden cursor-pointer text-start" data-select-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="الوقت المناسب للتواصل">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center"><span class="truncate is-empty" data-select-label data-label="الوقت المناسب للتواصل">الوقت المناسب للتواصل</span></span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="req-select__arrow pointer-events-none shrink-0">
+</button>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="الوقت المناسب للتواصل"  data-select-list>
+<li role="option" tabindex="-1" data-value="morning" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>الصبح (10 ص – 1 م)</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="afternoon" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>بعد الظهر (1 م – 5 م)</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="evening" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>المساء (5 م – 9 م)</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="any" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>أي وقت</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </fieldset>
@@ -502,12 +552,14 @@ data-compare-link data-base="compare.html" >
 </legend>
 <div class="grid grid-cols-1 gap-3.5 lg:grid-cols-2 lg:gap-4">
 <div class="min-w-0 " data-field>
-<label class="req-field">
+<div class="relative" data-select>
+
+<label class="req-field" data-select-native>
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
 </svg>
 </span>
-<select name="location" aria-label="المنطقة" class="req-field__control req-field__control--select" required>
+<select name="location" aria-label="المنطقة" class="req-field__control req-field__control--select"  required>
 <option value="" selected>المنطقة</option>
 <option value="new-cairo">القاهرة الجديدة</option>
 <option value="fifth-settlement">التجمع الخامس</option>
@@ -518,16 +570,109 @@ data-compare-link data-base="compare.html" >
 <option value="ain-sokhna">العين السخنة</option>
 <option value="other">منطقة أخرى</option>
 </select>
-<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
+<span class="req-star" aria-hidden="true">*</span>                <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
 </label>
+<button type="button" class="req-field hidden cursor-pointer text-start" data-select-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="المنطقة">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center"><span class="truncate is-empty" data-select-label data-label="المنطقة">المنطقة</span></span>
+<span class="req-star" aria-hidden="true">*</span>                <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="req-select__arrow pointer-events-none shrink-0">
+</button>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="المنطقة"  data-select-list>
+<li role="option" tabindex="-1" data-value="new-cairo" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>القاهرة الجديدة</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="fifth-settlement" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>التجمع الخامس</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="sheikh-zayed" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>الشيخ زايد</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="october" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>6 أكتوبر</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="new-capital" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>العاصمة الإدارية</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="north-coast" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>الساحل الشمالي</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="ain-sokhna" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>العين السخنة</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="other" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 21s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="9" r="2.6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>منطقة أخرى</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+</ul>
+</div>
 </div>
 <div class="min-w-0 " data-field>
-<label class="req-field">
+<div class="relative" data-select>
+
+<label class="req-field" data-select-native>
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 20v-4h4v4"/>
 </svg>
 </span>
-<select name="project" aria-label="المشروع" class="req-field__control req-field__control--select" >
+<select name="project" aria-label="المشروع" class="req-field__control req-field__control--select"  >
 <option value="" selected>المشروع</option>
 <option value="scenes">كمبوند سينز</option>
 <option value="la-vista-bay">قرية لافيستا باي</option>
@@ -537,14 +682,73 @@ data-compare-link data-base="compare.html" >
 </select>
 <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
 </label>
+<button type="button" class="req-field hidden cursor-pointer text-start" data-select-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="المشروع">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 20v-4h4v4"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center"><span class="truncate is-empty" data-select-label data-label="المشروع">المشروع</span></span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="req-select__arrow pointer-events-none shrink-0">
+</button>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="المشروع"  data-select-list>
+<li role="option" tabindex="-1" data-value="scenes" aria-selected="false" class="req-menu__item">
+
+<img loading="lazy" src="https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">TM</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>كمبوند سينز</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="la-vista-bay" aria-selected="false" class="req-menu__item">
+
+<img loading="lazy" src="https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">LV</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>قرية لافيستا باي</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="etaje" aria-selected="false" class="req-menu__item">
+
+<img loading="lazy" src="https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">MM</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إيتاج</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="mountain-view-icity" aria-selected="false" class="req-menu__item">
+
+<img loading="lazy" src="a/images/shary/developer-samples/mountain-view.png" data-img="images/shary/developer-samples/mountain-view.png" alt="" class="req-menu__logo" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="req-menu__icon req-menu__icon--short hidden" dir="ltr">MV</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>ماونتن فيو آي سيتي</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="other" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="5" y="4" width="14" height="16" rx="1.5"/><path d="M9 8h2M13 8h2M9 12h2M13 12h2M10 20v-4h4v4"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>مشروع آخر / خارج كمبوند</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+</ul>
+</div>
 </div>
 <div class="min-w-0 lg:col-span-2" data-field>
-<label class="req-field">
+<div class="relative" data-select>
+
+<label class="req-field" data-select-native>
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="M4 11 12 4.5 20 11v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8Z"/><path d="M10 20v-5h4v5"/>
 </svg>
 </span>
-<select name="property_type" aria-label="نوع العقار" class="req-field__control req-field__control--select" required>
+<select name="property_type" aria-label="نوع العقار" class="req-field__control req-field__control--select"  required>
 <option value="" selected>نوع العقار</option>
 <option value="apartment">شقة</option>
 <option value="villa">فيلا</option>
@@ -557,8 +761,119 @@ data-compare-link data-base="compare.html" >
 <option value="retail">محل تجاري</option>
 <option value="medical">عيادة</option>
 </select>
-<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
+<span class="req-star" aria-hidden="true">*</span>                <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
 </label>
+<button type="button" class="req-field hidden cursor-pointer text-start" data-select-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="نوع العقار">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 11 12 4.5 20 11v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8Z"/><path d="M10 20v-5h4v5"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center"><span class="truncate is-empty" data-select-label data-label="نوع العقار">نوع العقار</span></span>
+<span class="req-star" aria-hidden="true">*</span>                <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="req-select__arrow pointer-events-none shrink-0">
+</button>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="نوع العقار"  data-select-list>
+<li role="option" tabindex="-1" data-value="apartment" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="6" y="3.5" width="12" height="17" rx="1.5"/><path d="M9.5 7.5h1M13.5 7.5h1M9.5 11h1M13.5 11h1M9.5 14.5h1M13.5 14.5h1M10.5 20.5v-2.5h3v2.5"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>شقة</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="villa" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5M16 5.5V4h2v3.2"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>فيلا</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="twin-house" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 11 7.25 6.5 12 11l4.75-4.5L21.5 11"/><path d="M4 10v9.5h16V10M12 11v8.5M6.8 19.5v-4h2.4v4M14.8 19.5v-4h2.4v4"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>توين هاوس</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="townhouse" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 10 6 6.5 9.5 10 12 7.5l2.5 2.5L18 6.5l3.5 3.5"/><path d="M3.5 9.5v10h17v-10M9.5 10v9.5M14.5 10v9.5M5.5 14h2M11 14h2M16.5 14h2"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>تاون هاوس</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="duplex" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="4" y="4" width="16" height="16" rx="1.8"/><path d="M4 12h16M8 20v-4h3v-4M13 8h3.5"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>دوبلكس</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="studio" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="4" y="5" width="16" height="14.5" rx="1.8"/><path d="M4 14.5h7v5M15 9.5h2M7 9.5h4"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>استوديو</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="chalet" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 3.5 3 19.5h18L12 3.5Z"/><path d="M10 19.5v-4.5h4v4.5M12 9.5v2"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>شاليه</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="office" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="4" y="3.5" width="10" height="17" rx="1.5"/><path d="M14 9.5h4.5A1.5 1.5 0 0 1 20 11v9.5h-6M7.5 7.5h3M7.5 11h3M7.5 14.5h3M17 13.5v.01M17 16.5v.01"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>مكتب إداري</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="retail" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 9.5 5.5 4.5h13L20 9.5"/><path d="M4 9.5a2.67 2.67 0 0 0 5.33 0 2.67 2.67 0 0 0 5.34 0A2.67 2.67 0 0 0 20 9.5M5.5 12v7.5h13V12M10 19.5v-4h4v4"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>محل تجاري</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="medical" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>عيادة</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </fieldset>
@@ -569,30 +884,247 @@ data-compare-link data-base="compare.html" >
 </legend>
 <div class="grid grid-cols-1 gap-3.5 lg:grid-cols-2 lg:gap-4">
 <div class="min-w-0 " data-field>
-<label class="req-field">
+<div class="relative" data-select>
+
+<label class="req-field" data-select-native>
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<circle cx="12" cy="12" r="9"/><path d="M8 15c0-4 3-7 8-7 0 5-3 8-7 8M8 16l4-4"/>
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
 </svg>
 </span>
-<select name="features" aria-label="مميزات الوحدة" class="req-field__control req-field__control--select" >
-<option value="" selected>مميزات الوحدة</option>
-<option value="garden">حديقة</option>
-<option value="roof">روف</option>
-<option value="pool">حمام سباحة</option>
+<select name="features[]" aria-label="مميزات الوحدة" class="req-field__control req-field__control--select" multiple >
 <option value="sea-view">إطلالة على البحر</option>
+<option value="lagoon-view">إطلالة على اللاجون</option>
+<option value="pool-view">إطلالة على حمام السباحة</option>
+<option value="garden-view">إطلالة على الحديقة</option>
+<option value="landscape-view">إطلالة على اللاند سكيب</option>
+<option value="golf-view">إطلالة على الجولف</option>
+<option value="lake-view">إطلالة على البحيرة</option>
+<option value="park-view">إطلالة على البارك</option>
+<option value="club-view">إطلالة على النادي</option>
+<option value="nile-view">إطلالة على النيل</option>
+<option value="city-view">إطلالة على المدينة</option>
+<option value="main-street">إطلالة على شارع رئيسي</option>
+<option value="open-view">إطلالة مفتوحة</option>
+<option value="private-garden">حديقة خاصة</option>
+<option value="roof">روف</option>
+<option value="private-pool">حمام سباحة خاص</option>
+<option value="terrace">تراس</option>
 <option value="corner">ناصية</option>
-<option value="none">بدون</option>
+<option value="north-facing">بحري</option>
 </select>
 <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
 </label>
+<button type="button" class="req-field hidden cursor-pointer text-start" data-select-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="مميزات الوحدة">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center"><span class="truncate is-empty" data-select-label data-label="مميزات الوحدة">مميزات الوحدة</span></span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="req-select__arrow pointer-events-none shrink-0">
+</button>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="مميزات الوحدة" aria-multiselectable=true data-select-list>
+<li role="option" tabindex="-1" data-value="sea-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على البحر</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="lagoon-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على اللاجون</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="pool-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على حمام السباحة</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="garden-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على الحديقة</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="landscape-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على اللاند سكيب</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="golf-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على الجولف</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="lake-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على البحيرة</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="park-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على البارك</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="club-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على النادي</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="nile-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على النيل</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="city-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على المدينة</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="main-street" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة على شارع رئيسي</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="open-view" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>إطلالة مفتوحة</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="private-garden" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>حديقة خاصة</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="roof" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>روف</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="private-pool" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>حمام سباحة خاص</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="terrace" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>تراس</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="corner" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>ناصية</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="north-facing" aria-selected="false" class="req-menu__item">
+<span class="req-menu__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.8"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1 truncate" data-select-name>بحري</span>
+<span class="req-menu__check req-menu__check--box" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+</ul>
+</div>
 </div>
 <div class="min-w-0 " data-field>
-<label class="req-field">
+<div class="relative" data-select>
+
+<label class="req-field" data-select-native>
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <path d="m4 7 2 2 3.5-4M4 16l2 2 3.5-4M13 7h7M13 12h7M13 17h7"/>
 </svg>
 </span>
-<select name="unit_status" aria-label="حالة الوحدة" class="req-field__control req-field__control--select" >
+<select name="unit_status" aria-label="حالة الوحدة" class="req-field__control req-field__control--select"  >
 <option value="" selected>حالة الوحدة</option>
 <option value="furnished">مفروشة</option>
 <option value="unfurnished">غير مفروشة</option>
@@ -600,6 +1132,35 @@ data-compare-link data-base="compare.html" >
 </select>
 <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
 </label>
+<button type="button" class="req-field hidden cursor-pointer text-start" data-select-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="حالة الوحدة">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="m4 7 2 2 3.5-4M4 16l2 2 3.5-4M13 7h7M13 12h7M13 17h7"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center"><span class="truncate is-empty" data-select-label data-label="حالة الوحدة">حالة الوحدة</span></span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="req-select__arrow pointer-events-none shrink-0">
+</button>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="حالة الوحدة"  data-select-list>
+<li role="option" tabindex="-1" data-value="furnished" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>مفروشة</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="unfurnished" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>غير مفروشة</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="semi-furnished" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>نصف مفروشة</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+</ul>
+</div>
 </div>
 <div class="min-w-0 " data-field>
 <label class="req-field">
@@ -626,7 +1187,7 @@ data-compare-link data-base="compare.html" >
 </svg>
 </span>
 <input type="text" name="area" placeholder="المساحة (م²)" aria-label="المساحة (م²)" class="req-field__control " inputmode=numeric data-number  required>
-</label>
+<span class="req-star" aria-hidden="true">*</span>        </label>
 </div>
 <div class="min-w-0 " data-field>
 <label class="req-field">
@@ -664,19 +1225,50 @@ data-compare-link data-base="compare.html" >
 </legend>
 <div class="grid grid-cols-1 gap-3.5 lg:grid-cols-2 lg:gap-4">
 <div class="min-w-0 " data-field>
-<label class="req-field">
+<div class="relative" data-select>
+
+<label class="req-field" data-select-native>
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/>
 </svg>
 </span>
-<select name="rent_type" aria-label="نوع الإيجار" class="req-field__control req-field__control--select" required>
+<select name="rent_type" aria-label="نوع الإيجار" class="req-field__control req-field__control--select"  required>
 <option value="" selected>نوع الإيجار</option>
 <option value="monthly">شهري</option>
 <option value="yearly">سنوي</option>
 <option value="daily">يومي</option>
 </select>
-<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
+<span class="req-star" aria-hidden="true">*</span>                <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none shrink-0">
 </label>
+<button type="button" class="req-field hidden cursor-pointer text-start" data-select-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="نوع الإيجار">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<ellipse cx="12" cy="7" rx="7" ry="3"/><path d="M5 7v5c0 1.7 3.1 3 7 3s7-1.3 7-3V7M5 12v5c0 1.7 3.1 3 7 3s7-1.3 7-3v-5"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center"><span class="truncate is-empty" data-select-label data-label="نوع الإيجار">نوع الإيجار</span></span>
+<span class="req-star" aria-hidden="true">*</span>                <img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="req-select__arrow pointer-events-none shrink-0">
+</button>
+<ul class="req-menu shary-scroll hidden" role="listbox" aria-label="نوع الإيجار"  data-select-list>
+<li role="option" tabindex="-1" data-value="monthly" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>شهري</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="yearly" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>سنوي</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+<li role="option" tabindex="-1" data-value="daily" aria-selected="false" class="req-menu__item">
+<span class="min-w-0 flex-1 truncate" data-select-name>يومي</span>
+<span class="req-menu__check " aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+</span>
+</li>
+</ul>
+</div>
 </div>
 <div class="min-w-0 " data-field>
 <label class="req-field">
@@ -685,22 +1277,42 @@ data-compare-link data-base="compare.html" >
 </svg>
 </span>
 <input type="text" name="rent_value" placeholder="قيمة الإيجار (ج.م)" aria-label="قيمة الإيجار (ج.م)" class="req-field__control " inputmode=numeric data-number  required>
-</label>
+<span class="req-star" aria-hidden="true">*</span>        </label>
 </div>
-<div class="min-w-0 lg:col-span-2" data-field>
+<div class="min-w-0 " data-field>
 
 <label class="req-field cursor-pointer">
 <span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 <rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="m4 16 4.5-4.5 4 4 2.5-2.5 5 5"/><circle cx="15.5" cy="9.5" r="1.3"/>
 </svg>
 </span>
-<span class="req-field__control flex items-center text-shary-muted" data-file-label data-label="صور وفيديو الوحدة" data-count="ملف">صور وفيديو الوحدة</span>
-<input type="file" name="media[]" multiple accept="image/*,video/*" class="sr-only" data-file-input>
+<span class="req-field__control flex items-center text-shary-muted" data-file-label data-label="صور الوحدة" data-count="ملف">صور الوحدة</span>
+<span class="req-field__add" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 5v14M5 12h14"/>
+</svg>
+</span>
+<input type="file" name="photos[]" multiple accept="image/*" class="sr-only" data-file-input >
+</label>
+<div class="mt-2.5 hidden flex-wrap gap-2.5" data-file-previews data-remove-label="إزالة الملف"></div>
+</div>
+<div class="min-w-0 " data-field>
+
+<label class="req-field cursor-pointer">
+<span class="req-field__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="3" y="6" width="12.5" height="12" rx="2.5"/><path d="m15.5 10.5 5-3v9l-5-3"/>
+</svg>
+</span>
+<span class="req-field__control flex items-center text-shary-muted" data-file-label data-label="فيديو الوحدة" data-count="ملف">فيديو الوحدة</span>
+<span class="req-field__add" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 5v14M5 12h14"/>
+</svg>
+</span>
+<input type="file" name="videos[]" multiple accept="video/*" class="sr-only" data-file-input >
 </label>
 <div class="mt-2.5 hidden flex-wrap gap-2.5" data-file-previews data-remove-label="إزالة الملف"></div>
 </div>
 <div class="min-w-0 lg:col-span-2" data-field>
-<label class="mb-2 block text-[15px] font-bold leading-normal lg:text-[16px]" for="req-message-rent-property">رسالة (وصف الوحدة)</label>
+<label class="mb-2 block text-[15px] font-bold leading-normal lg:text-[16px]" for="req-message-rent-property">رسالة (وصف الوحدة) </label>
 <textarea id="req-message-rent-property" name="message" placeholder="اكتب هنا" class="req-textarea" ></textarea>
 </div>
 </div>
@@ -823,183 +1435,6 @@ data-compare-link data-base="compare.html" >
 <footer class="bg-white mt-6 border-t border-shary-line">
 <div class="site-container pb-8 lg:pb-14 lg:pt-12">
 
-<nav class="pb-2 pt-6 lg:hidden" aria-label="روابط الموقع" data-footer-quick>
-<h2 class="footer-m__title">روابط سريعة</h2>
-<ul class="grid grid-cols-2 gap-2">
-<li class="min-w-0 last:odd:col-span-2">
-<a href="#pv:/" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M10 19v-5h4v5"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">الرئيسية</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="#pv:/properties-abroad" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.5 2.6 14.5 0 17M12 3.5c-2.6 2.5-2.6 14.5 0 17"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">عقارات دولية</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="developers.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M4 20V6.5L11 4v16"/><path d="M11 9.5 20 12v8"/><path d="M3 20h18M7 9v.01M7 12.5v.01M7 16v.01M15 14.5v.01M15 17.5v.01"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">المطورين</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="#pv:/projects" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<rect x="4" y="9" width="7" height="11" rx="1.2"/><rect x="13" y="4" width="7" height="16" rx="1.2"/><path d="M7 12.5v.01M7 16v.01M16 8v.01M16 11.5v.01M16 15v.01"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">المشاريع</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="search-all.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">بحث</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="sell.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M12 12.2v4.6M10.2 13.4c0-.9.8-1.3 1.8-1.3s1.8.4 1.8 1.2c0 1.7-3.6.6-3.6 2.3 0 .8.8 1.2 1.8 1.2s1.8-.4 1.8-1.2"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">بيع</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="favorites.html" class="footer-m__link"
-data-favorites-indicator data-active="false" data-base="favorites.html" >
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">المفضلة</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="compare.html" class="footer-m__link"
-data-compare-link data-base="compare.html" >
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15V5Z"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">المقارنة</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="blog.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<rect x="4" y="4.5" width="16" height="15" rx="2.2"/><path d="M8 9h8M8 12.5h8M8 16h5"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">المدونة</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="about.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.01"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">من نحن</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="contact.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M5 6.5h14a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19 17.5h-7l-4.5 3v-3H5A1.5 1.5 0 0 1 3.5 16V8A1.5 1.5 0 0 1 5 6.5Z"/><path d="M8 11h8M8 13.8h5"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">اتصل بنا</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="terms.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M7 3.5h7.5L19 8v11a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5Z"/><path d="M14.5 3.5V8H19M9 12.5h6M9 16h6"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">الشروط والأحكام</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="privacy.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M12 3.5 5 6.5v5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9v-5l-7-3Z"/><path d="M12 10.5v4M12 8v.01"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">سياسة الخصوصية</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="shary-card.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<rect x="3" y="6" width="18" height="12.5" rx="2.2"/><path d="M3 10.5h18M7 15h3.5"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">كارت شاري</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="careers.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<rect x="3.5" y="7.5" width="17" height="12" rx="2.2"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 13h17M12 12v2"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">الوظائف</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="agents.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M12 3.5 5 6.5v5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9v-5l-7-3Z"/><path d="m9 12 2 2 4-4"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">الوكلاء</span>
-</a>
-</li>
-<li class="min-w-0 last:odd:col-span-2">
-<a href="notifications.html" class="footer-m__link"
->
-<span class="footer-m__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M6.5 16.5v-5a5.5 5.5 0 0 1 11 0v5l1.5 2h-14l1.5-2Z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/>
-</svg>
-</span>
-<span class="min-w-0 truncate">الإشعارات</span>
-</a>
-</li>
-</ul>
-</nav>
-<h2 class="footer-m__title mt-4 lg:hidden">تصفح العقارات</h2>
-
 <div class="lg:flex lg:flex-wrap lg:gap-x-16 lg:gap-y-8">
 <div class="border-b border-shary-line lg:shrink-0 lg:border-b-0">
 <button type="button" class="flex w-full items-center justify-between py-3.5 text-start text-[17px] font-bold leading-normal lg:pointer-events-none lg:py-0 lg:text-[16px]" data-footer-toggle aria-expanded="false">
@@ -1059,87 +1494,7 @@ data-compare-link data-base="compare.html" >
 </div>
 </div>
 
-<div class="pt-6 lg:hidden" data-footer-contact>
-<h2 class="footer-m__title">للتواصل</h2>
-<div class="grid grid-cols-1 gap-2 min-[360px]:grid-cols-2">
-<a href="tel:+201000730208" class="footer-m__link">
-<span class="footer-m__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg></span>
-<span class="min-w-0 truncate" dir="ltr">+201000730208</span>
-</a>
-<a href="mailto:info@shary.eg" class="footer-m__link">
-<span class="footer-m__icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7.5 8 6 8-6"/></svg></span>
-<span class="min-w-0 truncate" dir="ltr">info@shary.eg</span>
-</a>
-</div>
-
-<ul class="mt-4 flex items-center justify-between gap-1.5">
-<li>
-<a href="https://www.facebook.com/share/19hw9frWRC" target="_blank" rel="noopener" class="social-brand social-brand--facebook-f" aria-label="فيسبوك">
-<i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
-</a>
-</li>
-<li>
-<a href="https://www.instagram.com/sharyproperties" target="_blank" rel="noopener" class="social-brand social-brand--instagram" aria-label="إنستجرام">
-<i class="fa-brands fa-instagram" aria-hidden="true"></i>
-</a>
-</li>
-<li>
-<a href="https://x.com/SharyProperties" target="_blank" rel="noopener" class="social-brand social-brand--x-twitter" aria-label="إكس">
-<i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
-</a>
-</li>
-<li>
-<a href="https://youtube.com/@sharyproperties" target="_blank" rel="noopener" class="social-brand social-brand--youtube" aria-label="يوتيوب">
-<i class="fa-brands fa-youtube" aria-hidden="true"></i>
-</a>
-</li>
-<li>
-<a href="https://www.linkedin.com/company/sharyproperties/" target="_blank" rel="noopener" class="social-brand social-brand--linkedin-in" aria-label="لينكدإن">
-<i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
-</a>
-</li>
-<li>
-<a href="https://www.snapchat.com/add/sharyproperties" target="_blank" rel="noopener" class="social-brand social-brand--snapchat" aria-label="سناب شات">
-<i class="fa-brands fa-snapchat" aria-hidden="true"></i>
-</a>
-</li>
-<li>
-<a href="https://www.tiktok.com/@sharyproperties" target="_blank" rel="noopener" class="social-brand social-brand--tiktok" aria-label="تيك توك">
-<i class="fa-brands fa-tiktok" aria-hidden="true"></i>
-</a>
-</li>
-</ul>
-
-<div class="mt-5 rounded-2xl bg-shary-soft px-4 py-4 text-center">
-<p class="text-[15px] font-bold leading-normal">قم بتنزيل تطبيقنا</p>
-<div class="mt-2.5 flex justify-center gap-2.5" dir="ltr">
-<a href="https://apps.apple.com/us/app/shary-real-state/id6743754160" target="_blank" rel="noopener" class="flex h-[46px] items-center gap-2 rounded-lg border-[1.5px] border-shary-navy bg-white px-3" aria-label="Download on the App Store">
-<i class="fa-brands fa-apple text-[26px] leading-none" aria-hidden="true"></i>
-<span class="flex flex-col text-left">
-<span class="text-[8px] font-semibold uppercase leading-[1.3] tracking-wide">Download on the</span>
-<span class="text-[15px] font-bold leading-[1.2]">App Store</span>
-</span>
-</a>
-<a href="https://play.google.com/store/apps/details?id=com.sharyproperties.app" target="_blank" rel="noopener" class="flex h-[46px] items-center gap-2 rounded-lg border-[1.5px] border-shary-navy bg-white px-3" aria-label="Get it on Google Play">
-<i class="fa-brands fa-google-play text-[21px] leading-none" aria-hidden="true"></i>
-<span class="flex flex-col text-left">
-<span class="text-[8px] font-semibold uppercase leading-[1.3] tracking-wide">Get it on</span>
-<span class="text-[15px] font-bold leading-[1.2]">Google Play</span>
-</span>
-</a>
-</div>
-</div>
-
-<div class="mt-6 flex flex-col items-center gap-1.5 text-center">
-<a href="#pv:/" aria-label="شاري — الرئيسية">
-<img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="158" height="38" class="h-[38px] w-auto">
-</a>
-<p class="text-[14px] font-medium leading-normal text-shary-muted">شركة عقارية</p>
-<p class="text-[12.5px] font-medium leading-normal text-shary-muted">© حقوق النشر 2026 – شاري.</p>
-</div>
-</div>
-
-<div class="hidden flex-col items-center gap-5 pt-7 text-center lg:flex lg:flex-row lg:items-end lg:justify-between lg:gap-6 lg:pt-12 lg:text-start">
+<div class="flex flex-col items-center gap-5 pt-7 text-center lg:flex-row lg:items-end lg:justify-between lg:gap-6 lg:pt-12 lg:text-start">
 <div class="flex flex-col items-center gap-3 lg:items-start lg:gap-2.5">
 <a href="#pv:/" aria-label="شاري — الرئيسية">
 <img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="158" height="38" class="h-[38px] w-auto lg:h-[52px]">
@@ -1536,7 +1891,7 @@ data-compare-link data-base="compare.html" >
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "b1cd027f";</script>
+<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "fc350ee2";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -1553,7 +1908,7 @@ data-compare-link data-base="compare.html" >
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=b1cd027f"></script>
+<script src="a/site.js?v=fc350ee2"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -2655,17 +3010,19 @@ data-compare-link data-base="compare.html" >
     e.preventDefault();
     var page = e.target.closest('main') || root, d = e.detail, shown = 0;
     page.querySelectorAll('[data-offer-card]').forEach(function (card) {
+      var kinds = [].concat(d.offer || []);   // العرض اختيار متعدد
       var ok = (!d.area || (' ' + card.getAttribute('data-areas') + ' ').indexOf(' ' + d.area + ' ') !== -1)
-        && (!d.developer || card.getAttribute('data-developer') === d.developer) && (!d.offer || card.getAttribute('data-offer') === d.offer);
+        && (!d.developer || card.getAttribute('data-developer') === d.developer) && (!kinds.length || kinds.indexOf(card.getAttribute('data-offer')) !== -1);
       card.style.display = ok ? '' : 'none';
       if (ok) { card.classList.remove('hidden', 'lg:block'); shown++; }
     });
     var empty = page.querySelector('[data-offers-empty]');
     if (empty) empty.classList.toggle('hidden', shown > 0);
     var count = page.querySelector('[data-offers-count]');
-    if (count) { if (!count.getAttribute('data-all')) count.setAttribute('data-all', count.textContent); count.textContent = (d.area || d.developer || d.offer) ? shown : count.getAttribute('data-all'); }
+    if (count) { if (!count.getAttribute('data-all')) count.setAttribute('data-all', count.textContent); count.textContent = (d.area || d.developer || kinds0(d)) ? shown : count.getAttribute('data-all'); }
     var nav = page.querySelector('[data-pagination]');
-    if (nav) nav.style.display = (d.area || d.developer || d.offer) ? 'none' : '';
+    if (nav) nav.style.display = (d.area || d.developer || kinds0(d)) ? 'none' : '';
+    function kinds0(x) { return [].concat(x.offer || []).length > 0; }
   });
   // الوظائف: المعاينة بترد مكان السيرفر. الإشعارات: التفعيل بيتم على طول
   root.addEventListener('shary:career-apply', function (e) { e.preventDefault(); var finish = e.detail.done; setTimeout(finish, 500); });

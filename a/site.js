@@ -3505,6 +3505,120 @@
 })();
 
 /**
+ * قايمة الاختيار اللي بالصور [data-select] — فورم بيع / تأجير العقار وفورم الوظائف (resources/views/requests/partials/field.blade.php) وفلتر العروض الحصرية (offers/index.blade.php)
+ * - القايمة الأصلية <select> هي اللي بتتبعت مع الفورم. السكربت بيخفيها ويظهر مكانها زرار [data-select-toggle] وقايمة [data-select-list]
+ *   فيها جنب كل اختيار صورته (أيقونة المنطقة / لوجو المشروع / أيقونة نوع العقار).
+ * - القايمة بتفتح تحت الخانة دايمًا (مش لفوق)، ولو آخرها مش باين الصفحة بتنزل لها.
+ * - اختيار واحد: الضغط بيختار ويقفل. اختيار متعدد (select multiple — مميزات الوحدة): الضغط بيعلّم / يشيل والقايمة بتفضل مفتوحة.
+ * - أي تغيير بيطلع حدث change على الـ <select> — ولو كود تاني غيّر قيمته يطلّع change والزرار بيتحدّث لوحده.
+ * من غير السكربت: القايمة الأصلية بتشتغل عادي.
+ */
+(function () {
+    var opened = null;   // القايمة المفتوحة دلوقتي (واحدة بس)
+
+    function closeOpened() {
+        if (!opened) return;
+        opened.list.classList.add('hidden');
+        opened.toggle.setAttribute('aria-expanded', 'false');
+        opened.box.classList.remove('is-open');
+        var box = opened.box;
+        opened = null;
+        box.dispatchEvent(new CustomEvent('shary:select-close', { bubbles: true }));   // القايمة اتقفلت (فلتر العروض بيستناه)
+    }
+
+    document.querySelectorAll('[data-select]').forEach(function (box) {
+        var select = box.querySelector('select');
+        var native = box.querySelector('[data-select-native]');
+        var toggle = box.querySelector('[data-select-toggle]');
+        var list = box.querySelector('[data-select-list]');
+        var label = box.querySelector('[data-select-label]');
+        if (!select || !toggle || !list || !label) return;
+        var items = Array.prototype.slice.call(list.querySelectorAll('[role="option"]'));
+        var multi = select.multiple;
+        var self = { box: box, list: list, toggle: toggle };
+
+        native.classList.add('hidden');
+        toggle.classList.remove('hidden');
+
+        function option(value) {
+            for (var i = 0; i < select.options.length; i++) if (select.options[i].value === value) return select.options[i];
+            return null;
+        }
+
+        // الزرار والعلامات على حسب قيمة الـ select
+        function sync() {
+            var names = [];
+            items.forEach(function (item) {
+                var opt = option(item.getAttribute('data-value'));
+                var on = !!opt && opt.selected && opt.value !== '';
+                item.setAttribute('aria-selected', on ? 'true' : 'false');
+                if (on) names.push(item.querySelector('[data-select-name]').textContent.trim());
+            });
+            var text = label.getAttribute('data-label');
+            // اختيار واحد: اسمه. أكتر من واحد (مميزات الوحدة): أول اسم + عدد الباقي
+            if (names.length) text = names[0] + (names.length > 1 ? ' +' + (names.length - 1) : '');
+            label.textContent = text;
+            label.classList.toggle('is-empty', names.length === 0);
+            if (names.length) toggle.classList.remove('is-invalid');
+        }
+
+        function open() {
+            closeOpened();
+            list.classList.remove('hidden');
+            toggle.setAttribute('aria-expanded', 'true');
+            box.classList.add('is-open');
+            opened = self;
+            var current = list.querySelector('[aria-selected="true"]');
+            if (current && !multi) list.scrollTop = Math.max(0, current.offsetTop - 60);
+            // القايمة تحت الخانة: لو آخرها تحت الشاشة الصفحة بتنزل لها
+            var rect = list.getBoundingClientRect();
+            var space = (window.innerHeight || document.documentElement.clientHeight) - 96;
+            if (rect.bottom > space) window.scrollBy({ top: Math.min(rect.bottom - space, toggle.getBoundingClientRect().top - 96), behavior: 'smooth' });
+        }
+
+        function choose(item) {
+            var opt = option(item.getAttribute('data-value'));
+            if (!opt) return;
+            if (multi) opt.selected = !opt.selected;
+            else select.value = opt.selected ? '' : opt.value;
+            select.classList.toggle('has-value', !!select.value);
+            select.dispatchEvent(new Event('change', { bubbles: true }));
+            if (!multi) { closeOpened(); toggle.focus(); }
+        }
+
+        toggle.addEventListener('click', function () { if (opened === self) closeOpened(); else open(); });
+        toggle.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowDown') { event.preventDefault(); if (opened !== self) open(); if (items[0]) items[0].focus(); }
+        });
+        list.addEventListener('click', function (event) {
+            var item = event.target.closest ? event.target.closest('[role="option"]') : null;
+            if (item) choose(item);
+        });
+        list.addEventListener('keydown', function (event) {
+            var index = items.indexOf(document.activeElement);
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                var next = items[Math.max(0, Math.min(items.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1)))];
+                if (next) next.focus();
+            } else if ((event.key === 'Enter' || event.key === ' ') && index > -1) {
+                event.preventDefault();
+                choose(items[index]);
+            }
+        });
+        select.addEventListener('change', sync);
+        if (select.form) select.form.addEventListener('reset', function () { setTimeout(sync, 0); });
+        sync();
+    });
+
+    document.addEventListener('click', function (event) {
+        if (opened && !opened.box.contains(event.target)) closeOpened();
+    });
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && opened) { var toggle = opened.toggle; closeOpened(); toggle.focus(); }
+    });
+})();
+
+/**
  * فورم الخطوات [data-steps-form] — صفحة "بيع عقارك" وصفحة "أجّر عقارك" (resources/views/requests/property.blade.php)
  * - كل خطوة [data-step]: السكربت بيظهر خطوة واحدة، و"التالي" [data-steps-next] / "السابق" [data-steps-prev] بيبدّلوا بينهم.
  *   في آخر خطوة بيظهر زرار الإرسال [data-steps-submit] مكان "التالي".
@@ -3560,7 +3674,9 @@
             Array.prototype.forEach.call(step.querySelectorAll('[required]'), function (field) {
                 var value = String(field.value || '').trim();
                 var bad = !value || (field.type === 'email' && !/^\S+@\S+\.\S+$/.test(value)) || (field.type === 'tel' && value.replace(/\D/g, '').length < 6);
-                var box = field.closest('.req-field') || field;
+                // القايمة اللي بالصور (form-select.js): العلامة على الزرار الظاهر مش على القايمة الأصلية المخفية
+                var custom = field.closest('[data-select]');
+                var box = (custom && custom.querySelector('[data-select-toggle]:not(.hidden)')) || field.closest('.req-field') || field;
                 box.classList.toggle('is-invalid', bad);
                 if (bad && ok) field.focus();
                 if (bad) ok = false;
@@ -3602,6 +3718,7 @@
                 }
                 label.textContent = files.length ? files.length + ' ' + label.getAttribute('data-count') : label.getAttribute('data-label');
                 label.classList.toggle('text-shary-navy', files.length > 0);
+                if (files.length) input.closest('.req-field').classList.remove('is-invalid');
                 previews.textContent = '';
                 previews.classList.toggle('hidden', files.length === 0);
                 previews.classList.toggle('flex', files.length > 0);
@@ -3613,6 +3730,13 @@
                         img.src = URL.createObjectURL(file);
                         img.alt = file.name;
                         item.appendChild(img);
+                    } else if (/^video\//.test(file.type) && window.URL) {
+                        // فيديو: أول لقطة منه + علامة تشغيل
+                        var clip = document.createElement('video');
+                        clip.src = URL.createObjectURL(file) + '#t=0.1';
+                        clip.muted = true; clip.preload = 'metadata'; clip.setAttribute('playsinline', '');
+                        item.classList.add('req-thumb--video');
+                        item.appendChild(clip);
                     } else {
                         var name = document.createElement('span');
                         name.textContent = file.name;
@@ -3669,30 +3793,66 @@
 
 /**
  * صفحة العروض الحصرية (resources/views/offers/index.blade.php)
- * الفلتر [data-offers-filter] فورم GET (المنطقة / المطور / العرض): تغيير أي اختيار بيبعت الفورم على طول، وزرار "تطبيق" بيختفي.
- * قبل الإرسال بيطلع حدث shary:offers-filter على الفورم:
+ * الفلتر [data-offers-filter] فورم GET: المنطقة / المطور (اختيار واحد) والعرض (اختيار متعدد offer[]). القوايم نفسها من js/shary/form-select.js.
+ * - تغيير أي اختيار بيطلع حدث shary:offers-filter على الفورم، وزرار "تطبيق" بيختفي:
  *       form.addEventListener('shary:offers-filter', function (event) {
  *           event.preventDefault();          // هنجيب النتايج AJAX ونبدّل الكروت بنفسنا
- *           // event.detail = { area, developer, offer }
+ *           // event.detail = { area: '', developer: '', offer: ['dp-5', 'cash'] }
  *       });
- * لو الحدث ما اتمنعش الفورم بيتبعت عادي والصفحة بترجع متفلترة من السيرفر.
+ *   لو الحدث ما اتمنعش الفورم بيتبعت عادي والصفحة بترجع متفلترة من السيرفر (العرض المتعدد بيتبعت لما قايمته تتقفل عشان العميل يختار أكتر من عرض).
+ * - زرار "مسح" [data-offers-reset]: بيرجّع الفلاتر التلاتة للكل (نفس الحدث بقيم فاضية) — ولو الحدث ما اتمنعش بيفتح لينك الصفحة من غير فلتر.
  */
 (function () {
     document.querySelectorAll('[data-offers-filter]').forEach(function (form) {
         var apply = form.querySelector('[data-offers-apply]');
+        var reset = form.querySelector('[data-offers-reset]');
+        var selects = Array.prototype.slice.call(form.querySelectorAll('select'));
+        var silent = false, pending = false;
         if (apply) apply.classList.add('hidden');
         form.classList.add('is-live');
 
-        function send(event) {
-            if (event && event.type === 'submit') event.preventDefault();
+        function values() {
             var detail = {};
-            Array.prototype.forEach.call(form.querySelectorAll('select'), function (select) { detail[select.name] = select.value; });
+            selects.forEach(function (select) {
+                var name = select.name.replace(/\[\]$/, '');
+                detail[name] = select.multiple ? Array.prototype.filter.call(select.options, function (o) { return o.selected && o.value; }).map(function (o) { return o.value; }) : select.value;
+            });
+            return detail;
+        }
+
+        function mark(detail) {
+            var active = Object.keys(detail).some(function (key) { return detail[key] && detail[key].length; });
+            if (reset) reset.classList.toggle('is-active', active);
+        }
+
+        function send(event) {
+            if (silent) return;
+            if (event && event.type === 'submit') event.preventDefault();
+            var detail = values();
+            mark(detail);
             var go = form.dispatchEvent(new CustomEvent('shary:offers-filter', { bubbles: true, cancelable: true, detail: detail }));
-            if (go) form.submit();
+            if (!go) return;
+            // من غير AJAX: الاختيار المتعدد بيتبعت لما القايمة تتقفل
+            if (event && event.target && event.target.multiple && form.querySelector('[data-select].is-open')) { pending = true; return; }
+            form.submit();
         }
 
         form.addEventListener('change', send);
         form.addEventListener('submit', send);
+        form.addEventListener('shary:select-close', function () { if (pending) { pending = false; form.submit(); } });
+
+        if (reset) reset.addEventListener('click', function (event) {
+            silent = true;
+            selects.forEach(function (select) {
+                if (select.multiple) Array.prototype.forEach.call(select.options, function (o) { o.selected = false; }); else select.value = '';
+                select.dispatchEvent(new Event('change', { bubbles: true }));   // زرار القايمة بيتحدّث
+            });
+            silent = false;
+            var detail = values();
+            mark(detail);
+            var go = form.dispatchEvent(new CustomEvent('shary:offers-filter', { bubbles: true, cancelable: true, detail: detail }));
+            if (!go) event.preventDefault();   // AJAX: من غير تحميل. غير كده اللينك بيفتح الصفحة من غير فلتر
+        });
     });
 })();
 
@@ -3763,7 +3923,8 @@
 
 /**
  * صفحة شاري كارد (resources/views/card/show.blade.php)
- * - الشريط الرمادي [data-card-strip]: الضغط عليه بيكشف الكود [data-card-code] (والضغط تاني بيغطيه).
+ * - شريط الكود [data-card-strip]: العميل اللي معاه كارت بيشوف رقم الكود [data-card-code] على الكارت (is-revealed) وتحت الكارت [data-card-code-text].
+ *   الضغط على الشريط بيغطي / يكشف الكود. الزائر: الشريط رمادي والضغط عليه بينزّله للفورم.
  * - زرار النسخ [data-card-copy]: بينسخ الكود وبيكتب "تم نسخ الكود" لحظة.
  * - فورم طلب الكارت [data-card-form]: بيتأكد من الاسم والرقم، وبعدها بيطلع حدث shary:card-request على الفورم:
  *       form.addEventListener('shary:card-request', function (event) {
@@ -3782,8 +3943,15 @@
         var ready = page.querySelector('[data-card-ready]');
         var copyButton = page.querySelector('[data-card-copy]');
 
+        var codeText = page.querySelector('[data-card-code-text]');
+
         if (strip) strip.addEventListener('click', function () {
-            if (!code.textContent.trim()) return;
+            if (!code.textContent.trim()) {
+                // زائر لسه ما أخدش كارت: ينزل لفورم الطلب
+                var first = form && form.querySelector('input[name="name"]');
+                if (first) { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); first.focus({ preventScroll: true }); }
+                return;
+            }
             strip.classList.toggle('is-revealed');
         });
 
@@ -3802,8 +3970,8 @@
             if (!card || !card.code) return;
             name.textContent = card.name || name.getAttribute('data-empty');
             code.textContent = card.code;
-            strip.disabled = false;
-            strip.classList.remove('is-revealed');
+            if (codeText) codeText.textContent = card.code;
+            strip.classList.add('is-revealed');
             page.setAttribute('data-state', 'member');
             if (form) form.classList.add('hidden');
             if (ready) ready.classList.remove('hidden');
@@ -3863,7 +4031,7 @@
         document.addEventListener('click', function (event) {
             var button = event.target.closest ? event.target.closest('[data-job-apply]') : null;
             if (!button) return;
-            if (select) { select.value = button.getAttribute('data-job-apply'); mark(); }
+            if (select) { select.value = button.getAttribute('data-job-apply'); mark(); select.dispatchEvent(new Event('change', { bubbles: true })); }   // change: زرار القايمة (form-select.js) بيتحدّث
             var top = form.getBoundingClientRect().top + window.pageYOffset - 96;
             window.scrollTo({ top: top, behavior: 'smooth' });
         });
