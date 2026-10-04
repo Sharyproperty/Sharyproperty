@@ -400,6 +400,23 @@
         });
     });
 
+    // ---- عنصر ثابت تحت الهيدر [data-stick-under-header] (فورم الاستشارة في صفحة المقال على الديسك توب):
+    // الـ CSS بيثبته (lg:sticky) والسكربت بيظبط المسافة من فوق على ارتفاع الهيدر الفعلي + 16px.
+    document.querySelectorAll('[data-stick-under-header]').forEach(function (box) {
+        var scope = box.closest('[lang]') || document;
+        var waiting = false;
+        function place() {
+            waiting = false;
+            if (!box.offsetHeight) return;   // الصفحة مخفية دلوقتي
+            var header = scope.querySelector('header');
+            var base = header ? (parseFloat(window.getComputedStyle(header).top) || 0) + header.offsetHeight : 0;
+            box.style.top = (base + 16) + 'px';
+        }
+        window.addEventListener('resize', place);
+        window.addEventListener('scroll', function () { if (!waiting) { waiting = true; window.requestAnimationFrame(place); } }, { passive: true });
+        place();
+    });
+
     // ---- صف كروت بيتحرك لوحده [data-auto-rail] (المشروعات الجديدة في صفحة المنطقة وصفحة المشروع):
     // موبايل وتابلت بس: الصف بيتحرك بالراحة كارت كارت (كل 3.5 ثانية) ولما يوصل للآخر بيرجع للأول. ديسك توب: مش بيتحرك لوحده.
     // بيقف طول ما العميل ماسكه، ولو مش ظاهر على الشاشة، ولو الجهاز مطفّي الحركة.

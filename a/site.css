@@ -879,6 +879,101 @@ video {
   background-color: #1a6d62;
 }
 
+/* أزرار التواصل جوه المحتوى (الكود المختصر [shary-cta] — partials/content-cta): طلب مقابلة بإطار + اتصال كحلي + واتساب أخضر.
+       موبايل: طلب مقابلة بعرض السطر وتحته اتصال وواتساب. ديسك توب: التلاتة جنب بعض */
+
+.content-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 16px;
+  background-color: #f3f6fa;
+  padding: 16px;
+}
+
+.content-cta__title,
+    .article-content .content-cta__title {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+.content-cta__buttons {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.content-cta__button {
+  display: flex;
+  height: 52px;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #ffffff;
+  text-decoration: none;
+  transition: background-color 0.2s, filter 0.2s;
+}
+
+.content-cta__button svg,
+    .content-cta__button i {
+  flex-shrink: 0;
+}
+
+.content-cta__button i,
+    .content-cta__button .svg-inline--fa {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.content-cta__button--meeting {
+  grid-column: 1 / -1;
+  border: 1.5px solid #123a5c;
+  background-color: #ffffff;
+  color: #123a5c;
+}
+
+.content-cta__button--meeting:hover {
+  background-color: #e8eef5;
+}
+
+.content-cta__button--call {
+  background-color: #1e4166;
+}
+
+.content-cta__button--call:hover {
+  background-color: #123a5c;
+}
+
+.content-cta__button--whatsapp {
+  background-color: #4dc35a;
+}
+
+.content-cta__button--whatsapp:hover {
+  filter: brightness(0.95);
+}
+
+@media (min-width: 1024px) {
+  .content-cta {
+    padding: 20px 24px;
+  }
+
+  .content-cta__buttons {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .content-cta__button--meeting {
+    grid-column: auto;
+  }
+}
+
 /* ملحوظة مهمة: خلفية لبني خفيفة (لون الفورم) ورا النص. للحاجات المهمة بس — مرة أو مرتين في الصفحة */
 
 .shary-note,
@@ -6098,6 +6193,10 @@ input:focus-visible + .area-chip,
   width: 76%;
 }
 
+.w-\[84\%\] {
+  width: 84%;
+}
+
 .w-\[84px\] {
   width: 84px;
 }
@@ -6315,6 +6414,10 @@ input:focus-visible + .area-chip,
 
 .grid-cols-\[minmax\(0\2c 92px\)_minmax\(0\2c 1fr\)_64px\] {
   grid-template-columns: minmax(0,92px) minmax(0,1fr) 64px;
+}
+
+.grid-cols-\[repeat\(3\2c minmax\(max-content\2c 1fr\)\)_44px\] {
+  grid-template-columns: repeat(3,minmax(max-content,1fr)) 44px;
 }
 
 .grid-cols-\[repeat\(3\2c minmax\(max-content\2c 1fr\)\)_44px_44px\] {
@@ -8215,6 +8318,10 @@ input:focus-visible + .area-chip,
     height: 100%;
   }
 
+  .md\:w-\[46\%\] {
+    width: 46%;
+  }
+
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -8308,6 +8415,10 @@ input:focus-visible + .area-chip,
 
   .lg\:top-6 {
     top: 1.5rem;
+  }
+
+  .lg\:top-\[92px\] {
+    top: 92px;
   }
 
   .lg\:top-auto {
@@ -8845,6 +8956,10 @@ input:focus-visible + .area-chip,
 
   .lg\:grid-cols-\[1fr_1\.15fr\] {
     grid-template-columns: 1fr 1.15fr;
+  }
+
+  .lg\:grid-cols-\[240px_240px_240px_48px\] {
+    grid-template-columns: 240px 240px 240px 48px;
   }
 
   .lg\:grid-cols-\[240px_240px_240px_48px_48px\] {
@@ -9641,6 +9756,10 @@ input:focus-visible + .area-chip,
 }
 
 /* desktop layout forced on narrow screens (preview only) */
+.pv-desktop .content-cta {padding: 20px 24px;}
+.pv-desktop .content-cta__buttons {grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;}
+.pv-desktop .content-cta__button--meeting {grid-column: auto;}
 .pv-desktop .shary-note, .pv-desktop .dev-about p.shary-note, .pv-desktop .article-content p.article-note {padding: 14px 18px;}
 .pv-desktop .index-pick {font-size: 15px;}
 .pv-desktop .index-plot {height: 240px;}
@@ -10387,6 +10506,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .md\:table-cell {display: table-cell;}
 .pv-desktop .md\:hidden {display: none;}
 .pv-desktop .md\:h-full {height: 100%;}
+.pv-desktop .md\:w-\[46\%\] {width: 46%;}
 .pv-desktop .md\:grid-cols-2 {grid-template-columns: repeat(2, minmax(0, 1fr));}
 .pv-desktop .md\:grid-cols-3 {grid-template-columns: repeat(3, minmax(0, 1fr));}
 .pv-desktop .md\:gap-6 {gap: 1.5rem;}
@@ -10417,6 +10537,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:start-8 {inset-inline-start: 2rem;}
 .pv-desktop .lg\:top-24 {top: 6rem;}
 .pv-desktop .lg\:top-6 {top: 1.5rem;}
+.pv-desktop .lg\:top-\[92px\] {top: 92px;}
 .pv-desktop .lg\:top-auto {top: auto;}
 .pv-desktop .lg\:order-1 {order: 1;}
 .pv-desktop .lg\:order-2 {order: 2;}
@@ -10555,6 +10676,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:grid-cols-\[1\.05fr_1fr\] {grid-template-columns: 1.05fr 1fr;}
 .pv-desktop .lg\:grid-cols-\[1\.35fr_1fr\] {grid-template-columns: 1.35fr 1fr;}
 .pv-desktop .lg\:grid-cols-\[1fr_1\.15fr\] {grid-template-columns: 1fr 1.15fr;}
+.pv-desktop .lg\:grid-cols-\[240px_240px_240px_48px\] {grid-template-columns: 240px 240px 240px 48px;}
 .pv-desktop .lg\:grid-cols-\[240px_240px_240px_48px_48px\] {grid-template-columns: 240px 240px 240px 48px 48px;}
 .pv-desktop .lg\:grid-cols-\[300px_minmax\(0\2c 1fr\)\] {grid-template-columns: 300px minmax(0,1fr);}
 .pv-desktop .lg\:grid-cols-\[320px_minmax\(0\2c 1fr\)_48px\] {grid-template-columns: 320px minmax(0,1fr) 48px;}

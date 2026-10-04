@@ -1,7 +1,7 @@
 <!doctype html><html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=6d4ac5d8">
+<link rel="stylesheet" href="a/site.css?v=890c5fa3">
 </head><body>
 
 
@@ -279,7 +279,7 @@ window.addEventListener('load', function () {
 </div>
 </section>
 
-<section id="projects-sheikh-zayed">
+<section id="projects-sheikh-zayed" data-area-projects>
 <div class="mb-3.5 lg:mb-5">
 <h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">مشاريع في الشيخ زايد</h2>
 <p class="text-[12px] font-medium text-shary-muted lg:text-[13px]"><span data-projects-count>64</span> نتيجة متاحة</p>
@@ -1127,7 +1127,7 @@ window.addEventListener('load', function () {
 </form>
 
 <div class="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-projects-grid>
-<div class="" data-project data-slug="mountain-view-hyde-park" data-developer="mountain-view" data-kind="compound" data-price="7600000">
+<div class="" data-project data-slug="mountain-view-hyde-park" data-developer="mountain-view" data-kind="compound" data-price="7600000" data-types="">
 <article class="area-card card-stretch flex h-full flex-col overflow-hidden">
 <div class="relative aspect-video overflow-hidden bg-shary-image">
 <a href="#pv:/projects/mountain-view-hyde-park" tabindex="-1" aria-hidden="true">
@@ -1223,6 +1223,290 @@ window.addEventListener('load', function () {
 <svg class="ltr:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </nav>
+</div>
+</section>
+<section id="projects-dev-sheikh-zayed" hidden data-dev-scope>
+<div class="mb-3.5 lg:mb-5">
+
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]" data-scope-title>مشاريع ماونتن فيو في الشيخ زايد</h2>
+<p class="flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-medium text-shary-muted lg:text-[13px]">
+<span><span data-projects-count>1</span> نتيجة متاحة</span>
+<a href="developer-mountain-view.html" class="font-semibold text-shary-link hover:underline" data-scope-developer>صفحة ماونتن فيو</a>
+<a href="area-sheikh-zayed.html" class="font-semibold text-shary-link hover:underline" data-scope-all>كل مشاريع الشيخ زايد</a>
+</p>
+</div>
+
+<form class="area-filterbar mb-3.5 grid grid-cols-[repeat(3,minmax(max-content,1fr))_44px] gap-1.5 lg:mb-5 lg:grid-cols-[240px_240px_240px_48px] lg:justify-start lg:gap-3" data-area-filters data-developer-filters>
+<div class="area-filter">
+<button type="button" data-sheet-open="project" aria-haspopup="dialog" aria-expanded="false">
+<span class="whitespace-nowrap">المشروع</span>
+<span class="area-filter__count absolute -end-1.5 -top-1.5" data-sheet-count="project"></span>
+</button>
+<svg class="area-filter__chevron" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<div class="area-filter">
+<button type="button" data-sheet-open="type" aria-haspopup="dialog" aria-expanded="false">
+<span class="whitespace-nowrap">النوع</span>
+<span class="area-filter__count absolute -end-1.5 -top-1.5" data-sheet-count="type"></span>
+</button>
+<svg class="area-filter__chevron" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<div class="area-filter">
+<button type="button" data-sheet-open="price" aria-haspopup="dialog" aria-expanded="false">
+<span class="whitespace-nowrap">السعر</span>
+<span class="area-filter__count absolute -end-1.5 -top-1.5" data-sheet-count="price"></span>
+</button>
+<svg class="area-filter__chevron" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
+<div class="relative">
+<button type="button" class="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl bg-shary-action text-white transition-colors hover:bg-shary-link lg:h-12" data-sort-open aria-haspopup="true" aria-expanded="false" aria-label="ترتيب">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M8 19l-3-3M8 19l3-3M16 19V5M16 5l-3 3M16 5l3 3"/></svg>
+</button>
+<div class="absolute end-0 top-full z-30 mt-2 hidden w-[230px] rounded-2xl border border-shary-line bg-white px-4 py-1.5 shadow-[0_14px_34px_-14px_rgba(18,58,92,0.45)]" data-sort-menu>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="price_asc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أقل سعر</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="price_desc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أعلى سعر</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="delivery" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>تاريخ التسليم</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="newest" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>الأحدث</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="installment_asc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أقل قسط</span>
+</label>
+<label class="flex min-h-[46px] cursor-pointer items-center gap-3 text-[15px] font-semibold leading-normal text-shary-navy hover:text-shary-link">
+<input type="radio" name="sort" value="installment_desc" class="h-[18px] w-[18px] shrink-0 cursor-pointer accent-shary-link" >
+<span>أعلى قسط</span>
+</label>
+</div>
+</div>
+
+<input type="hidden" name="price_min" value="" data-range-min="price">
+<input type="hidden" name="price_max" value="" data-range-max="price">
+
+<div class="fixed inset-0 z-[60] hidden" data-filter-sheet="project" role="dialog" aria-modal="true" aria-label="المشروع">
+
+<div class="absolute inset-0 bg-shary-navy/60 lg:bg-transparent" data-sheet-close></div>
+<div class="area-sheet lg:mx-auto lg:w-[900px] lg:border lg:border-b-0 lg:border-shary-line lg:px-10 lg:pb-9 lg:pt-4 lg:shadow-[0_-20px_60px_-10px_rgba(18,58,92,0.38)] absolute inset-x-0 bottom-0 flex max-h-[82vh] flex-col rounded-t-[28px] bg-white px-5 pb-5 pt-3 lg:max-h-[80vh]">
+<span class="mx-auto mb-3 block h-1.5 w-11 shrink-0 rounded-full bg-shary-form " aria-hidden="true"></span>
+<h3 class="shrink-0 text-[20px] font-semibold leading-normal lg:mb-2 lg:text-[24px]">المشروع</h3>
+<div class="contents" data-list-home>
+<div class="shary-scroll mt-1 min-h-0 flex-1 overflow-y-auto pe-1 lg:grid lg:grid-cols-2 lg:content-start lg:gap-x-10" data-list-body="project">
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+<img loading="lazy" src="a/images/shary/area-samples/project-nova.jpg" data-img="images/shary/area-samples/project-nova.jpg" alt="" class="h-11 w-11 shrink-0 rounded-full bg-shary-image object-cover" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>كمبوند ماونتن فيو هايد بارك</span>
+<input type="checkbox" name="project[]" value="mountain-view-hyde-park" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+</div>
+</div>
+<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>تطبيق</button>
+</div>
+</div>
+<div class="fixed inset-0 z-[60] hidden" data-filter-sheet="type" role="dialog" aria-modal="true" aria-label="نوع العقار">
+
+<div class="absolute inset-0 bg-shary-navy/60 lg:bg-transparent" data-sheet-close></div>
+<div class="area-sheet lg:mx-auto lg:w-[900px] lg:border lg:border-b-0 lg:border-shary-line lg:px-10 lg:pb-9 lg:pt-4 lg:shadow-[0_-20px_60px_-10px_rgba(18,58,92,0.38)] absolute inset-x-0 bottom-0 flex max-h-[82vh] flex-col rounded-t-[28px] bg-white px-5 pb-5 pt-3 lg:max-h-[80vh]">
+<span class="mx-auto mb-3 block h-1.5 w-11 shrink-0 rounded-full bg-shary-form " aria-hidden="true"></span>
+<h3 class="shrink-0 text-[20px] font-semibold leading-normal lg:mb-2 lg:text-[24px]">نوع العقار</h3>
+<div class="contents" data-list-home>
+<div class="shary-scroll mt-1 min-h-0 flex-1 overflow-y-auto pe-1 lg:grid lg:grid-cols-2 lg:content-start lg:gap-x-10" data-list-body="type">
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>فلل</span>
+<input type="checkbox" name="type[]" value="villa" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>توين هاوس</span>
+<input type="checkbox" name="type[]" value="twin-house" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>تاون هاوس</span>
+<input type="checkbox" name="type[]" value="townhouse" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>بنتهاوس</span>
+<input type="checkbox" name="type[]" value="penthouse" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>دوبليكس</span>
+<input type="checkbox" name="type[]" value="duplex" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>شقه</span>
+<input type="checkbox" name="type[]" value="apartment" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>شالية</span>
+<input type="checkbox" name="type[]" value="chalet" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>كابينز</span>
+<input type="checkbox" name="type[]" value="cabin" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>تجاري</span>
+<input type="checkbox" name="type[]" value="retail" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>اداري</span>
+<input type="checkbox" name="type[]" value="office" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>طبي</span>
+<input type="checkbox" name="type[]" value="medical" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>شقق فندقية</span>
+<input type="checkbox" name="type[]" value="hotel-apartment" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>لوفت</span>
+<input type="checkbox" name="type[]" value="loft" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>استوديو</span>
+<input type="checkbox" name="type[]" value="studio" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+<label class="flex min-h-[60px] cursor-pointer items-center gap-3 border-b border-shary-line py-2 last:border-b-0 lg:min-h-[68px]">
+
+<span class="min-w-0 flex-1 truncate text-[15px] font-semibold leading-normal lg:text-[16px]" data-list-name>صيدليات</span>
+<input type="checkbox" name="type[]" value="pharmacy" class="h-[22px] w-[22px] shrink-0 cursor-pointer accent-shary-link" >
+</label>
+</div>
+</div>
+<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>تطبيق</button>
+</div>
+</div>
+
+<div class="fixed inset-0 z-[60] hidden" data-filter-sheet="price" role="dialog" aria-modal="true" aria-label="السعر">
+
+<div class="absolute inset-0 bg-shary-navy/60 lg:bg-transparent" data-sheet-close></div>
+<div class="area-sheet lg:border lg:border-b-0 lg:border-shary-line lg:shadow-[0_-20px_60px_-10px_rgba(18,58,92,0.38)] absolute inset-x-0 bottom-0 flex flex-col rounded-t-[28px] bg-white px-5 pb-5 pt-3 lg:mx-auto lg:w-[720px] lg:px-10 lg:pb-9 lg:pt-4">
+<span class="mx-auto mb-3 block h-1.5 w-11 shrink-0 rounded-full bg-shary-form" aria-hidden="true"></span>
+<h3 class="mb-5 text-[20px] font-semibold leading-normal lg:mb-7 lg:text-[24px]">السعر</h3>
+<div data-range="price" data-min="100000" data-max="100000000" data-scale="log" data-bounds="{&quot;rent&quot;:{&quot;min&quot;:500,&quot;max&quot;:25000}}">
+<div class="area-range">
+<span class="area-range__rail" aria-hidden="true"><i class="area-range__fill" data-range-fill></i></span>
+<input type="range" min="0" max="1000" step="1" value="0" aria-label="من" data-range-low>
+<input type="range" min="0" max="1000" step="1" value="1000" aria-label="إلى" data-range-high>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-3">
+<label class="area-field">
+<span class="sr-only">من</span>
+<span class="shrink-0">ج.م</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-low-text>
+</label>
+<label class="area-field">
+<span class="sr-only">إلى</span>
+<span class="shrink-0">ج.م</span>
+<input type="text" inputmode="numeric" autocomplete="off" data-range-high-text>
+</label>
+</div>
+</div>
+<button type="button" class="mt-5 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-8 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>تطبيق</button>
+</div>
+</div>
+</form>
+
+<div class="grid grid-cols-1 gap-3.5 md:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-projects-grid>
+<div class="" data-project data-slug="mountain-view-hyde-park" data-developer="mountain-view" data-kind="compound" data-price="7600000" data-types="apartment duplex">
+<article class="area-card card-stretch flex h-full flex-col overflow-hidden">
+<div class="relative aspect-video overflow-hidden bg-shary-image">
+<a href="#pv:/projects/mountain-view-hyde-park" tabindex="-1" aria-hidden="true">
+<img loading="lazy" src="a/images/shary/area-samples/project-nova.jpg" data-img="images/shary/area-samples/project-nova.jpg" alt="كمبوند ماونتن فيو هايد بارك" class="card-photo absolute inset-0 h-full w-full object-cover" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
+</a>
+
+<div class="absolute end-2.5 top-2.5 flex gap-1.5">
+<button type="button" class="area-action" data-compare-toggle data-compare-id="mountain-view-hyde-park-sheikh-zayed" aria-pressed="false" aria-label="قارن">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15V5Z" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle aria-pressed="false" aria-label="أضف للمفضلة">
+<svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="#pv:/projects/mountain-view-hyde-park" data-share-title="كمبوند ماونتن فيو هايد بارك" aria-label="شارك">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
+</div>
+</div>
+
+<div class="flex flex-1 flex-col p-4 lg:p-5">
+
+<div class="flex items-start gap-2.5">
+<div class="min-w-0 flex-1">
+
+<small class="flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
+<svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+<span class="min-w-0">الشيخ زايد، مصر</span>
+</small>
+<h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="#pv:/projects/mountain-view-hyde-park" class="card-link hover:text-shary-link">كمبوند ماونتن فيو هايد بارك</a></h3>
+
+<p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
+<span class="">شقق</span>
+<span class="border-s border-shary-line ps-2.5">دوبلكس</span>
+</p>
+</div>
+
+<img loading="lazy" src="a/images/shary/developer-samples/mountain-view-mark.png" data-img="images/shary/developer-samples/mountain-view-mark.png" alt="ماونتن فيو" class="h-[52px] w-[52px] shrink-0 rounded-full border border-shary-line bg-white object-contain lg:h-14 lg:w-14" onerror="this.onerror=null;this.classList.add('hidden');this.nextElementSibling.classList.remove('hidden')">
+<span class="hidden flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white lg:h-14 lg:w-14" dir="ltr">MV</span>
+</div>
+
+<div class="area-card__foot contents">
+<div class="area-card__price area-card__price--two mt-3 grid grid-cols-2 gap-3 border-t border-shary-line pt-3">
+<div class="min-w-0">
+<small class="block text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">سعر المطور يبدأ من</small>
+<p class="flex flex-wrap items-baseline gap-x-1 text-[18px] font-bold leading-[1.4] lg:text-[20px]">
+<span>7,600,000</span>
+<span class="text-[12px] font-semibold text-shary-muted lg:text-[13px]">ج.م</span>
+</p>
+</div>
+<div class="min-w-0 border-s border-shary-line ps-3">
+<small class="block text-[12px] font-medium leading-normal text-shary-muted lg:text-[13px]">إعادة البيع يبدأ من</small>
+<p class="text-[14px] font-semibold leading-[1.9] text-shary-hint lg:text-[15px]">لا توجد وحدات</p>
+</div>
+</div>
+
+<div class="area-card__actions mt-auto grid grid-cols-2 gap-2.5 pt-3.5">
+<a href="tel:+201000730208" class="card-above flex h-11 items-center justify-center gap-2 rounded-xl border-[1.5px] border-shary-navy bg-white text-[14px] font-bold leading-normal text-shary-navy transition-colors hover:border-shary-link hover:text-shary-link lg:h-[46px] lg:text-[15px]">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg>
+<span>اتصال</span>
+</a>
+<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="card-above flex h-11 items-center justify-center gap-2 rounded-xl bg-shary-whatsapp text-[14px] font-bold leading-normal text-white transition-[filter] hover:brightness-95 lg:h-[46px] lg:text-[15px]">
+<i class="fa-brands fa-whatsapp text-[20px] leading-none" aria-hidden="true"></i>
+<span>واتساب</span>
+</a>
+</div>
+</div>
+</div>
+</article>
+</div>
+
+</div>
+<p class="hidden rounded-2xl bg-shary-soft px-4 py-8 text-center text-[14px] font-semibold text-shary-muted" data-projects-empty>مفيش مشاريع مطابقة للاختيار ده. جرّب تغيّر الفلاتر.</p>
+
+<div class="lg:pt-4">
 </div>
 </section>
 
@@ -2178,7 +2462,7 @@ window.addEventListener('load', function () {
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "6d4ac5d8";</script>
+<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "890c5fa3";</script>
 <!--pv-scripts-->
 <script>
 // الصور مكتوبة مرة واحدة، وأي استخدام تاني لنفس الصورة بياخدها منها
@@ -2188,7 +2472,7 @@ window.addEventListener('load', function () {
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=6d4ac5d8"></script>
+<script src="a/site.js?v=890c5fa3"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -2201,7 +2485,7 @@ window.addEventListener('load', function () {
   var LIVE = {"scenes": "Mostakbal-City/scenes-mostakbal-city", "bloomfields": "Mostakbal-City/bloomfields-mostakbal-city", "el-patio-sola": "El-Shorouk-City/el-patio-sola-el-shorouk", "privado": "Madinaty-62/privado-madinaty", "xchange-hap-town": "Mostakbal-City/xchange-hap-town-mostakbal-city", "il-bosco-city": "Mostakbal-City/il-bosco-city-new-cairo", "the-butterfly": "Mostakbal-City/the-butterfly-mostakbel-city", "mivida-gardens": "Mostakbal-City/mivida-gardens-mostakbal-city", "aliva": "Mostakbal-City/aliva-mountain-view-mostakbal-city", "eastvale": "Mostakbal-City/eastvale-mostakbal-city", "el-patio-prime": "El-Shorouk-City/el-patio-prime-el-shorouk", "el-patio-casa": "El-Shorouk-City/el-patio-casa-el-shorouk", "el-patio-5-east": "El-Shorouk-City/el-patio-5-east-el-shorouk", "el-shorouk-springs": "El-Shorouk-City/el-shorouk-springs-compound", "avelin": "Fifth-Settlement/avelin-compound-new-cairo", "blue-walk": "Fifth-Settlement/blue-walk-new-cairo", "garnet": "Fifth-Settlement/garnet-new-cairo", "blue-tree": "Fifth-Settlement/blue-tree-new-cairo", "vie-halo": "Fifth-Settlement/vie-halo-new-cairo", "jeel-plaza": "Fifth-Settlement/jeel-plaza-new-cairo", "etaje": "New-Cairo/etaje-madinet-masr", "the-pulse": "New-Cairo/the-Pulse-new-cairo", "la-vista-bay": "North-Coast/la-vista-bay-north-coast", "beyond-blue": "North-Coast/beyond-blue-north-coast", "telal": "North-Coast/telal-north-coast", "four": "North-Coast/four-north-coast", "la-vista-bay-east": "North-Coast/la-vista-bay-east-north-coast", "marsa": "North-Coast/marsa-north-coast"};
   var LIVE_AREAS = {"new-cairo": "New-Cairo", "fifth-settlement": "Fifth-Settlement", "mostakbal-city": "Mostakbal-City", "madinaty": "Madinaty", "al-rehab": "Al-Rehab", "el-shorouk": "Shorouk-City"};
   var VIEWS = {"area-new-cairo": "new-cairo", "area-mostakbal-city": "mostakbal-city", "area-fifth-settlement": "fifth-settlement", "area-madinaty": "madinaty", "area-al-rehab": "al-rehab", "area-el-shorouk": "el-shorouk", "area-katameya": "katameya", "area-sheikh-zayed": "sheikh-zayed", "area-north-coast": "north-coast", "area-ain-sokhna": "ain-sokhna", "area-new-capital": "new-capital", "area-ras-el-hekma": "ras-el-hekma", "area-sidi-heneish": "sidi-heneish", "area-al-dabaa": "al-dabaa", "area-sidi-abdel-rahman": "sidi-abdel-rahman", "area-al-alamein": "al-alamein", "area-ghazala-bay": "ghazala-bay", "area-alam-al-roum": "alam-al-roum", "developer-mountain-view": "mountain-view", "areas": "areas", "shary-index": "shary-index", "rent": "rent", "rent-unit": "rent-unit", "unit": "unit", "project": "project", "blog": "blog", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026", "article-mortgage-types": "article-mortgage-types", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3", "article-new-capital-guide": "article-new-capital-guide", "article-new-capital-projects-2026": "article-new-capital-projects-2026", "article-resale-vs-developer-price": "article-resale-vs-developer-price", "article-reservation-contract-checklist": "article-reservation-contract-checklist", "article-zayed-vs-october": "article-zayed-vs-october"};
-  var SEARCH = {"ar": {"types": {"chalets": {"key": "chalet", "label": "شاليهات"}, "villas": {"key": "villa", "label": "فلل"}, "apartments": {"key": "apartment", "label": "شقق"}, "twin-houses": {"key": "twin-house", "label": "توين هاوس"}, "townhouses": {"key": "townhouse", "label": "تاون هاوس"}, "duplexes": {"key": "duplex", "label": "دوبلكس"}, "penthouses": {"key": "penthouse", "label": "بنتهاوس"}, "studios": {"key": "studio", "label": "استوديوهات"}, "hotel-apartments": {"key": "hotel-apartment", "label": "شقق فندقية"}, "offices": {"key": "office", "label": "مكاتب إدارية"}, "shops": {"key": "retail", "label": "محلات تجارية"}, "clinics": {"key": "medical", "label": "عيادات"}, "properties": {"key": null, "label": "وحدات"}}, "areas": {"north-coast": {"label": "الساحل الشمالي", "parent": null}, "ras-el-hekma": {"label": "رأس الحكمة", "parent": "north-coast"}, "al-dabaa": {"label": "الضبعة", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "سيدي عبد الرحمن", "parent": "north-coast"}, "al-alamein": {"label": "العلمين", "parent": "north-coast"}, "ghazala-bay": {"label": "غزالة باي", "parent": "north-coast"}, "new-cairo": {"label": "القاهرة الجديدة", "parent": null}, "sheikh-zayed": {"label": "الشيخ زايد", "parent": null}, "ain-sokhna": {"label": "العين السخنة", "parent": null}, "new-capital": {"label": "العاصمة الإدارية", "parent": null}, "mostakbal-city": {"label": "مدينة المستقبل", "parent": "new-cairo"}, "fifth-settlement": {"label": "التجمع الخامس", "parent": "new-cairo"}, "madinaty": {"label": "مدينتي", "parent": "new-cairo"}, "el-shorouk": {"label": "الشروق", "parent": "new-cairo"}}, "general": {"h1": "عقارات مصر", "h1_compounds": "كمبوندات مصر", "meta_title": "عقارات للبيع في مصر: وحدات وكمبوندات بالتقسيط | شاري", "meta_description": "ابحث في كل الوحدات والكمبوندات المتاحة في مصر: فلتر بالمنطقة، المطور، السعر، المساحة ونظام السداد."}, "text": {"sale": {"name": "%s للبيع في %s", "h1": "%s للبيع في %s", "meta_title": "%s للبيع في %s بالتقسيط | شاري", "meta_description": "كل %s المتاحة للبيع في %s: الأسعار، المساحات، أنظمة السداد والمطورين — فلتر وقارن واختار."}, "rent": {"name": "%s للإيجار في %s", "h1": "%s للإيجار في %s", "meta_title": "%s للإيجار في %s | شاري", "meta_description": "كل %s المتاحة للإيجار في %s: الأسعار والمساحات — فلتر وقارن واختار."}, "all": "كل %s", "compounds": "كمبوندات %s", "crumb": "عقارات مصر"}, "promo": {"title": "حدّد ميزانيتك و Shary AI يرشّحلك", "text": "اكتب المبلغ والمنطقة وهيطلعلك الوحدات المناسبة ليك."}, "perPage": 12}, "en": {"types": {"chalets": {"key": "chalet", "label": "Chalets"}, "villas": {"key": "villa", "label": "Villas"}, "apartments": {"key": "apartment", "label": "Apartments"}, "twin-houses": {"key": "twin-house", "label": "Twin houses"}, "townhouses": {"key": "townhouse", "label": "Townhouses"}, "duplexes": {"key": "duplex", "label": "Duplexes"}, "penthouses": {"key": "penthouse", "label": "Penthouses"}, "studios": {"key": "studio", "label": "Studios"}, "hotel-apartments": {"key": "hotel-apartment", "label": "Hotel apartments"}, "offices": {"key": "office", "label": "Offices"}, "shops": {"key": "retail", "label": "Shops"}, "clinics": {"key": "medical", "label": "Clinics"}, "properties": {"key": null, "label": "Properties"}}, "areas": {"north-coast": {"label": "North Coast", "parent": null}, "ras-el-hekma": {"label": "Ras El Hekma", "parent": "north-coast"}, "al-dabaa": {"label": "Al Dabaa", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "Sidi Abdel Rahman", "parent": "north-coast"}, "al-alamein": {"label": "Al Alamein", "parent": "north-coast"}, "ghazala-bay": {"label": "Ghazala Bay", "parent": "north-coast"}, "new-cairo": {"label": "New Cairo", "parent": null}, "sheikh-zayed": {"label": "Sheikh Zayed", "parent": null}, "ain-sokhna": {"label": "Ain Sokhna", "parent": null}, "new-capital": {"label": "New Capital", "parent": null}, "mostakbal-city": {"label": "Mostakbal City", "parent": "new-cairo"}, "fifth-settlement": {"label": "Fifth Settlement", "parent": "new-cairo"}, "madinaty": {"label": "Madinaty", "parent": "new-cairo"}, "el-shorouk": {"label": "El Shorouk", "parent": "new-cairo"}}, "general": {"h1": "Properties in Egypt", "h1_compounds": "Compounds in Egypt", "meta_title": "Properties for sale in Egypt: units and compounds in installments | Shary", "meta_description": "Search every unit and compound available in Egypt: filter by area, developer, price, size and payment plan."}, "text": {"sale": {"name": "%s for sale in %s", "h1": "%s for sale in %s", "meta_title": "%s for sale in %s in installments | Shary", "meta_description": "Every listing of %s for sale in %s: prices, sizes, payment plans and developers — filter, compare and choose."}, "rent": {"name": "%s for rent in %s", "h1": "%s for rent in %s", "meta_title": "%s for rent in %s | Shary", "meta_description": "Every listing of %s for rent in %s: prices and sizes — filter, compare and choose."}, "all": "All %s", "compounds": "Compounds in %s", "crumb": "Properties in Egypt"}, "promo": {"title": "Tell us your budget and Shary AI will shortlist for you", "text": "Type the amount and the area to get the units that fit you."}, "perPage": 12}};
+  var SEARCH = {"ar": {"types": {"chalets": {"key": "chalet", "label": "شاليهات"}, "villas": {"key": "villa", "label": "فلل"}, "apartments": {"key": "apartment", "label": "شقق"}, "twin-houses": {"key": "twin-house", "label": "توين هاوس"}, "townhouses": {"key": "townhouse", "label": "تاون هاوس"}, "duplexes": {"key": "duplex", "label": "دوبلكس"}, "penthouses": {"key": "penthouse", "label": "بنتهاوس"}, "studios": {"key": "studio", "label": "استوديوهات"}, "hotel-apartments": {"key": "hotel-apartment", "label": "شقق فندقية"}, "offices": {"key": "office", "label": "مكاتب إدارية"}, "shops": {"key": "retail", "label": "محلات تجارية"}, "clinics": {"key": "medical", "label": "عيادات"}, "properties": {"key": null, "label": "وحدات"}}, "areas": {"north-coast": {"label": "الساحل الشمالي", "parent": null}, "ras-el-hekma": {"label": "رأس الحكمة", "parent": "north-coast"}, "al-dabaa": {"label": "الضبعة", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "سيدي عبد الرحمن", "parent": "north-coast"}, "al-alamein": {"label": "العلمين", "parent": "north-coast"}, "ghazala-bay": {"label": "غزالة باي", "parent": "north-coast"}, "new-cairo": {"label": "القاهرة الجديدة", "parent": null}, "sheikh-zayed": {"label": "الشيخ زايد", "parent": null}, "ain-sokhna": {"label": "العين السخنة", "parent": null}, "new-capital": {"label": "العاصمة الإدارية", "parent": null}, "mostakbal-city": {"label": "مدينة المستقبل", "parent": "new-cairo"}, "fifth-settlement": {"label": "التجمع الخامس", "parent": "new-cairo"}, "madinaty": {"label": "مدينتي", "parent": "new-cairo"}, "el-shorouk": {"label": "الشروق", "parent": "new-cairo"}}, "general": {"h1": "عقارات مصر", "h1_compounds": "كمبوندات مصر", "meta_title": "عقارات للبيع في مصر: وحدات وكمبوندات بالتقسيط | شاري", "meta_description": "ابحث في كل الوحدات والكمبوندات المتاحة في مصر: فلتر بالمنطقة، المطور، السعر، المساحة ونظام السداد.", "about_title": "عقارات مصر: ما تحتاج معرفته", "about": ["تجمع هذه الصفحة كل الوحدات والكمبوندات المتاحة في مصر من المطورين ومن إعادة البيع، مع الأسعار وأنظمة السداد ومواعيد التسليم.", "استخدم الفلاتر لتحديد المنطقة والميزانية والمساحة، وقارن بين أكثر من وحدة قبل اتخاذ القرار. هذا نص تجريبي — محتوى كل صفحة بحث يُكتب من لوحة التحكم."]}, "text": {"sale": {"name": "%s للبيع في %s", "h1": "%s للبيع في %s", "meta_title": "%s للبيع في %s بالتقسيط | شاري", "meta_description": "كل %s المتاحة للبيع في %s: الأسعار، المساحات، أنظمة السداد والمطورين — فلتر وقارن واختار.", "about_title": "%s للبيع في %s: ما تحتاج معرفته", "about": ["تعرض هذه الصفحة %s معروضة للبيع في %s من المطورين ومن إعادة البيع، مع السعر ونظام السداد وموعد التسليم لكل وحدة.", "استخدم الفلاتر لتحديد الميزانية والمساحة وعدد الغرف، وقارن بين أكثر من وحدة قبل اتخاذ القرار. هذا نص تجريبي — محتوى كل صفحة بحث يُكتب من لوحة التحكم."]}, "rent": {"name": "%s للإيجار في %s", "h1": "%s للإيجار في %s", "meta_title": "%s للإيجار في %s | شاري", "meta_description": "كل %s المتاحة للإيجار في %s: الأسعار والمساحات — فلتر وقارن واختار.", "about_title": "%s للإيجار في %s: ما تحتاج معرفته", "about": ["تعرض هذه الصفحة %s معروضة للإيجار في %s، مع قيمة الإيجار والمساحة وحالة الفرش لكل وحدة.", "استخدم الفلاتر لتحديد الميزانية والمساحة وعدد الغرف، وقارن بين أكثر من وحدة قبل اتخاذ القرار. هذا نص تجريبي — محتوى كل صفحة بحث يُكتب من لوحة التحكم."]}, "all": "كل %s", "compounds": "كمبوندات %s", "crumb": "عقارات مصر", "areas_title": "تصفح مناطق %s", "types_title": "عقارات أخرى في %s"}, "promo": {"title": "حدّد ميزانيتك و Shary AI يرشّحلك", "text": "اكتب المبلغ والمنطقة وهيطلعلك الوحدات المناسبة ليك."}, "perPage": 12}, "en": {"types": {"chalets": {"key": "chalet", "label": "Chalets"}, "villas": {"key": "villa", "label": "Villas"}, "apartments": {"key": "apartment", "label": "Apartments"}, "twin-houses": {"key": "twin-house", "label": "Twin houses"}, "townhouses": {"key": "townhouse", "label": "Townhouses"}, "duplexes": {"key": "duplex", "label": "Duplexes"}, "penthouses": {"key": "penthouse", "label": "Penthouses"}, "studios": {"key": "studio", "label": "Studios"}, "hotel-apartments": {"key": "hotel-apartment", "label": "Hotel apartments"}, "offices": {"key": "office", "label": "Offices"}, "shops": {"key": "retail", "label": "Shops"}, "clinics": {"key": "medical", "label": "Clinics"}, "properties": {"key": null, "label": "Properties"}}, "areas": {"north-coast": {"label": "North Coast", "parent": null}, "ras-el-hekma": {"label": "Ras El Hekma", "parent": "north-coast"}, "al-dabaa": {"label": "Al Dabaa", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "Sidi Abdel Rahman", "parent": "north-coast"}, "al-alamein": {"label": "Al Alamein", "parent": "north-coast"}, "ghazala-bay": {"label": "Ghazala Bay", "parent": "north-coast"}, "new-cairo": {"label": "New Cairo", "parent": null}, "sheikh-zayed": {"label": "Sheikh Zayed", "parent": null}, "ain-sokhna": {"label": "Ain Sokhna", "parent": null}, "new-capital": {"label": "New Capital", "parent": null}, "mostakbal-city": {"label": "Mostakbal City", "parent": "new-cairo"}, "fifth-settlement": {"label": "Fifth Settlement", "parent": "new-cairo"}, "madinaty": {"label": "Madinaty", "parent": "new-cairo"}, "el-shorouk": {"label": "El Shorouk", "parent": "new-cairo"}}, "general": {"h1": "Properties in Egypt", "h1_compounds": "Compounds in Egypt", "meta_title": "Properties for sale in Egypt: units and compounds in installments | Shary", "meta_description": "Search every unit and compound available in Egypt: filter by area, developer, price, size and payment plan.", "about_title": "Properties in Egypt: what to know", "about": ["This page lists every unit and compound available in Egypt, from developers and resale, with prices, payment plans and delivery dates.", "Use the filters to set the area, budget and size, and compare several units before you decide. This is sample text — the content of each search page is written from the admin panel."]}, "text": {"sale": {"name": "%s for sale in %s", "h1": "%s for sale in %s", "meta_title": "%s for sale in %s in installments | Shary", "meta_description": "Every listing of %s for sale in %s: prices, sizes, payment plans and developers — filter, compare and choose.", "about_title": "%s for sale in %s: what to know", "about": ["This page lists %s for sale in %s, from developers and resale, with the price, payment plan and delivery date of each unit.", "Use the filters to set your budget, size and bedrooms, and compare several units before you decide. This is sample text — the content of each search page is written from the admin panel."]}, "rent": {"name": "%s for rent in %s", "h1": "%s for rent in %s", "meta_title": "%s for rent in %s | Shary", "meta_description": "Every listing of %s for rent in %s: prices and sizes — filter, compare and choose.", "about_title": "%s for rent in %s: what to know", "about": ["This page lists %s for rent in %s, with the rent, size and furnishing of each unit.", "Use the filters to set your budget, size and bedrooms, and compare several units before you decide. This is sample text — the content of each search page is written from the admin panel."]}, "all": "All %s", "compounds": "Compounds in %s", "crumb": "Properties in Egypt", "areas_title": "Browse areas in %s", "types_title": "More property types in %s"}, "promo": {"title": "Tell us your budget and Shary AI will shortlist for you", "text": "Type the amount and the area to get the units that fit you."}, "perPage": 12}};
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var T = {
@@ -2343,6 +2627,10 @@ window.addEventListener('load', function () {
     syncNav();
     root.classList.remove('pv-search');
     root.querySelectorAll('[data-view]').forEach(function (v) { v.hidden = v.getAttribute('data-view') !== slug; });
+    if (!fromHistory) {   // فتح صفحة المنطقة العادي: مشاريع كل المطورين (الرجوع بيسيب الصفحة زي ما كانت)
+      root.querySelectorAll('[data-view="' + slug + '"]').forEach(function (v) { scopeArea(v, false); });
+      if (fills[slug] && fills[slug].fn === 'devArea') fills[slug] = null;
+    }
     window.scrollTo(0, fromHistory ? (scrolls[slug] || 0) : 0);
     if (!fromHistory) remember(ready && changed);
     return true;
@@ -2402,7 +2690,8 @@ window.addEventListener('load', function () {
       }
       return out;
     }
-    if (slug === 'all') return { slug: 'all', h1: meta.general.h1, h1c: meta.general.h1_compounds, parent: null, defaults: {}, subs: [], similar: similar(null, null, 'sale') };
+    if (slug === 'all') return { slug: 'all', h1: meta.general.h1, h1c: meta.general.h1_compounds, parent: null, defaults: {}, subs: [], similar: similar(null, null, 'sale'),
+      about: { title: meta.general.about_title, paras: meta.general.about }, areaLinks: [], areaTitle: '' };
     var m = /^([a-z-]+)-for-(sale|rent)-in-([a-z0-9-]+)$/.exec(slug);
     if (!m || !meta.types[m[1]] || !meta.areas[m[3]]) return null;
     var type = meta.types[m[1]], offer = m[2], area = meta.areas[m[3]], text = meta.text[offer];
@@ -2412,13 +2701,26 @@ window.addEventListener('load', function () {
     Object.keys(meta.areas).forEach(function (where) {
       if (meta.areas[where].parent === parent && (where === m[3] || has(language, type.key, where, offer))) subs.push({ label: meta.areas[where].label, slug: link(where), current: where === m[3] });
     });
+    // لينكات تحت الصفحة: نفس البحث في باقي مناطق نفس المنطقة الأم — ومن غير مناطق فرعية: أنواع تانية في نفس المنطقة
+    var areaLinks = [], areaTitle = fill(meta.text.areas_title, meta.areas[parent].label), alike = similar(m[1], m[3], offer);
+    Object.keys(meta.areas).forEach(function (where) {
+      if (where !== m[3] && (meta.areas[where].parent === parent || (area.parent && where === parent)) && has(language, type.key, where, offer)) areaLinks.push({ label: fill(text.name, type.label, meta.areas[where].label), slug: link(where) });
+    });
+    if (!areaLinks.length) {
+      areaTitle = fill(meta.text.types_title, area.label);
+      Object.keys(meta.types).forEach(function (other) {
+        if (other !== m[1] && has(language, meta.types[other].key, m[3], offer)) areaLinks.push({ label: fill(text.name, meta.types[other].label, area.label), slug: other + '-for-' + offer + '-in-' + m[3] });
+      });
+      alike = alike.filter(function (item) { return !areaLinks.some(function (shown) { return shown.slug === item.slug; }); });
+    }
     var defaults = { area: [m[3]] };
     if (type.key) defaults.type = [type.key];
     if (offer === 'rent') defaults.offer = 'rent';
     return {
       slug: slug, h1: fill(text.h1, type.label, area.label), h1c: fill(meta.text.compounds, area.label), crumb: meta.text.crumb,
       parent: area.parent ? { label: fill(text.h1, type.label, meta.areas[parent].label), slug: link(parent) } : null,
-      defaults: defaults, subs: subs.length > 1 ? subs : [], similar: similar(m[1], m[3], offer)
+      defaults: defaults, subs: subs.length > 1 ? subs : [], similar: alike,
+      about: { title: fill(text.about_title, type.label, area.label), paras: [fill(text.about[0], type.label, area.label)].concat(text.about.slice(1)) }, areaLinks: areaLinks, areaTitle: areaTitle
     };
   }
 
@@ -2521,7 +2823,38 @@ window.addEventListener('load', function () {
       subs.style.display = entry.subs.length ? '' : 'none';
     }
     var grid = main.querySelector('[data-results]');
-    var more = grid.parentNode.querySelector('section');   // عمليات بحث مشابهة
+    // كونتنت الصفحة + لينكات مناطق نفس المنطقة
+    var about = grid.parentNode.querySelector('[data-search-about]');
+    if (about && entry.about) {
+      about.querySelector('[data-search-about-title]').textContent = entry.about.title;
+      var aboutBody = about.querySelector('[data-search-about-body]');
+      aboutBody.textContent = '';
+      entry.about.paras.forEach(function (text) { var para = document.createElement('p'); para.textContent = text; aboutBody.appendChild(para); });
+    }
+    var chips = grid.parentNode.querySelector('[data-search-similar] a');
+    var around = grid.parentNode.querySelector('[data-search-areas]');
+    if (!around && chips && (entry.areaLinks || []).length) {   // القالب مفيهوش القسم ده (البحث العام): بنبنيه بنفس شكل "عمليات بحث مشابهة"
+      var twin = grid.parentNode.querySelector('[data-search-similar]');
+      around = twin.cloneNode(true);
+      around.removeAttribute('data-search-similar'); around.setAttribute('data-search-areas', '');
+      around.querySelector('h2').setAttribute('data-search-areas-title', '');
+      twin.parentNode.insertBefore(around, twin);
+    }
+    if (around) {
+      var aroundList = around.querySelector('div');
+      if (!main.__areaClass) main.__areaClass = (aroundList.querySelector('a') || chips).className;
+      around.querySelector('[data-search-areas-title]').textContent = entry.areaTitle || '';
+      aroundList.textContent = '';
+      (entry.areaLinks || []).forEach(function (item) {
+        var a = document.createElement('a');
+        a.className = main.__areaClass;
+        a.textContent = item.label;
+        a.setAttribute('href', '#pv:/search/' + item.slug);
+        aroundList.appendChild(a);
+      });
+      around.style.display = (entry.areaLinks || []).length ? '' : 'none';
+    }
+    var more = grid.parentNode.querySelector('[data-search-similar]');   // عمليات بحث مشابهة
     if (more) {
       var links = more.querySelector('div');
       if (!main.__similarClass) main.__similarClass = links.querySelector('a').className;
@@ -2837,6 +3170,25 @@ window.addEventListener('load', function () {
       photo: img ? { src: img.currentSrc || img.getAttribute('src') || '', img: img.getAttribute('data-img') || '', key: img.getAttribute('data-img-key') || '', fallback: img.getAttribute('data-fallback-key') || '' } : null };
   }
   // صفحة المطور في المعاينة: قالب واحد (ماونتن فيو). لما لينك مطور تاني يتضغط: اسمه ولوجوه بيتحطوا مكان اسم القالب.
+  // منطقة جوه المطور (/developers/{developer}/areas/{area}): صفحة المنطقة بمشاريع المطور ده بس + فلتر المشروع / النوع / السعر.
+  // القسم ده موجود مخفي جوه صفحة المنطقة ([data-dev-scope]) والمعاينة بتبدّله مكان "مشاريع المنطقة".
+  function scopeArea(view, on, info) {
+    var scoped = view.querySelector('[data-dev-scope]');
+    if (!scoped) return;
+    scoped.hidden = !on;
+    view.querySelectorAll('[data-area-projects], [data-area-new], [data-area-subs]').forEach(function (part) { part.hidden = on; });
+    if (on) renameIn(scoped, info && info.name ? [[lang === 'ar' ? 'ماونتن فيو' : 'Mountain View', info.name]] : []);
+  }
+  function openDevArea(area, given) {
+    var info = given || { name: fills['mountain-view'] && fills['mountain-view'].info ? fills['mountain-view'].info.name : '' };
+    if (!inDoc(area)) return go(area, { fn: 'devArea', slug: area, info: info });
+    var view = wraps[lang].querySelector('[data-view="' + area + '"]');
+    if (!view || !view.querySelector('[data-dev-scope]') || !show(area)) return false;
+    scopeArea(view, true, info);
+    fills[area] = { fn: 'devArea', slug: area, info: info };
+    remember(false);
+    return true;
+  }
   function openDeveloper(link, slug, given) {
     var info = given || null;
     if (!info && link) {
@@ -2944,6 +3296,8 @@ window.addEventListener('load', function () {
       if (path === '/' && show(DOCS ? 'search-all' : firstView)) return;   // الرئيسية واللوجو: أول صفحة في المعاينة (الرئيسية نفسها مش من الصفحات المتنفذة)
       if (path === '/developers' && show('mountain-view')) return;
       if (path === '/projects' && showSearch('all', 'compounds')) return;   // "المشاريع" في الهيدر: البحث العام على الكمبوندات
+      var devArea = /^\/developers\/[a-z0-9-]+\/areas\/([a-z0-9-]+)$/.exec(path);   // منطقة جوه المطور: مشاريع المطور ده بس
+      if (devArea && openDevArea(devArea[1])) return;
       var developer = /^\/developers\/([a-z0-9-]+)$/.exec(path);   // أي مطور: صفحة المطور (قالب واحد) باسم المطور اللي اتضغط عليه
       if (developer && openDeveloper(link, developer[1])) return;
       if (/^\/rent\/[a-z0-9-]+$/.test(path) && openRentUnit(link)) return;   // وحدة إيجار: قالب واحد بيتملى من الكارت
@@ -3116,6 +3470,7 @@ window.addEventListener('load', function () {
       grid.insertBefore(promo, visibleCards[Number(promo.getAttribute('data-promo-after')) || 2] || null);
     }
     section.querySelector('[data-projects-empty], [data-results-empty]').classList.toggle('hidden', shown > 0);
+    if (section.hasAttribute('data-dev-scope')) section.querySelectorAll('[data-projects-count]').forEach(function (n) { n.textContent = shown; });   // مشاريع المطور في المنطقة: العدد هو عدد الكروت
     toast(t('filtered')(shown));
   });
   root.querySelectorAll('[data-project]').forEach(function (card, i) { card.setAttribute('data-order', i % 9); });
@@ -3257,6 +3612,7 @@ window.addEventListener('load', function () {
     if (job.fn === 'unit') return openUnit(null, job.slug, job.info || null);
     if (job.fn === 'project') return openProject(null, job.slug, job.info || null);
     if (job.fn === 'developer') return openDeveloper(null, job.slug, job.info || null);
+    if (job.fn === 'devArea') return openDevArea(job.slug, job.info || { name: '' });
     if (job.fn === 'search') return showSearch(job.slug, job.mode, job.extra || true);
     return false;
   }
