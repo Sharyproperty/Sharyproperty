@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=9e9aed72">
+<link rel="stylesheet" href="a/site.css?v=ccc5a164">
 </head><body>
 
 
@@ -351,13 +351,7 @@ data-compare-link data-base="compare-en.html" >
 </header>
 <main data-view="agents">
 
-<header class="area-hero relative overflow-hidden text-white">
-<div class="site-container relative pb-6 pt-[22px] lg:pb-12 lg:pt-14">
-<h1 class="text-[30px] font-extrabold leading-[1.25] lg:text-[48px] lg:leading-[1.2]">Verify an agent</h1>
-<p class="mt-1.5 max-w-[680px] text-[14px] font-medium leading-[1.7] text-white/90 lg:text-[17px]">Make sure your representative is an official Shary agent by checking their phone number below.</p>
-</div>
-</header>
-
+<div class="pb-3 lg:pb-4">
 <div class="site-container pt-3 lg:pt-4" data-breadcrumb>
 <nav aria-label="Breadcrumb">
 <ol class="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold leading-normal lg:text-[14px]">
@@ -376,14 +370,34 @@ data-compare-link data-base="compare-en.html" >
 </ol>
 </nav>
 </div>
+</div>
 
-<div class="site-container pb-10 pt-5 lg:pb-16 lg:pt-8">
-<div class="mx-auto flex max-w-[620px] flex-col gap-4 lg:gap-5" data-agent-verify data-state="idle">
+<div class="site-container">
+<header class="area-hero relative overflow-hidden rounded-2xl text-white lg:rounded-[24px]">
+<div class="relative px-5 pb-6 pt-[22px] lg:px-12 lg:pb-12 lg:pt-12">
+<h1 class="text-[30px] font-extrabold leading-[1.25] lg:text-[48px] lg:leading-[1.2]">Verify an agent</h1>
+<p class="mt-1.5 max-w-[680px] text-[14px] font-medium leading-[1.7] text-white/90 lg:text-[17px]">Make sure your representative is an official Shary agent by checking their phone number below.</p>
+</div>
+</header>
+</div>
 
-<form class="area-card flex flex-col gap-3 px-4 py-5 lg:px-7 lg:py-7" data-agent-form novalidate>
-<label for="agent-phone-agents-en" class="text-[15px] font-bold leading-normal lg:text-[16px]">Agent phone number</label>
+<div class="site-container grid grid-cols-1 gap-5 pb-10 pt-5 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-8 lg:pb-20 lg:pt-8">
+<div class="flex min-w-0 flex-col gap-4 lg:gap-5" data-agent-verify data-state="idle">
 
-<div class="relative w-full" data-phone-field>
+<form class="area-card px-4 py-5 lg:px-8 lg:py-8" data-agent-form novalidate>
+<div class="mb-4 flex items-center gap-3.5 lg:mb-6">
+<span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-shary-navy text-white lg:h-14 lg:w-14" aria-hidden="true">
+<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 5 6.5v5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9v-5l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+</span>
+<div class="min-w-0">
+<h2 class="text-[19px] font-bold leading-[1.4] lg:text-[24px]">Check the agent&#039;s number</h2>
+<p class="text-[13.5px] font-medium leading-[1.7] text-shary-muted lg:text-[15px]">Enter the number the agent contacts you from and we will tell you at once whether they are on our team.</p>
+</div>
+</div>
+
+<label for="agent-phone-agents-en" class="mb-2 block text-[14px] font-bold leading-normal lg:text-[15px]">Agent phone number</label>
+<div class="flex flex-col gap-3 lg:flex-row">
+<div class="relative w-full min-w-0 lg:flex-1" data-phone-field>
 <div class="flex h-[54px] w-full items-center rounded-[10px] border border-shary-line bg-white focus-within:ring-2 focus-within:ring-shary-teal ltr:flex-row-reverse">
 <input type="tel" name="phone" dir="ltr" id="agent-phone-agents-en" value="" inputmode="tel" autocomplete="off" placeholder="Phone number" aria-label="Agent phone number" required class="h-full min-w-0 flex-1 rounded-[10px] border-0 bg-transparent px-4 text-left rtl:text-right text-[16px] font-bold text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none">
 
@@ -544,47 +558,67 @@ data-compare-link data-base="compare-en.html" >
 </li>
 </ul>
 </div>
-<p class="hidden text-[13px] font-semibold leading-normal text-[#b3261e]" data-agent-error role="alert">Enter a valid phone number.</p>
 
-<button type="submit" class="flex h-[54px] w-full items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[18px] font-bold leading-[1.2] text-white transition-colors hover:bg-shary-navy">
+<button type="submit" class="flex h-[54px] w-full shrink-0 items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[17px] font-bold leading-[1.2] text-white transition-colors hover:bg-shary-navy lg:w-[170px]">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 5 6.5v5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9v-5l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
 <span>Verify</span>
 </button>
+</div>
+<p class="mt-2 hidden text-[13px] font-semibold leading-normal text-[#b3261e]" data-agent-error role="alert">Enter a valid phone number.</p>
+<p class="mt-2.5 text-[12.5px] font-medium leading-[1.7] text-shary-muted lg:text-[13.5px]">Choose the country code and enter the number exactly as the agent gave it to you.</p>
 </form>
 
 <section class="area-card overflow-hidden hidden" data-agent-result="found" aria-live="polite">
-<p class="flex items-center gap-2.5 bg-[#e7f5f1] px-4 py-3.5 text-[15px] font-bold leading-normal text-shary-teal lg:px-7 lg:text-[16px]">
+<p class="flex items-center gap-2.5 bg-shary-teal px-4 py-3.5 text-[15px] font-bold leading-normal text-white lg:px-8 lg:py-4 lg:text-[17px]">
 <svg class="shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12.5 2.8 2.8L16.5 9.5"/></svg>
 <span>An official agent on the Shary team</span>
 </p>
-<div class="flex flex-col items-center px-4 pb-6 pt-6 text-center lg:px-7 lg:pb-8 lg:pt-8">
-<div class="relative">
-<div class="relative flex h-[112px] w-[112px] items-center justify-center overflow-hidden rounded-full border-[3px] border-white bg-shary-form shadow-[0_10px_26px_-12px_rgba(18,58,92,0.5)] lg:h-[132px] lg:w-[132px]">
+<div class="px-4 pb-5 pt-5 lg:px-8 lg:pb-8 lg:pt-7">
+
+<div class="flex items-center gap-4 lg:gap-5">
+<div class="relative shrink-0">
+<div class="relative flex h-[88px] w-[88px] items-center justify-center overflow-hidden rounded-full border-[3px] border-white bg-shary-form shadow-[0_10px_26px_-12px_rgba(18,58,92,0.5)] lg:h-[112px] lg:w-[112px]">
 <img loading="lazy" src="" alt="" class="absolute inset-0 h-full w-full object-cover hidden" data-agent-photo>
 <span class="flex h-full w-full items-center justify-center " data-agent-photo-blank><svg class="h-[46%] w-[46%] text-[#b9c7d6]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.4 0-8 2.2-8 5v1.5h16V19c0-2.8-3.6-5-8-5Z"/></svg></span>
 </div>
-<span class="absolute bottom-0 end-0 flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-shary-teal text-white" aria-hidden="true">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 12.5 4 4 8-9"/></svg>
+<span class="absolute bottom-0 end-0 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-shary-teal text-white lg:h-8 lg:w-8" aria-hidden="true">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 12.5 4 4 8-9"/></svg>
 </span>
 </div>
-<h2 class="mt-3.5 text-[22px] font-extrabold leading-[1.35] lg:text-[26px]" data-agent-field="name"></h2>
-<p class="text-[14px] font-semibold leading-normal text-shary-muted lg:text-[15px]" data-agent-field="role"></p>
-<span class="mt-2 rounded-full bg-[#e7f5f1] px-3 py-1 text-[12.5px] font-bold leading-normal text-shary-teal">Verified agent</span>
-
-<dl class="mt-5 w-full divide-y divide-shary-line rounded-xl border border-shary-line text-start">
-<div class="flex items-center justify-between gap-3 px-4 py-3">
-<dt class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Email</dt>
-<dd class="min-w-0"><a href="mailto:" class="block break-all text-[15px] font-bold leading-normal hover:text-shary-link lg:text-[16px]" data-agent-link="email" data-agent-field="email"></a></dd>
+<div class="min-w-0">
+<span class="inline-block rounded-full bg-[#e7f5f1] px-3 py-1 text-[12px] font-bold leading-normal text-shary-teal lg:text-[13px]">Verified agent</span>
+<h2 class="mt-1.5 text-[21px] font-extrabold leading-[1.35] lg:text-[28px]" data-agent-field="name"></h2>
+<p class="text-[14px] font-semibold leading-normal text-shary-muted lg:text-[16px]" data-agent-field="role"></p>
 </div>
-<div class="flex items-center justify-between gap-3 px-4 py-3">
-<dt class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Phone number</dt>
-<dd class="min-w-0"><a href="tel:" class="block text-[15px] font-bold leading-normal hover:text-shary-link lg:text-[16px]" dir="ltr" data-agent-link="phone" data-agent-field="phone"></a></dd>
+</div>
+
+<dl class="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:mt-6 lg:gap-3">
+<div class="flex items-center gap-3 rounded-xl bg-shary-soft px-3.5 py-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-shary-navy" aria-hidden="true">
+<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7.5 8 6 8-6"/></svg>
+</span>
+<div class="min-w-0">
+<dt class="text-[12px] font-semibold leading-normal text-shary-muted lg:text-[13px]">Email</dt>
+<dd class="min-w-0"><a href="mailto:" class="block break-all text-[14.5px] font-bold leading-[1.5] hover:text-shary-link lg:text-[15.5px]" data-agent-link="email" data-agent-field="email"></a></dd>
+</div>
+</div>
+<div class="flex items-center gap-3 rounded-xl bg-shary-soft px-3.5 py-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-shary-navy" aria-hidden="true">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg>
+</span>
+<div class="min-w-0">
+<dt class="text-[12px] font-semibold leading-normal text-shary-muted lg:text-[13px]">Phone number</dt>
+<dd class="min-w-0"><a href="tel:" class="block text-[14.5px] font-bold leading-[1.5] hover:text-shary-link lg:text-[15.5px]" dir="ltr" data-agent-link="phone" data-agent-field="phone"></a></dd>
+</div>
 </div>
 </dl>
 
-<p class="mt-4 text-[14.5px] font-semibold leading-[1.8] text-shary-navy lg:text-[15.5px]">This number belongs to an official agent on our team.</p>
+<p class="mt-4 flex items-start gap-2.5 rounded-xl border border-[#cfe9e2] bg-[#f1faf7] px-3.5 py-3 text-[14px] font-semibold leading-[1.8] text-shary-navy lg:mt-5 lg:text-[15px]">
+<svg class="mt-1 shrink-0 text-shary-teal" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 5 6.5v5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9v-5l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
+<span class="min-w-0">This number belongs to an official agent on our team.</span>
+</p>
 
-<div class="mt-4 grid w-full grid-cols-2 gap-2.5">
+<div class="mt-4 grid grid-cols-2 gap-2.5 lg:mt-5">
 <a href="tel:" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-action text-[15px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy" data-agent-link="phone">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg>
 <span>Call</span>
@@ -594,20 +628,27 @@ data-compare-link data-base="compare-en.html" >
 <span>WhatsApp</span>
 </a>
 </div>
-<a href="agents-en.html" class="mt-4 text-[14px] font-bold leading-normal text-shary-link hover:underline" data-agent-again>Check another number</a>
+<a href="agents-en.html" class="mx-auto mt-4 block w-fit text-[14px] font-bold leading-normal text-shary-link hover:underline" data-agent-again>Check another number</a>
 </div>
 </section>
 
 <section class="area-card overflow-hidden hidden" data-agent-result="missing" aria-live="polite">
-<p class="flex items-center gap-2.5 bg-[#fdecea] px-4 py-3.5 text-[15px] font-bold leading-normal text-[#b3261e] lg:px-7 lg:text-[16px]">
+<p class="flex items-center gap-2.5 bg-[#b3261e] px-4 py-3.5 text-[15px] font-bold leading-normal text-white lg:px-8 lg:py-4 lg:text-[17px]">
 <svg class="shrink-0" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6M15 9l-6 6"/></svg>
 <span>This number is not on the Shary team</span>
 </p>
-<div class="flex flex-col items-center px-4 pb-6 pt-5 text-center lg:px-7 lg:pb-8 lg:pt-6">
-<p class="text-[13px] font-semibold leading-normal text-shary-muted lg:text-[14px]">Number checked</p>
-<p class="text-[20px] font-extrabold leading-[1.5] lg:text-[22px]" dir="ltr" data-agent-field="checked"></p>
-<p class="mt-3 text-[14.5px] font-semibold leading-[1.9] text-shary-navy lg:text-[15.5px]">The number you entered is not registered to any of our agents. Contact Shary directly before taking any step.</p>
-<div class="mt-4 grid w-full grid-cols-2 gap-2.5">
+<div class="px-4 pb-5 pt-5 lg:px-8 lg:pb-8 lg:pt-7">
+<div class="flex items-center gap-3.5 rounded-xl bg-[#fdf1f0] px-3.5 py-3 lg:px-5 lg:py-4">
+<span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-[#b3261e]" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor"/><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+</span>
+<div class="min-w-0">
+<p class="text-[12.5px] font-semibold leading-normal text-shary-muted lg:text-[13.5px]">Number checked</p>
+<p class="text-[19px] font-extrabold leading-[1.5] lg:text-[22px]" dir="ltr" data-agent-field="checked"></p>
+</div>
+</div>
+<p class="mt-4 text-[14.5px] font-semibold leading-[1.9] text-shary-navy lg:text-[16px]">The number you entered is not registered to any of our agents. Contact Shary directly before taking any step.</p>
+<div class="mt-4 grid grid-cols-2 gap-2.5 lg:mt-5">
 <a href="tel:+201000730208" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-action text-[15px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg>
 <span>Contact Shary</span>
@@ -617,28 +658,51 @@ data-compare-link data-base="compare-en.html" >
 <span>WhatsApp</span>
 </a>
 </div>
-<a href="agents-en.html" class="mt-4 text-[14px] font-bold leading-normal text-shary-link hover:underline" data-agent-again>Check another number</a>
+<a href="agents-en.html" class="mx-auto mt-4 block w-fit text-[14px] font-bold leading-normal text-shary-link hover:underline" data-agent-again>Check another number</a>
 </div>
 </section>
+</div>
 
-<section class="rounded-2xl bg-shary-soft px-4 py-5 lg:px-7 lg:py-6">
-<h2 class="mb-2.5 text-[17px] font-bold leading-normal lg:text-[19px]">How does verification work?</h2>
-<ol class="flex flex-col gap-2.5">
-<li class="flex items-start gap-3 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[15px]">
-<span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white">1</span>
-<span class="min-w-0">Ask the agent for the phone number they use to contact you.</span>
+<aside class="flex min-w-0 flex-col gap-4 lg:gap-5">
+<section class="rounded-2xl bg-shary-soft px-4 py-5 lg:px-6 lg:py-6" data-agent-steps>
+<h2 class="mb-3.5 text-[17px] font-bold leading-normal lg:mb-4 lg:text-[19px]">How does verification work?</h2>
+<ol class="agent-steps">
+<li>
+<span class="agent-steps__number" aria-hidden="true">1</span>
+<span class="min-w-0 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[14.5px]">Ask the agent for the phone number they use to contact you.</span>
 </li>
-<li class="flex items-start gap-3 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[15px]">
-<span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white">2</span>
-<span class="min-w-0">Enter the number with the country code and press &quot;Verify&quot;.</span>
+<li>
+<span class="agent-steps__number" aria-hidden="true">2</span>
+<span class="min-w-0 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[14.5px]">Enter the number with the country code and press &quot;Verify&quot;.</span>
 </li>
-<li class="flex items-start gap-3 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[15px]">
-<span class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-shary-navy text-[12px] font-bold leading-none text-white">3</span>
-<span class="min-w-0">If the number is registered you will see the agent photo, name and details. If it is not, contact us before taking any step.</span>
+<li>
+<span class="agent-steps__number" aria-hidden="true">3</span>
+<span class="min-w-0 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[14.5px]">If the number is registered you will see the agent photo, name and details. If it is not, contact us before taking any step.</span>
 </li>
 </ol>
 </section>
-</div>
+
+<section class="rounded-2xl border border-[#f1dfb5] bg-[#fff9ea] px-4 py-5 lg:px-6 lg:py-6" data-agent-tips>
+<h2 class="mb-3 flex items-center gap-2 text-[17px] font-bold leading-normal lg:text-[19px]">
+<svg class="shrink-0 text-[#b7791f]" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 8v5"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor"/><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+<span>Safety tips</span>
+</h2>
+<ul class="flex flex-col gap-2.5">
+<li class="flex items-start gap-2.5 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[14.5px]">
+<span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#b7791f]" aria-hidden="true"></span>
+<span class="min-w-0">Do not transfer any money or deposit before confirming the agent is on the Shary team.</span>
+</li>
+<li class="flex items-start gap-2.5 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[14.5px]">
+<span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#b7791f]" aria-hidden="true"></span>
+<span class="min-w-0">Make sure the number you verify is the same number contacting you.</span>
+</li>
+<li class="flex items-start gap-2.5 text-[14px] font-medium leading-[1.8] text-shary-navy lg:text-[14.5px]">
+<span class="mt-[11px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#b7791f]" aria-hidden="true"></span>
+<span class="min-w-0">If in doubt, contact Shary directly on the official numbers on the Contact page.</span>
+</li>
+</ul>
+</section>
+</aside>
 </div>
 
 <div class="fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 gap-2 border-t border-shary-line bg-white px-2.5 pb-[calc(10px+env(safe-area-inset-bottom,0px))] pt-[11px] shadow-[0_-8px_22px_-16px_rgba(18,58,92,0.4)] lg:hidden" data-quick-bar aria-label="Quick contact">
@@ -1133,7 +1197,7 @@ data-compare-link data-base="compare-en.html" >
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "9e9aed72";</script>
+<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "ccc5a164";</script>
 <!--pv-scripts-->
 <script>
 // الصور مكتوبة مرة واحدة، وأي استخدام تاني لنفس الصورة بياخدها منها
@@ -1143,7 +1207,7 @@ data-compare-link data-base="compare-en.html" >
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=9e9aed72"></script>
+<script src="a/site.js?v=ccc5a164"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -1361,7 +1425,8 @@ data-compare-link data-base="compare-en.html" >
     var facts = {
       title: link ? link.textContent.trim() : '', href: link ? link.getAttribute('href') : '#', location: text('article small span'), photo: photo,
       developer: (logo && logo.getAttribute('alt')) || labels.none,
-      price: price ? groupDigits(price) + ' ' + labels.currency + (data('data-offer') === 'rent' ? ' / ' + labels.month : '') : labels.none
+      price: price ? groupDigits(price) + ' ' + labels.currency + (data('data-offer') === 'rent' ? ' / ' + labels.month : '') : labels.none,
+      values: { price: price || '', area: unit ? (Number(data('data-size')) || '') : '' }   // الأرقام الخام لشارة الأفضل (data-value)
     };
     if (unit) {
       facts.installment = text('.area-card__price small') || text('small.truncate') || labels.none;
@@ -1376,16 +1441,36 @@ data-compare-link data-base="compare-en.html" >
       var typesRow = card.querySelector('h3 + p');
       facts.types = typesRow ? Array.prototype.map.call(typesRow.querySelectorAll('span'), function (n) { return n.textContent.trim(); }).filter(function (v) { return v && v.charAt(0) !== '+'; }).join(' ، ') : '';
       facts.types = facts.types || labels.none;
-      facts.plan = labels.none;
+      facts.plan = data('data-plan') || labels.none;
     }
     return facts;
+  }
+  // أول مرة تتفتح فيها المفضلة / المقارنة في المعاينة: لو النوع (وحدات / مشاريع) فاضي بيتحط فيه 3 عينات من كروت الموقع نفسها،
+  // عشان الصفحة تتشاف مليانة. بتحصل مرة واحدة لكل صفحة — بعدها اللي العميل يحفظه / يشيله هو اللي بيظهر.
+  var savedTab = '';
+  var seedPicks = { units: ['scenes-1', 'la-vista-bay-1', 'etaje-1'], projects: ['scenes', 'la-vista-bay', 'etaje'] };
+  function seedSaved(key) {
+    var list = savedList(key), flag = 'pv-seeded:' + key, done = false;
+    try { done = !!window.localStorage.getItem(flag); } catch (e) { done = true; }
+    if (done) return list;
+    ['units', 'projects'].forEach(function (group) {
+      if (list.some(function (id) { return id.indexOf(group + '/') === 0; })) return;
+      var pool = ((pools[lang] || {})[group === 'units' ? 'units' : 'compounds'] || []).map(function (card) { return card.getAttribute('data-slug'); });
+      var picks = seedPicks[group].filter(function (slug) { return pool.indexOf(slug) !== -1; });
+      pool.forEach(function (slug) { if (picks.length < 3 && picks.indexOf(slug) === -1) picks.push(slug); });
+      picks.slice(0, 3).forEach(function (slug) { list.push(group + '/' + slug); });
+    });
+    try { window.localStorage.setItem(flag, '1'); window.localStorage.setItem(key, JSON.stringify(list)); } catch (e) {}
+    if (key === 'shary-compare' && window.SharyCompare) window.SharyCompare.write(list);
+    if (window.SharyCards) window.SharyCards.refresh(document);
+    return list;
   }
   function renderSaved(slug) {
     var view = wraps[lang].querySelector('[data-view="' + slug + '"]');
     var page = view && view.querySelector('[data-saved-page]');
     if (!page) return;
     var compare = slug === 'compare';
-    var all = savedList(compare ? 'shary-compare' : 'shary-favorites');
+    var all = seedSaved(compare ? 'shary-compare' : 'shary-favorites');
     var labels = {};
     try { labels = JSON.parse(page.getAttribute('data-compare-labels') || '{}'); } catch (e) {}
     var counts = {};
@@ -1420,6 +1505,7 @@ data-compare-link data-base="compare-en.html" >
             var key = row.getAttribute('data-compare-row');
             if (key) {
               cell.textContent = facts[key] || labels.none || '';
+              cell.setAttribute('data-value', facts.values[key] || '');
             } else {
               var image = cell.querySelector('[data-compare-field="image"]');
               if (image && facts.photo) {
@@ -1448,7 +1534,9 @@ data-compare-link data-base="compare-en.html" >
     // التبويب المفتوح: اللي فيه عناصر
     var selected = page.querySelector('[data-saved-tab][aria-selected="true"]');
     var now = selected ? selected.getAttribute('data-saved-tab') : 'units';
-    if (!counts[now] && counts[now === 'units' ? 'projects' : 'units']) page.querySelector('[data-saved-tab="' + (now === 'units' ? 'projects' : 'units') + '"]').click();
+    if (savedTab && counts[savedTab]) page.querySelector('[data-saved-tab="' + savedTab + '"]').click();
+    else if (!counts[now] && counts[now === 'units' ? 'projects' : 'units']) page.querySelector('[data-saved-tab="' + (now === 'units' ? 'projects' : 'units') + '"]').click();
+    savedTab = '';
   }
 
 
@@ -2088,6 +2176,7 @@ data-compare-link data-base="compare-en.html" >
     if (link.hasAttribute('data-meeting-open')) return;   // "احجز العرض" و"طلب مقابلة": بيفتحوا فورم طلب الاجتماع
     if (link.hasAttribute('data-unit-tab') || link.hasAttribute('data-unit-sort')) return;   // تبويب وترتيب وحدات المشروع: سكربت الصفحة بيبدّل الكروت
     var pageView = VIEWS[href.replace(/[?#].*$/, '').replace(/(-en)?\.html$/, '')];   // صفحة موجودة جوه المعاينة (منطقة / مطور / بحث)
+    savedTab = (/[?&]tab=(units|projects)/.exec(href) || [])[1] || '';   // "قارن بين المحفوظ": صفحة المقارنة تفتح على نفس التبويب
 
     if (link.hasAttribute('data-lang-toggle')) {
       e.preventDefault();
@@ -2391,12 +2480,13 @@ data-compare-link data-base="compare-en.html" >
     });
   });
 
-  // التحقق من الوكيل: المعاينة بترد مكان السيرفر — الرقم التجريبي +20 1000000000 مسجّل، وأي رقم تاني غير مسجّل
+  // التحقق من الوكيل: المعاينة بترد مكان السيرفر — الرقم التجريبي 01010033401 (مصر +20) مسجّل، وأي رقم تاني غير مسجّل
+  var pvAgentPhoto = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MDAgNDAwIiB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCI+CiAgPHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSI0MDAiIGZpbGw9IiNkYmU2ZjEiLz4KICA8Y2lyY2xlIGN4PSIzMjAiIGN5PSI3MCIgcj0iMTIwIiBmaWxsPSIjZTlmMGY3Ii8+CiAgPHBhdGggZD0iTTQwIDQwMGMwLTc4IDYyLTEyOCAxNjAtMTI4czE2MCA1MCAxNjAgMTI4WiIgZmlsbD0iIzFlNDE2NiIvPgogIDxwYXRoIGQ9Ik0xNTggMjc2bDQyIDYyIDQyLTYyLTQyLTE0WiIgZmlsbD0iI2ZmZmZmZiIvPgogIDxwYXRoIGQ9Ik0xOTEgMzAwaDE4bDggNjItMTcgMjItMTctMjJaIiBmaWxsPSIjMWY3ZjcyIi8+CiAgPHBhdGggZD0iTTE1OCAyNzZsLTMwIDE0IDQ0IDcwIDI4LTIyWiIgZmlsbD0iIzE3MzY1YSIvPgogIDxwYXRoIGQ9Ik0yNDIgMjc2bDMwIDE0LTQ0IDcwLTI4LTIyWiIgZmlsbD0iIzE3MzY1YSIvPgogIDxyZWN0IHg9IjE3MiIgeT0iMjIyIiB3aWR0aD0iNTYiIGhlaWdodD0iNjIiIHJ4PSIyNCIgZmlsbD0iI2U4Yjg5MCIvPgogIDxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxNjgiIHJ4PSI3MCIgcnk9IjgwIiBmaWxsPSIjZjJjOWE0Ii8+CiAgPHBhdGggZD0iTTEyOCAxNjhjLTYtNjIgMjYtMTAwIDc0LTEwMHM4MCAzNiA3MiAxMDBjLTgtMzQtMjItNTItNDAtNTgtMzAgMTItNzAgMTQtOTAgNi04IDEyLTE0IDMwLTE2IDUyWiIgZmlsbD0iIzJiMzQ0MiIvPgogIDxlbGxpcHNlIGN4PSIxMjkiIGN5PSIxNzgiIHJ4PSI5IiByeT0iMTYiIGZpbGw9IiNlYWI5OGYiLz4KICA8ZWxsaXBzZSBjeD0iMjcxIiBjeT0iMTc4IiByeD0iOSIgcnk9IjE2IiBmaWxsPSIjZWFiOThmIi8+CiAgPGNpcmNsZSBjeD0iMTc0IiBjeT0iMTcyIiByPSI2IiBmaWxsPSIjMmIzNDQyIi8+CiAgPGNpcmNsZSBjeD0iMjI2IiBjeT0iMTcyIiByPSI2IiBmaWxsPSIjMmIzNDQyIi8+CiAgPHBhdGggZD0iTTE3NiAyMDhjMTQgMTIgMzQgMTIgNDggMCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjYjk3NzRmIiBzdHJva2Utd2lkdGg9IjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K';
   root.addEventListener('shary:agent-verify', function (e) {
     e.preventDefault();
     var number = String(e.detail.country_code || '').replace(/\D/g, '') + String(e.detail.phone || '').replace(/\D/g, '').replace(/^0+/, '');
-    var ok = number === '201000000000';
-    e.detail.show(ok ? { found: true, agent: { name: lang === 'ar' ? 'وكيل تجريبي' : 'Sample agent', role: lang === 'ar' ? 'مستشار عقاري' : 'Property advisor', email: 'agent@shary.eg', phone: '+201000000000', phone_display: '+20 100 000 0000', whatsapp: '201000000000', image: '' } }
+    var ok = number === '201010033401';
+    e.detail.show(ok ? { found: true, agent: { name: lang === 'ar' ? 'أحمد محمد علي' : 'Ahmed Mohamed Ali', role: lang === 'ar' ? 'مستشار عقاري' : 'Property advisor', email: 'ahmed.ali@shary.eg', phone: '+201010033401', phone_display: '+20 101 003 3401', whatsapp: '201010033401', image: pvAgentPhoto } }
       : { found: false, checked: e.detail.country_code + ' ' + e.detail.phone });
   });
 
