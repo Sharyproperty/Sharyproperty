@@ -1991,7 +1991,7 @@
                     image.alt = '';
                     image.loading = 'lazy';
                     image.setAttribute('data-fallback', shown.getAttribute('data-fallback') || '');
-                    image.onerror = function () { this.onerror = null; this.src = this.getAttribute('data-fallback'); };
+                    image.onerror = function () { this.onerror = null; var spare = this.getAttribute('data-fallback'); if (spare) this.src = spare; else this.remove(); };   // من غير صورة بديلة: الصورة بتتشال بدل علامة الصورة المكسورة
                     image.src = shown.currentSrc || shown.getAttribute('src');
                     item.appendChild(image);
                 }
