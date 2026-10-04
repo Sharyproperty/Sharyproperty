@@ -3174,7 +3174,7 @@
         var opener = event.target.closest ? event.target.closest('[data-ask-ai]') : null;
         if (!opener) return;
         var scope = opener.closest('main');
-        var panel = (scope && scope.querySelector('[data-ai-panel]')) || document.querySelector('[data-ai-panel]');
+        var panel = (scope && scope.querySelector('[data-ai-panel]')) || (opener.closest('[lang]') || document).querySelector('[data-ai-panel]');
         if (!panel || !panel.sharyOpen) return;
         event.preventDefault();
         panel.sharyOpen(opener);
