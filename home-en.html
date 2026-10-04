@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=d0fdfc31">
+<link rel="stylesheet" href="a/site.css?v=308d1da2">
 </head><body>
 
 
@@ -26,7 +26,17 @@ window.addEventListener('load', function () {
 
 <header class="sticky top-0 z-30 rounded-b-[28px] bg-white shadow-[0_6px_18px_rgba(18,58,92,0.10)] lg:rounded-none lg:shadow-[0_2px_10px_rgba(18,58,92,0.06)]">
 <div class="site-container flex items-center justify-between py-3.5 lg:justify-start lg:py-4">
-<a href="#pv:/app" class="flex h-11 shrink-0 items-center rounded-full bg-shary-action px-3 text-[13px] font-bold leading-normal text-white shadow-[0_4px_10px_rgba(18,58,92,0.28)] min-[380px]:px-4 min-[380px]:text-[14px] lg:hidden">Open App</a>
+
+<a href="#pv:/app" class="app-btn lg:hidden" data-app-button data-state="get"
+data-android-url="https://play.google.com/store/apps/details?id=com.sharyproperties.app" data-ios-url="https://apps.apple.com/us/app/shary-real-state/id6743754160"
+data-open-url="#pv:/app" data-android-package="com.sharyproperties.app"
+data-label-get="Get the App" data-label-open="Open App">
+<span class="app-btn__icon" aria-hidden="true">
+<svg data-app-icon="get" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
+<svg data-app-icon="open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7"/><path d="M9.5 7H17v7.5"/></svg>
+</span>
+<span data-app-label>Get the App</span>
+</a>
 
 <a href="#pv:/" class="shrink-0" aria-label="Shary — Home">
 <img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="125" height="30" class="h-[22px] w-auto min-[360px]:h-[26px] min-[380px]:h-[30px] lg:h-9">
@@ -133,6 +143,17 @@ window.addEventListener('load', function () {
 </svg>
 </span>
 <span class="min-w-0 flex-1">Search</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="shary-index-en.html" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 20h16"/><path d="m5 15.5 4-4.5 3.5 3L19 7"/><path d="M15 7h4v4"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">Shary Index</span>
 <svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </li>
@@ -361,6 +382,79 @@ data-compare-link data-base="compare-en.html" >
 </nav>
 </header>
 <main data-view="home"><script>
+/* المعاينة: صور وأيقونات الهوم بتيجي من shary.eg. لو المكان اللي المعاينة مفتوحة فيه مانع الصور الخارجية (أو اللينك ما فتحش)
+   بتظهر مكانها صورة تجريبية / أيقونة مرسومة، عشان الكروت تفضل ظاهرة كاملة. في الموقع نفسه الجزء ده مش مطلوب. */
+(function () {
+  var A = (window.PV_ASSETS || 'a/') + 'images/shary/area-samples/project-';
+  var PHOTOS = ['sky-park', 'city-gate', 'eastvale', 'ark', 'nova', 'galleria', 'lake-view', 'palm-hills', 'the-pulse'].map(function (n) { return A + n + '.jpg'; });
+  function svg(body, box, extra) { return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + (box || '0 0 24 24') + '" ' + (extra || 'fill="none" stroke="#1e4166" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"') + '>' + body + '</svg>'); }
+  var ICONS = {
+    'bed': svg('<path d="M3 18v-6.5A2.5 2.5 0 0 1 5.5 9h13a2.5 2.5 0 0 1 2.5 2.5V18"/><path d="M3 15h18M5.5 9V6.5h13V9M3 18v1.5M21 18v1.5"/>'),
+    'bath': svg('<path d="M3 12h18v2.5a4.5 4.5 0 0 1-4.5 4.5h-9A4.5 4.5 0 0 1 3 14.5V12Z"/><path d="M6 12V6.5A2.5 2.5 0 0 1 8.5 4c1.2 0 2 .8 2.3 1.8M7 19l-1 1.5M17 19l1 1.5"/>'),
+    'ruler': svg('<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h3M3 15h3M9 21v-3M15 21v-3"/>'),
+    'zoom': svg('<rect x="3" y="6.5" width="12" height="11" rx="2.5"/><path d="m15 10.5 6-3v9l-6-3"/>'),
+    'white-star': svg('<path d="m12 3 2.7 5.6 6.1.8-4.5 4.3 1.1 6.1L12 16.9 6.6 19.8l1.1-6.1L3.2 9.4l6.1-.8L12 3Z"/>', null, 'fill="#fff"'),
+    'dropdown-arrow': svg('<path d="m6 9 6 6 6-6"/>'),
+    'offers-card-icon': svg('<path d="M3.5 12.5 12 4h7.5a.5.5 0 0 1 .5.5V12l-8.5 8.5a1.5 1.5 0 0 1-2.1 0l-5.9-5.9a1.5 1.5 0 0 1 0-2.1Z"/><circle cx="16" cy="8" r="1.4"/><path d="m9 13 4 4"/>'),
+    'trending-icon': svg('<path d="M3 17 9 11l4 4 8-8"/><path d="M15 7h6v6"/>'),
+    'full-egypt-map-icon': svg('<path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/>'),
+    'sell-icon': svg('<path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M9.5 14.5h5m0 0-1.8-1.8m1.8 1.8-1.8 1.8"/>'),
+    'rent-home': svg('<path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><circle cx="11" cy="15" r="1.8"/><path d="M12.5 14 15 11.5"/>')
+  };
+  var PHONE = svg('<rect x="6" y="6" width="188" height="388" rx="34" fill="#152d35" stroke="#183840" stroke-width="4"/><rect x="20" y="24" width="160" height="352" rx="20" fill="#f4fbfa"/><rect x="74" y="12" width="52" height="9" rx="4.5" fill="#243d42"/>'
+    + '<rect x="36" y="52" width="128" height="86" rx="14" fill="#2a9d8f"/><rect x="36" y="154" width="86" height="12" rx="6" fill="#7da4a5"/><rect x="36" y="176" width="56" height="10" rx="5" fill="#b7cfd0"/>'
+    + '<rect x="36" y="204" width="128" height="56" rx="12" fill="#fff" stroke="#d6e6e6" stroke-width="2"/><rect x="36" y="272" width="128" height="56" rx="12" fill="#fff" stroke="#d6e6e6" stroke-width="2"/><circle cx="62" cy="232" r="11" fill="#fcb424"/><circle cx="62" cy="300" r="11" fill="#1e4166"/>', '0 0 200 400', 'fill="none"');
+  var picked = {}, next = 0;
+  function initials(text) {
+    var words = String(text || '').replace(/[^A-Za-z؀-ۿ ]/g, ' ').trim().split(/ +/).filter(Boolean);
+    var latin = /[A-Za-z]/.test(words.join(''));
+    return (latin ? words.slice(0, 2).map(function (w) { return w.charAt(0).toUpperCase(); }).join('') : (words[0] || '').slice(0, 3)) || '•';
+  }
+  function fix(img) {
+    if (img.__pvFixed || !img.closest || !img.closest('.shary-home-root')) return;
+    img.__pvFixed = true;
+    var src = img.getAttribute('src') || '';
+    if (src.indexOf('data:') === 0) return;
+    var name = (src.split('?')[0].split('/').pop() || '').replace(/[.][a-z0-9]+$/i, '');
+    var picture = img.parentNode && img.parentNode.tagName === 'PICTURE' ? img.parentNode : null;
+    if (picture) Array.prototype.slice.call(picture.querySelectorAll('source')).forEach(function (s) { picture.removeChild(s); });
+    if (ICONS[name]) { img.src = ICONS[name]; return; }
+    if (/phone-/.test(name)) { img.src = PHONE; return; }
+    if (/images\/developers\//.test(src) || img.closest('.developer-card, .developer-logo')) {
+      img.src = svg('<rect width="120" height="120" rx="60" fill="#eef4f8"/><text x="60" y="72" text-anchor="middle" font-family="Arial, Tahoma, sans-serif" font-size="' + (/[A-Za-z]/.test(initials(img.alt)) ? 38 : 26) + '" font-weight="700" fill="#1e4166" stroke="none">' + initials(img.alt) + '</text>', '0 0 120 120', 'fill="none"');
+      return;
+    }
+    if (/responsive-image|\/images\/|sliders|test-1/.test(src)) {
+      if (!picked[src]) picked[src] = PHOTOS[next++ % PHOTOS.length];
+      img.src = picked[src];
+      return;
+    }
+    img.style.visibility = 'hidden';
+  }
+  document.addEventListener('error', function (event) { if (event.target && event.target.tagName === 'IMG') fix(event.target); }, true);
+  function sweep() {
+    Array.prototype.forEach.call(document.querySelectorAll('.shary-home-root img'), function (img) { if (img.complete && !img.naturalWidth && img.getAttribute('src')) fix(img); });
+  }
+  document.addEventListener('DOMContentLoaded', sweep);
+  window.addEventListener('load', function () { sweep(); setTimeout(sweep, 2500); });
+  // خلفيات الكروت اللي جاية من shary.eg (CSS): لو الموقع مش متاح بناخد خلفية هادية بدلها
+  var probe = new Image();
+  probe.onerror = function () {
+    document.documentElement.classList.add('home-offline');
+    function backgrounds() {
+      Array.prototype.forEach.call(document.querySelectorAll('.shary-home-root [style*="background-image"]'), function (el) {
+        var m = /url\(['"]?(https:\/\/shary\.eg[^'")]+)/.exec(el.getAttribute('style') || '');
+        if (!m) return;
+        if (!picked[m[1]]) picked[m[1]] = PHOTOS[next++ % PHOTOS.length];
+        el.style.backgroundImage = 'url("' + picked[m[1]] + '")';
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', backgrounds); else backgrounds();
+    window.addEventListener('load', backgrounds);
+  };
+  probe.src = 'https://shary.eg/front/images/shary-logo.svg';
+})();
+
 /* المعاينة: initSharySwiper بتيجي في الموقع من الـ layout — بتشغّل Swiper أول ما مكتبته تتحمل */
 if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = function (selector, options) {
   function run() { try { if (window.Swiper && document.querySelector(selector)) return new window.Swiper(selector, options); } catch (e) {} }
@@ -379,9 +473,10 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/11.0.5/swiper-bundle.min.css">
-<link rel="stylesheet" href="a/home.css?v=d0fdfc31">
-<link rel="stylesheet" href="a/home-tw.css?v=d0fdfc31">
+<link rel="stylesheet" href="a/home.css?v=308d1da2">
+<link rel="stylesheet" href="a/home-tw.css?v=308d1da2">
 <div class="shary-home-root" data-home-title="Home">
+<script>window.PV_HOME = {"areas": {"1": "new-cairo", "2": "north-coast", "3": "mostakbal-city", "4": "sheikh-zayed", "5": "new-capital", "6": "ain-sokhna", "7": "fifth-settlement", "8": "ras-el-hekma", "9": "al-dabaa"}, "developers": {"1": "mountain-view", "2": "tatweer-misr", "3": "lavista", "4": "madinet-masr", "5": "tmg", "6": "hassan-allam", "7": "times", "8": "reedy", "9": "roya"}, "types": {"1": "apartment", "2": "villa", "3": "townhouse", "4": "twin-house", "5": "chalet", "6": "duplex", "7": "studio", "8": "penthouse"}, "search": [{"type": "area", "id": 1, "name": "New Cairo", "location": "Area", "image": "https://shary.eg/images/countries/cities/67d4514935a3eTagmoa.webp.webp", "url": "new-cairo-en.html", "keys": "القاهرة الجديدة New Cairo"}, {"type": "area", "id": 2, "name": "North Coast", "location": "Area", "image": "https://shary.eg/images/countries/cities/684efc4286b8a6800123426027pngtree-tropical-island-with-palms-banner-image_1739922.jpg.jpg.jpg", "url": "north-coast-en.html", "keys": "الساحل الشمالي North Coast"}, {"type": "area", "id": 3, "name": "Mostakbal City", "location": "Area", "image": "https://shary.eg/images/countries/cities/67d451145b033mostakbal-city-e1654434561138.jpg.jpg", "url": "mostakbal-city-en.html", "keys": "مدينة المستقبل Mostakbal City"}, {"type": "area", "id": 4, "name": "Sheikh Zayed", "location": "Area", "image": "", "url": "sheikh-zayed-en.html", "keys": "الشيخ زايد Sheikh Zayed"}, {"type": "area", "id": 5, "name": "New Capital", "location": "Area", "image": "https://shary.eg/images/countries/cities/68000cfa80ba6W020201013583251989242.jpg.jpg", "url": "new-capital-en.html", "keys": "العاصمة الإدارية New Capital"}, {"type": "area", "id": 6, "name": "Ain Sokhna", "location": "Area", "image": "https://shary.eg/images/countries/cities/67d4546ba2409%D9%82%D8%B1%D9%89-%D8%A7%D9%84%D8%B9%D9%8A%D9%86-%D8%A7%D9%84%D8%B3%D8%AE%D9%86%D8%A9.jpg.jpg", "url": "ain-sokhna-en.html", "keys": "العين السخنة Ain Sokhna"}, {"type": "area", "id": 7, "name": "Fifth Settlement", "location": "Area", "image": "https://shary.eg/images/countries/cities/67d4516969e6bTagmoa.webp.webp", "url": "fifth-settlement-en.html", "keys": "التجمع الخامس Fifth Settlement"}, {"type": "area", "id": 8, "name": "Ras El Hekma", "location": "Area", "image": "", "url": "ras-el-hekma-en.html", "keys": "رأس الحكمة Ras El Hekma"}, {"type": "area", "id": 9, "name": "Al Dabaa", "location": "Area", "image": "", "url": "al-dabaa-en.html", "keys": "الضبعة Al Dabaa"}, {"type": "developer", "id": 1, "name": "Mountain View", "location": "Developer", "image": "https://shary.eg/images/developers/67fe552ee6717IMG-20250415-WA0040.jpg.jpg", "url": "mountain-view-en.html", "keys": "ماونتن فيو Mountain View"}, {"type": "developer", "id": 2, "name": "Tatweer Misr", "location": "Developer", "image": "https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png", "url": "mountain-view-en.html", "keys": "تطوير مصر Tatweer Misr"}, {"type": "developer", "id": 3, "name": "La Vista", "location": "Developer", "image": "https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png", "url": "mountain-view-en.html", "keys": "لافيستا La Vista"}, {"type": "developer", "id": 4, "name": "Madinet Masr", "location": "Developer", "image": "https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png", "url": "mountain-view-en.html", "keys": "مدينة مصر Madinet Masr"}, {"type": "developer", "id": 5, "name": "Talaat Moustafa Group", "location": "Developer", "image": "https://shary.eg/images/developers/67ea9431c84fddownload.jpg.jpg", "url": "mountain-view-en.html", "keys": "طلعت مصطفى Talaat Moustafa Group"}, {"type": "developer", "id": 6, "name": "Hassan Allam", "location": "Developer", "image": "https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png", "url": "mountain-view-en.html", "keys": "حسن علام Hassan Allam"}, {"type": "developer", "id": 7, "name": "Times Developments", "location": "Developer", "image": "https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png", "url": "mountain-view-en.html", "keys": "تايمز Times Developments"}, {"type": "developer", "id": 8, "name": "Reedy Group", "location": "Developer", "image": "", "url": "mountain-view-en.html", "keys": "ريدي جروب Reedy Group"}, {"type": "developer", "id": 9, "name": "Roya", "location": "Developer", "image": "", "url": "mountain-view-en.html", "keys": "رؤية Roya"}, {"type": "project", "id": 101, "area_id": 3, "name": "Scenes", "location": "Mostakbal City — Tatweer Misr", "image": "https://shary.eg/responsive-image/480/images/compounds/6abe66916712d-scenes-mostakbal-city-3.webp?v=2", "url": "project-en.html", "keys": "كمبوند سينز Scenes", "slug": "scenes"}, {"type": "project", "id": 102, "area_id": 2, "name": "La Vista Bay", "location": "North Coast — La Vista", "image": "https://shary.eg/responsive-image/480/images/compounds/6aa167d4df6e4-la-vista-bay-north-coast-3.webp?v=2", "url": "project-en.html", "keys": "قرية لافيستا باي La Vista Bay", "slug": "la-vista-bay"}, {"type": "project", "id": 103, "area_id": 1, "name": "Avelin", "location": "New Cairo — Times Developments", "image": "https://shary.eg/responsive-image/480/images/compounds/6abe177d75fc4-untitled-design.webp?v=2", "url": "project-en.html", "keys": "كمبوند افيلين Avelin", "slug": "avelin"}, {"type": "project", "id": 104, "area_id": 1, "name": "Etaje", "location": "New Cairo — Madinet Masr", "image": "https://shary.eg/responsive-image/480/images/compounds/6abbbdc4e424e-etaje-460x200.webp?v=2", "url": "project-en.html", "keys": "كمبوند ايتاج Etaje", "slug": "etaje"}, {"type": "project", "id": 105, "area_id": 9, "name": "Beyond Blue", "location": "Al Dabaa — Reedy Group", "image": "https://shary.eg/responsive-image/480/images/compounds/6abe5f996e626-beyond-blue-nighttime-poolside-sanctuary.webp?v=2", "url": "project-en.html", "keys": "بيوند بلو Beyond Blue", "slug": "beyond-blue"}, {"type": "project", "id": 106, "area_id": 2, "name": "Telal", "location": "North Coast — Roya", "image": "https://shary.eg/responsive-image/480/images/compounds/6aa6aa7e1ebea-telal-north-coast-1.webp?v=2", "url": "project-en.html", "keys": "قرية تلال Telal", "slug": "telal"}]};</script>
     <style>
         .site-breadcrumb + #main-content > main {
             padding-top: 0px !important;
@@ -577,7 +672,6 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                             data-filter="sale_type"
                             data-value="rent"
                             aria-selected="false"
-                            id="rent-filter-btn"
                         >
                             <span class="search-tab-icon">
                                 <svg
@@ -1571,9 +1665,10 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
         <!-- Market ticker -->
         <section class="mt-3 md:mt-20 relative z-2 market-ticker-section" dir="ltr">
             <div class="mobile-full container-x md:pt-10">
-                <div class="market-ticker bg-navy text-white rounded-3xl shadow-soft overflow-hidden px-0 md:p-2">
+                
+                <div class="market-ticker bg-navy text-white rounded-3xl shadow-soft overflow-hidden px-0 md:p-2" style="cursor: pointer;" onclick="window.location.href = 'shary-index-en.html'">
                     
-                    <div class="market-ticker-badge">
+                    <a href="shary-index-en.html" class="market-ticker-badge" style="color: inherit; text-decoration: none;" aria-label="Shary Index">
                         <div class="market-ticker-badge-inner">
                             <span class="market-ticker-dot"></span>
                             <span class="mx-0">
@@ -1582,7 +1677,7 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                                 ›
                             </span>
                         </div>
-                    </div>
+                    </a>
 
                     
                     <div class="market-ticker-viewport">
@@ -1753,24 +1848,34 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
 
                 <!-- Investment shortcuts -->
                 <div class="horizontal-scroll investment-shortcuts">
-                                            <a href="search-en.html"
+                                            <a href="search-en.html?hs=%7B%22offer%22%3A%22developer%22%7D#search-all/en"
                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
-                                    <img src="" />
+                                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 fill=%22none%22 stroke=%22%231D4265%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M9 41V13l14-6v34%22/%3E%3Cpath d=%22M23 41V19l14 5v17%22/%3E%3Cpath d=%22M5 41h38%22/%3E%3Cpath stroke=%22%232FB5A5%22 d=%22M14 18h4M14 24h4M14 30h4M28 28h4M28 34h4%22/%3E%3C/svg%3E" />
                                 </div>
                                 <span class="text-[#1A2028]">Developer Units</span>
                             </div>
                         </a>
-                                            <a href="search-en.html?sale_type=resale"
+                                            <a href="search-en.html?hs=%7B%22offer%22%3A%22resale%22%7D#search-all/en"
                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
-                                    <img src="" />
+                                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 fill=%22none%22 stroke=%22%231D4265%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M8 22 24 9l16 13%22/%3E%3Cpath d=%22M12 20v19h24V20%22/%3E%3Cpath stroke=%22%232FB5A5%22 d=%22M19 30h10M26 26l4 4-4 4%22/%3E%3Cpath stroke=%22%232FB5A5%22 d=%22M22 34l-4-4%22/%3E%3C/svg%3E" />
                                 </div>
                                 <span class="text-[#1A2028]">Resale</span>
+                            </div>
+                        </a>
+                                            <a href="rent-en.html"
+                                                            onclick="handleInvestmentLink(event, this)"
+                                                    >
+                            <div class="investment-shortcut">
+                                <div class="investment-shortcut-icon">
+                                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 fill=%22none%22 stroke=%22%231D4265%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M8 22 24 9l16 13%22/%3E%3Cpath d=%22M12 20v19h24V20%22/%3E%3Ccircle stroke=%22%232FB5A5%22 cx=%2221%22 cy=%2231%22 r=%223.5%22/%3E%3Cpath stroke=%22%232FB5A5%22 d=%22m23.5 28.5 6-6m-2.5 2.5 2.5 2.5%22/%3E%3C/svg%3E" />
+                                </div>
+                                <span class="text-[#1A2028]">Rent Units</span>
                             </div>
                         </a>
                                             <a href="offers-en.html"
@@ -1778,7 +1883,7 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
-                                    <img src="" />
+                                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 fill=%22none%22 stroke=%22%231D4265%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M25 7h14v14L22 39 8 25 25 7Z%22/%3E%3Ccircle stroke=%22%232FB5A5%22 cx=%2232%22 cy=%2215%22 r=%222.6%22/%3E%3Cpath stroke=%22%232FB5A5%22 d=%22M18 27l8-8%22/%3E%3Ccircle stroke=%22%232FB5A5%22 cx=%2218%22 cy=%2220.5%22 r=%221.4%22/%3E%3Ccircle stroke=%22%232FB5A5%22 cx=%2225.5%22 cy=%2227%22 r=%221.4%22/%3E%3C/svg%3E" />
                                 </div>
                                 <span class="text-[#1A2028]">Exclusive Offers</span>
                             </div>
@@ -1788,7 +1893,7 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
-                                    <img src="" />
+                                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 fill=%22none%22 stroke=%22%231D4265%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Crect x=%228%22 y=%2210%22 width=%2232%22 height=%2230%22 rx=%224%22/%3E%3Cpath d=%22M8 18h32M16 6v8M32 6v8%22/%3E%3Cpath stroke=%22%232FB5A5%22 d=%22M15 26h6M15 33h6M27 30l3 3 6-7%22/%3E%3C/svg%3E" />
                                 </div>
                                 <span class="text-[#1A2028]">Installment Tracking</span>
                             </div>
@@ -1798,7 +1903,7 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
-                                    <img src="" />
+                                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 fill=%22none%22 stroke=%22%231D4265%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Ccircle cx=%2224%22 cy=%2224%22 r=%2216%22/%3E%3Cpath d=%22M24 8v16l12 10%22/%3E%3Cpath stroke=%22%232FB5A5%22 d=%22M24 24 12 34%22/%3E%3C/svg%3E" />
                                 </div>
                                 <span class="text-[#1A2028]">Fractional Investment</span>
                             </div>
@@ -1808,7 +1913,7 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
-                                    <img src="" />
+                                    <img src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 48 48%22 fill=%22none%22 stroke=%22%231D4265%22 stroke-width=%222.4%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpath d=%22M6 19 24 8l18 11H6Z%22/%3E%3Cpath d=%22M11 19v15M19 19v15M29 19v15M37 19v15M6 40h36M9 34h30%22/%3E%3Ccircle stroke=%22%232FB5A5%22 cx=%2224%22 cy=%2214.5%22 r=%221.6%22/%3E%3C/svg%3E" />
                                 </div>
                                 <span class="text-[#1A2028]">Mortgage</span>
                             </div>
@@ -1933,21 +2038,15 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                             <div class="property-actions" onclick="event.stopPropagation()">
                                 <div class="property-actions-row grid grid-cols-3 gap-2">
 
-                                    <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="project" data-compare-id="scenes" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="projects/scenes" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="project-en.html" data-share-title="scenes" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                    <button type="button" class="area-action" data-compare-toggle data-compare-type="project" data-compare-id="scenes" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="projects/scenes" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="project-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                 </div>
                             </div>
 
@@ -1963,21 +2062,15 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                             <div class="property-actions" onclick="event.stopPropagation()">
                                 <div class="property-actions-row grid grid-cols-3 gap-2">
 
-                                    <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="project" data-compare-id="la-vista-bay" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="projects/la-vista-bay" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="project-en.html" data-share-title="la-vista-bay" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                    <button type="button" class="area-action" data-compare-toggle data-compare-type="project" data-compare-id="la-vista-bay" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="projects/la-vista-bay" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="project-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                 </div>
                             </div>
 
@@ -1993,21 +2086,15 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                             <div class="property-actions" onclick="event.stopPropagation()">
                                 <div class="property-actions-row grid grid-cols-3 gap-2">
 
-                                    <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="project" data-compare-id="avelin" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="projects/avelin" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="project-en.html" data-share-title="avelin" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                    <button type="button" class="area-action" data-compare-toggle data-compare-type="project" data-compare-id="avelin" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="projects/avelin" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="project-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                 </div>
                             </div>
 
@@ -2023,21 +2110,15 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                             <div class="property-actions" onclick="event.stopPropagation()">
                                 <div class="property-actions-row grid grid-cols-3 gap-2">
 
-                                    <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="project" data-compare-id="etaje" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="projects/etaje" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="project-en.html" data-share-title="etaje" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                    <button type="button" class="area-action" data-compare-toggle data-compare-type="project" data-compare-id="etaje" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="projects/etaje" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="project-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                 </div>
                             </div>
 
@@ -2053,21 +2134,15 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                             <div class="property-actions" onclick="event.stopPropagation()">
                                 <div class="property-actions-row grid grid-cols-3 gap-2">
 
-                                    <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="project" data-compare-id="beyond-blue" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="projects/beyond-blue" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="project-en.html" data-share-title="beyond-blue" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                    <button type="button" class="area-action" data-compare-toggle data-compare-type="project" data-compare-id="beyond-blue" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="projects/beyond-blue" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="project-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                 </div>
                             </div>
 
@@ -2425,10 +2500,22 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                             <img src="https://shary.eg/responsive-image/480/images/compounds/6abe66916712d-scenes-mostakbal-city-3.webp?v=2" class="object-fill" style="width: 100%;"/>
                         </div>
                                             
+                        <div class="shary-promo-banner" onclick="window.location.href = 'javascript:redirectToStore()'"
+
+                        >
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDMyMCIgZm9udC1mYW1pbHk9IkFsbWFyYWksIENhaXJvLCBUYWhvbWEsIEFyaWFsLCBzYW5zLXNlcmlmIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwLjM1Ij48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMmZhZTlmIi8+PHN0b3Agb2Zmc2V0PSIzMyUiIHN0b3AtY29sb3I9IiMzZGJiYjAiLz48c3RvcCBvZmZzZXQ9IjY3JSIgc3RvcC1jb2xvcj0iIzhiZDhkMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Q4ZjNlZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9Ijc3MCIgY3k9IjE3MCIgcj0iMTUwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTQiLz48Y2lyY2xlIGN4PSI3NzAiIGN5PSIxNzAiIHI9IjEwNCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE2Ii8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzcwIDE2Nikgcm90YXRlKC03KSI+PHJlY3QgeD0iLTcwIiB5PSItMTQwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjI4MCIgcng9IjI0IiBmaWxsPSIjMTUyZDM1IiBzdHJva2U9IiMxODM4NDAiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9Ii01OCIgeT0iLTEyNiIgd2lkdGg9IjExNiIgaGVpZ2h0PSIyNTIiIHJ4PSIxNSIgZmlsbD0iI2Y0ZmJmYSIvPjxyZWN0IHg9Ii0yMCIgeT0iLTEzNCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjciIHJ4PSIzLjUiIGZpbGw9IiMyNDNkNDIiLz48cmVjdCB4PSItNDYiIHk9Ii0xMDQiIHdpZHRoPSI5MiIgaGVpZ2h0PSI2MiIgcng9IjEwIiBmaWxsPSIjMmE5ZDhmIi8+PHJlY3QgeD0iLTQ2IiB5PSItMzAiIHdpZHRoPSI2MiIgaGVpZ2h0PSI5IiByeD0iNC41IiBmaWxsPSIjN2RhNGE1Ii8+PHJlY3QgeD0iLTQ2IiB5PSItMTIiIHdpZHRoPSI0MCIgaGVpZ2h0PSI4IiByeD0iNCIgZmlsbD0iI2I3Y2ZkMCIvPjxyZWN0IHg9Ii00NiIgeT0iMTAiIHdpZHRoPSI5MiIgaGVpZ2h0PSI0MCIgcng9IjkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q2ZTZlNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iLTQ2IiB5PSI2MCIgd2lkdGg9IjkyIiBoZWlnaHQ9IjQwIiByeD0iOSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDZlNmU2IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSItMjgiIGN5PSIzMCIgcj0iOCIgZmlsbD0iI2ZjYjQyNCIvPjxjaXJjbGUgY3g9Ii0yOCIgY3k9IjgwIiByPSI4IiBmaWxsPSIjMWU0MTY2Ii8+PC9nPjx0ZXh0IHg9IjQ4IiB5PSI5NiIgZm9udC1zaXplPSI1MCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iIzBmMzM1MCIgZGlyZWN0aW9uPSJsdHIiPkRvd25sb2FkIHRoZSBTaGFyeSBhcHA8L3RleHQ+PHRleHQgeD0iNDgiIHk9IjE1MCIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iIzBmMzM1MCIgb3BhY2l0eT0iLjkyIiBkaXJlY3Rpb249Imx0ciI+U2VhcmNoLCBjb21wYXJlIGFuZCB0cmFjayB5b3VyIGluc3RhbGxtZW50czwvdGV4dD48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OCAyMTQpIj48cmVjdCB3aWR0aD0iMTcyIiBoZWlnaHQ9IjU4IiByeD0iMTQiIGZpbGw9IiMxMjNhNWMiLz48cGF0aCBkPSJNMzAgMTd2MTltMCAwLTgtOG04IDggOC04TTIwIDQzaDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMy40IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48dGV4dCB4PSI1MiIgeT0iMzciIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmZmZmZmYiIGRpcmVjdGlvbj0ibHRyIj5Hb29nbGUgUGxheTwvdGV4dD48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjMyIDIxNCkiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iNTgiIHJ4PSIxNCIgZmlsbD0iIzEyM2E1YyIvPjxwYXRoIGQ9Ik0zMCAxN3YxOW0wIDAtOC04bTggOCA4LThNMjAgNDNoMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIzLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjx0ZXh0IHg9IjUyIiB5PSIzNyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZGlyZWN0aW9uPSJsdHIiPkFwcCBTdG9yZTwvdGV4dD48L2c+PC9zdmc+" class="object-fill" style="width: 100%;"/>
+                        </div>
+                                            
                         <div class="shary-promo-banner" onclick="window.location.href = 'project-en.html'"
 
                         >
                             <img src="https://shary.eg/responsive-image/480/images/compounds/6aa167d4df6e4-la-vista-bay-north-coast-3.webp?v=2" class="object-fill" style="width: 100%;"/>
+                        </div>
+                                            
+                        <div class="shary-promo-banner" onclick="window.location.href = 'javascript:redirectToStore()'"
+
+                        >
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDMyMCIgZm9udC1mYW1pbHk9IkFsbWFyYWksIENhaXJvLCBUYWhvbWEsIEFyaWFsLCBzYW5zLXNlcmlmIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwLjM1Ij48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTIzYTVjIi8+PHN0b3Agb2Zmc2V0PSIzMyUiIHN0b3AtY29sb3I9IiMxZTQxNjYiLz48c3RvcCBvZmZzZXQ9IjY3JSIgc3RvcC1jb2xvcj0iIzI1NmY3ZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJhOWQ4ZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9Ijc3MCIgY3k9IjE3MCIgcj0iMTUwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTQiLz48Y2lyY2xlIGN4PSI3NzAiIGN5PSIxNzAiIHI9IjEwNCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE2Ii8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzcwIDE2Nikgcm90YXRlKC03KSI+PHJlY3QgeD0iLTcwIiB5PSItMTQwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjI4MCIgcng9IjI0IiBmaWxsPSIjMTUyZDM1IiBzdHJva2U9IiMxODM4NDAiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9Ii01OCIgeT0iLTEyNiIgd2lkdGg9IjExNiIgaGVpZ2h0PSIyNTIiIHJ4PSIxNSIgZmlsbD0iI2Y0ZmJmYSIvPjxyZWN0IHg9Ii0yMCIgeT0iLTEzNCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjciIHJ4PSIzLjUiIGZpbGw9IiMyNDNkNDIiLz48cmVjdCB4PSItNDYiIHk9Ii0xMDQiIHdpZHRoPSI5MiIgaGVpZ2h0PSI2MiIgcng9IjEwIiBmaWxsPSIjMmE5ZDhmIi8+PHJlY3QgeD0iLTQ2IiB5PSItMzAiIHdpZHRoPSI2MiIgaGVpZ2h0PSI5IiByeD0iNC41IiBmaWxsPSIjN2RhNGE1Ii8+PHJlY3QgeD0iLTQ2IiB5PSItMTIiIHdpZHRoPSI0MCIgaGVpZ2h0PSI4IiByeD0iNCIgZmlsbD0iI2I3Y2ZkMCIvPjxyZWN0IHg9Ii00NiIgeT0iMTAiIHdpZHRoPSI5MiIgaGVpZ2h0PSI0MCIgcng9IjkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q2ZTZlNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iLTQ2IiB5PSI2MCIgd2lkdGg9IjkyIiBoZWlnaHQ9IjQwIiByeD0iOSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDZlNmU2IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSItMjgiIGN5PSIzMCIgcj0iOCIgZmlsbD0iI2ZjYjQyNCIvPjxjaXJjbGUgY3g9Ii0yOCIgY3k9IjgwIiByPSI4IiBmaWxsPSIjMWU0MTY2Ii8+PC9nPjx0ZXh0IHg9IjQ4IiB5PSI5NiIgZm9udC1zaXplPSI1MCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiIgZGlyZWN0aW9uPSJsdHIiPkRvd25sb2FkIHRoZSBTaGFyeSBhcHA8L3RleHQ+PHRleHQgeD0iNDgiIHk9IjE1MCIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iLjkyIiBkaXJlY3Rpb249Imx0ciI+U2VhcmNoLCBjb21wYXJlIGFuZCB0cmFjayB5b3VyIGluc3RhbGxtZW50czwvdGV4dD48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OCAyMTQpIj48cmVjdCB3aWR0aD0iMTcyIiBoZWlnaHQ9IjU4IiByeD0iMTQiIGZpbGw9IiNmY2I0MjQiLz48cGF0aCBkPSJNMzAgMTd2MTltMCAwLTgtOG04IDggOC04TTIwIDQzaDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxMjNhNWMiIHN0cm9rZS13aWR0aD0iMy40IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48dGV4dCB4PSI1MiIgeT0iMzciIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjNhNWMiIGRpcmVjdGlvbj0ibHRyIj5Hb29nbGUgUGxheTwvdGV4dD48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjMyIDIxNCkiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iNTgiIHJ4PSIxNCIgZmlsbD0iI2ZjYjQyNCIvPjxwYXRoIGQ9Ik0zMCAxN3YxOW0wIDAtOC04bTggOCA4LThNMjAgNDNoMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzEyM2E1YyIgc3Ryb2tlLXdpZHRoPSIzLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjx0ZXh0IHg9IjUyIiB5PSIzNyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzEyM2E1YyIgZGlyZWN0aW9uPSJsdHIiPkFwcCBTdG9yZTwvdGV4dD48L2c+PC9zdmc+" class="object-fill" style="width: 100%;"/>
                         </div>
                                             
                         <div class="shary-promo-banner" onclick="window.location.href = 'search-en.html'"
@@ -2453,9 +2540,17 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                     >
                         <img src="https://shary.eg/responsive-image/480/images/compounds/6abe66916712d-scenes-mostakbal-city-3.webp?v=2" alt="" loading="lazy">
                     </div>
+                                                        <div class="mobile-promo-slide" onclick="window.location.href = 'javascript:redirectToStore()'"
+                    >
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDMyMCIgZm9udC1mYW1pbHk9IkFsbWFyYWksIENhaXJvLCBUYWhvbWEsIEFyaWFsLCBzYW5zLXNlcmlmIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwLjM1Ij48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMmZhZTlmIi8+PHN0b3Agb2Zmc2V0PSIzMyUiIHN0b3AtY29sb3I9IiMzZGJiYjAiLz48c3RvcCBvZmZzZXQ9IjY3JSIgc3RvcC1jb2xvcj0iIzhiZDhkMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2Q4ZjNlZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9Ijc3MCIgY3k9IjE3MCIgcj0iMTUwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTQiLz48Y2lyY2xlIGN4PSI3NzAiIGN5PSIxNzAiIHI9IjEwNCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE2Ii8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzcwIDE2Nikgcm90YXRlKC03KSI+PHJlY3QgeD0iLTcwIiB5PSItMTQwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjI4MCIgcng9IjI0IiBmaWxsPSIjMTUyZDM1IiBzdHJva2U9IiMxODM4NDAiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9Ii01OCIgeT0iLTEyNiIgd2lkdGg9IjExNiIgaGVpZ2h0PSIyNTIiIHJ4PSIxNSIgZmlsbD0iI2Y0ZmJmYSIvPjxyZWN0IHg9Ii0yMCIgeT0iLTEzNCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjciIHJ4PSIzLjUiIGZpbGw9IiMyNDNkNDIiLz48cmVjdCB4PSItNDYiIHk9Ii0xMDQiIHdpZHRoPSI5MiIgaGVpZ2h0PSI2MiIgcng9IjEwIiBmaWxsPSIjMmE5ZDhmIi8+PHJlY3QgeD0iLTQ2IiB5PSItMzAiIHdpZHRoPSI2MiIgaGVpZ2h0PSI5IiByeD0iNC41IiBmaWxsPSIjN2RhNGE1Ii8+PHJlY3QgeD0iLTQ2IiB5PSItMTIiIHdpZHRoPSI0MCIgaGVpZ2h0PSI4IiByeD0iNCIgZmlsbD0iI2I3Y2ZkMCIvPjxyZWN0IHg9Ii00NiIgeT0iMTAiIHdpZHRoPSI5MiIgaGVpZ2h0PSI0MCIgcng9IjkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q2ZTZlNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iLTQ2IiB5PSI2MCIgd2lkdGg9IjkyIiBoZWlnaHQ9IjQwIiByeD0iOSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDZlNmU2IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSItMjgiIGN5PSIzMCIgcj0iOCIgZmlsbD0iI2ZjYjQyNCIvPjxjaXJjbGUgY3g9Ii0yOCIgY3k9IjgwIiByPSI4IiBmaWxsPSIjMWU0MTY2Ii8+PC9nPjx0ZXh0IHg9IjQ4IiB5PSI5NiIgZm9udC1zaXplPSI1MCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iIzBmMzM1MCIgZGlyZWN0aW9uPSJsdHIiPkRvd25sb2FkIHRoZSBTaGFyeSBhcHA8L3RleHQ+PHRleHQgeD0iNDgiIHk9IjE1MCIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iIzBmMzM1MCIgb3BhY2l0eT0iLjkyIiBkaXJlY3Rpb249Imx0ciI+U2VhcmNoLCBjb21wYXJlIGFuZCB0cmFjayB5b3VyIGluc3RhbGxtZW50czwvdGV4dD48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OCAyMTQpIj48cmVjdCB3aWR0aD0iMTcyIiBoZWlnaHQ9IjU4IiByeD0iMTQiIGZpbGw9IiMxMjNhNWMiLz48cGF0aCBkPSJNMzAgMTd2MTltMCAwLTgtOG04IDggOC04TTIwIDQzaDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmZmZmYiIHN0cm9rZS13aWR0aD0iMy40IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48dGV4dCB4PSI1MiIgeT0iMzciIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiNmZmZmZmYiIGRpcmVjdGlvbj0ibHRyIj5Hb29nbGUgUGxheTwvdGV4dD48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjMyIDIxNCkiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iNTgiIHJ4PSIxNCIgZmlsbD0iIzEyM2E1YyIvPjxwYXRoIGQ9Ik0zMCAxN3YxOW0wIDAtOC04bTggOCA4LThNMjAgNDNoMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSIzLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjx0ZXh0IHg9IjUyIiB5PSIzNyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iI2ZmZmZmZiIgZGlyZWN0aW9uPSJsdHIiPkFwcCBTdG9yZTwvdGV4dD48L2c+PC9zdmc+" alt="" loading="lazy">
+                    </div>
                                                         <div class="mobile-promo-slide" onclick="window.location.href = 'project-en.html'"
                     >
                         <img src="https://shary.eg/responsive-image/480/images/compounds/6aa167d4df6e4-la-vista-bay-north-coast-3.webp?v=2" alt="" loading="lazy">
+                    </div>
+                                                        <div class="mobile-promo-slide" onclick="window.location.href = 'javascript:redirectToStore()'"
+                    >
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDMyMCIgZm9udC1mYW1pbHk9IkFsbWFyYWksIENhaXJvLCBUYWhvbWEsIEFyaWFsLCBzYW5zLXNlcmlmIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIwLjM1Ij48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjMTIzYTVjIi8+PHN0b3Agb2Zmc2V0PSIzMyUiIHN0b3AtY29sb3I9IiMxZTQxNjYiLz48c3RvcCBvZmZzZXQ9IjY3JSIgc3RvcC1jb2xvcj0iIzI1NmY3ZCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJhOWQ4ZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAwIiBoZWlnaHQ9IjMyMCIgZmlsbD0idXJsKCNnKSIvPjxjaXJjbGUgY3g9Ijc3MCIgY3k9IjE3MCIgcj0iMTUwIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuMTQiLz48Y2lyY2xlIGN4PSI3NzAiIGN5PSIxNzAiIHI9IjEwNCIgZmlsbD0iI2ZmZiIgb3BhY2l0eT0iLjE2Ii8+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzcwIDE2Nikgcm90YXRlKC03KSI+PHJlY3QgeD0iLTcwIiB5PSItMTQwIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjI4MCIgcng9IjI0IiBmaWxsPSIjMTUyZDM1IiBzdHJva2U9IiMxODM4NDAiIHN0cm9rZS13aWR0aD0iMyIvPjxyZWN0IHg9Ii01OCIgeT0iLTEyNiIgd2lkdGg9IjExNiIgaGVpZ2h0PSIyNTIiIHJ4PSIxNSIgZmlsbD0iI2Y0ZmJmYSIvPjxyZWN0IHg9Ii0yMCIgeT0iLTEzNCIgd2lkdGg9IjQwIiBoZWlnaHQ9IjciIHJ4PSIzLjUiIGZpbGw9IiMyNDNkNDIiLz48cmVjdCB4PSItNDYiIHk9Ii0xMDQiIHdpZHRoPSI5MiIgaGVpZ2h0PSI2MiIgcng9IjEwIiBmaWxsPSIjMmE5ZDhmIi8+PHJlY3QgeD0iLTQ2IiB5PSItMzAiIHdpZHRoPSI2MiIgaGVpZ2h0PSI5IiByeD0iNC41IiBmaWxsPSIjN2RhNGE1Ii8+PHJlY3QgeD0iLTQ2IiB5PSItMTIiIHdpZHRoPSI0MCIgaGVpZ2h0PSI4IiByeD0iNCIgZmlsbD0iI2I3Y2ZkMCIvPjxyZWN0IHg9Ii00NiIgeT0iMTAiIHdpZHRoPSI5MiIgaGVpZ2h0PSI0MCIgcng9IjkiIGZpbGw9IiNmZmYiIHN0cm9rZT0iI2Q2ZTZlNiIgc3Ryb2tlLXdpZHRoPSIyIi8+PHJlY3QgeD0iLTQ2IiB5PSI2MCIgd2lkdGg9IjkyIiBoZWlnaHQ9IjQwIiByeD0iOSIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjZDZlNmU2IiBzdHJva2Utd2lkdGg9IjIiLz48Y2lyY2xlIGN4PSItMjgiIGN5PSIzMCIgcj0iOCIgZmlsbD0iI2ZjYjQyNCIvPjxjaXJjbGUgY3g9Ii0yOCIgY3k9IjgwIiByPSI4IiBmaWxsPSIjMWU0MTY2Ii8+PC9nPjx0ZXh0IHg9IjQ4IiB5PSI5NiIgZm9udC1zaXplPSI1MCIgZm9udC13ZWlnaHQ9IjgwMCIgZmlsbD0iI2ZmZmZmZiIgZGlyZWN0aW9uPSJsdHIiPkRvd25sb2FkIHRoZSBTaGFyeSBhcHA8L3RleHQ+PHRleHQgeD0iNDgiIHk9IjE1MCIgZm9udC1zaXplPSIyNyIgZm9udC13ZWlnaHQ9IjYwMCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iLjkyIiBkaXJlY3Rpb249Imx0ciI+U2VhcmNoLCBjb21wYXJlIGFuZCB0cmFjayB5b3VyIGluc3RhbGxtZW50czwvdGV4dD48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OCAyMTQpIj48cmVjdCB3aWR0aD0iMTcyIiBoZWlnaHQ9IjU4IiByeD0iMTQiIGZpbGw9IiNmY2I0MjQiLz48cGF0aCBkPSJNMzAgMTd2MTltMCAwLTgtOG04IDggOC04TTIwIDQzaDIwIiBmaWxsPSJub25lIiBzdHJva2U9IiMxMjNhNWMiIHN0cm9rZS13aWR0aD0iMy40IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48dGV4dCB4PSI1MiIgeT0iMzciIGZvbnQtc2l6ZT0iMjAiIGZvbnQtd2VpZ2h0PSI3MDAiIGZpbGw9IiMxMjNhNWMiIGRpcmVjdGlvbj0ibHRyIj5Hb29nbGUgUGxheTwvdGV4dD48L2c+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjMyIDIxNCkiPjxyZWN0IHdpZHRoPSIxNzIiIGhlaWdodD0iNTgiIHJ4PSIxNCIgZmlsbD0iI2ZjYjQyNCIvPjxwYXRoIGQ9Ik0zMCAxN3YxOW0wIDAtOC04bTggOCA4LThNMjAgNDNoMjAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzEyM2E1YyIgc3Ryb2tlLXdpZHRoPSIzLjQiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjx0ZXh0IHg9IjUyIiB5PSIzNyIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9IjcwMCIgZmlsbD0iIzEyM2E1YyIgZGlyZWN0aW9uPSJsdHIiPkFwcCBTdG9yZTwvdGV4dD48L2c+PC9zdmc+" alt="" loading="lazy">
                     </div>
                                                         <div class="mobile-promo-slide" onclick="window.location.href = 'search-en.html'"
                     >
@@ -2659,21 +2754,15 @@ if (typeof window.initSharySwiper !== 'function') window.initSharySwiper = funct
                                                                                     </div>
                                         <div class="property-actions" onclick="event.stopPropagation()">
                                             <div class="property-actions-row grid grid-cols-3 gap-2">
-                                                <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="unit" data-compare-id="scenes-1" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="units/scenes-1" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="unit-en.html" data-share-title="scenes-1" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                                <button type="button" class="area-action" data-compare-toggle data-compare-type="unit" data-compare-id="scenes-1" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="units/scenes-1" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="unit-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                             </div>
                                         </div>
                                         <div class="property-location-city">
@@ -2794,21 +2883,15 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                                                                                     </div>
                                         <div class="property-actions" onclick="event.stopPropagation()">
                                             <div class="property-actions-row grid grid-cols-3 gap-2">
-                                                <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="unit" data-compare-id="la-vista-bay-1" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="units/la-vista-bay-1" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="unit-en.html" data-share-title="la-vista-bay-1" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                                <button type="button" class="area-action" data-compare-toggle data-compare-type="unit" data-compare-id="la-vista-bay-1" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="units/la-vista-bay-1" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="unit-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                             </div>
                                         </div>
                                         <div class="property-location-city">
@@ -2929,21 +3012,15 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                                                                                     </div>
                                         <div class="property-actions" onclick="event.stopPropagation()">
                                             <div class="property-actions-row grid grid-cols-3 gap-2">
-                                                <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="unit" data-compare-id="avelin-1" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="units/avelin-1" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="unit-en.html" data-share-title="avelin-1" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                                <button type="button" class="area-action" data-compare-toggle data-compare-type="unit" data-compare-id="avelin-1" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="units/avelin-1" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="unit-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                             </div>
                                         </div>
                                         <div class="property-location-city">
@@ -3063,21 +3140,15 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                                                                                     </div>
                                         <div class="property-actions" onclick="event.stopPropagation()">
                                             <div class="property-actions-row grid grid-cols-3 gap-2">
-                                                <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="unit" data-compare-id="etaje-1" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="units/etaje-1" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="unit-en.html" data-share-title="etaje-1" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                                <button type="button" class="area-action" data-compare-toggle data-compare-type="unit" data-compare-id="etaje-1" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="units/etaje-1" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="unit-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                             </div>
                                         </div>
                                         <div class="property-location-city">
@@ -3198,21 +3269,15 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                                                                                     </div>
                                         <div class="property-actions" onclick="event.stopPropagation()">
                                             <div class="property-actions-row grid grid-cols-3 gap-2">
-                                                <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="unit" data-compare-id="beyond-blue-1" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="units/beyond-blue-1" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="unit-en.html" data-share-title="beyond-blue-1" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                                <button type="button" class="area-action" data-compare-toggle data-compare-type="unit" data-compare-id="beyond-blue-1" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="units/beyond-blue-1" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="unit-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                             </div>
                                         </div>
                                         <div class="property-location-city">
@@ -3333,21 +3398,15 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                                                                                     </div>
                                         <div class="property-actions" onclick="event.stopPropagation()">
                                             <div class="property-actions-row grid grid-cols-3 gap-2">
-                                                <div class="compare-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-compare-toggle data-compare-type="unit" data-compare-id="telal-1" aria-pressed="false" aria-label="Compare">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
-    </button>
-</div>
-<div class="fav-icon compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-favorite-toggle data-favorite-id="units/telal-1" aria-pressed="false" aria-label="Add to favorites">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-    </button>
-</div>
-<div class="compact-action-icon shrink-0">
-    <button type="button" class="card-action-button cursor-pointer border-0" data-share-url="unit-en.html" data-share-title="telal-1" aria-label="Share">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
-    </button>
-</div>
+                                                <button type="button" class="area-action" data-compare-toggle data-compare-type="unit" data-compare-id="telal-1" aria-pressed="false" aria-label="Compare">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15" fill="currentColor"/></svg>
+</button>
+<button type="button" class="area-action group" data-favorite-toggle data-favorite-id="units/telal-1" aria-pressed="false" aria-label="Add to favorites">
+    <svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>
+</button>
+<button type="button" class="area-action" data-share-url="unit-en.html" data-share-title="" aria-label="Share">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>
+</button>
                                             </div>
                                         </div>
                                         <div class="property-location-city">
@@ -4113,6 +4172,12 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                             for="resale">Resale</label>
                     </div>
                     
+                    <div class="filter-input">
+                        <input type="radio" name="header filter" id="forRent">
+                        <label
+                            class="block py-2 px-4 rounded-full border border-solid border-[#1D4265] bg-white text-[#1D4265]"
+                            for="forRent">For Rent</label>
+                    </div>
                 </div>
 
                 <!-- Property Type -->
@@ -5993,7 +6058,7 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                 }
             });
 
-            window.location.href =`search-en.html?${params.toString()}`;
+            window.pvHomeSearch(params);
         }
 
         function resetMobileFilterControls(container) {
@@ -6274,7 +6339,7 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
 
             try {
 
-                const url = `#?q=${encodeURIComponent(search)}&page=${page}`;
+                const url = `pv-home-search?q=${encodeURIComponent(search)}&page=${page}`;
 
 
                 const response = await fetch(url, {
@@ -6382,7 +6447,7 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
                         class="hero-search-result"
                         data-result-id="${item.id}"
                         data-result-type="${item.type}"
-                        onclick="window.location.href='${route}'"
+                        onclick="window.location.href='${item.url || route}'"
                     >
                         <div class="hero-search-result-icon">
                             <img
@@ -7095,7 +7160,7 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
 
                 const query = params.toString();
 
-                window.location.href = "search-en.html" + (query ? `?${query}` : '');
+                window.pvHomeSearch(params);
 
             };
 
@@ -8828,8 +8893,154 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
   });
   def('updateRangeSlider', function () {});
   def('showToast', function (message, type) { if (window.toastr) window.toastr[type === 'error' ? 'error' : 'success'](message); });
+  if (!window.toastr) window.toastr = { info: function () {}, success: function () {}, error: function () {}, warning: function () {} };
+})();
+
+/* المعاينة: بحث الهوم متوصل بصفحة البحث.
+   - خانة البحث: في الموقع بتسأل route('home.search') — هنا الرد من بيانات تجريبية (PV_HOME.search) والاقتراح بيفتح صفحته.
+   - زرار "بحث" (ديسك توب + فلتر الموبايل): الاختيارات (بيع / إعادة بيع / إيجار ، النوع ، المنطقة ، المطور ، الغرف ، الحمامات ، السعر ، الاستلام ، النص)
+     بتتحول لفلاتر صفحة البحث وبتفتح عليها متعلّمة. في الموقع: نفس الباراميترات بتروح للباك إند على route('new-for-sale'). */
+(function () {
+  var PV = window.PV_HOME || { areas: {}, developers: {}, types: {}, search: [] };
+  function plain(text) { return String(text || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/[-_,،]/g, ' ').replace(/ +/g, ' ').trim(); }
+  var realFetch = window.fetch;
+  window.fetch = function (input) {
+    var url = typeof input === 'string' ? input : (input && input.url) || '';
+    if (url.indexOf('pv-home-search') === -1) return realFetch.apply(this, arguments);
+    var q = '';
+    try { q = decodeURIComponent((/[?&]q=([^&]*)/.exec(url) || [])[1] || ''); } catch (e) {}
+    var words = plain(q).split(' ').filter(Boolean);
+    var list = (PV.search || []).filter(function (item) { var hay = plain(item.name + ' ' + item.keys + ' ' + item.location); return words.every(function (w) { return hay.indexOf(w) > -1; }); });
+    var body = JSON.stringify({ data: list, pagination: { has_more: false, current_page: 1 } });
+    return Promise.resolve(new Response(body, { status: 200, headers: { 'Content-Type': 'application/json' } }));
+  };
+
+  function all(params, key) { return params.getAll(key + '[]').concat(params.getAll(key)).filter(function (v) { return v !== '' && v != null; }); }
+  function mapped(values, table) { return values.map(function (v) { return table[v]; }).filter(Boolean); }
+  window.pvHomeSearch = function (params) {
+    params = params || new URLSearchParams();
+    var tab = document.querySelector('.home-search-tab.is-active, .home-search-tab.active');
+    var status = document.querySelector('.property-status.active');
+    var sale = params.get('sale_type') || (tab && tab.getAttribute('data-value')) || '';
+    var state = params.get('status') || (status ? status.getAttribute('data-value') : '') || '';
+    var extra = { offer: sale === 'rent' ? 'rent' : (sale === 'resale' || state === 'resale' ? 'resale' : 'developer') };
+    extra.type = mapped(all(params, 'property_type'), PV.types);
+    extra.area = mapped(all(params, 'location'), PV.areas);
+    extra.developer = mapped(all(params, 'developer'), PV.developers);
+    extra.beds = all(params, 'bedrooms');
+    extra.baths = all(params, 'bathrooms');
+    extra.delivery = all(params, 'delivery_in').map(function (v) { return String(v) === '1' ? 'ready' : String(v); });
+    var q = (params.get('search') || params.get('q') || '').trim();
+    // لو المكتوب اسم منطقة / مطور / مشروع من الاقتراحات: بيتعلّم في الفلتر بدل البحث بالنص
+    var hit = q && (PV.search || []).filter(function (item) { return plain(item.name) === plain(q); })[0];
+    if (hit && hit.type === 'area' && PV.areas[hit.id]) extra.area.push(PV.areas[hit.id]);
+    else if (hit && hit.type === 'developer' && PV.developers[hit.id]) extra.developer.push(PV.developers[hit.id]);
+    else if (hit && hit.type === 'project' && hit.slug) extra.project = [hit.slug];
+    else if (q) extra.q = q;
+    // السعر: بيتبعت بس لو العميل غيّره عن أول وآخر الشريط
+    var low = Number(params.get('min_price')), high = Number(params.get('max_price'));
+    var slider = document.getElementById('range_heroPrice_low') || document.getElementById('range_sideSmFilterPrice_low');
+    var floor = slider ? Number(slider.min) : 0, ceil = slider ? Number(slider.max) : 0;
+    if (low && low > floor) extra.low = low;
+    if (high && (!ceil || high < ceil)) extra.high = high;
+    Object.keys(extra).forEach(function (key) { if (Array.isArray(extra[key]) && !extra[key].length) delete extra[key]; });
+    var en = (document.documentElement.lang || '').indexOf('en') === 0 || window.PV_LANG === 'en';
+    try { sessionStorage.setItem('pv:nav', '1'); } catch (e) {}
+    // للإيجار: صفحة الإيجار نفسها (مفروش / غير مفروش من الزراير اللي تحت التبويب) — البيع وإعادة البيع: صفحة البحث
+    if (sale === 'rent') {
+      var furnished = String(state) === '1' ? 'furnished' : (String(state) === '0' ? 'unfurnished' : '');
+      var more = {};
+      ['type', 'area', 'beds', 'baths'].forEach(function (key) { if (extra[key]) more[key] = extra[key]; });
+      window.location.href = (en ? 'rent-en.html' : 'rent.html') + '?v=' + (window.PV_VER || '') + (furnished ? '&furnished=' + furnished : '')
+        + (Object.keys(more).length ? '&hr=' + encodeURIComponent(JSON.stringify(more)) : '') + '#rent' + (en ? '/en' : '');
+      return;
+    }
+    window.location.href = (en ? 'search-en.html' : 'search.html') + '?v=' + (window.PV_VER || '') + '&hs=' + encodeURIComponent(JSON.stringify(extra)) + '#search-all' + (en ? '/en' : '');
+  };
 })();
 </script>
+</div>
+<div class="fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 gap-2 border-t border-shary-line bg-white px-2.5 pb-[calc(10px+env(safe-area-inset-bottom,0px))] pt-[11px] shadow-[0_-8px_22px_-16px_rgba(18,58,92,0.4)] lg:hidden" data-quick-bar aria-label="Quick contact">
+<a href="tel:+201000730208" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-action text-[15px] font-bold leading-normal text-white">
+<span class="fab-call flex" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg></span>
+<span>Call</span>
+</a>
+<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-whatsapp text-[15px] font-bold leading-normal text-white">
+<span class="fab-ring flex" aria-hidden="true"><i class="fa-brands fa-whatsapp text-[21px] leading-none"></i></span>
+<span>WhatsApp</span>
+</a>
+<a href="#" class="quick-ai flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-l from-[#1F5FC4] to-[#5AA9EE] text-[14px] font-bold leading-normal text-white" data-ask-ai>
+<span class="fab-beat flex h-[26px] w-7 shrink-0 items-center justify-center rounded-lg bg-white" aria-hidden="true">
+<img loading="lazy" src="a/images/shary/logo-mark.svg" data-img="images/shary/logo-mark.svg" alt="" width="20" height="17">
+</span>
+<span dir="ltr">Shary AI</span>
+</a>
+</div>
+
+<div class="fixed bottom-28 right-7 z-30 hidden flex-col gap-3.5 lg:flex" aria-label="Quick contact">
+<a href="#" class="area-fab area-ai" aria-label="Ask Shary AI" data-ask-ai>
+<img loading="lazy" src="a/images/shary/logo-mark.svg" data-img="images/shary/logo-mark.svg" alt="" width="38" height="31">
+
+<span class="area-fab__label area-fab__label--pop">Ask me about any property</span>
+</a>
+<a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="area-fab area-fab--wa bg-shary-whatsapp text-white" aria-label="WhatsApp">
+<span class="fab-ring flex" aria-hidden="true"><i class="fa-brands fa-whatsapp text-[32px] leading-none"></i></span>
+<span class="area-fab__label">WhatsApp</span>
+</a>
+</div>
+
+<div class="compare-float fixed bottom-[84px] left-3 z-30 hidden items-center gap-1 rounded-full border border-shary-line bg-white p-1.5 lg:bottom-7 lg:left-7 lg:gap-1.5" data-compare-bar>
+
+<a href="compare-en.html" data-base="compare-en.html" class="flex h-11 items-center gap-2 rounded-full bg-shary-action pe-1.5 ps-4 text-[14px] font-bold leading-normal text-white transition-colors hover:bg-shary-link lg:h-12 lg:ps-5 lg:text-[15px]" data-compare-link>
+<span>Start compare</span>
+<span class="flex h-8 min-w-[32px] items-center justify-center rounded-full bg-shary-yellow px-2 text-[14px] font-extrabold text-shary-navy" data-compare-count>0</span>
+</a>
+
+<button type="button" class="flex h-11 items-center rounded-full px-3.5 text-[14px] font-bold leading-normal text-shary-link transition-colors hover:bg-shary-form lg:h-12 lg:px-4 lg:text-[15px]" data-compare-dismiss>Cancel</button>
+</div>
+
+
+<div class="app-pop lg:hidden" data-app-popup data-delay="1800" hidden aria-hidden="true">
+<div class="app-pop__backdrop" data-app-popup-close></div>
+<div class="app-pop__card" role="dialog" aria-modal="true" aria-labelledby="app-pop-title-about-en">
+<button type="button" class="app-pop__close" data-app-popup-close aria-label="Close">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+
+<div class="app-pop__art" aria-hidden="true">
+<span class="app-pop__shape app-pop__shape--teal"></span>
+<span class="app-pop__shape app-pop__shape--navy"></span>
+<span class="app-pop__shape app-pop__shape--gold"></span>
+
+<div class="app-pop__phone">
+<div class="app-pop__screen">
+<img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="" width="70" height="17" class="app-pop__logo">
+<span class="app-pop__search"></span>
+<span class="app-pop__tiles"><i></i><i></i><i></i><i></i></span>
+<span class="app-pop__banner"></span>
+<span class="app-pop__tabs"><i></i><i></i><i></i><i></i></span>
+</div>
+</div>
+
+<span class="app-pop__chip app-pop__chip--a">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 17.5h2"/></svg>
+One app for all            </span>
+<span class="app-pop__chip app-pop__chip--b">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/></svg>
+My property            </span>
+</div>
+
+<h2 id="app-pop-title-about-en" class="app-pop__title">Make your next move easier — get the Shary app</h2>
+<p class="app-pop__text">Search, compare, book and track your unit and installments from your phone.</p>
+
+<a href="#pv:/app" class="app-pop__cta" data-app-button data-state="get"
+data-android-url="https://play.google.com/store/apps/details?id=com.sharyproperties.app" data-ios-url="https://apps.apple.com/us/app/shary-real-state/id6743754160"
+data-open-url="#pv:/app" data-android-package="com.sharyproperties.app"
+data-label-get="Download Now" data-label-open="Open App">
+<svg data-app-icon="get" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
+<span data-app-label>Download Now</span>
+</a>
+</div>
 </div>
 </main>
 <footer class="bg-white mt-6 border-t border-shary-line">
@@ -9290,7 +9501,7 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "d0fdfc31";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "308d1da2";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -9307,7 +9518,7 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=d0fdfc31"></script>
+<script src="a/site.js?v=308d1da2"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -9893,6 +10104,18 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
         if (box && !box.disabled) { box.checked = true; touched = box; }
       });
     });
+    // اختيارات جاية من بحث الهوم: الغرف / الحمامات / الاستلام / السعر / النص
+    [['beds', 'bedrooms'], ['baths', 'bathrooms'], ['delivery', 'delivery']].forEach(function (pair) {
+      (chosen[pair[0]] || []).forEach(function (value) {
+        var box = form.querySelector('input[name="' + pair[1] + '[]"][value="' + value + '"]');
+        if (box && !box.disabled) { box.checked = true; touched = box; }
+      });
+    });
+    [['low', 'min'], ['high', 'max']].forEach(function (pair) {
+      var el = form.querySelector('[data-range-' + pair[1] + '="price"]');
+      if (el && chosen[pair[0]]) { el.value = chosen[pair[0]]; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
+    if (q && chosen.q) q.value = chosen.q;
     if (touched) touched.dispatchEvent(new Event('change', { bubbles: true }));
     clearTimeout(form.__pvTimer);
     form.__pvTimer = setTimeout(function () { form.__pvQuiet = false; }, 650);
@@ -10684,6 +10907,8 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
   if (bar.querySelector('[data-go]')) document.documentElement.classList.add('pv-strip');   // معاينة البحث بتفتح على البحث العام
   var ALIAS = { search: 'search-all', area: 'new-cairo', developer: 'mountain-view' };   // لينكات المعاينة القديمة
   var pending = takePending();
+  // بحث الهوم بيفتح صفحة البحث ومعاه الاختيارات في اللينك (?hs=...)
+  if (!pending) { try { var hs = /[?&]hs=([^&#]+)/.exec(location.search); if (hs) pending = { fn: 'search', slug: 'all', mode: 'units', extra: JSON.parse(decodeURIComponent(hs[1])) }; } catch (e) {} }
   var saved = null;
   try { saved = history.state; } catch (e) {}
   function fillFrom(job) {
@@ -10700,6 +10925,24 @@ Unit link:" data-wa-url="unit-en.html" data-wa-image="https://shary.eg/responsiv
   else if (DOCS && saved && saved.pvView && (parseSearchKey(saved.pvView) || inDoc(saved.pvView))) show(saved.pvView, true);
   else if (start[0]) show(ALIAS[start[0]] || start[0]);
   if (DOCS && saved && saved.pvScroll && !pending) setTimeout(function () { window.scrollTo(0, saved.pvScroll); }, 60);
+  // بحث الهوم على "للإيجار": صفحة الإيجار بتفتح على مفروش / غير مفروش (?furnished=) وباقي الاختيارات (?hr= النوع / المنطقة / الغرف / الحمامات)
+  try {
+    var rentFurnished = /[?&]furnished=([a-z]+)/.exec(location.search), rentMore = /[?&]hr=([^&#]+)/.exec(location.search);
+    if (rentFurnished || rentMore) setTimeout(function () {
+      var rentForm = wraps[lang].querySelector('[data-view="rent"] form');
+      if (!rentForm) return;
+      var last = null, more = rentMore ? JSON.parse(decodeURIComponent(rentMore[1])) : {};
+      [['type', 'type'], ['area', 'area'], ['beds', 'bedrooms'], ['baths', 'bathrooms']].forEach(function (pair) {
+        (more[pair[0]] || []).forEach(function (value) {
+          var box = rentForm.querySelector('input[name="' + pair[1] + '[]"][value="' + value + '"]');
+          if (box && !box.disabled) { box.checked = true; last = box; }
+        });
+      });
+      var radio = rentFurnished && rentForm.querySelector('input[name="furnished"][value="' + rentFurnished[1] + '"]');
+      if (radio) { radio.checked = true; last = radio; }
+      if (last) last.dispatchEvent(new Event('change', { bubbles: true }));
+    }, 120);
+  } catch (e) {}
   if (DOCS) window.addEventListener('pagehide', function () {
     try { history.replaceState(Object.assign({}, history.state || {}, { pvScroll: window.scrollY }), ''); } catch (e) {}
   });

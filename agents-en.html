@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=d0fdfc31">
+<link rel="stylesheet" href="a/site.css?v=308d1da2">
 </head><body>
 
 
@@ -26,7 +26,17 @@ window.addEventListener('load', function () {
 
 <header class="sticky top-0 z-30 rounded-b-[28px] bg-white shadow-[0_6px_18px_rgba(18,58,92,0.10)] lg:rounded-none lg:shadow-[0_2px_10px_rgba(18,58,92,0.06)]">
 <div class="site-container flex items-center justify-between py-3.5 lg:justify-start lg:py-4">
-<a href="#pv:/app" class="flex h-11 shrink-0 items-center rounded-full bg-shary-action px-3 text-[13px] font-bold leading-normal text-white shadow-[0_4px_10px_rgba(18,58,92,0.28)] min-[380px]:px-4 min-[380px]:text-[14px] lg:hidden">Open App</a>
+
+<a href="#pv:/app" class="app-btn lg:hidden" data-app-button data-state="get"
+data-android-url="https://play.google.com/store/apps/details?id=com.sharyproperties.app" data-ios-url="https://apps.apple.com/us/app/shary-real-state/id6743754160"
+data-open-url="#pv:/app" data-android-package="com.sharyproperties.app"
+data-label-get="Get the App" data-label-open="Open App">
+<span class="app-btn__icon" aria-hidden="true">
+<svg data-app-icon="get" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
+<svg data-app-icon="open" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 16 17 7"/><path d="M9.5 7H17v7.5"/></svg>
+</span>
+<span data-app-label>Get the App</span>
+</a>
 
 <a href="#pv:/" class="shrink-0" aria-label="Shary — Home">
 <img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="125" height="30" class="h-[22px] w-auto min-[360px]:h-[26px] min-[380px]:h-[30px] lg:h-9">
@@ -133,6 +143,17 @@ window.addEventListener('load', function () {
 </svg>
 </span>
 <span class="min-w-0 flex-1">Search</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="shary-index-en.html" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 20h16"/><path d="m5 15.5 4-4.5 3.5 3L19 7"/><path d="M15 7h4v4"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">Shary Index</span>
 <svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </a>
 </li>
@@ -572,7 +593,7 @@ data-compare-link data-base="compare-en.html" >
 
 <div class="fixed inset-x-0 bottom-0 z-30 grid grid-cols-3 gap-2 border-t border-shary-line bg-white px-2.5 pb-[calc(10px+env(safe-area-inset-bottom,0px))] pt-[11px] shadow-[0_-8px_22px_-16px_rgba(18,58,92,0.4)] lg:hidden" data-quick-bar aria-label="Quick contact">
 <a href="tel:+201000730208" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-action text-[15px] font-bold leading-normal text-white">
-<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg>
+<span class="fab-call flex" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1L6.6 10.8Z"/></svg></span>
 <span>Call</span>
 </a>
 <a href="https://wa.me/201000730208" target="_blank" rel="noopener" class="flex h-12 items-center justify-center gap-2 rounded-xl bg-shary-whatsapp text-[15px] font-bold leading-normal text-white">
@@ -609,6 +630,49 @@ data-compare-link data-base="compare-en.html" >
 <button type="button" class="flex h-11 items-center rounded-full px-3.5 text-[14px] font-bold leading-normal text-shary-link transition-colors hover:bg-shary-form lg:h-12 lg:px-4 lg:text-[15px]" data-compare-dismiss>Cancel</button>
 </div>
 
+
+<div class="app-pop lg:hidden" data-app-popup data-delay="1800" hidden aria-hidden="true">
+<div class="app-pop__backdrop" data-app-popup-close></div>
+<div class="app-pop__card" role="dialog" aria-modal="true" aria-labelledby="app-pop-title-agents-en">
+<button type="button" class="app-pop__close" data-app-popup-close aria-label="Close">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+
+<div class="app-pop__art" aria-hidden="true">
+<span class="app-pop__shape app-pop__shape--teal"></span>
+<span class="app-pop__shape app-pop__shape--navy"></span>
+<span class="app-pop__shape app-pop__shape--gold"></span>
+
+<div class="app-pop__phone">
+<div class="app-pop__screen">
+<img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="" width="70" height="17" class="app-pop__logo">
+<span class="app-pop__search"></span>
+<span class="app-pop__tiles"><i></i><i></i><i></i><i></i></span>
+<span class="app-pop__banner"></span>
+<span class="app-pop__tabs"><i></i><i></i><i></i><i></i></span>
+</div>
+</div>
+
+<span class="app-pop__chip app-pop__chip--a">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 17.5h2"/></svg>
+One app for all            </span>
+<span class="app-pop__chip app-pop__chip--b">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/></svg>
+My property            </span>
+</div>
+
+<h2 id="app-pop-title-agents-en" class="app-pop__title">Make your next move easier — get the Shary app</h2>
+<p class="app-pop__text">Search, compare, book and track your unit and installments from your phone.</p>
+
+<a href="#pv:/app" class="app-pop__cta" data-app-button data-state="get"
+data-android-url="https://play.google.com/store/apps/details?id=com.sharyproperties.app" data-ios-url="https://apps.apple.com/us/app/shary-real-state/id6743754160"
+data-open-url="#pv:/app" data-android-package="com.sharyproperties.app"
+data-label-get="Download Now" data-label-open="Open App">
+<svg data-app-icon="get" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
+<span data-app-label>Download Now</span>
+</a>
+</div>
+</div>
 </main>
 <footer class="bg-white mt-6 border-t border-shary-line">
 <div class="site-container pb-8 lg:pb-14 lg:pt-12">
@@ -1068,7 +1132,7 @@ data-compare-link data-base="compare-en.html" >
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "d0fdfc31";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "308d1da2";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -1085,7 +1149,7 @@ data-compare-link data-base="compare-en.html" >
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=d0fdfc31"></script>
+<script src="a/site.js?v=308d1da2"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -1671,6 +1735,18 @@ data-compare-link data-base="compare-en.html" >
         if (box && !box.disabled) { box.checked = true; touched = box; }
       });
     });
+    // اختيارات جاية من بحث الهوم: الغرف / الحمامات / الاستلام / السعر / النص
+    [['beds', 'bedrooms'], ['baths', 'bathrooms'], ['delivery', 'delivery']].forEach(function (pair) {
+      (chosen[pair[0]] || []).forEach(function (value) {
+        var box = form.querySelector('input[name="' + pair[1] + '[]"][value="' + value + '"]');
+        if (box && !box.disabled) { box.checked = true; touched = box; }
+      });
+    });
+    [['low', 'min'], ['high', 'max']].forEach(function (pair) {
+      var el = form.querySelector('[data-range-' + pair[1] + '="price"]');
+      if (el && chosen[pair[0]]) { el.value = chosen[pair[0]]; el.dispatchEvent(new Event('input', { bubbles: true })); el.dispatchEvent(new Event('change', { bubbles: true })); }
+    });
+    if (q && chosen.q) q.value = chosen.q;
     if (touched) touched.dispatchEvent(new Event('change', { bubbles: true }));
     clearTimeout(form.__pvTimer);
     form.__pvTimer = setTimeout(function () { form.__pvQuiet = false; }, 650);
@@ -2462,6 +2538,8 @@ data-compare-link data-base="compare-en.html" >
   if (bar.querySelector('[data-go]')) document.documentElement.classList.add('pv-strip');   // معاينة البحث بتفتح على البحث العام
   var ALIAS = { search: 'search-all', area: 'new-cairo', developer: 'mountain-view' };   // لينكات المعاينة القديمة
   var pending = takePending();
+  // بحث الهوم بيفتح صفحة البحث ومعاه الاختيارات في اللينك (?hs=...)
+  if (!pending) { try { var hs = /[?&]hs=([^&#]+)/.exec(location.search); if (hs) pending = { fn: 'search', slug: 'all', mode: 'units', extra: JSON.parse(decodeURIComponent(hs[1])) }; } catch (e) {} }
   var saved = null;
   try { saved = history.state; } catch (e) {}
   function fillFrom(job) {
@@ -2478,6 +2556,24 @@ data-compare-link data-base="compare-en.html" >
   else if (DOCS && saved && saved.pvView && (parseSearchKey(saved.pvView) || inDoc(saved.pvView))) show(saved.pvView, true);
   else if (start[0]) show(ALIAS[start[0]] || start[0]);
   if (DOCS && saved && saved.pvScroll && !pending) setTimeout(function () { window.scrollTo(0, saved.pvScroll); }, 60);
+  // بحث الهوم على "للإيجار": صفحة الإيجار بتفتح على مفروش / غير مفروش (?furnished=) وباقي الاختيارات (?hr= النوع / المنطقة / الغرف / الحمامات)
+  try {
+    var rentFurnished = /[?&]furnished=([a-z]+)/.exec(location.search), rentMore = /[?&]hr=([^&#]+)/.exec(location.search);
+    if (rentFurnished || rentMore) setTimeout(function () {
+      var rentForm = wraps[lang].querySelector('[data-view="rent"] form');
+      if (!rentForm) return;
+      var last = null, more = rentMore ? JSON.parse(decodeURIComponent(rentMore[1])) : {};
+      [['type', 'type'], ['area', 'area'], ['beds', 'bedrooms'], ['baths', 'bathrooms']].forEach(function (pair) {
+        (more[pair[0]] || []).forEach(function (value) {
+          var box = rentForm.querySelector('input[name="' + pair[1] + '[]"][value="' + value + '"]');
+          if (box && !box.disabled) { box.checked = true; last = box; }
+        });
+      });
+      var radio = rentFurnished && rentForm.querySelector('input[name="furnished"][value="' + rentFurnished[1] + '"]');
+      if (radio) { radio.checked = true; last = radio; }
+      if (last) last.dispatchEvent(new Event('change', { bubbles: true }));
+    }, 120);
+  } catch (e) {}
   if (DOCS) window.addEventListener('pagehide', function () {
     try { history.replaceState(Object.assign({}, history.state || {}, { pvScroll: window.scrollY }), ''); } catch (e) {}
   });

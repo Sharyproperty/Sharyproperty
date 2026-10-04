@@ -1,3 +1,12 @@
+.swiper{margin-left:auto;margin-right:auto;position:relative;overflow:hidden;list-style:none;padding:0;z-index:1;display:block}
+.swiper-wrapper{position:relative;width:100%;height:100%;z-index:1;display:flex;transition-property:transform;transition-timing-function:ease;box-sizing:content-box;transform:translate3d(0,0,0)}
+.swiper-slide{flex-shrink:0;width:100%;height:100%;position:relative;transition-property:transform;display:block}
+.swiper-horizontal{touch-action:pan-y}
+.swiper-pagination{position:absolute;text-align:center;transition:.3s opacity;transform:translate3d(0,0,0);z-index:10}
+.swiper-pagination-bullets.swiper-pagination-horizontal{bottom:8px;left:0;width:100%}
+.swiper-pagination-bullet{width:8px;height:8px;display:inline-block;border-radius:50%;background:#000;opacity:.2;margin:0 4px;cursor:pointer}
+.swiper-pagination-bullet-active{opacity:1;background:#1e4166}
+.swiper-pagination-lock{display:none}
 
 
 
@@ -8050,10 +8059,36 @@ html, body {
     border-color: #246BCE;
     color: #246BCE;
 }
-/* ---- المعاينة: أزرار المقارنة / المفضلة / المشاركة (partials/new-compare-favorite) ---- */
-.compact-action-icon .card-action-button { width: 26px; height: 26px; min-width: 26px; min-height: 26px; padding: 0; margin: 0; border-radius: 9px; display: flex; align-items: center; justify-content: center; overflow: hidden; background: rgba(255,255,255,.96); color: #1D4265; box-shadow: 0 3px 10px rgba(0,0,0,.12); }
-.compact-action-icon .card-action-button[data-compare-toggle][aria-pressed="true"] { color: #0B7A3B; }
-.compact-action-icon .card-action-button[data-favorite-toggle][aria-pressed="true"] { color: #DA0000; }
-.compact-action-icon .card-action-button[data-favorite-toggle][aria-pressed="true"] svg { fill: currentColor; }
+/* ---- أزرار المقارنة / المفضلة / المشاركة على كروت الهوم: نفس أزرار باقي الموقع (area-action) ---- */
+.shary-home-root .property-actions, .shary-home-root .compounds-actions { top: 10px; left: 10px; gap: 6px; }
+.shary-home-root .property-actions-row { display: flex; gap: 6px; direction: ltr; }
+.shary-home-root .property-actions .area-action { width: 32px; height: 32px; padding: 0; border-radius: 9px; background: #fff; color: #123a5c; box-shadow: 0 2px 6px rgba(18, 58, 92, 0.16); }
+.shary-home-root .property-actions .area-action:hover { transform: translateY(-1px); color: #1f63c6; }
+.shary-home-root .property-actions .area-action svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 1.9; }
+.shary-home-root .property-actions .area-action[data-favorite-toggle] svg { stroke: none; }
+.shary-home-root .property-actions .area-action[data-favorite-toggle][aria-pressed="true"] { color: #dc2626; }
+.shary-home-root .property-actions .area-action[data-favorite-toggle][aria-pressed="true"] svg { fill: currentColor; }
+.shary-home-root .property-actions .area-action[data-compare-toggle][aria-pressed="true"] { background: #1e4166; color: #fff; }
+@media (max-width: 640px) {
+  .shary-home-root .property-actions, .shary-home-root .compounds-actions { top: 8px; left: 8px; gap: 5px; }
+  .shary-home-root .property-actions-row { gap: 5px; }
+  .shary-home-root .property-actions .area-action { width: 28px; height: 28px; border-radius: 8px; }
+  .shary-home-root .property-actions .area-action svg { width: 15px; height: 15px; }
+  /* المطورين: 4 في عرض الشاشة على الموبايل */
+  .shary-home-root .developers-track { gap: 10px; }
+  .shary-home-root .developer-card { flex: 0 0 calc((95vw - 62px) / 4); width: calc((95vw - 62px) / 4); height: calc((95vw - 62px) / 4); font-size: 13px; }
+}
 .shary-home-root .whatsapp-button { display: flex; align-items: center; justify-content: center; color: #fff; }
 .shary-home-root .whatsapp-button i, .shary-home-root .whatsapp-button .svg-inline--fa { font-size: 18px; }
+/* ---- المعاينة: لو صور shary.eg مش متاحة (الكلاس home-offline بيتحط من سكربت المعاينة) — خلفيات هادية بدل صور الخلفية ---- */
+.home-offline .shary-home-root .promo-map, .home-offline .shary-home-root .promo-sahel-map { background-image: linear-gradient(135deg, #e3f3f1, #cfe9e6); }
+.home-offline .shary-home-root .promo-trending-card { background-image: linear-gradient(135deg, #fff6e2, #ffe9bd); }
+.home-offline .shary-home-root .promo-sales-card { background-image: linear-gradient(135deg, #e8f1fa, #d5e6f6); }
+.home-offline .shary-home-root .shary-app { background-image: linear-gradient(135deg, #2fae9f, #8bd8d0); }
+/* فلتر الموبايل: الاختيارات شكلها أقراص (الخانة نفسها مخفية — في الموقع الستايل ده جاي من CSS الـ layout) */
+.shary-home-root .filter-input { position: relative; }
+.shary-home-root .filter-input input[type="checkbox"], .shary-home-root .filter-input input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none; }
+.shary-home-root .filter-input label { cursor: pointer; transition: background-color .15s, color .15s, border-color .15s; }
+.shary-home-root .filter-input input:checked + label { background: #1D4265 !important; border-color: #1D4265 !important; color: #fff !important; }
+/* شريط مؤشر شاري بقى لينك لصفحة المؤشر */
+.shary-home-root a.market-ticker-badge { cursor: pointer; }

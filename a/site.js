@@ -238,7 +238,7 @@
         }
         showFavorites();
         button.dispatchEvent(new CustomEvent('shary:favorite', { bubbles: true, detail: { id: id, active: active } }));
-    });
+    }, true);   // capture: الزرار بيشتغل حتى لو الكارت اللي حواليه بيوقّف الضغطة (stopPropagation)
     markFavorites(document);
 
     // ---- المشاركة
@@ -435,7 +435,7 @@
             }
             openShareSheet(url, title, en);
         })();
-    });
+    }, true);
 
     // ---- واتساب: رسالة جاهزة فيها بيانات الوحدة / المشروع وكوده ولينكه (واتساب بيعرض اللينك بصورة الصفحة og:image)
     // النص من أقرب عنصر عليه data-wa-text (كارت) ، وإلا من data-wa-page اللي على صفحة الوحدة / المشروع (لأي زرار واتساب في الصفحة) ،
@@ -567,7 +567,7 @@
         writeCompare(list);
         markCompare(document);
         button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: id, active: active, ids: list } }));
-    });
+    }, true);
     markCompare(document);
 
     // X جنب زرار المقارنة العايم [data-compare-dismiss]: بيفضّي المقارنة والزرار بيختفي. الحدث shary:compare-clear ({ ids }) عشان السيرفر يتحدّث
@@ -683,6 +683,97 @@
         // بيتبدّل لوحده بس والشريط ظاهر على الشاشة والعميل مش واقف عليه
         window.setInterval(function () { if (seen && !held && !document.hidden) go(at + 1); }, 5000);
     });
+})();
+
+/**
+ * زرار التطبيق في الهيدر [data-app-button]:
+ * - الافتراضي "حمّل التطبيق" (data-state="get") واللينك بيبقى المتجر المناسب للجهاز: data-ios-url على آيفون/آيباد ، data-android-url على الباقي.
+ * - لو التطبيق متسطّب بيتحوّل لـ "افتح التطبيق" (data-state="open") واللينك بيبقى data-open-url. بنعرف إنه متسطّب من:
+ *   1) أندرويد (كروم): navigator.getInstalledRelatedApps() — محتاج related_applications في manifest الموقع + assetlinks.json في التطبيق.
+ *   2) الصفحة مفتوحة من جوه التطبيق نفسه (User-Agent فيه SharyApp) أو اللينك جاي من التطبيق (?from=app) — وبيتحفظ على الجهاز.
+ *   آيفون (سفاري): المتصفح مش بيسمح للموقع يعرف التطبيقات المتسطّبة — عشان كده data-open-url لازم يبقى Universal Link (بيفتح التطبيق لو موجود).
+ * - حدث shary:app-state ({ installed }) على الزرار بعد ما الحالة تتحدد.
+ */
+(function () {
+    var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-app-button]'));
+    if (!buttons.length) return;
+    var ua = navigator.userAgent || '';
+    var ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+    var KEY = 'shary-app-installed';
+
+    function remembered() { try { return window.localStorage.getItem(KEY) === '1'; } catch (error) { return false; } }
+    function remember() { try { window.localStorage.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ } }
+
+    function apply(installed) {
+        buttons.forEach(function (button) {
+            var label = button.querySelector('[data-app-label]');
+            var store = button.getAttribute(ios ? 'data-ios-url' : 'data-android-url');
+            var open = button.getAttribute('data-open-url');
+            button.setAttribute('data-state', installed ? 'open' : 'get');
+            if (label) label.textContent = button.getAttribute(installed ? 'data-label-open' : 'data-label-get') || label.textContent;
+            if (installed && open && open !== '#') { button.setAttribute('href', open); button.removeAttribute('target'); }
+            else if (!installed && store) { button.setAttribute('href', store); button.setAttribute('target', '_blank'); button.setAttribute('rel', 'noopener'); }
+            button.dispatchEvent(new CustomEvent('shary:app-state', { bubbles: true, detail: { installed: installed } }));
+        });
+    }
+
+    var fromApp = /SharyApp/i.test(ua) || /[?&]from=app(&|$)/.test(window.location.search);
+    if (fromApp) remember();
+    apply(fromApp || remembered());
+
+    if (navigator.getInstalledRelatedApps) {
+        navigator.getInstalledRelatedApps().then(function (apps) {
+            var id = buttons[0].getAttribute('data-android-package');
+            var found = (apps || []).some(function (app) { return !id || app.id === id; });
+            if (found) { remember(); apply(true); }
+        }).catch(function () { /* المتصفح مش بيدعمها */ });
+    }
+})();
+
+/**
+ * بوب أب تحميل التطبيق [data-app-popup] (موبايل بس): بيظهر بعد data-delay من فتح الصفحة وبيدخل من الشمال.
+ * - مرة كل 3 أيام على نفس الجهاز (localStorage) ، ومش بيظهر لو التطبيق متسطّب (زرار التطبيق data-state="open").
+ * - القفل: × أو الضغط براه أو Esc أو الضغط على زرار التحميل. window.SharyAppPopup.open() / .close() للتحكم من أي كود.
+ * - حدث shary:app-popup ({ open }) على العنصر.
+ */
+(function () {
+    var pop = document.querySelector('[data-app-popup]');
+    if (!pop) return;
+    var KEY = 'shary-app-popup';
+    var DAYS = 3;
+
+    function seen() { try { var at = Number(window.localStorage.getItem(KEY)); return !!at && Date.now() - at < DAYS * 86400000; } catch (error) { return false; } }
+    function mark() { try { window.localStorage.setItem(KEY, String(Date.now())); } catch (error) { /* التخزين مقفول */ } }
+
+    function close() {
+        if (pop.hidden) return;
+        pop.classList.remove('is-open');
+        pop.setAttribute('aria-hidden', 'true');
+        window.setTimeout(function () { pop.hidden = true; }, 380);
+        mark();
+        pop.dispatchEvent(new CustomEvent('shary:app-popup', { bubbles: true, detail: { open: false } }));
+    }
+
+    function open() {
+        pop.hidden = false;
+        pop.setAttribute('aria-hidden', 'false');
+        window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { pop.classList.add('is-open'); }); });
+        pop.dispatchEvent(new CustomEvent('shary:app-popup', { bubbles: true, detail: { open: true } }));
+    }
+
+    pop.addEventListener('click', function (event) {
+        if (event.target.closest('[data-app-popup-close]') || event.target.closest('[data-app-button]')) close();
+    });
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
+    window.SharyAppPopup = { open: open, close: close };
+
+    var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
+    if (!mobile || seen() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    window.setTimeout(function () {
+        var button = pop.querySelector('[data-app-button]');
+        if (button && button.getAttribute('data-state') === 'open') return;   // التطبيق متسطّب
+        open();
+    }, Number(pop.getAttribute('data-delay')) || 1800);
 })();
 
 /**
