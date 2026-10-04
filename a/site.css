@@ -2926,6 +2926,10 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
+.prop-bar__meeting {
+  display: none;
+}
+
 /* زرار متابعة المشروع جنب الاسم: كبسولة بإطار، ولما العميل يتابع بتتلوّن كحلي وعليها علامة صح */
 
 .prop-follow {
@@ -3802,6 +3806,12 @@ input:focus-visible + .area-chip,
     align-self: center;
     justify-self: end;
     gap: 10px;
+  }
+
+  /* "طلب مقابلة" في الشريط: مستخبي والصفحة فوق (الفورم ظاهرة جنبه)، وبيظهر جنب اتصال / واتساب لما الشريط يثبت */
+
+  .prop-bar.is-stuck .prop-bar__meeting {
+    display: flex;
   }
 
   .prop-pill {
@@ -7171,10 +7181,6 @@ input:focus-visible + .area-chip,
   font-size: 14px;
 }
 
-.text-\[15\.5px\] {
-  font-size: 15.5px;
-}
-
 .text-\[15px\] {
   font-size: 15px;
 }
@@ -8013,6 +8019,11 @@ input:focus-visible + .area-chip,
   border-color: rgb(31 99 198 / var(--tw-border-opacity, 1));
 }
 
+.active\:bg-shary-form:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(227 234 243 / var(--tw-bg-opacity, 1));
+}
+
 .active\:bg-shary-navy:active {
   --tw-bg-opacity: 1;
   background-color: rgb(18 58 92 / var(--tw-bg-opacity, 1));
@@ -8021,6 +8032,11 @@ input:focus-visible + .area-chip,
 .active\:text-shary-link:active {
   --tw-text-opacity: 1;
   color: rgb(31 99 198 / var(--tw-text-opacity, 1));
+}
+
+.active\:brightness-95:active {
+  --tw-brightness: brightness(.95);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .group[open] .group-open\:hidden {
@@ -9726,6 +9742,9 @@ input:focus-visible + .area-chip,
     align-self: center;
     justify-self: end;
     gap: 10px;}
+.pv-desktop /* "طلب مقابلة" في الشريط: مستخبي والصفحة فوق (الفورم ظاهرة جنبه)، وبيظهر جنب اتصال / واتساب لما الشريط يثبت */
+
+  .prop-bar.is-stuck .prop-bar__meeting {display: flex;}
 .pv-desktop .prop-pill {min-height: 40px;
     padding: 3px 16px;
     box-shadow: none;}
