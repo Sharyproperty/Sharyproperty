@@ -979,6 +979,66 @@ video {
   white-space: nowrap;
 }
 
+/* اتصل بنا: أيقونات السوشيال ميديا بألوان المنصات الأصلية — دايرة ملوّنة والأيقونة بيضا (سناب شات: أصفر والأيقونة سودا) */
+
+.social-brand {
+  display: flex;
+  height: 44px;
+  width: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: #123a5c;
+  font-size: 21px;
+  line-height: 1;
+  color: #ffffff;
+  text-decoration: none;
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.social-brand:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+}
+
+.social-brand--facebook-f {
+  background-color: #1877f2;
+}
+
+.social-brand--instagram {
+  background-image: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+}
+
+.social-brand--x-twitter {
+  background-color: #000000;
+}
+
+.social-brand--youtube {
+  background-color: #ff0000;
+}
+
+.social-brand--linkedin-in {
+  background-color: #0a66c2;
+}
+
+.social-brand--snapchat {
+  background-color: #fffc00;
+  color: #000000;
+}
+
+.social-brand--tiktok {
+  background-color: #000000;
+}
+
+@media (min-width: 1024px) {
+  .social-brand {
+    height: 48px;
+    width: 48px;
+    font-size: 23px;
+  }
+}
+
 /* التحقق من الوكيل: خطوات التحقق — رقم في دايرة وخط واصل بين الخطوات */
 
 .agent-steps {
@@ -7880,11 +7940,6 @@ input:focus-visible + .area-chip,
   padding: 1rem;
 }
 
-.px-0\.5 {
-  padding-left: 0.125rem;
-  padding-right: 0.125rem;
-}
-
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -9017,11 +9072,6 @@ input:focus-visible + .area-chip,
   border-color: rgb(31 99 198 / var(--tw-border-opacity, 1));
 }
 
-.hover\:border-shary-navy:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(18 58 92 / var(--tw-border-opacity, 1));
-}
-
 .hover\:border-shary-teal:hover {
   --tw-border-opacity: 1;
   border-color: rgb(31 127 114 / var(--tw-border-opacity, 1));
@@ -9070,11 +9120,6 @@ input:focus-visible + .area-chip,
 .hover\:text-shary-link:hover {
   --tw-text-opacity: 1;
   color: rgb(31 99 198 / var(--tw-text-opacity, 1));
-}
-
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
 .hover\:underline:hover {
@@ -10718,10 +10763,6 @@ input:focus-visible + .area-chip,
     font-size: 11.5px;
   }
 
-  .lg\:text-\[11px\] {
-    font-size: 11px;
-  }
-
   .lg\:text-\[12\.5px\] {
     font-size: 12.5px;
   }
@@ -10982,6 +11023,9 @@ input:focus-visible + .area-chip,
 /* desktop layout forced on narrow screens (preview only) */
 .pv-desktop .shot-card__name {font-size: 20px;}
 .pv-desktop .shot-card__place {font-size: 14px;}
+.pv-desktop .social-brand {height: 48px;
+    width: 48px;
+    font-size: 23px;}
 .pv-desktop .about-stats {grid-template-columns: repeat(4, minmax(0, 1fr));}
 .pv-desktop .about-stats__item {padding: 30px 20px;}
 .pv-desktop .contact-tile {padding: 18px 20px;}
@@ -12165,7 +12209,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:text-start {text-align: start;}
 .pv-desktop .lg\:text-\[10\.5px\] {font-size: 10.5px;}
 .pv-desktop .lg\:text-\[11\.5px\] {font-size: 11.5px;}
-.pv-desktop .lg\:text-\[11px\] {font-size: 11px;}
 .pv-desktop .lg\:text-\[12\.5px\] {font-size: 12.5px;}
 .pv-desktop .lg\:text-\[12px\] {font-size: 12px;}
 .pv-desktop .lg\:text-\[13\.5px\] {font-size: 13.5px;}
