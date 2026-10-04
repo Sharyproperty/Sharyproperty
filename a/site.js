@@ -3667,3 +3667,327 @@
     });
 })();
 
+/**
+ * صفحة العروض الحصرية (resources/views/offers/index.blade.php)
+ * الفلتر [data-offers-filter] فورم GET (المنطقة / المطور / العرض): تغيير أي اختيار بيبعت الفورم على طول، وزرار "تطبيق" بيختفي.
+ * قبل الإرسال بيطلع حدث shary:offers-filter على الفورم:
+ *       form.addEventListener('shary:offers-filter', function (event) {
+ *           event.preventDefault();          // هنجيب النتايج AJAX ونبدّل الكروت بنفسنا
+ *           // event.detail = { area, developer, offer }
+ *       });
+ * لو الحدث ما اتمنعش الفورم بيتبعت عادي والصفحة بترجع متفلترة من السيرفر.
+ */
+(function () {
+    document.querySelectorAll('[data-offers-filter]').forEach(function (form) {
+        var apply = form.querySelector('[data-offers-apply]');
+        if (apply) apply.classList.add('hidden');
+        form.classList.add('is-live');
+
+        function send(event) {
+            if (event && event.type === 'submit') event.preventDefault();
+            var detail = {};
+            Array.prototype.forEach.call(form.querySelectorAll('select'), function (select) { detail[select.name] = select.value; });
+            var go = form.dispatchEvent(new CustomEvent('shary:offers-filter', { bubbles: true, cancelable: true, detail: detail }));
+            if (go) form.submit();
+        }
+
+        form.addEventListener('change', send);
+        form.addEventListener('submit', send);
+    });
+})();
+
+/**
+ * صفحة "الأكثر رواجًا" — الفيديوهات (resources/views/trends/index.blade.php)
+ * كارت الفيديو [data-video-open] عليه data-video = لينك التضمين (يوتيوب embed / فيميو) أو لينك ملف mp4، و data-video-title = العنوان.
+ * الضغط بيفتح نافذة الفيديو [data-video-modal] والفيديو بيشتغل، والقفل (X / الضغط بره / Esc / زرار الرجوع) بيوقفه.
+ * لو data-video فاضي بتظهر رسالة [data-empty] مكان الفيديو.
+ */
+(function () {
+    if (!document.querySelector('[data-video-modal]')) return;
+    var modal = null, frame = null, heading = null;
+    var opened = false;
+
+    // النافذة الأقرب للكارت (لو الصفحة فيها أكتر من نافذة) وإلا أول نافذة في الصفحة
+    function pick(button) {
+        var scope = button.closest('main') || document;
+        modal = scope.querySelector('[data-video-modal]') || document.querySelector('[data-video-modal]');
+        frame = modal.querySelector('[data-video-frame]');
+        heading = modal.querySelector('[data-video-heading]');
+    }
+
+    function close(fromBack) {
+        if (!opened) return;
+        opened = false;
+        modal.classList.add('hidden');
+        frame.textContent = '';   // بيوقف الفيديو
+        document.documentElement.classList.remove('overflow-hidden');
+        if (!fromBack && window.SharyBack && window.SharyBack.closed) window.SharyBack.closed();
+    }
+
+    function open(button) {
+        if (opened) close(false);
+        pick(button);
+        var url = button.getAttribute('data-video') || '';
+        heading.textContent = button.getAttribute('data-video-title') || '';
+        frame.textContent = '';
+        if (!url) {
+            var note = document.createElement('p');
+            note.textContent = frame.getAttribute('data-empty') || '';
+            frame.appendChild(note);
+        } else if (/\.(mp4|webm|ogg)(\?|$)/i.test(url)) {
+            var video = document.createElement('video');
+            video.src = url; video.controls = true; video.autoplay = true; video.setAttribute('playsinline', '');
+            frame.appendChild(video);
+        } else {
+            var iframe = document.createElement('iframe');
+            iframe.src = url + (url.indexOf('?') === -1 ? '?' : '&') + 'autoplay=1';
+            iframe.title = heading.textContent;
+            iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen');
+            iframe.setAttribute('allowfullscreen', '');
+            frame.appendChild(iframe);
+        }
+        modal.classList.remove('hidden');
+        document.documentElement.classList.add('overflow-hidden');
+        opened = true;
+        if (window.SharyBack && window.SharyBack.opened) window.SharyBack.opened(function () { close(true); });
+    }
+
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest) return;
+        var button = event.target.closest('[data-video-open]');
+        if (button) { event.preventDefault(); open(button); return; }
+        if (event.target.closest('[data-video-close]')) close(false);
+    });
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(false); });
+})();
+
+/**
+ * صفحة شاري كارد (resources/views/card/show.blade.php)
+ * - الشريط الرمادي [data-card-strip]: الضغط عليه بيكشف الكود [data-card-code] (والضغط تاني بيغطيه).
+ * - زرار النسخ [data-card-copy]: بينسخ الكود وبيكتب "تم نسخ الكود" لحظة.
+ * - فورم طلب الكارت [data-card-form]: بيتأكد من الاسم والرقم، وبعدها بيطلع حدث shary:card-request على الفورم:
+ *       form.addEventListener('shary:card-request', function (event) {
+ *           event.preventDefault();                         // هنطلب الكارت AJAX
+ *           // event.detail = { name, phone, country_code, show(card), fail(message) }
+ *           event.detail.show({ name: 'نبيل سليمان', code: 'SH-482913' });   // الكارت بيظهر باسمه وكوده
+ *       });
+ *   لو الحدث ما اتمنعش الفورم بيتبعت عادي (POST) والسيرفر يرجّع الصفحة بالكارت ($card).
+ */
+(function () {
+    document.querySelectorAll('[data-card-page]').forEach(function (page) {
+        var strip = page.querySelector('[data-card-strip]');
+        var code = page.querySelector('[data-card-code]');
+        var name = page.querySelector('[data-card-name]');
+        var form = page.querySelector('[data-card-form]');
+        var ready = page.querySelector('[data-card-ready]');
+        var copyButton = page.querySelector('[data-card-copy]');
+
+        if (strip) strip.addEventListener('click', function () {
+            if (!code.textContent.trim()) return;
+            strip.classList.toggle('is-revealed');
+        });
+
+        if (copyButton) copyButton.addEventListener('click', function () {
+            var value = code.textContent.trim();
+            if (!value) return;
+            var label = copyButton.querySelector('[data-card-copy-label]');
+            var original = label.textContent;
+            function done() { label.textContent = copyButton.getAttribute('data-done') || original; setTimeout(function () { label.textContent = original; }, 1800); }
+            if (strip) strip.classList.add('is-revealed');
+            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(value).then(done, done); else done();
+        });
+
+        // الكارت بيظهر باسم العميل وكوده
+        function show(card) {
+            if (!card || !card.code) return;
+            name.textContent = card.name || name.getAttribute('data-empty');
+            code.textContent = card.code;
+            strip.disabled = false;
+            strip.classList.remove('is-revealed');
+            page.setAttribute('data-state', 'member');
+            if (form) form.classList.add('hidden');
+            if (ready) ready.classList.remove('hidden');
+            var top = page.getBoundingClientRect().top + window.pageYOffset - 90;
+            if (window.pageYOffset > top) window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+
+        if (!form) return;
+        var error = form.querySelector('[data-card-error]');
+        form.addEventListener('input', function () { if (error) error.classList.add('hidden'); });
+        form.addEventListener('submit', function (event) {
+            var nameInput = form.querySelector('input[name="name"]');
+            var phoneInput = form.querySelector('input[name="phone"]');
+            var ok = nameInput.value.trim().length > 1 && phoneInput.value.replace(/\D/g, '').length >= 6;
+            if (!ok) {
+                event.preventDefault();
+                if (error) error.classList.remove('hidden');
+                (nameInput.value.trim().length > 1 ? phoneInput : nameInput).focus();
+                return;
+            }
+            var go = form.dispatchEvent(new CustomEvent('shary:card-request', {
+                bubbles: true,
+                cancelable: true,
+                detail: {
+                    name: nameInput.value.trim(), phone: phoneInput.value, country_code: (form.querySelector('[data-phone-value]') || {}).value || '',
+                    show: show,
+                    fail: function (message) { if (error) { if (message) error.textContent = message; error.classList.remove('hidden'); } }
+                }
+            }));
+            if (!go) event.preventDefault();
+        });
+    });
+})();
+
+/**
+ * صفحة الوظائف (resources/views/careers/index.blade.php)
+ * - "قدّم الآن" [data-job-apply="slug"]: بيختار الوظيفة في فورم التقديم وينزل للفورم.
+ * - السيرة الذاتية [data-cv-input]: اسم الملف بيظهر مكان اسم الخانة.
+ * - الإرسال: بيتأكد من الاسم والرقم والسيرة الذاتية، وبعدها حدث shary:career-apply على الفورم:
+ *       form.addEventListener('shary:career-apply', function (event) {
+ *           event.preventDefault();                 // هنبعت AJAX
+ *           // event.detail = { data: FormData, done(), fail(message) }
+ *       });
+ *   لو الحدث ما اتمنعش الفورم بيتبعت عادي (POST multipart).
+ */
+(function () {
+    document.querySelectorAll('[data-career-form]').forEach(function (form) {
+        var select = form.querySelector('select[name="position"]');
+        var input = form.querySelector('[data-cv-input]');
+        var label = form.querySelector('[data-cv-label]');
+        var error = form.querySelector('[data-career-error]');
+        var body = form.querySelector('[data-career-body]');
+        var done = form.querySelector('[data-career-done]');
+
+        function mark() { if (select) select.classList.toggle('has-value', !!select.value); }
+
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest ? event.target.closest('[data-job-apply]') : null;
+            if (!button) return;
+            if (select) { select.value = button.getAttribute('data-job-apply'); mark(); }
+            var top = form.getBoundingClientRect().top + window.pageYOffset - 96;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+        });
+
+        if (select) select.addEventListener('change', mark);
+        if (input) input.addEventListener('change', function () {
+            var file = input.files && input.files[0];
+            label.textContent = file ? file.name : label.getAttribute('data-label');
+            label.classList.toggle('text-shary-navy', !!file);
+            input.closest('.req-field').classList.remove('is-invalid');
+        });
+        form.addEventListener('input', function (event) {
+            var box = event.target.closest ? event.target.closest('.req-field') : null;
+            if (box) box.classList.remove('is-invalid');
+            if (error) error.classList.add('hidden');
+        });
+
+        form.addEventListener('submit', function (event) {
+            var name = form.querySelector('input[name="name"]');
+            var phone = form.querySelector('input[name="phone"]');
+            var bad = [];
+            if (name.value.trim().length < 2) bad.push(name);
+            if (phone.value.replace(/\D/g, '').length < 6) bad.push(phone);
+            if (input && !(input.files && input.files.length)) bad.push(input);
+            [name, phone, input].forEach(function (field) { if (field) field.closest('.req-field').classList.toggle('is-invalid', bad.indexOf(field) !== -1); });
+            if (bad.length) {
+                event.preventDefault();
+                if (error) error.classList.remove('hidden');
+                return;
+            }
+            var go = form.dispatchEvent(new CustomEvent('shary:career-apply', {
+                bubbles: true,
+                cancelable: true,
+                detail: {
+                    data: new FormData(form),
+                    done: function () { body.classList.add('hidden'); done.classList.remove('hidden'); done.classList.add('flex'); },
+                    fail: function (message) { if (error) { if (message) error.textContent = message; error.classList.remove('hidden'); } }
+                }
+            }));
+            if (!go) event.preventDefault();
+        });
+
+        var again = form.querySelector('[data-career-again]');
+        if (again) again.addEventListener('click', function () {
+            form.reset();
+            mark();
+            if (label) { label.textContent = label.getAttribute('data-label'); label.classList.remove('text-shary-navy'); }
+            done.classList.add('hidden'); done.classList.remove('flex');
+            body.classList.remove('hidden');
+        });
+    });
+})();
+
+/**
+ * صفحة الإشعارات (resources/views/notifications/index.blade.php)
+ * - التبويب [data-notify-tab="all | unread"] بيفلتر القايمة من غير تحميل.
+ * - الضغط على إشعار غير مقروء بيعلّمه مقروء وبيطلع حدث shary:notification-read ({ id }) — اسمعوه عشان تحدّثوا السيرفر. اللينك بيفتح عادي.
+ * - "تعليم الكل كمقروء" [data-notify-all]: حدث shary:notifications-read-all.
+ * - زرار التفعيل [data-notify-button]: حدث shary:notifications-enable ({ done() }) — اربطوه بتفعيل إشعارات المتصفح / التطبيق ونادوا done().
+ *   لو الحدث ما اتمنعش السكربت بيطلب إذن إشعارات المتصفح (Notification.requestPermission) لو متاح.
+ */
+(function () {
+    document.querySelectorAll('[data-notifications]').forEach(function (box) {
+        var list = box.querySelector('[data-notify-list]');
+        var empty = box.querySelector('[data-notify-empty]');
+        var all = box.querySelector('[data-notify-all]');
+        var mode = 'all';
+
+        function items() { return Array.prototype.slice.call(list.querySelectorAll('[data-notify-item]')); }
+
+        function refresh() {
+            var unread = items().filter(function (item) { return item.getAttribute('data-read') !== '1'; });
+            var shown = 0;
+            items().forEach(function (item) {
+                var show = mode === 'all' || item.getAttribute('data-read') !== '1';
+                item.classList.toggle('hidden', !show);
+                if (show) shown++;
+            });
+            box.querySelectorAll('[data-notify-count="all"]').forEach(function (n) { n.textContent = items().length; });
+            box.querySelectorAll('[data-notify-count="unread"]').forEach(function (n) { n.textContent = unread.length; });
+            if (empty) empty.classList.toggle('hidden', shown > 0);
+            if (all) all.classList.toggle('hidden', unread.length === 0);
+        }
+
+        box.querySelectorAll('[data-notify-tab]').forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                mode = tab.getAttribute('data-notify-tab');
+                box.querySelectorAll('[data-notify-tab]').forEach(function (other) { other.setAttribute('aria-selected', other === tab ? 'true' : 'false'); });
+                refresh();
+            });
+        });
+
+        list.addEventListener('click', function (event) {
+            var item = event.target.closest ? event.target.closest('[data-notify-item]') : null;
+            if (!item || item.getAttribute('data-read') === '1') return;
+            item.setAttribute('data-read', '1');
+            item.dispatchEvent(new CustomEvent('shary:notification-read', { bubbles: true, detail: { id: item.getAttribute('data-notify-item') } }));
+            refresh();
+        });
+
+        if (all) all.addEventListener('click', function () {
+            items().forEach(function (item) { item.setAttribute('data-read', '1'); });
+            all.dispatchEvent(new CustomEvent('shary:notifications-read-all', { bubbles: true }));
+            refresh();
+        });
+
+        var button = box.querySelector('[data-notify-button]');
+        var title = box.querySelector('[data-notify-title]');
+        function enabled() {
+            if (title) title.textContent = title.getAttribute('data-on') || title.textContent;
+            if (button) button.classList.add('hidden');
+        }
+        if (window.Notification && Notification.permission === 'granted') enabled();
+        if (button) button.addEventListener('click', function () {
+            var go = button.dispatchEvent(new CustomEvent('shary:notifications-enable', { bubbles: true, cancelable: true, detail: { done: enabled } }));
+            if (!go) return;
+            if (window.Notification && Notification.requestPermission) {
+                try { Notification.requestPermission().then(function (result) { if (result === 'granted') enabled(); }); } catch (error) { enabled(); }
+            } else {
+                enabled();
+            }
+        });
+
+        refresh();
+    });
+})();
+
