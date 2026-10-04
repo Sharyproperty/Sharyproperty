@@ -102,12 +102,21 @@
         };
     })();
 
+    // قايمة الموبايل: زرار القايمة بيفتحها صفحة كاملة، وبتتقفل من زرار الإغلاق [data-nav-close] أو Esc أو الضغط على أي رابط فيها
     document.querySelectorAll('[data-nav-toggle]').forEach(function (button) {
-        button.addEventListener('click', function () {
-            var nav = document.getElementById(button.getAttribute('aria-controls'));
-            if (!nav) return;
-            var isOpen = !nav.classList.toggle('hidden');
-            button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        var nav = document.getElementById(button.getAttribute('aria-controls'));
+        if (!nav) return;
+        function setMenu(open) {
+            nav.classList.toggle('hidden', !open);
+            button.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) { var scroll = nav.querySelector('.site-menu__scroll'); if (scroll) scroll.scrollTop = 0; }
+        }
+        button.addEventListener('click', function () { setMenu(nav.classList.contains('hidden')); });
+        nav.addEventListener('click', function (event) {
+            if (event.target.closest('[data-nav-close]') || event.target.closest('a')) setMenu(false);
+        });
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && !nav.classList.contains('hidden')) setMenu(false);
         });
     });
 
@@ -188,10 +197,13 @@
     }
 
     function showFavorites() {
-        var pressed = document.querySelectorAll('[data-favorite-toggle][aria-pressed="true"]').length;
-        var total = Math.max(readFavorites().length, pressed);
+        var saved = readFavorites();
+        var total = saved.length;   // العدد = المحفوظ فعلًا (نفس العنصر ممكن يبقى له أكتر من قلب في الصفحة)
         document.querySelectorAll('[data-favorites-indicator]').forEach(function (indicator) {
             indicator.setAttribute('data-active', total > 0 ? 'true' : 'false');
+            // لينك صفحة المفضلة: المحفوظ على الجهاز بيتبعت في اللينك (?ids=units/a,projects/b) — العميل المسجل: المفضلة من حسابه على السيرفر
+            var base = indicator.getAttribute('data-base') || '';
+            if (base && base !== '#') indicator.setAttribute('href', base + (saved.length ? (base.indexOf('?') === -1 ? '?' : '&') + 'ids=' + saved.join(',') : ''));
             var badge = indicator.querySelector('[data-favorites-count]');
             if (badge) { badge.textContent = total; badge.classList.toggle('hidden', total === 0); }
         });
@@ -209,7 +221,7 @@
         });
         showFavorites();
     }
-    window.SharyCards = { refresh: markFavorites };
+    window.SharyCards = { refresh: function (root) { markFavorites(root); markCompare(root); } };
 
     document.addEventListener('click', function (event) {
         var button = closest(event, '[data-favorite-toggle]');
@@ -364,27 +376,83 @@
         })();
     });
 
-    // ---- المقارنة: الضغط على "قارن" بيعلّم المشروع، وبيظهر زرار المقارنة تحت بعدد المشاريع المختارة — الضغط عليه بيفتح صفحة المقارنة
-    function showCompare(scope) {
-        var bar = scope.querySelector('[data-compare-bar]') || document.querySelector('[data-compare-bar]');
-        if (!bar) return [];
-        var ids = Array.prototype.map.call(scope.querySelectorAll('[data-compare-toggle][aria-pressed="true"]'), function (item) { return item.getAttribute('data-compare-id') || ''; });
-        bar.classList.toggle('hidden', ids.length === 0);
-        bar.classList.toggle('flex', ids.length > 0);
-        var count = bar.querySelector('[data-compare-count]');
-        if (count) count.textContent = ids.length;
-        var base = bar.getAttribute('data-base') || '';
-        if (base && base !== '#') bar.setAttribute('href', base + (base.indexOf('?') === -1 ? '?' : '&') + 'projects=' + ids.filter(Boolean).join(','));
-        return ids;
+    // ---- المقارنة: الضغط على "قارن" بيعلّم الوحدة / المشروع وبيحفظه على الجهاز (shary-compare: units/slug ، projects/slug)،
+    // وبيظهر زرار المقارنة تحت بالعدد — الضغط عليه بيفتح صفحة المقارنة: ?units=a,b&projects=c,d . أقصى عدد 4 وحدات و4 مشاريع.
+    // نوع العنصر: data-compare-type="unit | project" على الزرار (ولو مش مكتوب: الكارت اللي جوه [data-unit] وحدة، وغيره مشروع).
+    var compareKey = 'shary-compare';
+    var compareMemory = [];
+    var compareMax = 4;
+
+    function readCompare() {
+        try { return JSON.parse(window.localStorage.getItem(compareKey)) || []; } catch (error) { return compareMemory; }
     }
+
+    function writeCompare(list) {
+        compareMemory = list;
+        try { window.localStorage.setItem(compareKey, JSON.stringify(list)); } catch (error) { /* التخزين مش متاح: الحالة بتفضل على الصفحة بس */ }
+    }
+
+    function compareId(button) {
+        var slug = button.getAttribute('data-compare-id') || '';
+        if (slug.indexOf('/') !== -1) return slug;
+        var type = button.getAttribute('data-compare-type') || (button.closest('[data-unit]') ? 'unit' : 'project');
+        return (type === 'unit' ? 'units/' : 'projects/') + slug;
+    }
+
+    function compareQuery(list) {
+        var parts = [];
+        ['units', 'projects'].forEach(function (group) {
+            var slugs = list.filter(function (id) { return id.indexOf(group + '/') === 0; }).map(function (id) { return id.slice(group.length + 1); });
+            if (slugs.length) parts.push(group + '=' + slugs.join(','));
+        });
+        return parts.join('&');
+    }
+
+    function showCompare() {
+        var list = readCompare();
+        var query = compareQuery(list);
+        document.querySelectorAll('[data-compare-bar], [data-compare-link]').forEach(function (link) {
+            if (link.hasAttribute('data-compare-bar')) {
+                link.classList.toggle('hidden', list.length === 0);
+                link.classList.toggle('flex', list.length > 0);
+            }
+            var count = link.querySelector('[data-compare-count]');
+            if (count) { count.textContent = list.length; if (!link.hasAttribute('data-compare-bar')) count.classList.toggle('hidden', list.length === 0); }
+            var base = link.getAttribute('data-base') || '';
+            if (base && base !== '#') link.setAttribute('href', base + (query ? (base.indexOf('?') === -1 ? '?' : '&') + query : ''));
+        });
+        return list;
+    }
+
+    // بتعلّم أزرار "قارن" المحفوظة جوه جزء من الصفحة (والكروت الجديدة: window.SharyCards.refresh(root))
+    function markCompare(root) {
+        var list = readCompare();
+        (root || document).querySelectorAll('[data-compare-toggle]').forEach(function (button) {
+            button.setAttribute('aria-pressed', list.indexOf(compareId(button)) !== -1 ? 'true' : 'false');
+        });
+        showCompare();
+    }
+    window.SharyCompare = { read: readCompare, write: function (list) { writeCompare(list); markCompare(document); } };
+
     document.addEventListener('click', function (event) {
         var button = closest(event, '[data-compare-toggle]');
         if (!button) return;
+        var id = compareId(button);
         var active = button.getAttribute('aria-pressed') !== 'true';
-        button.setAttribute('aria-pressed', active ? 'true' : 'false');
-        var ids = showCompare(button.closest('main') || document);
-        button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: button.getAttribute('data-compare-id'), active: active, ids: ids } }));
+        var list = readCompare().filter(function (item) { return item !== id; });
+        if (active) {
+            var group = id.split('/')[0];
+            if (list.filter(function (item) { return item.indexOf(group + '/') === 0; }).length >= compareMax) {   // العدد كامل: رسالة ومفيش إضافة
+                toast(english(button) ? 'You can compare up to ' + compareMax + ' at a time' : 'أقصى عدد للمقارنة ' + compareMax + ' في المرة');
+                return;
+            }
+            list.push(id);
+        }
+        writeCompare(list);
+        markCompare(document);
+        button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: id, active: active, ids: list } }));
     });
+    markCompare(document);
     // ---------- نص بيتقصّر ويتفرد [data-collapsible] ("عن المطور" ، "عن الإيجار" ، "عن الوحدة") ----------
     // النص مفتوح في الأول. الزرار [data-collapsible-toggle] اللي جنبه بيقصّره (is-collapsed) ويفرده، ونصه بيتبدّل بين data-less و data-more.
     document.querySelectorAll('[data-collapsible]').forEach(function (box) {
@@ -3266,6 +3334,65 @@
                 input.focus();
                 if (form.scrollIntoView) form.scrollIntoView({ block: 'center', behavior: 'smooth' });
             });
+        });
+    });
+})();
+
+/**
+ * صفحة المفضلة وصفحة المقارنة (resources/views/saved/*.blade.php)
+ * - التبويب [data-saved-tab="units | projects"] بيبدّل بين اللوحتين [data-saved-panel] من غير تحميل.
+ * - المفضلة: القلب على أي كارت بيشيله من المفضلة — الكارت [data-saved-item] بيختفي والعدد بيتحدّث، ولو التبويب فضي بتظهر رسالة [data-saved-empty].
+ * - المقارنة: زرار X [data-compare-remove="units/slug"] بيشيل العمود (كل الخلايا اللي عليها data-col بنفس القيمة) ومن المحفوظ على الجهاز.
+ * - window.SharySaved.refresh(panel): بتحدّث العدد والرسالة بعد ما تضيفوا / تشيلوا عناصر بنفسكم (AJAX).
+ */
+(function () {
+    function refresh(panel) {
+        var page = panel.closest('[data-saved-page]');
+        var name = panel.getAttribute('data-saved-panel');
+        var table = panel.querySelector('[data-compare-table]');
+        var total = table ? table.querySelectorAll('.compare-row--head .compare-cell').length : panel.querySelectorAll('[data-saved-item]').length;
+        page.querySelectorAll('[data-saved-count="' + name + '"]').forEach(function (badge) { badge.textContent = total; });
+        var content = panel.querySelector('[data-saved-content]');
+        var empty = panel.querySelector('[data-saved-empty]');
+        if (content) content.classList.toggle('hidden', total === 0);
+        if (empty) empty.classList.toggle('hidden', total > 0);
+        if (table) table.style.setProperty('--cols', Math.max(total, 1));
+        var hint = panel.querySelector('[data-compare-hint]');
+        if (hint) hint.classList.toggle('hidden', total !== 1);
+    }
+    window.SharySaved = { refresh: refresh };
+
+    document.querySelectorAll('[data-saved-page]').forEach(function (page) {
+        var tabs = Array.prototype.slice.call(page.querySelectorAll('[data-saved-tab]'));
+        function open(name) {
+            tabs.forEach(function (tab) { tab.setAttribute('aria-selected', tab.getAttribute('data-saved-tab') === name ? 'true' : 'false'); });
+            page.querySelectorAll('[data-saved-panel]').forEach(function (panel) { panel.classList.toggle('hidden', panel.getAttribute('data-saved-panel') !== name); });
+        }
+        tabs.forEach(function (tab) { tab.addEventListener('click', function () { open(tab.getAttribute('data-saved-tab')); }); });
+
+        // المفضلة: الكارت اللي اتشال قلبه بيختفي
+        page.addEventListener('shary:favorite', function (event) {
+            if (page.getAttribute('data-saved-page') !== 'favorites' || event.detail.active) return;
+            var item = event.target.closest('[data-saved-item]');
+            if (!item) return;
+            var panel = item.closest('[data-saved-panel]');
+            item.parentNode.removeChild(item);
+            refresh(panel);
+        });
+
+        // المقارنة: X بيشيل العمود
+        page.addEventListener('click', function (event) {
+            var button = event.target.closest ? event.target.closest('[data-compare-remove]') : null;
+            if (!button) return;
+            event.preventDefault();
+            var id = button.getAttribute('data-compare-remove');
+            var panel = button.closest('[data-saved-panel]');
+            Array.prototype.forEach.call(panel.querySelectorAll('[data-col]'), function (cell) {
+                if (cell.getAttribute('data-col') === id) cell.parentNode.removeChild(cell);
+            });
+            if (window.SharyCompare) window.SharyCompare.write(window.SharyCompare.read().filter(function (item) { return item !== id; }));
+            refresh(panel);
+            button.dispatchEvent(new CustomEvent('shary:compare', { bubbles: true, detail: { id: id, active: false } }));
         });
     });
 })();

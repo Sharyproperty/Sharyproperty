@@ -641,6 +641,330 @@ video {
   scrollbar-width: none;
 }
 
+/* صفحة المفضلة وصفحة المقارنة: التبويب (الوحدات | المشاريع) + رسالة "مفيش حاجة" + جدول المقارنة */
+
+.saved-tabs {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 4px;
+  border-radius: 999px;
+  background-color: #eef2f7;
+  padding: 4px;
+}
+
+.saved-tabs button {
+  display: flex;
+  height: 44px;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding-inline: 18px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  color: #123a5c;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.saved-tabs button[aria-selected="true"] {
+  background-color: #1e4166;
+  color: #ffffff;
+  box-shadow: 0 6px 14px -8px rgba(18, 58, 92, 0.7);
+}
+
+.saved-tabs__count {
+  display: inline-flex;
+  height: 22px;
+  min-width: 22px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: #ffffff;
+  padding-inline: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #123a5c;
+}
+
+.saved-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border-radius: 20px;
+  background-color: #f3f6fa;
+  padding: 36px 20px;
+  text-align: center;
+}
+
+.saved-empty.hidden {
+  display: none;
+}
+
+.saved-empty__icon {
+  display: flex;
+  height: 60px;
+  width: 60px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #1e4166;
+  box-shadow: 0 8px 20px -14px rgba(18, 58, 92, 0.6);
+}
+
+/* جدول المقارنة: --cols = عدد العناصر. موبايل: اسم الصف سطر فوق القيم، والعمود 150px على الأقل (الجدول بيتسحب بالجنب) */
+
+.compare-table {
+  overflow-x: auto;
+  border: 1px solid #e4e9ef;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(18, 58, 92, 0.04), 0 12px 26px -18px rgba(18, 58, 92, 0.35);
+}
+
+.compare-table.hidden {
+  display: none;
+}
+
+.compare-row {
+  display: grid;
+  min-width: -moz-min-content;
+  min-width: min-content;
+  grid-template-columns: repeat(var(--cols, 2), minmax(150px, 1fr));
+}
+
+.compare-label {
+  grid-column: 1 / -1;
+  background-color: #f3f6fa;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #5b6f84;
+}
+
+.compare-label span {
+  position: sticky;
+  inset-inline-start: 14px;
+}
+
+.compare-row--head .compare-label,
+    .compare-row--foot .compare-label {
+  display: none;
+}
+
+.compare-cell {
+  min-width: 0;
+  padding: 12px 14px;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #123a5c;
+}
+
+.compare-cell + .compare-cell {
+  border-inline-start: 1px solid #e4e9ef;
+}
+
+.compare-cell--strong {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.compare-row--head .compare-cell {
+  padding-top: 14px;
+}
+
+.compare-row--foot .compare-cell {
+  border-top: 1px solid #e4e9ef;
+  padding-bottom: 14px;
+}
+
+@media (min-width: 1024px) {
+  .saved-tabs button {
+    height: 48px;
+    padding-inline: 24px;
+    font-size: 16px;
+  }
+
+  .saved-empty {
+    padding: 56px 24px;
+  }
+
+  /* ديسك توب: اسم الصف عمود في الأول والقيم جنبه */
+
+  .compare-row {
+    grid-template-columns: 210px repeat(var(--cols, 2), minmax(0, 1fr));
+  }
+
+  .compare-row + .compare-row {
+    border-top: 1px solid #e4e9ef;
+  }
+
+  .compare-label,
+        .compare-row--head .compare-label,
+        .compare-row--foot .compare-label {
+    display: flex;
+    grid-column: auto;
+    align-items: center;
+    background-color: #f7f9fc;
+    padding: 14px 20px;
+    font-size: 14.5px;
+    color: #123a5c;
+  }
+
+  .compare-label span {
+    position: static;
+  }
+
+  .compare-cell {
+    border-inline-start: 1px solid #e4e9ef;
+    padding: 14px 20px;
+    font-size: 15.5px;
+  }
+
+  .compare-cell--strong {
+    font-size: 18px;
+  }
+
+  .compare-row--head .compare-cell {
+    padding-block: 20px 16px;
+  }
+
+  .compare-row--foot .compare-cell {
+    border-top: 0;
+    padding-block: 16px 20px;
+  }
+}
+
+/* قايمة الموبايل: صفحة كاملة فوق كل حاجة — شريط فوق (اللوجو + إغلاق) وتحته الروابط بتتسكرول */
+
+.site-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+
+/* الهيدر ثابت وله ترتيب طبقات خاص بيه: والقايمة مفتوحة بيطلع فوق شريط التواصل والأزرار العايمة */
+
+header:has(> .site-menu:not(.hidden)) {
+  z-index: 60;
+}
+
+.site-menu__bar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e4e9ef;
+  padding: 14px 20px;
+}
+
+.site-menu__scroll {
+  min-height: 0;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.site-menu__list {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 12px 12px;
+}
+
+.site-menu__link {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  gap: 14px;
+  border-radius: 14px;
+  padding: 7px 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #123a5c;
+  transition: background-color 0.15s;
+}
+
+.site-menu__link:active,
+    .site-menu__link.is-active {
+  background-color: #f3f6fa;
+}
+
+.site-menu__link.is-active {
+  font-weight: 700;
+  color: #1f63c6;
+}
+
+.site-menu__icon {
+  display: flex;
+  height: 42px;
+  width: 42px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #e8eef5;
+  color: #1e4166;
+}
+
+.site-menu__link.is-active .site-menu__icon {
+  background-color: #1e4166;
+  color: #ffffff;
+}
+
+/* المفضلة: القلب بيبقى أحمر طول ما فيه حاجة محفوظة */
+
+.site-menu__link[data-active="true"] .site-menu__icon {
+  background-color: #fdecea;
+  color: #dc2626;
+}
+
+.site-menu__link[data-active="true"] .site-menu__icon svg {
+  fill: currentColor;
+}
+
+.site-menu__arrow {
+  flex-shrink: 0;
+  color: #b9c7d6;
+}
+
+.site-menu__count {
+  display: inline-flex;
+  height: 22px;
+  min-width: 22px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: #1e4166;
+  padding-inline: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.site-menu__count--red {
+  background-color: #dc2626;
+}
+
+.site-menu__info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  border-top: 8px solid #f3f6fa;
+  padding: 22px 20px 28px;
+  text-align: center;
+}
+
 .shary-rail::-webkit-scrollbar {
   display: none;
 }
@@ -5601,6 +5925,10 @@ input:focus-visible + .area-chip,
   inset-inline-end: 0px;
 }
 
+.end-2 {
+  inset-inline-end: 0.5rem;
+}
+
 .end-2\.5 {
   inset-inline-end: 0.625rem;
 }
@@ -5647,6 +5975,10 @@ input:focus-visible + .area-chip,
 
 .top-1\/2 {
   top: 50%;
+}
+
+.top-2 {
+  top: 0.5rem;
 }
 
 .top-2\.5 {
@@ -6026,6 +6358,10 @@ input:focus-visible + .area-chip,
   height: 280px;
 }
 
+.h-\[30px\] {
+  height: 30px;
+}
+
 .h-\[38px\] {
   height: 38px;
 }
@@ -6301,6 +6637,10 @@ input:focus-visible + .area-chip,
 
 .max-w-\[170px\] {
   max-width: 170px;
+}
+
+.max-w-\[360px\] {
+  max-width: 360px;
 }
 
 .max-w-\[480px\] {
@@ -6628,6 +6968,11 @@ input:focus-visible + .area-chip,
        column-gap: 1rem;
 }
 
+.gap-x-5 {
+  -moz-column-gap: 1.25rem;
+       column-gap: 1.25rem;
+}
+
 .gap-y-0\.5 {
   row-gap: 0.125rem;
 }
@@ -6638,6 +6983,10 @@ input:focus-visible + .area-chip,
 
 .gap-y-1\.5 {
   row-gap: 0.375rem;
+}
+
+.gap-y-2 {
+  row-gap: 0.5rem;
 }
 
 .gap-y-3 {
@@ -7421,6 +7770,10 @@ input:focus-visible + .area-chip,
   font-size: 24px;
 }
 
+.text-\[25px\] {
+  font-size: 25px;
+}
+
 .text-\[26px\] {
   font-size: 26px;
 }
@@ -7551,6 +7904,10 @@ input:focus-visible + .area-chip,
 
 .leading-normal {
   line-height: 1.5;
+}
+
+.tracking-\[0\.08em\] {
+  letter-spacing: 0.08em;
 }
 
 .tracking-wide {
@@ -7748,6 +8105,12 @@ input:focus-visible + .area-chip,
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-\[0_2px_8px_rgba\(18\2c 58\2c 92\2c 0\.3\)\] {
+  --tw-shadow: 0 2px 8px rgba(18,58,92,0.3);
+  --tw-shadow-colored: 0 2px 8px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-\[0_4px_10px_rgba\(18\2c 58\2c 92\2c 0\.28\)\] {
   --tw-shadow: 0 4px 10px rgba(18,58,92,0.28);
   --tw-shadow-colored: 0 4px 10px var(--tw-shadow-color);
@@ -7852,7 +8215,33 @@ input:focus-visible + .area-chip,
 
 /* ============================== صفحة المنطقة ============================== */
 
+.group[open] .group-open\:hidden.saved-empty {
+  display: none;
+}
+
+.group[open] .group-open\:hidden.compare-table {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .md\:hidden.compare-table {
+    display: none;
+  }
+}
+
 @media (min-width: 1024px) {
+  .lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .lg\:hidden.compare-table {
+    display: none;
+  }
+
   @media (min-width: 1024px) {
     /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
 
@@ -8178,6 +8567,11 @@ input:focus-visible + .area-chip,
   background-color: rgb(18 58 92 / var(--tw-bg-opacity, 1));
 }
 
+.hover\:text-\[\#b3261e\]:hover {
+  --tw-text-opacity: 1;
+  color: rgb(179 38 30 / var(--tw-text-opacity, 1));
+}
+
 .hover\:text-shary-action:hover {
   --tw-text-opacity: 1;
   color: rgb(30 65 102 / var(--tw-text-opacity, 1));
@@ -8237,6 +8631,11 @@ input:focus-visible + .area-chip,
 .active\:border-shary-link:active {
   --tw-border-opacity: 1;
   border-color: rgb(31 99 198 / var(--tw-border-opacity, 1));
+}
+
+.active\:bg-shary-cloud:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(214 226 236 / var(--tw-bg-opacity, 1));
 }
 
 .active\:bg-shary-form:active {
@@ -9953,6 +10352,29 @@ input:focus-visible + .area-chip,
 }
 
 /* desktop layout forced on narrow screens (preview only) */
+.pv-desktop .saved-tabs button {height: 48px;
+    padding-inline: 24px;
+    font-size: 16px;}
+.pv-desktop .saved-empty {padding: 56px 24px;}
+.pv-desktop /* ديسك توب: اسم الصف عمود في الأول والقيم جنبه */
+
+  .compare-row {grid-template-columns: 210px repeat(var(--cols, 2), minmax(0, 1fr));}
+.pv-desktop .compare-row + .compare-row {border-top: 1px solid #e4e9ef;}
+.pv-desktop .compare-label, .pv-desktop .compare-row--head .compare-label, .pv-desktop .compare-row--foot .compare-label {display: flex;
+    grid-column: auto;
+    align-items: center;
+    background-color: #f7f9fc;
+    padding: 14px 20px;
+    font-size: 14.5px;
+    color: #123a5c;}
+.pv-desktop .compare-label span {position: static;}
+.pv-desktop .compare-cell {border-inline-start: 1px solid #e4e9ef;
+    padding: 14px 20px;
+    font-size: 15.5px;}
+.pv-desktop .compare-cell--strong {font-size: 18px;}
+.pv-desktop .compare-row--head .compare-cell {padding-block: 20px 16px;}
+.pv-desktop .compare-row--foot .compare-cell {border-top: 0;
+    padding-block: 16px 20px;}
 .pv-desktop .content-cta {padding: 20px 24px;}
 .pv-desktop .content-cta__buttons {grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;}
@@ -10417,6 +10839,10 @@ input:focus-visible + .area-chip,
 .pv-desktop .area-text h3 {font-size: 18px;}
 .pv-desktop .area-text p {font-size: 15px;}
 .pv-desktop .area-dots {font-size: 14px;}
+.pv-desktop .md\:hidden.saved-empty {display: none;}
+.pv-desktop .md\:hidden.compare-table {display: none;}
+.pv-desktop .lg\:hidden.saved-empty {display: none;}
+.pv-desktop .lg\:hidden.compare-table {display: none;}
 .pv-desktop /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
 
     /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */

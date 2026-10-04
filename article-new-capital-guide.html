@@ -1,7 +1,7 @@
 <!doctype html><html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=c9afb61c">
+<link rel="stylesheet" href="a/site.css?v=9e9aed72">
 </head><body>
 
 
@@ -52,7 +52,7 @@ window.addEventListener('load', function () {
 
 <div class="flex shrink-0 items-center gap-1 min-[380px]:gap-3">
 
-<a href="#" class="group relative hidden h-11 w-11 items-center justify-center rounded-full text-shary-navy transition-colors hover:bg-shary-form hover:text-shary-link data-[active=true]:text-red-600 data-[active=true]:hover:text-red-600 lg:flex" data-favorites-indicator data-active="false" aria-label="المفضلة">
+<a href="favorites.html" data-base="favorites.html" class="group relative hidden h-11 w-11 items-center justify-center rounded-full text-shary-navy transition-colors hover:bg-shary-form hover:text-shary-link data-[active=true]:text-red-600 data-[active=true]:hover:text-red-600 lg:flex" data-favorites-indicator data-active="false" aria-label="المفضلة">
 <svg class="transition-colors group-data-[active=true]:fill-current" width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
 <span class="absolute -end-0.5 -top-0.5 hidden h-[18px] min-w-[18px] items-center justify-center rounded-full bg-white px-1 text-center text-[11px] font-bold leading-[18px] text-red-600 shadow-[0_1px_4px_rgba(18,58,92,0.3)]" data-favorites-count></span>
 </a>
@@ -68,22 +68,281 @@ window.addEventListener('load', function () {
 </div>
 </div>
 
-<nav id="mobile-nav" class="hidden border-t border-shary-line lg:hidden" aria-label="القائمة الرئيسية">
-<div class="site-container flex flex-col py-2">
-<a href="#pv:/" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">الرئيسية</a>
-<a href="#pv:/developers" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">المطورين</a>
-<a href="#pv:/projects" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">المشاريع</a>
-<a href="search-all.html" class="py-3 text-[16px] font-bold leading-normal text-shary-link">بحث</a>
-<a href="blog.html" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">المدونة</a>
-<a href="about.html" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">من نحن</a>
-<a href="contact.html" class="py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link">اتصل بنا</a>
-<div data-nav-dropdown>
-<button type="button" class="flex w-full items-center justify-between py-3 text-[16px] font-bold leading-normal text-shary-navy active:text-shary-link aria-expanded:text-shary-link" aria-expanded="false" data-nav-dropdown-toggle>
-<span>الوكلاء</span>
-<svg class="transition-transform duration-200" data-nav-dropdown-arrow width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<nav id="mobile-nav" class="site-menu hidden lg:hidden" aria-label="القائمة الرئيسية">
+<div class="site-menu__bar">
+<a href="#pv:/" class="shrink-0" aria-label="شاري — الرئيسية">
+<img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="125" height="30" class="h-[30px] w-auto">
+</a>
+<button type="button" class="flex h-11 w-11 items-center justify-center rounded-full bg-shary-form text-shary-navy transition-colors active:bg-shary-cloud" data-nav-close aria-label="إغلاق">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
 </button>
-<div class="hidden flex-col pb-2 ps-4" data-nav-dropdown-menu>
-<a href="agents.html" class="py-2.5 text-[15px] font-semibold leading-normal text-shary-navy active:text-shary-link">الوكلاء المعتمدون</a>
+</div>
+
+<div class="site-menu__scroll shary-scroll">
+<ul class="site-menu__list">
+<li>
+<a href="#pv:/" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M10 19v-5h4v5"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">الرئيسية</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/international" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.5 2.6 14.5 0 17M12 3.5c-2.6 2.5-2.6 14.5 0 17"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">عقارات دولية</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/developers" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 20V6.5L11 4v16"/><path d="M11 9.5 20 12v8"/><path d="M3 20h18M7 9v.01M7 12.5v.01M7 16v.01M15 14.5v.01M15 17.5v.01"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">المطورين</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/projects" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="4" y="9" width="7" height="11" rx="1.2"/><rect x="13" y="4" width="7" height="16" rx="1.2"/><path d="M7 12.5v.01M7 16v.01M16 8v.01M16 11.5v.01M16 15v.01"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">المشاريع</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="search-all.html" class="site-menu__link is-active"
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">بحث</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/sell" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M12 12.2v4.6M10.2 13.4c0-.9.8-1.3 1.8-1.3s1.8.4 1.8 1.2c0 1.7-3.6.6-3.6 2.3 0 .8.8 1.2 1.8 1.2s1.8-.4 1.8-1.2"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">بيع</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="favorites.html" class="site-menu__link "
+data-favorites-indicator data-active="false" data-base="favorites.html" >
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">المفضلة</span>
+<span class="site-menu__count site-menu__count--red hidden" data-favorites-count></span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="compare.html" class="site-menu__link "
+data-compare-link data-base="compare.html" >
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15V5Z"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">المقارنة</span>
+<span class="site-menu__count hidden" data-compare-count></span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="blog.html" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="4" y="4.5" width="16" height="15" rx="2.2"/><path d="M8 9h8M8 12.5h8M8 16h5"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">المدونة</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="about.html" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.8v.01"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">من نحن</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="contact.html" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M5 6.5h14a1.5 1.5 0 0 1 1.5 1.5v8A1.5 1.5 0 0 1 19 17.5h-7l-4.5 3v-3H5A1.5 1.5 0 0 1 3.5 16V8A1.5 1.5 0 0 1 5 6.5Z"/><path d="M8 11h8M8 13.8h5"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">اتصل بنا</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/terms" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M7 3.5h7.5L19 8v11a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 6 19V5a1.5 1.5 0 0 1 1-1.5Z"/><path d="M14.5 3.5V8H19M9 12.5h6M9 16h6"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">الشروط والأحكام</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/privacy" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 3.5 5 6.5v5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9v-5l-7-3Z"/><path d="M12 10.5v4M12 8v.01"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">سياسة الخصوصية</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/shary-card" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="3" y="6" width="18" height="12.5" rx="2.2"/><path d="M3 10.5h18M7 15h3.5"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">كارت شاري</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/careers" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<rect x="3.5" y="7.5" width="17" height="12" rx="2.2"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3.5 13h17M12 12v2"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">الوظائف</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="agents.html" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M12 3.5 5 6.5v5c0 4.2 2.9 7.6 7 9 4.1-1.4 7-4.8 7-9v-5l-7-3Z"/><path d="m9 12 2 2 4-4"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">الوكلاء</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+<li>
+<a href="#pv:/notifications" class="site-menu__link "
+>
+<span class="site-menu__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<path d="M6.5 16.5v-5a5.5 5.5 0 0 1 11 0v5l1.5 2h-14l1.5-2Z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/>
+</svg>
+</span>
+<span class="min-w-0 flex-1">الإشعارات</span>
+<svg class="site-menu__arrow rtl:rotate-180" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.75 4.5 11.25 9l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
+</li>
+</ul>
+
+<div class="site-menu__info">
+<p class="text-[12.5px] font-bold uppercase leading-normal tracking-[0.08em] text-shary-muted">للتواصل</p>
+<ul class="flex flex-wrap items-center justify-center gap-x-5 gap-y-1">
+<li>
+<a href="#" class="social-link flex h-10 items-center text-[25px] leading-none text-shary-navy active:text-shary-link" target="_blank" rel="noopener" aria-label="فيسبوك">
+<i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">فيسبوك</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-10 items-center text-[25px] leading-none text-shary-navy active:text-shary-link" target="_blank" rel="noopener" aria-label="إنستجرام">
+<i class="fa-brands fa-instagram" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">إنستجرام</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-10 items-center text-[25px] leading-none text-shary-navy active:text-shary-link" target="_blank" rel="noopener" aria-label="إكس">
+<i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">إكس</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-10 items-center text-[25px] leading-none text-shary-navy active:text-shary-link" target="_blank" rel="noopener" aria-label="يوتيوب">
+<i class="fa-brands fa-youtube" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">يوتيوب</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-10 items-center text-[25px] leading-none text-shary-navy active:text-shary-link" target="_blank" rel="noopener" aria-label="لينكدإن">
+<i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">لينكدإن</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-10 items-center text-[25px] leading-none text-shary-navy active:text-shary-link" target="_blank" rel="noopener" aria-label="سناب شات">
+<i class="fa-brands fa-snapchat" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">سناب شات</span>
+</a>
+</li>
+<li>
+<a href="#" class="social-link flex h-10 items-center text-[25px] leading-none text-shary-navy active:text-shary-link" target="_blank" rel="noopener" aria-label="تيك توك">
+<i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+<span class="social-label text-[13px] font-bold leading-normal">تيك توك</span>
+</a>
+</li>
+</ul>
+<div class="flex flex-col items-center gap-1">
+<p class="text-[15px] font-medium leading-normal text-shary-muted">اتصل بنا: <a href="tel:+201000730208" class="font-bold text-shary-navy" dir="ltr">+201000730208</a></p>
+<p class="text-[15px] font-medium leading-normal text-shary-muted">البريد الإلكتروني: <a href="mailto:info@shary.eg" class="font-bold text-shary-navy" dir="ltr">info@shary.eg</a></p>
+</div>
+<div class="flex flex-col items-center gap-2.5">
+<p class="text-[14.5px] font-medium leading-normal text-shary-muted">قم بتنزيل تطبيقنا</p>
+<div class="flex gap-3" dir="ltr">
+<a href="#" class="flex h-[46px] items-center gap-2 rounded-lg border-[1.5px] border-shary-navy bg-white px-3 text-shary-navy" aria-label="Get it on Google Play">
+<i class="fa-brands fa-google-play text-[22px] leading-none" aria-hidden="true"></i>
+<span class="flex flex-col text-left">
+<span class="text-[8px] font-semibold uppercase leading-[1.3] tracking-wide">Get it on</span>
+<span class="text-[15px] font-bold leading-[1.2]">Google Play</span>
+</span>
+</a>
+<a href="#" class="flex h-[46px] items-center gap-2 rounded-lg border-[1.5px] border-shary-navy bg-white px-3 text-shary-navy" aria-label="Download on the App Store">
+<i class="fa-brands fa-apple text-[26px] leading-none" aria-hidden="true"></i>
+<span class="flex flex-col text-left">
+<span class="text-[8px] font-semibold uppercase leading-[1.3] tracking-wide">Download on the</span>
+<span class="text-[15px] font-bold leading-[1.2]">App Store</span>
+</span>
+</a>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1.5 pt-1">
+<img loading="lazy" src="a/images/shary/shary-logo.svg" data-img="images/shary/shary-logo.svg" alt="Shary" width="125" height="30" class="h-[30px] w-auto opacity-70">
+<p class="text-[13.5px] font-medium leading-normal text-shary-muted">شركة عقارية</p>
 </div>
 </div>
 </div>
@@ -745,7 +1004,7 @@ window.addEventListener('load', function () {
 </a>
 </div>
 
-<a href="#" data-base="#" class="fixed bottom-[84px] left-3 z-30 hidden h-12 items-center gap-2 rounded-full bg-shary-action pe-2 ps-4 text-[14px] font-bold leading-normal text-white shadow-[0_10px_24px_-8px_rgba(18,58,92,0.6)] transition-colors hover:bg-shary-link lg:bottom-7 lg:left-7 lg:h-[52px] lg:text-[15px]" data-compare-bar>
+<a href="compare.html" data-base="compare.html" class="fixed bottom-[84px] left-3 z-30 hidden h-12 items-center gap-2 rounded-full bg-shary-action pe-2 ps-4 text-[14px] font-bold leading-normal text-white shadow-[0_10px_24px_-8px_rgba(18,58,92,0.6)] transition-colors hover:bg-shary-link lg:bottom-7 lg:left-7 lg:h-[52px] lg:text-[15px]" data-compare-bar>
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15V5Z" fill="currentColor"/></svg>
 <span>المقارنة</span>
 <span class="flex h-8 min-w-[32px] items-center justify-center rounded-full bg-white px-2 text-[14px] font-extrabold text-shary-navy" data-compare-count>0</span>
@@ -1205,12 +1464,12 @@ window.addEventListener('load', function () {
 </div>
 
 <div class="pv-bar pv-bar--site" dir="rtl" lang="ar" role="group" aria-label="أدوات المعاينة" hidden>
-  <button type="button" class="pv-back" hidden data-ar="‹ رجوع" data-en="‹ Back">‹ رجوع</button><button type="button" data-go="search-all" data-ar="بحث" data-en="Search">بحث</button><button type="button" data-go="new-cairo" data-ar="منطقة" data-en="Area">منطقة</button><button type="button" data-go="mountain-view" data-ar="مطور" data-en="Developer">مطور</button><button type="button" data-go="blog" data-ar="مدونة" data-en="Blog">مدونة</button><button type="button" data-go="shary-index" data-ar="المؤشر" data-en="Index">المؤشر</button><button type="button" data-go="rent" data-ar="إيجار" data-en="Rent">إيجار</button><button type="button" data-go="project" data-ar="مشروع" data-en="Project">مشروع</button><button type="button" data-go="unit" data-ar="وحدة" data-en="Unit">وحدة</button><button type="button" data-go="about" data-ar="من نحن" data-en="About">من نحن</button><button type="button" data-go="contact" data-ar="اتصل بنا" data-en="Contact">اتصل بنا</button><button type="button" data-go="agents" data-ar="الوكلاء" data-en="Agents">الوكلاء</button><button type="button" data-desktop aria-pressed="false" data-ar="ديسك توب" data-en="Desktop">ديسك توب</button>
+  <button type="button" class="pv-back" hidden data-ar="‹ رجوع" data-en="‹ Back">‹ رجوع</button><button type="button" data-go="search-all" data-ar="بحث" data-en="Search">بحث</button><button type="button" data-go="new-cairo" data-ar="منطقة" data-en="Area">منطقة</button><button type="button" data-go="mountain-view" data-ar="مطور" data-en="Developer">مطور</button><button type="button" data-go="blog" data-ar="مدونة" data-en="Blog">مدونة</button><button type="button" data-go="shary-index" data-ar="المؤشر" data-en="Index">المؤشر</button><button type="button" data-go="rent" data-ar="إيجار" data-en="Rent">إيجار</button><button type="button" data-go="project" data-ar="مشروع" data-en="Project">مشروع</button><button type="button" data-go="unit" data-ar="وحدة" data-en="Unit">وحدة</button><button type="button" data-go="about" data-ar="من نحن" data-en="About">من نحن</button><button type="button" data-go="contact" data-ar="اتصل بنا" data-en="Contact">اتصل بنا</button><button type="button" data-go="agents" data-ar="الوكلاء" data-en="Agents">الوكلاء</button><button type="button" data-go="favorites" data-ar="المفضلة" data-en="Favorites">المفضلة</button><button type="button" data-go="compare" data-ar="المقارنة" data-en="Compare">المقارنة</button><button type="button" data-desktop aria-pressed="false" data-ar="ديسك توب" data-en="Desktop">ديسك توب</button>
   <button type="button" data-zoom aria-pressed="false" hidden data-ar="تكبير" data-en="Zoom">تكبير</button>
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "c9afb61c";</script>
+<script>window.PV_DOCS = {"search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "9e9aed72";</script>
 <!--pv-scripts-->
 <script>
 // الصور مكتوبة مرة واحدة، وأي استخدام تاني لنفس الصورة بياخدها منها
@@ -1220,7 +1479,7 @@ window.addEventListener('load', function () {
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=c9afb61c"></script>
+<script src="a/site.js?v=9e9aed72"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -1232,7 +1491,7 @@ window.addEventListener('load', function () {
   var current = 'article-new-capital-guide';     // المنطقة المفتوحة
   var LIVE = {"scenes": "Mostakbal-City/scenes-mostakbal-city", "bloomfields": "Mostakbal-City/bloomfields-mostakbal-city", "el-patio-sola": "El-Shorouk-City/el-patio-sola-el-shorouk", "privado": "Madinaty-62/privado-madinaty", "xchange-hap-town": "Mostakbal-City/xchange-hap-town-mostakbal-city", "il-bosco-city": "Mostakbal-City/il-bosco-city-new-cairo", "the-butterfly": "Mostakbal-City/the-butterfly-mostakbel-city", "mivida-gardens": "Mostakbal-City/mivida-gardens-mostakbal-city", "aliva": "Mostakbal-City/aliva-mountain-view-mostakbal-city", "eastvale": "Mostakbal-City/eastvale-mostakbal-city", "el-patio-prime": "El-Shorouk-City/el-patio-prime-el-shorouk", "el-patio-casa": "El-Shorouk-City/el-patio-casa-el-shorouk", "el-patio-5-east": "El-Shorouk-City/el-patio-5-east-el-shorouk", "el-shorouk-springs": "El-Shorouk-City/el-shorouk-springs-compound", "avelin": "Fifth-Settlement/avelin-compound-new-cairo", "blue-walk": "Fifth-Settlement/blue-walk-new-cairo", "garnet": "Fifth-Settlement/garnet-new-cairo", "blue-tree": "Fifth-Settlement/blue-tree-new-cairo", "vie-halo": "Fifth-Settlement/vie-halo-new-cairo", "jeel-plaza": "Fifth-Settlement/jeel-plaza-new-cairo", "etaje": "New-Cairo/etaje-madinet-masr", "the-pulse": "New-Cairo/the-Pulse-new-cairo", "la-vista-bay": "North-Coast/la-vista-bay-north-coast", "beyond-blue": "North-Coast/beyond-blue-north-coast", "telal": "North-Coast/telal-north-coast", "four": "North-Coast/four-north-coast", "la-vista-bay-east": "North-Coast/la-vista-bay-east-north-coast", "marsa": "North-Coast/marsa-north-coast"};
   var LIVE_AREAS = {"new-cairo": "New-Cairo", "fifth-settlement": "Fifth-Settlement", "mostakbal-city": "Mostakbal-City", "madinaty": "Madinaty", "al-rehab": "Al-Rehab", "el-shorouk": "Shorouk-City"};
-  var VIEWS = {"area-new-cairo": "new-cairo", "area-mostakbal-city": "mostakbal-city", "area-fifth-settlement": "fifth-settlement", "area-madinaty": "madinaty", "area-al-rehab": "al-rehab", "area-el-shorouk": "el-shorouk", "area-katameya": "katameya", "area-sheikh-zayed": "sheikh-zayed", "area-north-coast": "north-coast", "area-ain-sokhna": "ain-sokhna", "area-new-capital": "new-capital", "area-ras-el-hekma": "ras-el-hekma", "area-sidi-heneish": "sidi-heneish", "area-al-dabaa": "al-dabaa", "area-sidi-abdel-rahman": "sidi-abdel-rahman", "area-al-alamein": "al-alamein", "area-ghazala-bay": "ghazala-bay", "area-alam-al-roum": "alam-al-roum", "developer-mountain-view": "mountain-view", "areas": "areas", "shary-index": "shary-index", "rent": "rent", "rent-unit": "rent-unit", "unit": "unit", "project": "project", "about": "about", "contact": "contact", "agents": "agents", "blog": "blog", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026", "article-mortgage-types": "article-mortgage-types", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3", "article-new-capital-guide": "article-new-capital-guide", "article-new-capital-projects-2026": "article-new-capital-projects-2026", "article-resale-vs-developer-price": "article-resale-vs-developer-price", "article-reservation-contract-checklist": "article-reservation-contract-checklist", "article-zayed-vs-october": "article-zayed-vs-october"};
+  var VIEWS = {"area-new-cairo": "new-cairo", "area-mostakbal-city": "mostakbal-city", "area-fifth-settlement": "fifth-settlement", "area-madinaty": "madinaty", "area-al-rehab": "al-rehab", "area-el-shorouk": "el-shorouk", "area-katameya": "katameya", "area-sheikh-zayed": "sheikh-zayed", "area-north-coast": "north-coast", "area-ain-sokhna": "ain-sokhna", "area-new-capital": "new-capital", "area-ras-el-hekma": "ras-el-hekma", "area-sidi-heneish": "sidi-heneish", "area-al-dabaa": "al-dabaa", "area-sidi-abdel-rahman": "sidi-abdel-rahman", "area-al-alamein": "al-alamein", "area-ghazala-bay": "ghazala-bay", "area-alam-al-roum": "alam-al-roum", "developer-mountain-view": "mountain-view", "areas": "areas", "shary-index": "shary-index", "rent": "rent", "rent-unit": "rent-unit", "unit": "unit", "project": "project", "about": "about", "contact": "contact", "agents": "agents", "favorites": "favorites", "compare": "compare", "blog": "blog", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026", "article-mortgage-types": "article-mortgage-types", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3", "article-new-capital-guide": "article-new-capital-guide", "article-new-capital-projects-2026": "article-new-capital-projects-2026", "article-resale-vs-developer-price": "article-resale-vs-developer-price", "article-reservation-contract-checklist": "article-reservation-contract-checklist", "article-zayed-vs-october": "article-zayed-vs-october"};
   var SEARCH = {"ar": {"types": {"chalets": {"key": "chalet", "label": "شاليهات"}, "villas": {"key": "villa", "label": "فلل"}, "apartments": {"key": "apartment", "label": "شقق"}, "twin-houses": {"key": "twin-house", "label": "توين هاوس"}, "townhouses": {"key": "townhouse", "label": "تاون هاوس"}, "duplexes": {"key": "duplex", "label": "دوبلكس"}, "penthouses": {"key": "penthouse", "label": "بنتهاوس"}, "studios": {"key": "studio", "label": "استوديوهات"}, "hotel-apartments": {"key": "hotel-apartment", "label": "شقق فندقية"}, "offices": {"key": "office", "label": "مكاتب إدارية"}, "shops": {"key": "retail", "label": "محلات تجارية"}, "clinics": {"key": "medical", "label": "عيادات"}, "properties": {"key": null, "label": "وحدات"}}, "areas": {"north-coast": {"label": "الساحل الشمالي", "parent": null}, "ras-el-hekma": {"label": "رأس الحكمة", "parent": "north-coast"}, "al-dabaa": {"label": "الضبعة", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "سيدي عبد الرحمن", "parent": "north-coast"}, "al-alamein": {"label": "العلمين", "parent": "north-coast"}, "ghazala-bay": {"label": "غزالة باي", "parent": "north-coast"}, "new-cairo": {"label": "القاهرة الجديدة", "parent": null}, "sheikh-zayed": {"label": "الشيخ زايد", "parent": null}, "ain-sokhna": {"label": "العين السخنة", "parent": null}, "new-capital": {"label": "العاصمة الإدارية", "parent": null}, "mostakbal-city": {"label": "مدينة المستقبل", "parent": "new-cairo"}, "fifth-settlement": {"label": "التجمع الخامس", "parent": "new-cairo"}, "madinaty": {"label": "مدينتي", "parent": "new-cairo"}, "el-shorouk": {"label": "الشروق", "parent": "new-cairo"}}, "general": {"h1": "عقارات مصر", "h1_compounds": "كمبوندات مصر", "meta_title": "عقارات للبيع في مصر: وحدات وكمبوندات بالتقسيط | شاري", "meta_description": "ابحث في كل الوحدات والكمبوندات المتاحة في مصر: فلتر بالمنطقة، المطور، السعر، المساحة ونظام السداد.", "about_title": "عقارات مصر: ما تحتاج معرفته", "about_html": "<p>تعرض هذه الصفحة كل الوحدات والكمبوندات المتاحة في مصر من المطورين ومن إعادة البيع، مع الأسعار وأنظمة السداد ومواعيد التسليم.</p><h3>كيف تختار الوحدة المناسبة؟</h3><ul><li><strong>الميزانية</strong> <span>حدّد المقدم والقسط المناسب لك قبل المقارنة بين الوحدات.</span></li><li><strong>موعد التسليم</strong> <span>استلام فوري أو وحدة تحت الإنشاء بفترة سداد أطول.</span></li><li><strong>المطور</strong> <span>راجع سابقة أعماله والتزامه بمواعيد التسليم.</span></li></ul><p>هذا نص تجريبي — محتوى كل صفحة بحث يُكتب من لوحة التحكم بالتنسيق الكامل: عناوين، قوائم، روابط وجداول.</p>"}, "text": {"sale": {"name": "%s للبيع في %s", "h1": "%s للبيع في %s", "meta_title": "%s للبيع في %s بالتقسيط | شاري", "meta_description": "كل %s المتاحة للبيع في %s: الأسعار، المساحات، أنظمة السداد والمطورين — فلتر وقارن واختار.", "about_title": "%s للبيع في %s: ما تحتاج معرفته", "about_html": "<p>تعرض هذه الصفحة %s معروضة للبيع في %s من المطورين ومن إعادة البيع، مع السعر ونظام السداد وموعد التسليم لكل وحدة.</p><h3>كيف تختار الوحدة المناسبة؟</h3><ul><li><strong>الميزانية</strong> <span>حدّد المقدم والقسط المناسب لك قبل المقارنة بين الوحدات.</span></li><li><strong>موعد التسليم</strong> <span>استلام فوري أو وحدة تحت الإنشاء بفترة سداد أطول.</span></li><li><strong>المطور</strong> <span>راجع سابقة أعماله والتزامه بمواعيد التسليم.</span></li></ul><p>هذا نص تجريبي — محتوى كل صفحة بحث يُكتب من لوحة التحكم بالتنسيق الكامل: عناوين، قوائم، روابط وجداول.</p>"}, "rent": {"name": "%s للإيجار في %s", "h1": "%s للإيجار في %s", "meta_title": "%s للإيجار في %s | شاري", "meta_description": "كل %s المتاحة للإيجار في %s: الأسعار والمساحات — فلتر وقارن واختار.", "about_title": "%s للإيجار في %s: ما تحتاج معرفته", "about_html": "<p>تعرض هذه الصفحة %s معروضة للإيجار في %s، مع قيمة الإيجار والمساحة وحالة الفرش لكل وحدة.</p><h3>كيف تختار الوحدة المناسبة؟</h3><ul><li><strong>الميزانية</strong> <span>حدّد المقدم والقسط المناسب لك قبل المقارنة بين الوحدات.</span></li><li><strong>موعد التسليم</strong> <span>استلام فوري أو وحدة تحت الإنشاء بفترة سداد أطول.</span></li><li><strong>المطور</strong> <span>راجع سابقة أعماله والتزامه بمواعيد التسليم.</span></li></ul><p>هذا نص تجريبي — محتوى كل صفحة بحث يُكتب من لوحة التحكم بالتنسيق الكامل: عناوين، قوائم، روابط وجداول.</p>"}, "all": "كل %s", "compounds": "كمبوندات %s", "crumb": "عقارات مصر", "areas_title": "تصفح مناطق %s", "types_title": "عقارات أخرى في %s"}, "promo": {"title": "حدّد ميزانيتك و Shary AI يرشّحلك", "text": "اكتب المبلغ والمنطقة وهيطلعلك الوحدات المناسبة ليك."}, "perPage": 12}, "en": {"types": {"chalets": {"key": "chalet", "label": "Chalets"}, "villas": {"key": "villa", "label": "Villas"}, "apartments": {"key": "apartment", "label": "Apartments"}, "twin-houses": {"key": "twin-house", "label": "Twin houses"}, "townhouses": {"key": "townhouse", "label": "Townhouses"}, "duplexes": {"key": "duplex", "label": "Duplexes"}, "penthouses": {"key": "penthouse", "label": "Penthouses"}, "studios": {"key": "studio", "label": "Studios"}, "hotel-apartments": {"key": "hotel-apartment", "label": "Hotel apartments"}, "offices": {"key": "office", "label": "Offices"}, "shops": {"key": "retail", "label": "Shops"}, "clinics": {"key": "medical", "label": "Clinics"}, "properties": {"key": null, "label": "Properties"}}, "areas": {"north-coast": {"label": "North Coast", "parent": null}, "ras-el-hekma": {"label": "Ras El Hekma", "parent": "north-coast"}, "al-dabaa": {"label": "Al Dabaa", "parent": "north-coast"}, "sidi-abdel-rahman": {"label": "Sidi Abdel Rahman", "parent": "north-coast"}, "al-alamein": {"label": "Al Alamein", "parent": "north-coast"}, "ghazala-bay": {"label": "Ghazala Bay", "parent": "north-coast"}, "new-cairo": {"label": "New Cairo", "parent": null}, "sheikh-zayed": {"label": "Sheikh Zayed", "parent": null}, "ain-sokhna": {"label": "Ain Sokhna", "parent": null}, "new-capital": {"label": "New Capital", "parent": null}, "mostakbal-city": {"label": "Mostakbal City", "parent": "new-cairo"}, "fifth-settlement": {"label": "Fifth Settlement", "parent": "new-cairo"}, "madinaty": {"label": "Madinaty", "parent": "new-cairo"}, "el-shorouk": {"label": "El Shorouk", "parent": "new-cairo"}}, "general": {"h1": "Properties in Egypt", "h1_compounds": "Compounds in Egypt", "meta_title": "Properties for sale in Egypt: units and compounds in installments | Shary", "meta_description": "Search every unit and compound available in Egypt: filter by area, developer, price, size and payment plan.", "about_title": "Properties in Egypt: what to know", "about_html": "<p>This page lists every unit and compound available in Egypt, from developers and resale, with prices, payment plans and delivery dates.</p><h3>How to choose the right unit</h3><ul><li><strong>Budget</strong> <span>Settle the down payment and instalment that suit you before comparing units.</span></li><li><strong>Delivery</strong> <span>Ready to move, or under construction with a longer payment period.</span></li><li><strong>Developer</strong> <span>Check the track record and on-time delivery.</span></li></ul><p>This is sample text — the content of each search page is written from the admin panel with full formatting: headings, lists, links and tables.</p>"}, "text": {"sale": {"name": "%s for sale in %s", "h1": "%s for sale in %s", "meta_title": "%s for sale in %s in installments | Shary", "meta_description": "Every listing of %s for sale in %s: prices, sizes, payment plans and developers — filter, compare and choose.", "about_title": "%s for sale in %s: what to know", "about_html": "<p>This page lists %s for sale in %s, from developers and resale, with the price, payment plan and delivery date of each unit.</p><h3>How to choose the right unit</h3><ul><li><strong>Budget</strong> <span>Settle the down payment and instalment that suit you before comparing units.</span></li><li><strong>Delivery</strong> <span>Ready to move, or under construction with a longer payment period.</span></li><li><strong>Developer</strong> <span>Check the track record and on-time delivery.</span></li></ul><p>This is sample text — the content of each search page is written from the admin panel with full formatting: headings, lists, links and tables.</p>"}, "rent": {"name": "%s for rent in %s", "h1": "%s for rent in %s", "meta_title": "%s for rent in %s | Shary", "meta_description": "Every listing of %s for rent in %s: prices and sizes — filter, compare and choose.", "about_title": "%s for rent in %s: what to know", "about_html": "<p>This page lists %s for rent in %s, with the rent, size and furnishing of each unit.</p><h3>How to choose the right unit</h3><ul><li><strong>Budget</strong> <span>Settle the down payment and instalment that suit you before comparing units.</span></li><li><strong>Delivery</strong> <span>Ready to move, or under construction with a longer payment period.</span></li><li><strong>Developer</strong> <span>Check the track record and on-time delivery.</span></li></ul><p>This is sample text — the content of each search page is written from the admin panel with full formatting: headings, lists, links and tables.</p>"}, "all": "All %s", "compounds": "Compounds in %s", "crumb": "Properties in Egypt", "areas_title": "Browse areas in %s", "types_title": "More property types in %s"}, "promo": {"title": "Tell us your budget and Shary AI will shortlist for you", "text": "Type the amount and the area to get the units that fit you."}, "perPage": 12}};
   var calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1343,7 +1602,7 @@ window.addEventListener('load', function () {
   function syncNav() {
     var search = parseSearchKey(current);
     var group = search ? (search.mode === 'compounds' ? 'projects' : 'search') : (current === 'blog' || current.indexOf('article-') === 0) ? 'blog' : current === 'mountain-view' ? 'developers' : (current === 'about' || current === 'contact') ? current : '';
-    var single = { about: 1, contact: 1, agents: 1 };   // صفحات ليها زرار لوحدها في شريط المعاينة
+    var single = { about: 1, contact: 1, agents: 1, favorites: 1, compare: 1 };   // صفحات ليها زرار لوحدها في شريط المعاينة
     root.querySelectorAll('header nav a').forEach(function (a) {
       var mine = navGroup(a.getAttribute('href') || '');
       if (!mine && !a.classList.contains('text-shary-link')) return;
@@ -1382,9 +1641,150 @@ window.addEventListener('load', function () {
       root.querySelectorAll('[data-view="' + slug + '"]').forEach(function (v) { scopeArea(v, false); });
       if (fills[slug] && fills[slug].fn === 'devArea') fills[slug] = null;
     }
+    if (slug === 'favorites' || slug === 'compare') renderSaved(slug);   // بتتملى من اللي العميل حفظه / اختاره فعلًا
     window.scrollTo(0, fromHistory ? (scrolls[slug] || 0) : 0);
     if (!fromHistory) remember(ready && changed);
     return true;
+  }
+
+  // ===================== المفضلة والمقارنة في المعاينة =====================
+  // في الموقع السيرفر هو اللي بيجيب العناصر من اللينك (?ids= / ?units=&projects=). هنا المعاينة بتبنيهم من الكروت نفسها:
+  // الكارت بيتاخد من كروت الصفحة / كروت البحث المخفية، ولو مش موجودين (صفحة تانية) من نسخة اتحفظت وقت الضغط على القلب / قارن.
+  // شريط صفحة الوحدة / المشروع (قالب واحد بيتملى من الكارت): القلب وزرار قارن بياخدوا العنصر المفتوح فعلًا
+  function retagBar(viewName, group, slug) {
+    var view = wraps[lang].querySelector('[data-view="' + viewName + '"]');
+    if (!view || !slug) return;
+    view.querySelectorAll('[data-prop-bar] [data-favorite-toggle]').forEach(function (b) { b.setAttribute('data-favorite-id', group + '/' + slug); b.setAttribute('aria-pressed', 'false'); });
+    view.querySelectorAll('[data-prop-bar] [data-compare-toggle]').forEach(function (b) { b.setAttribute('data-compare-id', slug); });
+    if (window.SharyCards) window.SharyCards.refresh(view);
+  }
+  function savedList(key) { try { return JSON.parse(window.localStorage.getItem(key)) || []; } catch (e) { return []; } }
+  function snapKey(id) { return 'pv-card:' + lang + ':' + id; }
+  function snapCard(id, node) {
+    var wrap = node && node.closest ? node.closest('[data-unit], [data-project]') : null;
+    if (!wrap || !id) return;
+    var copy = wrap.cloneNode(true);
+    copy.querySelectorAll('img').forEach(function (img) { if ((img.getAttribute('src') || '').indexOf('data:') === 0) img.removeAttribute('src'); });   // الصور المكتوبة جوه الملف تقيلة على التخزين
+    try { window.localStorage.setItem(snapKey(id), copy.outerHTML); } catch (e) {}
+  }
+  function findCard(id) {
+    var unit = id.indexOf('units/') === 0, slug = id.slice(id.indexOf('/') + 1);
+    var pool = ((pools[lang] || {})[unit ? 'units' : 'compounds'] || []).filter(function (card) { return card.getAttribute('data-slug') === slug; })[0];
+    var live = pool || Array.prototype.filter.call(wraps[lang].querySelectorAll(unit ? '[data-unit]' : '[data-project]'), function (card) {
+      return card.getAttribute('data-slug') === slug && card.querySelector('article') && !card.closest('[data-view="favorites"], [data-view="compare"]');
+    })[0];
+    var node = live ? live.cloneNode(true) : null;
+    if (!node) {
+      var html = null;
+      try { html = window.localStorage.getItem(snapKey(id)); } catch (e) {}
+      if (!html) return null;
+      var box = document.createElement('div');
+      box.innerHTML = html;
+      node = box.firstElementChild;
+    }
+    node.className = 'min-w-0';
+    node.style.display = '';
+    node.removeAttribute('data-order');
+    return node;
+  }
+  function cardFacts(card, unit, labels) {
+    function text(selector) { var el = card.querySelector(selector); return el ? el.textContent.trim().replace(/\s+/g, ' ') : ''; }
+    function data(name) { return card.getAttribute(name) || ''; }
+    var link = card.querySelector('h3 a');
+    var photo = card.querySelector('img.card-photo') || card.querySelector('img');
+    var logo = card.querySelector('img.rounded-full');
+    var price = Number(data('data-price')) || 0;
+    var facts = {
+      title: link ? link.textContent.trim() : '', href: link ? link.getAttribute('href') : '#', location: text('article small span'), photo: photo,
+      developer: (logo && logo.getAttribute('alt')) || labels.none,
+      price: price ? groupDigits(price) + ' ' + labels.currency + (data('data-offer') === 'rent' ? ' / ' + labels.month : '') : labels.none
+    };
+    if (unit) {
+      facts.installment = text('.area-card__price small') || text('small.truncate') || labels.none;
+      facts.area = data('data-size') ? data('data-size') + ' ' + labels.m2 : labels.none;
+      facts.beds = data('data-beds') && data('data-beds') !== '0' ? data('data-beds') : labels.none;
+      facts.baths = data('data-baths') && data('data-baths') !== '0' ? data('data-baths') : labels.none;
+      facts.finishing = (labels.finishing || {})[data('data-finishing')] || labels.none;
+      facts.delivery = data('data-delivery') === 'ready' ? labels.ready : (data('data-delivery') || labels.none);
+    } else {
+      var resale = card.querySelector('.area-card__price--two > div:nth-child(2) p span');
+      facts.resale = resale && /\d/.test(resale.textContent) ? resale.textContent.trim() + ' ' + labels.currency : labels.no_resale;
+      var typesRow = card.querySelector('h3 + p');
+      facts.types = typesRow ? Array.prototype.map.call(typesRow.querySelectorAll('span'), function (n) { return n.textContent.trim(); }).filter(function (v) { return v && v.charAt(0) !== '+'; }).join(' ، ') : '';
+      facts.types = facts.types || labels.none;
+      facts.plan = labels.none;
+    }
+    return facts;
+  }
+  function renderSaved(slug) {
+    var view = wraps[lang].querySelector('[data-view="' + slug + '"]');
+    var page = view && view.querySelector('[data-saved-page]');
+    if (!page) return;
+    var compare = slug === 'compare';
+    var all = savedList(compare ? 'shary-compare' : 'shary-favorites');
+    var labels = {};
+    try { labels = JSON.parse(page.getAttribute('data-compare-labels') || '{}'); } catch (e) {}
+    var counts = {};
+    ['units', 'projects'].forEach(function (group) {
+      var panel = page.querySelector('[data-saved-panel="' + group + '"]');
+      var ids = all.filter(function (id) { return id.indexOf(group + '/') === 0; });
+      var shown = 0;
+      if (!compare) {
+        var grid = panel.querySelector('[data-saved-content]');
+        grid.textContent = '';
+        ids.forEach(function (id) {
+          var card = findCard(id);
+          if (!card) return;
+          card.setAttribute('data-saved-item', id);
+          grid.appendChild(card);
+          shown++;
+        });
+      } else {
+        var table = panel.querySelector('[data-compare-table]');
+        var rows = Array.prototype.slice.call(table.querySelectorAll('.compare-row'));
+        rows.forEach(function (row) {   // أول خلية في القالب هي شكل العمود
+          if (!row.__pvCell) row.__pvCell = row.querySelector('.compare-cell').cloneNode(true);
+          Array.prototype.slice.call(row.querySelectorAll('.compare-cell')).forEach(function (cell) { row.removeChild(cell); });
+        });
+        ids.slice(0, 4).forEach(function (id) {
+          var card = findCard(id);
+          if (!card) return;
+          var facts = cardFacts(card, group === 'units', labels);
+          rows.forEach(function (row) {
+            var cell = row.__pvCell.cloneNode(true);
+            cell.setAttribute('data-col', id);
+            var key = row.getAttribute('data-compare-row');
+            if (key) {
+              cell.textContent = facts[key] || labels.none || '';
+            } else {
+              var image = cell.querySelector('[data-compare-field="image"]');
+              if (image && facts.photo) {
+                ['data-img', 'data-img-key', 'data-fallback-key'].forEach(function (name) { var v = facts.photo.getAttribute(name); if (v) image.setAttribute(name, v); else image.removeAttribute(name); });
+                image.src = facts.photo.currentSrc || facts.photo.getAttribute('src') || '';
+                image.alt = facts.title;
+              }
+              var title = cell.querySelector('[data-compare-field="title"]');
+              if (title) { title.textContent = facts.title; title.setAttribute('href', facts.href); }
+              var place = cell.querySelector('[data-compare-field="location"]');
+              if (place) place.textContent = facts.location;
+              var open = cell.querySelector('[data-compare-field="link"]');
+              if (open) open.setAttribute('href', facts.href);
+              var remove = cell.querySelector('[data-compare-remove]');
+              if (remove) remove.setAttribute('data-compare-remove', id);
+            }
+            row.appendChild(cell);
+          });
+          shown++;
+        });
+      }
+      counts[group] = shown;
+      if (window.SharySaved) window.SharySaved.refresh(panel);
+    });
+    if (window.SharyCards) window.SharyCards.refresh(view);
+    // التبويب المفتوح: اللي فيه عناصر
+    var selected = page.querySelector('[data-saved-tab][aria-selected="true"]');
+    var now = selected ? selected.getAttribute('data-saved-tab') : 'units';
+    if (!counts[now] && counts[now === 'units' ? 'projects' : 'units']) page.querySelector('[data-saved-tab="' + (now === 'units' ? 'projects' : 'units') + '"]').click();
   }
 
 
@@ -1752,6 +2152,7 @@ window.addEventListener('load', function () {
       pill: (card.querySelector('.area-card__price span.ms-auto') || {}).textContent
     } : null;
     if (!show('rent-unit')) return false;
+    if (card) retagBar('rent-unit', 'units', card.getAttribute('data-slug'));
     var view = wraps[lang].querySelector('[data-view="rent-unit"]');
     function set(name, text) { if (text == null || text === '') return; view.querySelectorAll('[data-unit-field="' + name + '"]').forEach(function (n) { n.textContent = text; }); }
     set('title', title);
@@ -1866,6 +2267,7 @@ window.addEventListener('load', function () {
     }
     if (!inDoc('unit')) return go('unit', { fn: 'unit', slug: slug, info: info });
     if (!show('unit')) return false;
+    retagBar('unit', 'units', slug);
     fills.unit = info ? { fn: 'unit', slug: slug, info: info } : null;
     remember(false);
     var view = wraps[lang].querySelector('[data-view="unit"]');
@@ -1975,6 +2377,7 @@ window.addEventListener('load', function () {
     }
     if (!inDoc('project')) return go('project', { fn: 'project', slug: slug, info: info });
     if (!show('project')) return false;
+    retagBar('project', 'projects', slug);
     if (shot) window.scrollTo(0, 0);
     fills.project = info ? { fn: 'project', slug: slug, info: info } : null;
     remember(false);
@@ -2020,7 +2423,7 @@ window.addEventListener('load', function () {
     var href = link.getAttribute('href') || '';
     if (link.hasAttribute('data-meeting-open')) return;   // "احجز العرض" و"طلب مقابلة": بيفتحوا فورم طلب الاجتماع
     if (link.hasAttribute('data-unit-tab') || link.hasAttribute('data-unit-sort')) return;   // تبويب وترتيب وحدات المشروع: سكربت الصفحة بيبدّل الكروت
-    var pageView = VIEWS[href.replace(/#.*$/, '').replace(/(-en)?\.html$/, '')];   // صفحة موجودة جوه المعاينة (منطقة / مطور / بحث)
+    var pageView = VIEWS[href.replace(/[?#].*$/, '').replace(/(-en)?\.html$/, '')];   // صفحة موجودة جوه المعاينة (منطقة / مطور / بحث)
 
     if (link.hasAttribute('data-lang-toggle')) {
       e.preventDefault();
@@ -2120,13 +2523,13 @@ window.addEventListener('load', function () {
     }, 450);
   });
 
-  root.addEventListener('shary:favorite', function (e) { toast(t(e.detail.active ? 'favoriteOn' : 'favoriteOff')); });
+  root.addEventListener('shary:favorite', function (e) { if (e.detail.active) snapCard(e.detail.id, e.target); toast(t(e.detail.active ? 'favoriteOn' : 'favoriteOff')); });
   root.addEventListener('shary:ai-send', function (e) {
     e.preventDefault();
     var reply = e.detail.reply;
     setTimeout(function () { reply(lang === 'ar' ? 'دي معاينة للشكل بس — رد Shary AI الحقيقي بيظهر هنا بعد ربط الصفحة بالباك إند.' : 'This is a design preview — the real Shary AI answer appears here once the page is connected to the back end.'); }, 700);
   });
-  root.addEventListener('shary:compare', function (e) { toast(t(e.detail.active ? 'compareOn' : 'compareOff')); });
+  root.addEventListener('shary:compare', function (e) { if (e.detail.active) snapCard(e.detail.id, e.target); toast(t(e.detail.active ? 'compareOn' : 'compareOff')); });
 
   // الفلاتر في المعاينة: بتفلتر وترتّب المشاريع التجريبية مكانها (على الموقع الباك إند هو اللي بيرجّع النتايج)
   root.addEventListener('shary:filter', function (e) {
