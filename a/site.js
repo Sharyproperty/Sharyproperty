@@ -802,6 +802,47 @@
 })();
 
 /**
+ * سيستم اللوجوهات — مفيش لوجو يبان "مربع" جوه الدايرة:
+ * اللوجو بيتعرض كامل (object-contain) جوه دايرة ، ولو صورة اللوجو خلفيتها لون ثابت (مش شفافة) الدايرة بتاخد نفس لون الخلفية فالمربع بيختفي.
+ * بيشتغل لوحده على لوجوهات المطورين في كل الكروت والصفحات (والصور اللي بتتحمّل بعدين). لأي صورة تانية: حطوا عليها data-logo-fit.
+ * ملاحظة: قراءة لون الخلفية بتشتغل لما الصورة من نفس الدومين (أو عليها CORS) — غير كده اللوجو بيفضل على خلفية بيضا.
+ * الأفضل من لوحة التحكم: رفع اللوجو PNG شفاف أو مربع 400×400 — راجعوا README.
+ */
+(function () {
+    var SELECTOR = 'img[data-logo-fit], img.rounded-full.object-contain, .dev-logo-link img, .prop-shot__logo img, .dev-icon__logo img, .prop-bar__logo img, .developer-logo img, .req-menu__logo';
+
+    function fit(img) {
+        if (!img.naturalWidth || img.__logoFit === img.currentSrc) return;
+        img.__logoFit = img.currentSrc;
+        try {
+            var canvas = document.createElement('canvas');
+            var size = canvas.width = canvas.height = 24;
+            var context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0, size, size);
+            var corners = [[1, 1], [size - 2, 1], [1, size - 2], [size - 2, size - 2]].map(function (point) { return context.getImageData(point[0], point[1], 1, 1).data; });
+            var first = corners[0];
+            var solid = first[3] > 200 && corners.every(function (pixel) {
+                return Math.abs(pixel[0] - first[0]) + Math.abs(pixel[1] - first[1]) + Math.abs(pixel[2] - first[2]) < 30 && pixel[3] > 200;
+            });
+            if (!solid) return;   // خلفية شفافة أو مش لون واحد: بيفضل على الأبيض
+            var color = 'rgb(' + first[0] + ',' + first[1] + ',' + first[2] + ')';
+            img.style.backgroundColor = color;
+            var box = img.parentElement;
+            if (box && box.clientWidth && box.clientWidth <= img.clientWidth * 1.7 && window.getComputedStyle(box).borderTopLeftRadius !== '0px') box.style.backgroundColor = color;
+        } catch (error) { /* صورة من دومين تاني من غير CORS */ }
+    }
+
+    function scan(scope) { (scope || document).querySelectorAll(SELECTOR).forEach(function (img) { if (img.complete) fit(img); }); }
+
+    document.addEventListener('load', function (event) {
+        var img = event.target;
+        if (img && img.tagName === 'IMG' && img.matches(SELECTOR)) fit(img);
+    }, true);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { scan(); }); else scan();
+    window.SharyLogoFit = { scan: scan };
+})();
+
+/**
  * اختيار كود الدولة جنب رقم الهاتف (فورم الاستشارة).
  * بيشتغل على أي عنصر عليه data-phone-field: الزرار بيفتح القايمة، والاختيار بيغيّر العلم والكود
  * وقيمة الحقل المخفي country_code اللي بتتبعت مع الفورم.
@@ -2488,9 +2529,10 @@
  *    - لو ما اتمنعش: الكروت اللي في الصفحة [data-opp-card] بتتفلتر في مكانها (data-areas / data-type / data-price) والعدد [data-opps-count] بيتحدّث.
  *    - "مسح" [data-opps-reset] بيرجّع كل الاختيارات.
  *
- * 3) "قدّم عرضك": الزرار [data-offer-open] بيفتح الفورم [data-offer-form] (قيمة العرض + الاسم + الموبايل).
- *    الإرسال بيطلع حدث shary:opportunity-offer على الفورم: detail = { slug, amount, name, phone, done(), fail() }.
- *    لو ما اتمنعش: POST على action الفورم (JSON) وبعد الرد بتظهر رسالة التأكيد [data-offer-done].
+ * 3) "قدّم عرضك" (طلب شراء): أي عنصر عليه [data-offer-open] بيفتح البوب أب [data-offer-modal] (opportunities/partials/offer-modal)،
+ *    وبيتقفل من X أو الضغط براه أو Esc. الاسم والموبايل (مع كود الدولة) إجباري ، وقيمة العرض اختيارية.
+ *    الإرسال بيطلع حدث shary:opportunity-offer على الفورم: detail = { slug, amount (0 = من غير قيمة), name, country_code, phone, done(), fail() }.
+ *    لو ما اتمنعش: POST على action الفورم (JSON) وبعد الرد بتظهر رسالة التأكيد [data-offer-done] مكان الفورم.
  */
 (function () {
     // ---- 1) العدّاد
@@ -2593,19 +2635,41 @@
         });
     });
 
-    // ---- 3) قدّم عرضك
-    document.querySelectorAll('[data-offer-form]').forEach(function (form) {
-        var scope = form.closest('[data-opp-market]') || document;
-        var opener = scope.querySelector('[data-offer-open]');
+    // ---- 3) قدّم عرضك (بوب أب)
+    document.querySelectorAll('[data-offer-modal]').forEach(function (modal) {
+        var form = modal.querySelector('[data-offer-form]');
+        if (!form) return;
+        var scope = modal.closest('[lang]') || document;
         var error = form.querySelector('[data-offer-error]');
-        var done = form.querySelector('[data-offer-done]');
+        var done = modal.querySelector('[data-offer-done]');
         var amount = form.querySelector('[name="amount"]');
+        var nameField = form.querySelector('[name="name"]');
+        var lastOpener = null;
 
-        if (opener) opener.addEventListener('click', function () {
-            var open = form.classList.toggle('hidden') === false;
-            opener.setAttribute('aria-expanded', open ? 'true' : 'false');
-            if (open) { form.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); if (amount) amount.focus({ preventScroll: true }); }
+        function open(opener) {
+            lastOpener = opener || null;
+            // كل مرة يتفتح: الفورم ظاهر ورسالة التأكيد مخفية
+            form.classList.remove('hidden');
+            if (done) { done.classList.add('hidden'); done.classList.remove('flex'); }
+            if (error) error.classList.add('hidden');
+            modal.classList.remove('hidden');
+            document.documentElement.classList.add('overflow-hidden');
+            if (nameField && window.matchMedia('(min-width: 1024px)').matches) nameField.focus({ preventScroll: true });
+        }
+
+        function close() {
+            if (modal.classList.contains('hidden')) return;
+            modal.classList.add('hidden');
+            document.documentElement.classList.remove('overflow-hidden');
+            if (lastOpener && lastOpener.focus) lastOpener.focus({ preventScroll: true });
+        }
+
+        scope.addEventListener('click', function (event) {
+            var opener = event.target.closest('[data-offer-open]');
+            if (opener) { event.preventDefault(); open(opener); return; }
+            if (event.target.closest('[data-offer-close]') && modal.contains(event.target)) close();
         });
+        document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
 
         // قيمة العرض: أرقام بس وبفواصل الآلاف
         if (amount) amount.addEventListener('input', function () {
@@ -2615,13 +2679,16 @@
 
         form.addEventListener('submit', function (event) {
             event.preventDefault();
+            var code = form.querySelector('[name="country_code"]');
             var data = {
                 slug: form.getAttribute('data-slug') || '',
-                amount: Number((amount ? amount.value : '').replace(/[^\d]/g, '')) || 0,
-                name: (form.querySelector('[name="name"]').value || '').trim(),
+                amount: Number((amount ? amount.value : '').replace(/[^\d]/g, '')) || 0,   // 0 = من غير قيمة (اختياري)
+                name: (nameField.value || '').trim(),
+                country_code: code ? code.value : '',
                 phone: (form.querySelector('[name="phone"]').value || '').trim()
             };
-            var valid = data.amount > 0 && data.name.length > 1 && data.phone.replace(/[^\d]/g, '').length >= 8;
+            // الاسم والموبايل إجباري — قيمة العرض اختيارية
+            var valid = data.name.length > 1 && data.phone.replace(/[^\d]/g, '').length >= 8;
             if (error) error.classList.toggle('hidden', valid);
             if (!valid) return;
 
@@ -2629,8 +2696,9 @@
             if (button) button.disabled = true;
             function finish() {
                 if (button) button.disabled = false;
-                if (done) done.classList.remove('hidden');
                 form.reset();
+                form.classList.add('hidden');
+                if (done) { done.classList.remove('hidden'); done.classList.add('flex'); }
             }
             function fail() {
                 if (button) button.disabled = false;
@@ -2644,10 +2712,149 @@
             fetch(form.getAttribute('action'), {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': token ? token.value : '' },
-                body: JSON.stringify({ amount: data.amount, name: data.name, phone: data.phone })
+                body: JSON.stringify({ amount: data.amount || null, name: data.name, country_code: data.country_code, phone: data.phone })
             }).then(function (response) { if (!response.ok) throw new Error(response.status); finish(); }).catch(fail);
         });
     });
+})();
+
+/**
+ * خريطة شاري التفاعلية (resources/views/map/show.blade.php)
+ * - اختيار مشروع [data-smap-item] بيحرّك الخريطة [data-smap-frame] على مكانه (data-lat / data-lng) وبيملا كارت المشروع [data-smap-card].
+ * - [data-smap-type] قمر صناعي (h) / خريطة (m) ، [data-smap-zoom] تكبير / تصغير.
+ * - البحث [data-smap-search] وفلتر المنطقة [data-smap-area] بيفلتروا القايمة — لو المشروع المختار اختفى بيتختار أول مشروع ظاهر.
+ * - الاختيار بيطلع حدث shary:map-select على الصفحة: detail = بيانات المشروع (slug, lat, lng ...).
+ * - من أي كود: window.SharyMap.select('slug').
+ * الخريطة تضمين خرائط جوجل (من غير API key). الصفحة مخفية / لسه ما ظهرتش: الخريطة بتتحمّل أول ما تظهر على الشاشة.
+ */
+(function () {
+    var maps = [];
+
+    document.querySelectorAll('[data-smap]').forEach(function (root) {
+        var frame = root.querySelector('[data-smap-frame]');
+        var card = root.querySelector('[data-smap-card]');
+        var items = Array.prototype.slice.call(root.querySelectorAll('[data-smap-item]'));
+        var search = root.querySelector('[data-smap-search]');
+        var empty = root.querySelector('[data-smap-empty]');
+        var lang = root.getAttribute('data-lang') || 'ar';
+        var state = { type: 'h', zoom: 16, current: null, live: false, area: root.getAttribute('data-area') || '' };
+        if (!frame || !items.length) return;
+
+        function info(item) {
+            if (!item.__project) { try { item.__project = JSON.parse(item.getAttribute('data-project')); } catch (e) { item.__project = {}; } }
+            return item.__project;
+        }
+
+        function plain(text) {
+            return String(text || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim();
+        }
+
+        // الخريطة بتتحدّث لما تبقى ظاهرة بس (ولما المشروع / النوع / التكبير يتغيّر)
+        function paint() {
+            if (!state.live || !state.current) return;
+            var p = info(state.current);
+            var url = 'https://www.google.com/maps?q=' + p.lat + ',' + p.lng + '&t=' + state.type + '&z=' + state.zoom + '&hl=' + lang + '&output=embed';
+            if (frame.getAttribute('src') !== url) frame.setAttribute('src', url);
+            frame.setAttribute('title', (root.getAttribute('data-frame-title') || '').replace(':name', p.name || ''));
+        }
+
+        function select(item, reveal) {
+            if (!item) return;
+            state.current = item;
+            var p = info(item);
+            items.forEach(function (other) { other.setAttribute('aria-current', other === item ? 'true' : 'false'); });
+            if (card) {
+                card.querySelectorAll('[data-smap-k]').forEach(function (node) {
+                    var key = node.getAttribute('data-smap-k');
+                    if (node.tagName === 'IMG') {
+                        // نفس صورة المشروع في القايمة (ولو اتبدلت بالصورة البديلة بناخد البديلة)
+                        var thumb = item.querySelector('img');
+                        if (thumb) {
+                            Array.prototype.forEach.call(thumb.attributes, function (attr) { if (attr.name.indexOf('data-fallback') === 0 || attr.name === 'onerror') node.setAttribute(attr.name, attr.value); });
+                            node.src = thumb.currentSrc || thumb.getAttribute('src') || p.image_fallback || '';
+                        } else node.src = p.image || p.image_fallback || '';
+                        node.alt = p.name || '';
+                    }
+                    else node.textContent = p[key] || '';
+                });
+                var links = { url: p.url, directions: 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng, earth: 'https://earth.google.com/web/search/' + p.lat + ',' + p.lng };
+                card.querySelectorAll('[data-smap-link]').forEach(function (link) { link.setAttribute('href', links[link.getAttribute('data-smap-link')] || '#'); });
+                card.classList.add('is-on');
+            }
+            paint();
+            if (reveal) {
+                var list = item.closest('[data-smap-list]');
+                if (list && list.scrollHeight > list.clientHeight) list.scrollTop = item.offsetTop - list.offsetTop - 8;
+                // موبايل: القايمة تحت الخريطة — نطلع للخريطة عشان العميل يشوف المكان
+                if (window.matchMedia('(max-width: 1023px)').matches) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            root.dispatchEvent(new CustomEvent('shary:map-select', { bubbles: true, detail: p }));
+        }
+
+        function filter() {
+            var words = plain(search && search.value).split(' ').filter(Boolean);
+            var shown = [];
+            items.forEach(function (item) {
+                var p = info(item);
+                if (!item.__hay) item.__hay = plain([p.name, p.developer_name, p.area_label, p.location, p.slug].join(' '));
+                var ok = (!state.area || item.getAttribute('data-area') === state.area) && words.every(function (word) { return item.__hay.indexOf(word) > -1; });
+                item.parentNode.hidden = !ok;
+                if (ok) shown.push(item);
+            });
+            if (empty) empty.classList.toggle('hidden', shown.length > 0);
+            if (shown.length && shown.indexOf(state.current) === -1) select(shown[0], false);
+        }
+
+        items.forEach(function (item) { item.addEventListener('click', function () { select(item, true); }); });
+
+        root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                state.area = chip.getAttribute('data-smap-area');
+                root.querySelectorAll('[data-smap-area]').forEach(function (other) { other.setAttribute('aria-pressed', other === chip ? 'true' : 'false'); });
+                filter();
+            });
+        });
+
+        if (search) search.addEventListener('input', filter);
+
+        root.querySelectorAll('[data-smap-type]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                state.type = button.getAttribute('data-smap-type');
+                root.querySelectorAll('[data-smap-type]').forEach(function (other) { other.setAttribute('aria-pressed', other === button ? 'true' : 'false'); });
+                paint();
+            });
+        });
+
+        root.querySelectorAll('[data-smap-zoom]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                state.zoom = Math.max(9, Math.min(20, state.zoom + Number(button.getAttribute('data-smap-zoom'))));
+                paint();
+            });
+        });
+
+        function bySlug(slug) { return items.filter(function (item) { return item.getAttribute('data-slug') === slug; })[0]; }
+
+        // البداية: فلتر المنطقة (لو موجود) + المشروع المطلوب
+        if (state.area) root.querySelectorAll('[data-smap-area]').forEach(function (chip) { chip.setAttribute('aria-pressed', chip.getAttribute('data-smap-area') === state.area ? 'true' : 'false'); });
+        select(bySlug(root.getAttribute('data-selected')) || items[0], false);
+        filter();
+
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries, observer) {
+                if (entries.some(function (entry) { return entry.isIntersecting; })) { state.live = true; paint(); observer.disconnect(); }
+            }, { rootMargin: '200px' }).observe(frame);
+        } else { state.live = true; paint(); }
+
+        maps.push({ root: root, select: function (slug) { var item = bySlug(slug); if (item) { if (item.parentNode.hidden) { state.area = ''; if (search) search.value = ''; root.querySelectorAll('[data-smap-area]').forEach(function (chip) { chip.setAttribute('aria-pressed', chip.getAttribute('data-smap-area') === '' ? 'true' : 'false'); }); filter(); } select(item, false); } return !!item; } });
+    });
+
+    window.SharyMap = {
+        // بيختار المشروع في الخريطة الظاهرة (أو أول خريطة)
+        select: function (slug) {
+            var visible = maps.filter(function (map) { return map.root.offsetParent !== null; });
+            return (visible.length ? visible : maps).some(function (map) { return map.select(slug); });
+        }
+    };
 })();
 
 /**
@@ -4382,8 +4589,9 @@
  * - فورم طلب الكارت [data-card-form]: بيتأكد من الاسم والرقم، وبعدها بيطلع حدث shary:card-request على الفورم:
  *       form.addEventListener('shary:card-request', function (event) {
  *           event.preventDefault();                         // هنطلب الكارت AJAX
- *           // event.detail = { name, phone, country_code, show(card), fail(message) }
- *           event.detail.show({ name: 'نبيل سليمان', code: 'SH-482913' });   // الكارت بيظهر باسمه وكوده
+ *           // event.detail = { name, phone, country_code, show(card), pending(), fail(message) }
+ *           event.detail.pending();                                           // الطلب اتسجل والكود لسه هيصدر من الأدمن: رسالة "طلبك وصل"
+ *           event.detail.show({ name: 'نبيل سليمان', code: 'SH-482913' });   // الكود صدر: الكارت بيظهر باسمه وكوده + دعوة صديق
  *       });
  *   لو الحدث ما اتمنعش الفورم بيتبعت عادي (POST) والسيرفر يرجّع الصفحة بالكارت ($card).
  */
@@ -4418,9 +4626,20 @@
             if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(value).then(done, done); else done();
         });
 
+        var pendingBox = page.querySelector('[data-card-pending]');
+        var invite = page.querySelector('[data-card-invite]');
+
+        // الطلب اتسجل ولسه الكود ما صدرش من الأدمن: رسالة "طلبك وصل" مكان الفورم
+        function pending() {
+            if (form) form.classList.add('hidden');
+            if (pendingBox) pendingBox.classList.remove('hidden');
+        }
+
         // الكارت بيظهر باسم العميل وكوده
         function show(card) {
             if (!card || !card.code) return;
+            if (pendingBox) pendingBox.classList.add('hidden');
+            if (invite) invite.href = 'https://wa.me/?text=' + encodeURIComponent((invite.getAttribute('data-message') || '').replace(':code', card.code));
             name.textContent = card.name || name.getAttribute('data-empty');
             code.textContent = card.code;
             if (codeText) codeText.textContent = card.code;
@@ -4451,6 +4670,7 @@
                 detail: {
                     name: nameInput.value.trim(), phone: phoneInput.value, country_code: (form.querySelector('[data-phone-value]') || {}).value || '',
                     show: show,
+                    pending: pending,
                     fail: function (message) { if (error) { if (message) error.textContent = message; error.classList.remove('hidden'); } }
                 }
             }));

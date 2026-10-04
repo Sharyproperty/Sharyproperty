@@ -8114,3 +8114,18 @@ html, body {
 }
 /* شريط مؤشر شاري بقى لينك لصفحة المؤشر */
 .shary-home-root a.market-ticker-badge { cursor: pointer; }
+
+/* ---- تحديث: زرار "مؤشر شاري" في الشريط — صغير ومن غير السهم، ونبضة بتدعو للضغط. "سعر المتر / نسبة الزيادة" مش بتظهر على الموبايل ---- */
+.shary-home-root .market-ticker-arrow { display: none !important; }
+.shary-home-root .market-ticker-badge-inner { justify-content: center; gap: 5px; animation: sharyBadgeTap 3.2s ease-in-out 1.2s infinite; }
+.shary-home-root .market-ticker-badge { position: relative; }
+.shary-home-root .market-ticker-badge::after { content: ""; position: absolute; inset: 0; border-radius: 999px; border: 2px solid rgba(53, 182, 167, 0.7); opacity: 0; pointer-events: none; animation: sharyBadgeRing 3.2s ease-out 1.2s infinite; }
+@keyframes sharyBadgeTap { 0%, 62%, 100% { transform: scale(1); } 70% { transform: scale(0.93); } 80% { transform: scale(1.05); } 88% { transform: scale(1); } }
+@keyframes sharyBadgeRing { 0%, 70% { opacity: 0; transform: scale(1); } 76% { opacity: 0.9; } 100% { opacity: 0; transform: scale(1.28, 1.6); } }
+@media (max-width: 640px) {
+  .shary-home-root .market-ticker-badge { width: 76px; min-width: 76px; flex-basis: 76px; height: 32px; font-size: 9.5px; }
+  .shary-home-root .market-ticker-badge-inner, .shary-home-root .market-ticker-badge-inner span { white-space: nowrap; }
+  /* موبايل: من غير "سعر المتر / نسبة الزيادة" — أرقام المؤشر بتملى مكانهم */
+  .shary-home-root .market-ticker-labels { display: none !important; }
+}
+@media (prefers-reduced-motion: reduce) { .shary-home-root .market-ticker-badge-inner, .shary-home-root .market-ticker-badge::after { animation: none; } }
