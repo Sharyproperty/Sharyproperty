@@ -4586,7 +4586,7 @@ input:focus-visible + .area-chip,
 }
 
 /* كل اللوحات والفورمات اللي بتفتح فوق الصفحة (طلب المقابلة / الفلاتر / اختيار المنطقة والمطور / السعر / فلتر مؤشر شاري / المشاركة / بوب أب التطبيق):
-       الصفحة بتفضل ظاهرة وراها بتغميق شفاف خفيف + بلور ، بدل الصفحة البيضا الكاملة. الضغط بره اللوحة لسه بيقفلها. */
+       الصفحة بتفضل ظاهرة وراها بتغميق شفاف خفيف (من غير بلور) ، واللوحة نفسها مش بيضا صريحة: خلفية لبني هادية بتدرّج + خط خفيف بيحددها. */
 
 [data-meeting-modal] > [data-meeting-close],
     [data-filter-sheet] > [data-sheet-close],
@@ -4594,38 +4594,36 @@ input:focus-visible + .area-chip,
     [data-index-picker] > [data-picker-close],
     .shary-share__dim,
     .app-pop__backdrop {
-  background-color: rgba(13, 32, 51, 0.4) !important;
-  -webkit-backdrop-filter: blur(8px) saturate(1.15);
-  backdrop-filter: blur(8px) saturate(1.15);
+  background-color: rgba(13, 32, 51, 0.46) !important;
 }
 
-/* صفحة "تصفية" الكاملة على الموبايل: بقت لوحة طالعة من تحت — فوقها جزء من الصفحة ظاهر بنفس التغميق والبلور */
+/* صفحة "تصفية" الكاملة على الموبايل: لوحة طالعة من تحت — فوقها جزء من الصفحة ظاهر بنفس التغميق */
 
 @media (max-width: 1023px) {
   [data-filter-sheet="all"] {
-    background-color: rgba(13, 32, 51, 0.4);
-    -webkit-backdrop-filter: blur(8px) saturate(1.15);
-    backdrop-filter: blur(8px) saturate(1.15);
+    background-color: rgba(13, 32, 51, 0.46);
   }
 
   [data-filter-sheet="all"] > .area-sheet {
     top: 7vh !important;
     overflow: hidden;
     border-radius: 28px 28px 0 0;
-    box-shadow: 0 -18px 40px -18px rgba(13, 32, 51, 0.55);
   }
 }
 
-.meeting-panel,
-    [data-filter-sheet] > .area-sheet:not(.inset-0) {
-  box-shadow: 0 -18px 44px -18px rgba(13, 32, 51, 0.5);
-}
+/* خلفية اللوحات: لبني هادي بتدرّج بدل الأبيض الصريح (الخانات والكروت اللي جواها بتفضل بيضا فبتبان) */
 
-[data-index-picker] > .meeting-panel {
+[data-meeting-modal] > .meeting-panel,
+    [data-filter-sheet] > .area-sheet,
+    [data-filter-sheet] > .meeting-panel,
+    [data-index-advanced] > .area-sheet,
+    [data-index-advanced] > .meeting-panel,
+    [data-index-picker] > .meeting-panel,
+    .shary-share__panel {
   border: 1px solid #c6d6ea;
-  background-color: #f4f8fd;
-  background-image: linear-gradient(180deg, #e9f1fb 0, #f4f8fd 120px, #f8fbfe 100%);
-  box-shadow: none;
+  background-color: #f3f7fc !important;
+  background-image: linear-gradient(180deg, #e3edf9 0, #eef4fb 130px, #f6f9fd 100%) !important;
+  box-shadow: 0 -18px 44px -18px rgba(13, 32, 51, 0.5);
 }
 
 [data-filter-sheet] > .area-sheet:not(.inset-0) {
@@ -7164,7 +7162,9 @@ input:focus-visible + .area-chip,
   .search-side > .area-sheet {
     position: static !important;
     display: block !important;
+    border: 0;
     background: transparent !important;
+    box-shadow: none;
     animation: none !important;
   }
 
@@ -8594,9 +8594,7 @@ input:focus-visible + .area-chip,
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(13, 32, 51, 0.4);
-    -webkit-backdrop-filter: blur(8px) saturate(1.15);
-    backdrop-filter: blur(8px) saturate(1.15);
+    background-color: rgba(13, 32, 51, 0.46);
   }
 
   .home-filter .search-side {
@@ -8607,7 +8605,6 @@ input:focus-visible + .area-chip,
     flex-direction: column;
     overflow: hidden;
     border-radius: 24px;
-    background-color: #fff;
     box-shadow: 0 40px 110px -24px rgba(15, 47, 75, 0.6);
   }
 
@@ -8621,7 +8618,8 @@ input:focus-visible + .area-chip,
     max-height: 88vh;
     flex: 1;
     flex-direction: column;
-    background: #fff !important;
+    background-color: #f3f7fc !important;
+    background-image: linear-gradient(180deg, #e3edf9 0, #eef4fb 130px, #f6f9fd 100%) !important;
   }
 
   .home-filter .search-side > .area-sheet > .lg\:hidden {
@@ -12015,9 +12013,7 @@ input:focus-visible + .area-chip,
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(13, 32, 51, 0.4);
-      -webkit-backdrop-filter: blur(8px) saturate(1.15);
-      backdrop-filter: blur(8px) saturate(1.15);
+      background-color: rgba(13, 32, 51, 0.46);
     }
 
     .home-filter .md\:hidden.search-side {
@@ -12243,9 +12239,7 @@ input:focus-visible + .area-chip,
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(13, 32, 51, 0.4);
-      -webkit-backdrop-filter: blur(8px) saturate(1.15);
-      backdrop-filter: blur(8px) saturate(1.15);
+      background-color: rgba(13, 32, 51, 0.46);
     }
 
     .home-filter .lg\:hidden.search-side {
@@ -14752,7 +14746,9 @@ input:focus-visible + .area-chip,
     grid-row: 2;}
 .pv-desktop .search-side > .area-sheet {position: static !important;
     display: block !important;
+    border: 0;
     background: transparent !important;
+    box-shadow: none;
     animation: none !important;}
 .pv-desktop .search-side__scroll {overflow: visible !important;}
 .pv-desktop .search-side__list {display: flex;
@@ -14998,9 +14994,7 @@ input:focus-visible + .area-chip,
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(13, 32, 51, 0.4);
-    -webkit-backdrop-filter: blur(8px) saturate(1.15);
-    backdrop-filter: blur(8px) saturate(1.15);}
+    background-color: rgba(13, 32, 51, 0.46);}
 .pv-desktop .home-filter .search-side {display: flex !important;
     width: 600px;
     max-width: 94vw;
@@ -15008,7 +15002,6 @@ input:focus-visible + .area-chip,
     flex-direction: column;
     overflow: hidden;
     border-radius: 24px;
-    background-color: #fff;
     box-shadow: 0 40px 110px -24px rgba(15, 47, 75, 0.6);}
 .pv-desktop .home-filter .search-side.hidden {display: none !important;}
 .pv-desktop .home-filter .search-side > .area-sheet {display: flex !important;
@@ -15016,7 +15009,8 @@ input:focus-visible + .area-chip,
     max-height: 88vh;
     flex: 1;
     flex-direction: column;
-    background: #fff !important;}
+    background-color: #f3f7fc !important;
+    background-image: linear-gradient(180deg, #e3edf9 0, #eef4fb 130px, #f6f9fd 100%) !important;}
 .pv-desktop .home-filter .search-side > .area-sheet > .lg\:hidden {display: flex !important;}
 .pv-desktop .home-filter .search-side__scroll {min-height: 0;
     flex: 1;
@@ -15062,9 +15056,7 @@ input:focus-visible + .area-chip,
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(13, 32, 51, 0.4);
-      -webkit-backdrop-filter: blur(8px) saturate(1.15);
-      backdrop-filter: blur(8px) saturate(1.15);}
+      background-color: rgba(13, 32, 51, 0.46);}
 .pv-desktop .home-filter .md\:hidden.search-side {display: none !important;}
 .pv-desktop .md\:hidden.privacy-note {display: none;}
 .pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.md\:hidden)) {position: fixed;
@@ -15073,9 +15065,7 @@ input:focus-visible + .area-chip,
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(13, 32, 51, 0.4);
-      -webkit-backdrop-filter: blur(8px) saturate(1.15);
-      backdrop-filter: blur(8px) saturate(1.15);}
+      background-color: rgba(13, 32, 51, 0.46);}
 .pv-desktop .home-filter .md\:hidden.search-side {display: none !important;}
 .pv-desktop .lg\:hidden.saved-empty {display: none;}
 .pv-desktop .lg\:hidden.compare-table {display: none;}
@@ -15246,9 +15236,7 @@ input:focus-visible + .area-chip,
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(13, 32, 51, 0.4);
-      -webkit-backdrop-filter: blur(8px) saturate(1.15);
-      backdrop-filter: blur(8px) saturate(1.15);}
+      background-color: rgba(13, 32, 51, 0.46);}
 .pv-desktop .home-filter .lg\:hidden.search-side {display: none !important;}
 .pv-desktop .lg\:hidden.privacy-note {display: none;}
 .pv-desktop /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
@@ -15418,9 +15406,7 @@ input:focus-visible + .area-chip,
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: rgba(13, 32, 51, 0.4);
-      -webkit-backdrop-filter: blur(8px) saturate(1.15);
-      backdrop-filter: blur(8px) saturate(1.15);}
+      background-color: rgba(13, 32, 51, 0.46);}
 .pv-desktop .home-filter .lg\:hidden.search-side {display: none !important;}
 .pv-desktop .md\:mt-0 {margin-top: 0px;}
 .pv-desktop .md\:inline {display: inline;}
