@@ -713,6 +713,108 @@ video {
   box-shadow: 0 8px 20px -14px rgba(18, 58, 92, 0.6);
 }
 
+/* كارت صورة لمشروع (صفحة "أفضل المشاريع" و"المشاريع الجديدة" — collections/partials/project-shot): الصورة مالية الكارت والاسم والمكان عليها من تحت */
+
+.shot-card {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 18px;
+  background-color: #dfe7ef;
+  box-shadow: 0 1px 2px rgba(18, 58, 92, 0.05), 0 16px 30px -22px rgba(18, 58, 92, 0.55);
+}
+
+.shot-card > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.shot-card:hover > img {
+  transform: scale(1.04);
+}
+
+.shot-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(9, 26, 43, 0.86), rgba(9, 26, 43, 0.15) 52%, rgba(9, 26, 43, 0) 70%);
+  pointer-events: none;
+}
+
+.shot-card__text {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 14px 16px 16px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.shot-card__name {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+  text-shadow: 0 1px 6px rgba(9, 26, 43, 0.45);
+}
+
+/* الكارت كله بيفتح صفحة المشروع */
+
+.shot-card .card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.shot-card__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.shot-card__badge {
+  position: absolute;
+  top: 10px;
+  inset-inline-start: 10px;
+  z-index: 2;
+  border-radius: 999px;
+  background-color: #1f7f72;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #ffffff;
+}
+
+.shot-card__actions {
+  position: absolute;
+  top: 10px;
+  inset-inline-end: 10px;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+}
+
+@media (min-width: 1024px) {
+  .shot-card__name {
+    font-size: 20px;
+  }
+
+  .shot-card__place {
+    font-size: 14px;
+  }
+}
+
 /* شريط الأدوات فوق كروت المفضلة / جدول المقارنة: التبويب أو العدد من ناحية، والأزرار من الناحية التانية */
 
 .saved-toolbar {
@@ -7229,6 +7331,10 @@ input:focus-visible + .area-chip,
   gap: 2rem;
 }
 
+.gap-9 {
+  gap: 2.25rem;
+}
+
 .gap-\[18px\] {
   gap: 18px;
 }
@@ -9384,6 +9490,10 @@ input:focus-visible + .area-chip,
     grid-row-start: 1;
   }
 
+  .lg\:row-start-10 {
+    grid-row-start: 10;
+  }
+
   .lg\:row-start-2 {
     grid-row-start: 2;
   }
@@ -10101,6 +10211,10 @@ input:focus-visible + .area-chip,
     gap: 3.5rem;
   }
 
+  .lg\:gap-16 {
+    gap: 4rem;
+  }
+
   .lg\:gap-2 {
     gap: 0.5rem;
   }
@@ -10480,6 +10594,10 @@ input:focus-visible + .area-chip,
     padding-bottom: 2.5rem;
   }
 
+  .lg\:pb-11 {
+    padding-bottom: 2.75rem;
+  }
+
   .lg\:pb-12 {
     padding-bottom: 3rem;
   }
@@ -10542,6 +10660,10 @@ input:focus-visible + .area-chip,
 
   .lg\:pt-10 {
     padding-top: 2.5rem;
+  }
+
+  .lg\:pt-11 {
+    padding-top: 2.75rem;
   }
 
   .lg\:pt-12 {
@@ -10704,6 +10826,10 @@ input:focus-visible + .area-chip,
     font-size: 44px;
   }
 
+  .lg\:text-\[46px\] {
+    font-size: 46px;
+  }
+
   .lg\:text-\[48px\] {
     font-size: 48px;
   }
@@ -10722,6 +10848,10 @@ input:focus-visible + .area-chip,
 
   .lg\:leading-\[1\.2\] {
     line-height: 1.2;
+  }
+
+  .lg\:leading-\[1\.35\] {
+    line-height: 1.35;
   }
 
   .lg\:leading-\[1\.45\] {
@@ -10850,6 +10980,8 @@ input:focus-visible + .area-chip,
 }
 
 /* desktop layout forced on narrow screens (preview only) */
+.pv-desktop .shot-card__name {font-size: 20px;}
+.pv-desktop .shot-card__place {font-size: 14px;}
 .pv-desktop .about-stats {grid-template-columns: repeat(4, minmax(0, 1fr));}
 .pv-desktop .about-stats__item {padding: 30px 20px;}
 .pv-desktop .contact-tile {padding: 18px 20px;}
@@ -11693,6 +11825,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:row-span-3 {grid-row: span 3 / span 3;}
 .pv-desktop .lg\:row-span-4 {grid-row: span 4 / span 4;}
 .pv-desktop .lg\:row-start-1 {grid-row-start: 1;}
+.pv-desktop .lg\:row-start-10 {grid-row-start: 10;}
 .pv-desktop .lg\:row-start-2 {grid-row-start: 2;}
 .pv-desktop .lg\:row-start-3 {grid-row-start: 3;}
 .pv-desktop .lg\:row-start-4 {grid-row-start: 4;}
@@ -11876,6 +12009,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:gap-10 {gap: 2.5rem;}
 .pv-desktop .lg\:gap-12 {gap: 3rem;}
 .pv-desktop .lg\:gap-14 {gap: 3.5rem;}
+.pv-desktop .lg\:gap-16 {gap: 4rem;}
 .pv-desktop .lg\:gap-2 {gap: 0.5rem;}
 .pv-desktop .lg\:gap-2\.5 {gap: 0.625rem;}
 .pv-desktop .lg\:gap-3 {gap: 0.75rem;}
@@ -12000,6 +12134,7 @@ input:focus-visible + .area-chip,
     padding-bottom: 2.25rem;}
 .pv-desktop .lg\:pb-0 {padding-bottom: 0px;}
 .pv-desktop .lg\:pb-10 {padding-bottom: 2.5rem;}
+.pv-desktop .lg\:pb-11 {padding-bottom: 2.75rem;}
 .pv-desktop .lg\:pb-12 {padding-bottom: 3rem;}
 .pv-desktop .lg\:pb-14 {padding-bottom: 3.5rem;}
 .pv-desktop .lg\:pb-16 {padding-bottom: 4rem;}
@@ -12016,6 +12151,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:pt-0 {padding-top: 0px;}
 .pv-desktop .lg\:pt-1 {padding-top: 0.25rem;}
 .pv-desktop .lg\:pt-10 {padding-top: 2.5rem;}
+.pv-desktop .lg\:pt-11 {padding-top: 2.75rem;}
 .pv-desktop .lg\:pt-12 {padding-top: 3rem;}
 .pv-desktop .lg\:pt-14 {padding-top: 3.5rem;}
 .pv-desktop .lg\:pt-2\.5 {padding-top: 0.625rem;}
@@ -12056,11 +12192,13 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:text-\[38px\] {font-size: 38px;}
 .pv-desktop .lg\:text-\[42px\] {font-size: 42px;}
 .pv-desktop .lg\:text-\[44px\] {font-size: 44px;}
+.pv-desktop .lg\:text-\[46px\] {font-size: 46px;}
 .pv-desktop .lg\:text-\[48px\] {font-size: 48px;}
 .pv-desktop .lg\:text-\[56px\] {font-size: 56px;}
 .pv-desktop .lg\:font-bold {font-weight: 700;}
 .pv-desktop .lg\:leading-\[1\.25\] {line-height: 1.25;}
 .pv-desktop .lg\:leading-\[1\.2\] {line-height: 1.2;}
+.pv-desktop .lg\:leading-\[1\.35\] {line-height: 1.35;}
 .pv-desktop .lg\:leading-\[1\.45\] {line-height: 1.45;}
 .pv-desktop .lg\:shadow-\[0_-20px_60px_-10px_rgba\(18\2c 58\2c 92\2c 0\.38\)\] {--tw-shadow: 0 -20px 60px -10px rgba(18,58,92,0.38);
     --tw-shadow-colored: 0 -20px 60px -10px var(--tw-shadow-color);
