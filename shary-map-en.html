@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=66fa06e2">
+<link rel="stylesheet" href="a/site.css?v=223c956a">
 </head><body>
 
 
@@ -376,7 +376,7 @@ data-compare-link data-base="compare-en.html" >
 </nav>
 </header>
 <main data-view="shary-map">
-<div class="pb-2 lg:pb-3">
+<div class="pb-1 lg:pb-2">
 <div class="site-container pt-3 lg:pt-4" data-breadcrumb>
 <nav aria-label="Breadcrumb">
 <ol class="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold leading-normal lg:text-[14px]">
@@ -398,503 +398,721 @@ data-compare-link data-base="compare-en.html" >
 </div>
 
 <div class="site-container pb-8 lg:pb-12">
-<div class="smap" data-smap data-selected="scenes" data-area="" data-lang="en" data-frame-title=":name location on the map">
+<div class="mb-3 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 lg:mb-4">
+<div class="min-w-0">
+<h1 class="text-[20px] font-extrabold leading-[1.4] lg:text-[26px]">Shary Interactive Map</h1>
+<p class="text-[13px] font-medium leading-[1.7] text-shary-muted lg:text-[15px]">Pick a project and see its real location in satellite view.</p>
+</div>
+<p class="hidden text-[14px] font-bold text-shary-teal lg:block"><span data-smap-count>31</span> projects</p>
+</div>
+
+<div class="smap" data-smap data-selected="scenes" data-area="" data-lang="en"
+data-frame-title=":name location on the map" data-search-url="search-all-en.html" data-all-label="Choose area"
+data-mapbox-token="" data-million="M">
 
 <div class="smap__map">
+<div class="smap__gl" data-smap-gl hidden></div>
 <iframe class="smap__frame" data-smap-frame title="Shary Interactive Map" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 
-<div class="smap__tools">
-<div class="smap__switch" role="group" aria-label="Shary Interactive Map">
-<button type="button" data-smap-type="h" aria-pressed="true">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.800 2.700 4.200 5.700 4.200 9S14.800 18.300 12 21c-2.800-2.700-4.200-5.700-4.200-9S9.200 5.700 12 3Z"/></svg>
-Satellite                        </button>
-<button type="button" data-smap-type="m" aria-pressed="false">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 4-6 2.500v13.500l6-2.500 6 2.500 6-2.500V4l-6 2.500L9 4ZM9 4v13.500M15 6.500V20"/></svg>
-Map                        </button>
-</div>
-<div class="smap__zoom">
-<button type="button" data-smap-zoom="1" aria-label="Zoom in">+</button>
-<button type="button" data-smap-zoom="-1" aria-label="Zoom out">−</button>
-</div>
-</div>
-
-<article class="smap__card" data-smap-card>
-<img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe66916712d-scenes-mostakbal-city-3.webp?v=2" alt="" class="smap__card-img card-photo" data-smap-k="image" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
-<div class="min-w-0 flex-1">
-<h2 class="smap__card-name" data-smap-k="name"></h2>
-<p class="smap__card-meta"><span data-smap-k="developer_name"></span> · <span data-smap-k="area_label"></span></p>
-<p class="smap__card-price"><small>Starts from</small> <bdi dir="ltr" data-smap-k="price"></bdi> <small>EGP</small></p>
-</div>
-<div class="smap__card-actions">
-<a href="#" class="smap__btn smap__btn--main" data-smap-link="url">Project page</a>
-<a href="#" target="_blank" rel="noopener" class="smap__btn" data-smap-link="directions">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
-Directions                        </a>
-<a href="#" target="_blank" rel="noopener" class="smap__btn" data-smap-link="earth">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3.500 9h6l2 3-1.500 3.500 2.500 5M20.500 9.500 17 11l-1 3 2.500 3"/></svg>
-Google Earth                        </a>
-</div>
-</article>
-</div>
-
-<aside class="smap__side">
-<div class="smap__head">
-<h1 class="text-[20px] font-extrabold leading-[1.4] lg:text-[23px]">Shary Interactive Map</h1>
-<p class="text-[13px] font-medium leading-[1.7] text-shary-muted lg:text-[14px]">Pick a project and see its real location in satellite view.</p>
-</div>
-
+<div class="smap__top">
 <label class="smap__search">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.600-3.600"/></svg>
 <input type="search" placeholder="Search by project or developer" aria-label="Search by project or developer" data-smap-search autocomplete="off">
 </label>
-
-<div class="smap__chips shary-scroll" role="group" aria-label="Shary Interactive Map">
-<button type="button" class="smap__chip" data-smap-area="" aria-pressed="true">All <b>31</b></button>
-<button type="button" class="smap__chip" data-smap-area="new-cairo" aria-pressed="false">New Cairo <b>22</b></button>
-<button type="button" class="smap__chip" data-smap-area="north-coast" aria-pressed="false">North Coast <b>6</b></button>
-<button type="button" class="smap__chip" data-smap-area="sheikh-zayed" aria-pressed="false">Sheikh Zayed <b>1</b></button>
-<button type="button" class="smap__chip" data-smap-area="ain-sokhna" aria-pressed="false">Ain Sokhna <b>1</b></button>
-<button type="button" class="smap__chip" data-smap-area="new-capital" aria-pressed="false">New Capital <b>1</b></button>
+<div class="smap__bar">
+<button type="button" class="smap__pill" data-smap-areas-toggle aria-expanded="false" aria-controls="smap-areas-shary-map-en">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg>
+<span data-smap-area-label>Choose area</span>
+<svg class="smap__pill-arrow" width="12" height="12" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.500 6.750 9 11.250l4.500-4.500" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+<div class="smap__switch" role="group" aria-label="Shary Interactive Map">
+<button type="button" data-smap-type="h" aria-pressed="true">Satellite</button>
+<button type="button" data-smap-type="m" aria-pressed="false">Map</button>
 </div>
+</div>
+
+<div id="smap-areas-shary-map-en" class="smap__areas" data-smap-areas hidden>
+<p>Looking for a specific area?</p>
+<div class="smap__chips" role="group" aria-label="Choose area">
+<button type="button" class="smap__chip" data-smap-area="" data-label="Choose area" aria-pressed="true">All <b>31</b></button>
+<button type="button" class="smap__chip" data-smap-area="new-cairo" data-label="New Cairo" aria-pressed="false">New Cairo <b>22</b></button>
+<button type="button" class="smap__chip" data-smap-area="north-coast" data-label="North Coast" aria-pressed="false">North Coast <b>6</b></button>
+<button type="button" class="smap__chip" data-smap-area="sheikh-zayed" data-label="Sheikh Zayed" aria-pressed="false">Sheikh Zayed <b>1</b></button>
+<button type="button" class="smap__chip" data-smap-area="ain-sokhna" data-label="Ain Sokhna" aria-pressed="false">Ain Sokhna <b>1</b></button>
+<button type="button" class="smap__chip" data-smap-area="new-capital" data-label="New Capital" aria-pressed="false">New Capital <b>1</b></button>
+</div>
+</div>
+</div>
+
+<div class="smap__tools">
+<button type="button" data-smap-zoom="1" aria-label="Zoom in">+</button>
+<button type="button" data-smap-zoom="-1" aria-label="Zoom out">−</button>
+<button type="button" data-smap-reset aria-label="All projects" title="All projects">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11.500 12 5l8 6.500"/><path d="M6.500 10v9h11v-9"/></svg>
+</button>
+</div>
+</div>
+
+<aside class="smap__panel">
+<a href="search-all-en.html" class="smap__list-btn" data-smap-list-link>
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="6" height="6" rx="1.500"/><rect x="3" y="14" width="6" height="6" rx="1.500"/><path d="M13 6h8M13 9h5M13 16h8M13 19h5"/></svg>
+Show list                </a>
 
 <h2 class="sr-only">Projects on the map</h2>
 <ul class="smap__list shary-scroll" data-smap-list>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="scenes" data-area="new-cairo" data-lat="30.11297" data-lng="31.6431"
-data-project="{&quot;slug&quot;:&quot;scenes&quot;,&quot;name&quot;:&quot;Scenes&quot;,&quot;developer_name&quot;:&quot;Tatweer Misr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;27,160,000&quot;,&quot;types&quot;:&quot;Townhouse · Twin house · Villa&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abe66916712d-scenes-mostakbal-city-3.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-city-gate.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/scenes&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11297,&quot;lng&quot;:31.6431}" aria-current="true">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="scenes" data-area="new-cairo" data-lat="30.11297" data-lng="31.6431"
+data-project="{&quot;slug&quot;:&quot;scenes&quot;,&quot;name&quot;:&quot;Scenes&quot;,&quot;developer_name&quot;:&quot;Tatweer Misr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;27,160,000&quot;,&quot;price_value&quot;:27160000,&quot;types&quot;:&quot;Townhouse · Twin house · Villa&quot;,&quot;url&quot;:&quot;#pv:/projects/scenes&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11297,&quot;lng&quot;:31.6431}" aria-current="true">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe66916712d-scenes-mostakbal-city-3.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Scenes</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Tatweer Misr · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">27,160,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">27,160,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/scenes" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.11297,31.6431" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.11297,31.6431" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="la-vista-bay" data-area="north-coast" data-lat="31.10533" data-lng="27.85772"
-data-project="{&quot;slug&quot;:&quot;la-vista-bay&quot;,&quot;name&quot;:&quot;La Vista Bay&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Ras El Hekma, North Coast, Egypt&quot;,&quot;price&quot;:&quot;14,200,000&quot;,&quot;types&quot;:&quot;Chalet · Villa · Twin house&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6aa167d4df6e4-la-vista-bay-north-coast-3.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-city-gate.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/la-vista-bay&quot;,&quot;area&quot;:&quot;ras-el-hekma&quot;,&quot;area_label&quot;:&quot;Ras El Hekma&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:31.10533,&quot;lng&quot;:27.85772}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="la-vista-bay" data-area="north-coast" data-lat="31.10533" data-lng="27.85772"
+data-project="{&quot;slug&quot;:&quot;la-vista-bay&quot;,&quot;name&quot;:&quot;La Vista Bay&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Ras El Hekma, North Coast, Egypt&quot;,&quot;price&quot;:&quot;14,200,000&quot;,&quot;price_value&quot;:14200000,&quot;types&quot;:&quot;Chalet · Villa · Twin house&quot;,&quot;url&quot;:&quot;#pv:/projects/la-vista-bay&quot;,&quot;area&quot;:&quot;ras-el-hekma&quot;,&quot;area_label&quot;:&quot;Ras El Hekma&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:31.10533,&quot;lng&quot;:27.85772}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6aa167d4df6e4-la-vista-bay-north-coast-3.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">La Vista Bay</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">La Vista · Ras El Hekma</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">14,200,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">14,200,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/la-vista-bay" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=31.10533,27.85772" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/31.10533,27.85772" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="avelin" data-area="new-cairo" data-lat="30.00238" data-lng="31.4602"
-data-project="{&quot;slug&quot;:&quot;avelin&quot;,&quot;name&quot;:&quot;Avelin&quot;,&quot;developer_name&quot;:&quot;Times Developments&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,100,000&quot;,&quot;types&quot;:&quot;Studio · Apartment · Duplex&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abe177d75fc4-untitled-design.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-sky-park.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/avelin&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.00238,&quot;lng&quot;:31.4602}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="avelin" data-area="new-cairo" data-lat="30.00238" data-lng="31.4602"
+data-project="{&quot;slug&quot;:&quot;avelin&quot;,&quot;name&quot;:&quot;Avelin&quot;,&quot;developer_name&quot;:&quot;Times Developments&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a9cf5c2fe4bTimes%20Developments.png.png&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,100,000&quot;,&quot;price_value&quot;:6100000,&quot;types&quot;:&quot;Studio · Apartment · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/avelin&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.00238,&quot;lng&quot;:31.4602}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe177d75fc4-untitled-design.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Avelin</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Times Developments · Fifth Settlement</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">6,100,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">6,100,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/avelin" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.00238,31.4602" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.00238,31.4602" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="beyond-blue" data-area="north-coast" data-lat="31.03995" data-lng="28.46664"
-data-project="{&quot;slug&quot;:&quot;beyond-blue&quot;,&quot;name&quot;:&quot;Beyond Blue&quot;,&quot;developer_name&quot;:&quot;Reedy Group&quot;,&quot;developer_logo&quot;:&quot;&quot;,&quot;location&quot;:&quot;Al Dabaa, North Coast, Egypt&quot;,&quot;price&quot;:&quot;6,900,000&quot;,&quot;types&quot;:&quot;Chalet · Studio&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abe5f996e626-beyond-blue-nighttime-poolside-sanctuary.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-sky-park.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/beyond-blue&quot;,&quot;area&quot;:&quot;al-dabaa&quot;,&quot;area_label&quot;:&quot;Al Dabaa&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:31.03995,&quot;lng&quot;:28.46664}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="beyond-blue" data-area="north-coast" data-lat="31.03995" data-lng="28.46664"
+data-project="{&quot;slug&quot;:&quot;beyond-blue&quot;,&quot;name&quot;:&quot;Beyond Blue&quot;,&quot;developer_name&quot;:&quot;Reedy Group&quot;,&quot;developer_logo&quot;:&quot;&quot;,&quot;location&quot;:&quot;Al Dabaa, North Coast, Egypt&quot;,&quot;price&quot;:&quot;6,900,000&quot;,&quot;price_value&quot;:6900000,&quot;types&quot;:&quot;Chalet · Studio&quot;,&quot;url&quot;:&quot;#pv:/projects/beyond-blue&quot;,&quot;area&quot;:&quot;al-dabaa&quot;,&quot;area_label&quot;:&quot;Al Dabaa&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:31.03995,&quot;lng&quot;:28.46664}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe5f996e626-beyond-blue-nighttime-poolside-sanctuary.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Beyond Blue</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Reedy Group · Al Dabaa</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">6,900,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">6,900,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/beyond-blue" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=31.03995,28.46664" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/31.03995,28.46664" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="etaje" data-area="new-cairo" data-lat="30.03225" data-lng="31.47864"
-data-project="{&quot;slug&quot;:&quot;etaje&quot;,&quot;name&quot;:&quot;Etaje&quot;,&quot;developer_name&quot;:&quot;Madinet Masr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png&quot;,&quot;location&quot;:&quot;New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,700,000&quot;,&quot;types&quot;:&quot;Studio · Apartment&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abbbdc4e424e-etaje-460x200.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-nova.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/etaje&quot;,&quot;area&quot;:&quot;new-cairo&quot;,&quot;area_label&quot;:&quot;New Cairo&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.03225,&quot;lng&quot;:31.47864}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="etaje" data-area="new-cairo" data-lat="30.03225" data-lng="31.47864"
+data-project="{&quot;slug&quot;:&quot;etaje&quot;,&quot;name&quot;:&quot;Etaje&quot;,&quot;developer_name&quot;:&quot;Madinet Masr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png&quot;,&quot;location&quot;:&quot;New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,700,000&quot;,&quot;price_value&quot;:6700000,&quot;types&quot;:&quot;Studio · Apartment&quot;,&quot;url&quot;:&quot;#pv:/projects/etaje&quot;,&quot;area&quot;:&quot;new-cairo&quot;,&quot;area_label&quot;:&quot;New Cairo&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.03225,&quot;lng&quot;:31.47864}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abbbdc4e424e-etaje-460x200.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Etaje</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Madinet Masr · New Cairo</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">6,700,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">6,700,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/etaje" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.03225,31.47864" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.03225,31.47864" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="telal" data-area="north-coast" data-lat="30.95731" data-lng="28.7273"
-data-project="{&quot;slug&quot;:&quot;telal&quot;,&quot;name&quot;:&quot;Telal&quot;,&quot;developer_name&quot;:&quot;Roya&quot;,&quot;developer_logo&quot;:&quot;&quot;,&quot;location&quot;:&quot;Sidi Abdel Rahman, North Coast, Egypt&quot;,&quot;price&quot;:&quot;11,800,000&quot;,&quot;types&quot;:&quot;Chalet · Villa · Twin house&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6aa6aa7e1ebea-telal-north-coast-1.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-nova.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/telal&quot;,&quot;area&quot;:&quot;sidi-abdel-rahman&quot;,&quot;area_label&quot;:&quot;Sidi Abdel Rahman&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:30.95731,&quot;lng&quot;:28.7273}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="telal" data-area="north-coast" data-lat="30.95731" data-lng="28.7273"
+data-project="{&quot;slug&quot;:&quot;telal&quot;,&quot;name&quot;:&quot;Telal&quot;,&quot;developer_name&quot;:&quot;Roya&quot;,&quot;developer_logo&quot;:&quot;&quot;,&quot;location&quot;:&quot;Sidi Abdel Rahman, North Coast, Egypt&quot;,&quot;price&quot;:&quot;11,800,000&quot;,&quot;price_value&quot;:11800000,&quot;types&quot;:&quot;Chalet · Villa · Twin house&quot;,&quot;url&quot;:&quot;#pv:/projects/telal&quot;,&quot;area&quot;:&quot;sidi-abdel-rahman&quot;,&quot;area_label&quot;:&quot;Sidi Abdel Rahman&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:30.95731,&quot;lng&quot;:28.7273}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6aa6aa7e1ebea-telal-north-coast-1.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Telal</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Roya · Sidi Abdel Rahman</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">11,800,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">11,800,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/telal" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.95731,28.7273" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.95731,28.7273" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="garnet" data-area="new-cairo" data-lat="30.02177" data-lng="31.41052"
-data-project="{&quot;slug&quot;:&quot;garnet&quot;,&quot;name&quot;:&quot;Garnet&quot;,&quot;developer_name&quot;:&quot;Jadeer&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/6a71a25a5a3a0%D8%B4%D8%B1%D9%83%D8%A9%20%D8%AC%D8%AF%D9%8A%D8%B1%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.webp.webp&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;4,500,000&quot;,&quot;types&quot;:&quot;Studio · Apartment · Duplex&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abe5cb2664c8-garnet-residence-courtyard-panorama.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-the-pulse.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/garnet&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.02177,&quot;lng&quot;:31.41052}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="garnet" data-area="new-cairo" data-lat="30.02177" data-lng="31.41052"
+data-project="{&quot;slug&quot;:&quot;garnet&quot;,&quot;name&quot;:&quot;Garnet&quot;,&quot;developer_name&quot;:&quot;Jadeer&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/6a71a25a5a3a0%D8%B4%D8%B1%D9%83%D8%A9%20%D8%AC%D8%AF%D9%8A%D8%B1%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.webp.webp&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;4,500,000&quot;,&quot;price_value&quot;:4500000,&quot;types&quot;:&quot;Studio · Apartment · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/garnet&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.02177,&quot;lng&quot;:31.41052}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe5cb2664c8-garnet-residence-courtyard-panorama.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Garnet</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Jadeer · Fifth Settlement</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">4,500,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">4,500,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/garnet" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.02177,31.41052" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.02177,31.41052" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="four" data-area="north-coast" data-lat="30.85301" data-lng="28.95558"
-data-project="{&quot;slug&quot;:&quot;four&quot;,&quot;name&quot;:&quot;Four&quot;,&quot;developer_name&quot;:&quot;Madinet Masr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png&quot;,&quot;location&quot;:&quot;Al Alamein, North Coast, Egypt&quot;,&quot;price&quot;:&quot;9,400,000&quot;,&quot;types&quot;:&quot;Chalet · Townhouse&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6aa9533e67848-four-north-coast-3.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-the-pulse.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/four&quot;,&quot;area&quot;:&quot;al-alamein&quot;,&quot;area_label&quot;:&quot;Al Alamein&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:30.85301,&quot;lng&quot;:28.95558}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="four" data-area="north-coast" data-lat="30.85301" data-lng="28.95558"
+data-project="{&quot;slug&quot;:&quot;four&quot;,&quot;name&quot;:&quot;Four&quot;,&quot;developer_name&quot;:&quot;Madinet Masr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png&quot;,&quot;location&quot;:&quot;Al Alamein, North Coast, Egypt&quot;,&quot;price&quot;:&quot;9,400,000&quot;,&quot;price_value&quot;:9400000,&quot;types&quot;:&quot;Chalet · Townhouse&quot;,&quot;url&quot;:&quot;#pv:/projects/four&quot;,&quot;area&quot;:&quot;al-alamein&quot;,&quot;area_label&quot;:&quot;Al Alamein&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:30.85301,&quot;lng&quot;:28.95558}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6aa9533e67848-four-north-coast-3.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Four</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Madinet Masr · Al Alamein</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">9,400,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">9,400,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/four" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.85301,28.95558" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.85301,28.95558" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="bloomfields" data-area="new-cairo" data-lat="30.11626" data-lng="31.60386"
-data-project="{&quot;slug&quot;:&quot;bloomfields&quot;,&quot;name&quot;:&quot;Bloomfields&quot;,&quot;developer_name&quot;:&quot;Tatweer Misr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;5,845,000&quot;,&quot;types&quot;:&quot;Apartment · Villa · Duplex&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a99796b26bee-bloomfields-mostakbal-city-4.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-galleria.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/bloomfields&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11626,&quot;lng&quot;:31.60386}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="bloomfields" data-area="new-cairo" data-lat="30.11626" data-lng="31.60386"
+data-project="{&quot;slug&quot;:&quot;bloomfields&quot;,&quot;name&quot;:&quot;Bloomfields&quot;,&quot;developer_name&quot;:&quot;Tatweer Misr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a84a5ab1cTatweer%20Misr.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;5,845,000&quot;,&quot;price_value&quot;:5845000,&quot;types&quot;:&quot;Apartment · Villa · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/bloomfields&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11626,&quot;lng&quot;:31.60386}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a99796b26bee-bloomfields-mostakbal-city-4.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Bloomfields</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Tatweer Misr · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">5,845,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">5,845,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/bloomfields" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.11626,31.60386" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.11626,31.60386" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="la-vista-bay-east" data-area="north-coast" data-lat="31.14003" data-lng="27.82352"
-data-project="{&quot;slug&quot;:&quot;la-vista-bay-east&quot;,&quot;name&quot;:&quot;La Vista Bay East&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Ras El Hekma, North Coast, Egypt&quot;,&quot;price&quot;:&quot;16,500,000&quot;,&quot;types&quot;:&quot;Chalet&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a9572e939ebe-la-vista-bay-east-north-coast-1.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-galleria.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/la-vista-bay-east&quot;,&quot;area&quot;:&quot;ras-el-hekma&quot;,&quot;area_label&quot;:&quot;Ras El Hekma&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:31.14003,&quot;lng&quot;:27.82352}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="la-vista-bay-east" data-area="north-coast" data-lat="31.14003" data-lng="27.82352"
+data-project="{&quot;slug&quot;:&quot;la-vista-bay-east&quot;,&quot;name&quot;:&quot;La Vista Bay East&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Ras El Hekma, North Coast, Egypt&quot;,&quot;price&quot;:&quot;16,500,000&quot;,&quot;price_value&quot;:16500000,&quot;types&quot;:&quot;Chalet&quot;,&quot;url&quot;:&quot;#pv:/projects/la-vista-bay-east&quot;,&quot;area&quot;:&quot;ras-el-hekma&quot;,&quot;area_label&quot;:&quot;Ras El Hekma&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:31.14003,&quot;lng&quot;:27.82352}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a9572e939ebe-la-vista-bay-east-north-coast-1.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">La Vista Bay East</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">La Vista · Ras El Hekma</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">16,500,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">16,500,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/la-vista-bay-east" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=31.14003,27.82352" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/31.14003,27.82352" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="blue-tree" data-area="new-cairo" data-lat="30.02402" data-lng="31.40752"
-data-project="{&quot;slug&quot;:&quot;blue-tree&quot;,&quot;name&quot;:&quot;Blue Tree&quot;,&quot;developer_name&quot;:&quot;Sky Abu Dhabi&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a24a80473%D8%B3%D9%83%D8%A7%D9%8A%20%D8%A3%D8%A8%D9%88%20%D8%B8%D8%A8%D9%8A%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,508,000&quot;,&quot;types&quot;:&quot;Apartment · Duplex&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6aaa72fccabcb-blue-tree-new-cairo-3.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-eastvale.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/blue-tree&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.02402,&quot;lng&quot;:31.40752}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="blue-tree" data-area="new-cairo" data-lat="30.02402" data-lng="31.40752"
+data-project="{&quot;slug&quot;:&quot;blue-tree&quot;,&quot;name&quot;:&quot;Blue Tree&quot;,&quot;developer_name&quot;:&quot;Sky Abu Dhabi&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a24a80473%D8%B3%D9%83%D8%A7%D9%8A%20%D8%A3%D8%A8%D9%88%20%D8%B8%D8%A8%D9%8A%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,508,000&quot;,&quot;price_value&quot;:6508000,&quot;types&quot;:&quot;Apartment · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/blue-tree&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.02402,&quot;lng&quot;:31.40752}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6aaa72fccabcb-blue-tree-new-cairo-3.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-eastvale.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Blue Tree</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Sky Abu Dhabi · Fifth Settlement</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">6,508,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">6,508,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/blue-tree" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.02402,31.40752" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.02402,31.40752" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="marsa" data-area="north-coast" data-lat="30.94179" data-lng="28.66742"
-data-project="{&quot;slug&quot;:&quot;marsa&quot;,&quot;name&quot;:&quot;Marsa&quot;,&quot;developer_name&quot;:&quot;Mercon&quot;,&quot;developer_logo&quot;:&quot;&quot;,&quot;location&quot;:&quot;Ghazala Bay, North Coast, Egypt&quot;,&quot;price&quot;:&quot;5,200,000&quot;,&quot;types&quot;:&quot;Hotel&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abbbb40a1c2c-marsa-north-coast-4.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-eastvale.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/marsa&quot;,&quot;area&quot;:&quot;ghazala-bay&quot;,&quot;area_label&quot;:&quot;Ghazala Bay&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:30.94179,&quot;lng&quot;:28.66742}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="marsa" data-area="north-coast" data-lat="30.94179" data-lng="28.66742"
+data-project="{&quot;slug&quot;:&quot;marsa&quot;,&quot;name&quot;:&quot;Marsa&quot;,&quot;developer_name&quot;:&quot;Mercon&quot;,&quot;developer_logo&quot;:&quot;&quot;,&quot;location&quot;:&quot;Ghazala Bay, North Coast, Egypt&quot;,&quot;price&quot;:&quot;5,200,000&quot;,&quot;price_value&quot;:5200000,&quot;types&quot;:&quot;Hotel&quot;,&quot;url&quot;:&quot;#pv:/projects/marsa&quot;,&quot;area&quot;:&quot;ghazala-bay&quot;,&quot;area_label&quot;:&quot;Ghazala Bay&quot;,&quot;group&quot;:&quot;north-coast&quot;,&quot;group_label&quot;:&quot;North Coast&quot;,&quot;lat&quot;:30.94179,&quot;lng&quot;:28.66742}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abbbb40a1c2c-marsa-north-coast-4.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-eastvale.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Marsa</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Mercon · Ghazala Bay</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">5,200,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">5,200,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/marsa" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.94179,28.66742" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.94179,28.66742" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="el-patio-sola" data-area="new-cairo" data-lat="30.10457" data-lng="31.57746"
-data-project="{&quot;slug&quot;:&quot;el-patio-sola&quot;,&quot;name&quot;:&quot;El Patio Sola&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;9,900,000&quot;,&quot;types&quot;:&quot;Apartment · Penthouse · Duplex&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abb86cd4604b-20.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-ark.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-sola&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.10457,&quot;lng&quot;:31.57746}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="el-patio-sola" data-area="new-cairo" data-lat="30.10457" data-lng="31.57746"
+data-project="{&quot;slug&quot;:&quot;el-patio-sola&quot;,&quot;name&quot;:&quot;El Patio Sola&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;9,900,000&quot;,&quot;price_value&quot;:9900000,&quot;types&quot;:&quot;Apartment · Penthouse · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-sola&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.10457,&quot;lng&quot;:31.57746}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abb86cd4604b-20.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-ark.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">El Patio Sola</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">La Vista · El Shorouk</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">9,900,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">9,900,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/el-patio-sola" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.10457,31.57746" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.10457,31.57746" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="privado" data-area="new-cairo" data-lat="30.07921" data-lng="31.6337"
-data-project="{&quot;slug&quot;:&quot;privado&quot;,&quot;name&quot;:&quot;Privado&quot;,&quot;developer_name&quot;:&quot;TMG&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67ea9431c84fddownload.jpg.jpg&quot;,&quot;location&quot;:&quot;Madinaty, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;12,744,850&quot;,&quot;types&quot;:&quot;Studio · Apartment · Hotel&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a7881c29ffdd-privado-madinaty-4.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-palm-hills.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/privado&quot;,&quot;area&quot;:&quot;madinaty&quot;,&quot;area_label&quot;:&quot;Madinaty&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.07921,&quot;lng&quot;:31.6337}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="privado" data-area="new-cairo" data-lat="30.07921" data-lng="31.6337"
+data-project="{&quot;slug&quot;:&quot;privado&quot;,&quot;name&quot;:&quot;Privado&quot;,&quot;developer_name&quot;:&quot;TMG&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67ea9431c84fddownload.jpg.jpg&quot;,&quot;location&quot;:&quot;Madinaty, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;12,744,850&quot;,&quot;price_value&quot;:12744850,&quot;types&quot;:&quot;Studio · Apartment · Hotel&quot;,&quot;url&quot;:&quot;#pv:/projects/privado&quot;,&quot;area&quot;:&quot;madinaty&quot;,&quot;area_label&quot;:&quot;Madinaty&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.07921,&quot;lng&quot;:31.6337}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a7881c29ffdd-privado-madinaty-4.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-palm-hills.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Privado</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">TMG · Madinaty</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">12,744,850</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">12,744,850</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/privado" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.07921,31.6337" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.07921,31.6337" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="the-pulse" data-area="new-cairo" data-lat="30.01812" data-lng="31.4751"
-data-project="{&quot;slug&quot;:&quot;the-pulse&quot;,&quot;name&quot;:&quot;The Pulse&quot;,&quot;developer_name&quot;:&quot;Sky Innovo&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/6ab3e4d9659cdSky%20Innovo%20Developments.png.png&quot;,&quot;location&quot;:&quot;New Cairo, Egypt&quot;,&quot;price&quot;:&quot;19,350,000&quot;,&quot;types&quot;:&quot;Office&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abe639806075-citystars-the-pulse-new-cairo.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-lake-view.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/the-pulse&quot;,&quot;area&quot;:&quot;new-cairo&quot;,&quot;area_label&quot;:&quot;New Cairo&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.01812,&quot;lng&quot;:31.4751}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="the-pulse" data-area="new-cairo" data-lat="30.01812" data-lng="31.4751"
+data-project="{&quot;slug&quot;:&quot;the-pulse&quot;,&quot;name&quot;:&quot;The Pulse&quot;,&quot;developer_name&quot;:&quot;Sky Innovo&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/6ab3e4d9659cdSky%20Innovo%20Developments.png.png&quot;,&quot;location&quot;:&quot;New Cairo, Egypt&quot;,&quot;price&quot;:&quot;19,350,000&quot;,&quot;price_value&quot;:19350000,&quot;types&quot;:&quot;Office&quot;,&quot;url&quot;:&quot;#pv:/projects/the-pulse&quot;,&quot;area&quot;:&quot;new-cairo&quot;,&quot;area_label&quot;:&quot;New Cairo&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.01812,&quot;lng&quot;:31.4751}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe639806075-citystars-the-pulse-new-cairo.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">The Pulse</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Sky Innovo · New Cairo</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">19,350,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">19,350,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/the-pulse" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.01812,31.4751" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.01812,31.4751" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="blue-walk" data-area="new-cairo" data-lat="30.00139" data-lng="31.41076"
-data-project="{&quot;slug&quot;:&quot;blue-walk&quot;,&quot;name&quot;:&quot;Blue Walk Mall&quot;,&quot;developer_name&quot;:&quot;Sky Abu Dhabi&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a24a80473%D8%B3%D9%83%D8%A7%D9%8A%20%D8%A3%D8%A8%D9%88%20%D8%B8%D8%A8%D9%8A%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;4,800,000&quot;,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abe59a84d9da-blue-walk-new-cairo.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-city-gate.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/blue-walk&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.00139,&quot;lng&quot;:31.41076}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="blue-walk" data-area="new-cairo" data-lat="30.00139" data-lng="31.41076"
+data-project="{&quot;slug&quot;:&quot;blue-walk&quot;,&quot;name&quot;:&quot;Blue Walk Mall&quot;,&quot;developer_name&quot;:&quot;Sky Abu Dhabi&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a0a24a80473%D8%B3%D9%83%D8%A7%D9%8A%20%D8%A3%D8%A8%D9%88%20%D8%B8%D8%A8%D9%8A%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;4,800,000&quot;,&quot;price_value&quot;:4800000,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;url&quot;:&quot;#pv:/projects/blue-walk&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.00139,&quot;lng&quot;:31.41076}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe59a84d9da-blue-walk-new-cairo.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Blue Walk Mall</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Sky Abu Dhabi · Fifth Settlement</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">4,800,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">4,800,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/blue-walk" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.00139,31.41076" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.00139,31.41076" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="vie-halo" data-area="new-cairo" data-lat="29.99221" data-lng="31.40662"
-data-project="{&quot;slug&quot;:&quot;vie-halo&quot;,&quot;name&quot;:&quot;Vie Halo Mall&quot;,&quot;developer_name&quot;:&quot;Vie Communities&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/6aaa658432e41%D8%B4%D8%B1%D9%83%D8%A9%20%D9%81%D9%8A%20%D9%83%D9%88%D9%85%D9%8A%D9%88%D9%86%D9%8A%D8%AA%D9%8A%D8%B2%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.webp.webp&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;5,500,000&quot;,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abbd405afadf-untitled-design.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-sky-park.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/vie-halo&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:29.99221,&quot;lng&quot;:31.40662}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="vie-halo" data-area="new-cairo" data-lat="29.99221" data-lng="31.40662"
+data-project="{&quot;slug&quot;:&quot;vie-halo&quot;,&quot;name&quot;:&quot;Vie Halo Mall&quot;,&quot;developer_name&quot;:&quot;Vie Communities&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/6aaa658432e41%D8%B4%D8%B1%D9%83%D8%A9%20%D9%81%D9%8A%20%D9%83%D9%88%D9%85%D9%8A%D9%88%D9%86%D9%8A%D8%AA%D9%8A%D8%B2%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.webp.webp&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;5,500,000&quot;,&quot;price_value&quot;:5500000,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;url&quot;:&quot;#pv:/projects/vie-halo&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:29.99221,&quot;lng&quot;:31.40662}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abbd405afadf-untitled-design.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Vie Halo Mall</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Vie Communities · Fifth Settlement</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">5,500,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">5,500,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/vie-halo" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=29.99221,31.40662" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/29.99221,31.40662" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="jeel-plaza" data-area="new-cairo" data-lat="29.9968" data-lng="31.44142"
-data-project="{&quot;slug&quot;:&quot;jeel-plaza&quot;,&quot;name&quot;:&quot;Jeel Plaza&quot;,&quot;developer_name&quot;:&quot;Arabco&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f66e30a6c0%D8%A7%D8%B1%D8%A7%D8%A8%D9%83%D9%88.jpeg.jpeg&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;7,000,000&quot;,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abb98638d6cf-image-sep-29-2026-01-51-13-am-1.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-nova.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/jeel-plaza&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:29.9968,&quot;lng&quot;:31.44142}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="jeel-plaza" data-area="new-cairo" data-lat="29.9968" data-lng="31.44142"
+data-project="{&quot;slug&quot;:&quot;jeel-plaza&quot;,&quot;name&quot;:&quot;Jeel Plaza&quot;,&quot;developer_name&quot;:&quot;Arabco&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f66e30a6c0%D8%A7%D8%B1%D8%A7%D8%A8%D9%83%D9%88.jpeg.jpeg&quot;,&quot;location&quot;:&quot;Fifth Settlement, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;7,000,000&quot;,&quot;price_value&quot;:7000000,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;url&quot;:&quot;#pv:/projects/jeel-plaza&quot;,&quot;area&quot;:&quot;fifth-settlement&quot;,&quot;area_label&quot;:&quot;Fifth Settlement&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:29.9968,&quot;lng&quot;:31.44142}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abb98638d6cf-image-sep-29-2026-01-51-13-am-1.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Jeel Plaza</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Arabco · Fifth Settlement</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">7,000,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">7,000,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/jeel-plaza" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=29.9968,31.44142" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/29.9968,31.44142" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="xchange-hap-town" data-area="new-cairo" data-lat="30.12868" data-lng="31.61472"
-data-project="{&quot;slug&quot;:&quot;xchange-hap-town&quot;,&quot;name&quot;:&quot;Xchange Hap Town&quot;,&quot;developer_name&quot;:&quot;Hassan Allam&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;16,060,000&quot;,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6abe5da07a3a1-xchange-hap-town-mostakbal-city.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-the-pulse.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/xchange-hap-town&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12868,&quot;lng&quot;:31.61472}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="xchange-hap-town" data-area="new-cairo" data-lat="30.12868" data-lng="31.61472"
+data-project="{&quot;slug&quot;:&quot;xchange-hap-town&quot;,&quot;name&quot;:&quot;Xchange Hap Town&quot;,&quot;developer_name&quot;:&quot;Hassan Allam&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;16,060,000&quot;,&quot;price_value&quot;:16060000,&quot;types&quot;:&quot;Retail · Office · Medical&quot;,&quot;url&quot;:&quot;#pv:/projects/xchange-hap-town&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12868,&quot;lng&quot;:31.61472}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6abe5da07a3a1-xchange-hap-town-mostakbal-city.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Xchange Hap Town</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Hassan Allam · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">16,060,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">16,060,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/xchange-hap-town" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.12868,31.61472" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.12868,31.61472" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="il-bosco-city" data-area="new-cairo" data-lat="30.11108" data-lng="31.61316"
-data-project="{&quot;slug&quot;:&quot;il-bosco-city&quot;,&quot;name&quot;:&quot;IL Bosco City&quot;,&quot;developer_name&quot;:&quot;Misr Italia&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679fa50a63f8b%D9%85%D8%B9%D9%85%D8%A7%D8%B1%20%D8%AC%D8%AF%D9%8A%D8%AF%20%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;3,240,000&quot;,&quot;types&quot;:&quot;Apartment · Villa · Duplex&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a8d9435c7c38-il-bosco-city-new-cairo-1.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-galleria.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/il-bosco-city&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11108,&quot;lng&quot;:31.61316}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="il-bosco-city" data-area="new-cairo" data-lat="30.11108" data-lng="31.61316"
+data-project="{&quot;slug&quot;:&quot;il-bosco-city&quot;,&quot;name&quot;:&quot;IL Bosco City&quot;,&quot;developer_name&quot;:&quot;Misr Italia&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679fa50a63f8b%D9%85%D8%B9%D9%85%D8%A7%D8%B1%20%D8%AC%D8%AF%D9%8A%D8%AF%20%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;3,240,000&quot;,&quot;price_value&quot;:3240000,&quot;types&quot;:&quot;Apartment · Villa · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/il-bosco-city&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11108,&quot;lng&quot;:31.61316}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a8d9435c7c38-il-bosco-city-new-cairo-1.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">IL Bosco City</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Misr Italia · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">3,240,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">3,240,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/il-bosco-city" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.11108,31.61316" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.11108,31.61316" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="the-butterfly" data-area="new-cairo" data-lat="30.11585" data-lng="31.64526"
-data-project="{&quot;slug&quot;:&quot;the-butterfly&quot;,&quot;name&quot;:&quot;The Butterfly&quot;,&quot;developer_name&quot;:&quot;Madinet Masr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,150,000&quot;,&quot;types&quot;:&quot;Apartment · Duplex · Townhouse&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a7c813c7000e-the-butterfly-mostakbel-city.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-eastvale.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/the-butterfly&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11585,&quot;lng&quot;:31.64526}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="the-butterfly" data-area="new-cairo" data-lat="30.11585" data-lng="31.64526"
+data-project="{&quot;slug&quot;:&quot;the-butterfly&quot;,&quot;name&quot;:&quot;The Butterfly&quot;,&quot;developer_name&quot;:&quot;Madinet Masr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67d02f9390a41download%20(7).png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;6,150,000&quot;,&quot;price_value&quot;:6150000,&quot;types&quot;:&quot;Apartment · Duplex · Townhouse&quot;,&quot;url&quot;:&quot;#pv:/projects/the-butterfly&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11585,&quot;lng&quot;:31.64526}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a7c813c7000e-the-butterfly-mostakbel-city.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-eastvale.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">The Butterfly</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Madinet Masr · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">6,150,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">6,150,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/the-butterfly" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.11585,31.64526" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.11585,31.64526" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="mivida-gardens" data-area="new-cairo" data-lat="30.11212" data-lng="31.6377"
-data-project="{&quot;slug&quot;:&quot;mivida-gardens&quot;,&quot;name&quot;:&quot;Mivida Gardens&quot;,&quot;developer_name&quot;:&quot;Emaar Misr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a7f596d9099IMG_4573.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;12,000,000&quot;,&quot;types&quot;:&quot;Apartment · Townhouse · Villa&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a41343551df9-mivida-gardens-mostakbal-city-2.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-ark.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/mivida-gardens&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11212,&quot;lng&quot;:31.6377}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="mivida-gardens" data-area="new-cairo" data-lat="30.11212" data-lng="31.6377"
+data-project="{&quot;slug&quot;:&quot;mivida-gardens&quot;,&quot;name&quot;:&quot;Mivida Gardens&quot;,&quot;developer_name&quot;:&quot;Emaar Misr&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67a7f596d9099IMG_4573.png.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;12,000,000&quot;,&quot;price_value&quot;:12000000,&quot;types&quot;:&quot;Apartment · Townhouse · Villa&quot;,&quot;url&quot;:&quot;#pv:/projects/mivida-gardens&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.11212,&quot;lng&quot;:31.6377}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a41343551df9-mivida-gardens-mostakbal-city-2.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-ark.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Mivida Gardens</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Emaar Misr · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">12,000,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">12,000,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/mivida-gardens" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.11212,31.6377" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.11212,31.6377" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="aliva" data-area="new-cairo" data-lat="30.13187" data-lng="31.62312"
-data-project="{&quot;slug&quot;:&quot;aliva&quot;,&quot;name&quot;:&quot;Aliva&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;8,589,924&quot;,&quot;types&quot;:&quot;Apartment · Townhouse · Villa&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a47c66deba08-aliva-mountain-view-mostakbal-city-5.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-palm-hills.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/aliva&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.13187,&quot;lng&quot;:31.62312}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="aliva" data-area="new-cairo" data-lat="30.13187" data-lng="31.62312"
+data-project="{&quot;slug&quot;:&quot;aliva&quot;,&quot;name&quot;:&quot;Aliva&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;8,589,924&quot;,&quot;price_value&quot;:8589924,&quot;types&quot;:&quot;Apartment · Townhouse · Villa&quot;,&quot;url&quot;:&quot;#pv:/projects/aliva&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.13187,&quot;lng&quot;:31.62312}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a47c66deba08-aliva-mountain-view-mostakbal-city-5.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-palm-hills.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Aliva</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Mountain View · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">8,589,924</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">8,589,924</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/aliva" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.13187,31.62312" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.13187,31.62312" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="eastvale" data-area="new-cairo" data-lat="30.14888" data-lng="31.61694"
-data-project="{&quot;slug&quot;:&quot;eastvale&quot;,&quot;name&quot;:&quot;Eastvale&quot;,&quot;developer_name&quot;:&quot;SODIC&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67f85409473dc%D8%B3%D9%88%D8%AF%D9%8A%D9%83.jpg.jpg&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;13,000,000&quot;,&quot;types&quot;:&quot;Apartment · Townhouse · Twin house&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a47c8c2ca812-eastvale-mostakbal-city-4.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-lake-view.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/eastvale&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.14888,&quot;lng&quot;:31.61694}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="eastvale" data-area="new-cairo" data-lat="30.14888" data-lng="31.61694"
+data-project="{&quot;slug&quot;:&quot;eastvale&quot;,&quot;name&quot;:&quot;Eastvale&quot;,&quot;developer_name&quot;:&quot;SODIC&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/67f85409473dc%D8%B3%D9%88%D8%AF%D9%8A%D9%83.jpg.jpg&quot;,&quot;location&quot;:&quot;Mostakbal City, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;13,000,000&quot;,&quot;price_value&quot;:13000000,&quot;types&quot;:&quot;Apartment · Townhouse · Twin house&quot;,&quot;url&quot;:&quot;#pv:/projects/eastvale&quot;,&quot;area&quot;:&quot;mostakbal-city&quot;,&quot;area_label&quot;:&quot;Mostakbal City&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.14888,&quot;lng&quot;:31.61694}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a47c8c2ca812-eastvale-mostakbal-city-4.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Eastvale</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">SODIC · Mostakbal City</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">13,000,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">13,000,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/eastvale" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.14888,31.61694" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.14888,31.61694" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="el-patio-prime" data-area="new-cairo" data-lat="30.10623" data-lng="31.60098"
-data-project="{&quot;slug&quot;:&quot;el-patio-prime&quot;,&quot;name&quot;:&quot;El Patio Prime&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;24,200,000&quot;,&quot;types&quot;:&quot;Villa · Townhouse · Twin house&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6ab78ffd0d776-2.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-city-gate.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-prime&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.10623,&quot;lng&quot;:31.60098}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="el-patio-prime" data-area="new-cairo" data-lat="30.10623" data-lng="31.60098"
+data-project="{&quot;slug&quot;:&quot;el-patio-prime&quot;,&quot;name&quot;:&quot;El Patio Prime&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;24,200,000&quot;,&quot;price_value&quot;:24200000,&quot;types&quot;:&quot;Villa · Townhouse · Twin house&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-prime&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.10623,&quot;lng&quot;:31.60098}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6ab78ffd0d776-2.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-city-gate.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">El Patio Prime</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">La Vista · El Shorouk</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">24,200,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">24,200,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/el-patio-prime" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.10623,31.60098" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.10623,31.60098" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="el-patio-casa" data-area="new-cairo" data-lat="30.12513" data-lng="31.6245"
-data-project="{&quot;slug&quot;:&quot;el-patio-casa&quot;,&quot;name&quot;:&quot;El Patio Casa&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;22,800,000&quot;,&quot;types&quot;:&quot;Apartment · Penthouse · Duplex&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6ab799c719e18-5.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-sky-park.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-casa&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12513,&quot;lng&quot;:31.6245}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="el-patio-casa" data-area="new-cairo" data-lat="30.12513" data-lng="31.6245"
+data-project="{&quot;slug&quot;:&quot;el-patio-casa&quot;,&quot;name&quot;:&quot;El Patio Casa&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;22,800,000&quot;,&quot;price_value&quot;:22800000,&quot;types&quot;:&quot;Apartment · Penthouse · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-casa&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12513,&quot;lng&quot;:31.6245}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6ab799c719e18-5.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-sky-park.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">El Patio Casa</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">La Vista · El Shorouk</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">22,800,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">22,800,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/el-patio-casa" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.12513,31.6245" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.12513,31.6245" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="el-patio-5-east" data-area="new-cairo" data-lat="30.12014" data-lng="31.58616"
-data-project="{&quot;slug&quot;:&quot;el-patio-5-east&quot;,&quot;name&quot;:&quot;El Patio 5 East&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;23,500,000&quot;,&quot;types&quot;:&quot;Villa · Townhouse · Twin house&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a69cd42b31fa-el-patio-5-east-el-shorouk-1.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-nova.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-5-east&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12014,&quot;lng&quot;:31.58616}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="el-patio-5-east" data-area="new-cairo" data-lat="30.12014" data-lng="31.58616"
+data-project="{&quot;slug&quot;:&quot;el-patio-5-east&quot;,&quot;name&quot;:&quot;El Patio 5 East&quot;,&quot;developer_name&quot;:&quot;La Vista&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f9ab2dcfe7%D8%B4%D8%B1%D9%83%D8%A9%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;23,500,000&quot;,&quot;price_value&quot;:23500000,&quot;types&quot;:&quot;Villa · Townhouse · Twin house&quot;,&quot;url&quot;:&quot;#pv:/projects/el-patio-5-east&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12014,&quot;lng&quot;:31.58616}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a69cd42b31fa-el-patio-5-east-el-shorouk-1.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-nova.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">El Patio 5 East</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">La Vista · El Shorouk</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">23,500,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">23,500,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/el-patio-5-east" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.12014,31.58616" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.12014,31.58616" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="el-shorouk-springs" data-area="new-cairo" data-lat="30.12783" data-lng="31.60098"
-data-project="{&quot;slug&quot;:&quot;el-shorouk-springs&quot;,&quot;name&quot;:&quot;Springs&quot;,&quot;developer_name&quot;:&quot;Hassan Allam&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;31,500,000&quot;,&quot;types&quot;:&quot;Apartment · Townhouse · Twin house&quot;,&quot;image&quot;:&quot;https://shary.eg/responsive-image/480/images/compounds/6a3bbbb64a01c-el-shorouk-springs-compound-3.webp?v=2&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-the-pulse.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/el-shorouk-springs&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12783,&quot;lng&quot;:31.60098}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="el-shorouk-springs" data-area="new-cairo" data-lat="30.12783" data-lng="31.60098"
+data-project="{&quot;slug&quot;:&quot;el-shorouk-springs&quot;,&quot;name&quot;:&quot;Springs&quot;,&quot;developer_name&quot;:&quot;Hassan Allam&quot;,&quot;developer_logo&quot;:&quot;https://shary.eg/images/developers/679f8abeb1134%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85.png.png&quot;,&quot;location&quot;:&quot;El Shorouk, New Cairo, Egypt&quot;,&quot;price&quot;:&quot;31,500,000&quot;,&quot;price_value&quot;:31500000,&quot;types&quot;:&quot;Apartment · Townhouse · Twin house&quot;,&quot;url&quot;:&quot;#pv:/projects/el-shorouk-springs&quot;,&quot;area&quot;:&quot;el-shorouk&quot;,&quot;area_label&quot;:&quot;El Shorouk&quot;,&quot;group&quot;:&quot;new-cairo&quot;,&quot;group_label&quot;:&quot;New Cairo&quot;,&quot;lat&quot;:30.12783,&quot;lng&quot;:31.60098}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="https://shary.eg/responsive-image/480/images/compounds/6a3bbbb64a01c-el-shorouk-springs-compound-3.webp?v=2" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-the-pulse.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Springs</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Hassan Allam · El Shorouk</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">31,500,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">31,500,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/el-shorouk-springs" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.12783,31.60098" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.12783,31.60098" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="mountain-view-hyde-park" data-area="sheikh-zayed" data-lat="30.02848" data-lng="30.96128"
-data-project="{&quot;slug&quot;:&quot;mountain-view-hyde-park&quot;,&quot;name&quot;:&quot;Mountain View Hyde Park&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;Sheikh Zayed, Egypt&quot;,&quot;price&quot;:&quot;7,600,000&quot;,&quot;types&quot;:&quot;Apartment · Duplex&quot;,&quot;image&quot;:&quot;images/shary/area-samples/project-galleria.jpg&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-galleria.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/mountain-view-hyde-park&quot;,&quot;area&quot;:&quot;sheikh-zayed&quot;,&quot;area_label&quot;:&quot;Sheikh Zayed&quot;,&quot;group&quot;:&quot;sheikh-zayed&quot;,&quot;group_label&quot;:&quot;Sheikh Zayed&quot;,&quot;lat&quot;:30.02848,&quot;lng&quot;:30.96128}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="mountain-view-hyde-park" data-area="sheikh-zayed" data-lat="30.02848" data-lng="30.96128"
+data-project="{&quot;slug&quot;:&quot;mountain-view-hyde-park&quot;,&quot;name&quot;:&quot;Mountain View Hyde Park&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;Sheikh Zayed, Egypt&quot;,&quot;price&quot;:&quot;7,600,000&quot;,&quot;price_value&quot;:7600000,&quot;types&quot;:&quot;Apartment · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/mountain-view-hyde-park&quot;,&quot;area&quot;:&quot;sheikh-zayed&quot;,&quot;area_label&quot;:&quot;Sheikh Zayed&quot;,&quot;group&quot;:&quot;sheikh-zayed&quot;,&quot;group_label&quot;:&quot;Sheikh Zayed&quot;,&quot;lat&quot;:30.02848,&quot;lng&quot;:30.96128}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="a/images/shary/area-samples/project-galleria.jpg" data-img="images/shary/area-samples/project-galleria.jpg" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-galleria.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Mountain View Hyde Park</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Mountain View · Sheikh Zayed</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">7,600,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">7,600,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/mountain-view-hyde-park" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.02848,30.96128" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.02848,30.96128" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="mountain-view-sokhna" data-area="ain-sokhna" data-lat="29.58137" data-lng="32.30812"
-data-project="{&quot;slug&quot;:&quot;mountain-view-sokhna&quot;,&quot;name&quot;:&quot;Mountain View Sokhna&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;Ain Sokhna, Egypt&quot;,&quot;price&quot;:&quot;7,100,000&quot;,&quot;types&quot;:&quot;Chalet · Villa&quot;,&quot;image&quot;:&quot;images/shary/area-samples/project-palm-hills.jpg&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-palm-hills.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/mountain-view-sokhna&quot;,&quot;area&quot;:&quot;ain-sokhna&quot;,&quot;area_label&quot;:&quot;Ain Sokhna&quot;,&quot;group&quot;:&quot;ain-sokhna&quot;,&quot;group_label&quot;:&quot;Ain Sokhna&quot;,&quot;lat&quot;:29.58137,&quot;lng&quot;:32.30812}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="mountain-view-sokhna" data-area="ain-sokhna" data-lat="29.58137" data-lng="32.30812"
+data-project="{&quot;slug&quot;:&quot;mountain-view-sokhna&quot;,&quot;name&quot;:&quot;Mountain View Sokhna&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;Ain Sokhna, Egypt&quot;,&quot;price&quot;:&quot;7,100,000&quot;,&quot;price_value&quot;:7100000,&quot;types&quot;:&quot;Chalet · Villa&quot;,&quot;url&quot;:&quot;#pv:/projects/mountain-view-sokhna&quot;,&quot;area&quot;:&quot;ain-sokhna&quot;,&quot;area_label&quot;:&quot;Ain Sokhna&quot;,&quot;group&quot;:&quot;ain-sokhna&quot;,&quot;group_label&quot;:&quot;Ain Sokhna&quot;,&quot;lat&quot;:29.58137,&quot;lng&quot;:32.30812}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="a/images/shary/area-samples/project-palm-hills.jpg" data-img="images/shary/area-samples/project-palm-hills.jpg" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-palm-hills.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Mountain View Sokhna</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Mountain View · Ain Sokhna</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">7,100,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">7,100,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/mountain-view-sokhna" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=29.58137,32.30812" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/29.58137,32.30812" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 <li>
-<button type="button" class="smap__item" data-smap-item data-slug="grand-valleys" data-area="new-capital" data-lat="30.0263" data-lng="31.75604"
-data-project="{&quot;slug&quot;:&quot;grand-valleys&quot;,&quot;name&quot;:&quot;Grand Valleys&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;New Capital, Egypt&quot;,&quot;price&quot;:&quot;8,400,000&quot;,&quot;types&quot;:&quot;Apartment · Duplex&quot;,&quot;image&quot;:&quot;images/shary/area-samples/project-lake-view.jpg&quot;,&quot;image_fallback&quot;:&quot;images/shary/area-samples/project-lake-view.jpg&quot;,&quot;url&quot;:&quot;#pv:/projects/grand-valleys&quot;,&quot;area&quot;:&quot;new-capital&quot;,&quot;area_label&quot;:&quot;New Capital&quot;,&quot;group&quot;:&quot;new-capital&quot;,&quot;group_label&quot;:&quot;New Capital&quot;,&quot;lat&quot;:30.0263,&quot;lng&quot;:31.75604}" aria-current="false">
+<div class="smap__item" role="button" tabindex="0" data-smap-item data-slug="grand-valleys" data-area="new-capital" data-lat="30.0263" data-lng="31.75604"
+data-project="{&quot;slug&quot;:&quot;grand-valleys&quot;,&quot;name&quot;:&quot;Grand Valleys&quot;,&quot;developer_name&quot;:&quot;Mountain View&quot;,&quot;developer_logo&quot;:&quot;images/shary/developer-samples/mountain-view-mark.png&quot;,&quot;location&quot;:&quot;New Capital, Egypt&quot;,&quot;price&quot;:&quot;8,400,000&quot;,&quot;price_value&quot;:8400000,&quot;types&quot;:&quot;Apartment · Duplex&quot;,&quot;url&quot;:&quot;#pv:/projects/grand-valleys&quot;,&quot;area&quot;:&quot;new-capital&quot;,&quot;area_label&quot;:&quot;New Capital&quot;,&quot;group&quot;:&quot;new-capital&quot;,&quot;group_label&quot;:&quot;New Capital&quot;,&quot;lat&quot;:30.0263,&quot;lng&quot;:31.75604}" aria-current="false">
+<div class="smap__item-main">
 <img loading="lazy" src="a/images/shary/area-samples/project-lake-view.jpg" data-img="images/shary/area-samples/project-lake-view.jpg" alt="" class="smap__thumb card-photo" data-fallback-key="images/shary/area-samples/project-lake-view.jpg" onerror="pvFallback(this)">
 <span class="min-w-0 flex-1 text-start">
 <b class="block truncate text-[14.5px] font-extrabold leading-[1.5]">Grand Valleys</b>
 <span class="block truncate text-[12.5px] font-medium leading-[1.6] text-shary-muted">Mountain View · New Capital</span>
+<span class="block text-[13px] font-extrabold leading-[1.5] text-shary-teal"><small class="text-[11px] font-semibold text-shary-muted">Starts from</small> <bdi dir="ltr">8,400,000</bdi> <small class="text-[11px] font-semibold text-shary-muted">EGP</small></span>
 </span>
-<span class="shrink-0 text-end">
-<small class="block text-[10.5px] font-semibold leading-[1.4] text-shary-muted">Starts from</small>
-<bdi dir="ltr" class="block text-[13px] font-extrabold leading-[1.4] text-shary-teal">8,400,000</bdi>
-</span>
-</button>
+</div>
+
+<div class="smap__item-actions">
+<a href="#pv:/projects/grand-valleys" class="smap__btn smap__btn--main">Project page</a>
+<a href="https://www.google.com/maps/dir/?api=1&destination=30.0263,31.75604" target="_blank" rel="noopener" class="smap__btn">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.500l7.500 3L13.500 21 21 3Z"/></svg>
+Directions                                    </a>
+<a href="https://earth.google.com/web/search/30.0263,31.75604" target="_blank" rel="noopener" class="smap__btn">Google Earth</a>
+</div>
+</div>
 </li>
 </ul>
-<p class="hidden px-2 py-6 text-center text-[14px] font-semibold text-shary-muted" data-smap-empty>No project with that name — try another one.</p>
+<p class="smap__empty hidden" data-smap-empty>No project with that name — try another one.</p>
 </aside>
 </div>
 </div>
@@ -1446,7 +1664,7 @@ data-label-get="Download Now" data-label-open="Open App">
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "66fa06e2";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "223c956a";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -1463,7 +1681,7 @@ data-label-get="Download Now" data-label-open="Open App">
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=66fa06e2"></script>
+<script src="a/site.js?v=223c956a"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -1535,6 +1753,14 @@ data-label-get="Download Now" data-label-open="Open App">
   var VER = window.PV_VER ? '?v=' + window.PV_VER : '';   // رقم النسخة على لينكات الصفحات عشان المتصفح ما يفتحش نسخة قديمة
   function langFile(file, language) { file = file.replace(/-en\.html$/, '.html'); return language === 'en' ? file.replace(/\.html$/, '-en.html') : file; }
   var pvProject = '';
+  // خريطة شاري — "عرض القائمة": صفحة البحث على المنطقة المختارة (التبديل وحدات ⇄ كمبوندات من جوه صفحة البحث)
+  root.addEventListener('click', function (e) {
+    var listLink = e.target.closest ? e.target.closest('[data-smap-list-link]') : null;
+    if (!listLink) return;
+    e.preventDefault(); e.stopPropagation();
+    var picked = /area\[\]=([a-z0-9-]+)/.exec(listLink.getAttribute('href') || '');
+    showSearch('all', 'units', picked ? { area: [picked[1]] } : undefined);
+  }, true);
   // خريطة شاري التفاعلية: بتفتح على المشروع المطلوب (?project=) — ومن صفحة المشروع على المشروع المفتوح
   function openMap(slug) {
     if (!inDoc('shary-map')) return go('shary-map', { fn: 'map', slug: slug });

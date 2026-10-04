@@ -2720,24 +2720,34 @@
 
 /**
  * خريطة شاري التفاعلية (resources/views/map/show.blade.php)
- * - اختيار مشروع [data-smap-item] بيحرّك الخريطة [data-smap-frame] على مكانه (data-lat / data-lng) وبيملا كارت المشروع [data-smap-card].
- * - [data-smap-type] قمر صناعي (h) / خريطة (m) ، [data-smap-zoom] تكبير / تصغير.
- * - البحث [data-smap-search] وفلتر المنطقة [data-smap-area] بيفلتروا القايمة — لو المشروع المختار اختفى بيتختار أول مشروع ظاهر.
- * - الاختيار بيطلع حدث shary:map-select على الصفحة: detail = بيانات المشروع (slug, lat, lng ...).
- * - من أي كود: window.SharyMap.select('slug').
- * الخريطة تضمين خرائط جوجل (من غير API key). الصفحة مخفية / لسه ما ظهرتش: الخريطة بتتحمّل أول ما تظهر على الشاشة.
+ * - اختيار مشروع [data-smap-item] (كارت في القايمة أو علامة السعر على الخريطة) بيحرّك الخريطة على مكانه (data-lat / data-lng) وبيظهر أزراره.
+ * - "اختر المنطقة" [data-smap-areas-toggle] بيفتح قايمة المناطق [data-smap-areas] ، واختيار منطقة [data-smap-area] بيفلتر المشاريع.
+ * - البحث [data-smap-search] ، قمر صناعي (h) / خريطة (m) [data-smap-type] ، تكبير / تصغير [data-smap-zoom] ، كل المشاريع [data-smap-reset].
+ * - "عرض القائمة" [data-smap-list-link]: صفحة البحث على المنطقة المختارة (?area[]=) — التبديل وحدات ⇄ كمبوندات من جوه صفحة البحث.
+ * - الاختيار بيطلع حدث shary:map-select على الصفحة: detail = بيانات المشروع. من أي كود: window.SharyMap.select('slug').
+ *
+ * الخريطة نفسها:
+ *   1) Mapbox GL (لو data-mapbox-token موجود ومكتبة mapboxgl محمّلة): خريطة حقيقية بعلامة سعر لكل مشروع — نفس خريطة الموقع الحالية.
+ *   2) غير كده: تضمين خرائط جوجل بالقمر الصناعي على المشروع المختار (من غير أي مفتاح).
  */
 (function () {
     var maps = [];
+    var STYLES = { h: 'mapbox://styles/mapbox/satellite-streets-v12', m: 'mapbox://styles/mapbox/streets-v12' };
 
     document.querySelectorAll('[data-smap]').forEach(function (root) {
         var frame = root.querySelector('[data-smap-frame]');
-        var card = root.querySelector('[data-smap-card]');
+        var glBox = root.querySelector('[data-smap-gl]');
         var items = Array.prototype.slice.call(root.querySelectorAll('[data-smap-item]'));
         var search = root.querySelector('[data-smap-search]');
         var empty = root.querySelector('[data-smap-empty]');
+        var areasBox = root.querySelector('[data-smap-areas]');
+        var areasToggle = root.querySelector('[data-smap-areas-toggle]');
+        var areaLabel = root.querySelector('[data-smap-area-label]');
+        var listLink = root.querySelector('[data-smap-list-link]');
+        var count = (root.closest('main') || document).querySelector('[data-smap-count]');
         var lang = root.getAttribute('data-lang') || 'ar';
         var state = { type: 'h', zoom: 16, current: null, live: false, area: root.getAttribute('data-area') || '' };
+        var gl = null;
         if (!frame || !items.length) return;
 
         function info(item) {
@@ -2749,10 +2759,57 @@
             return String(text || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim();
         }
 
+        function shown() { return items.filter(function (item) { return !item.parentNode.hidden; }); }
+
+        // ---- Mapbox: خريطة حقيقية بعلامات الأسعار
+        function startGL() {
+            var token = root.getAttribute('data-mapbox-token');
+            if (gl || !token || !window.mapboxgl || !glBox) return !!gl;
+            try {
+                var first = info(state.current || items[0]);
+                window.mapboxgl.accessToken = token;
+                glBox.hidden = false;
+                gl = new window.mapboxgl.Map({ container: glBox, style: STYLES[state.type], center: [first.lng, first.lat], zoom: 12 });
+                items.forEach(function (item) {
+                    var p = info(item);
+                    var pin = document.createElement('button');
+                    pin.type = 'button';
+                    pin.className = 'smap__marker';
+                    pin.setAttribute('aria-label', p.name || '');
+                    pin.textContent = p.price_value ? (Math.round(p.price_value / 100000) / 10) + (root.getAttribute('data-million') || 'M') : (p.name || '');
+                    pin.addEventListener('click', function (event) { event.stopPropagation(); select(item, true); });
+                    pin.style.display = item.parentNode.hidden ? 'none' : '';
+                    item.__pin = pin;
+                    item.__marker = new window.mapboxgl.Marker({ element: pin, anchor: 'bottom' }).setLngLat([p.lng, p.lat]).addTo(gl);
+                });
+                frame.hidden = true;
+                root.classList.add('is-gl');
+                return true;
+            } catch (error) {
+                gl = null;
+                if (glBox) glBox.hidden = true;
+                return false;
+            }
+        }
+
+        // كل المشاريع الظاهرة في الكادر
+        function fitAll() {
+            var list = shown();
+            if (!gl || !list.length || !window.mapboxgl.LngLatBounds) return;
+            var bounds = new window.mapboxgl.LngLatBounds();
+            list.forEach(function (item) { var p = info(item); bounds.extend([p.lng, p.lat]); });
+            gl.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 700 });
+        }
+
         // الخريطة بتتحدّث لما تبقى ظاهرة بس (ولما المشروع / النوع / التكبير يتغيّر)
-        function paint() {
+        function paint(fly) {
             if (!state.live || !state.current) return;
             var p = info(state.current);
+            if (startGL()) {
+                items.forEach(function (item) { if (item.__pin) item.__pin.classList.toggle('is-on', item === state.current); });
+                if (fly !== false) gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(13, Math.min(18, state.zoom)), duration: 900 });
+                return;
+            }
             var url = 'https://www.google.com/maps?q=' + p.lat + ',' + p.lng + '&t=' + state.type + '&z=' + state.zoom + '&hl=' + lang + '&output=embed';
             if (frame.getAttribute('src') !== url) frame.setAttribute('src', url);
             frame.setAttribute('title', (root.getAttribute('data-frame-title') || '').replace(':name', p.name || ''));
@@ -2761,91 +2818,117 @@
         function select(item, reveal) {
             if (!item) return;
             state.current = item;
-            var p = info(item);
             items.forEach(function (other) { other.setAttribute('aria-current', other === item ? 'true' : 'false'); });
-            if (card) {
-                card.querySelectorAll('[data-smap-k]').forEach(function (node) {
-                    var key = node.getAttribute('data-smap-k');
-                    if (node.tagName === 'IMG') {
-                        // نفس صورة المشروع في القايمة (ولو اتبدلت بالصورة البديلة بناخد البديلة)
-                        var thumb = item.querySelector('img');
-                        if (thumb) {
-                            Array.prototype.forEach.call(thumb.attributes, function (attr) { if (attr.name.indexOf('data-fallback') === 0 || attr.name === 'onerror') node.setAttribute(attr.name, attr.value); });
-                            node.src = thumb.currentSrc || thumb.getAttribute('src') || p.image_fallback || '';
-                        } else node.src = p.image || p.image_fallback || '';
-                        node.alt = p.name || '';
-                    }
-                    else node.textContent = p[key] || '';
-                });
-                var links = { url: p.url, directions: 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng, earth: 'https://earth.google.com/web/search/' + p.lat + ',' + p.lng };
-                card.querySelectorAll('[data-smap-link]').forEach(function (link) { link.setAttribute('href', links[link.getAttribute('data-smap-link')] || '#'); });
-                card.classList.add('is-on');
-            }
             paint();
             if (reveal) {
+                // الكارت المختار يبان في القايمة (بالعرض على الموبايل / بالطول على الديسك توب) من غير ما الصفحة تتحرك
                 var list = item.closest('[data-smap-list]');
-                if (list && list.scrollHeight > list.clientHeight) list.scrollTop = item.offsetTop - list.offsetTop - 8;
-                // موبايل: القايمة تحت الخريطة — نطلع للخريطة عشان العميل يشوف المكان
-                if (window.matchMedia('(max-width: 1023px)').matches) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                var row = item.parentNode;
+                if (list && list.scrollWidth > list.clientWidth + 4) list.scrollTo({ left: row.offsetLeft - (list.clientWidth - row.offsetWidth) / 2, behavior: 'smooth' });
+                else if (list && list.scrollHeight > list.clientHeight + 4) list.scrollTo({ top: row.offsetTop - list.offsetTop - 8, behavior: 'smooth' });
             }
-            root.dispatchEvent(new CustomEvent('shary:map-select', { bubbles: true, detail: p }));
+            root.dispatchEvent(new CustomEvent('shary:map-select', { bubbles: true, detail: info(item) }));
         }
 
-        function filter() {
+        function filter(keep) {
             var words = plain(search && search.value).split(' ').filter(Boolean);
-            var shown = [];
+            var list = [];
             items.forEach(function (item) {
                 var p = info(item);
-                if (!item.__hay) item.__hay = plain([p.name, p.developer_name, p.area_label, p.location, p.slug].join(' '));
+                if (!item.__hay) item.__hay = plain([p.name, p.developer_name, p.area_label, p.group_label, p.location, p.slug].join(' '));
                 var ok = (!state.area || item.getAttribute('data-area') === state.area) && words.every(function (word) { return item.__hay.indexOf(word) > -1; });
                 item.parentNode.hidden = !ok;
-                if (ok) shown.push(item);
+                if (item.__pin) item.__pin.style.display = ok ? '' : 'none';
+                if (ok) list.push(item);
             });
-            if (empty) empty.classList.toggle('hidden', shown.length > 0);
-            if (shown.length && shown.indexOf(state.current) === -1) select(shown[0], false);
+            if (empty) empty.classList.toggle('hidden', list.length > 0);
+            if (count) count.textContent = list.length;
+            if (listLink) listLink.setAttribute('href', (root.getAttribute('data-search-url') || '#') + (state.area ? '?area[]=' + state.area : ''));
+            if (list.length && list.indexOf(state.current) === -1) select(list[0], true);
+            if (!keep && gl) fitAll();
         }
 
-        items.forEach(function (item) { item.addEventListener('click', function () { select(item, true); }); });
-
-        root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
-            chip.addEventListener('click', function () {
-                state.area = chip.getAttribute('data-smap-area');
-                root.querySelectorAll('[data-smap-area]').forEach(function (other) { other.setAttribute('aria-pressed', other === chip ? 'true' : 'false'); });
-                filter();
+        function setArea(slug) {
+            state.area = slug;
+            root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
+                var on = chip.getAttribute('data-smap-area') === slug;
+                chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+                if (on && areaLabel) areaLabel.textContent = chip.getAttribute('data-label') || '';
             });
+            if (areasToggle) areasToggle.classList.toggle('is-set', !!slug);
+        }
+
+        function toggleAreas(open) {
+            if (!areasBox) return;
+            areasBox.hidden = !open;
+            if (areasToggle) areasToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        }
+
+        items.forEach(function (item) {
+            item.addEventListener('click', function (event) { if (!event.target.closest('a')) select(item, true); });
+            item.addEventListener('keydown', function (event) { if ((event.key === 'Enter' || event.key === ' ') && event.target === item) { event.preventDefault(); select(item, true); } });
         });
 
-        if (search) search.addEventListener('input', filter);
+        if (areasToggle) areasToggle.addEventListener('click', function () { toggleAreas(areasBox.hidden); });
+        root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
+            chip.addEventListener('click', function () { setArea(chip.getAttribute('data-smap-area')); toggleAreas(false); filter(); });
+        });
+        document.addEventListener('click', function (event) {
+            if (areasBox && !areasBox.hidden && !event.target.closest('[data-smap-areas], [data-smap-areas-toggle]')) toggleAreas(false);
+        });
+
+        if (search) search.addEventListener('input', function () { filter(); });
 
         root.querySelectorAll('[data-smap-type]').forEach(function (button) {
             button.addEventListener('click', function () {
                 state.type = button.getAttribute('data-smap-type');
                 root.querySelectorAll('[data-smap-type]').forEach(function (other) { other.setAttribute('aria-pressed', other === button ? 'true' : 'false'); });
-                paint();
+                if (gl) gl.setStyle(STYLES[state.type]); else paint();
             });
         });
 
         root.querySelectorAll('[data-smap-zoom]').forEach(function (button) {
             button.addEventListener('click', function () {
-                state.zoom = Math.max(9, Math.min(20, state.zoom + Number(button.getAttribute('data-smap-zoom'))));
+                var step = Number(button.getAttribute('data-smap-zoom'));
+                if (gl) { if (step > 0) gl.zoomIn(); else gl.zoomOut(); return; }
+                state.zoom = Math.max(9, Math.min(20, state.zoom + step));
                 paint();
             });
+        });
+
+        // "كل المشاريع": بيرجّع كل المناطق ويمسح البحث
+        var reset = root.querySelector('[data-smap-reset]');
+        if (reset) reset.addEventListener('click', function () {
+            if (search) search.value = '';
+            setArea('');
+            state.zoom = 16;
+            filter();
+            if (!gl) paint();
         });
 
         function bySlug(slug) { return items.filter(function (item) { return item.getAttribute('data-slug') === slug; })[0]; }
 
         // البداية: فلتر المنطقة (لو موجود) + المشروع المطلوب
-        if (state.area) root.querySelectorAll('[data-smap-area]').forEach(function (chip) { chip.setAttribute('aria-pressed', chip.getAttribute('data-smap-area') === state.area ? 'true' : 'false'); });
+        if (state.area) setArea(state.area);
         select(bySlug(root.getAttribute('data-selected')) || items[0], false);
-        filter();
+        filter(true);
 
         if ('IntersectionObserver' in window) {
             new IntersectionObserver(function (entries, observer) {
                 if (entries.some(function (entry) { return entry.isIntersecting; })) { state.live = true; paint(); observer.disconnect(); }
-            }, { rootMargin: '200px' }).observe(frame);
+            }, { rootMargin: '200px' }).observe(frame.parentNode);
         } else { state.live = true; paint(); }
 
-        maps.push({ root: root, select: function (slug) { var item = bySlug(slug); if (item) { if (item.parentNode.hidden) { state.area = ''; if (search) search.value = ''; root.querySelectorAll('[data-smap-area]').forEach(function (chip) { chip.setAttribute('aria-pressed', chip.getAttribute('data-smap-area') === '' ? 'true' : 'false'); }); filter(); } select(item, false); } return !!item; } });
+        maps.push({
+            root: root,
+            select: function (slug) {
+                var item = bySlug(slug);
+                if (!item) return false;
+                if (item.parentNode.hidden) { if (search) search.value = ''; setArea(''); filter(true); }
+                select(item, true);
+                return true;
+            }
+        });
     });
 
     window.SharyMap = {
