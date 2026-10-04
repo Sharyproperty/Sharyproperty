@@ -52,7 +52,7 @@
  * - المفضلة (القلب على أي كارت): الضغط بيخليها حمراء (aria-pressed) وضغطة تانية بترجّعها. الحالة بتتحفظ على المتصفح
  *   بالـ data-favorite-id، وبيتبعت حدث shary:favorite ({ id, active }) عشان الباك إند يحفظها في حساب العميل.
  *   قلب الهيدر (data-favorites-indicator) بيبقى أحمر وعليه العدد طول ما فيه حاجة في المفضلة، وبيفتح صفحة المفضلة.
- * - المشاركة (data-share-url): موبايل = قايمة المشاركة بتاعة الموبايل، ولو مش متاحة بتطلع قايمة شاري من تحت (واتساب/تيليجرام/فيسبوك/X/البريد/نسخ).
+ * - المشاركة (data-share-url): موبايل = قايمة شاري من تحت (واتساب أول اختيار برسالة الوحدة الجاهزة + "المزيد" لقايمة الموبايل) (واتساب/تيليجرام/فيسبوك/X/البريد/نسخ).
  *   ديسك توب = قايمة صغيرة جنب الزرار (واتساب / فيسبوك / X / تيليجرام / نسخ الرابط). حدث shary:share ({ url, title }) — ممكن تغيّر detail.url أو تمنعه.
  * - واتساب: أي لينك wa.me من غير نص بيتضاف له رسالة جاهزة (اسم الوحدة / المشروع + المكان + السعر + الكود + اللينك) من data-wa-text / data-wa-page — حدث shary:whatsapp ({ text }).
  * - الاتصال على الديسك توب / التابلت: لينك tel: بيفتح قايمة صغيرة (اتصل / واتساب / نسخ الرقم) بدل ما يتجاهله المتصفح.
@@ -323,7 +323,7 @@
         window.SharyBack.closed();
     }
 
-    function openShareSheet(url, title, en) {
+    function openShareSheet(url, title, en, button) {
         if (!shareSheet) {
             shareSheet = document.createElement('div');
             shareSheet.className = 'shary-share';
@@ -348,8 +348,14 @@
 
         var u = encodeURIComponent(url);
         var t = encodeURIComponent(title);
+        // واتساب: الرسالة الجاهزة ببيانات الوحدة / المشروع (data-wa-text على الكارت ، أو data-wa-page لو المشاركة لصفحة العنصر نفسها) — وإلا العنوان + اللينك
+        var waText = title + '\n' + url;
+        if (button && button.closest) {
+            var waPage = button.closest('[data-wa-page]');
+            if (button.closest('[data-wa-text]') || (waPage && !button.closest('[data-card], [data-unit], [data-project], article'))) waText = whatsappText(button);
+        }
         var targets = [
-            ['shary-share__icon--whatsapp', 'fa-brands fa-whatsapp', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(title + '\n' + url)],
+            ['shary-share__icon--whatsapp', 'fa-brands fa-whatsapp', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(waText)],
             ['shary-share__icon--telegram', 'fa-brands fa-telegram', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + u + '&text=' + t],
             ['shary-share__icon--facebook', 'fa-brands fa-facebook-f', en ? 'Facebook' : 'فيسبوك', 'https://www.facebook.com/sharer/sharer.php?u=' + u],
             ['shary-share__icon--x', 'fa-brands fa-x-twitter', 'X', 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t],
@@ -423,17 +429,10 @@
             var en = english(button);
             var phone = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
 
-            // ديسك توب: قايمة صغيرة جنب الزرار. موبايل: قايمة المشاركة بتاعة الموبايل نفسه (العنوان + لينك العنصر + نسخ + التطبيقات) ، ولو مش متاحة: قايمة شاري من تحت
+            // ديسك توب: قايمة صغيرة جنب الزرار. موبايل: قايمة شاري من تحت (واتساب أول اختيار ، تيليجرام ، فيسبوك ، X ، البريد ، نسخ الرابط)
+            // وآخرها "المزيد" بيفتح قايمة المشاركة بتاعة الموبايل نفسه.
             if (!phone) { event.stopPropagation(); openShareMenu(button, url, title, en); return; }
-            if (navigator.share && !nativeShareBlocked) {
-                navigator.share({ title: title, text: title, url: url }).catch(function (error) {
-                    if (error && error.name === 'AbortError') return;   // قفل القايمة بنفسه
-                    nativeShareBlocked = true;
-                    openShareSheet(url, title, en);
-                });
-                return;
-            }
-            openShareSheet(url, title, en);
+            openShareSheet(url, title, en, button);
         })();
     }, true);
 

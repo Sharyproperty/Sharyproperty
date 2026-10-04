@@ -7916,68 +7916,6 @@ input:focus-visible + .area-chip,
   opacity: 1;
 }
 
-/* ---- زرار التطبيق في الهيدر (موبايل): حمّل التطبيق / افتح التطبيق ---- */
-
-.app-btn {
-  display: inline-flex;
-  height: 44px;
-  flex-shrink: 0;
-  align-items: center;
-  gap: 7px;
-  border-radius: 999px;
-  background-image: linear-gradient(135deg, #24507c, #123a5c);
-  padding-inline: 6px 14px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-  white-space: nowrap;
-  color: #fff;
-  box-shadow: 0 8px 16px -8px rgba(18, 58, 92, 0.7), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-  transition: transform 0.15s, box-shadow 0.2s;
-}
-
-.app-btn:active {
-  transform: scale(0.96);
-}
-
-.app-btn__icon {
-  display: flex;
-  height: 32px;
-  width: 32px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: #fff;
-  color: #123a5c;
-}
-
-.app-btn [data-app-icon="open"],
-    .app-btn[data-state="open"] [data-app-icon="get"] {
-  display: none;
-}
-
-.app-btn[data-state="open"] [data-app-icon="open"] {
-  display: block;
-}
-
-.app-btn[data-state="open"] .app-btn__icon {
-  background-color: #2a9d8f;
-  color: #fff;
-}
-
-@media (max-width: 359px) {
-  .app-btn {
-    height: 40px;
-    padding-inline: 12px;
-    font-size: 12px;
-  }
-
-  .app-btn__icon {
-    display: none;
-  }
-}
-
 /* ---- بوب أب تحميل التطبيق (موبايل): بيدخل من الشمال ---- */
 
 .app-pop {
@@ -8005,11 +7943,11 @@ input:focus-visible + .area-chip,
 .app-pop__card {
   position: relative;
   width: 100%;
-  max-width: 372px;
+  max-width: 332px;
   overflow: hidden;
-  border-radius: 28px;
+  border-radius: 30px;
   background-color: #fff;
-  padding-bottom: 24px;
+  padding-bottom: 26px;
   text-align: center;
   box-shadow: 0 30px 60px -20px rgba(10, 26, 42, 0.65);
   opacity: 0;
@@ -8044,7 +7982,7 @@ input:focus-visible + .area-chip,
 
 .app-pop__art {
   position: relative;
-  height: 268px;
+  height: min(352px, 46vh);
   overflow: hidden;
   background-image: linear-gradient(160deg, #eef6fb, #e2f3f0);
 }
@@ -8082,90 +8020,33 @@ input:focus-visible + .area-chip,
   position: absolute;
   left: 50%;
   top: 26px;
-  height: 290px;
-  width: 150px;
-  border-radius: 26px;
-  background-color: #10202b;
+  width: 178px;
+  border-radius: 30px;
+  background-color: #0d1b25;
   padding: 7px;
-  box-shadow: 0 24px 36px -14px rgba(10, 26, 42, 0.7);
-  transform: translateX(-50%) rotate(-6deg);
+  box-shadow: 0 26px 40px -14px rgba(10, 26, 42, 0.75), inset 0 0 0 1.5px #2b3d4a;
+  transform: translateX(-50%) rotate(-5deg);
 }
 
-.app-pop__screen {
-  display: flex;
-  height: 100%;
-  flex-direction: column;
-  gap: 8px;
-  overflow: hidden;
-  border-radius: 20px;
-  background-color: #f6fafb;
-  padding: 16px 10px 0;
-}
-
-.app-pop__logo {
-  height: 15px;
-  width: auto;
-  align-self: flex-start;
-}
-
-.app-pop__search {
-  height: 20px;
-  flex-shrink: 0;
+.app-pop__notch {
+  position: absolute;
+  left: 50%;
+  top: 13px;
+  z-index: 1;
+  height: 12px;
+  width: 52px;
   border-radius: 999px;
-  border: 1px solid #dce6ec;
-  background-color: #fff;
+  background-color: #0d1b25;
+  transform: translateX(-50%);
 }
 
-.app-pop__tiles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-
-.app-pop__tiles i {
-  height: 38px;
-  border-radius: 9px;
-  border-top: 3px solid #2a9d8f;
-  background-color: #fff;
-  box-shadow: 0 2px 6px -2px rgba(18, 58, 92, 0.25);
-}
-
-.app-pop__tiles i:nth-child(2) {
-  border-top-color: #fcb424;
-}
-
-.app-pop__tiles i:nth-child(3) {
-  border-top-color: #1e4166;
-}
-
-.app-pop__tiles i:nth-child(4) {
-  border-top-color: #5aa9ee;
-}
-
-.app-pop__banner {
-  height: 46px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background-image: linear-gradient(120deg, #1e4166, #2a9d8f);
-}
-
-.app-pop__tabs {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-around;
-  border-top: 1px solid #e3ebf0;
-  padding: 8px 0 10px;
-}
-
-.app-pop__tabs i {
-  height: 9px;
-  width: 9px;
-  border-radius: 50%;
-  background-color: #c5d3dc;
-}
-
-.app-pop__tabs i:first-child {
-  background-color: #1e4166;
+.app-pop__shot {
+  display: block;
+  height: auto;
+  width: 100%;
+  border-radius: 23px;
+  background-color: #f6fafb;
+  padding-top: 22px;
 }
 
 .app-pop__chip {
@@ -8189,13 +8070,13 @@ input:focus-visible + .area-chip,
 }
 
 .app-pop__chip--a {
-  top: 78px;
-  left: 14px;
+  top: 92px;
+  left: 10px;
 }
 
 .app-pop__chip--b {
-  right: 16px;
-  bottom: 34px;
+  right: 10px;
+  bottom: 54px;
   animation-delay: 1.2s;
 }
 
@@ -8204,10 +8085,10 @@ input:focus-visible + .area-chip,
 }
 
 .app-pop__title {
-  margin: 22px 22px 0;
-  font-size: 21px;
+  margin: 20px 20px 0;
+  font-size: 20px;
   font-weight: 800;
-  line-height: 1.45;
+  line-height: 1.5;
   color: #123a5c;
 }
 
@@ -8220,15 +8101,14 @@ input:focus-visible + .area-chip,
 }
 
 .app-pop__cta {
-  margin-top: 18px;
-  display: inline-flex;
+  margin: 18px 20px 0;
+  display: flex;
   height: 52px;
   align-items: center;
   justify-content: center;
   gap: 9px;
   border-radius: 14px;
   background-image: linear-gradient(135deg, #24507c, #123a5c);
-  padding-inline: 30px;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
@@ -11165,6 +11045,12 @@ input:focus-visible + .area-chip,
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-\[0_4px_10px_rgba\(18\2c 58\2c 92\2c 0\.28\)\] {
+  --tw-shadow: 0 4px 10px rgba(18,58,92,0.28);
+  --tw-shadow-colored: 0 4px 10px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-\[0_6px_14px_-10px_rgba\(18\2c 58\2c 92\2c 0\.5\)\] {
   --tw-shadow: 0 6px 14px -10px rgba(18,58,92,0.5);
   --tw-shadow-colored: 0 6px 14px -10px var(--tw-shadow-color);
@@ -11844,6 +11730,15 @@ input:focus-visible + .area-chip,
   .min-\[380px\]\:gap-x-5 {
     -moz-column-gap: 1.25rem;
          column-gap: 1.25rem;
+  }
+
+  .min-\[380px\]\:px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .min-\[380px\]\:text-\[14px\] {
+    font-size: 14px;
   }
 }
 
