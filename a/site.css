@@ -815,6 +815,337 @@ video {
   }
 }
 
+/* صفحة "بيع عقارك" / "أجّر عقارك" (requests/property): البانر + دواير الخطوات + خانات بشكل خانات التطبيق + الأزرار */
+
+.req-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #dbe5f0;
+  border-radius: 24px;
+  background-image: linear-gradient(180deg, #e3eefb 0%, #e6f1f0 62%, #f4f8fb 100%);
+  padding: 24px 16px 22px;
+  text-align: center;
+}
+
+.req-banner__icon {
+  display: flex;
+  height: 92px;
+  width: 92px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #1e4166;
+  box-shadow: 0 14px 30px -18px rgba(18, 58, 92, 0.55);
+}
+
+.req-switch {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  border-radius: 999px;
+  padding-inline: 18px;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1;
+  color: #123a5c;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.req-switch[aria-current="page"] {
+  background-color: #1e4166;
+  color: #ffffff;
+  box-shadow: 0 6px 14px -8px rgba(18, 58, 92, 0.7);
+}
+
+.req-steps {
+  display: flex;
+  align-items: center;
+}
+
+.req-steps li {
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+}
+
+.req-steps li:last-child {
+  flex: 0 0 auto;
+}
+
+/* الخط الواصل بين الدواير: أخضر بعد الخطوة اللي خلصت */
+
+.req-steps li:not(:last-child)::after {
+  content: "";
+  height: 3px;
+  flex: 1 1 0%;
+  margin-inline: 8px;
+  border-radius: 3px;
+  background-color: #e6edf5;
+}
+
+.req-steps li[data-state="done"]:not(:last-child)::after {
+  background-color: #4bbfb0;
+}
+
+.req-steps__dot {
+  display: flex;
+  height: 38px;
+  width: 38px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #c9d1db;
+  border-radius: 999px;
+  background-color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  color: #8b98a8;
+}
+
+.req-steps__dot svg {
+  display: none;
+}
+
+.req-steps li[data-state="current"] .req-steps__dot {
+  border-color: #1e4166;
+  background-color: #1e4166;
+  color: #ffffff;
+}
+
+.req-steps li[data-state="done"] .req-steps__dot {
+  border-color: #4bbfb0;
+  background-color: #4bbfb0;
+  color: #ffffff;
+}
+
+.req-steps li[data-state="done"] .req-steps__dot b {
+  display: none;
+}
+
+.req-steps li[data-state="done"] .req-steps__dot svg {
+  display: block;
+}
+
+.req-field {
+  display: flex;
+  height: 56px;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  border: 1.5px solid #d4dfed;
+  border-radius: 16px;
+  background-color: #e9f0fa;
+  padding-inline: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.req-field:focus-within {
+  border-color: #1e4166;
+  box-shadow: 0 0 0 3px rgba(30, 65, 102, 0.12);
+}
+
+.req-field.is-invalid,
+    .req-textarea.is-invalid {
+  border-color: #d2463c;
+  background-color: #fdf3f2;
+}
+
+.req-field__icon {
+  display: flex;
+  flex-shrink: 0;
+  color: #8a94a1;
+}
+
+.req-field__control {
+  height: 100%;
+  min-width: 0;
+  flex: 1 1 0%;
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #123a5c;
+  outline: none;
+  box-shadow: none;
+}
+
+.req-field__control:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.req-field__control::-moz-placeholder {
+  font-weight: 500;
+  color: #6f7c8b;
+}
+
+.req-field__control::placeholder {
+  font-weight: 500;
+  color: #6f7c8b;
+}
+
+/* القايمة: اسم الخانة رمادي لحد ما العميل يختار */
+
+.req-field__control--select {
+  cursor: pointer;
+  -moz-appearance: none;
+       appearance: none;
+  -webkit-appearance: none;
+  background-image: none;
+  font-weight: 500;
+  color: #6f7c8b;
+}
+
+.req-field__control--select.has-value {
+  font-weight: 600;
+  color: #123a5c;
+}
+
+.req-field__control--select option {
+  color: #123a5c;
+}
+
+.req-textarea {
+  display: block;
+  min-height: 150px;
+  width: 100%;
+  resize: vertical;
+  border: 1.5px solid #d4dfed;
+  border-radius: 20px;
+  background-color: #e9f0fa;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #123a5c;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.req-textarea:focus {
+  border-color: #1e4166;
+  box-shadow: 0 0 0 3px rgba(30, 65, 102, 0.12);
+}
+
+.req-textarea::-moz-placeholder {
+  font-weight: 500;
+  color: #6f7c8b;
+}
+
+.req-textarea::placeholder {
+  font-weight: 500;
+  color: #6f7c8b;
+}
+
+.req-button {
+  display: flex;
+  height: 56px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #1e4166;
+  border-radius: 14px;
+  background-color: #1e4166;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  color: #ffffff;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.req-button:hover {
+  background-color: #123a5c;
+}
+
+.req-button--ghost {
+  background-color: #ffffff;
+  color: #1e4166;
+}
+
+.req-button--ghost:hover {
+  background-color: #eef3f9;
+}
+
+/* مصغّر الصورة المختارة + X */
+
+.req-thumb {
+  position: relative;
+  display: flex;
+  height: 96px;
+  width: 96px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #d4dfed;
+  border-radius: 14px;
+  background-color: #f3f6fa;
+  padding: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #5b6b7c;
+  word-break: break-all;
+}
+
+.req-thumb img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.req-thumb button {
+  position: absolute;
+  top: 6px;
+  inset-inline-start: 6px;
+  display: flex;
+  height: 24px;
+  width: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: #ffffff;
+  color: #d2463c;
+  box-shadow: 0 2px 6px rgba(18, 58, 92, 0.3);
+}
+
+@media (min-width: 1024px) {
+  .req-banner {
+    padding: 36px 24px 30px;
+  }
+
+  .req-banner__icon {
+    height: 104px;
+    width: 104px;
+  }
+
+  .req-steps__dot {
+    height: 42px;
+    width: 42px;
+  }
+
+  /* "محتاج مساعدة؟" في العمود الجانبي الضيق: طلب مقابلة بعرض الصف وتحته اتصال وواتساب */
+
+  .req-help .content-cta__buttons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .req-help .content-cta__button--meeting {
+    grid-column: 1 / -1;
+  }
+}
+
 /* أيقونة المطور (صفحة "كل المطورين"): لوجو في دايرة بإطار رمادي رفيع — والمطور اللي له ستوري إطاره أخضر تخين */
 
 .dev-icon {
@@ -6490,6 +6821,10 @@ input:focus-visible + .area-chip,
   top: 60px;
 }
 
+.top-\[62px\] {
+  top: 62px;
+}
+
 .top-full {
   top: 100%;
 }
@@ -6895,6 +7230,10 @@ input:focus-visible + .area-chip,
   height: 6px;
 }
 
+.h-\[72px\] {
+  height: 72px;
+}
+
 .h-\[7px\] {
   height: 7px;
 }
@@ -7163,6 +7502,10 @@ input:focus-visible + .area-chip,
 
 .max-w-\[360px\] {
   max-width: 360px;
+}
+
+.max-w-\[420px\] {
+  max-width: 420px;
 }
 
 .max-w-\[480px\] {
@@ -8049,6 +8392,11 @@ input:focus-visible + .area-chip,
   padding-right: 1.5rem;
 }
 
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .py-0\.5 {
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
@@ -8092,6 +8440,11 @@ input:focus-visible + .area-chip,
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
+}
+
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
 .py-7 {
@@ -8517,6 +8870,11 @@ input:focus-visible + .area-chip,
   color: rgb(42 141 138 / var(--tw-text-opacity, 1));
 }
 
+.text-\[\#4bbfb0\] {
+  --tw-text-opacity: 1;
+  color: rgb(75 191 176 / var(--tw-text-opacity, 1));
+}
+
 .text-\[\#7A5A12\] {
   --tw-text-opacity: 1;
   color: rgb(122 90 18 / var(--tw-text-opacity, 1));
@@ -8525,6 +8883,11 @@ input:focus-visible + .area-chip,
 .text-\[\#9bc53d\] {
   --tw-text-opacity: 1;
   color: rgb(155 197 61 / var(--tw-text-opacity, 1));
+}
+
+.text-\[\#9fb0c3\] {
+  --tw-text-opacity: 1;
+  color: rgb(159 176 195 / var(--tw-text-opacity, 1));
 }
 
 .text-\[\#b3261e\] {
@@ -8545,6 +8908,11 @@ input:focus-visible + .area-chip,
 .text-\[\#c8921f\] {
   --tw-text-opacity: 1;
   color: rgb(200 146 31 / var(--tw-text-opacity, 1));
+}
+
+.text-\[\#f5a623\] {
+  --tw-text-opacity: 1;
+  color: rgb(245 166 35 / var(--tw-text-opacity, 1));
 }
 
 .text-red-600 {
@@ -10767,6 +11135,10 @@ input:focus-visible + .area-chip,
     padding-inline-start: 2.5rem;
   }
 
+  .lg\:ps-4 {
+    padding-inline-start: 1rem;
+  }
+
   .lg\:pt-0 {
     padding-top: 0px;
   }
@@ -11037,6 +11409,10 @@ input:focus-visible + .area-chip,
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.ltr\:grid-cols-\[auto_minmax\(0\2c 1fr\)\]:where([dir="ltr"], [dir="ltr"] *) {
+  grid-template-columns: auto minmax(0,1fr);
+}
+
 .ltr\:flex-row-reverse:where([dir="ltr"], [dir="ltr"] *) {
   flex-direction: row-reverse;
 }
@@ -11095,6 +11471,15 @@ input:focus-visible + .area-chip,
 /* desktop layout forced on narrow screens (preview only) */
 .pv-desktop .shot-card__name {font-size: 20px;}
 .pv-desktop .shot-card__place {font-size: 14px;}
+.pv-desktop .req-banner {padding: 36px 24px 30px;}
+.pv-desktop .req-banner__icon {height: 104px;
+    width: 104px;}
+.pv-desktop .req-steps__dot {height: 42px;
+    width: 42px;}
+.pv-desktop /* "محتاج مساعدة؟" في العمود الجانبي الضيق: طلب مقابلة بعرض الصف وتحته اتصال وواتساب */
+
+  .req-help .content-cta__buttons {grid-template-columns: repeat(2, minmax(0, 1fr));}
+.pv-desktop .req-help .content-cta__button--meeting {grid-column: 1 / -1;}
 .pv-desktop .dev-icon__logo {height: 124px;
     width: 124px;
     font-size: 22px;}
@@ -12270,6 +12655,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:pe-10 {padding-inline-end: 2.5rem;}
 .pv-desktop .lg\:ps-0 {padding-inline-start: 0px;}
 .pv-desktop .lg\:ps-10 {padding-inline-start: 2.5rem;}
+.pv-desktop .lg\:ps-4 {padding-inline-start: 1rem;}
 .pv-desktop .lg\:pt-0 {padding-top: 0px;}
 .pv-desktop .lg\:pt-1 {padding-top: 0.25rem;}
 .pv-desktop .lg\:pt-10 {padding-top: 2.5rem;}
