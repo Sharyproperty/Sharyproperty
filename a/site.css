@@ -8648,12 +8648,12 @@ input:focus-visible + .area-chip,
   bottom: calc(84px + env(safe-area-inset-bottom, 0px));
   z-index: 35;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 12px;
   border-radius: 18px;
   border: 1px solid #dfe7ef;
   background-color: #fff;
-  padding: 12px 14px;
+  padding: 14px;
   font-size: 13px;
   font-weight: 500;
   line-height: 1.65;
@@ -8678,29 +8678,42 @@ input:focus-visible + .area-chip,
   color: #1f8a7c;
 }
 
-.privacy-note a {
-  font-weight: 700;
-  color: #1f63c6;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+/* الزرارين جنب بعض بنفس العرض: موافق (كحلي) + سياسة الخصوصية (بإطار) */
+
+.privacy-note__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.privacy-note button {
-  height: 40px;
-  flex-shrink: 0;
+.privacy-note__accept,
+    .privacy-note__link {
+  display: flex;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
   border-radius: 12px;
-  background-color: #1e4166;
-  padding-inline: 18px;
   font-size: 14px;
   font-weight: 700;
+  line-height: 1.5;
+}
+
+.privacy-note__accept {
+  background-color: #1e4166;
   color: #fff;
+}
+
+.privacy-note__link {
+  border: 1.5px solid #1e4166;
+  background-color: #fff;
+  color: #1e4166;
 }
 
 @media (min-width: 1024px) {
   .privacy-note {
     inset-inline: auto 28px;
     bottom: 28px;
-    width: 460px;
+    width: 440px;
     font-size: 14px;
   }
 }
@@ -15012,7 +15025,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .home-filter .search-side__reset {display: none !important;}
 .pv-desktop .privacy-note {inset-inline: auto 28px;
     bottom: 28px;
-    width: 460px;
+    width: 440px;
     font-size: 14px;}
 .pv-desktop .area-map__rings {width: 128px;}
 .pv-desktop .area-plot {height: 150px;}
