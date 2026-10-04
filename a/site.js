@@ -2811,6 +2811,28 @@
         }, 4500);
     });
 
+    // ---------- متابعة المشروع [data-follow-toggle]: "متابعة" ⇄ "متابَع". بتتحفظ على جهاز العميل (localStorage: shary:follows).
+    // حدث shary:follow ({ id, following }) على الزرار: اسمعوه عشان تحفظوا المتابعة على حساب العميل، أو امنعوه (preventDefault) لو محتاجين تسجيل دخول الأول.
+    document.querySelectorAll('[data-follow-toggle]').forEach(function (button) {
+        var label = button.querySelector('[data-label]');
+        function saved() { try { return JSON.parse(window.localStorage.getItem('shary:follows') || '[]'); } catch (e) { return []; } }
+        function paint(on) {
+            button.setAttribute('aria-pressed', on ? 'true' : 'false');
+            if (label) label.textContent = button.getAttribute(on ? 'data-on' : 'data-off');
+        }
+        paint(saved().indexOf(button.getAttribute('data-follow-id')) > -1);
+        button.addEventListener('click', function () {
+            var id = button.getAttribute('data-follow-id');
+            var on = button.getAttribute('aria-pressed') !== 'true';
+            var event = new CustomEvent('shary:follow', { bubbles: true, cancelable: true, detail: { id: id, following: on } });
+            if (!button.dispatchEvent(event)) return;
+            var list = saved().filter(function (item) { return item !== id; });
+            if (on) list.push(id);
+            try { window.localStorage.setItem('shary:follows', JSON.stringify(list)); } catch (e) {}
+            paint(on);
+        });
+    });
+
     // ---------- زرار "الخريطة" على الديسك توب [data-map-open]: بيفتح خريطة المشروع على الشاشة كلها (نفس زرار التكبير في js/shary/area-page.js) ----------
     document.querySelectorAll('[data-map-open]').forEach(function (button) {
         button.addEventListener('click', function () {
