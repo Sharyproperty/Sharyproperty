@@ -335,7 +335,10 @@
                     '<span class="shary-share__grip" aria-hidden="true"></span>' +
                     '<div class="shary-share__head"><h3 data-share-heading></h3>' +
                         '<button type="button" class="shary-share__close" data-share-close><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>' +
-                    '<div class="shary-share__link"><div><strong data-share-name></strong><span dir="ltr" data-share-link></span></div>' +
+                    // لوجو شاري في دايرة صغيرة قدام اسم العنصر ولينكه ، وقصادهم زرار "نسخ"
+                    '<div class="shary-share__link"><i class="shary-share__logo" aria-hidden="true">' +
+                        '<svg width="26" height="22" viewBox="0 0 44 36"><circle cx="13" cy="23" r="11" fill="#FCB424"/><circle cx="31" cy="23" r="11" fill="#4CBFB2"/><circle cx="22" cy="12" r="11" fill="#1F4466"/></svg></i>' +
+                        '<div><strong data-share-name></strong><span dir="ltr" data-share-link></span></div>' +
                         '<button type="button" data-share-copy></button></div>' +
                     '<div class="shary-share__grid" data-share-targets></div>' +
                 '</div>';
@@ -616,8 +619,7 @@
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         var railNarrow = window.matchMedia('(max-width: 1023px)');
         document.querySelectorAll('[data-auto-rail]').forEach(function (rail) {
-            var cards = Array.prototype.slice.call(rail.children);
-            if (cards.length < 2) return;
+            // العناصر بتتقري كل مرة (الصف ممكن محتواه يتغيّر) ، والمدة من data-auto-rail="بالمللي ثانية" (الافتراضي 3500)
             var at = 0, held = false, seen = false, resume = null;
             function hold() { held = true; if (resume) { clearTimeout(resume); resume = null; } }
             function release(wait) { if (resume) clearTimeout(resume); resume = setTimeout(function () { held = false; resume = null; }, wait); }
@@ -636,11 +638,13 @@
             }
             window.setInterval(function () {
                 if (!railNarrow.matches || held || !seen || document.hidden || !rail.offsetWidth) return;
+                var cards = Array.prototype.slice.call(rail.children);
+                if (cards.length < 2 || rail.scrollWidth - rail.clientWidth < 4) return;   // كله ظاهر: مفيش حاجة تتحرك
                 at = (at + 1) % cards.length;
                 var room = rail.scrollWidth - rail.clientWidth - Math.abs(rail.scrollLeft);
                 if (at === 0 || room < 2) { at = 0; rail.scrollTo({ left: 0, behavior: 'smooth' }); return; }
                 rail.scrollTo({ left: rail.scrollLeft + offset(cards[at]), behavior: 'smooth' });
-            }, 3500);
+            }, Number(rail.getAttribute('data-auto-rail')) || 3500);
         });
     }
 
@@ -1263,7 +1267,31 @@
             }
             return sheet(name) ? all('input[type="checkbox"]:checked', sheet(name)).length : 0;
         }
+        // ---- الفلتر الذكي: المنطقة ← المطور ← المشروع. الصف اللي مش مرتبط بالمختار بيختفي (is-unrelated) ولو كان متعلّم بيتشال اختياره.
+        //      المطور: data-areas = مناطق مشاريعه. المشروع: data-developer + data-areas. من غير الخصائص دي القايمة بتفضل كاملة.
+        function relate() {
+            function picked(name) { return all('input[name="' + name + '[]"]:checked').map(function (box) { return box.value; }); }
+            function rows(name) { var body = form.querySelector('[data-list-body="' + name + '"]'); return body ? Array.prototype.slice.call(body.querySelectorAll('label')) : []; }
+            function inAreas(row, areas) {
+                if (!areas.length || !row.hasAttribute('data-areas')) return true;
+                var own = row.getAttribute('data-areas').split(' ');
+                return areas.some(function (slug) { return own.indexOf(slug) !== -1; });
+            }
+            function set(row, ok) {
+                row.classList.toggle('is-unrelated', !ok);
+                var box = row.querySelector('input[type="checkbox"]');
+                if (!ok && box && box.checked) box.checked = false;
+            }
+            var areas = picked('area');
+            rows('developer').forEach(function (row) { set(row, inAreas(row, areas)); });
+            var developers = picked('developer');
+            rows('project').forEach(function (row) {
+                set(row, inAreas(row, areas) && (!developers.length || !row.hasAttribute('data-developer') || developers.indexOf(row.getAttribute('data-developer')) !== -1));
+            });
+        }
+
         function badges() {
+            relate();
             // شريط "الأسعار حسب الفلاتر اللي اخترتها" (صفحة البحث): ظاهر طول ما فيه فلتر مختار
             var notice = form.querySelector('[data-filter-notice]');
             if (notice) notice.classList.toggle('hidden', count('all') === 0);
@@ -2421,6 +2449,164 @@
         var current = page.querySelector('[data-index-type][aria-pressed="true"]');
         if (current) typeKey = current.getAttribute('data-index-type');
         show();
+    });
+})();
+
+/**
+ * فرص إعادة بيع حصرية — القايمة (opportunities/index) وصفحة الفرصة (units/show + opportunities/partials/deal + market)
+ *
+ * 1) العدّاد [data-countdown="تاريخ الانتهاء ISO"]: النص بيتحدّث كل دقيقة من قوالب:
+ *      data-countdown-days  = "متبقي :days أيام و :hours ساعات"
+ *      data-countdown-hours = "متبقي :hours ساعات و :minutes دقيقة"   (آخر يوم)
+ *      data-countdown-ended = "انتهت الفرصة"
+ *
+ * 2) فلتر القايمة [data-opps-filter] (المنطقة area[] / النوع type[] / السعر price = "من-إلى"):
+ *    - أي تغيير بيطلع حدث shary:opportunities-filter على الفورم: detail = { area: [], type: [], price: '' }.
+ *      امنعوه (preventDefault) لو هتجيبوا النتايج من السيرفر (AJAX) وبدّلوا الكروت بنفسكم.
+ *    - لو ما اتمنعش: الكروت اللي في الصفحة [data-opp-card] بتتفلتر في مكانها (data-areas / data-type / data-price) والعدد [data-opps-count] بيتحدّث.
+ *    - "مسح" [data-opps-reset] بيرجّع كل الاختيارات.
+ *
+ * 3) "قدّم عرضك": الزرار [data-offer-open] بيفتح الفورم [data-offer-form] (قيمة العرض + الاسم + الموبايل).
+ *    الإرسال بيطلع حدث shary:opportunity-offer على الفورم: detail = { slug, amount, name, phone, done(), fail() }.
+ *    لو ما اتمنعش: POST على action الفورم (JSON) وبعد الرد بتظهر رسالة التأكيد [data-offer-done].
+ */
+(function () {
+    // ---- 1) العدّاد
+    var timers = Array.prototype.slice.call(document.querySelectorAll('[data-countdown]'));
+    function tick() {
+        var now = Date.now();
+        timers.forEach(function (node) {
+            var end = Date.parse(node.getAttribute('data-countdown'));
+            if (isNaN(end)) return;
+            var left = Math.max(0, Math.floor((end - now) / 1000));
+            if (!left) { node.textContent = node.getAttribute('data-countdown-ended') || ''; return; }
+            var days = Math.floor(left / 86400), hours = Math.floor(left % 86400 / 3600), minutes = Math.floor(left % 3600 / 60);
+            var template = node.getAttribute(days > 0 ? 'data-countdown-days' : 'data-countdown-hours') || '';
+            if (!template) return;
+            node.textContent = template.replace(':days', days).replace(':hours', hours).replace(':minutes', minutes);
+        });
+    }
+    if (timers.length) { tick(); window.setInterval(tick, 60000); }
+
+    // ---- 2) فلتر القايمة
+    document.querySelectorAll('[data-opps-filter]').forEach(function (form) {
+        var page = form.closest('[data-opps-page]') || document;
+        var apply = form.querySelector('[data-opps-apply]');
+        var reset = form.querySelector('[data-opps-reset]');
+        var selects = Array.prototype.slice.call(form.querySelectorAll('select'));
+        var silent = false;
+        if (apply) apply.classList.add('hidden');
+        form.classList.add('is-live');
+
+        function values() {
+            var detail = {};
+            selects.forEach(function (select) {
+                var name = select.name.replace(/\[\]$/, '');
+                detail[name] = select.multiple ? Array.prototype.filter.call(select.options, function (o) { return o.selected && o.value; }).map(function (o) { return o.value; }) : select.value;
+            });
+            return detail;
+        }
+
+        function filter(detail) {
+            var cards = Array.prototype.slice.call(page.querySelectorAll('[data-opp-card]'));
+            var range = String(detail.price || '').split('-');
+            var low = range[0] ? Number(range[0]) : null, high = range[1] ? Number(range[1]) : null;
+            var shown = 0;
+            cards.forEach(function (card) {
+                var areas = (card.getAttribute('data-areas') || '').split(' ');
+                var price = Number(card.getAttribute('data-price')) || 0;
+                var ok = (!(detail.area || []).length || detail.area.some(function (slug) { return areas.indexOf(slug) !== -1; })) &&
+                    (!(detail.type || []).length || detail.type.indexOf(card.getAttribute('data-type')) !== -1) &&
+                    (low === null || price >= low) && (high === null || price <= high);
+                // الكارت جوه [data-opp-item]: مع الفلتر كل الفرص بتتعرض (من غير انتظار النزول) واللي مش مطابق بيختفي
+                var item = card.closest('[data-opp-item]') || card;
+                item.classList.remove('hidden', 'lg:block');
+                item.classList.toggle('opp-out', !ok);
+                if (ok) shown++;
+            });
+            var count = page.querySelector('[data-opps-count]');
+            if (count) count.textContent = shown;
+            var empty = page.querySelector('[data-opps-empty]');
+            if (empty) empty.classList.toggle('hidden', shown > 0);
+        }
+
+        function send() {
+            if (silent) return;
+            var detail = values();
+            var active = Object.keys(detail).some(function (key) { return detail[key] && detail[key].length; });
+            if (reset) reset.classList.toggle('is-active', active);
+            if (!form.dispatchEvent(new CustomEvent('shary:opportunities-filter', { bubbles: true, cancelable: true, detail: detail }))) return;
+            filter(detail);
+        }
+
+        form.addEventListener('change', send);
+        form.addEventListener('submit', function (event) { event.preventDefault(); send(); });
+        if (reset) reset.addEventListener('click', function (event) {
+            event.preventDefault();
+            silent = true;
+            selects.forEach(function (select) {
+                if (select.multiple) Array.prototype.forEach.call(select.options, function (o) { o.selected = false; }); else select.value = '';
+                select.dispatchEvent(new Event('change', { bubbles: true }));   // زرار القايمة بيتحدّث
+            });
+            silent = false;
+            send();
+        });
+    });
+
+    // ---- 3) قدّم عرضك
+    document.querySelectorAll('[data-offer-form]').forEach(function (form) {
+        var scope = form.closest('[data-opp-market]') || document;
+        var opener = scope.querySelector('[data-offer-open]');
+        var error = form.querySelector('[data-offer-error]');
+        var done = form.querySelector('[data-offer-done]');
+        var amount = form.querySelector('[name="amount"]');
+
+        if (opener) opener.addEventListener('click', function () {
+            var open = form.classList.toggle('hidden') === false;
+            opener.setAttribute('aria-expanded', open ? 'true' : 'false');
+            if (open) { form.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); if (amount) amount.focus({ preventScroll: true }); }
+        });
+
+        // قيمة العرض: أرقام بس وبفواصل الآلاف
+        if (amount) amount.addEventListener('input', function () {
+            var digits = amount.value.replace(/[^\d]/g, '').replace(/^0+/, '');
+            amount.value = digits.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        });
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            var data = {
+                slug: form.getAttribute('data-slug') || '',
+                amount: Number((amount ? amount.value : '').replace(/[^\d]/g, '')) || 0,
+                name: (form.querySelector('[name="name"]').value || '').trim(),
+                phone: (form.querySelector('[name="phone"]').value || '').trim()
+            };
+            var valid = data.amount > 0 && data.name.length > 1 && data.phone.replace(/[^\d]/g, '').length >= 8;
+            if (error) error.classList.toggle('hidden', valid);
+            if (!valid) return;
+
+            var button = form.querySelector('[type="submit"]');
+            if (button) button.disabled = true;
+            function finish() {
+                if (button) button.disabled = false;
+                if (done) done.classList.remove('hidden');
+                form.reset();
+            }
+            function fail() {
+                if (button) button.disabled = false;
+                if (error) error.classList.remove('hidden');
+            }
+            data.done = finish;
+            data.fail = fail;
+            if (!form.dispatchEvent(new CustomEvent('shary:opportunity-offer', { bubbles: true, cancelable: true, detail: data }))) return;
+
+            var token = form.querySelector('[name="_token"]');
+            fetch(form.getAttribute('action'), {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': token ? token.value : '' },
+                body: JSON.stringify({ amount: data.amount, name: data.name, phone: data.phone })
+            }).then(function (response) { if (!response.ok) throw new Error(response.status); finish(); }).catch(fail);
+        });
     });
 })();
 

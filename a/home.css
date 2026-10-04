@@ -8092,5 +8092,15 @@ html, body {
 .shary-home-root .filter-input input:checked + label { background: #1D4265 !important; border-color: #1D4265 !important; color: #fff !important; }
 /* لوجو المطور مالي الدايرة (والحروف البديلة بحجم واضح) */
 @media (min-width: 641px) { .shary-home-root .developer-card { font-size: 26px; letter-spacing: .5px; } }
+/* ---- الفلتر المتقدم في الهوم = فلتر صفحة البحث (نفس الفورم). موبايل: صفحة كاملة زي البحث. ديسك توب: نافذة في نص الشاشة ---- */
+.home-filter .search-head { display: none !important; }
+@media (min-width: 1024px) {
+  .home-filter .search-side { position: fixed !important; inset: 0 !important; z-index: 70 !important; display: flex !important; align-items: center; justify-content: center; background: rgba(10, 26, 42, .55); }
+  .home-filter .search-side.hidden { display: none !important; }
+  .home-filter .search-side > .area-sheet { position: relative !important; display: flex !important; flex-direction: column; width: 580px; max-width: 94vw; max-height: 88vh; overflow: hidden; border-radius: 24px; background: #fff !important; box-shadow: 0 40px 110px -24px rgba(15, 47, 75, .6); }
+  .home-filter .search-side > .area-sheet > .lg\:hidden { display: flex !important; }
+  .home-filter .search-side__scroll { overflow-y: auto !important; padding: 0 28px 12px; }
+  .home-filter .search-side__reset { display: none !important; }
+}
 /* شريط مؤشر شاري بقى لينك لصفحة المؤشر */
 .shary-home-root a.market-ticker-badge { cursor: pointer; }
