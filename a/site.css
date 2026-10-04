@@ -1113,6 +1113,38 @@ video {
   color: #ffffff;
 }
 
+/* السيرة الذاتية: زرارين "ملف" / "صورة" جوه الخانة */
+
+.cv-pick {
+  display: inline-flex;
+  height: 34px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  border: 1px solid #c6d6ea;
+  background-color: #eef4fb;
+  padding-inline: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #1e4166;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+[data-cv-field] {
+  gap: 8px;
+}
+
+.cv-pick:hover {
+  background-color: #1e4166;
+  color: #ffffff;
+}
+
+[data-cv-label] {
+  cursor: pointer;
+}
+
 /* قايمة الاختيار اللي بالصور (js/shary/form-select.js): بتفتح تحت الخانة دايمًا */
 
 .req-select__arrow {
@@ -1328,8 +1360,8 @@ video {
 
 .offer-filter {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 6px;
 }
 
 /* خانة الفلتر + قايمتها (js/shary/form-select.js): القايمة بتفتح تحت الخانة وأعرض منها على الموبايل */
@@ -1370,11 +1402,12 @@ video {
   color: #123a5c;
 }
 
-/* زرار "مسح" (clear-btn): مكانه في الفلتر — موبايل: سطر لوحده في آخر الصف ، ديسك توب: جنب الخانات */
+/* زرار "مسح" (clear-btn): جنب الخانات في نفس الصف — موبايل وديسك توب */
 
-.offer-filter__reset {
-  grid-column: 1 / -1;
-  justify-self: end;
+.offer-filter .offer-filter__reset {
+  height: 48px;
+  gap: 4px;
+  padding-inline: 10px;
 }
 
 .offer-filter__field {
@@ -1386,7 +1419,7 @@ video {
   border: 1px solid #d5dde7;
   border-radius: 12px;
   background-color: #ffffff;
-  padding-inline: 10px;
+  padding-inline: 8px;
   transition: border-color 0.2s;
 }
 
@@ -1483,7 +1516,7 @@ video {
 
   .offer-filter .offer-filter__reset {
     height: 52px;
-    grid-column: auto;
+    gap: 6px;
     justify-self: start;
     padding-inline: 20px;
     font-size: 15px;
@@ -2096,6 +2129,33 @@ video {
 
 .dev-icon__logo--story {
   border: 4px solid #17a398;
+}
+
+/* موبايل وتابلت: المطور كارت (2 في الصف) — اللوجو والاسم وتحتهم المشاريع والوحدات */
+
+@media (max-width: 1023px) {
+  .dev-icon {
+    height: 100%;
+    border: 1px solid #e3e9f0;
+    border-radius: 16px;
+    background-color: #ffffff;
+    padding: 14px 12px 12px;
+    box-shadow: 0 6px 18px -14px rgba(18, 58, 92, 0.4);
+  }
+
+  .dev-icon__logo {
+    height: 84px;
+    width: 84px;
+  }
+
+  .dev-icon__stats {
+    margin-top: 8px;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid #e3e9f0;
+    padding-top: 8px;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -3049,6 +3109,16 @@ header:has(> .site-menu:not(.hidden)) {
   background-color: #1e4166;
 }
 
+/* زرار واحد أو اتنين (الكاتب اختارهم): زرار واحد بعرض محدود ، اتنين جنب بعض */
+
+.content-cta__buttons--1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.content-cta__buttons--2 .content-cta__button--meeting {
+  grid-column: auto;
+}
+
 .content-cta__button--call:hover {
   background-color: #123a5c;
 }
@@ -3073,6 +3143,14 @@ header:has(> .site-menu:not(.hidden)) {
 
   .content-cta__button--meeting {
     grid-column: auto;
+  }
+
+  .content-cta__buttons--1 {
+    grid-template-columns: minmax(0, 320px);
+  }
+
+  .content-cta__buttons--2 {
+    grid-template-columns: repeat(2, minmax(0, 260px));
   }
 }
 
@@ -5132,13 +5210,45 @@ input:focus-visible + .area-chip,
   margin-top: 10px;
 }
 
+/* ترتيب العناوين جوه الوصف: <h2> عنوان رئيسي ، <h3> عنوان فرعي ، <h4> عنوان صغير — اسم المشروع فوق هو الـ <h1> */
+
 .prop-about h2,
     .prop-about h3,
     .prop-about h4 {
-  margin-top: 22px;
-  font-size: 17px;
   font-weight: 800;
   line-height: 1.5;
+  color: #123a5c;
+}
+
+.prop-about h2 {
+  margin-top: 28px;
+  font-size: 19px;
+}
+
+.prop-about h3 {
+  margin-top: 20px;
+  font-size: 16.5px;
+}
+
+.prop-about h4 {
+  margin-top: 16px;
+  font-size: 15px;
+}
+
+.prop-about .content-cta {
+  margin-block: 18px;
+}
+
+.prop-about .content-cta a {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.prop-about .content-cta a:hover {
+  text-decoration: none;
+}
+
+.prop-about .content-cta .content-cta__button--meeting {
   color: #123a5c;
 }
 
@@ -5186,11 +5296,19 @@ input:focus-visible + .area-chip,
     font-size: 16px;
   }
 
-  .prop-about h2,
-        .prop-about h3,
-        .prop-about h4 {
-    margin-top: 26px;
-    font-size: 19px;
+  .prop-about h2 {
+    margin-top: 34px;
+    font-size: 22px;
+  }
+
+  .prop-about h3 {
+    margin-top: 24px;
+    font-size: 18.5px;
+  }
+
+  .prop-about h4 {
+    margin-top: 18px;
+    font-size: 16.5px;
   }
 
   /* العمود الجانبي (فورم الاستشارة + طلب مقابلة + اتصال / واتساب): ثابت جنب المحتوى تحت شريط الملخص وأنت نازل — زي الموقع الحالي */
@@ -7069,7 +7187,34 @@ input:focus-visible + .area-chip,
 
   .search-side .area-toggle span {
     height: 36px;
-    font-size: 13.5px;
+    padding-inline: 4px;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+
+  /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+  .search-side input[type="checkbox"]:not(.sr-only) {
+    -moz-appearance: none;
+         appearance: none;
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 1.5px solid #b9c9d8;
+    border-radius: 5px;
+    background: #fff center / 13px no-repeat;
+  }
+
+  .search-side input[type="checkbox"]:not(.sr-only):hover {
+    border-color: #1f63c6;
+  }
+
+  .search-side input[type="checkbox"]:not(.sr-only):checked {
+    border-color: #1f63c6;
+    background-color: #1f63c6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");
   }
 
   /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
@@ -8042,6 +8187,57 @@ input:focus-visible + .area-chip,
   }
 }
 
+/* صف الغرف / الحمامات / المساحة في كارت الوحدة (.unit-specs): في الكروت اللي 3 في الصف على الديسك توب المسافات والخط أصغر
+       عشان "م²" ما تتقصش — والكارت العريض في صفحة البحث بيفضل بالمقاس الكبير */
+
+@media (min-width: 1024px) {
+  .area-card .unit-specs {
+    -moz-column-gap: 8px;
+         column-gap: 8px;
+    font-size: 13px;
+  }
+
+  .area-card .unit-specs > li {
+    gap: 4px;
+  }
+
+  .area-card .unit-specs > li + li {
+    padding-inline-start: 8px;
+  }
+
+  .area-card .unit-specs svg {
+    height: 18px;
+    width: 18px;
+  }
+
+  .area-card .unit-specs b {
+    font-size: 15px;
+  }
+
+  .search-results [data-results] .area-card .unit-specs {
+    -moz-column-gap: 12px;
+         column-gap: 12px;
+    font-size: 14px;
+  }
+
+  .search-results [data-results] .area-card .unit-specs > li {
+    gap: 6px;
+  }
+
+  .search-results [data-results] .area-card .unit-specs > li + li {
+    padding-inline-start: 12px;
+  }
+
+  .search-results [data-results] .area-card .unit-specs svg {
+    height: 20px;
+    width: 20px;
+  }
+
+  .search-results [data-results] .area-card .unit-specs b {
+    font-size: 16px;
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -8585,6 +8781,10 @@ input:focus-visible + .area-chip,
   height: 150px;
 }
 
+.h-\[15px\] {
+  height: 15px;
+}
+
 .h-\[18px\] {
   height: 18px;
 }
@@ -8809,6 +9009,10 @@ input:focus-visible + .area-chip,
   width: 112px;
 }
 
+.w-\[15px\] {
+  width: 15px;
+}
+
 .w-\[18px\] {
   width: 18px;
 }
@@ -8957,10 +9161,6 @@ input:focus-visible + .area-chip,
 
 .max-w-\[420px\] {
   max-width: 420px;
-}
-
-.max-w-\[480px\] {
-  max-width: 480px;
 }
 
 .max-w-\[52px\] {
@@ -9323,10 +9523,6 @@ input:focus-visible + .area-chip,
 
 .gap-y-4 {
   row-gap: 1rem;
-}
-
-.gap-y-5 {
-  row-gap: 1.25rem;
 }
 
 .gap-y-\[18px\] {
@@ -10728,43 +10924,7 @@ input:focus-visible + .area-chip,
 
     /* نوع البيع */
 
-    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
-
-    .search-side [data-key="type"] .lg\:flex-wrap,
-        .search-side [data-key="finishing"] .lg\:flex-wrap,
-        .search-side [data-key="delivery"] .lg\:flex-wrap {
-      display: block;
-    }
-
-    /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
-
-    .search-side .area-fsec .lg\:flex-wrap {
-      gap: 8px;
-    }
-
-    /* المرافق */
-
-    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
-
-    /* عنوان القسم زرار بيفتح نافذة الاختيار */
-
-    /* "مسح كل الفلاتر": ثابت في آخر العمود */
-
-    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
-
-    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
-
-    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
-
-    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
-
-    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
-
-    /* ترتيب الأقسام في العمود */
-
-    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
-
-    /* نوع البيع */
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -10804,43 +10964,7 @@ input:focus-visible + .area-chip,
 
     /* نوع البيع */
 
-    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
-
-    .search-side [data-key="type"] .lg\:flex-wrap,
-        .search-side [data-key="finishing"] .lg\:flex-wrap,
-        .search-side [data-key="delivery"] .lg\:flex-wrap {
-      display: block;
-    }
-
-    /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
-
-    .search-side .area-fsec .lg\:flex-wrap {
-      gap: 8px;
-    }
-
-    /* المرافق */
-
-    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
-
-    /* عنوان القسم زرار بيفتح نافذة الاختيار */
-
-    /* "مسح كل الفلاتر": ثابت في آخر العمود */
-
-    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
-
-    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
-
-    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
-
-    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
-
-    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
-
-    /* ترتيب الأقسام في العمود */
-
-    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
-
-    /* نوع البيع */
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -10879,6 +11003,88 @@ input:focus-visible + .area-chip,
     /* القسم: من غير كارت وأيقونة — خط فاصل بس */
 
     /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
+
+    .search-side [data-key="type"] .lg\:flex-wrap,
+        .search-side [data-key="finishing"] .lg\:flex-wrap,
+        .search-side [data-key="delivery"] .lg\:flex-wrap {
+      display: block;
+    }
+
+    /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
+
+    .search-side .area-fsec .lg\:flex-wrap {
+      gap: 8px;
+    }
+
+    /* المرافق */
+
+    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
+
+    /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
+
+    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
+
+    /* ترتيب الأقسام في العمود */
+
+    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
+
+    /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
+
+    .search-side [data-key="type"] .lg\:flex-wrap,
+        .search-side [data-key="finishing"] .lg\:flex-wrap,
+        .search-side [data-key="delivery"] .lg\:flex-wrap {
+      display: block;
+    }
+
+    /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
+
+    .search-side .area-fsec .lg\:flex-wrap {
+      gap: 8px;
+    }
+
+    /* المرافق */
+
+    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
+
+    /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
+
+    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
+
+    /* ترتيب الأقسام في العمود */
+
+    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
+
+    /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -11566,6 +11772,10 @@ input:focus-visible + .area-chip,
     margin-bottom: 1.75rem;
   }
 
+  .lg\:me-0 {
+    margin-inline-end: 0px;
+  }
+
   .lg\:me-auto {
     margin-inline-end: auto;
   }
@@ -11913,10 +12123,6 @@ input:focus-visible + .area-chip,
 
   .lg\:w-\[460px\] {
     width: 460px;
-  }
-
-  .lg\:w-\[480px\] {
-    width: 480px;
   }
 
   .lg\:w-\[52px\] {
@@ -12351,6 +12557,16 @@ input:focus-visible + .area-chip,
 
   .lg\:overflow-visible {
     overflow: visible;
+  }
+
+  .lg\:truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lg\:whitespace-normal {
+    white-space: normal;
   }
 
   .lg\:whitespace-nowrap {
@@ -13023,7 +13239,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .offer-filter__field select, .pv-desktop .offer-filter__field [data-select-label] {font-size: 15px;}
 .pv-desktop .offer-filter__box .req-menu {width: max(100%, 280px);}
 .pv-desktop .offer-filter .offer-filter__reset {height: 52px;
-    grid-column: auto;
+    gap: 6px;
     justify-self: start;
     padding-inline: 20px;
     font-size: 15px;}
@@ -13102,6 +13318,8 @@ input:focus-visible + .area-chip,
 .pv-desktop .content-cta__buttons {grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;}
 .pv-desktop .content-cta__button--meeting {grid-column: auto;}
+.pv-desktop .content-cta__buttons--1 {grid-template-columns: minmax(0, 320px);}
+.pv-desktop .content-cta__buttons--2 {grid-template-columns: repeat(2, minmax(0, 260px));}
 .pv-desktop .shary-note, .pv-desktop .dev-about p.shary-note, .pv-desktop .article-content p.article-note {padding: 14px 18px;}
 .pv-desktop .index-pick {font-size: 15px;}
 .pv-desktop .index-plot {height: 240px;}
@@ -13155,8 +13373,12 @@ input:focus-visible + .area-chip,
     font-size: 18px;}
 .pv-desktop .dev-areas.is-open {grid-template-columns: repeat(5, 1fr);}
 .pv-desktop .prop-about {font-size: 16px;}
-.pv-desktop .prop-about h2, .pv-desktop .prop-about h3, .pv-desktop .prop-about h4 {margin-top: 26px;
-    font-size: 19px;}
+.pv-desktop .prop-about h2 {margin-top: 34px;
+    font-size: 22px;}
+.pv-desktop .prop-about h3 {margin-top: 24px;
+    font-size: 18.5px;}
+.pv-desktop .prop-about h4 {margin-top: 18px;
+    font-size: 16.5px;}
 .pv-desktop /* العمود الجانبي (فورم الاستشارة + طلب مقابلة + اتصال / واتساب): ثابت جنب المحتوى تحت شريط الملخص وأنت نازل — زي الموقع الحالي */
 
   .prop-aside--stick {position: sticky;
@@ -13417,7 +13639,25 @@ input:focus-visible + .area-chip,
     border-radius: 10px;
     font-size: 13px;}
 .pv-desktop .search-side .area-toggle span {height: 36px;
-    font-size: 13.5px;}
+    padding-inline: 4px;
+    font-size: 12.5px;
+    white-space: nowrap;}
+.pv-desktop /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+  .search-side input[type="checkbox"]:not(.sr-only) {-moz-appearance: none;
+         appearance: none;
+    -webkit-appearance: none;
+    height: 18px;
+    width: 18px;
+    flex-shrink: 0;
+    cursor: pointer;
+    border: 1.5px solid #b9c9d8;
+    border-radius: 5px;
+    background: #fff center / 13px no-repeat;}
+.pv-desktop .search-side input[type="checkbox"]:not(.sr-only):hover {border-color: #1f63c6;}
+.pv-desktop .search-side input[type="checkbox"]:not(.sr-only):checked {border-color: #1f63c6;
+    background-color: #1f63c6;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E");}
 .pv-desktop /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
   .search-side [data-key="type"] .flex-wrap, .pv-desktop .search-side [data-key="finishing"] .flex-wrap, .pv-desktop .search-side [data-key="delivery"] .flex-wrap {display: block;}
@@ -13571,6 +13811,22 @@ input:focus-visible + .area-chip,
 .pv-desktop .area-text h3 {font-size: 18px;}
 .pv-desktop .area-text p {font-size: 15px;}
 .pv-desktop .area-dots {font-size: 14px;}
+.pv-desktop .area-card .unit-specs {-moz-column-gap: 8px;
+         column-gap: 8px;
+    font-size: 13px;}
+.pv-desktop .area-card .unit-specs > li {gap: 4px;}
+.pv-desktop .area-card .unit-specs > li + li {padding-inline-start: 8px;}
+.pv-desktop .area-card .unit-specs svg {height: 18px;
+    width: 18px;}
+.pv-desktop .area-card .unit-specs b {font-size: 15px;}
+.pv-desktop .search-results [data-results] .area-card .unit-specs {-moz-column-gap: 12px;
+         column-gap: 12px;
+    font-size: 14px;}
+.pv-desktop .search-results [data-results] .area-card .unit-specs > li {gap: 6px;}
+.pv-desktop .search-results [data-results] .area-card .unit-specs > li + li {padding-inline-start: 12px;}
+.pv-desktop .search-results [data-results] .area-card .unit-specs svg {height: 20px;
+    width: 20px;}
+.pv-desktop .search-results [data-results] .area-card .unit-specs b {font-size: 16px;}
 .pv-desktop .md\:hidden.saved-empty {display: none;}
 .pv-desktop .md\:hidden.compare-table {display: none;}
 .pv-desktop .lg\:hidden.saved-empty {display: none;}
@@ -13585,35 +13841,7 @@ input:focus-visible + .area-chip,
 
     /* نوع البيع */
 
-    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
-
-    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
-.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
-
-    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
-.pv-desktop /* المرافق */
-
-    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
-
-    /* عنوان القسم زرار بيفتح نافذة الاختيار */
-
-    /* "مسح كل الفلاتر": ثابت في آخر العمود */
-
-    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
-
-    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
-
-    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
-
-    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
-
-    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
-
-    /* ترتيب الأقسام في العمود */
-
-    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
-
-    /* نوع البيع */
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -13645,35 +13873,7 @@ input:focus-visible + .area-chip,
 
     /* نوع البيع */
 
-    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
-
-    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
-.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
-
-    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
-.pv-desktop /* المرافق */
-
-    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
-
-    /* عنوان القسم زرار بيفتح نافذة الاختيار */
-
-    /* "مسح كل الفلاتر": ثابت في آخر العمود */
-
-    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
-
-    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
-
-    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
-
-    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
-
-    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
-
-    /* ترتيب الأقسام في العمود */
-
-    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
-
-    /* نوع البيع */
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -13704,6 +13904,72 @@ input:focus-visible + .area-chip,
     /* القسم: من غير كارت وأيقونة — خط فاصل بس */
 
     /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
+
+    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
+.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
+
+    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
+.pv-desktop /* المرافق */
+
+    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
+
+    /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
+
+    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
+
+    /* ترتيب الأقسام في العمود */
+
+    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
+
+    /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
+
+    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
+.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
+
+    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
+.pv-desktop /* المرافق */
+
+    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
+
+    /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
+
+    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
+
+    /* ترتيب الأقسام في العمود */
+
+    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
+
+    /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -13726,35 +13992,7 @@ input:focus-visible + .area-chip,
 
     /* نوع البيع */
 
-    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
-
-    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
-.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
-
-    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
-.pv-desktop /* المرافق */
-
-    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
-
-    /* عنوان القسم زرار بيفتح نافذة الاختيار */
-
-    /* "مسح كل الفلاتر": ثابت في آخر العمود */
-
-    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
-
-    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
-
-    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
-
-    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
-
-    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
-
-    /* ترتيب الأقسام في العمود */
-
-    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
-
-    /* نوع البيع */
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -13786,35 +14024,7 @@ input:focus-visible + .area-chip,
 
     /* نوع البيع */
 
-    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
-
-    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
-.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
-
-    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
-.pv-desktop /* المرافق */
-
-    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
-
-    /* عنوان القسم زرار بيفتح نافذة الاختيار */
-
-    /* "مسح كل الفلاتر": ثابت في آخر العمود */
-
-    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
-
-    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
-
-    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
-
-    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
-
-    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
-
-    /* ترتيب الأقسام في العمود */
-
-    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
-
-    /* نوع البيع */
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -13845,6 +14055,72 @@ input:focus-visible + .area-chip,
     /* القسم: من غير كارت وأيقونة — خط فاصل بس */
 
     /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
+
+    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
+.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
+
+    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
+.pv-desktop /* المرافق */
+
+    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
+
+    /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
+
+    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
+
+    /* ترتيب الأقسام في العمود */
+
+    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
+
+    /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
+
+    /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
+
+    .search-side [data-key="type"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="finishing"] .lg\:flex-wrap, .pv-desktop .search-side [data-key="delivery"] .lg\:flex-wrap {display: block;}
+.pv-desktop /* الغرف / الحمامات / سنوات التقسيط: دواير صغيرة */
+
+    .search-side .area-fsec .lg\:flex-wrap {gap: 8px;}
+.pv-desktop /* المرافق */
+
+    /* المنطقة / المطور جوه العمود: أول 3 اختيارات، والباقي من "عرض المزيد" */
+
+    /* عنوان القسم زرار بيفتح نافذة الاختيار */
+
+    /* "مسح كل الفلاتر": ثابت في آخر العمود */
+
+    /* كارت النتيجة بالعرض: الصورة على جنب والتفاصيل جنبها (كارت الوحدة وكارت المشروع) */
+
+    /* الكارت العريض: مستطيل واطي — الصورة على جنب، وجنبها البيانات، وآخر سطر السعر وجنبه زراير التواصل */
+
+    /* السعرين في كارت الكمبوند العريض: في سطر واحد من غير ما العملة تنزل تحت */
+
+    /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
+
+    /* عمود الفلاتر: بسيط — عنوان القسم وجنبه "مسح"، قوايم بمربعات اختيار، وخط فاصل بين الأقسام. ماشي مع الصفحة (مش ثابت) */
+
+    /* ترتيب الأقسام في العمود */
+
+    /* القسم: من غير كارت وأيقونة — خط فاصل بس */
+
+    /* نوع البيع */
+
+    /* مربعات الاختيار العادية في الفلتر (المنطقة / المطور / المشروع / المرافق) بنفس شكل مربعات نوع العقار والتشطيب */
 
     /* نوع العقار / التشطيب / التسليم: قايمة تحت بعض بمربعات اختيار (نفس الحقول، الشكل بس) */
 
@@ -13930,6 +14206,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:mb-5 {margin-bottom: 1.25rem;}
 .pv-desktop .lg\:mb-6 {margin-bottom: 1.5rem;}
 .pv-desktop .lg\:mb-7 {margin-bottom: 1.75rem;}
+.pv-desktop .lg\:me-0 {margin-inline-end: 0px;}
 .pv-desktop .lg\:me-auto {margin-inline-end: auto;}
 .pv-desktop .lg\:ms-10 {margin-inline-start: 2.5rem;}
 .pv-desktop .lg\:ms-4 {margin-inline-start: 1rem;}
@@ -14018,7 +14295,6 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:w-\[34px\] {width: 34px;}
 .pv-desktop .lg\:w-\[360px\] {width: 360px;}
 .pv-desktop .lg\:w-\[460px\] {width: 460px;}
-.pv-desktop .lg\:w-\[480px\] {width: 480px;}
 .pv-desktop .lg\:w-\[52px\] {width: 52px;}
 .pv-desktop .lg\:w-\[540px\] {width: 540px;}
 .pv-desktop .lg\:w-\[54px\] {width: 54px;}
@@ -14135,6 +14411,10 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:self-stretch {align-self: stretch;}
 .pv-desktop .lg\:overflow-hidden {overflow: hidden;}
 .pv-desktop .lg\:overflow-visible {overflow: visible;}
+.pv-desktop .lg\:truncate {overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;}
+.pv-desktop .lg\:whitespace-normal {white-space: normal;}
 .pv-desktop .lg\:whitespace-nowrap {white-space: nowrap;}
 .pv-desktop .lg\:rounded-2xl {border-radius: 1rem;}
 .pv-desktop .lg\:rounded-\[24px\] {border-radius: 24px;}

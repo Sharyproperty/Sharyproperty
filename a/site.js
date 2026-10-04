@@ -4146,7 +4146,7 @@
 /**
  * صفحة الوظائف (resources/views/careers/index.blade.php)
  * - "قدّم الآن" [data-job-apply="slug"]: بيختار الوظيفة في فورم التقديم وينزل للفورم.
- * - السيرة الذاتية [data-cv-input]: اسم الملف بيظهر مكان اسم الخانة.
+ * - السيرة الذاتية [data-cv-input]: زرارين [data-cv-pick] — "ملف" بيفتح المستندات (PDF / Word) و"صورة" بيفتح معرض الصور — واسم الملف بيظهر مكان اسم الخانة.
  * - الإرسال: بيتأكد من الاسم والرقم والسيرة الذاتية، وبعدها حدث shary:career-apply على الفورم:
  *       form.addEventListener('shary:career-apply', function (event) {
  *           event.preventDefault();                 // هنبعت AJAX
@@ -4174,6 +4174,15 @@
         });
 
         if (select) select.addEventListener('change', mark);
+        // "ملف" / "صورة": نفس الخانة بنوع مختلف (accept) عشان الموبايل يفتح المستندات أو معرض الصور
+        form.querySelectorAll('[data-cv-pick]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                if (!input) return;
+                input.setAttribute('accept', button.getAttribute('data-accept'));
+                input.click();
+            });
+        });
+        if (label && input) label.addEventListener('click', function () { input.click(); });
         if (input) input.addEventListener('change', function () {
             var file = input.files && input.files[0];
             label.textContent = file ? file.name : label.getAttribute('data-label');
