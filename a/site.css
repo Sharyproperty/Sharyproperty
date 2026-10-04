@@ -815,6 +815,66 @@ video {
   }
 }
 
+/* أيقونة المطور (صفحة "كل المطورين"): لوجو في دايرة بإطار رمادي رفيع — والمطور اللي له ستوري إطاره أخضر تخين */
+
+.dev-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dev-icon__logo {
+  position: relative;
+  display: flex;
+  height: 96px;
+  width: 96px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #d9dfe7;
+  border-radius: 999px;
+  background-color: #ffffff;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  color: #123a5c;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.dev-icon__logo:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -16px rgba(18, 58, 92, 0.6);
+}
+
+.dev-icon__logo > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #ffffff;
+  -o-object-fit: contain;
+     object-fit: contain;
+  padding: 12px;
+}
+
+.dev-icon__logo--story {
+  border: 4px solid #17a398;
+}
+
+@media (min-width: 1024px) {
+  .dev-icon__logo {
+    height: 124px;
+    width: 124px;
+    font-size: 22px;
+  }
+
+  .dev-icon__logo > img {
+    padding: 16px;
+  }
+}
+
 /* شريط الأدوات فوق كروت المفضلة / جدول المقارنة: التبويب أو العدد من ناحية، والأزرار من الناحية التانية */
 
 .saved-toolbar {
@@ -7471,6 +7531,10 @@ input:focus-visible + .area-chip,
   row-gap: 1rem;
 }
 
+.gap-y-5 {
+  row-gap: 1.25rem;
+}
+
 .gap-y-\[18px\] {
   row-gap: 18px;
 }
@@ -9392,6 +9456,10 @@ input:focus-visible + .area-chip,
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .md\:gap-6 {
     gap: 1.5rem;
   }
@@ -9657,6 +9725,10 @@ input:focus-visible + .area-chip,
     margin-top: 0.5rem;
   }
 
+  .lg\:mt-2\.5 {
+    margin-top: 0.625rem;
+  }
+
   .lg\:mt-3 {
     margin-top: 0.75rem;
   }
@@ -9825,12 +9897,12 @@ input:focus-visible + .area-chip,
     height: 76px;
   }
 
-  .lg\:h-\[88px\] {
-    height: 88px;
-  }
-
   .lg\:h-\[88vh\] {
     height: 88vh;
+  }
+
+  .lg\:h-\[92px\] {
+    height: 92px;
   }
 
   .lg\:h-\[96px\] {
@@ -9990,12 +10062,12 @@ input:focus-visible + .area-chip,
     width: 84px;
   }
 
-  .lg\:w-\[88px\] {
-    width: 88px;
-  }
-
   .lg\:w-\[900px\] {
     width: 900px;
+  }
+
+  .lg\:w-\[92px\] {
+    width: 92px;
   }
 
   .lg\:w-\[96px\] {
@@ -11023,6 +11095,10 @@ input:focus-visible + .area-chip,
 /* desktop layout forced on narrow screens (preview only) */
 .pv-desktop .shot-card__name {font-size: 20px;}
 .pv-desktop .shot-card__place {font-size: 14px;}
+.pv-desktop .dev-icon__logo {height: 124px;
+    width: 124px;
+    font-size: 22px;}
+.pv-desktop .dev-icon__logo > img {padding: 16px;}
 .pv-desktop .social-brand {height: 48px;
     width: 48px;
     font-size: 23px;}
@@ -11827,6 +11903,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .md\:h-full {height: 100%;}
 .pv-desktop .md\:grid-cols-2 {grid-template-columns: repeat(2, minmax(0, 1fr));}
 .pv-desktop .md\:grid-cols-3 {grid-template-columns: repeat(3, minmax(0, 1fr));}
+.pv-desktop .md\:grid-cols-4 {grid-template-columns: repeat(4, minmax(0, 1fr));}
 .pv-desktop .md\:gap-6 {gap: 1.5rem;}
 .pv-desktop .md\:gap-8 {gap: 2rem;}
 .pv-desktop .md\:border-t-0 {border-top-width: 0px;}
@@ -11901,6 +11978,7 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:mt-12 {margin-top: 3rem;}
 .pv-desktop .lg\:mt-14 {margin-top: 3.5rem;}
 .pv-desktop .lg\:mt-2 {margin-top: 0.5rem;}
+.pv-desktop .lg\:mt-2\.5 {margin-top: 0.625rem;}
 .pv-desktop .lg\:mt-3 {margin-top: 0.75rem;}
 .pv-desktop .lg\:mt-3\.5 {margin-top: 0.875rem;}
 .pv-desktop .lg\:mt-4 {margin-top: 1rem;}
@@ -11943,8 +12021,8 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:h-\[60px\] {height: 60px;}
 .pv-desktop .lg\:h-\[70px\] {height: 70px;}
 .pv-desktop .lg\:h-\[76px\] {height: 76px;}
-.pv-desktop .lg\:h-\[88px\] {height: 88px;}
 .pv-desktop .lg\:h-\[88vh\] {height: 88vh;}
+.pv-desktop .lg\:h-\[92px\] {height: 92px;}
 .pv-desktop .lg\:h-\[96px\] {height: 96px;}
 .pv-desktop .lg\:h-auto {height: auto;}
 .pv-desktop .lg\:h-fit {height: -moz-fit-content;
@@ -11985,8 +12063,8 @@ input:focus-visible + .area-chip,
 .pv-desktop .lg\:w-\[60px\] {width: 60px;}
 .pv-desktop .lg\:w-\[720px\] {width: 720px;}
 .pv-desktop .lg\:w-\[84px\] {width: 84px;}
-.pv-desktop .lg\:w-\[88px\] {width: 88px;}
 .pv-desktop .lg\:w-\[900px\] {width: 900px;}
+.pv-desktop .lg\:w-\[92px\] {width: 92px;}
 .pv-desktop .lg\:w-\[96px\] {width: 96px;}
 .pv-desktop .lg\:w-\[calc\(\(100\%-48px\)\/3\)\] {width: calc((100% - 48px) / 3);}
 .pv-desktop .lg\:w-\[min\(980px\2c 94vw\)\] {width: min(980px,94vw);}
