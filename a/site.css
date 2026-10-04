@@ -5447,7 +5447,7 @@ input:focus-visible + .area-chip,
 
 @media (max-width: 1023px) {
   .prop-bar--project .prop-bar__in {
-    grid-template-areas: "logo head actions" "loc loc follow" "prices prices prices";
+    grid-template-areas: "logo head actions" "loc loc loc" "prices prices prices";
     row-gap: 10px;
   }
 
@@ -5460,9 +5460,12 @@ input:focus-visible + .area-chip,
     min-width: 0;
   }
 
+  /* المكان والزرار في نفس الخانة: المكان بعرض الصف (وسايب مكان الزرار) والزرار في آخر الصف */
+
   .prop-bar--project .prop-bar__head > p {
     grid-area: loc;
     min-width: 0;
+    padding-inline-end: 92px;
   }
 
   .prop-bar--project .prop-bar__head > p > span {
@@ -5472,7 +5475,8 @@ input:focus-visible + .area-chip,
   }
 
   .prop-bar--project .prop-bar__head > .prop-follow {
-    grid-area: follow;
+    grid-area: loc;
+    align-self: center;
     justify-self: end;
   }
 
