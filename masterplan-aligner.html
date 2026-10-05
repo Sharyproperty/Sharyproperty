@@ -40,7 +40,10 @@
     .btn--main { flex: 1; height: 46px; background: var(--navy); border-color: var(--navy); color: #fff; font-size: 14.5px; border-radius: 12px; }
     .btn--main:hover { background: var(--navy-deep); }
     .btn--main:disabled { opacity: .5; cursor: default; }
-    .btn--ghost { height: 46px; border-radius: 12px; padding: 0 16px; }
+    .btn--ghost { height: 46px; border-radius: 12px; padding: 0 14px; text-decoration: none; color: var(--navy); white-space: nowrap; }
+    [hidden] { display: none !important; }
+    .chipx { display: inline-flex; align-items: center; gap: 2px; }
+    .chipx .btn + .btn { padding: 0 9px; color: var(--bad); }
     .pad { display: grid; grid-template-columns: repeat(3, 36px); gap: 5px; direction: ltr; }
     .pad .btn { padding: 0; width: 36px; }
     .file { display: block; border: 1.5px dashed #b9cfe8; border-radius: 12px; padding: 12px; text-align: center; font-size: 12.5px; font-weight: 800; color: var(--blue); cursor: pointer; }
@@ -82,6 +85,18 @@
         </div>
         <div class="side__body">
             <div class="state" id="state">ارفع صورة الماستر بلان المفرّغة للبدء.</div>
+
+            <div class="box" id="pickBox" hidden>
+                <b>المشروع</b>
+                <div class="row"><input type="text" id="pick" list="pickList" placeholder="اكتب اسم المشروع واختاره…" autocomplete="off"><datalist id="pickList"></datalist></div>
+                <small id="pickInfo"></small>
+            </div>
+            <div class="box" id="testBox" hidden>
+                <b>وضع التجربة</b>
+                <div class="row"><label>الاسم</label><input type="text" id="testName" placeholder="اسم المشروع"></div>
+                <div class="btns" id="testList" style="margin-top:8px"></div>
+                <small style="margin-top:6px">الحفظ هنا على المتصفح ده بس — عشان تشوف النتيجة على خريطة الاختبار.</small>
+            </div>
 
             <div class="box" id="imageBox">
                 <b>1) الصورة</b>
@@ -146,6 +161,8 @@
         </div>
         <div class="side__foot">
             <button class="btn btn--main" id="save" disabled>حفظ مكان الماستر بلان</button>
+            <button class="btn btn--ghost" id="download" hidden>تحميل الملف</button>
+            <a class="btn btn--ghost" id="openTest" hidden target="_blank" rel="noopener">افتح الخريطة</a>
         </div>
     </aside>
 </div>
@@ -168,6 +185,13 @@
  * الحفظ بيبعت: { masterplan_corners: [[lng,lat] × 4], masterplan_placement: { center, width_m, height_m, rotation, flip_x, flip_y, free } }
  *   masterplan_corners بالترتيب: أعلى-يسار الصورة ، أعلى-يمين ، أسفل-يمين ، أسفل-يسار — وده اللي خريطة العميل بتعرضه بالظبط.
  * حدث على window بعد الحفظ: shary:masterplan-saved ({ detail: payload }).
+ *
+ * 3 أوضاع (الأداة بتختار لوحدها):
+ *   1) server: فيه saveUrl / project في الإعدادات ← الحفظ POST على السيرفر (لوحة التحكم).
+ *   2) file:   من غير إعدادات والصفحة مرفوعة على نفس دومين الموقع ← بتجيب المشاريع من /api/map/compounds (projectsUrl) ،
+ *              تختار المشروع وتضبطه ، و"تحميل الملف" بينزّل masterplan-placements.json — يترفع على السيرفر في public/map-data/
+ *              (placementsUrl) والخريطة بتقراه لوحدها. من غير أي برمجة باك إند.
+ *   3) test:   مفيش API (معاينة) ← الحفظ على المتصفح (IndexedDB) و"افتح الخريطة" بيفتح خريطة الاختبار map-test.html بنفس كود الخريطة.
  */
 (function () {
     var CFG = window.MP_ALIGNER || {};
@@ -200,7 +224,9 @@
     var history = [];
     var img = { url: '', w: 0, h: 0 };
     var stepIndex = 1, STEPS = [0.2, 1, 5, 25];
-    var DRAFT = 'shary-mp-aligner-' + project.id;
+    function draftKey() { return 'shary-mp-aligner-' + project.id; }
+    var mode = 'server';        // server | file | test
+    var apiProjects = [], placements = {}, tests = [];
     var dirty = false;
 
     function mirrored() { return C ? signedArea(C) > 0 : false; }
@@ -331,7 +357,7 @@
         $('save').disabled = false;
         if (final) {
             dirty = true;
-            try { localStorage.setItem(DRAFT, JSON.stringify({ corners: coordsLL(), free: free })); } catch (e) { /* التخزين مقفول */ }
+            try { localStorage.setItem(draftKey(), JSON.stringify({ corners: coordsLL(), free: free })); } catch (e) { /* التخزين مقفول */ }
             setState('فيه تعديلات لسه ما اتحفظتش.', '');
         }
     }
@@ -474,9 +500,11 @@
     // ---------- حدود المشروع (اختياري) ----------
     function polygonLL() {
         var p = CFG.polygon;
-        if (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { p = null; } }
-        if (p && p.type === 'Polygon') p = p.coordinates[0];
-        return Array.isArray(p) && p.length >= 3 ? p.map(function (q) { return [Number(q[0]), Number(q[1])]; }) : null;
+        for (var i = 0; i < 3 && typeof p === 'string'; i++) { try { p = JSON.parse(p); } catch (e) { p = null; } }
+        if (p && p.type === 'Polygon' && Array.isArray(p.coordinates)) p = p.coordinates[0];
+        if (!Array.isArray(p) || p.length < 3 || !p.every(function (q) { return Array.isArray(q) && q.length >= 2; })) return null;
+        var ring = p.map(function (q) { return [Number(q[0]), Number(q[1])]; });
+        return ring.every(function (q) { return isFinite(q[0]) && isFinite(q[1]); }) ? ring : null;
     }
     function fitPolygon() {
         var ring = polygonLL();
@@ -510,9 +538,33 @@
             button.disabled = false;
             if (!ok) { setState(message || 'الحفظ ما تمش — جرّب تاني.', 'bad'); return; }
             dirty = false;
-            try { localStorage.removeItem(DRAFT); } catch (e) { /* التخزين مقفول */ }
+            try { localStorage.removeItem(draftKey()); } catch (e) { /* التخزين مقفول */ }
             setState(message || 'تم الحفظ ✓ المكان ده هيظهر للعميل زي ما هو.', 'ok');
             window.dispatchEvent(new CustomEvent('shary:masterplan-saved', { detail: data }));
+        }
+        // وضع الملف: بيتسجل في ملف الأماكن (على المتصفح) لحد ما الملف يتحمّل ويترفع على السيرفر
+        if (mode === 'file') {
+            placements[project.id] = { name: project.name, masterplan_corners: data.masterplan_corners, masterplan_placement: data.masterplan_placement, version: Date.now() };
+            try { localStorage.setItem('shary-mp-placements', JSON.stringify(placements)); } catch (e) { /* التخزين مقفول */ }
+            pickInfo();
+            done(true, 'اتسجّل ✓ لما تخلّص المشاريع اضغط "تحميل الملف" وارفعه على السيرفر في public/map-data/');
+            return;
+        }
+        // وضع التجربة: على المتصفح ده — وخريطة الاختبار بتقراه
+        if (mode === 'test') {
+            if (!img.url) { done(false, 'ارفع الصورة الأول.'); return; }
+            var c = data.masterplan_placement.center;
+            var item = { id: project.id, name: $('testName').value.trim() || ('مشروع تجريبي ' + project.id), image: img.url, corners: data.masterplan_corners, placement: data.masterplan_placement, lng: c[0], lat: c[1] };
+            button.disabled = true;
+            idbPut(item).then(function () {
+                project.name = item.name;
+                $('projectName').textContent = item.name + ' — #' + item.id;
+                tests = tests.filter(function (one) { return one.id !== item.id; }).concat([item]);
+                renderTests();
+                $('openTest').href = 'map-test.html?compound_id=' + item.id;
+                done(true, 'اتحفظ ✓ اضغط "افتح الخريطة" وشوفه في مكانه — وجرّب Refresh والزوم.');
+            }, function () { done(false, 'المتصفح رفض التخزين — جرّب من غير وضع التصفح الخفي.'); });
+            return;
         }
         if (!CFG.saveUrl) { copyOut().then(function () { done(true, 'النتيجة اتنسخت — احفظها في حقل masterplan_corners للمشروع.'); }); return; }
         button.disabled = true;
@@ -524,6 +576,15 @@
           .then(function (result) { done(true, result && result.message); })
           .catch(function () { done(false); });
     });
+    // تحميل ملف الأماكن (كل المشاريع اللي اتضبطت) — يترفع على السيرفر: public/map-data/masterplan-placements.json
+    $('download').addEventListener('click', function () {
+        var blob = new Blob([JSON.stringify({ updated_at: new Date().toISOString(), projects: placements }, null, 1)], { type: 'application/json' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob); link.download = 'masterplan-placements.json';
+        document.body.appendChild(link); link.click(); link.remove();
+        setTimeout(function () { URL.revokeObjectURL(link.href); }, 2000);
+        setState('الملف نزل ✓ ارفعه على السيرفر في public/map-data/masterplan-placements.json', 'ok');
+    });
     window.addEventListener('beforeunload', function (event) { if (dirty && CFG.saveUrl) { event.preventDefault(); event.returnValue = ''; } });
 
     // ---------- البداية ----------
@@ -533,25 +594,138 @@
         var out = value.slice(0, 4).map(function (p) { return [Number(p[0]), Number(p[1])]; });
         return out.every(function (p) { return isFinite(p[0]) && isFinite(p[1]); }) ? out : null;
     }
-    map.on('load', function () {
+    function drawPolygon() {
+        if (map.getLayer('poly')) { map.removeLayer('poly'); map.removeSource('poly'); }
         var ring = polygonLL();
-        if (ring) {
-            ring = ring.slice(); ring.push(ring[0]);
-            map.addSource('poly', { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: ring } } });
-            map.addLayer({ id: 'poly', type: 'line', source: 'poly', paint: { 'line-color': '#ffd400', 'line-width': 2.5 } });
-            $('fitPoly').hidden = false;
-        }
-        var saved = parseCorners(CFG.corners), draft = null;
-        try { draft = JSON.parse(localStorage.getItem(DRAFT) || 'null'); } catch (e) { draft = null; }
+        $('fitPoly').hidden = !ring;
+        if (!ring) return;
+        ring = ring.slice(); ring.push(ring[0]);
+        map.addSource('poly', { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: ring } } });
+        map.addLayer({ id: 'poly', type: 'line', source: 'poly', paint: { 'line-color': '#ffd400', 'line-width': 2.5 } });
+    }
+    // فتح مشروع في الأداة: { id, name, image, corners, polygon, center, placement }
+    function openProject(p) {
+        project = { id: p.id, name: p.name || '' };
+        $('projectName').textContent = project.name ? project.name + ' — #' + project.id : 'مشروع #' + project.id;
+        CFG.polygon = p.polygon || null; CFG.placement = p.placement || null;
+        history = []; C = null; free = false; dirty = false; dragStart = null; img = { url: '', w: 0, h: 0 };
+        if (picks) endPicking();
+        ['mp', 'mp-frame'].forEach(function (id) { if (map.getLayer(id)) map.removeLayer(id); });
+        ['mp', 'mp-frame'].forEach(function (id) { if (map.getSource(id)) map.removeSource(id); });
+        corners.concat([mover, rotator]).forEach(function (marker) { marker.remove(); });
+        drawPolygon();
+        $('out').value = ''; $('save').disabled = true; $('imageInfo').textContent = '';
+        $('imageUrl').value = p.image && !/^(data:|blob:)/.test(p.image) ? p.image : '';
+        var ring = polygonLL(), saved = parseCorners(p.corners), draft = null;
+        try { draft = JSON.parse(localStorage.getItem(draftKey()) || 'null'); } catch (e) { draft = null; }
         var first = saved || (draft && parseCorners(draft.corners));
         if (first) {
             C = first.map(toM);
             free = !saved && draft ? !!draft.free : !!(CFG.placement && CFG.placement.free);
-            var xs = first.map(function (p) { return p[0]; }), ys = first.map(function (p) { return p[1]; });
+            var xs = first.map(function (q) { return q[0]; }), ys = first.map(function (q) { return q[1]; });
             map.fitBounds([[Math.min.apply(null, xs), Math.min.apply(null, ys)], [Math.max.apply(null, xs), Math.max.apply(null, ys)]], { padding: 90, duration: 0 });
         } else if (ring) fitPolygon();
-        if (CFG.image) { $('imageUrl').value = CFG.image; setImage(CFG.image, !!C); }
-        else if (C) setState('المكان المحفوظ موجود — ارفع الصورة عشان تشوفها.', '');
+        else if (p.center && isFinite(p.center[0]) && isFinite(p.center[1]) && (p.center[0] || p.center[1])) map.jumpTo({ center: p.center, zoom: 15 });
+        if (p.image) setImage(p.image, !!C);
+        else setState(C ? 'المكان المحفوظ موجود — ارفع الصورة عشان تشوفها.' : 'ارفع صورة الماستر بلان المفرّغة للبدء.', '');
+    }
+
+    // ---------- وضع الملف: المشاريع من الـ API + ملف الأماكن ----------
+    function pickInfo() {
+        var done = apiProjects.filter(function (p) { return placements[p.id]; }).length;
+        $('pickInfo').textContent = apiProjects.length + ' مشروع — ' + done + ' اتضبطوا في الملف.' + (done ? ' اللي عليه ✓ اتضبط.' : '');
+        $('pickList').textContent = '';
+        apiProjects.forEach(function (p) {
+            var option = document.createElement('option');
+            option.value = (placements[p.id] ? '✓ ' : '') + (p.name_ar || p.name_en || 'مشروع') + ' — #' + p.id;
+            $('pickList').appendChild(option);
+        });
+    }
+    function fileMode(list) {
+        mode = 'file'; apiProjects = list;
+        $('pickBox').hidden = false; $('download').hidden = false;
+        var url = CFG.placementsUrl === undefined ? '/map-data/masterplan-placements.json' : CFG.placementsUrl;
+        (url ? fetch(url, { cache: 'no-cache' }).then(function (r) { return r.ok ? r.json() : {}; }) : Promise.resolve({})).catch(function () { return {}; }).then(function (data) {
+            var onServer = data && data.projects && typeof data.projects === 'object' ? data.projects : (data || {}), local = {};
+            try { local = JSON.parse(localStorage.getItem('shary-mp-placements') || '{}') || {}; } catch (e) { local = {}; }
+            placements = {};
+            Object.keys(onServer).forEach(function (id) { placements[id] = onServer[id]; });
+            // اللي اتضبط على المتصفح ده ولسه ما اترفعش بيكسب لو أحدث
+            Object.keys(local).forEach(function (id) { if (!placements[id] || (local[id].version || 0) >= (placements[id].version || 0)) placements[id] = local[id]; });
+            pickInfo();
+            setState('اختار المشروع من فوق عشان تضبط الماستر بلان بتاعته.', '');
+            var wanted = query.get('id');
+            if (wanted) { var hit = apiProjects.filter(function (p) { return String(p.id) === wanted; })[0]; if (hit) pickProject(hit); }
+        });
+    }
+    function pickProject(p) {
+        var saved = placements[p.id] || {};
+        openProject({ id: p.id, name: p.name_ar || p.name_en || '', image: saved.masterplan || p.masterplan || '', corners: saved.masterplan_corners || p.masterplan_corners,
+            polygon: p.boundary_coords || p.boundary || p.coordinates || null, center: [Number(p.lng), Number(p.lat)], placement: saved.masterplan_placement || p.masterplan_placement || null });
+    }
+    $('pick').addEventListener('change', function () {
+        var match = /#(\S+)\s*$/.exec(this.value), value = this.value.trim();
+        var hit = match ? apiProjects.filter(function (p) { return String(p.id) === match[1]; })[0] : apiProjects.filter(function (p) { return (p.name_ar || '') === value || (p.name_en || '') === value; })[0];
+        if (hit) pickProject(hit);
+    });
+
+    // ---------- وضع التجربة: على المتصفح (IndexedDB) — خريطة الاختبار map-test.html بتقرا نفس البيانات ----------
+    function idb() {
+        return new Promise(function (resolve, reject) {
+            var open = indexedDB.open('shary-mp-test', 1);
+            open.onupgradeneeded = function () { open.result.createObjectStore('projects', { keyPath: 'id' }); };
+            open.onsuccess = function () { resolve(open.result); };
+            open.onerror = function () { reject(open.error); };
+        });
+    }
+    function idbRun(type, work) {
+        return idb().then(function (db) {
+            return new Promise(function (resolve, reject) {
+                var request = work(db.transaction('projects', type).objectStore('projects'));
+                request.onsuccess = function () { resolve(request.result); };
+                request.onerror = function () { reject(request.error); };
+            });
+        });
+    }
+    function idbPut(item) { return idbRun('readwrite', function (store) { return store.put(item); }); }
+    function idbAll() { return idbRun('readonly', function (store) { return store.getAll(); }); }
+    function idbDelete(id) { return idbRun('readwrite', function (store) { return store.delete(id); }); }
+    function nextTestId() { return tests.reduce(function (max, one) { return Math.max(max, Number(one.id) || 0); }, 9000) + 1; }
+    function newTest() { $('testName').value = ''; openProject({ id: nextTestId(), name: '', center: CFG.center || null }); }
+    function renderTests() {
+        var box = $('testList'); box.textContent = '';
+        tests.forEach(function (item) {
+            var wrap = document.createElement('span'); wrap.className = 'chipx';
+            var open = document.createElement('button'); open.className = 'btn' + (String(item.id) === String(project.id) ? ' is-on' : ''); open.type = 'button'; open.textContent = item.name;
+            open.addEventListener('click', function () { $('testName').value = item.name; openProject({ id: item.id, name: item.name, image: item.image, corners: item.corners, placement: item.placement, center: [item.lng, item.lat] }); $('openTest').href = 'map-test.html?compound_id=' + item.id; renderTests(); });
+            var drop = document.createElement('button'); drop.className = 'btn'; drop.type = 'button'; drop.textContent = '×'; drop.title = 'مسح';
+            drop.addEventListener('click', function () { idbDelete(item.id).then(function () { tests = tests.filter(function (one) { return one.id !== item.id; }); if (String(project.id) === String(item.id)) newTest(); renderTests(); }); });
+            wrap.appendChild(open); wrap.appendChild(drop); box.appendChild(wrap);
+        });
+        var add = document.createElement('button'); add.className = 'btn'; add.type = 'button'; add.textContent = '＋ مشروع جديد';
+        add.addEventListener('click', function () { newTest(); renderTests(); });
+        box.appendChild(add);
+    }
+    function testMode() {
+        mode = 'test';
+        $('testBox').hidden = false; $('openTest').hidden = false; $('openTest').href = 'map-test.html';
+        idbAll().catch(function () { return []; }).then(function (items) {
+            tests = items || [];
+            newTest();
+            renderTests();
+            if (CFG.image) setImage(CFG.image, false);
+        });
+    }
+
+    map.on('load', function () {
+        if (CFG.saveUrl || CFG.project) {
+            openProject({ id: project.id, name: project.name, image: CFG.image, corners: CFG.corners, polygon: CFG.polygon, center: CFG.center, placement: CFG.placement });
+            return;
+        }
+        var api = CFG.projectsUrl === undefined ? '/api/map/compounds' : CFG.projectsUrl;
+        (api ? fetch(api, { headers: { 'Accept': 'application/json' } }).then(function (r) { return r.ok ? r.json() : Promise.reject(); }) : Promise.reject())
+            .then(function (data) { var list = data && Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : []); if (!list.length) throw new Error('empty'); return list; })
+            .then(fileMode, testMode);
     });
     // تغيير شكل الخريطة بيمسح الطبقات: نرجّعها
     map.on('style.load', function () { if (C && img.url) draw(); });
