@@ -1239,49 +1239,19 @@ body { margin: 0; font-family: Cairo, Tahoma, Arial, sans-serif; color: #123a5c;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
     </style>
+<script src="mp-demo.js"></script>
 <script>
-/* ===== وضع الاختبار: بيانات أداة الضبط (على المتصفح) بدل الـ API ===== */
-(function () {
-    function all() {
-        return new Promise(function (resolve) {
-            try {
-                var open = indexedDB.open('shary-mp-test', 1);
-                open.onupgradeneeded = function () { open.result.createObjectStore('projects', { keyPath: 'id' }); };
-                open.onsuccess = function () {
-                    var request = open.result.transaction('projects', 'readonly').objectStore('projects').getAll();
-                    request.onsuccess = function () { resolve(request.result || []); };
-                    request.onerror = function () { resolve([]); };
-                };
-                open.onerror = function () { resolve([]); };
-            } catch (error) { resolve([]); }
-        });
-    }
-    var data = window.__mpTestData = all();
-    var realFetch = window.fetch.bind(window);
-    function json(value) { return new Response(JSON.stringify(value), { status: 200, headers: { 'Content-Type': 'application/json' } }); }
-    window.fetch = function (input, init) {
-        var url = typeof input === 'string' ? input : ((input && input.url) || '');
-        var hit = /\/api\/map\/([A-Za-z-]+)/.exec(url);
-        if (!hit) return realFetch(input, init);
-        return data.then(function (items) {
-            if (hit[1] === 'cities') return json({ success: true, data: [{ id: 1, name_ar: 'مشاريع الاختبار', name_en: 'Test projects', country_id: 1 }] });
-            if (hit[1] === 'compounds') return json({ success: true, data: items.map(function (one) {
-                return { id: Number(one.id), name_ar: one.name, name_en: one.name, developer: 'اختبار', city_id: 1, country_id: 1, lat: Number(one.lat), lng: Number(one.lng),
-                    masterplan: one.image, masterplan_corners: one.corners, units: [], price_from: 0 };
-            }) });
-            return json({ success: true, data: [] });
-        });
-    };
-    document.addEventListener('DOMContentLoaded', function () {
-        data.then(function (items) {
-            var bar = document.createElement('div');
-            bar.setAttribute('style', 'position:fixed;left:50%;top:calc(env(safe-area-inset-top, 0px) + 118px);transform:translateX(-50%);z-index:99999;max-width:calc(100% - 24px);background:rgba(13,43,68,.94);color:#fff;border-radius:999px;padding:6px 14px;font:700 12.5px/1.6 Cairo,Tahoma,Arial,sans-serif;direction:rtl;display:flex;gap:10px;align-items:center;white-space:nowrap;box-shadow:0 10px 26px -12px rgba(0,0,0,.6)');
-            bar.innerHTML = '<span>' + (items.length ? 'خريطة اختبار — ' + items.length + ' مشروع من أداة الضبط' : 'لسه مفيش مشروع محفوظ') + '</span><a href="masterplan-aligner.html" style="color:#8fc6ff;text-decoration:underline">أداة الضبط</a>';
-            document.body.appendChild(bar);
-            setTimeout(function () { bar.style.transition = 'opacity .6s'; bar.style.opacity = '0'; setTimeout(function () { bar.remove(); }, 700); }, 8000);
-        });
+/* ===== وضع الاختبار: mp-demo.js بيقوم بدور الـ API — المشاريع التجريبية + الماستر بلان اللي اتحفظت من لوحة التحكم التجريبية ===== */
+document.addEventListener('DOMContentLoaded', function () {
+    window.MP_DEMO.all().then(function (items) {
+        var placed = items.filter(function (item) { return item.image && item.corners; }).length;
+        var bar = document.createElement('div');
+        bar.setAttribute('style', 'position:fixed;left:50%;top:calc(env(safe-area-inset-top, 0px) + 118px);transform:translateX(-50%);z-index:99999;max-width:calc(100% - 24px);background:rgba(13,43,68,.94);color:#fff;border-radius:999px;padding:6px 14px;font:700 12.5px/1.6 Cairo,Tahoma,Arial,sans-serif;direction:rtl;display:flex;gap:10px;align-items:center;white-space:nowrap;box-shadow:0 10px 26px -12px rgba(0,0,0,.6)');
+        bar.innerHTML = '<span>خريطة اختبار — ' + placed + ' ماستر بلان محفوظة</span><a href="masterplan-dashboard.html" style="color:#8fc6ff;text-decoration:underline">لوحة التحكم</a>';
+        document.body.appendChild(bar);
+        setTimeout(function () { bar.style.transition = 'opacity .6s'; bar.style.opacity = '0'; setTimeout(function () { bar.remove(); }, 700); }, 8000);
     });
-})();
+});
 </script>
 </head>
 <body>
@@ -1297,7 +1267,7 @@ body { margin: 0; font-family: Cairo, Tahoma, Arial, sans-serif; color: #123a5c;
             
             <header class="smap__header">
                 <div class="smap__row">
-                    <a href="masterplan-aligner.html" class="smap__back" data-smap-back aria-label="رجوع">
+                    <a href="masterplan-dashboard.html" class="smap__back" data-smap-back aria-label="رجوع">
                         <svg class="ltr:rotate-180" width="22" height="22" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.750 4.500 11.250 9l-4.500 4.500" stroke="currentColor" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"/></svg>
                     </a>
                     <label class="smap__search">
@@ -1549,7 +1519,7 @@ body { margin: 0; font-family: Cairo, Tahoma, Arial, sans-serif; color: #123a5c;
         var MP = {
             minZoom: options.minZoom || 10,
             hdZoom: options.hdZoom || 15.5,
-            maxActive: options.maxActive || (wide() ? 24 : 8),
+            maxActive: options.maxActive || (wide() ? 24 : 10),
             viewBuffer: options.viewBuffer || 0.5,
             unplaced: options.unplaced || 'bbox',
             rendered: {},          // id -> { token, sourceId, layerId, coords, hd, tiles, saved }
