@@ -3410,6 +3410,8 @@
  * - عارض الصور [data-rent-lightbox]: أي زرار [data-lightbox-open="gallery | floor | master"] بيفتحه على صور المجموعة دي
  *   (الصور اللي عليها data-lightbox-item بنفس الاسم). بنفس شكل تطبيق شاري: X + عدّاد "1 / 5"، وصف صور صغيرة تحت للمعرض،
  *   ومخطط الوحدة جوه كارت أبيض. السحب / الأسهم / الكيبورد بتقلّب، و X أو الضغط بره أو Esc بيقفل.
+ * - التكبير (الصور / الماستر بلان / مخطط الوحدة): بصباعين (pinch) أو ضغطتين ورا بعض أو زراير + / − [data-lightbox-zoom] أو عجلة الماوس ،
+ *   والصورة المكبّرة بتتحرك بالسحب. التقليب بالسحب بيشتغل والصورة بحجمها الطبيعي بس. الصورة بترجع لحجمها مع كل صورة جديدة.
  */
 (function () {
     document.querySelectorAll('[data-rent-lightbox]').forEach(function (box) {
@@ -3421,10 +3423,29 @@
         var items = [];
         var at = 0;
         var opener = null;
+        var frame = box.querySelector('[data-lightbox-frame]') || view;
+        var zoom = { scale: 1, x: 0, y: 0 };   // تكبير الصورة المفتوحة ومكانها
+
+        function applyZoom(smooth) {
+            // الصورة ما تخرجش بره الشاشة: أقصى حركة = نص الزيادة في المقاس
+            var maxX = Math.max(0, (zoom.scale - 1) * frame.offsetWidth / 2), maxY = Math.max(0, (zoom.scale - 1) * frame.offsetHeight / 2);
+            zoom.x = Math.max(-maxX, Math.min(maxX, zoom.x));
+            zoom.y = Math.max(-maxY, Math.min(maxY, zoom.y));
+            frame.style.transition = smooth ? 'transform 0.22s ease' : 'none';
+            frame.style.transform = zoom.scale === 1 ? '' : 'translate(' + zoom.x + 'px, ' + zoom.y + 'px) scale(' + zoom.scale + ')';
+            box.classList.toggle('is-zoomed', zoom.scale > 1);
+        }
+
+        function setZoom(scale, smooth) {
+            zoom.scale = Math.max(1, Math.min(4, scale));
+            if (zoom.scale === 1) { zoom.x = 0; zoom.y = 0; }
+            applyZoom(smooth);
+        }
 
         function show(index) {
             if (!items.length) return;
             at = (index + items.length) % items.length;
+            setZoom(1, false);
             var source = items[at];
             view.src = source.currentSrc || source.getAttribute('src');
             view.alt = source.getAttribute('alt') || '';
@@ -3462,6 +3483,7 @@
         }
 
         function close() {
+            setZoom(1, false);
             box.classList.add('hidden');
             document.documentElement.style.overflow = '';
             if (opener) opener.focus();
@@ -3473,16 +3495,49 @@
         box.querySelectorAll('[data-lightbox-close]').forEach(function (button) { button.addEventListener('click', close); });
         box.querySelector('[data-lightbox-prev]').addEventListener('click', function () { show(at - 1); });
         box.querySelector('[data-lightbox-next]').addEventListener('click', function () { show(at + 1); });
-        // السحب بالصباع يمين / شمال بيقلّب الصور
-        var startX = null;
-        box.addEventListener('touchstart', function (event) { startX = event.touches[0].clientX; }, { passive: true });
+        // اللمس: صباع واحد = تقليب (أو تحريك الصورة لو مكبّرة) ، صباعين = تكبير / تصغير ، ضغطتين ورا بعض = تكبير / رجوع
+        var startX = null, pinch = null, drag = null, lastTap = 0;
+        function spread(touches) { return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY); }
+        box.addEventListener('touchstart', function (event) {
+            if (event.touches.length === 2) { pinch = { distance: spread(event.touches), scale: zoom.scale }; startX = null; drag = null; return; }
+            var touch = event.touches[0];
+            if (zoom.scale > 1) { drag = { x: touch.clientX - zoom.x, y: touch.clientY - zoom.y }; startX = null; }
+            else startX = touch.clientX;
+        }, { passive: true });
+        box.addEventListener('touchmove', function (event) {
+            if (pinch && event.touches.length === 2) { event.preventDefault(); setZoom(pinch.scale * spread(event.touches) / pinch.distance, false); return; }
+            if (drag && event.touches.length === 1) { event.preventDefault(); zoom.x = event.touches[0].clientX - drag.x; zoom.y = event.touches[0].clientY - drag.y; applyZoom(false); }
+        }, { passive: false });
         box.addEventListener('touchend', function (event) {
+            if (pinch) { if (event.touches.length < 2) { pinch = null; if (zoom.scale < 1.08) setZoom(1, true); } return; }
+            if (event.target.closest && event.target.closest('button, a')) { startX = null; drag = null; return; }
+            // ضغطتين ورا بعض على الصورة
+            var now = Date.now();
+            var moved = startX === null ? 0 : event.changedTouches[0].clientX - startX;
+            if (Math.abs(moved) < 12 && event.target.closest && event.target.closest('[data-lightbox-frame]')) {
+                if (now - lastTap < 320) { lastTap = 0; setZoom(zoom.scale > 1 ? 1 : 2.5, true); startX = null; drag = null; return; }
+                lastTap = now;
+            }
+            drag = null;
             if (startX === null) return;
-            var moved = event.changedTouches[0].clientX - startX;
             startX = null;
-            if (Math.abs(moved) < 45 || items.length < 2) return;
+            if (Math.abs(moved) < 45 || items.length < 2 || zoom.scale > 1) return;
             var rtl = !!box.closest('[dir="rtl"]');
             show(at + ((moved < 0) === rtl ? -1 : 1));
+        });
+        // ديسك توب: عجلة الماوس بتكبّر ، ضغطتين بيكبّروا / يرجّعوا ، والسحب بيحرّك الصورة المكبّرة
+        box.addEventListener('wheel', function (event) {
+            if (!event.target.closest || !event.target.closest('[data-lightbox-stage], [data-lightbox-frame]')) return;
+            event.preventDefault();
+            setZoom(zoom.scale * (event.deltaY < 0 ? 1.15 : 0.87), false);
+        }, { passive: false });
+        frame.addEventListener('dblclick', function () { setZoom(zoom.scale > 1 ? 1 : 2.5, true); });
+        var mouse = null;
+        frame.addEventListener('mousedown', function (event) { if (zoom.scale > 1) { mouse = { x: event.clientX - zoom.x, y: event.clientY - zoom.y }; event.preventDefault(); } });
+        document.addEventListener('mousemove', function (event) { if (!mouse) return; zoom.x = event.clientX - mouse.x; zoom.y = event.clientY - mouse.y; applyZoom(false); });
+        document.addEventListener('mouseup', function () { mouse = null; });
+        box.querySelectorAll('[data-lightbox-zoom]').forEach(function (button) {
+            button.addEventListener('click', function () { setZoom(zoom.scale + Number(button.getAttribute('data-lightbox-zoom')) * 0.75, true); });
         });
         document.addEventListener('keydown', function (event) {
             if (box.classList.contains('hidden')) return;
