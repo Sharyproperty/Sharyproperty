@@ -10434,38 +10434,6 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   color: #9a5b00;
 }
 
-.opp-pay__grid {
-  margin-top: 14px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.opp-pay__grid--one {
-  grid-template-columns: minmax(0, 1fr);
-}
-
-.opp-pay__cell {
-  border-radius: 14px;
-  background-color: #f3f7fc;
-  padding: 12px 14px;
-}
-
-.opp-pay__cell dt {
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #5b7189;
-}
-
-.opp-pay__cell dd {
-  margin-top: 2px;
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 1.5;
-  white-space: nowrap;
-}
-
 .opp-pay small {
   font-size: 0.68em;
   font-weight: 700;
@@ -10528,23 +10496,6 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   white-space: nowrap;
 }
 
-.opp-pay__chips {
-  margin-top: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.opp-pay__chips span {
-  border-radius: 999px;
-  background-color: #eaf1fa;
-  padding: 5px 11px;
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #1e4166;
-}
-
 .opp-pay__bar {
   margin-top: 12px;
   height: 8px;
@@ -10566,6 +10517,35 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   font-weight: 600;
   line-height: 1.6;
   color: #5b7189;
+}
+
+/* القسط + مدة الأقساط (خانتين جنب بعض) */
+
+.opp-pay__terms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.opp-pay__terms > div {
+  border-radius: 12px;
+  background-color: #fff;
+  padding: 10px 12px;
+}
+
+.opp-pay__terms dt {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #5b7189;
+}
+
+.opp-pay__terms dd {
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: #123a5c;
 }
 
 .opp-pay__full {
@@ -10886,7 +10866,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   overflow: hidden;
   border-radius: 28px;
   background-color: #fff;
-  padding: 0 0 18px;
+  padding: 0 0 22px;
   text-align: center;
   color: #123a5c;
   box-shadow: 0 30px 60px -24px rgba(6, 20, 34, 0.6);
@@ -10924,66 +10904,62 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .app-pop__art {
   position: relative;
   display: flex;
-  height: min(350px, 50vh);
-  align-items: center;
+  height: min(280px, 38vh);
+  align-items: flex-start;
   justify-content: center;
   overflow: hidden;
   background-color: #eef8f6;
-  padding: 38px 0 30px;
+  padding-top: 26px;
 }
 
 .app-pop__art::before {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 34px;
   left: 50%;
-  height: 400px;
-  width: 400px;
+  height: 320px;
+  width: 320px;
   border-radius: 50%;
   background-color: #4cbfae;
-  transform: translate(-50%, -42%);
+  transform: translateX(-50%);
 }
-
-/* التليفون كامل بنسبته الطبيعية (طوله وعرضه زي ما هو — من غير ضغط ولا قص) */
 
 .app-pop__device {
   position: relative;
-  height: 100%;
+  height: 330px;
   width: auto;
-  max-width: 86%;
+  max-width: none;
   flex-shrink: 0;
-  -o-object-fit: contain;
-     object-fit: contain;
   filter: drop-shadow(0 20px 24px rgba(13, 44, 73, 0.35));
 }
 
 .app-pop__body {
   position: relative;
   z-index: 2;
-  margin-top: -20px;
+  margin-top: -22px;
   border-radius: 26px 26px 0 0;
   background-color: #fff;
-  padding-top: 16px;
+  padding-top: 20px;
 }
 
 .app-pop__title {
   margin: 0 24px;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 800;
   line-height: 1.45;
   color: #123a5c;
 }
 
 .app-pop__text {
-  margin: 2px 28px 0;
-  font-size: 13.5px;
+  margin: 6px 28px 0;
+  font-size: 14.5px;
   font-weight: 500;
   line-height: 1.7;
   color: #5b7189;
 }
 
 .app-pop__cta {
-  margin: 12px 22px 0;
+  margin: 18px 22px 0;
   display: flex;
   height: 52px;
   align-items: center;

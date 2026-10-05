@@ -3525,6 +3525,8 @@
             var rtl = !!box.closest('[dir="rtl"]');
             show(at + ((moved < 0) === rtl ? -1 : 1));
         });
+        // التكبير للصورة بس: المتصفح ما يكبّرش الصفحة / الخلفية / صف الصور الصغيرة (iOS: gesturestart)
+        ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (name) { box.addEventListener(name, function (event) { event.preventDefault(); }, { passive: false }); });
         // ديسك توب: عجلة الماوس بتكبّر ، ضغطتين بيكبّروا / يرجّعوا ، والسحب بيحرّك الصورة المكبّرة
         box.addEventListener('wheel', function (event) {
             if (!event.target.closest || !event.target.closest('[data-lightbox-stage], [data-lightbox-frame]')) return;
