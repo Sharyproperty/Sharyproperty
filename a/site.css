@@ -2282,84 +2282,6 @@ video {
   margin-inline-start: 18px;
 }
 
-/* البحث + الفلتر المتقدم (search-strip): كبسولة بيضا واحدة زي بحث الصفحة الرئيسية — دايرة البحث الكحلي يمين ، وزرار الفلتر جوه الكبسولة شمال (الأماكن ثابتة في اللغتين) */
-
-.strip-pill {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 999px;
-  border: 1px solid #e3eaf1;
-  background-color: #fff;
-  padding: 5px;
-  box-shadow: 0 10px 24px -14px rgba(18, 58, 92, 0.5);
-  direction: rtl;
-}
-
-.strip-pill__go {
-  display: flex;
-  height: 42px;
-  width: 42px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  background-color: #123a5c;
-  color: #fff;
-}
-
-.strip-pill__input {
-  display: flex;
-  min-width: 0;
-  flex: 1 1 0%;
-  align-items: center;
-}
-
-.strip-pill__input input {
-  min-width: 0;
-  flex: 1 1 0%;
-  border: 0;
-  background: transparent;
-  font-size: 15px;
-  font-weight: 600;
-  color: #123a5c;
-  outline: none;
-}
-
-[lang="en"] .strip-pill__input input,
-    [dir="ltr"] .strip-pill__input input {
-  direction: ltr;
-  text-align: left;
-}
-
-.strip-pill__input input::-moz-placeholder {
-  color: #8494a6;
-}
-
-.strip-pill__input input::placeholder {
-  color: #8494a6;
-}
-
-.strip-pill__filter {
-  display: flex;
-  height: 42px;
-  width: 42px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  border-radius: 999px;
-  border: 1px solid #dbe4ee;
-  background-color: #fff;
-  color: #123a5c;
-  box-shadow: 0 4px 10px -6px rgba(18, 58, 92, 0.45);
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.strip-pill__filter:hover {
-  border-color: #1f5fc4;
-  color: #1f5fc4;
-}
-
 @media (min-width: 1024px) {
   .coll-tools {
     margin-bottom: 26px;
@@ -2369,17 +2291,6 @@ video {
     margin: 16px 0 0;
     padding-inline: 0;
     font-size: 14.5px;
-  }
-
-  .strip-pill {
-    max-width: 760px;
-    padding: 6px;
-  }
-
-  .strip-pill__go,
-        .strip-pill__filter {
-    height: 46px;
-    width: 46px;
   }
 }
 
@@ -5459,6 +5370,99 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
+/* خانة البحث في الموقع كله (صفحة البحث + فوق صفحات المشروع / الوحدة / عرض الكل): كبسولة بيضا واحدة زي بحث الصفحة الرئيسية —
+       دايرة البحث الكحلي يمين ، الكتابة في النص ، وزرار الفلتر المتقدم جوه الكبسولة شمال (الأماكن ثابتة في العربي والإنجليزي) */
+
+.search-bar .search-input {
+  height: 54px;
+  border-color: #e3eaf1;
+  border-radius: 999px;
+  background-color: #fff;
+  padding-left: 58px;
+  padding-right: 6px;
+  box-shadow: 0 10px 24px -14px rgba(18, 58, 92, 0.5);
+  direction: rtl;
+}
+
+.search-bar .search-input > svg {
+  box-sizing: content-box;
+  height: 20px;
+  width: 20px;
+  border-radius: 999px;
+  background-color: #123a5c;
+  padding: 11px;
+  color: #fff;
+}
+
+[lang="en"] .search-bar .search-input input,
+    [dir="ltr"] .search-bar .search-input input {
+  direction: ltr;
+  text-align: left;
+}
+
+.search-bar > [data-sheet-open],
+    .search-bar > [data-filter-modal-open] {
+  position: absolute;
+  top: 50%;
+  left: 26px;
+  height: 42px;
+  width: 42px;
+  border-radius: 999px;
+  box-shadow: 0 4px 10px -6px rgba(18, 58, 92, 0.45);
+  transform: translateY(-50%);
+}
+
+/* فوق صفحات المشروع / الوحدة / عرض الكل: الخانة جزء من الصفحة (مش ثابتة) */
+
+.search-bar.static {
+  position: relative;
+  top: auto;
+  margin-inline: 0;
+  padding: 0;
+}
+
+.search-bar.static > [data-filter-modal-open] {
+  left: 6px;
+}
+
+.search-bar.static .search-suggest {
+  inset-inline: 0;
+  top: calc(100% + 6px);
+}
+
+.search-suggest__sub {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #6f8399;
+}
+
+.search-suggest__none {
+  padding: 14px 12px;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #6f8399;
+}
+
+@media (min-width: 1024px) {
+  .search-bar .search-input {
+    padding-left: 16px;
+  }
+
+  .search-bar.static .search-input {
+    max-width: 760px;
+    padding-left: 58px;
+  }
+
+  .search-bar.static {
+    max-width: 760px;
+  }
+}
+
 /* اقتراحات البحث تحت الخانة (منطقة / مطور / كمبوند) */
 
 .search-suggest {
@@ -6609,7 +6613,8 @@ input:focus-visible + .area-chip,
 
 .prop-band {
   margin-inline: -20px;
-  background-color: #f2f5f8;
+  /* خلفية الصفحة أبيض (من غير شريط رمادي ورا المحتوى) */
+  background-color: #fff;
   padding: 18px 20px 20px;
 }
 
@@ -15577,6 +15582,10 @@ img.abroad-dev__logo {
   visibility: collapse;
 }
 
+.static {
+  position: static;
+}
+
 .fixed {
   position: fixed;
 }
@@ -20871,10 +20880,6 @@ img.abroad-dev__logo {
 .pv-desktop .coll-links {margin: 16px 0 0;
     padding-inline: 0;
     font-size: 14.5px;}
-.pv-desktop .strip-pill {max-width: 760px;
-    padding: 6px;}
-.pv-desktop .strip-pill__go, .pv-desktop .strip-pill__filter {height: 46px;
-    width: 46px;}
 .pv-desktop .story__frame {height: min(92vh, 860px);
     border-radius: 20px;}
 .pv-desktop .dev-icon__logo {height: 124px;
@@ -20986,6 +20991,10 @@ img.abroad-dev__logo {
 .pv-desktop .dev-about h3 {margin-top: 18px;
     font-size: 18px;}
 .pv-desktop .dev-areas.is-open {grid-template-columns: repeat(5, 1fr);}
+.pv-desktop .search-bar .search-input {padding-left: 16px;}
+.pv-desktop .search-bar.static .search-input {max-width: 760px;
+    padding-left: 58px;}
+.pv-desktop .search-bar.static {max-width: 760px;}
 .pv-desktop .prop-about {font-size: 16px;}
 .pv-desktop .prop-about h2 {margin-top: 34px;
     font-size: 22px;}
