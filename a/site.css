@@ -2202,6 +2202,46 @@ video {
   margin-bottom: 16px;
 }
 
+/* عنوان الصفحة تحت البحث: نص كبير من غير خلفية */
+
+.coll-head {
+  margin-top: 12px;
+}
+
+.coll-title {
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.3;
+  color: #123a5c;
+}
+
+.coll-sub {
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.75;
+  color: #6f8091;
+}
+
+.coll-sub b {
+  font-weight: 700;
+  color: #1f7f72;
+}
+
+@media (min-width: 1024px) {
+  .coll-head {
+    margin-top: 18px;
+  }
+
+  .coll-title {
+    font-size: 42px;
+  }
+
+  .coll-sub {
+    font-size: 16px;
+  }
+}
+
 .coll-tools__row {
   display: flex;
   align-items: center;
@@ -10238,11 +10278,11 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   color: var(--sai-blue-dark);
 }
 
-/* بيسجّل: الزرار أحمر بينبض — ضغطة تانية بتوقّف */
+/* بيسجّل: الزرار تركواز (لون شاري) بينبض — ضغطة تانية بتبعت */
 
 .sai__mic[aria-pressed="true"] {
-  border-color: #e5484d;
-  background-color: #e5484d;
+  border-color: #1f9d8f;
+  background-color: #1f9d8f;
   color: #fff;
   animation: sai-mic-pulse 1.4s ease-out infinite;
 }
@@ -10252,22 +10292,22 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 }
 
 .sai__composer.is-recording textarea::-moz-placeholder {
-  color: #d13438;
+  color: #1f8a7c;
   opacity: 1;
 }
 
 .sai__composer.is-recording textarea::placeholder {
-  color: #d13438;
+  color: #1f8a7c;
   opacity: 1;
 }
 
 @keyframes sai-mic-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(229, 72, 77, 0.5);
+    box-shadow: 0 0 0 0 rgba(31, 157, 143, 0.5);
   }
 
   100% {
-    box-shadow: 0 0 0 12px rgba(229, 72, 77, 0);
+    box-shadow: 0 0 0 12px rgba(31, 157, 143, 0);
   }
 }
 
@@ -15773,6 +15813,10 @@ img.abroad-dev__logo {
   margin-inline-start: -1.25rem;
 }
 
+.-mt-3 {
+  margin-top: -0.75rem;
+}
+
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -20808,6 +20852,9 @@ img.abroad-dev__logo {
 .pv-desktop .legal-section__number {height: 38px;
     width: 38px;
     font-size: 16px;}
+.pv-desktop .coll-head {margin-top: 18px;}
+.pv-desktop .coll-title {font-size: 42px;}
+.pv-desktop .coll-sub {font-size: 16px;}
 .pv-desktop .coll-tools {margin-bottom: 26px;}
 .pv-desktop .coll-search, .pv-desktop .coll-filter {height: 56px;}
 .pv-desktop .coll-filter span {display: inline;}
