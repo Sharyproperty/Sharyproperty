@@ -2598,9 +2598,10 @@
     if (timers.length) { tick(); window.setInterval(tick, 60000); }
 
     // ---- السعر والتوفير الثابتين [data-opp-sticky] (موبايل): بيظهروا تحت الهيدر لما قسم السعر (.opp-deal) يطلع بره الشاشة
-    var sticky = document.querySelector('[data-opp-sticky]');
-    var deal = document.querySelector('.opp-deal');
-    if (sticky && deal) {
+    document.querySelectorAll('[data-opp-sticky]').forEach(function (sticky) {
+        var holder = sticky.closest('[data-opportunity-page]') || sticky.parentNode;
+        var deal = holder.querySelector('.opp-deal') || document.querySelector('.opp-deal');
+        if (!deal) return;
         var stickyHeader = sticky.closest('[lang]') ? sticky.closest('[lang]').querySelector('header') : document.querySelector('header');
         var placeSticky = function () {
             var box = deal.getBoundingClientRect();
@@ -2613,7 +2614,7 @@
         window.addEventListener('scroll', placeSticky, { passive: true });
         window.addEventListener('resize', placeSticky);
         placeSticky();
-    }
+    });
 
     // ---- 2) فلتر القايمة
     document.querySelectorAll('[data-opps-filter]').forEach(function (form) {
