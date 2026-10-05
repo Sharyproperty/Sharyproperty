@@ -2789,6 +2789,7 @@
     var EGYPT = [30.2, 27.4];                     // [lng, lat] — نص مصر
     var START = { center: [8, 12], zoom: -0.6 };  // أول فتحة: الكرة الأرضية صغيرة من بعيد — وبتكبر بحركة ناعمة
     function easeOut(t) { return 1 - Math.pow(1 - t, 2.2); }
+    var INTRO = 4600;   // مدة حركة الفتح (مللي ثانية) — نفس السرعة لخريطة مصر (الكرة الأرضية) وخريطة المنطقة (?area= — زي خريطة الساحل)
 
     // ستايل MapLibre (من غير توكن): كرة أرضية + قمر صناعي وأسماء الأماكن (h) أو خريطة الشوارع (m)
     function libreStyle(type) {
@@ -2802,7 +2803,7 @@
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
         // السما حوالين الكرة: سحابي فاتح (مش أسود ولا كحلي) — نفس خلفية .smap__map
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
-            sky: { 'sky-color': '#dbe9f4', 'horizon-color': '#ffffff', 'fog-color': '#ffffff', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
+            sky: { 'sky-color': '#a9bccd', 'horizon-color': '#eef3f8', 'fog-color': '#eef3f8', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
     }
 
     document.querySelectorAll('[data-smap]').forEach(function (root) {
@@ -2906,7 +2907,7 @@
                 glLib = lib;
                 if (lib.AttributionControl) gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
                 // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
-                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#ffffff', 'high-color': '#dbe9f4', 'space-color': '#dce9f4', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#eef3f8', 'high-color': '#b6c8d8', 'space-color': '#a9bccd', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
@@ -2941,13 +2942,13 @@
             if (state.focus && state.current) {
                 var p = info(state.current);
                 leaveGlobe();
-                gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: 9000, essential: true });
+                gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: INTRO + 600, essential: true });
                 return;
             }
-            if (state.area) { leaveGlobe(); fitAll(8500); return; }
+            if (state.area) { leaveGlobe(); fitAll(INTRO); return; }
             // الكرة بتيجي من بعيد وتكبر بالراحة لحد ما تقف فوق مصر — وبعدها قايمة "اختر المنطقة" بتنزل
-            gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: 9000, easing: easeOut, essential: true });
-            window.setTimeout(function () { if (root.classList.contains('is-globe') && !state.area && !state.current) toggleAreas(true); }, 5600);
+            gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: INTRO, easing: easeOut, essential: true });
+            window.setTimeout(function () { if (root.classList.contains('is-globe') && !state.area && !state.current) toggleAreas(true); }, INTRO - 1400);
         }
 
         // الخريطة بتتحدّث لما تبقى ظاهرة بس (ولما المشروع / النوع / التكبير يتغيّر)
