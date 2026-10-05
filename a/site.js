@@ -1580,6 +1580,20 @@
             all('[data-filter-clear], [data-filter-clear-all]').forEach(function (button) { button.addEventListener('click', autoApply); });
         }
 
+        // ---- ديسك توب: إخفاء / إظهار عمود الفلاتر [data-side-toggle] — النتايج بتاخد عرض الصفحة كله والاختيار بيتحفظ طول الزيارة
+        var layout = form.closest('.search-layout');
+        if (sidebar && layout) {
+            var setSide = function (hidden) {
+                layout.classList.toggle('is-side-hidden', hidden);
+                all('[data-side-toggle]').forEach(function (button) { button.setAttribute('aria-expanded', hidden ? 'false' : 'true'); });
+                try { window.sessionStorage.setItem('shary-side-hidden', hidden ? '1' : ''); } catch (error) { /* التخزين مقفول */ }
+            };
+            all('[data-side-toggle]').forEach(function (button) {
+                button.addEventListener('click', function () { setSide(!layout.classList.contains('is-side-hidden')); });
+            });
+            try { if (window.sessionStorage.getItem('shary-side-hidden') === '1') setSide(true); } catch (error) { /* التخزين مقفول */ }
+        }
+
         // ---- الترتيب: قايمة تحت الزرار
         var sortOpen = form.querySelector('[data-sort-open]');
         var sortMenu = form.querySelector('[data-sort-menu]');
