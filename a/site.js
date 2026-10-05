@@ -3213,7 +3213,7 @@
  *      <template data-smap-item-tpl> + مناطق "اختر المنطقة" (المدن) + فلاتر الأنواع والتسليم. الحقول المقروءة من كل مشروع:
  *        id , name_ar , name_en , developer , city_id , lat , lng , image , price_from (بالمليون) , delivery_in , units[].type , price_list_pdf , url (اختياري)
  *        + الماستر بلان: masterplan , masterplan_corners , masterplan_placement , masterplan_hd , masterplan_tiles(+_meta) , masterplan_version , coordinates / boundary_coords / boundary
- *      data-compound="12" (أو ?compound_id=12 / ?project=12) بيفتح الخريطة على المشروع ده. data-mode="sahl" + data-sahel-city="16" = خريطة الساحل.
+ *      data-compound="12" (أو ?compound_id=12 / ?project=12 / ?project=slug لو الـ API بيرجّع slug) بيفتح الخريطة على المشروع ده. data-mode="sahl" + data-sahel-city="16" = خريطة الساحل.
  *      data-project-url="/compounds/:id" = لينك "صفحة المشروع" لو الـ API ما بيرجّعش url (من غيره الزرار بيختفي وبيظهر "قائمة الأسعار" لو موجودة).
  * الماستر بلان (js/shary/masterplans.js — لو الملف محمّل): صورة كل مشروع بتتعرض فوق القمر الصناعي في مكانها المحفوظ بالظبط
  *   (masterplan_corners من البيانات أو من ملف الأماكن data-placements) — واختيار مشروع له ماستر بلان بيقرّب الخريطة على حدودها.
@@ -3264,7 +3264,7 @@
         (p.units || []).forEach(function (unit) { var type = String((unit && unit.type) || '').trim(); if (type && types.indexOf(type) === -1) types.push(type); });
         var url = p.url || p.link || (config.pattern ? config.pattern.replace(':id', p.id).replace(':slug', p.slug || p.id) : '');
         return {
-            id: p.id, slug: String(p.id), name: (en ? (p.name_en || p.name_ar) : (p.name_ar || p.name_en)) || '', developer_name: p.developer || '',
+            id: p.id, slug: String(p.id), alias: p.slug ? String(p.slug) : '', name: (en ? (p.name_en || p.name_ar) : (p.name_ar || p.name_en)) || '', developer_name: p.developer || '',
             location: p.address || cityName, area_label: cityName, group: 'c' + p.city_id, group_label: cityName,
             price: value ? Math.round(value).toLocaleString('en-US') : '', price_value: value, types: types.slice(0, 3).join(' · '), type_keys: types,
             delivery: deliveryOf(p.delivery_in), image: p.image || '', url: url, price_list_pdf: p.price_list_pdf || '', lat: lat, lng: lng,
@@ -3350,7 +3350,9 @@
             Array.prototype.forEach.call(count, function (node) { node.textContent = list.length; });
             // المشروع المطلوب: data-compound أو ?compound_id= أو ?project=
             var wanted = root.getAttribute('data-compound') || query.get('compound_id') || query.get('project') || '';
-            if (wanted && list.some(function (p) { return p.slug === String(wanted); })) { root.setAttribute('data-selected', String(wanted)); root.setAttribute('data-focus', '1'); }
+            // بالـ id ، أو بالـ slug لو الـ API بيرجّعه (لينكات صفحات المشاريع ?project=slug)
+            var found = wanted ? list.filter(function (p) { return p.slug === String(wanted) || (p.alias && p.alias === String(wanted)); })[0] : null;
+            if (found) { root.setAttribute('data-selected', found.slug); root.setAttribute('data-focus', '1'); }
             else if (mode === 'sahl' && list.length) root.setAttribute('data-area', 'c' + sahel);
             if (note) note.hidden = true;
             root.classList.remove('is-loading');
