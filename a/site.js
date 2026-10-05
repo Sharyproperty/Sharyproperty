@@ -4292,65 +4292,354 @@
 })();
 
 /**
- * صفحة Shary AI (partials/ai-panel.blade.php)
- * - أي عنصر عليه data-ask-ai بيفتح الصفحة (بتطلع من تحت). القفل من السهم أو الضغط براها أو Esc.
- * - الإرسال (الكتابة أو اختيار منطقة): الرسالة بتتضاف، وبيطلع حدث shary:ai-send على الصفحة:
- *       panel.addEventListener('shary:ai-send', function (event) { event.preventDefault(); event.detail.reply('نص الرد'); });
- *   لو الحدث ما اتمنعش وفيه data-endpoint: الرسالة بتتبعت POST JSON {message} والرد المتوقع JSON {reply}.
- * - النقط التلاتة: محادثة جديدة. المايك بيظهر بس لو المتصفح بيدعم الإملاء الصوتي.
+ * صفحة Shary AI (partials/ai-panel.blade.php) — بنفس ستراكشر نسخة شاري AI المعتمدة.
+ * - أي عنصر عليه data-ask-ai بيفتح الصفحة. القفل من سهم الرجوع أو الضغط براها أو Esc.
+ * - أسئلة الاختيار [data-ai-onb]: بتترسم من data-ai-config ← flow (المنطقة ← الحي ← الاستخدام ← نوع الوحدة ← الميزانية ← الهدف) ،
+ *   كل سؤال بيظهر بعد اللي قبله ، و"ابدأ البحث" بيبعت رسالة جاهزة + الاختيارات. "أو اكتب سؤالك مباشرة" بيفتح الشات على طول.
+ * - الإرسال: الرسالة بتتضاف (صورة + اسم + رسالة) وبيطلع حدث shary:ai-send على الصفحة:
+ *       panel.addEventListener('shary:ai-send', function (event) {
+ *           event.preventDefault();
+ *           event.detail.reply('نص الرد', { cards: [...], chips: [...], meeting: true });   // detail.text ، detail.answers
+ *       });
+ *   لو الحدث ما اتمنعش وفيه data-endpoint: بيتبعت POST JSON { message, answers, session } والرد المتوقع JSON { reply, cards, chips, meeting, session }.
+ * - كروت الرد (cards):
+ *       { type: 'unit',    title, location, developer, developer_short, image, price, currency, beds, baths, area, plan, badge, url }
+ *       { type: 'project', name,  location, developer, developer_short, image, price (يبدأ من), currency, types: [...], plan, index (مؤشر شاري), badge, url }
+ *   وتحت كل كارت: اتصال + واتساب + احجز ميتنج (بيفتح فورم طلب المقابلة) + التفاصيل (url). meeting: true = كارت "تحب تتكلم مع مستشار شاري؟".
+ * - "من الأول": محادثة جديدة ورجوع لأسئلة الاختيار. المايك بيظهر بس لو المتصفح بيدعم الإملاء الصوتي.
  */
 (function () {
     var panels = Array.prototype.slice.call(document.querySelectorAll('[data-ai-panel]'));
     if (!panels.length) return;
 
-    panels.forEach(function (panel) {
-        var list = panel.querySelector('[data-ai-messages]');
-        var scroll = panel.querySelector('[data-ai-scroll]');
-        var suggestions = panel.querySelector('[data-ai-suggestions]');
-        var form = panel.querySelector('[data-ai-form]');
-        var input = form.querySelector('input[name="message"]');
-        var opener = null;
+    function make(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text != null) node.textContent = text;
+        return node;
+    }
+    var ICONS = {
+        bed: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 18v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6M3 15h18M6 10V7.500A1.500 1.500 0 0 1 7.500 6h9A1.500 1.500 0 0 1 18 7.500V10"/></svg>',
+        bath: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v2a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5v-2ZM6 12V6.500A2.500 2.500 0 0 1 8.500 4c1.200 0 2 .700 2.300 1.700M7 19l-1 2M17 19l1 2"/></svg>',
+        size: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 20 4M4 20V9M4 20h11M9 15l2 2M13 11l2 2"/></svg>',
+        phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.250 11.400 11.400 0 0 0 3.600.570 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.200 2.450.570 3.570a1 1 0 0 1-.250 1L6.600 10.800Z"/></svg>',
+        calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15" rx="2.500"/><path d="M8 3v4M16 3v4M3.500 10h17"/></svg>',
+        pin: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.200 7 13 7 13s7-7.800 7-13a7 7 0 0 0-7-7Zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5Z"/></svg>'
+    };
 
-        function bubble(text, mine) {
-            var node = document.createElement('div');
-            node.className = mine ? 'area-ai-msg area-ai-msg--mine' : 'area-ai-msg';
-            node.setAttribute('data-ai-added', '');
-            var p = document.createElement('p');
-            p.textContent = text;
-            node.appendChild(p);
-            list.appendChild(node);
-            scroll.scrollTop = scroll.scrollHeight;
-            return node;
+    panels.forEach(function (panel) {
+        var config = {};
+        try { config = JSON.parse(panel.getAttribute('data-ai-config') || '{}'); } catch (error) { config = {}; }
+        var T = config.text || {};
+        var flow = Array.isArray(config.flow) ? config.flow : [];
+        var contact = config.contact || {};
+        var user = config.user || {};
+
+        var onb = panel.querySelector('[data-ai-onb]');
+        var stepsBox = panel.querySelector('[data-ai-steps]');
+        var startButton = panel.querySelector('[data-ai-start]');
+        var skipButton = panel.querySelector('[data-ai-skip]');
+        var scroll = panel.querySelector('[data-ai-scroll]');
+        var list = panel.querySelector('[data-ai-messages]');
+        var chipsBox = panel.querySelector('[data-ai-chips]');
+        var form = panel.querySelector('[data-ai-form]');
+        var input = form.querySelector('[name="message"]');
+        var opener = null;
+        var answers = {};          // اختيارات الأسئلة: { area: { value, label }, ... }
+        var session = '';          // رقم الجلسة اللي بيرجعه السيرفر (اختياري)
+        var busy = false;
+
+        // ---------- أسئلة الاختيار ----------
+        function optionsOf(step) {
+            if (!step.depends) return Array.isArray(step.options) ? step.options : [];
+            var parent = answers[step.depends];
+            var map = step.options || {};
+            return parent && Array.isArray(map[parent.value]) ? map[parent.value] : [];
+        }
+        // الخطوات اللي ليها اختيارات دلوقتي (الحي بيظهر بس لو المنطقة ليها أحياء)
+        function activeSteps() {
+            return flow.filter(function (step) { return !step.depends || (answers[step.depends] && optionsOf(step).length); });
+        }
+        function renderSteps() {
+            if (!stepsBox) return;
+            stepsBox.textContent = '';
+            var steps = activeSteps();
+            var open = true;
+            steps.forEach(function (step) {
+                if (!open) return;
+                var chosen = answers[step.key];
+                var block = make('div', 'sai__step');
+                var head = make('p', 'sai__q');
+                head.appendChild(make('b', '', step.question));
+                if (step.hint) head.appendChild(make('span', '', step.hint));
+                block.appendChild(head);
+                var opts = make('div', 'sai__opts');
+                optionsOf(step).forEach(function (option) {
+                    var button = make('button', '', option.label);
+                    button.type = 'button';
+                    if (chosen && chosen.value === option.value) button.className = 'is-on';
+                    button.addEventListener('click', function () { pick(step, option); });
+                    opts.appendChild(button);
+                });
+                block.appendChild(opts);
+                stepsBox.appendChild(block);
+                if (!chosen) open = false;   // السؤال اللي بعده بيظهر بعد الإجابة
+            });
+            var done = steps.length > 0 && steps.every(function (step) { return !!answers[step.key]; });
+            if (startButton) startButton.disabled = !done;
+            if (done && startButton && startButton.scrollIntoView) startButton.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+        function pick(step, option) {
+            answers[step.key] = { value: option.value, label: option.label };
+            // تغيير إجابة بيمسح اللي بعدها (الأسئلة اللي معتمدة عليها)
+            var after = false;
+            flow.forEach(function (item) {
+                if (item.key === step.key) { after = true; return; }
+                if (after && item.depends === step.key) delete answers[item.key];
+            });
+            renderSteps();
+            var last = stepsBox.lastElementChild;
+            if (last && last.scrollIntoView) last.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+        function queryText() {
+            var place = (answers.sub && answers.sub.value ? answers.sub.label : '') || (answers.area ? answers.area.label : '');
+            var text = String(T.query || '');
+            var map = { type: answers.type ? answers.type.label : '', use: answers.use ? answers.use.label : '', place: place, budget: answers.budget ? answers.budget.label : '', purpose: answers.purpose ? answers.purpose.label : '' };
+            Object.keys(map).forEach(function (key) { text = text.replace(':' + key, map[key]); });
+            return text.replace(/\s+/g, ' ').trim();
+        }
+        function plainAnswers() {
+            var out = {};
+            Object.keys(answers).forEach(function (key) { out[key] = answers[key].value; });
+            return out;
         }
 
-        function send(text) {
-            text = String(text || '').trim();
-            if (!text) return;
-            bubble(text, true);
-            input.value = '';
-            if (suggestions) suggestions.classList.add('hidden');
+        // ---------- الشات ----------
+        function showChat() {
+            if (onb) onb.classList.add('hidden');
+            scroll.classList.remove('hidden');
+            if (chipsBox && chipsBox.children.length) chipsBox.classList.remove('hidden');
+            if (!list.children.length && T.welcome) bubble(T.welcome, false);
+        }
+        function toBottom() { scroll.scrollTop = scroll.scrollHeight; }
+        function avatar(mine) {
+            var node = make('span', 'sai__avatar ' + (mine ? 'sai__avatar--me' : 'sai__avatar--bot'));
+            node.setAttribute('aria-hidden', 'true');
+            if (mine && user.avatar) { node.style.backgroundImage = 'url("' + String(user.avatar).replace(/"/g, '%22') + '")'; node.classList.add('sai__avatar--img'); }
+            else node.textContent = mine ? String(user.name || T.me || '').trim().slice(0, 1) : 'AI';
+            return node;
+        }
+        function row(mine) {
+            var line = make('div', 'sai__row ' + (mine ? 'sai__row--me' : 'sai__row--bot'));
+            var col = make('div', 'sai__col');
+            col.appendChild(make('span', 'sai__who', mine ? (user.name || T.me || '') : (T.bot || 'Shary AI')));
+            line.appendChild(avatar(mine));
+            line.appendChild(col);
+            list.appendChild(line);
+            return col;
+        }
+        // النص: **كلمة** = بولد ، وكل سطر في فقرة (من غير HTML من السيرفر)
+        function fill(node, text) {
+            String(text).split(/\n+/).forEach(function (lineText) {
+                var p = make('p');
+                lineText.split(/(\*\*[^*]+\*\*)/).forEach(function (part) {
+                    if (/^\*\*[^*]+\*\*$/.test(part)) p.appendChild(make('b', '', part.slice(2, -2)));
+                    else if (part) p.appendChild(document.createTextNode(part));
+                });
+                node.appendChild(p);
+            });
+        }
+        function bubble(text, mine) {
+            var col = row(mine);
+            var node = make('div', 'sai__msg ' + (mine ? 'sai__msg--me' : 'sai__msg--bot'));
+            fill(node, text);
+            col.appendChild(node);
+            toBottom();
+            return node;
+        }
+        function waLink(text) {
+            var number = String(contact.whatsapp || '').replace(/\D+/g, '');
+            return 'https://wa.me/' + number + (text ? '?text=' + encodeURIComponent(text) : '');
+        }
+        function action(className, label, icon, href) {
+            var node = make(href ? 'a' : 'button', 'sai__way ' + className);
+            if (href) { node.href = href; if (/^https?:/.test(href)) { node.target = '_blank'; node.rel = 'noopener'; } } else node.type = 'button';
+            if (icon) node.insertAdjacentHTML('beforeend', icon);
+            node.appendChild(make('span', '', label));
+            return node;
+        }
+        function meetButton(label, className) {
+            var node = action(className || 'sai__way--meet', label || T.meet, ICONS.calendar, contact.meeting || '#');
+            node.removeAttribute('target');
+            node.setAttribute('data-meeting-open', '');
+            // فورم المقابلة بيفتح فوق الصفحة: صفحة Shary AI بتتقفل الأول
+            node.addEventListener('click', function () { close(); });
+            return node;
+        }
+        function card(item) {
+            var isUnit = item.type !== 'project';
+            var name = isUnit ? item.title : item.name;
+            var box = make('article', 'sai__card');
+            if (item.image) {
+                var photo = make(item.url ? 'a' : 'span', 'sai__card-photo');
+                if (item.url) photo.href = item.url;
+                var img = make('img');
+                img.src = item.image; img.alt = name || ''; img.loading = 'lazy';
+                if (item.image_fallback) img.onerror = function () { img.onerror = null; img.src = item.image_fallback; };
+                photo.appendChild(img);
+                if (item.badge) photo.appendChild(make('span', 'sai__card-badge', item.badge));
+                box.appendChild(photo);
+            }
+            var body = make('div', 'sai__card-body');
+            // شريط المطور: الحروف المختصرة + الاسم (+ مؤشر شاري للمشروع)
+            var dev = make('div', 'sai__card-dev');
+            dev.appendChild(make('span', 'sai__card-logo', item.developer_short || String(item.developer || '').slice(0, 2)));
+            dev.appendChild(make('span', 'sai__card-devname', item.developer || ''));
+            if (!isUnit && item.index) {
+                var score = make('span', 'sai__card-index');
+                score.appendChild(make('b', '', String(item.index)));
+                score.appendChild(make('small', '', T.index || ''));
+                dev.appendChild(score);
+            }
+            body.appendChild(dev);
+            var title = make('h3', 'sai__card-title');
+            if (item.url) { var link = make('a', '', name || ''); link.href = item.url; title.appendChild(link); } else title.textContent = name || '';
+            body.appendChild(title);
+            if (item.location) {
+                var place = make('p', 'sai__card-place');
+                place.insertAdjacentHTML('beforeend', ICONS.pin);
+                place.appendChild(make('span', '', item.location));
+                body.appendChild(place);
+            }
+            // السعر: رقم كبير ذهبي
+            if (item.price) {
+                var price = make('p', 'sai__card-price');
+                if (!isUnit) price.appendChild(make('small', '', T.from || ''));
+                var amount = make('b', '', String(item.price)); amount.dir = 'ltr';
+                price.appendChild(amount);
+                price.appendChild(make('span', '', item.currency || T.currency || ''));
+                body.appendChild(price);
+            }
+            if (item.plan) body.appendChild(make('p', 'sai__card-plan', item.plan));
+            // خانات الوحدة (غرف / حمامات / مساحة) أو أنواع وحدات المشروع
+            if (isUnit) {
+                var cells = make('ul', 'sai__card-cells');
+                [[item.beds, T.beds, ICONS.bed], [item.baths, T.baths, ICONS.bath], [item.area, T.area, ICONS.size]].forEach(function (cell) {
+                    if (cell[0] == null || cell[0] === '') return;
+                    var li = make('li');
+                    li.insertAdjacentHTML('beforeend', cell[2]);
+                    li.appendChild(make('b', '', String(cell[0])));
+                    li.appendChild(make('span', '', cell[1] || ''));
+                    cells.appendChild(li);
+                });
+                if (cells.children.length) body.appendChild(cells);
+            } else if (Array.isArray(item.types) && item.types.length) {
+                var types = make('p', 'sai__card-types');
+                item.types.slice(0, 4).forEach(function (type) { types.appendChild(make('span', '', type)); });
+                body.appendChild(types);
+            }
+            // التواصل: اتصال + واتساب + احجز ميتنج (+ التفاصيل)
+            var ways = make('div', 'sai__ways');
+            ways.appendChild(action('sai__way--call', T.call, ICONS.phone, 'tel:' + (contact.phone || '')));
+            var wa = action('sai__way--wa', T.whatsapp, '', waLink(name ? name + (item.url ? '\n' + item.url : '') : ''));
+            wa.insertAdjacentHTML('afterbegin', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>');
+            ways.appendChild(wa);
+            ways.appendChild(meetButton());
+            body.appendChild(ways);
+            if (item.url) { var more = make('a', 'sai__card-more', T.details || ''); more.href = item.url; body.appendChild(more); }
+            box.appendChild(body);
+            return box;
+        }
+        function cards(items) {
+            if (!Array.isArray(items) || !items.length) return;
+            var wrap = make('div', 'sai__cards');
+            items.forEach(function (item) { if (item && typeof item === 'object') wrap.appendChild(card(item)); });
+            list.appendChild(wrap);
+        }
+        function meeting() {
+            var box = make('div', 'sai__meet');
+            var text = make('div', 'sai__meet-text');
+            text.appendChild(make('b', '', T.meet_title || ''));
+            text.appendChild(make('span', '', T.meet_text || ''));
+            box.appendChild(text);
+            box.appendChild(meetButton(T.meet, 'sai__meet-btn'));
+            list.appendChild(box);
+        }
+        function chips(items) {
+            if (!chipsBox) return;
+            chipsBox.textContent = '';
+            (Array.isArray(items) ? items : []).forEach(function (text) {
+                var button = make('button', '', text);
+                button.type = 'button';
+                button.addEventListener('click', function () { send(text); });
+                chipsBox.appendChild(button);
+            });
+            chipsBox.classList.toggle('hidden', !chipsBox.children.length || scroll.classList.contains('hidden'));
+        }
+        function grow() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px'; }
 
-            var typing = bubble('…', false);
-            typing.classList.add('area-ai-msg--typing');
+        function send(text, extra) {
+            text = String(text || '').trim();
+            if (!text || busy) return;
+            showChat();
+            bubble(text, true);
+            input.value = ''; grow();
+            busy = true;
+            form.classList.add('is-busy');
+
+            var typingCol = row(false);
+            var typing = make('div', 'sai__msg sai__msg--bot sai__typing');
+            typing.setAttribute('aria-label', T.typing || '');
+            typing.innerHTML = '<i></i><i></i><i></i>';
+            typingCol.appendChild(typing);
+            toBottom();
+
             var done = false;
-            function reply(answer) {
+            function reply(answer, more) {
                 if (done) return;
-                done = true;
-                typing.remove();
+                done = true; busy = false;
+                form.classList.remove('is-busy');
+                var line = typingCol.parentNode;
+                if (line && line.parentNode) line.parentNode.removeChild(line);
+                more = more || {};
                 if (answer) bubble(answer, false);
+                cards(more.cards);
+                if (more.meeting) meeting();
+                if (Array.isArray(more.chips)) chips(more.chips);
+                if (more.session) session = more.session;
+                toBottom();
             }
 
-            var go = panel.dispatchEvent(new CustomEvent('shary:ai-send', { bubbles: true, cancelable: true, detail: { text: text, reply: reply } }));
+            var detail = { text: text, answers: (extra && extra.answers) || null, reply: reply, sample: config.sample || null };
+            var go = panel.dispatchEvent(new CustomEvent('shary:ai-send', { bubbles: true, cancelable: true, detail: detail }));
             if (!go) return;
 
             var endpoint = panel.getAttribute('data-endpoint');
-            if (!endpoint) { reply(''); return; }
+            if (!endpoint) {
+                // من غير سيرفر (معاينة): الكروت التجريبية لو موجودة
+                window.setTimeout(function () { reply(config.sample && config.sample.reply ? config.sample.reply : '', config.sample || {}); }, 600);
+                return;
+            }
             var token = document.querySelector('meta[name="csrf-token"]');
             fetch(endpoint, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '' },
-                body: JSON.stringify({ message: text })
-            }).then(function (response) { return response.json(); }).then(function (data) { reply(data && data.reply); }).catch(function () { reply(''); });
+                body: JSON.stringify({ message: text, answers: detail.answers, session: session })
+            }).then(function (response) { return response.json(); })
+              .then(function (data) { data = data || {}; reply(data.reply || '', data); })
+              .catch(function () { reply(T.error || ''); });
+        }
+
+        function restart() {
+            answers = {}; session = ''; busy = false;
+            form.classList.remove('is-busy');
+            list.textContent = '';
+            input.value = ''; grow();
+            scroll.classList.add('hidden');
+            if (chipsBox) chipsBox.classList.add('hidden');
+            if (onb) { onb.classList.remove('hidden'); onb.scrollTop = 0; }
+            chips(config.chips);
+            renderSteps();
         }
 
         function open(from) {
@@ -4365,25 +4654,29 @@
             if (panel.classList.contains('hidden')) return;
             panel.classList.add('hidden');
             document.documentElement.style.overflow = '';
-            if (opener) opener.focus({ preventScroll: true });
+            if (opener) { try { opener.focus({ preventScroll: true }); } catch (error) { /* العنصر اتشال */ } }
             if (window.SharyBack) window.SharyBack.closed();
         }
         panel.sharyOpen = open;
 
         panel.querySelectorAll('[data-ai-close]').forEach(function (node) { node.addEventListener('click', close); });
+        // لينك كارت (صفحة الوحدة / المشروع): صفحة Shary AI بتتقفل والعميل بيروح للصفحة
+        list.addEventListener('click', function (event) {
+            var link = event.target.closest ? event.target.closest('a[href]') : null;
+            if (link && !link.target && !/^(tel:|mailto:)/.test(link.getAttribute('href')) && !link.hasAttribute('data-meeting-open')) close();
+        });
         document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
         form.addEventListener('submit', function (event) { event.preventDefault(); send(input.value); });
-        panel.querySelectorAll('[data-ai-suggest]').forEach(function (button) {
-            button.addEventListener('click', function () { send(button.textContent); });
-        });
+        input.addEventListener('input', grow);
+        input.addEventListener('keydown', function (event) { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(input.value); } });
+        if (startButton) startButton.addEventListener('click', function () { if (!startButton.disabled) send(queryText(), { answers: plainAnswers() }); });
+        if (skipButton) skipButton.addEventListener('click', function () { showChat(); input.focus(); });
 
         var reset = panel.querySelector('[data-ai-reset]');
         if (reset) {
             reset.addEventListener('click', function () {
-                list.querySelectorAll('[data-ai-added]').forEach(function (node) { node.remove(); });
-                if (suggestions) suggestions.classList.remove('hidden');
-                input.value = '';
-                scroll.scrollTop = 0;
+                if (list.children.length > 1 && T.reset_confirm && !window.confirm(T.reset_confirm)) return;
+                restart();
             });
         }
 
@@ -4392,20 +4685,22 @@
         var Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (mic && Speech) {
             mic.classList.remove('hidden');
-            mic.classList.add('flex');
             var listening = null;
             mic.addEventListener('click', function () {
                 if (listening) { listening.stop(); return; }
                 var langNode = panel.closest('[lang]');
                 var recognition = new Speech();
                 recognition.lang = ((langNode && langNode.lang) || document.documentElement.lang || 'ar').indexOf('en') === 0 ? 'en-US' : 'ar-EG';
-                recognition.onresult = function (event) { input.value = event.results[0][0].transcript; input.focus(); };
+                recognition.onresult = function (event) { input.value = event.results[0][0].transcript; grow(); input.focus(); };
                 recognition.onend = recognition.onerror = function () { listening = null; mic.setAttribute('aria-pressed', 'false'); };
                 listening = recognition;
                 mic.setAttribute('aria-pressed', 'true');
                 try { recognition.start(); } catch (error) { listening = null; mic.setAttribute('aria-pressed', 'false'); }
             });
         }
+
+        chips(config.chips);
+        renderSteps();
     });
 
     // أي زرار Shary AI بيفتح الصفحة الأقرب له
