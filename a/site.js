@@ -2222,9 +2222,9 @@
                     if (areas[slug].url) name.setAttribute('href', areas[slug].url);
                     var values = areas[slug].values[typeKey];
                     item.querySelector('[data-mover-value]').textContent = values[field[kind]] != null ? values[field[kind]] : values.price_text;
-                    // الأعلى طلبًا: الدايرة بتتملى على قد الرقم
+                    // الأعلى طلبًا: الدايرة (مفتوحة من تحت — القوس 75 من 100) بتتملى على قد الرقم
                     var arc = item.querySelector('[data-mover-arc]');
-                    if (arc) arc.setAttribute('stroke-dasharray', Math.max(0, Math.min(100, Number(values.demand) || 0)) + ' 100');
+                    if (arc) arc.setAttribute('stroke-dasharray', (Math.max(0, Math.min(100, Number(values.demand) || 0)) * 0.75).toFixed(1) + ' 100');
                 });
             });
         }
