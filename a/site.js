@@ -2803,7 +2803,7 @@
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
         // السما حوالين الكرة: سحابي فاتح (مش أسود ولا كحلي) — نفس خلفية .smap__map
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
-            sky: { 'sky-color': '#a9bccd', 'horizon-color': '#eef3f8', 'fog-color': '#eef3f8', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
+            sky: { 'sky-color': '#d3dee8', 'horizon-color': '#f6f9fc', 'fog-color': '#f6f9fc', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
     }
 
     document.querySelectorAll('[data-smap]').forEach(function (root) {
@@ -2907,7 +2907,7 @@
                 glLib = lib;
                 if (lib.AttributionControl) gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
                 // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
-                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#eef3f8', 'high-color': '#b6c8d8', 'space-color': '#a9bccd', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#f6f9fc', 'high-color': '#d3dee8', 'space-color': '#d6e0e9', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
