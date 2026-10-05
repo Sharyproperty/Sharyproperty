@@ -6371,6 +6371,87 @@ input:focus-visible + .area-chip,
   grid-template-areas: "head actions" "prices prices";
 }
 
+/* موبايل (الوحدة والمشروع): العنوان سطر واحد بعرض الصف — من غير ما أزرار قارن / مفضلة / شارك تزاحمه.
+       الصف الأول: (لوجو المطور في المشروع) + العنوان ، تحته المكان ، وبعدهم صف: الكود + متابعة ... وقصادهم قارن / مفضلة / شارك ، وبعده الأسعار */
+
+@media (max-width: 1023px) {
+  .prop-bar .prop-bar__in {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    -moz-column-gap: 8px;
+         column-gap: 8px;
+    row-gap: 6px;
+  }
+
+  .prop-bar .prop-bar__head,
+        .prop-bar .prop-bar__head > div:first-child {
+    display: contents;
+  }
+
+  .prop-bar .prop-bar__head h1 {
+    order: 1;
+    min-width: 0;
+    flex: 0 0 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: clamp(16px, 4.9vw, 19px);
+  }
+
+  .prop-bar .prop-bar__head > p {
+    order: 2;
+    min-width: 0;
+    flex: 0 0 100%;
+    margin-top: -3px;
+    padding-inline-end: 0;
+  }
+
+  .prop-bar .prop-bar__head > p > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .prop-bar .prop-bar__head [data-bar-field="code"] {
+    order: 3;
+  }
+
+  .prop-bar .prop-bar__head > .prop-follow {
+    order: 4;
+  }
+
+  .prop-bar .prop-bar__actions {
+    order: 5;
+    margin-inline-start: auto;
+    align-self: center;
+  }
+
+  .prop-bar .prop-bar__prices {
+    order: 6;
+    flex: 0 0 100%;
+    margin-top: 6px;
+  }
+
+  /* المشروع: لوجو المطور (56px) جنب العنوان والمكان */
+
+  .prop-bar--project .prop-bar__logo {
+    position: absolute;
+    top: 0;
+    inset-inline-start: 20px;
+  }
+
+  .prop-bar--project .prop-bar__head h1,
+        .prop-bar--project .prop-bar__head > p {
+    padding-inline-start: 68px;
+  }
+
+  .prop-bar--project .prop-bar__head h1 {
+    margin-top: 3px;
+  }
+}
+
 /* المعرض على الموبايل (الوحدة / المشروع): صورة واحدة بتتسحب بالجنب وتحتها نقط */
 
 .rent-gallery-wrap {
@@ -19502,8 +19583,8 @@ img.abroad-dev__logo {
     height: 54px;
   }
 
-  .lg\:h-\[60px\] {
-    height: 60px;
+  .lg\:h-\[68px\] {
+    height: 68px;
   }
 
   .lg\:h-\[70px\] {
@@ -19655,8 +19736,8 @@ img.abroad-dev__logo {
     width: 560px;
   }
 
-  .lg\:w-\[60px\] {
-    width: 60px;
+  .lg\:w-\[68px\] {
+    width: 68px;
   }
 
   .lg\:w-\[720px\] {
@@ -22236,7 +22317,7 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:h-\[46px\] {height: 46px;}
 .pv-desktop .lg\:h-\[52px\] {height: 52px;}
 .pv-desktop .lg\:h-\[54px\] {height: 54px;}
-.pv-desktop .lg\:h-\[60px\] {height: 60px;}
+.pv-desktop .lg\:h-\[68px\] {height: 68px;}
 .pv-desktop .lg\:h-\[70px\] {height: 70px;}
 .pv-desktop .lg\:h-\[76px\] {height: 76px;}
 .pv-desktop .lg\:h-\[84px\] {height: 84px;}
@@ -22275,7 +22356,7 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:w-\[540px\] {width: 540px;}
 .pv-desktop .lg\:w-\[54px\] {width: 54px;}
 .pv-desktop .lg\:w-\[560px\] {width: 560px;}
-.pv-desktop .lg\:w-\[60px\] {width: 60px;}
+.pv-desktop .lg\:w-\[68px\] {width: 68px;}
 .pv-desktop .lg\:w-\[720px\] {width: 720px;}
 .pv-desktop .lg\:w-\[84px\] {width: 84px;}
 .pv-desktop .lg\:w-\[900px\] {width: 900px;}
