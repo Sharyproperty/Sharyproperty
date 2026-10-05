@@ -2780,6 +2780,7 @@
  * الخريطة نفسها (أول محرك متاح) — الاتنين نفس الـ API فالكود واحد:
  *   1) Mapbox GL (لو data-mapbox-token موجود ومكتبة mapboxgl محملة): نفس خريطة الموقع الحالية ، بالكرة الأرضية (projection: globe).
  *   2) MapLibre GL (من غير توكن): المكتبة بتتحمل لوحدها من data-gl-src (+ data-gl-css) ، كرة أرضية + صور قمر صناعي (Esri World Imagery) + أسماء الأماكن.
+ *   علامة كل مشروع = اسمه المختصر في تابة صغيرة كحلي (المختار تركواز) — وعلى الكرة الأرضية قبل اختيار منطقة: نقط صغيرة.
  *   3) لو مفيش WebGL / المكتبة ما اتحملتش: تضمين خرائط جوجل بالقمر الصناعي على المشروع المختار (من غير أي مفتاح).
  */
 (function () {
@@ -2803,7 +2804,7 @@
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
         // السما حوالين الكرة: سحابي فاتح (مش أسود ولا كحلي) — نفس خلفية .smap__map
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
-            sky: { 'sky-color': '#d3dee8', 'horizon-color': '#f6f9fc', 'fog-color': '#f6f9fc', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
+            sky: { 'sky-color': '#c3d6ee', 'horizon-color': '#ffffff', 'fog-color': '#ffffff', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
     }
 
     document.querySelectorAll('[data-smap]').forEach(function (root) {
@@ -2907,14 +2908,18 @@
                 glLib = lib;
                 if (lib.AttributionControl) gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
                 // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
-                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#f6f9fc', 'high-color': '#d3dee8', 'space-color': '#d6e0e9', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#ffffff', 'high-color': '#c3d6ee', 'space-color': '#cfe0f3', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
                     pin.type = 'button';
                     pin.className = 'smap__marker';
                     pin.setAttribute('aria-label', p.name || '');
-                    pin.textContent = priceLabel(p);
+                    // اسم المشروع المختصر (من غير "كمبوند / قرية / Compound") جوه تابة صغيرة — السعر في الـ title
+                    var label = document.createElement('span');
+                    label.textContent = String(p.name || '').replace(/^(كمبوند|قرية|مشروع|Compound|Village)\s+/i, '') || priceLabel(p);
+                    pin.appendChild(label);
+                    pin.title = (p.name || '') + ' — ' + priceLabel(p);
                     pin.addEventListener('click', function (event) { event.stopPropagation(); select(item, true); });
                     pin.style.display = item.parentNode.hidden ? 'none' : '';
                     item.__pin = pin;
