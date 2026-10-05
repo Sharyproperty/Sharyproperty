@@ -4445,13 +4445,19 @@ input:focus-visible + .area-chip,
   outline-offset: 2px;
 }
 
+/* تبويبات العرض (وحدات المطور / إعادة البيع / الإيجار): كل تبويب بياخد عرض على قد كلمته (الكلمة الطويلة تاخد مساحة أكبر) والكلمة في سطر واحد متسنترة — عربي وإنجليزي */
+
 .area-tabs {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
   gap: 4px;
   border-radius: 22px;
   background-color: #e3eaf3;
   padding: 6px;
+}
+
+.area-tabs label {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .area-tabs span {
@@ -4460,10 +4466,21 @@ input:focus-visible + .area-chip,
   align-items: center;
   justify-content: center;
   border-radius: 16px;
+  padding-inline: 8px;
+  text-align: center;
+  white-space: nowrap;
   font-size: 15px;
   font-weight: 600;
+  line-height: 1.3;
   color: #123a5c;
   transition: background-color 0.15s, color 0.15s;
+}
+
+@media (max-width: 379px) {
+  .area-tabs span {
+    padding-inline: 5px;
+    font-size: 13.5px;
+  }
 }
 
 .area-tabs input:checked + span {
@@ -9527,51 +9544,26 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   color: #3c5068;
 }
 
-/* الخريطة: الخلفية ورا الكرة الأرضية زجاج مموّه (blur) — مش لون مصمت: طبقة ألوان متحركة ::before تحت */
+/* الخريطة: الخلفية ورا الكرة الأرضية لون واحد جلاسي (أزرق سماوي فاتح) — من غير بقع ألوان ولا حركة: درجة واحدة هادية + لمعة زجاج خفيفة ::before */
 
 .smap__map {
   position: relative;
   min-height: 0;
   flex: 1 1 0%;
   overflow: hidden;
-  background-color: #d3e2f3;
+  background-color: #dbe7f4;
+  background-image: linear-gradient(180deg, #e2ecf7 0%, #d5e3f2 100%);
 }
 
-/* طبقة الزجاج المموّه ورا الكرة: بقع ألوان (أزرق سماوي / كحلي / بنفسجي هادي / أبيض) عليها blur قوي وبتتحرك بالراحة — فالخلفية شكلها زجاج حيّ مش لون واحد */
+/* لمعة الزجاج: خط نور مايل خفيف على نفس اللون (مش لون تاني) */
 
 .smap__map::before {
   content: "";
   position: absolute;
-  inset: -22%;
+  inset: 0;
   z-index: 0;
-  background-image:
-            radial-gradient(circle at 50% 50%, #ffffff 0 20%, transparent 21%),
-            radial-gradient(circle at 18% 24%, #5f9fe6 0 19%, transparent 20%),
-            radial-gradient(circle at 82% 18%, #a79cf0 0 14%, transparent 15%),
-            radial-gradient(circle at 78% 82%, #2c5c9c 0 21%, transparent 22%),
-            radial-gradient(circle at 14% 80%, #8fd2f2 0 19%, transparent 20%),
-            radial-gradient(circle at 52% 6%, #cfe6fb 0 15%, transparent 16%);
-  filter: blur(58px);
-  opacity: 0.92;
+  background-image: linear-gradient(125deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 34%, rgba(255, 255, 255, 0) 66%, rgba(255, 255, 255, 0.22) 100%);
   pointer-events: none;
-  animation: smap-drift 24s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-@keyframes smap-drift {
-  from {
-    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1);
-  }
-
-  to {
-    transform: translate3d(3%, 2%, 0) rotate(8deg) scale(1.08);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .smap__map::before {
-    animation: none;
-  }
 }
 
 .smap__frame,
@@ -11860,7 +11852,7 @@ img.abroad-dev__logo {
   transition: opacity 0.3s;
 }
 
-/* كارت واحد هادي وراقي بألوان شاري: كحلي شاري من فوق لتحت + لمسة تركواز ورا التليفون ولمسة صفرا خفيفة في الركن (ألوان اللوجو) — من غير جزء منفصل ولا زرار مليان:
+/* كارت واحد بألوان لوجو شاري: أزرق شاري صافي من فوق لتحت (من غير أي لون رمادي أو بقع) ، ودايرة بيضا كبيرة ورا التليفون ومعاها دايرتين صغيرين صفرا وتركواز (دواير اللوجو) —
        التليفون واضح ، العنوان أبيض ، سطر واحد ، و"حمل التطبيق الآن" سطر نص بسهم (مش زرار). الكارت كله بيفتح المتجر */
 
 .app-pop__card {
@@ -11870,11 +11862,8 @@ img.abroad-dev__logo {
   cursor: pointer;
   overflow: hidden;
   border-radius: 30px;
-  background-color: #163a5e;
-  background-image:
-            radial-gradient(62% 34% at 50% 36%, rgba(76, 191, 174, 0.34), rgba(76, 191, 174, 0)),
-            radial-gradient(42% 22% at 92% 4%, rgba(252, 180, 36, 0.2), rgba(252, 180, 36, 0)),
-            linear-gradient(180deg, #1e4166 0%, #163a5e 52%, #0e2c49 100%);
+  background-color: #24598f;
+  background-image: linear-gradient(180deg, #2f6fa6 0%, #24598f 55%, #1e4a7c 100%);
   padding: 0 0 26px;
   text-align: center;
   color: #fff;
@@ -11904,11 +11893,11 @@ img.abroad-dev__logo {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.14);
-  color: #fff;
+  background-color: #fff;
+  color: #1e4166;
 }
 
-/* التليفون كبير وواضح فوق هالة نور خفيفة — على نفس خلفية الكارت */
+/* التليفون كبير وواضح قدام دايرة بيضا — ودايرتين صغيرين (صفرا وتركواز) زي دواير اللوجو */
 
 .app-pop__art {
   position: relative;
@@ -11916,18 +11905,21 @@ img.abroad-dev__logo {
   height: min(430px, 56vh);
   align-items: center;
   justify-content: center;
+  background-image:
+            radial-gradient(circle at 17% 24%, #fcb424 0 26px, rgba(252, 180, 36, 0) 27px),
+            radial-gradient(circle at 85% 80%, #4cbfae 0 34px, rgba(76, 191, 174, 0) 35px);
   padding: 36px 0 4px;
 }
 
 .app-pop__art::before {
   content: "";
   position: absolute;
-  top: 52%;
+  top: 53%;
   left: 50%;
-  height: 320px;
-  width: 320px;
+  height: 292px;
+  width: 292px;
   border-radius: 50%;
-  background-image: radial-gradient(closest-side, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 55%, rgba(255, 255, 255, 0) 100%);
+  background-color: #fff;
   transform: translate(-50%, -50%);
 }
 
@@ -11941,7 +11933,7 @@ img.abroad-dev__logo {
   flex-shrink: 0;
   -o-object-fit: contain;
      object-fit: contain;
-  filter: drop-shadow(0 24px 28px rgba(4, 16, 30, 0.6));
+  filter: drop-shadow(0 22px 24px rgba(10, 34, 64, 0.45));
 }
 
 .app-pop__body {
@@ -11963,22 +11955,22 @@ img.abroad-dev__logo {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.88);
 }
 
-/* "حمل التطبيق الآن": سطر نص بسهم تحته خط رفيع (مش زرار) */
+/* "حمل التطبيق الآن": سطر نص أبيض بسهم وتحته خط أصفر رفيع (مش زرار) */
 
 .app-pop__cta {
   margin: 14px auto 0;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border-bottom: 1.5px solid rgba(76, 191, 174, 0.7);
+  border-bottom: 2px solid #fcb424;
   padding-bottom: 3px;
   font-size: 16.5px;
   font-weight: 800;
   line-height: 1.5;
-  color: #6fd3c4;
+  color: #fff;
 }
 
 .app-pop__cta[data-state="open"] [data-app-icon="get"] {
