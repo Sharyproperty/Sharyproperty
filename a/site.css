@@ -5916,7 +5916,7 @@ input:focus-visible + .area-chip,
   color: #123a5c;
 }
 
-/* زرارين فوق في المشروع والوحدة (المخطط / الصور — مخطط الوحدة / المخطط): الأيقونة جنب الاسم زي التطبيق */
+/* زراير أول صفحة المشروع والوحدة (الصور / على الخريطة / المخطط — مخطط الوحدة / على الخريطة / المخطط): 3 جنب بعض والأيقونة فوق الاسم */
 
 .prop-tiles {
   display: flex;
@@ -5925,17 +5925,18 @@ input:focus-visible + .area-chip,
 
 .prop-tile {
   display: flex;
-  min-height: 60px;
+  min-height: 78px;
   min-width: 0;
   flex: 1 1 0%;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 6px;
   border: 1px solid #e4e9ef;
   border-radius: 16px;
-  background-color: #fff;
-  padding: 10px 8px;
-  font-size: 14.5px;
+  background-color: #f6f9fd;
+  padding: 10px 6px;
+  font-size: 13.5px;
   font-weight: 700;
   line-height: 1.4;
   color: #123a5c;
@@ -6432,7 +6433,9 @@ input:focus-visible + .area-chip,
     flex: 0 0 auto;
     flex-direction: column;
     gap: 8px;
+    background-color: #fff;
     padding-inline: 20px;
+    font-size: 14.5px;
   }
 
   /* صفحة الوحدة: الأربع زراير (مخطط الوحدة / المخطط / الصور / الخريطة) بيتقسموا على عرض الصف بالتساوي */
@@ -8275,8 +8278,8 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .sai {
   --sai-navy: #123a5c;
   --sai-navy-deep: #0d2b44;
-  --sai-teal: #3aafa0;
-  --sai-teal-dark: #12796c;
+  --sai-blue: #5aa9ee;
+  --sai-blue-dark: #1f5fc4;
   --sai-gold: #c9922b;
   --sai-bg: #f4f7f9;
   --sai-line: #e4eaef;
@@ -8335,7 +8338,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  background-image: linear-gradient(145deg, var(--sai-teal), var(--sai-teal-dark));
+  background-image: linear-gradient(145deg, var(--sai-blue), var(--sai-blue-dark));
   font-weight: 800;
   line-height: 1;
   color: #fff;
@@ -8368,15 +8371,15 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   font-size: 11.5px;
   font-weight: 700;
   line-height: 1.5;
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__title small i {
   height: 7px;
   width: 7px;
   border-radius: 50%;
-  background-color: var(--sai-teal);
-  box-shadow: 0 0 0 3px rgba(58, 175, 160, 0.22);
+  background-color: var(--sai-blue);
+  box-shadow: 0 0 0 3px rgba(90, 169, 238, 0.28);
 }
 
 .sai__reset {
@@ -8393,8 +8396,8 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__reset:hover {
-  border-color: var(--sai-teal);
-  color: var(--sai-teal-dark);
+  border-color: var(--sai-blue);
+  color: var(--sai-blue-dark);
 }
 
 /* أسئلة الاختيار */
@@ -8416,13 +8419,13 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   align-items: center;
   gap: 12px;
   border-radius: 22px;
-  background-image: linear-gradient(90deg, var(--sai-teal) 0%, var(--sai-navy-deep) 100%);
+  background-image: linear-gradient(90deg, var(--sai-blue) 0%, var(--sai-blue-dark) 100%);
   padding: 13px 15px;
   color: #fff;
 }
 
 [dir="ltr"] .sai__hero {
-  background-image: linear-gradient(270deg, var(--sai-teal) 0%, var(--sai-navy-deep) 100%);
+  background-image: linear-gradient(270deg, var(--sai-blue) 0%, var(--sai-blue-dark) 100%);
 }
 
 .sai__hero-dot {
@@ -8456,8 +8459,9 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .sai__q {
   margin-bottom: 9px;
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 8px;
+  gap: 0 8px;
 }
 
 .sai__q b {
@@ -8482,7 +8486,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .sai__opts button,
     .sai__chips button {
   border-radius: 999px;
-  border: 1.5px solid var(--sai-teal);
+  border: 1.5px solid var(--sai-blue);
   background-color: #fff;
   padding: 9px 16px;
   font-size: 13.5px;
@@ -8493,16 +8497,16 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__opts button:hover {
-  box-shadow: 0 6px 14px -8px rgba(18, 121, 108, 0.6);
+  box-shadow: 0 6px 14px -8px rgba(31, 95, 196, 0.6);
 }
 
 .sai__opts button.is-on {
   border-color: transparent;
-  background-image: linear-gradient(120deg, var(--sai-teal), var(--sai-teal-dark));
+  background-image: linear-gradient(120deg, var(--sai-blue), var(--sai-blue-dark));
   color: #fff;
 }
 
-.sai__step {
+.sai__step--new {
   animation: sai-in 0.25s ease;
 }
 
@@ -8517,7 +8521,8 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   margin-top: 4px;
   width: 100%;
   border-radius: 15px;
-  background-color: var(--sai-teal-dark);
+  background-color: var(--sai-blue-dark);
+  background-image: linear-gradient(270deg, var(--sai-blue-dark), var(--sai-blue));
   padding: 14px;
   font-size: 15.5px;
   font-weight: 800;
@@ -8527,7 +8532,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__start:hover {
-  background-color: #0f6a5f;
+  filter: brightness(1.05);
 }
 
 .sai__start:disabled {
@@ -8545,7 +8550,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__skip:hover {
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 /* الشات */
@@ -8653,7 +8658,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   height: 7px;
   width: 7px;
   border-radius: 50%;
-  background-color: var(--sai-teal);
+  background-color: var(--sai-blue);
   animation: sai-dot 1s ease-in-out infinite;
 }
 
@@ -8715,7 +8720,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   top: 10px;
   inset-inline-start: 10px;
   border-radius: 999px;
-  background-color: var(--sai-teal-dark);
+  background-color: var(--sai-blue-dark);
   padding: 3px 11px;
   font-size: 11.5px;
   font-weight: 700;
@@ -8773,7 +8778,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .sai__card-index b {
   font-size: 19px;
   font-weight: 800;
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__card-index small {
@@ -8790,7 +8795,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__card-title a:hover {
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__card-place {
@@ -8833,7 +8838,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   font-size: 12px;
   font-weight: 700;
   line-height: 1.6;
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__card-cells {
@@ -8851,7 +8856,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   align-items: center;
   gap: 1px;
   padding: 8px 4px;
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__card-cells li + li {
@@ -8881,12 +8886,12 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 
 .sai__card-types span {
   border-radius: 999px;
-  background-color: #e8f5f2;
+  background-color: #e8f1fc;
   padding: 3px 11px;
   font-size: 12px;
   font-weight: 700;
   line-height: 1.6;
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__ways {
@@ -8927,9 +8932,9 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__way--meet {
-  border: 1.5px solid var(--sai-teal);
+  border: 1.5px solid var(--sai-blue);
   background-color: #fff;
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__card-more {
@@ -8983,9 +8988,298 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   height: 42px;
   flex: 0 0 auto;
   border-radius: 12px;
-  background-color: var(--sai-teal);
+  background-color: var(--sai-blue);
   padding-inline: 13px;
-  color: #06312b;
+  color: var(--sai-navy-deep);
+}
+
+/* سؤال بأكتر من اختيار: علامة صح على المختار */
+
+.sai__opts--multi button.is-on::before {
+  content: "\2713";
+  margin-inline-end: 6px;
+  font-weight: 800;
+}
+
+.sai__opts button:disabled {
+  cursor: default;
+  border-color: var(--sai-line);
+  color: #b3c0cb;
+  text-decoration: line-through;
+  box-shadow: none;
+}
+
+/* حجز الميتنج جوه الشات: كارت بخطوات (بخصوص إيه ← النوع ← اليوم ← الساعة ← البيانات) */
+
+.sai__book,
+    .sai__booked {
+  border-radius: 18px;
+  border: 1px solid var(--sai-line);
+  background-color: #fff;
+  padding: 14px;
+  box-shadow: 0 10px 22px -18px rgba(18, 58, 92, 0.55);
+  animation: sai-in 0.25s ease;
+}
+
+.sai__book-head {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sai__book-icon {
+  display: flex;
+  height: 38px;
+  width: 38px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-image: linear-gradient(145deg, var(--sai-blue), var(--sai-blue-dark));
+  color: #fff;
+}
+
+.sai__book-head b {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.sai__book-head small {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--sai-muted);
+}
+
+.sai__book .sai__q {
+  margin-bottom: 8px;
+}
+
+.sai__book .sai__q b {
+  font-size: 13.5px;
+}
+
+.sai__book .sai__opts {
+  margin-bottom: 14px;
+}
+
+.sai__book .sai__opts button {
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+/* الأيام: صف بيتسحب (اسم اليوم فوق التاريخ) */
+
+.sai__days {
+  margin-bottom: 14px;
+  display: flex;
+  gap: 7px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.sai__days::-webkit-scrollbar {
+  display: none;
+}
+
+.sai__days button {
+  display: flex;
+  min-width: 74px;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  border-radius: 14px;
+  border: 1.5px solid var(--sai-line);
+  background-color: #fff;
+  padding: 8px 10px;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: var(--sai-navy);
+}
+
+.sai__days button small {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--sai-muted);
+}
+
+.sai__days button.is-on {
+  border-color: transparent;
+  background-image: linear-gradient(120deg, var(--sai-blue), var(--sai-blue-dark));
+  color: #fff;
+}
+
+.sai__days button.is-on small {
+  color: #fff;
+  opacity: 0.9;
+}
+
+.sai__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sai__phone {
+  display: flex;
+  gap: 8px;
+}
+
+.sai__fields input,
+    .sai__fields select {
+  height: 46px;
+  min-width: 0;
+  border-radius: 13px;
+  border: 1px solid var(--sai-line);
+  background-color: var(--sai-bg);
+  padding: 0 13px;
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--sai-navy);
+  outline: none;
+}
+
+.sai__fields input {
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.sai__phone input {
+  width: auto;
+  flex: 1 1 0%;
+}
+
+.sai__fields select {
+  width: 124px;
+  flex-shrink: 0;
+}
+
+.sai__fields input:focus,
+    .sai__fields select:focus {
+  border-color: var(--sai-blue);
+  background-color: #fff;
+}
+
+.sai__fields input::-moz-placeholder {
+  font-weight: 600;
+  color: #9aaab6;
+}
+
+.sai__fields input::placeholder {
+  font-weight: 600;
+  color: #9aaab6;
+}
+
+.sai__book-error {
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #c0392b;
+}
+
+.sai__book-go {
+  margin-top: 4px;
+  display: flex;
+  height: 48px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 14px;
+  background-color: var(--sai-blue-dark);
+  background-image: linear-gradient(270deg, var(--sai-blue-dark), var(--sai-blue));
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #fff;
+}
+
+.sai__book-go:disabled {
+  opacity: 0.55;
+}
+
+/* كارت تأكيد الحجز */
+
+.sai__booked-head {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.sai__booked-head span {
+  display: flex;
+  height: 34px;
+  width: 34px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #e8f1fc;
+  color: var(--sai-blue-dark);
+}
+
+.sai__booked dl {
+  border-radius: 14px;
+  background-color: var(--sai-bg);
+  padding: 4px 12px;
+}
+
+.sai__booked dl div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+.sai__booked dl div + div {
+  border-top: 1px solid var(--sai-line);
+}
+
+.sai__booked dt {
+  flex-shrink: 0;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--sai-muted);
+}
+
+.sai__booked dd {
+  min-width: 0;
+  text-align: end;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.6;
+}
+
+.sai__booked-note {
+  margin-top: 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--sai-muted);
+}
+
+.sai__booked .sai__ways {
+  margin-top: 12px;
+}
+
+.sai__way--edit {
+  border: 1.5px solid var(--sai-line);
+  background-color: #fff;
+  color: var(--sai-navy);
 }
 
 /* الاختصارات + خانة الكتابة */
@@ -9016,7 +9310,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__chips button:hover {
-  border-color: var(--sai-teal);
+  border-color: var(--sai-blue);
 }
 
 .sai__composer {
@@ -9046,7 +9340,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__composer textarea:focus {
-  border-color: var(--sai-teal);
+  border-color: var(--sai-blue);
 }
 
 .sai__composer textarea::-moz-placeholder {
@@ -9073,7 +9367,8 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .sai__send {
-  background-color: var(--sai-teal-dark);
+  background-color: var(--sai-blue-dark);
+  background-image: linear-gradient(270deg, var(--sai-blue-dark), var(--sai-blue));
   color: #fff;
   transition: opacity 0.15s;
 }
@@ -9085,12 +9380,12 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 
 .sai__mic {
   border: 1px solid var(--sai-line);
-  color: var(--sai-teal-dark);
+  color: var(--sai-blue-dark);
 }
 
 .sai__mic[aria-pressed="true"] {
-  border-color: var(--sai-teal);
-  background-color: #e8f5f2;
+  border-color: var(--sai-blue);
+  background-color: #e8f1fc;
 }
 
 .sai__note {
@@ -18576,7 +18871,9 @@ img.abroad-dev__logo {
     flex: 0 0 auto;
     flex-direction: column;
     gap: 8px;
-    padding-inline: 20px;}
+    background-color: #fff;
+    padding-inline: 20px;
+    font-size: 14.5px;}
 .pv-desktop /* صفحة الوحدة: الأربع زراير (مخطط الوحدة / المخطط / الصور / الخريطة) بيتقسموا على عرض الصف بالتساوي */
 
   .prop-tiles--fill .prop-tile {min-width: 0;

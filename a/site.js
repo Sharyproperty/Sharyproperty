@@ -4295,17 +4295,29 @@
  * صفحة Shary AI (partials/ai-panel.blade.php) — بنفس ستراكشر نسخة شاري AI المعتمدة.
  * - أي عنصر عليه data-ask-ai بيفتح الصفحة. القفل من سهم الرجوع أو الضغط براها أو Esc.
  * - أسئلة الاختيار [data-ai-onb]: بتترسم من data-ai-config ← flow (المنطقة ← الحي ← الاستخدام ← نوع الوحدة ← الميزانية ← الهدف) ،
- *   كل سؤال بيظهر بعد اللي قبله ، و"ابدأ البحث" بيبعت رسالة جاهزة + الاختيارات. "أو اكتب سؤالك مباشرة" بيفتح الشات على طول.
+ *   كل سؤال بيظهر بعد اللي قبله. السؤال اللي عليه multiple: true العميل يختار فيه أكتر من اختيار (سكن + استثمار ، شقة + دوبلكس ، أكتر من منطقة) ،
+ *   و"ابدأ البحث" بيبعت رسالة جاهزة + الاختيارات. "أو اكتب سؤالك مباشرة" بيفتح الشات على طول.
+ *   answers المبعوتة: { area: ['new-cairo', 'sheikh-zayed'], sub: ['madinaty'], use: 'residential', type: ['apartment', 'duplex'], budget: '5000000-10000000', purpose: ['living', 'investment'] }
+ *   (السؤال المتعدد = array ، السؤال العادي = قيمة واحدة).
  * - الإرسال: الرسالة بتتضاف (صورة + اسم + رسالة) وبيطلع حدث shary:ai-send على الصفحة:
  *       panel.addEventListener('shary:ai-send', function (event) {
  *           event.preventDefault();
  *           event.detail.reply('نص الرد', { cards: [...], chips: [...], meeting: true });   // detail.text ، detail.answers
  *       });
- *   لو الحدث ما اتمنعش وفيه data-endpoint: بيتبعت POST JSON { message, answers, session } والرد المتوقع JSON { reply, cards, chips, meeting, session }.
+ *   لو الحدث ما اتمنعش وفيه data-endpoint: بيتبعت POST JSON { message, answers, session } والرد المتوقع JSON { reply, cards, chips, meeting, book, session }.
  * - كروت الرد (cards):
  *       { type: 'unit',    title, location, developer, developer_short, image, price, currency, beds, baths, area, plan, badge, url }
  *       { type: 'project', name,  location, developer, developer_short, image, price (يبدأ من), currency, types: [...], plan, index (مؤشر شاري), badge, url }
- *   وتحت كل كارت: اتصال + واتساب + احجز ميتنج (بيفتح فورم طلب المقابلة) + التفاصيل (url). meeting: true = كارت "تحب تتكلم مع مستشار شاري؟".
+ *   وتحت كل كارت: اتصال + واتساب + احجز ميتنج + التفاصيل (url). meeting: true = كارت "تحب تتكلم مع مستشار شاري؟".
+ * - حجز الميتنج جوه الشات (من غير ما العميل يسيب المحادثة):
+ *     بيبدأ من: زرار "احجز ميتنج" تحت أي كارت (الحجز بيتربط بالوحدة/المشروع ده) ، كارت "تحب تتكلم مع مستشار شاري؟" ،
+ *     أو لو العميل كتب/ضغط "عايز أحجز ميتنج" (كلمات lang/ai.php ← book.words) ، أو لو السيرفر رجّع book: true.
+ *     الخطوات: بخصوص إيه (لو فيه كروت معروضة ومش محدد) ← النوع (زوم / مكتب شاري / زيارة الموقع — الزيارة بس لو فيه وحدة أو مشروع)
+ *              ← اليوم (7 أيام) ← الساعة (اللي فات من مواعيد النهارده مقفول) ← الاسم والموبايل بكود الدولة (بيتراجعوا قبل الإرسال) ← تأكيد ← كارت التأكيد.
+ *     الإرسال: حدث shary:ai-meeting (detail.data + detail.done(ok, message)) — لو ما اتمنعش: POST JSON على contact.meeting ($meetingUrl):
+ *       { meeting_type: 'zoom' | 'in_person' | 'site_visit', meeting_date: 'Y-m-d', meeting_time: 'H:i', name, phone, country_code,
+ *         subject, subject_type: 'unit' | 'project' | 'general', subject_url, source: 'shary-ai', answers, session }
+ *     المواعيد الفاضية فعلًا (اختياري): contact.slots ($meetingSlotsUrl) ← GET ?date=Y-m-d&type=zoom والرد { slots: [{ value, label, available }] }.
  * - "من الأول": محادثة جديدة ورجوع لأسئلة الاختيار. المايك بيظهر بس لو المتصفح بيدعم الإملاء الصوتي.
  */
 (function () {
@@ -4324,6 +4336,7 @@
         size: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20 20 4M4 20V9M4 20h11M9 15l2 2M13 11l2 2"/></svg>',
         phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.250 11.400 11.400 0 0 0 3.600.570 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.200 2.450.570 3.570a1 1 0 0 1-.250 1L6.600 10.800Z"/></svg>',
         calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15" rx="2.500"/><path d="M8 3v4M16 3v4M3.500 10h17"/></svg>',
+        check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.500 4.500 4.500L19 7.500"/></svg>',
         pin: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.200 7 13 7 13s7-7.800 7-13a7 7 0 0 0-7-7Zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5Z"/></svg>'
     };
 
@@ -4345,72 +4358,123 @@
         var form = panel.querySelector('[data-ai-form]');
         var input = form.querySelector('[name="message"]');
         var opener = null;
-        var answers = {};          // اختيارات الأسئلة: { area: { value, label }, ... }
+        var answers = {};          // اختيارات الأسئلة: { area: [{ value, label }, ...], ... } — دايمًا قايمة (السؤال العادي فيها عنصر واحد)
         var session = '';          // رقم الجلسة اللي بيرجعه السيرفر (اختياري)
         var busy = false;
+        var stepsShown = 0;        // عدد الأسئلة الظاهرة (الحركة للسؤال الجديد بس)
+        var B = T.book || {};      // نصوص حجز الميتنج
+        var times = Array.isArray(contact.times) ? contact.times : [];
+        var countries = Array.isArray(contact.countries) ? contact.countries : [];
+        var shown = [];            // آخر كروت اتعرضت (عشان "الميتنج بخصوص إيه؟")
+        var book = null;           // حجز الميتنج الشغال: { box, intro, state }
+        var saved = { name: user.name || '', phone: user.phone || '', code: countries.length ? countries[0].code : '+20' };
+        var langNode = panel.closest ? panel.closest('[lang]') : null;
+        var english = ((langNode && langNode.lang) || document.documentElement.lang || 'ar').indexOf('en') === 0;
 
         // ---------- أسئلة الاختيار ----------
+        function chosenOf(key) { return answers[key] || []; }
         function optionsOf(step) {
-            if (!step.depends) return Array.isArray(step.options) ? step.options : [];
-            var parent = answers[step.depends];
-            var map = step.options || {};
-            return parent && Array.isArray(map[parent.value]) ? map[parent.value] : [];
+            var out = [];
+            if (!step.depends) out = Array.isArray(step.options) ? step.options.slice() : [];
+            else {
+                // اختيارات معتمدة على سؤال قبله: لو العميل اختار أكتر من قيمة هناك، الاختيارات بتتجمع من غير تكرار
+                var map = step.options || {};
+                var seen = {};
+                chosenOf(step.depends).forEach(function (parent) {
+                    (Array.isArray(map[parent.value]) ? map[parent.value] : []).forEach(function (option) {
+                        if (seen[option.value]) return;
+                        seen[option.value] = true;
+                        out.push(option);
+                    });
+                });
+            }
+            if (step.all && out.length) out.push({ value: '', label: step.all, exclusive: true });
+            return out;
         }
         // الخطوات اللي ليها اختيارات دلوقتي (الحي بيظهر بس لو المنطقة ليها أحياء)
         function activeSteps() {
-            return flow.filter(function (step) { return !step.depends || (answers[step.depends] && optionsOf(step).length); });
+            return flow.filter(function (step) { return !step.depends || optionsOf(step).length; });
         }
+        function isOn(key, value) { return chosenOf(key).some(function (item) { return item.value === value; }); }
         function renderSteps() {
             if (!stepsBox) return;
             stepsBox.textContent = '';
             var steps = activeSteps();
             var open = true;
+            var count = 0;
             steps.forEach(function (step) {
                 if (!open) return;
-                var chosen = answers[step.key];
-                var block = make('div', 'sai__step');
+                count += 1;
+                var block = make('div', 'sai__step' + (count > stepsShown ? ' sai__step--new' : ''));
                 var head = make('p', 'sai__q');
                 head.appendChild(make('b', '', step.question));
-                if (step.hint) head.appendChild(make('span', '', step.hint));
+                var hint = step.hint || (step.multiple ? T.multi : '');
+                if (hint) head.appendChild(make('span', '', hint));
                 block.appendChild(head);
-                var opts = make('div', 'sai__opts');
+                var opts = make('div', 'sai__opts' + (step.multiple ? ' sai__opts--multi' : ''));
                 optionsOf(step).forEach(function (option) {
                     var button = make('button', '', option.label);
                     button.type = 'button';
-                    if (chosen && chosen.value === option.value) button.className = 'is-on';
+                    var on = isOn(step.key, option.value);
+                    if (on) button.className = 'is-on';
+                    button.setAttribute('aria-pressed', on ? 'true' : 'false');
                     button.addEventListener('click', function () { pick(step, option); });
                     opts.appendChild(button);
                 });
                 block.appendChild(opts);
                 stepsBox.appendChild(block);
-                if (!chosen) open = false;   // السؤال اللي بعده بيظهر بعد الإجابة
+                if (!chosenOf(step.key).length) open = false;   // السؤال اللي بعده بيظهر بعد أول اختيار
             });
-            var done = steps.length > 0 && steps.every(function (step) { return !!answers[step.key]; });
+            var grew = count > stepsShown;
+            stepsShown = count;
+            var done = steps.length > 0 && steps.every(function (step) { return chosenOf(step.key).length > 0; });
             if (startButton) startButton.disabled = !done;
-            if (done && startButton && startButton.scrollIntoView) startButton.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            var target = done ? startButton : (grew ? stepsBox.lastElementChild : null);
+            if (target && target.scrollIntoView) target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
         function pick(step, option) {
-            answers[step.key] = { value: option.value, label: option.label };
-            // تغيير إجابة بيمسح اللي بعدها (الأسئلة اللي معتمدة عليها)
-            var after = false;
-            flow.forEach(function (item) {
-                if (item.key === step.key) { after = true; return; }
-                if (after && item.depends === step.key) delete answers[item.key];
+            var item = { value: option.value, label: option.label, exclusive: !!option.exclusive };
+            var current = chosenOf(step.key).slice();
+            if (!step.multiple) current = [item];
+            else if (isOn(step.key, option.value)) current = current.filter(function (one) { return one.value !== option.value; });   // ضغطة تانية بتشيل الاختيار
+            else if (item.exclusive) current = [item];                                                                              // "أي منطقة" / "كل الأحياء" بتلغي الباقي
+            else { current = current.filter(function (one) { return !one.exclusive; }); current.push(item); }
+            if (current.length) answers[step.key] = current; else delete answers[step.key];
+            // الأسئلة المعتمدة على السؤال ده: بنشيل منها الاختيارات اللي ما بقتش متاحة
+            flow.forEach(function (next) {
+                if (!next.depends || !answers[next.key]) return;
+                var allowed = optionsOf(next).map(function (one) { return one.value; });
+                var kept = answers[next.key].filter(function (one) { return allowed.indexOf(one.value) > -1; });
+                if (kept.length) answers[next.key] = kept; else delete answers[next.key];
             });
             renderSteps();
-            var last = stepsBox.lastElementChild;
-            if (last && last.scrollIntoView) last.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+        function labels(key, joiner) {
+            return chosenOf(key).filter(function (item) { return item.value !== ''; }).map(function (item) { return item.label; }).join(joiner);
         }
         function queryText() {
-            var place = (answers.sub && answers.sub.value ? answers.sub.label : '') || (answers.area ? answers.area.label : '');
+            var or = T.or || ' / ';
             var text = String(T.query || '');
-            var map = { type: answers.type ? answers.type.label : '', use: answers.use ? answers.use.label : '', place: place, budget: answers.budget ? answers.budget.label : '', purpose: answers.purpose ? answers.purpose.label : '' };
+            // المكان: أحياء كل منطقة لو العميل اختار منها — وإلا اسم المنطقة نفسها
+            var subStep = flow.filter(function (step) { return step.key === 'sub'; })[0];
+            var subMap = (subStep && subStep.options) || {};
+            var places = [];
+            chosenOf('area').forEach(function (area) {
+                var mine = chosenOf('sub').filter(function (sub) { return sub.value !== '' && (Array.isArray(subMap[area.value]) ? subMap[area.value] : []).some(function (option) { return option.value === sub.value; }); });
+                if (mine.length) mine.forEach(function (sub) { places.push(sub.label); }); else places.push(area.label);
+            });
+            var map = { type: labels('type', or), use: labels('use', or), place: places.join(or), budget: labels('budget', or), purpose: labels('purpose', T.and || ' + ') };
             Object.keys(map).forEach(function (key) { text = text.replace(':' + key, map[key]); });
             return text.replace(/\s+/g, ' ').trim();
         }
+        // السؤال المتعدد = array من القيم ، السؤال العادي = قيمة واحدة
         function plainAnswers() {
             var out = {};
-            Object.keys(answers).forEach(function (key) { out[key] = answers[key].value; });
+            flow.forEach(function (step) {
+                var values = chosenOf(step.key).map(function (item) { return item.value; }).filter(function (value) { return value !== ''; });
+                if (!chosenOf(step.key).length) return;
+                out[step.key] = step.multiple ? values : (values[0] || '');
+            });
             return out;
         }
 
@@ -4468,12 +4532,11 @@
             node.appendChild(make('span', '', label));
             return node;
         }
-        function meetButton(label, className) {
-            var node = action(className || 'sai__way--meet', label || T.meet, ICONS.calendar, contact.meeting || '#');
-            node.removeAttribute('target');
-            node.setAttribute('data-meeting-open', '');
-            // فورم المقابلة بيفتح فوق الصفحة: صفحة Shary AI بتتقفل الأول
-            node.addEventListener('click', function () { close(); });
+        // "احجز ميتنج": الحجز بيتم جوه الشات (item = الوحدة/المشروع اللي الزرار تحته — من غيره بنسأل "بخصوص إيه؟")
+        function meetButton(label, className, item) {
+            var node = action(className || 'sai__way--meet', label || T.meet, ICONS.calendar, '');
+            node.setAttribute('data-ai-meet', '');
+            node.addEventListener('click', function () { startMeeting(item || null); });
             return node;
         }
         function card(item) {
@@ -4544,7 +4607,7 @@
             var wa = action('sai__way--wa', T.whatsapp, '', waLink(name ? name + (item.url ? '\n' + item.url : '') : ''));
             wa.insertAdjacentHTML('afterbegin', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>');
             ways.appendChild(wa);
-            ways.appendChild(meetButton());
+            ways.appendChild(meetButton(null, null, item));
             body.appendChild(ways);
             if (item.url) { var more = make('a', 'sai__card-more', T.details || ''); more.href = item.url; body.appendChild(more); }
             box.appendChild(body);
@@ -4553,16 +4616,247 @@
         function cards(items) {
             if (!Array.isArray(items) || !items.length) return;
             var wrap = make('div', 'sai__cards');
-            items.forEach(function (item) { if (item && typeof item === 'object') wrap.appendChild(card(item)); });
+            shown = [];
+            items.forEach(function (item) { if (item && typeof item === 'object') { wrap.appendChild(card(item)); shown.push(item); } });
             list.appendChild(wrap);
         }
+        // ---------- حجز الميتنج جوه الشات ----------
+        function two(number) { return (number < 10 ? '0' : '') + number; }
+        function subjectOf(item) {
+            if (!item) return null;
+            var name = item.title || item.name || '';
+            return name ? { name: name, type: item.type === 'project' ? 'project' : 'unit', url: item.url || '' } : null;
+        }
+        // مواعيد اليوم: مواعيد النهارده اللي فاتت (أو فاضل عليها أقل من ساعة) بتتقفل
+        function slotsOf(dateValue) {
+            var now = new Date();
+            var today = dateValue === now.getFullYear() + '-' + two(now.getMonth() + 1) + '-' + two(now.getDate());
+            var limit = now.getHours() * 60 + now.getMinutes() + 60;
+            return times.map(function (slot) {
+                var parts = String(slot.value).split(':');
+                return { value: slot.value, label: slot.label, off: today && (Number(parts[0]) * 60 + Number(parts[1] || 0)) < limit };
+            });
+        }
+        function dayList() {
+            var locale = english ? 'en-GB' : 'ar-EG-u-nu-latn';
+            var now = new Date();
+            var out = [];
+            for (var index = 0; index < 9 && out.length < 7; index += 1) {
+                var day = new Date(now.getFullYear(), now.getMonth(), now.getDate() + index);
+                var value = day.getFullYear() + '-' + two(day.getMonth() + 1) + '-' + two(day.getDate());
+                if (index === 0 && !slotsOf(value).some(function (slot) { return !slot.off; })) continue;   // النهارده خلص
+                var weekday = day.toLocaleDateString(locale, { weekday: 'long' });
+                out.push({ value: value, name: index === 0 ? (B.today || weekday) : (index === 1 ? (B.tomorrow || weekday) : weekday), weekday: weekday, date: day.toLocaleDateString(locale, { day: 'numeric', month: 'short' }) });
+            }
+            return out;
+        }
+        function wantsMeeting(text) {
+            var lower = String(text).toLowerCase();
+            return (Array.isArray(B.words) ? B.words : []).some(function (word) { return word && lower.indexOf(String(word).toLowerCase()) > -1; });
+        }
+        function dropBook() {
+            if (!book) return;
+            [book.box, book.intro].forEach(function (node) { if (node && node.parentNode) node.parentNode.removeChild(node); });
+            book = null;
+        }
+        function startMeeting(item, keep) {
+            showChat();
+            dropBook();   // حجز واحد شغال في المرة
+            var subject = subjectOf(item);
+            var state = keep || { subject: subject, asked: !subject && shown.length > 0, type: '', day: null, time: null, slots: null };
+            var text = state.subject ? String(B.intro_about || '').replace(':name', state.subject.name) : (B.intro || '');
+            var introRow = null;
+            if (text) { bubble(text, false); introRow = list.lastElementChild; }
+            book = { box: make('div', 'sai__book'), intro: introRow, state: state };
+            list.appendChild(book.box);
+            renderBook();
+            toBottom();
+        }
+        function bookStep(question, hint) {
+            var head = make('p', 'sai__q');
+            head.appendChild(make('b', '', question || ''));
+            if (hint) head.appendChild(make('span', '', hint));
+            book.box.appendChild(head);
+        }
+        function bookOptions(items, isOnItem, onPick, className) {
+            var wrap = make('div', className || 'sai__opts');
+            items.forEach(function (item) {
+                var button = make('button', isOnItem(item) ? 'is-on' : '');
+                button.type = 'button';
+                if (item.sub) { button.appendChild(make('span', '', item.label)); button.appendChild(make('small', '', item.sub)); } else button.textContent = item.label;
+                if (item.off) button.disabled = true;
+                button.addEventListener('click', function () { onPick(item); renderBook(); toBottom(); });
+                wrap.appendChild(button);
+            });
+            book.box.appendChild(wrap);
+            return wrap;
+        }
+        function loadSlots(state) {
+            state.slots = null;
+            if (!contact.slots || !state.day) { state.slots = state.day ? slotsOf(state.day.value) : null; return; }
+            var day = state.day;
+            fetch(contact.slots + (contact.slots.indexOf('?') > -1 ? '&' : '?') + 'date=' + encodeURIComponent(day.value) + '&type=' + encodeURIComponent(state.type), { headers: { 'Accept': 'application/json' } })
+                .then(function (response) { return response.json(); })
+                .then(function (data) {
+                    var rows = data && Array.isArray(data.slots) ? data.slots : null;
+                    return rows ? rows.map(function (slot) { return { value: slot.value, label: slot.label || slot.value, off: slot.available === false }; }) : slotsOf(day.value);
+                })
+                .catch(function () { return slotsOf(day.value); })
+                .then(function (rows) {
+                    if (!book || book.state !== state || state.day !== day) return;
+                    state.slots = rows;
+                    renderBook(); toBottom();
+                });
+        }
+        function renderBook() {
+            if (!book) return;
+            var state = book.state;
+            var box = book.box;
+            box.textContent = '';
+            var head = make('div', 'sai__book-head');
+            var icon = make('span', 'sai__book-icon'); icon.innerHTML = ICONS.calendar;
+            var title = make('span', 'min-w-0');
+            title.appendChild(make('b', '', B.title || T.meet || ''));
+            if (state.subject || !state.asked) title.appendChild(make('small', '', state.subject ? state.subject.name : (B.general || '')));
+            head.appendChild(icon); head.appendChild(title);
+            box.appendChild(head);
+
+            // 1) بخصوص إيه؟ (لو فيه كروت معروضة والعميل ما حددش)
+            if (state.asked) {
+                bookStep(B.subject);
+                var subjects = shown.map(function (item) { var one = subjectOf(item); return one ? { label: one.name, subject: one } : null; }).filter(Boolean).slice(0, 4);
+                subjects.push({ label: B.general || '', subject: null, general: true });
+                bookOptions(subjects, function (item) { return state.picked && (item.general ? !state.subject : (state.subject && state.subject.name === item.label)); }, function (item) {
+                    state.subject = item.subject; state.picked = true;
+                    if (!state.subject && state.type === 'site_visit') state.type = '';
+                });
+                if (!state.picked) return;
+            }
+            // 2) نوع الميتنج (زيارة الموقع بس لو فيه وحدة أو مشروع)
+            bookStep(B.type);
+            var names = B.types || {};
+            var kinds = ['zoom', 'in_person', 'site_visit'].filter(function (key) { return names[key] && (key !== 'site_visit' || state.subject); }).map(function (key) { return { value: key, label: names[key] }; });
+            bookOptions(kinds, function (item) { return state.type === item.value; }, function (item) { state.type = item.value; if (contact.slots && state.day) loadSlots(state); });
+            if (!state.type) return;
+            // 3) اليوم
+            bookStep(B.day);
+            bookOptions(dayList().map(function (day) { return { value: day.value, label: day.name, sub: day.date, day: day }; }), function (item) { return state.day && state.day.value === item.value; }, function (item) {
+                state.day = item.day; state.time = null; loadSlots(state);
+            }, 'sai__days');
+            if (!state.day) return;
+            // 4) الساعة
+            bookStep(B.time);
+            if (!state.slots) { box.appendChild(make('p', 'sai__booked-note', B.loading || '')); return; }
+            if (!state.slots.some(function (slot) { return !slot.off; })) { box.appendChild(make('p', 'sai__book-error', B.no_slots || '')); return; }
+            bookOptions(state.slots, function (item) { return state.time && state.time.value === item.value; }, function (item) { state.time = item; });
+            if (!state.time) return;
+            // 5) الاسم والموبايل
+            bookStep(B.contact);
+            var fields = make('div', 'sai__fields');
+            var name = make('input'); name.type = 'text'; name.autocomplete = 'name'; name.placeholder = B.name || ''; name.setAttribute('aria-label', B.name || ''); name.value = saved.name;
+            name.addEventListener('input', function () { saved.name = name.value; });
+            var phoneRow = make('div', 'sai__phone'); phoneRow.dir = 'ltr';
+            var code = make('select'); code.setAttribute('aria-label', B.code || '');
+            countries.forEach(function (country) { var option = make('option', '', country.code + '  ' + country.name); option.value = country.code; code.appendChild(option); });
+            code.value = saved.code;
+            code.addEventListener('change', function () { saved.code = code.value; });
+            var phone = make('input'); phone.type = 'tel'; phone.dir = 'ltr'; phone.autocomplete = 'tel-national'; phone.inputMode = 'tel'; phone.placeholder = B.phone || ''; phone.setAttribute('aria-label', B.phone || ''); phone.value = saved.phone;
+            phone.addEventListener('input', function () { saved.phone = phone.value; });
+            if (countries.length) phoneRow.appendChild(code);
+            phoneRow.appendChild(phone);
+            var error = make('p', 'sai__book-error hidden');
+            var go = make('button', 'sai__book-go', B.confirm || ''); go.type = 'button';
+            go.addEventListener('click', function () { submitBook(go, error, name, phone); });
+            [name, phone].forEach(function (field) { field.addEventListener('keydown', function (event) { if (event.key === 'Enter') { event.preventDefault(); submitBook(go, error, name, phone); } }); });
+            fields.appendChild(name); fields.appendChild(phoneRow); fields.appendChild(error); fields.appendChild(go);
+            box.appendChild(fields);
+        }
+        function submitBook(go, error, nameField, phoneField) {
+            if (!book || go.disabled) return;
+            var state = book.state;
+            function fail(text, field) { error.textContent = text || ''; error.classList.remove('hidden'); if (field) field.focus(); toBottom(); }
+            var name = saved.name.replace(/\s+/g, ' ').trim();
+            if (name.length < 2) return fail(B.err_name, nameField);
+            // الموبايل: أرقام بس من غير الصفر الأول — مصر: 10 أرقام بتبدأ بـ 10 / 11 / 12 / 15 ، باقي الدول: 6 إلى 12 رقم
+            var digits = saved.phone.replace(/[٠-٩]/g, function (digit) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(digit); }).replace(/\D+/g, '');
+            var prefix = String(saved.code).replace(/\D+/g, '');
+            if (prefix && digits.indexOf('00' + prefix) === 0) digits = digits.slice(prefix.length + 2);
+            digits = digits.replace(/^0+/, '');
+            if (saved.code === '+20' && digits.length === 12 && digits.indexOf('20') === 0) digits = digits.slice(2);
+            if (saved.code === '+20' ? !/^1[0125]\d{8}$/.test(digits) : !/^\d{6,12}$/.test(digits)) return fail(B.err_phone, phoneField);
+            error.classList.add('hidden');
+            go.disabled = true; go.textContent = B.sending || '';
+            var data = {
+                meeting_type: state.type, meeting_date: state.day.value, meeting_time: state.time.value, name: name, phone: digits, country_code: saved.code,
+                subject: state.subject ? state.subject.name : '', subject_type: state.subject ? state.subject.type : 'general', subject_url: state.subject ? state.subject.url : '',
+                source: 'shary-ai', answers: plainAnswers(), session: session
+            };
+            var finished = false;
+            function done(ok, message) {
+                if (finished) return;
+                finished = true;
+                if (!book || book.state !== state) return;
+                if (ok === false) { go.disabled = false; go.textContent = B.confirm || ''; return fail(message || B.err_send); }
+                booked(data, state, message);
+            }
+            var proceed = panel.dispatchEvent(new CustomEvent('shary:ai-meeting', { bubbles: true, cancelable: true, detail: { data: data, done: done } }));
+            if (!proceed) return;
+            var url = String(contact.meeting || '');
+            if (!url || url.charAt(0) === '#') { window.setTimeout(function () { done(true); }, 500); return; }   // معاينة من غير سيرفر
+            var token = document.querySelector('meta[name="csrf-token"]');
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                body: JSON.stringify(data)
+            }).then(function (response) {
+                if (!response.ok) throw new Error('failed');
+                return response.json().catch(function () { return {}; });
+            }).then(function (result) { done(true, result && result.message); })
+              .catch(function () { done(false); });
+        }
+        // كارت التأكيد مكان كارت الحجز + رسالة تأكيد
+        function booked(data, state, message) {
+            var kind = (B.types || {})[data.meeting_type] || '';
+            var when = state.day.weekday + ' ' + state.day.date;
+            var box = make('div', 'sai__booked');
+            var head = make('div', 'sai__booked-head');
+            var mark = make('span'); mark.innerHTML = ICONS.check;
+            head.appendChild(mark); head.appendChild(make('b', '', B.done_title || ''));
+            box.appendChild(head);
+            var rows = make('dl');
+            [[B.row_type, kind], [B.row_when, when + ' — ' + state.time.label], [B.row_about, data.subject || B.general], [B.row_who, data.name]].forEach(function (pair) {
+                var line = make('div');
+                line.appendChild(make('dt', '', pair[0] || ''));
+                line.appendChild(make('dd', '', pair[1] || ''));
+                rows.appendChild(line);
+            });
+            box.appendChild(rows);
+            var note = (B.notes || {})[data.meeting_type];
+            if (note) box.appendChild(make('p', 'sai__booked-note', note));
+            var ways = make('div', 'sai__ways');
+            var wa = action('sai__way--wa', B.whatsapp || T.whatsapp, '', waLink([B.wa_text, kind, when + ' — ' + state.time.label, data.subject || B.general, data.name, data.subject_url].filter(Boolean).join('\n')));
+            wa.insertAdjacentHTML('afterbegin', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>');
+            ways.appendChild(wa);
+            var edit = action('sai__way--edit', B.edit || '', ICONS.calendar, '');
+            edit.addEventListener('click', function () {
+                if (box.parentNode) box.parentNode.removeChild(box);
+                startMeeting(null, { subject: state.subject, asked: false, type: state.type, day: null, time: null, slots: null });
+            });
+            ways.appendChild(edit);
+            box.appendChild(ways);
+            if (book.box.parentNode) book.box.parentNode.replaceChild(box, book.box);
+            book = null;
+            bubble(message || String(B.done || '').replace(':name', data.name).replace(':type', kind).replace(':day', when).replace(':time', state.time.label), false);
+            toBottom();
+        }
+
         function meeting() {
             var box = make('div', 'sai__meet');
             var text = make('div', 'sai__meet-text');
             text.appendChild(make('b', '', T.meet_title || ''));
             text.appendChild(make('span', '', T.meet_text || ''));
             box.appendChild(text);
-            box.appendChild(meetButton(T.meet, 'sai__meet-btn'));
+            box.appendChild(meetButton(T.meet, 'sai__meet-btn', null));
             list.appendChild(box);
         }
         function chips(items) {
@@ -4584,6 +4878,8 @@
             showChat();
             bubble(text, true);
             input.value = ''; grow();
+            // العميل طالب ميتنج: الحجز بيبدأ على طول جوه الشات
+            if (!extra && wantsMeeting(text)) { startMeeting(null); return; }
             busy = true;
             form.classList.add('is-busy');
 
@@ -4605,6 +4901,7 @@
                 if (answer) bubble(answer, false);
                 cards(more.cards);
                 if (more.meeting) meeting();
+                if (more.book) startMeeting(typeof more.book === 'object' ? more.book : null);
                 if (Array.isArray(more.chips)) chips(more.chips);
                 if (more.session) session = more.session;
                 toBottom();
@@ -4631,7 +4928,7 @@
         }
 
         function restart() {
-            answers = {}; session = ''; busy = false;
+            answers = {}; session = ''; busy = false; stepsShown = 0; shown = []; book = null;
             form.classList.remove('is-busy');
             list.textContent = '';
             input.value = ''; grow();
@@ -4663,7 +4960,7 @@
         // لينك كارت (صفحة الوحدة / المشروع): صفحة Shary AI بتتقفل والعميل بيروح للصفحة
         list.addEventListener('click', function (event) {
             var link = event.target.closest ? event.target.closest('a[href]') : null;
-            if (link && !link.target && !/^(tel:|mailto:)/.test(link.getAttribute('href')) && !link.hasAttribute('data-meeting-open')) close();
+            if (link && !link.target && !/^(tel:|mailto:|#)/.test(link.getAttribute('href'))) close();
         });
         document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
         form.addEventListener('submit', function (event) { event.preventDefault(); send(input.value); });
@@ -4688,9 +4985,8 @@
             var listening = null;
             mic.addEventListener('click', function () {
                 if (listening) { listening.stop(); return; }
-                var langNode = panel.closest('[lang]');
                 var recognition = new Speech();
-                recognition.lang = ((langNode && langNode.lang) || document.documentElement.lang || 'ar').indexOf('en') === 0 ? 'en-US' : 'ar-EG';
+                recognition.lang = english ? 'en-US' : 'ar-EG';
                 recognition.onresult = function (event) { input.value = event.results[0][0].transcript; grow(); input.focus(); };
                 recognition.onend = recognition.onerror = function () { listening = null; mic.setAttribute('aria-pressed', 'false'); };
                 listening = recognition;
