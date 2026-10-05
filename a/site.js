@@ -2282,7 +2282,7 @@
                 [['a', a, va], ['b', b, vb]].forEach(function (entry) {
                     var value = entry[2];
                     block.querySelector('[data-compare-name="' + entry[0] + '"]').textContent = entry[1].name;
-                    block.querySelector('[data-compare-bar="' + entry[0] + '"]').style.width = Math.max(2, Math.abs(value) / top * 100) + '%';
+                    block.querySelector('[data-compare-fill="' + entry[0] + '"]').style.width = Math.max(2, Math.abs(value) / top * 100) + '%';
                     block.querySelector('[data-compare-value="' + entry[0] + '"]').textContent =
                         metric === 'price' || metric === 'resale' ? format(value) : metric === 'yearly' ? percent(value) : metric === 'yield' ? value.toFixed(1) + '%' : value;
                 });
