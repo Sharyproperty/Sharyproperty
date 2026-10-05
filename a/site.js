@@ -2604,9 +2604,9 @@
         var stickyHeader = sticky.closest('[lang]') ? sticky.closest('[lang]').querySelector('header') : document.querySelector('header');
         var placeSticky = function () {
             var box = deal.getBoundingClientRect();
-            var top = stickyHeader ? Math.max(0, stickyHeader.getBoundingClientRect().bottom - 18) : 0;
+            // الشريط عايم تحت الهيدر على طول (بمسافة صغيرة) — من غير خلفية داخلة تحت الهيدر
+            var top = stickyHeader ? Math.max(0, stickyHeader.getBoundingClientRect().bottom) + 6 : 6;
             sticky.style.top = top + 'px';
-            sticky.style.paddingTop = stickyHeader ? '26px' : '';
             // ظاهر بس لما قسم السعر يعدّي فوق (والصفحة نفسها ظاهرة)
             sticky.classList.toggle('is-on', box.height > 0 && box.bottom < top + 10);
         };
@@ -3415,8 +3415,9 @@
  * - عارض الصور [data-rent-lightbox]: أي زرار [data-lightbox-open="gallery | floor | master"] بيفتحه على صور المجموعة دي
  *   (الصور اللي عليها data-lightbox-item بنفس الاسم). بنفس شكل تطبيق شاري: X + عدّاد "1 / 5"، وصف صور صغيرة تحت للمعرض،
  *   ومخطط الوحدة جوه كارت أبيض. السحب / الأسهم / الكيبورد بتقلّب، و X أو الضغط بره أو Esc بيقفل.
- * - التكبير (الصور / الماستر بلان / مخطط الوحدة): بصباعين (pinch) أو ضغطتين ورا بعض أو زراير + / − [data-lightbox-zoom] أو عجلة الماوس ،
- *   والصورة المكبّرة بتتحرك بالسحب. التقليب بالسحب بيشتغل والصورة بحجمها الطبيعي بس. الصورة بترجع لحجمها مع كل صورة جديدة.
+ * - التكبير (الصور / الماستر بلان / مخطط الوحدة) باليد على الموبايل: بصباعين (pinch) — التكبير بيحصل عند مكان الصوابع والصورة بتتحرك معاها
+ *   يمين / شمال / فوق / تحت في نفس الوقت ، وبعد التكبير صباع واحد بيحرّك الصورة في أي اتجاه. ضغطتين ورا بعض بيكبّروا مكان الضغطة.
+ *   زراير + / − [data-lightbox-zoom] وعجلة الماوس اختياريين. التقليب بالسحب بيشتغل والصورة بحجمها الطبيعي بس. الصورة بترجع لحجمها مع كل صورة جديدة.
  */
 (function () {
     document.querySelectorAll('[data-rent-lightbox]').forEach(function (box) {
@@ -3501,26 +3502,70 @@
         box.querySelector('[data-lightbox-prev]').addEventListener('click', function () { show(at - 1); });
         box.querySelector('[data-lightbox-next]').addEventListener('click', function () { show(at + 1); });
         // اللمس: صباع واحد = تقليب (أو تحريك الصورة لو مكبّرة) ، صباعين = تكبير / تصغير ، ضغطتين ورا بعض = تكبير / رجوع
-        var startX = null, pinch = null, drag = null, lastTap = 0;
+        var startX = null, pinch = null, drag = null, lastTap = 0, moving = false;
         function spread(touches) { return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY); }
+        function middle(touches) { return { x: (touches[0].clientX + touches[1].clientX) / 2, y: (touches[0].clientY + touches[1].clientY) / 2 }; }
+        // مركز الصورة على الشاشة من غير الحركة (علشان التكبير يحصل عند مكان الصوابع)
+        function home() { var rect = frame.getBoundingClientRect(); return { x: rect.left + rect.width / 2 - zoom.x, y: rect.top + rect.height / 2 - zoom.y }; }
+        // تكبير عند نقطة على الشاشة: النقطة دي بتفضل تحت الصباع
+        function zoomAt(scale, point, smooth) {
+            var base = home(), before = zoom.scale;
+            scale = Math.max(1, Math.min(4, scale));
+            zoom.x = (point.x - base.x) - ((point.x - base.x) - zoom.x) * (scale / before);
+            zoom.y = (point.y - base.y) - ((point.y - base.y) - zoom.y) * (scale / before);
+            setZoom(scale, smooth);
+        }
+        function startDrag(touch) { drag = { x: touch.clientX - zoom.x, y: touch.clientY - zoom.y }; startX = null; }
         box.addEventListener('touchstart', function (event) {
-            if (event.touches.length === 2) { pinch = { distance: spread(event.touches), scale: zoom.scale }; startX = null; drag = null; return; }
+            if (event.touches.length === 2) {
+                var mid = middle(event.touches), base = home();
+                pinch = { distance: spread(event.touches) || 1, scale: zoom.scale, x: mid.x - base.x - zoom.x, y: mid.y - base.y - zoom.y, base: base };
+                startX = null; drag = null; moving = true;
+                return;
+            }
             var touch = event.touches[0];
-            if (zoom.scale > 1) { drag = { x: touch.clientX - zoom.x, y: touch.clientY - zoom.y }; startX = null; }
+            moving = false;
+            if (zoom.scale > 1) startDrag(touch);
             else startX = touch.clientX;
         }, { passive: true });
         box.addEventListener('touchmove', function (event) {
-            if (pinch && event.touches.length === 2) { event.preventDefault(); setZoom(pinch.scale * spread(event.touches) / pinch.distance, false); return; }
-            if (drag && event.touches.length === 1) { event.preventDefault(); zoom.x = event.touches[0].clientX - drag.x; zoom.y = event.touches[0].clientY - drag.y; applyZoom(false); }
+            if (pinch && event.touches.length === 2) {
+                // صباعين: تكبير / تصغير عند مكان الصوابع + الصورة بتتحرك مع الصوابع في أي اتجاه
+                event.preventDefault();
+                var mid = middle(event.touches);
+                var scale = Math.max(1, Math.min(4, pinch.scale * spread(event.touches) / pinch.distance));
+                zoom.x = (mid.x - pinch.base.x) - pinch.x * (scale / pinch.scale);
+                zoom.y = (mid.y - pinch.base.y) - pinch.y * (scale / pinch.scale);
+                setZoom(scale, false);
+                return;
+            }
+            if (drag && event.touches.length === 1) {
+                // صباع واحد والصورة مكبّرة: الصورة بتمشي مع الصباع يمين / شمال / فوق / تحت
+                event.preventDefault(); moving = true;
+                zoom.x = event.touches[0].clientX - drag.x; zoom.y = event.touches[0].clientY - drag.y; applyZoom(false);
+            }
         }, { passive: false });
         box.addEventListener('touchend', function (event) {
-            if (pinch) { if (event.touches.length < 2) { pinch = null; if (zoom.scale < 1.08) setZoom(1, true); } return; }
+            if (pinch) {
+                if (event.touches.length < 2) {
+                    pinch = null;
+                    if (zoom.scale < 1.08) setZoom(1, true);
+                    // صباع لسه على الشاشة بعد التكبير: يكمل تحريك الصورة على طول
+                    else if (event.touches.length === 1) startDrag(event.touches[0]);
+                }
+                return;
+            }
             if (event.target.closest && event.target.closest('button, a')) { startX = null; drag = null; return; }
-            // ضغطتين ورا بعض على الصورة
+            // ضغطتين ورا بعض على الصورة: تكبير عند مكان الضغطة / رجوع
             var now = Date.now();
             var moved = startX === null ? 0 : event.changedTouches[0].clientX - startX;
-            if (Math.abs(moved) < 12 && event.target.closest && event.target.closest('[data-lightbox-frame]')) {
-                if (now - lastTap < 320) { lastTap = 0; setZoom(zoom.scale > 1 ? 1 : 2.5, true); startX = null; drag = null; return; }
+            if (!moving && Math.abs(moved) < 12 && event.target.closest && event.target.closest('[data-lightbox-frame]')) {
+                if (now - lastTap < 320) {
+                    lastTap = 0;
+                    if (zoom.scale > 1) setZoom(1, true);
+                    else zoomAt(2.5, { x: event.changedTouches[0].clientX, y: event.changedTouches[0].clientY }, true);
+                    startX = null; drag = null; return;
+                }
                 lastTap = now;
             }
             drag = null;

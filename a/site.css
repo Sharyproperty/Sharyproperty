@@ -804,13 +804,23 @@ video {
   text-shadow: 0 1px 6px rgba(9, 26, 43, 0.45);
 }
 
-/* الكارت كله بيفتح صفحة المشروع */
+/* الكارت كله بيفتح صفحة المشروع: لينك شفاف مغطّي الصورة كلها (shot-card__cover) ، والنص فوقه من غير ما يمنع الضغط */
 
-.shot-card .card-link::after {
-  content: "";
+.shot-card__cover,
+    .prop-shot__cover {
   position: absolute;
   inset: 0;
   z-index: 1;
+}
+
+.shot-card__text,
+    .prop-shot__name {
+  pointer-events: none;
+}
+
+.shot-card__text a,
+    .prop-shot__name a {
+  pointer-events: auto;
 }
 
 .shot-card__place {
@@ -6253,6 +6263,26 @@ input:focus-visible + .area-chip,
   }
 }
 
+/* مقاس بوكس الإعلانات واحد في الموقع كله (نفس ارتفاع بوكس الهوم): 120px موبايل — 160px ديسك توب.
+       ‎.ad-strip (partials/ad-strip) و ‎.ad-box (صف إعلانات المشاريع في صفحة المشروع / المنطقة) بنفس الارتفاع */
+
+.ad-strip,
+    .ad-box {
+  --ad-h: 120px;
+}
+
+.ad-box > * {
+  height: var(--ad-h) !important;
+  aspect-ratio: auto !important;
+}
+
+@media (min-width: 1024px) {
+  .ad-strip,
+        .ad-box {
+    --ad-h: 160px;
+  }
+}
+
 /* كارت صورة وعليه الاسم (إعلان مشروع / مرحلة) */
 
 .prop-shot {
@@ -6684,22 +6714,36 @@ input:focus-visible + .area-chip,
 }
 
 .ad-card {
+  position: relative;
   display: flex;
-  min-height: 104px;
+  height: var(--ad-h, 120px);
   flex: 0 0 100%;
+  overflow: hidden;
   scroll-snap-align: start;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 14px 16px;
+  padding: 10px 16px;
+}
+
+/* الإعلان كله كليكابل (مش الزرار / السهم بس): لينك الزرار ممدود على البوكس كله */
+
+.ad-card__cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 
 /* إعلان صورة (مرفوعة من لوحة التحكم): الصورة مالية البوكس والإعلان كله لينك */
 
 .ad-card--image {
-  min-height: 0;
   padding: 0;
-  aspect-ratio: 32 / 9;
+}
+
+.ad-card--image picture {
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
 .ad-card--image img {
@@ -6717,21 +6761,51 @@ input:focus-visible + .area-chip,
   margin-block: 22px;
 }
 
-.article-content .ad-card__title,
-    .article-content .ad-card__kicker,
-    .article-content .ad-card__text {
-  margin: 0;
-  color: #ffffff;
+.article-content .ad-card .ad-card__title,
+    .article-content .ad-card .ad-card__kicker,
+    .article-content .ad-card .ad-card__text {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  color: #ffffff !important;
 }
 
-.article-content .ad-card__title {
-  font-size: 16px;
-  line-height: 1.4;
+.article-content .ad-card .ad-card__kicker {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  line-height: 1.5 !important;
 }
 
-.article-content .ad-card__cta {
-  color: #123a5c;
-  text-decoration: none;
+.article-content .ad-card .ad-card__title {
+  font-size: 15.5px !important;
+  font-weight: 800 !important;
+  line-height: 1.4 !important;
+}
+
+.article-content .ad-card .ad-card__text {
+  font-size: 12.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.6 !important;
+}
+
+.article-content .ad-card .ad-card__cta {
+  color: #123a5c !important;
+  text-decoration: none !important;
+}
+
+.article-content .ad-card--image img {
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+@media (min-width: 1024px) {
+  .article-content .ad-card .ad-card__title {
+    font-size: 20px !important;
+  }
+
+  .article-content .ad-card .ad-card__text {
+    font-size: 14px !important;
+  }
 }
 
 /* بوكس الصور (partials/photo-box): صور مرفوعة جوه بوكس واحد بكيرف — صورة واحدة ظاهرة والباقي بيتحرك جواه (سحب أو لوحده) + نقط */
@@ -6806,12 +6880,20 @@ input:focus-visible + .area-chip,
 }
 
 .ad-card__title {
-  font-size: 16px;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 15.5px;
   font-weight: 800;
   line-height: 1.4;
 }
 
 .ad-card__text {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
   font-size: 12.5px;
   font-weight: 500;
   line-height: 1.6;
@@ -6840,9 +6922,12 @@ input:focus-visible + .area-chip,
 
 @media (min-width: 1024px) {
   .ad-card {
-    min-height: 118px;
     gap: 24px;
     padding: 18px 36px;
+  }
+
+  .ad-card__text {
+    -webkit-line-clamp: 2;
   }
 
   .ad-card__kicker {
@@ -8529,12 +8614,14 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  border-radius: 0 0 22px 22px;
-  background-color: #fff;
-  padding: 10px 20px 12px;
+  gap: 8px;
+  margin-inline: 12px;
+  border-radius: 14px;
+  border: 1px solid #e3e9ef;
+  background-color: rgba(255, 255, 255, 0.96);
+  padding: 7px 12px;
   color: #123a5c;
-  box-shadow: 0 12px 24px -16px rgba(18, 58, 92, 0.55);
+  box-shadow: 0 10px 20px -14px rgba(18, 58, 92, 0.6);
   opacity: 0;
   pointer-events: none;
   transform: translateY(-100%);
@@ -8545,6 +8632,124 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   opacity: 1;
   pointer-events: auto;
   transform: none;
+}
+
+.opp-sticky__price {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 7px;
+}
+
+.opp-sticky__price strong {
+  white-space: nowrap;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.opp-sticky__price strong span {
+  font-size: 12px;
+}
+
+.opp-sticky__off {
+  flex-shrink: 0;
+  border-radius: 999px;
+  background-color: #e7f6f3;
+  padding: 1px 8px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.7;
+  color: #136a5f;
+}
+
+.opp-sticky__save {
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 999px;
+  background-color: #1e4166;
+  padding: 4px 11px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #fff;
+}
+
+/* ملخص السداد على كارت الفرصة: "المطلوب كاش" (سطر واحد) أو 3 خانات (المقدم / المتبقي / القسط) */
+
+.opp-card__pay {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.opp-card__pay > div {
+  min-width: 0;
+  border-radius: 12px;
+  background-color: #f1f6fb;
+  padding: 7px 8px;
+}
+
+.opp-card__pay dt {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #5b7189;
+}
+
+.opp-card__pay dd {
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+.opp-card__pay dd small {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: #5b7189;
+}
+
+.opp-card__pay--cash {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-radius: 12px;
+  background-color: #e7f6f3;
+  padding: 8px 12px;
+  color: #136a5f;
+}
+
+.opp-card__pay--cash > span {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.opp-card__pay--cash > span small {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.opp-card__pay--cash > b {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.opp-card__pay--cash > b small {
+  font-size: 11.5px;
 }
 
 .opp-timer {
@@ -10634,29 +10839,6 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   white-space: nowrap;
 }
 
-.opp-pay__bar {
-  margin-top: 12px;
-  height: 8px;
-  overflow: hidden;
-  border-radius: 999px;
-  background-color: #e6eef8;
-}
-
-.opp-pay__bar i {
-  display: block;
-  height: 100%;
-  border-radius: 999px;
-  background-color: #2a9d8f;
-}
-
-.opp-pay__note {
-  margin-top: 6px;
-  font-size: 12.5px;
-  font-weight: 600;
-  line-height: 1.6;
-  color: #5b7189;
-}
-
 /* القسط + مدة الأقساط (خانتين جنب بعض) */
 
 .opp-pay__terms {
@@ -10684,24 +10866,6 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   font-weight: 800;
   line-height: 1.6;
   color: #123a5c;
-}
-
-.opp-pay__full {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 14px;
-  background-color: #e7f6f3;
-  padding: 12px 14px;
-  font-size: 14.5px;
-  font-weight: 800;
-  line-height: 1.6;
-  color: #136a5f;
-}
-
-.opp-pay__full svg {
-  flex-shrink: 0;
 }
 
 @media (min-width: 1024px) {
@@ -10999,10 +11163,10 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .app-pop__card {
   position: relative;
   width: 100%;
-  max-width: 328px;
+  max-width: 340px;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 28px;
+  border-radius: 30px;
   background-color: #fff;
   padding: 0 0 18px;
   text-align: center;
@@ -11041,15 +11205,21 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 
 /* البوب أب مستطيل بالطول (مناسب لشاشة الموبايل): التليفون كامل بنسبته الطبيعية فوق دايرة تركواز ، وتحته العنوان والزرار */
 
+/* الخلفية أزرقات منوّرة: سما فاتحة من فوق لأزرق صافي تحت + هالة نور بيضا ورا التليفون ونقطتين نور خفاف. التليفون كبير وواضح */
+
 .app-pop__art {
   position: relative;
   display: flex;
-  height: min(350px, 50vh);
+  height: min(440px, 58vh);
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  background-color: #eef8f6;
-  padding: 38px 0 30px;
+  background-color: #8ec9fb;
+  background-image:
+            radial-gradient(46% 30% at 12% 12%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0)),
+            radial-gradient(40% 26% at 92% 30%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0)),
+            linear-gradient(180deg, #e6f4ff 0%, #b5dcff 38%, #69b4f6 76%, #3d93ea 100%);
+  padding: 30px 0 34px;
 }
 
 .app-pop__art::before {
@@ -11057,11 +11227,11 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
-  height: 400px;
-  width: 400px;
+  height: 380px;
+  width: 380px;
   border-radius: 50%;
-  background-color: #4cbfae;
-  transform: translate(-50%, -42%);
+  background-image: radial-gradient(closest-side, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 42%, rgba(255, 255, 255, 0) 100%);
+  transform: translate(-50%, -50%);
 }
 
 /* التليفون كامل بنسبته الطبيعية (طوله وعرضه زي ما هو — من غير ضغط ولا قص) */
@@ -11070,11 +11240,11 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   position: relative;
   height: 100%;
   width: auto;
-  max-width: 86%;
+  max-width: 92%;
   flex-shrink: 0;
   -o-object-fit: contain;
      object-fit: contain;
-  filter: drop-shadow(0 20px 24px rgba(13, 44, 73, 0.35));
+  filter: drop-shadow(0 22px 26px rgba(20, 78, 148, 0.38));
 }
 
 .app-pop__body {
@@ -11110,7 +11280,9 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   justify-content: center;
   gap: 9px;
   border-radius: 999px;
-  background-color: #1e4166;
+  background-color: #1f6fd6;
+  background-image: linear-gradient(90deg, #1c5fbf 0%, #2f8bef 100%);
+  box-shadow: 0 12px 20px -10px rgba(31, 111, 214, 0.75);
   font-size: 16.5px;
   font-weight: 800;
   line-height: 1.5;
@@ -14011,6 +14183,10 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   text-decoration-line: line-through;
 }
 
+.decoration-1 {
+  text-decoration-thickness: 1px;
+}
+
 .underline-offset-4 {
   text-underline-offset: 4px;
 }
@@ -16719,6 +16895,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .pv-desktop .prop-bar--project .prop-bar__head > p {order: 3;
     flex-basis: 100%;}
 .pv-desktop .rent-gallery.rent-gallery--slider .rent-gallery__item {transition: flex-grow 0.9s ease;}
+.pv-desktop .ad-strip, .pv-desktop .ad-box {--ad-h: 160px;}
 .pv-desktop .prop-rail {margin-inline: 0;
     padding-inline: 0;
     scroll-padding-inline: 0;}
@@ -16838,9 +17015,11 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
     align-self: center;
     gap: 12px;}
 .pv-desktop .rent-bar__tools > * {flex: none;}
-.pv-desktop .ad-card {min-height: 118px;
-    gap: 24px;
+.pv-desktop .article-content .ad-card .ad-card__title {font-size: 20px !important;}
+.pv-desktop .article-content .ad-card .ad-card__text {font-size: 14px !important;}
+.pv-desktop .ad-card {gap: 24px;
     padding: 18px 36px;}
+.pv-desktop .ad-card__text {-webkit-line-clamp: 2;}
 .pv-desktop .ad-card__kicker {font-size: 12px;}
 .pv-desktop .ad-card__title {font-size: 22px;}
 .pv-desktop .ad-card__text {font-size: 14.5px;}
