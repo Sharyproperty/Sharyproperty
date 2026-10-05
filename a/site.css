@@ -11193,6 +11193,53 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   }
 }
 
+/* مؤشر شاري — زرار "غيّر المنطقة" جنب جدول الأنواع */
+
+.index-area-change {
+  display: inline-flex;
+  height: 38px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  border-radius: 10px;
+  border: 1.5px solid #1e4166;
+  background-color: #fff;
+  padding-inline: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #1e4166;
+}
+
+/* مؤشر شاري — نوع الوحدة في "قارن بين منطقتين" (نفس أنواع الفلتر اللي فوق) */
+
+.index-compare__types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.index-compare__types button {
+  min-height: 38px;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  border-radius: 10px;
+  border: 1.5px solid #d5dfea;
+  background-color: #fff;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.index-compare__types button[aria-pressed="true"] {
+  border-color: #1e4166;
+  background-color: #1e4166;
+  color: #fff;
+}
+
 /* ---- عقارات دولية (abroad/index + abroad/country): الدول ← المناطق ← المطورين ← المشاريع ---- */
 
 /* كارت الدولة: الصورة مالية الكارت + العلم + الاسم والمدن + عدد المشاريع و"يبدأ من" */
@@ -13400,8 +13447,8 @@ img.abroad-dev__logo {
   grid-template-columns: minmax(0,118px) minmax(0,1fr) 86px;
 }
 
-.grid-cols-\[minmax\(0\2c 128px\)_34px_minmax\(0\2c 1fr\)_26px\] {
-  grid-template-columns: minmax(0,128px) 34px minmax(0,1fr) 26px;
+.grid-cols-\[minmax\(0\2c 1fr\)_minmax\(0\2c 90px\)_38px\] {
+  grid-template-columns: minmax(0,1fr) minmax(0,90px) 38px;
 }
 
 .grid-cols-\[minmax\(0\2c 92px\)_minmax\(0\2c 1fr\)_64px\] {
@@ -16446,10 +16493,6 @@ img.abroad-dev__logo {
     grid-template-columns: minmax(0,150px) 34px minmax(0,1fr) 26px;
   }
 
-  .lg\:grid-cols-\[minmax\(0\2c 170px\)_38px_minmax\(0\2c 1fr\)_26px\] {
-    grid-template-columns: minmax(0,170px) 38px minmax(0,1fr) 26px;
-  }
-
   .lg\:grid-cols-\[minmax\(0\2c 1fr\)_320px\] {
     grid-template-columns: minmax(0,1fr) 320px;
   }
@@ -16488,6 +16531,10 @@ img.abroad-dev__logo {
 
   .lg\:grid-cols-\[minmax\(0\2c 220px\)_minmax\(0\2c 1fr\)_110px\] {
     grid-template-columns: minmax(0,220px) minmax(0,1fr) 110px;
+  }
+
+  .lg\:grid-cols-\[minmax\(0\2c 260px\)_minmax\(0\2c 1fr\)_44px\] {
+    grid-template-columns: minmax(0,260px) minmax(0,1fr) 44px;
   }
 
   .lg\:flex-row {
@@ -18796,7 +18843,6 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1\.1fr\)_48px_minmax\(0\2c 1fr\)_40px\] {grid-template-columns: minmax(0,1.1fr) 48px minmax(0,1fr) 40px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 130px\)_minmax\(0\2c 1fr\)_72px\] {grid-template-columns: minmax(0,130px) minmax(0,1fr) 72px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 150px\)_34px_minmax\(0\2c 1fr\)_26px\] {grid-template-columns: minmax(0,150px) 34px minmax(0,1fr) 26px;}
-.pv-desktop .lg\:grid-cols-\[minmax\(0\2c 170px\)_38px_minmax\(0\2c 1fr\)_26px\] {grid-template-columns: minmax(0,170px) 38px minmax(0,1fr) 26px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_320px\] {grid-template-columns: minmax(0,1fr) 320px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_360px\] {grid-template-columns: minmax(0,1fr) 360px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_380px\] {grid-template-columns: minmax(0,1fr) 380px;}
@@ -18807,6 +18853,7 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_minmax\(0\2c 480px\)\] {grid-template-columns: minmax(0,1fr) minmax(0,480px);}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_minmax\(0\2c 520px\)\] {grid-template-columns: minmax(0,1fr) minmax(0,520px);}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 220px\)_minmax\(0\2c 1fr\)_110px\] {grid-template-columns: minmax(0,220px) minmax(0,1fr) 110px;}
+.pv-desktop .lg\:grid-cols-\[minmax\(0\2c 260px\)_minmax\(0\2c 1fr\)_44px\] {grid-template-columns: minmax(0,260px) minmax(0,1fr) 44px;}
 .pv-desktop .lg\:flex-row {flex-direction: row;}
 .pv-desktop .lg\:flex-row-reverse {flex-direction: row-reverse;}
 .pv-desktop .lg\:flex-col {flex-direction: column;}

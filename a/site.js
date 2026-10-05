@@ -2040,6 +2040,24 @@
             page.querySelectorAll('[data-k="' + key + '"]').forEach(function (el) { el.textContent = value; });
         }
 
+        // جدول "متوسط سعر المتر حسب نوع الوحدة" [data-type-row]: أرقام المنطقة المختارة في الفلتر (أو السوق كله لو "مصر كلها")
+        function fillTypeRows() {
+            page.querySelectorAll('[data-type-row]').forEach(function (row) {
+                var key = row.getAttribute('data-type-row');
+                var market = data.types[key] ? data.types[key].market : null;
+                var own = areaKey && areas[areaKey] && areas[areaKey].values[key] ? areas[areaKey].values[key] : null;
+                var from = own || market;
+                if (!from) return;
+                var cell = function (name, value) { var node = row.querySelector('[data-cell="' + name + '"]'); if (node) node.textContent = value; return node; };
+                cell('price', from.price_text);
+                var yearly = cell('yearly', from.yearly_text);
+                if (yearly) yearly.setAttribute('data-sign', Number(from.yearly) >= 0 ? 'up' : 'down');
+                cell('yield', from.yield_text);
+                cell('range', own ? (own.resale_text || '—') : market.range_text);
+                cell('demand', from.demand);
+            });
+        }
+
         // أرقام الاختيار الحالي: السوق كله (مصر) أو منطقة بعينها — نفس المفاتيح في الحالتين
         function scope() {
             var type = data.types[typeKey];
@@ -2082,6 +2100,7 @@
             set('range_label', now.range_label);
             set('range', now.range_text);
             draw();
+            fillTypeRows();
 
             var insights = page.querySelector('[data-insights]');
             if (insights) {
@@ -2320,9 +2339,26 @@
                 });
             });
         }
+        // نوع الوحدة في المقارنة [data-compare-type]: نفس اختيار الفلتر اللي فوق — الضغط هنا بيغيّر الفلتر (والصفحة كلها) ، وتغيير الفلتر بيعلّم هنا
+        function markCompareType() {
+            if (!compare) return;
+            var label = '';
+            compare.querySelectorAll('[data-compare-type]').forEach(function (chip) {
+                var on = chip.getAttribute('data-compare-type') === typeKey;
+                chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+                if (on) label = chip.textContent.trim();
+            });
+            if (label) compare.querySelectorAll('[data-compare-type-label]').forEach(function (node) { node.textContent = label; });
+        }
         if (compare) {
             compare.querySelectorAll('[data-compare-select]').forEach(function (select) {
                 select.addEventListener('change', function () { showCompare(); announce(); });
+            });
+            compare.querySelectorAll('[data-compare-type]').forEach(function (chip) {
+                chip.addEventListener('click', function () {
+                    var target = page.querySelector('[data-index-type="' + chip.getAttribute('data-compare-type') + '"]');
+                    if (target) target.click();
+                });
             });
         }
 
@@ -2365,6 +2401,7 @@
                 buttons.forEach(function (other) { other.setAttribute('aria-pressed', other === button ? 'true' : 'false'); });
                 typeKey = button.getAttribute('data-index-type');
                 show();
+                markCompareType();
                 announce();
             });
         });
@@ -2400,6 +2437,25 @@
                 });
             });
         }
+
+        // "غيّر المنطقة" جنب جدول الأنواع: بيفتح نفس قايمة مناطق الفلتر (من غير ما الصفحة تطلع لفوق)
+        page.querySelectorAll('[data-index-area-open]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var hero = page.querySelector('[data-picker-open="hero"]');
+                if (hero) hero.click();
+            });
+        });
+        // "إزاي المؤشر بيتحسب": زراير الحسابات التلاتة (المنطقة / المشروع والوحدة / المطور)
+        page.querySelectorAll('[data-index-method]').forEach(function (box) {
+            var tabs = Array.prototype.slice.call(box.querySelectorAll('[data-method-tab]'));
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    var key = tab.getAttribute('data-method-tab');
+                    tabs.forEach(function (other) { other.setAttribute('aria-pressed', other === tab ? 'true' : 'false'); });
+                    box.querySelectorAll('[data-method-panel]').forEach(function (panel) { panel.classList.toggle('hidden', panel.getAttribute('data-method-panel') !== key); });
+                });
+            });
+        });
 
         // ---------- جدول أنواع الوحدات: الضغط على النوع بيغيّر الصفحة كلها للنوع ده ويطلع للفلتر ----------
         page.querySelectorAll('[data-index-type-jump]').forEach(function (jump) {
@@ -2513,7 +2569,7 @@
             var closePicker = function () {
                 picker.classList.add('hidden');
                 document.documentElement.style.overflow = '';
-                if (target) target.focus();
+                if (target) { try { target.focus({ preventScroll: true }); } catch (error) { target.focus(); } }
                 target = null;
             };
             page.querySelectorAll('[data-picker-open]').forEach(function (button) {

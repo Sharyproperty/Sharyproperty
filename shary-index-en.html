@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=37f38aad">
+<link rel="stylesheet" href="a/site.css?v=997828ed">
 </head><body>
 
 
@@ -1380,6 +1380,15 @@ data-compare-link data-base="compare-en.html" >
 <p class="text-[12px] font-medium text-shary-muted lg:text-[13px]">Pick two areas to see the difference in price, growth and demand · <span data-k="label">Residential</span></p>
 </div>
 <div class="area-card p-4 lg:p-7">
+
+<p class="mb-1.5 text-[12px] font-bold leading-normal lg:text-[13px]">Compare by unit type</p>
+<div class="index-compare__types mb-4 lg:mb-6" role="group" aria-label="Compare by unit type">
+<button type="button" data-compare-type="res" aria-pressed="true">Residential</button>
+<button type="button" data-compare-type="com" aria-pressed="false">Retail</button>
+<button type="button" data-compare-type="adm" aria-pressed="false">Office</button>
+<button type="button" data-compare-type="med" aria-pressed="false">Medical</button>
+<button type="button" data-compare-type="hot" aria-pressed="false">Hotel</button>
+</div>
 <div class="grid grid-cols-1 gap-2.5 md:grid-cols-2 lg:gap-6">
 <div class="relative block">
 <p class="mb-1.5 flex items-center gap-1.5 text-[12px] font-bold leading-normal lg:text-[13px]"><i class="index-swatch" data-side="a"></i>First area</p>
@@ -1433,7 +1442,7 @@ data-compare-link data-base="compare-en.html" >
 
 <div class="mt-4 grid grid-cols-1 gap-x-10 gap-y-4 lg:mt-6 lg:grid-cols-2 lg:gap-y-6">
 <div data-compare-metric="price">
-<h3 class="mb-1.5 text-[13px] font-bold leading-normal lg:text-[14px]">Price per meter (EGP/m²)</h3>
+<h3 class="mb-1.5 text-[13px] font-bold leading-normal lg:text-[14px]">Price per meter (EGP/m²) <span class="font-semibold text-shary-link">— <span data-compare-type-label>Residential</span></span></h3>
 <div class="grid grid-cols-[minmax(0,92px)_minmax(0,1fr)_64px] items-center gap-2.5 py-1 lg:grid-cols-[minmax(0,130px)_minmax(0,1fr)_72px]">
 <span class="text-[12.5px] font-semibold leading-normal text-shary-muted lg:text-[13px]" data-compare-name="a">New Cairo</span>
 <span class="h-2.5 overflow-hidden rounded-full bg-shary-soft"><i class="index-compare__bar block h-full" data-side="a" data-compare-fill="a"></i></span>
@@ -1446,7 +1455,7 @@ data-compare-link data-base="compare-en.html" >
 </div>
 </div>
 <div data-compare-metric="resale">
-<h3 class="mb-1.5 text-[13px] font-bold leading-normal lg:text-[14px]">Resale price per meter (EGP/m²)</h3>
+<h3 class="mb-1.5 text-[13px] font-bold leading-normal lg:text-[14px]">Resale price per meter (EGP/m²) <span class="font-semibold text-shary-link">— <span data-compare-type-label>Residential</span></span></h3>
 <div class="grid grid-cols-[minmax(0,92px)_minmax(0,1fr)_64px] items-center gap-2.5 py-1 lg:grid-cols-[minmax(0,130px)_minmax(0,1fr)_72px]">
 <span class="text-[12.5px] font-semibold leading-normal text-shary-muted lg:text-[13px]" data-compare-name="a">New Cairo</span>
 <span class="h-2.5 overflow-hidden rounded-full bg-shary-soft"><i class="index-compare__bar block h-full" data-side="a" data-compare-fill="a"></i></span>
@@ -1546,8 +1555,14 @@ data-compare-link data-base="compare-en.html" >
 </div>
 </section>
 
-<section>
-<h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">Average price per meter by unit type</h2>
+<section data-index-types>
+<div class="mb-3.5 flex flex-wrap items-center justify-between gap-x-3 gap-y-2 lg:mb-5">
+<h2 class="text-[20px] font-bold leading-[1.35] lg:text-[28px]">Average price per meter by unit type <span class="whitespace-nowrap text-shary-link">— <span data-k="scope">All of Egypt</span></span></h2>
+<button type="button" class="index-area-change" data-index-area-open>
+<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
+<span>Change area</span>
+</button>
+</div>
 <div class="area-card overflow-hidden">
 <table class="index-table">
 <thead>
@@ -1561,45 +1576,45 @@ data-compare-link data-base="compare-en.html" >
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr data-type-row="res">
 <th scope="row" class="index-table__name"><button type="button" class="font-bold text-shary-navy hover:text-shary-link" data-index-type-jump="res">Residential</button></th>
-<td><b dir="ltr">76,000</b></td>
-<td><span class="index-change" data-sign="up" dir="ltr">+21.4%</span></td>
-<td><b dir="ltr">6.1%</b></td>
-<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr">39,200 – 117,600</bdi></td>
-<td class="hidden lg:table-cell"><b>88</b></td>
+<td><b dir="ltr" data-cell="price">76,000</b></td>
+<td><span class="index-change" data-sign="up" dir="ltr" data-cell="yearly">+21.4%</span></td>
+<td><b dir="ltr" data-cell="yield">6.1%</b></td>
+<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr" data-cell="range">39,200 – 117,600</bdi></td>
+<td class="hidden lg:table-cell"><b data-cell="demand">88</b></td>
 </tr>
-<tr>
+<tr data-type-row="com">
 <th scope="row" class="index-table__name"><button type="button" class="font-bold text-shary-navy hover:text-shary-link" data-index-type-jump="com">Retail</button></th>
-<td><b dir="ltr">137,700</b></td>
-<td><span class="index-change" data-sign="up" dir="ltr">+17.8%</span></td>
-<td><b dir="ltr">9.0%</b></td>
-<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr">71,000 – 213,000</bdi></td>
-<td class="hidden lg:table-cell"><b>81</b></td>
+<td><b dir="ltr" data-cell="price">137,700</b></td>
+<td><span class="index-change" data-sign="up" dir="ltr" data-cell="yearly">+17.8%</span></td>
+<td><b dir="ltr" data-cell="yield">9.0%</b></td>
+<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr" data-cell="range">71,000 – 213,000</bdi></td>
+<td class="hidden lg:table-cell"><b data-cell="demand">81</b></td>
 </tr>
-<tr>
+<tr data-type-row="adm">
 <th scope="row" class="index-table__name"><button type="button" class="font-bold text-shary-navy hover:text-shary-link" data-index-type-jump="adm">Office</button></th>
-<td><b dir="ltr">93,600</b></td>
-<td><span class="index-change" data-sign="up" dir="ltr">+14.2%</span></td>
-<td><b dir="ltr">8.1%</b></td>
-<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr">48,200 – 144,800</bdi></td>
-<td class="hidden lg:table-cell"><b>75</b></td>
+<td><b dir="ltr" data-cell="price">93,600</b></td>
+<td><span class="index-change" data-sign="up" dir="ltr" data-cell="yearly">+14.2%</span></td>
+<td><b dir="ltr" data-cell="yield">8.1%</b></td>
+<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr" data-cell="range">48,200 – 144,800</bdi></td>
+<td class="hidden lg:table-cell"><b data-cell="demand">75</b></td>
 </tr>
-<tr>
+<tr data-type-row="med">
 <th scope="row" class="index-table__name"><button type="button" class="font-bold text-shary-navy hover:text-shary-link" data-index-type-jump="med">Medical</button></th>
-<td><b dir="ltr">114,500</b></td>
-<td><span class="index-change" data-sign="up" dir="ltr">+19.5%</span></td>
-<td><b dir="ltr">8.6%</b></td>
-<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr">59,000 – 177,000</bdi></td>
-<td class="hidden lg:table-cell"><b>79</b></td>
+<td><b dir="ltr" data-cell="price">114,500</b></td>
+<td><span class="index-change" data-sign="up" dir="ltr" data-cell="yearly">+19.5%</span></td>
+<td><b dir="ltr" data-cell="yield">8.6%</b></td>
+<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr" data-cell="range">59,000 – 177,000</bdi></td>
+<td class="hidden lg:table-cell"><b data-cell="demand">79</b></td>
 </tr>
-<tr>
+<tr data-type-row="hot">
 <th scope="row" class="index-table__name"><button type="button" class="font-bold text-shary-navy hover:text-shary-link" data-index-type-jump="hot">Hotel</button></th>
-<td><b dir="ltr">100,900</b></td>
-<td><span class="index-change" data-sign="up" dir="ltr">+11.6%</span></td>
-<td><b dir="ltr">10.0%</b></td>
-<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr">52,000 – 156,000</bdi></td>
-<td class="hidden lg:table-cell"><b>67</b></td>
+<td><b dir="ltr" data-cell="price">100,900</b></td>
+<td><span class="index-change" data-sign="up" dir="ltr" data-cell="yearly">+11.6%</span></td>
+<td><b dir="ltr" data-cell="yield">10.0%</b></td>
+<td class="hidden whitespace-nowrap md:table-cell"><bdi dir="ltr" data-cell="range">52,000 – 156,000</bdi></td>
+<td class="hidden lg:table-cell"><b data-cell="demand">67</b></td>
 </tr>
 </tbody>
 </table>
@@ -2073,31 +2088,107 @@ data-compare-link data-base="compare-en.html" >
 <section class="grid grid-cols-1 gap-8 lg:gap-12">
 <div>
 <h2 class="mb-3.5 text-[20px] font-bold leading-[1.35] lg:mb-5 lg:text-[28px]">How is the Shary Index calculated?</h2>
-<div class="area-card px-4 py-4 lg:px-7 lg:py-6">
-<p class="mb-2.5 text-[14px] font-medium leading-[1.8] text-shary-muted lg:text-[15px]">The index is a score out of 100 built from 4 weighted factors. The figures here are the market average for the selected unit type.</p>
-<div class="grid grid-cols-[minmax(0,128px)_34px_minmax(0,1fr)_26px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,170px)_38px_minmax(0,1fr)_26px] lg:text-[14px]">
-<span class="font-bold">Liquidity and sales speed</span>
-<em class="text-[11px] font-medium not-italic text-shary-muted" dir="ltr">30%</em>
-<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 88%"></i></span>
-<b class="text-[12.5px] font-bold">88</b>
+
+<div class="area-card px-4 py-4 lg:px-7 lg:py-6" data-index-method>
+<p class="mb-2 text-[13px] font-bold leading-normal lg:text-[14px]">Whose index?</p>
+<div class="index-compare__types mb-4" role="tablist" aria-label="Whose index?">
+<button type="button" role="tab" data-method-tab="area" aria-pressed="true">Area</button>
+<button type="button" role="tab" data-method-tab="project" aria-pressed="false">Project / unit</button>
+<button type="button" role="tab" data-method-tab="developer" aria-pressed="false">Developer</button>
 </div>
-<div class="grid grid-cols-[minmax(0,128px)_34px_minmax(0,1fr)_26px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,170px)_38px_minmax(0,1fr)_26px] lg:text-[14px]">
+<div data-method-panel="area" class="">
+<p class="mb-2.5 text-[14px] font-medium leading-[1.8] text-shary-muted lg:text-[15px]">The area index is a score out of 100 built from 4 factors for the market average in the selected area and unit type.</p>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Liquidity and selling speed</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 90%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">30%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
 <span class="font-bold">Price growth</span>
-<em class="text-[11px] font-medium not-italic text-shary-muted" dir="ltr">25%</em>
-<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 84%"></i></span>
-<b class="text-[12.5px] font-bold">84</b>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 75%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">25%</b>
 </div>
-<div class="grid grid-cols-[minmax(0,128px)_34px_minmax(0,1fr)_26px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,170px)_38px_minmax(0,1fr)_26px] lg:text-[14px]">
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
 <span class="font-bold">Area growth</span>
-<em class="text-[11px] font-medium not-italic text-shary-muted" dir="ltr">25%</em>
-<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 81%"></i></span>
-<b class="text-[12.5px] font-bold">81</b>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 75%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">25%</b>
 </div>
-<div class="grid grid-cols-[minmax(0,128px)_34px_minmax(0,1fr)_26px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,170px)_38px_minmax(0,1fr)_26px] lg:text-[14px]">
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
 <span class="font-bold">Services and facilities</span>
-<em class="text-[11px] font-medium not-italic text-shary-muted" dir="ltr">20%</em>
-<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 76%"></i></span>
-<b class="text-[12.5px] font-bold">76</b>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+</div>
+<div data-method-panel="project" class="hidden">
+<p class="mb-2.5 text-[14px] font-medium leading-[1.8] text-shary-muted lg:text-[15px]">The project index is a score out of 100 from 5 equally weighted factors — every unit inside a project uses its project&#039;s calculation.</p>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Average price vs. the area</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Project price growth</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Area growth</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">On-time delivery</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Services and facilities</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+</div>
+<div data-method-panel="developer" class="hidden">
+<p class="mb-2.5 text-[14px] font-medium leading-[1.8] text-shary-muted lg:text-[15px]">The developer index is a score out of 100 from 8 factors that measure the developer&#039;s record across all projects.</p>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Liquidity and selling speed</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Price growth after delivery</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 60%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">20%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Delivery commitment</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 45%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">15%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Financial solvency</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 45%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">15%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Developer growth</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 30%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">10%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Product quality</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 30%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">10%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Services and facilities</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 15%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">5%</b>
+</div>
+<div class="grid grid-cols-[minmax(0,1fr)_minmax(0,90px)_38px] items-center gap-2.5 py-1.5 text-[13px] leading-normal lg:grid-cols-[minmax(0,260px)_minmax(0,1fr)_44px] lg:text-[14px]">
+<span class="font-bold">Service and support</span>
+<span class="h-2 overflow-hidden rounded-full bg-shary-soft"><i class="area-bar block h-full rounded-full" style="width: 15%"></i></span>
+<b class="text-end text-[13px] font-bold" dir="ltr">5%</b>
+</div>
 </div>
 <p class="shary-note mt-3 text-[12.5px] leading-[1.7] lg:text-[13.5px]">The index is a guide for reading the market, not a substitute for viewing the unit and reviewing the contract.</p>
 </div>
@@ -2995,7 +3086,7 @@ data-label-get="Download Now" data-label-open="Open App">
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "37f38aad";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "997828ed";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -3012,7 +3103,7 @@ data-label-get="Download Now" data-label-open="Open App">
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=37f38aad"></script>
+<script src="a/site.js?v=997828ed"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
