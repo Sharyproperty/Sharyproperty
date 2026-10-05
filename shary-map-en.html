@@ -1,9 +1,9 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=0cf2a5c7">
+<link rel="stylesheet" href="a/site.css?v=c7fed34f">
 <script>(function(){var h=(location.hash||"").slice(1).replace(/\/en$/,"");var M=["shary-map"];if(h&&h!==M[0]&&M.indexOf(h)>-1){document.write('<style id="pv-first">main[data-view][data-view]{display:none!important}main[data-view="'+h+'"][data-view]{display:block!important}</style>');setTimeout(function(){var s=document.getElementById("pv-first");if(s)s.parentNode.removeChild(s)},6000)}})();</script>
-<script src="mp-demo.js?v=0cf2a5c7"></script>
+<script src="mp-demo.js?v=c7fed34f"></script>
 </head><body>
 
 
@@ -1162,15 +1162,24 @@ Directions                                </a>
 <div class="smap__sheet" data-smap-sheet hidden role="dialog" aria-modal="true" aria-label="Filters">
 <div class="smap__sheet-dim" data-smap-sheet-close></div>
 <div class="smap__sheet-box">
+
 <div class="smap__sheet-head">
-<p>Filters</p>
 <button type="button" data-smap-sheet-close aria-label="Close">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+<svg class="ltr:rotate-180" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </button>
+<p role="heading" aria-level="2">
+<span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span>
+Filter                        </p>
 </div>
 <div class="smap__sheet-body shary-scroll">
 <section data-smap-fsec="types">
-<p>Unit types</p>
+<div class="smap__fhead">
+<div>
+<span aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V6l8-3v18M12 9l8 2v10M4 21h16M7.5 9v.01M7.5 12.5v.01M7.5 16v.01M15.5 13.5v.01M15.5 17v.01"/></svg></span>
+<p role="heading" aria-level="3">Unit types</p>
+</div>
+<button type="button" class="clear-btn clear-btn--sm" data-smap-fclear-one="types"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Clear</span></button>
+</div>
 <div class="smap__chips">
 <button type="button" class="smap__chip" data-smap-f="types" data-value="townhouse" aria-pressed="false">Townhouses</button>
 <button type="button" class="smap__chip" data-smap-f="types" data-value="twin-house" aria-pressed="false">Twin houses</button>
@@ -1187,7 +1196,13 @@ Directions                                </a>
 </div>
 </section>
 <section data-smap-fsec="delivery">
-<p>Delivery</p>
+<div class="smap__fhead">
+<div>
+<span aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
+<p role="heading" aria-level="3">Delivery</p>
+</div>
+<button type="button" class="clear-btn clear-btn--sm" data-smap-fclear-one="delivery"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Clear</span></button>
+</div>
 <div class="smap__chips">
 <button type="button" class="smap__chip" data-smap-f="delivery" data-value="0" aria-pressed="false">Ready to move</button>
 <button type="button" class="smap__chip" data-smap-f="delivery" data-value="2026" aria-pressed="false">2026</button>
@@ -1197,7 +1212,13 @@ Directions                                </a>
 </div>
 </section>
 <section data-smap-fsec="price">
-<p>Price</p>
+<div class="smap__fhead">
+<div>
+<span aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 12.5 12 4h7.5a.5.5 0 0 1 .5.5V12l-8.5 8.5a1.5 1.5 0 0 1-2.1 0l-5.9-5.9a1.5 1.5 0 0 1 0-2.1Z"/><circle cx="16" cy="8" r="1.4"/></svg></span>
+<p role="heading" aria-level="3">Price</p>
+</div>
+<button type="button" class="clear-btn clear-btn--sm" data-smap-fclear-one="price"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Clear</span></button>
+</div>
 <div class="smap__chips">
 <button type="button" class="smap__chip" data-smap-f="price" data-value="0" data-min="0" data-max="5000000" aria-pressed="false">Up to 5 M</button>
 <button type="button" class="smap__chip" data-smap-f="price" data-value="1" data-min="5000000" data-max="10000000" aria-pressed="false">5 – 10 M</button>
@@ -1207,8 +1228,8 @@ Directions                                </a>
 </section>
 </div>
 <div class="smap__sheet-foot">
-<button type="button" class="smap__sheet-clear" data-smap-fclear>Clear</button>
 <button type="button" class="smap__sheet-apply" data-smap-sheet-close>Show results (<span data-smap-count>31</span>)</button>
+<button type="button" class="clear-btn clear-btn--lg smap__sheet-clear" data-smap-fclear><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg><span>Clear</span></button>
 </div>
 </div>
 </div>
@@ -1750,7 +1771,7 @@ data-label-get="Download Now" data-label-open="Open App">
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "0cf2a5c7";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "c7fed34f";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -1767,7 +1788,7 @@ data-label-get="Download Now" data-label-open="Open App">
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=0cf2a5c7"></script>
+<script src="a/site.js?v=c7fed34f"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -3415,6 +3436,23 @@ data-label-get="Download Now" data-label-open="Open App">
   root.addEventListener('shary:career-apply', function (e) { var form = e.target.closest ? e.target.closest('form') : null; if (form) pvMail('طلب توظيف', pvFormFields(form)); }, true);
   root.addEventListener('shary:card-request', function (e) { var d = e.detail || {}; pvMail('طلب شاري كارد', { 'الاسم': d.name, 'الموبايل': (d.country_code || '') + ' ' + (d.phone || '') }); }, true);
   root.addEventListener('shary:opportunity-offer', function (e) { var d = e.detail || {}; pvMail('عرض على فرصة إعادة بيع', { 'الاسم': d.name, 'الموبايل': (d.country_code || '') + ' ' + (d.phone || ''), 'قيمة العرض': d.amount, 'الفرصة': d.slug }); }, true);
+
+  // شبكة أمان: أي فورم POST في المعاينة مالوش معالج خاص (زي فورم الاستشارة في الصفحة الرئيسية) — المعاينة من غير سيرفر ،
+  // فبدل ما الصفحة تفتح على خطأ: الطلب بيتبعت ميل تجريبي وبتظهر رسالة "اتبعت". على الموقع الحقيقي الفورم بيروح للسيرفر عادي.
+  document.addEventListener('submit', function (e) {
+    var form = e.target;
+    if (e.defaultPrevented || !form || !form.getAttribute || String(form.getAttribute('method') || '').toLowerCase() !== 'post') return;
+    e.preventDefault();
+    var fields = pvFormFields(form);
+    var areaLabel = form.querySelector('#contact_location_label');
+    if (areaLabel && fields.area_id) { fields['المنطقة'] = areaLabel.textContent.trim(); delete fields.area_id; }
+    pvMail(form.id === 'homeContactForm' ? 'طلب استشارة — الصفحة الرئيسية' : 'طلب من فورم على الموقع', fields);
+    var placeholder = areaLabel ? areaLabel.getAttribute('data-placeholder') || (lang === 'ar' ? 'المنطقة' : 'Area') : '';
+    form.reset();
+    if (form.id === 'homeContactForm') Array.prototype.forEach.call(form.querySelectorAll('#selected_area_id, #selected_developer_id'), function (input) { input.value = ''; });
+    if (areaLabel) areaLabel.textContent = placeholder;
+    toast(t('received'));
+  });
 
   root.querySelectorAll('form[data-consult]').forEach(function (form) {
     var label = form.querySelector('button[type="submit"] span');

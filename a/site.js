@@ -4219,6 +4219,15 @@
         });
         var clear = root.querySelector('[data-smap-fclear]');
         if (clear) clear.addEventListener('click', function () { state.types = []; state.delivery = []; state.price = ''; paintChips(); filter(); });
+        // "مسح" جنب عنوان كل قسم: بيفضّي القسم ده بس
+        root.querySelectorAll('[data-smap-fclear-one]').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var kind = button.getAttribute('data-smap-fclear-one');
+                if (kind === 'price') state.price = ''; else if (state[kind]) state[kind] = [];
+                paintChips();
+                filter();
+            });
+        });
         // "استلام فوري": المشاريع اللي فيها وحدات جاهزة بس
         var readyButton = root.querySelector('[data-smap-ready]');
         if (readyButton) readyButton.addEventListener('click', function () {
