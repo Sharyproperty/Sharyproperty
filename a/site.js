@@ -791,11 +791,16 @@
 
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
     if (!mobile || seen() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
-    window.setTimeout(function () {
+    // العميل فاتح Shary AI: البوب أب ما يقطعش المحادثة — بيستنى لحد ما يقفلها
+    function show() {
         var button = pop.querySelector('[data-app-button]');
         if (button && button.getAttribute('data-state') === 'open') return;   // التطبيق متسطّب
+        var ai = document.querySelector('[data-ai-panel]');
+        if (ai && Array.prototype.some.call(document.querySelectorAll('[data-ai-panel]'), function (panel) { return !panel.classList.contains('hidden'); })) { window.setTimeout(show, 4000); return; }
+        if (seen()) return;
         open();
-    }, Number(pop.getAttribute('data-delay')) || 1800);
+    }
+    window.setTimeout(show, Number(pop.getAttribute('data-delay')) || 1800);
 })();
 
 /**
@@ -4359,6 +4364,38 @@
  *   بتفضل مفتوحة بنفس المحادثة وهو بيتنقل بين الصفحات (الحالة محفوظة في sessionStorage: shary-ai-state) لحد ما يقفلها بنفسه.
  *   موبايل: بملء الشاشة زي ما هي (والضغط على لينك كارت بيقفلها).
  * - "من الأول": محادثة جديدة ورجوع لأسئلة الاختيار. المايك بيظهر بس لو المتصفح بيدعم الإملاء الصوتي.
+ *
+ * ===== الإيجنت (تحديث) — كل ده جاهز في الفرونت ومستني الباك إند بس =====
+ * - الرد بيبدأ من فوق: بعد أي رد الشات بيقف على أول الرد (النص وأول كارت) والعميل ينزل براحته — مش على آخر كارت.
+ * - الطلب (POST JSON على data-endpoint ، ونفسه في event.detail):
+ *       { message, answers, context, session, lang: 'ar' | 'en', via: 'steps' | 'text', page: '/projects/scenes' }
+ *     answers = اختيارات العميل الحالية دايمًا (حتى مع الأسئلة المكتوبة) ، context = الصفحة اللي هو فاتحها ($aiContext): { type: 'project' | 'unit' | 'area' | 'developer', id, name, url }.
+ * - الرد JSON (كل المفاتيح اختيارية):
+ *       reply      نص الرد (**بولد** وسطور)
+ *       id         رقم الرسالة (بيرجع مع التقييم)
+ *       criteria   ['شقة', 'القاهرة الجديدة', 'حتى 10 مليون'] — اللي الإيجنت فهمه من كلام العميل: بيظهر في شريط "طلبك" فوق الشات
+ *       options    ['2 غرف', '3 غرف', '4+'] — سؤال توضيحي: زراير تحت الرد ، الضغط بيبعت النص كرسالة
+ *       stats      [{ label, value, unit, note, trend: 'up' | 'down' }] أو { title, items: [...] } — أرقام السوق (سعر المتر / العائد / مؤشر شاري)
+ *       results    { total, search_url, title, visible } — عدد النتايج + لينك "اعرض الكل في البحث" (visible = عدد الكروت الظاهرة قبل "اعرض كمان" ، الافتراضي 3)
+ *       cards      [{ ...الكارت زي فوق + slug (للمفضلة والمقارنة) , match: 92 (نسبة المطابقة) , reasons: ['في حدود ميزانيتك', ...] (ليه رشحناها) }]
+ *       compare    { title, columns: ['سينز', 'آي سيتي'], rows: [{ label, values: [...], best: 0 }], note } — جدول مقارنة
+ *       sources    [{ label, url }] — مصدر الأرقام
+ *       actions    [{ label, url } | { label, say: 'نص يتبعت' } | { label, type: 'meeting' }] — زراير تحت الرد
+ *       meeting    true = كارت "تحب تتكلم مع مستشار شاري؟" ، book = ابدأ حجز الميتنج ، lead: true | { title, text } = فورم "خلّي مستشار يكلمك" (اسم + موبايل)
+ *       chips      اختصارات المتابعة فوق خانة الكتابة ، session رقم الجلسة ، feedback: false = من غير زراير التقييم ، error: true = رسالة خطأ + "حاول تاني"
+ * - الرد على مراحل (اختياري — Streaming): لو الرد Content-Type: application/x-ndjson أو text/event-stream ، كل سطر JSON:
+ *       { "status": "بدوّر في وحدات القاهرة الجديدة…" }   ← بيتكتب جنب نقط الكتابة
+ *       { "delta": "جزء من النص" }                        ← النص بيتكتب قدام العميل
+ *       { "reply": "...", "cards": [...], ... }           ← السطر الأخير: الرد الكامل بنفس المفاتيح اللي فوق
+ *   ومن غير endpoint (حدث shary:ai-send): event.detail.status('...') ، event.detail.stream('...') ، event.detail.reply(text, more) ، event.detail.fail() ، event.detail.signal (AbortSignal — العميل ضغط "إيقاف").
+ * - التقييم 👍 / 👎 / نسخ تحت كل رد: حدث shary:ai-feedback ({ id, value: 'up' | 'down', reason, text, session }) + POST JSON على contact.feedback ($aiFeedbackUrl) لو موجود.
+ * - "خلّي مستشار يكلمك" (lead): حدث shary:ai-lead ({ data, done(ok, message) }) + POST JSON على contact.lead ($aiLeadUrl):
+ *       { name, phone, country_code, message (آخر سؤال للعميل), source: 'shary-ai', answers, context, session }
+ * - شريط "طلبك" [data-ai-criteria]: اختيارات العميل (أو criteria من الرد) + "تعديل" بيرجّعه للأسئلة باختياراته ويبعت البحث من جديد.
+ * - المفضلة والمقارنة على الكارت بنفس زراير الموقع (data-favorite-toggle / data-compare-toggle) — بتشتغل مع site-chrome.js من غير أي كود زيادة.
+ * - أي زرار data-ask-ai يقدر يفتح الإيجنت على حاجة معينة: data-ai-context='{"type":"project","id":"scenes","name":"سينز","url":"..."}' (سياق الزرار ده)
+ *   و data-ai-ask="أسعار وخطط السداد في سينز" (السؤال بيتبعت على طول). من الكود: panel.sharyContext({...}) ، panel.sharyAsk('...') ، panel.sharyOpen() ، panel.sharyClose().
+ * - وقت الانتظار: حالات بتتغير ("بفهم طلبك…" ← "بدوّر في بيانات شاري…" ← "برتّب أنسب النتايج…") من lang/ai.php ← ui.steps ، وزرار الإرسال بيبقى "إيقاف".
  */
 (function () {
     var panels = Array.prototype.slice.call(document.querySelectorAll('[data-ai-panel]'));
@@ -4377,7 +4414,14 @@
         phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.600 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.250 11.400 11.400 0 0 0 3.600.570 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.200 2.450.570 3.570a1 1 0 0 1-.250 1L6.600 10.800Z"/></svg>',
         calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15" rx="2.500"/><path d="M8 3v4M16 3v4M3.500 10h17"/></svg>',
         check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.500 4.500 4.500L19 7.500"/></svg>',
-        pin: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.200 7 13 7 13s7-7.800 7-13a7 7 0 0 0-7-7Zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5Z"/></svg>'
+        pin: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.200 7 13 7 13s7-7.800 7-13a7 7 0 0 0-7-7Zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5Z"/></svg>',
+        heart: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.500s-7.500-4.600-7.500-10.200A4.300 4.300 0 0 1 12 7.600a4.300 4.300 0 0 1 7.500 2.700c0 5.600-7.500 10.200-7.500 10.200Z"/></svg>',
+        compare: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4v16M16 4v16M4 8l4-4 4 4M12 16l4 4 4-4"/></svg>',
+        up: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v9H4v-9h3ZM7 11l4-7a2 2 0 0 1 2 2v4h5.500a1.500 1.500 0 0 1 1.500 1.800l-1.300 6A1.500 1.500 0 0 1 17.200 19H7"/></svg>',
+        down: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 13V4h3v9h-3ZM17 13l-4 7a2 2 0 0 1-2-2v-4H5.500A1.500 1.500 0 0 1 4 12.200l1.300-6A1.500 1.500 0 0 1 6.800 5H17"/></svg>',
+        copy: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.500" y="8.500" width="11" height="11" rx="2.500"/><path d="M15.500 5.500v-1a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1"/></svg>',
+        tick: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.500 4.500 4.500L19 7.500"/></svg>',
+        search: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.500"/><path d="m20 20-4.200-4.200"/></svg>'
     };
 
     panels.forEach(function (panel) {
@@ -4411,6 +4455,18 @@
         var saved = { name: user.name || '', phone: user.phone || '', code: countries.length ? countries[0].code : '+20' };
         var langNode = panel.closest ? panel.closest('[lang]') : null;
         var english = ((langNode && langNode.lang) || document.documentElement.lang || 'ar').indexOf('en') === 0;
+        var U = T.ui || {};        // نصوص الإيجنت (lang/ai.php ← ui)
+        var context = config.context && config.context.name ? config.context : null;   // الصفحة اللي العميل فاتحها ($aiContext)
+        var critBox = panel.querySelector('[data-ai-criteria]');
+        var critList = critBox ? critBox.querySelector('[data-ai-criteria-list]') : null;
+        var contextBox = panel.querySelector('[data-ai-context]');
+        var sendButton = form.querySelector('.sai__send');
+        var understood = [];       // اللي الإيجنت فهمه من كلام العميل (criteria في الرد) — بيظهر في شريط "طلبك"
+        var lastText = '';         // آخر سؤال للعميل (بيتبعت مع "خلّي مستشار يكلمك")
+        var stopNow = null;        // إيقاف الرد الشغال
+        var sendLabel = sendButton ? (sendButton.getAttribute('aria-label') || '') : '';
+        var startText = startButton ? startButton.textContent : '';
+        var skipText = skipButton ? skipButton.textContent : '';
 
         // ---------- أسئلة الاختيار ----------
         function chosenOf(key) { return answers[key] || []; }
@@ -4437,7 +4493,7 @@
             return flow.filter(function (step) { return !step.depends || optionsOf(step).length; });
         }
         function isOn(key, value) { return chosenOf(key).some(function (item) { return item.value === value; }); }
-        function renderSteps() {
+        function renderSteps(quiet) {
             if (!stepsBox) return;
             stepsBox.textContent = '';
             var steps = activeSteps();
@@ -4471,7 +4527,7 @@
             var done = steps.length > 0 && steps.every(function (step) { return chosenOf(step.key).length > 0; });
             if (startButton) startButton.disabled = !done;
             var target = done ? startButton : (grew ? stepsBox.lastElementChild : null);
-            if (target && target.scrollIntoView) target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            if (!quiet && target && target.scrollIntoView) target.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
         }
         function pick(step, option) {
             var item = { value: option.value, label: option.label, exclusive: !!option.exclusive };
@@ -4524,14 +4580,73 @@
             return out;
         }
 
+        // ---------- شريط "طلبك": اختيارات العميل (أو اللي الإيجنت فهمه من كلامه) + "تعديل" ----------
+        function criteriaLabels() {
+            if (understood.length) return understood.slice();
+            var out = [];
+            flow.forEach(function (step) { var text = labels(step.key, U.sep || '، '); if (text) out.push(text); });
+            return out;
+        }
+        function renderCriteria() {
+            if (!critBox || !critList) return;
+            critList.textContent = '';
+            criteriaLabels().forEach(function (text) { critList.appendChild(make('span', '', text)); });
+            critBox.classList.toggle('hidden', !critList.children.length || scroll.classList.contains('hidden'));
+        }
+        function onbLabels() {
+            var started = list.children.length > 1;
+            if (startButton) startButton.textContent = started && U.update ? U.update : startText;
+            if (skipButton) skipButton.textContent = started && U.back_chat ? U.back_chat : skipText;
+        }
+        // "تعديل": رجوع للأسئلة بنفس الاختيارات — المحادثة بتفضل زي ما هي
+        function editCriteria() {
+            if (busy || !onb) return;
+            dropBook();
+            understood = [];
+            scroll.classList.add('hidden');
+            if (chipsBox) chipsBox.classList.add('hidden');
+            if (critBox) critBox.classList.add('hidden');
+            onb.classList.remove('hidden');
+            stepsShown = flow.length;
+            renderSteps(true);
+            onbLabels();
+            onb.scrollTop = 0;
+        }
+        // الصفحة اللي العميل فاتحها: سطر "بتتفرج على …" + أسئلة جاهزة عنها
+        function renderContext() {
+            if (!contextBox) return;
+            contextBox.textContent = '';
+            contextBox.classList.toggle('hidden', !context);
+            if (!context) return;
+            var head = make('p', 'sai__ctx-head');
+            head.appendChild(make('span', '', U.context || ''));
+            head.appendChild(make('b', '', context.name));
+            contextBox.appendChild(head);
+            var asks = make('div', 'sai__asks');
+            ((U.context_chips || {})[context.type] || []).forEach(function (text) {
+                var button = make('button', '', String(text).replace(':name', context.name));
+                button.type = 'button';
+                button.setAttribute('data-ai-say', button.textContent);
+                asks.appendChild(button);
+            });
+            if (asks.children.length) contextBox.appendChild(asks);
+        }
+
         // ---------- الشات ----------
         function showChat() {
             if (onb) onb.classList.add('hidden');
             scroll.classList.remove('hidden');
             if (chipsBox && chipsBox.children.length) chipsBox.classList.remove('hidden');
             if (!list.children.length && T.welcome) bubble(T.welcome, false);
+            renderCriteria();
         }
         function toBottom() { scroll.scrollTop = scroll.scrollHeight; }
+        // الرد بيبدأ من فوق: الشات بيقف على أول الرد (مش آخره) والعميل ينزل براحته
+        function toNode(node) {
+            if (!node || !node.getBoundingClientRect) { toBottom(); return; }
+            var top = Math.max(0, node.getBoundingClientRect().top - scroll.getBoundingClientRect().top + scroll.scrollTop - 10);
+            scroll.scrollTop = top;
+        }
         function avatar(mine) {
             var node = make('span', 'sai__avatar ' + (mine ? 'sai__avatar--me' : 'sai__avatar--bot'));
             node.setAttribute('aria-hidden', 'true');
@@ -4559,12 +4674,12 @@
                 node.appendChild(p);
             });
         }
-        function bubble(text, mine) {
+        function bubble(text, mine, stay) {
             var col = row(mine);
             var node = make('div', 'sai__msg ' + (mine ? 'sai__msg--me' : 'sai__msg--bot'));
             fill(node, text);
             col.appendChild(node);
-            toBottom();
+            if (!stay) toBottom();
             return node;
         }
         function waLink(text) {
@@ -4590,6 +4705,23 @@
             var name = isUnit ? item.title : item.name;
             var box = make('article', 'sai__card');
             box.setAttribute('data-subject', JSON.stringify(subjectOf(item) || {}));
+            // المفضلة + المقارنة: نفس زراير الموقع (site-chrome.js) — محتاجة slug الوحدة / المشروع
+            if (item.slug && item.image) {
+                var tools = make('div', 'sai__card-tools');
+                var fav = make('button', 'sai__tool sai__tool--fav'); fav.type = 'button';
+                fav.setAttribute('data-favorite-toggle', '');
+                fav.setAttribute('data-favorite-id', item.favorite_id || ((isUnit ? 'units/' : 'projects/') + item.slug));
+                fav.setAttribute('aria-pressed', 'false'); fav.setAttribute('aria-label', U.fav || ''); fav.title = U.fav || '';
+                fav.innerHTML = ICONS.heart;
+                var cmp = make('button', 'sai__tool sai__tool--cmp'); cmp.type = 'button';
+                cmp.setAttribute('data-compare-toggle', '');
+                cmp.setAttribute('data-compare-type', isUnit ? 'unit' : 'project');
+                cmp.setAttribute('data-compare-id', item.slug);
+                cmp.setAttribute('aria-pressed', 'false'); cmp.setAttribute('aria-label', U.compare || ''); cmp.title = U.compare || '';
+                cmp.innerHTML = ICONS.compare;
+                tools.appendChild(cmp); tools.appendChild(fav);
+                box.appendChild(tools);
+            }
             if (item.image) {
                 var photo = make(item.url ? 'a' : 'span', 'sai__card-photo');
                 if (item.url) photo.href = item.url;
@@ -4631,6 +4763,17 @@
                 body.appendChild(price);
             }
             if (item.plan) body.appendChild(make('p', 'sai__card-plan', item.plan));
+            // نسبة المطابقة لطلب العميل (match: 0 – 100)
+            var match = Math.max(0, Math.min(100, parseInt(item.match, 10) || 0));
+            if (match) {
+                var fit = make('div', 'sai__card-fit');
+                var fitText = make('p');
+                fitText.appendChild(make('b', '', match + '%'));
+                fitText.appendChild(make('span', '', U.match || ''));
+                var bar = make('i'); var barFill = make('i'); barFill.style.width = match + '%'; bar.appendChild(barFill);
+                fit.appendChild(fitText); fit.appendChild(bar);
+                body.appendChild(fit);
+            }
             // خانات الوحدة (غرف / حمامات / مساحة) أو أنواع وحدات المشروع
             if (isUnit) {
                 var cells = make('ul', 'sai__card-cells');
@@ -4648,6 +4791,20 @@
                 item.types.slice(0, 4).forEach(function (type) { types.appendChild(make('span', '', type)); });
                 body.appendChild(types);
             }
+            // ليه رشحناها (reasons)
+            if (Array.isArray(item.reasons) && item.reasons.length) {
+                var why = make('div', 'sai__card-why');
+                why.appendChild(make('b', '', U.why || ''));
+                var whyList = make('ul');
+                item.reasons.slice(0, 4).forEach(function (reason) {
+                    var li = make('li');
+                    li.insertAdjacentHTML('beforeend', ICONS.tick);
+                    li.appendChild(make('span', '', String(reason)));
+                    whyList.appendChild(li);
+                });
+                why.appendChild(whyList);
+                body.appendChild(why);
+            }
             // التواصل: اتصال + واتساب + احجز ميتنج (+ التفاصيل)
             var ways = make('div', 'sai__ways');
             ways.appendChild(action('sai__way--call', T.call, ICONS.phone, 'tel:' + (contact.phone || '')));
@@ -4660,11 +4817,242 @@
             box.appendChild(body);
             return box;
         }
-        function cards(items) {
+        // كروت النتايج: عنوان بالعدد + "اعرض الكل في البحث" ← أول 3 كروت ← "اعرض كمان" ← لينك كل النتايج
+        function cards(items, info) {
             if (!Array.isArray(items) || !items.length) return;
+            info = info && typeof info === 'object' ? info : {};
+            items = items.filter(function (item) { return item && typeof item === 'object'; });
+            var total = parseInt(info.total, 10) || items.length;
             var wrap = make('div', 'sai__cards');
-            items.forEach(function (item) { if (item && typeof item === 'object') wrap.appendChild(card(item)); });
+            var head = make('div', 'sai__res');
+            head.appendChild(make('b', '', info.title || String(U.results || '').replace(':count', total)));
+            if (info.search_url) {
+                var all = make('a', '', U.see_all || ''); all.href = info.search_url;
+                all.insertAdjacentHTML('afterbegin', ICONS.search);
+                head.appendChild(all);
+            }
+            wrap.appendChild(head);
+            var show = parseInt(info.visible, 10) || 3;
+            items.forEach(function (item, index) {
+                var box = card(item);
+                if (index >= show) box.hidden = true;
+                wrap.appendChild(box);
+            });
+            if (items.length > show) {
+                var more = make('button', 'sai__more', String(U.more_cards || '').replace(':count', items.length - show)); more.type = 'button';
+                more.setAttribute('data-ai-more', '');
+                wrap.appendChild(more);
+            }
+            if (info.search_url && total > items.length) {
+                var link = make('a', 'sai__more sai__more--all', String(U.all_results || '').replace(':count', total)); link.href = info.search_url;
+                wrap.appendChild(link);
+            }
             list.appendChild(wrap);
+            if (window.SharyCards) window.SharyCards.refresh(wrap);
+        }
+        // أرقام السوق: [{ label, value, unit, note, trend }] أو { title, items }
+        function statsBlock(data) {
+            var items = Array.isArray(data) ? data : (data && Array.isArray(data.items) ? data.items : []);
+            if (!items.length) return;
+            var box = make('div', 'sai__blk sai__stats');
+            if (data.title) box.appendChild(make('b', 'sai__blk-title', data.title));
+            var grid = make('div', 'sai__stats-grid');
+            items.slice(0, 6).forEach(function (item) {
+                var cell = make('div', 'sai__stat');
+                cell.appendChild(make('span', '', item.label || ''));
+                var value = make('p');
+                value.appendChild(make('b', '', String(item.value == null ? '' : item.value)));
+                if (item.unit) value.appendChild(make('small', '', item.unit));
+                cell.appendChild(value);
+                if (item.note) cell.appendChild(make('em', item.trend === 'up' ? 'is-up' : (item.trend === 'down' ? 'is-down' : ''), (item.trend === 'up' ? '▲ ' : (item.trend === 'down' ? '▼ ' : '')) + item.note));
+                grid.appendChild(cell);
+            });
+            box.appendChild(grid);
+            list.appendChild(box);
+        }
+        // جدول المقارنة: { title, columns: [...], rows: [{ label, values: [...], best }], note }
+        function compareBlock(data) {
+            if (!data || !Array.isArray(data.columns) || !Array.isArray(data.rows) || !data.columns.length) return;
+            var box = make('div', 'sai__blk sai__cmp');
+            if (data.title) box.appendChild(make('b', 'sai__blk-title', data.title));
+            var scroller = make('div', 'sai__cmp-scroll');
+            var table = make('table');
+            var top = make('tr');
+            top.appendChild(make('th', '', ''));
+            data.columns.forEach(function (column) { top.appendChild(make('th', '', typeof column === 'object' && column ? (column.name || '') : String(column))); });
+            var thead = make('thead'); thead.appendChild(top); table.appendChild(thead);
+            var tbody = make('tbody');
+            data.rows.forEach(function (line) {
+                if (!line) return;
+                var tr = make('tr');
+                tr.appendChild(make('th', '', line.label || ''));
+                (Array.isArray(line.values) ? line.values : []).forEach(function (value, index) {
+                    var td = make('td', line.best === index ? 'is-best' : '', String(value == null ? '—' : value));
+                    if (line.best === index && U.best) td.title = U.best;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+            scroller.appendChild(table);
+            box.appendChild(scroller);
+            if (data.note) box.appendChild(make('p', 'sai__blk-note', data.note));
+            list.appendChild(box);
+        }
+        function sourcesBlock(items) {
+            if (!Array.isArray(items) || !items.length) return;
+            var box = make('p', 'sai__src');
+            box.appendChild(make('span', '', U.sources || ''));
+            items.slice(0, 4).forEach(function (item) {
+                if (!item) return;
+                var node = make(item.url ? 'a' : 'b', '', item.label || item.url || '');
+                if (item.url) node.href = item.url;
+                box.appendChild(node);
+            });
+            list.appendChild(box);
+        }
+        // سؤال توضيحي (options) / زراير تحت الرد (actions)
+        function optionsBlock(items) {
+            if (!Array.isArray(items) || !items.length) return;
+            var box = make('div', 'sai__asks sai__asks--chat');
+            items.slice(0, 8).forEach(function (item) {
+                var label = typeof item === 'object' && item ? (item.label || '') : String(item);
+                if (!label) return;
+                var button = make('button', '', label); button.type = 'button';
+                button.setAttribute('data-ai-say', (typeof item === 'object' && item && item.say) || label);
+                box.appendChild(button);
+            });
+            list.appendChild(box);
+        }
+        function actionsBlock(items) {
+            if (!Array.isArray(items) || !items.length) return;
+            var box = make('div', 'sai__acts');
+            items.slice(0, 4).forEach(function (item) {
+                if (!item || !item.label) return;
+                if (item.type === 'meeting') { box.appendChild(meetButton(item.label, 'sai__act', null)); return; }
+                var node = make(item.url ? 'a' : 'button', 'sai__act', item.label);
+                if (item.url) node.href = item.url; else { node.type = 'button'; node.setAttribute('data-ai-say', item.say || item.label); }
+                box.appendChild(node);
+            });
+            if (box.children.length) list.appendChild(box);
+        }
+        // التقييم تحت الرد: 👍 / 👎 / نسخ
+        function feedbackBar(id) {
+            var bar = make('div', 'sai__fb');
+            bar.setAttribute('data-ai-fb', id == null ? '' : String(id));
+            [['up', U.fb_up, ICONS.up], ['down', U.fb_down, ICONS.down], ['copy', U.copy, ICONS.copy]].forEach(function (one) {
+                var button = make('button', 'sai__fb-btn'); button.type = 'button';
+                button.setAttribute('data-fb', one[0]);
+                button.setAttribute('aria-label', one[1] || ''); button.title = one[1] || '';
+                button.innerHTML = one[2];
+                bar.appendChild(button);
+            });
+            list.appendChild(bar);
+        }
+        // نص الرد اللي فوق شريط التقييم
+        function answerOf(bar) {
+            var node = bar.previousElementSibling;
+            while (node && !(node.classList.contains('sai__row--bot'))) {
+                if (node.classList.contains('sai__row--me')) return '';
+                node = node.previousElementSibling;
+            }
+            var msg = node ? node.querySelector('.sai__msg') : null;
+            return msg ? Array.prototype.map.call(msg.querySelectorAll('p'), function (p) { return p.textContent; }).join('\n') : '';
+        }
+        function post(url, data) {
+            url = String(url || '');
+            if (!url || url.charAt(0) === '#') return Promise.resolve({});
+            var token = document.querySelector('meta[name="csrf-token"]');
+            return fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                body: JSON.stringify(data)
+            }).then(function (response) {
+                if (!response.ok) throw new Error('failed');
+                return response.json().catch(function () { return {}; });
+            });
+        }
+        function sendFeedback(bar, value, reason) {
+            var data = { id: bar.getAttribute('data-ai-fb') || '', value: value, reason: reason || '', text: answerOf(bar), session: session };
+            if (!panel.dispatchEvent(new CustomEvent('shary:ai-feedback', { bubbles: true, cancelable: true, detail: data }))) return;
+            post(contact.feedback, data).catch(function () { /* التقييم مش بيوقف العميل */ });
+        }
+        // الموبايل: أرقام بس من غير الصفر الأول — مصر: 10 أرقام بتبدأ بـ 10 / 11 / 12 / 15 ، باقي الدول: 6 إلى 12 رقم. بيرجّع '' لو الرقم غلط
+        function cleanPhone(code, raw) {
+            var digits = String(raw || '').replace(/[٠-٩]/g, function (digit) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(digit); }).replace(/\D+/g, '');
+            var prefix = String(code).replace(/\D+/g, '');
+            if (prefix && digits.indexOf('00' + prefix) === 0) digits = digits.slice(prefix.length + 2);
+            digits = digits.replace(/^0+/, '');
+            if (code === '+20' && digits.length === 12 && digits.indexOf('20') === 0) digits = digits.slice(2);
+            return (code === '+20' ? /^1[0125]\d{8}$/.test(digits) : /^\d{6,12}$/.test(digits)) ? digits : '';
+        }
+        // "خلّي مستشار يكلمك": اسم + موبايل جوه الشات (lead)
+        function leadBlock(info) {
+            info = info && typeof info === 'object' ? info : {};
+            var L = U.lead || {};
+            var box = make('div', 'sai__blk sai__lead');
+            var head = make('div', 'sai__lead-head');
+            var icon = make('span', 'sai__book-icon'); icon.innerHTML = ICONS.phone;
+            var title = make('span', 'min-w-0');
+            title.appendChild(make('b', '', info.title || L.title || ''));
+            title.appendChild(make('small', '', info.text || L.text || ''));
+            head.appendChild(icon); head.appendChild(title);
+            box.appendChild(head);
+            var fields = make('div', 'sai__fields');
+            var name = make('input'); name.type = 'text'; name.autocomplete = 'name'; name.placeholder = B.name || ''; name.setAttribute('aria-label', B.name || ''); name.setAttribute('data-lead-name', '');
+            name.setAttribute('value', saved.name);
+            var phoneRow = make('div', 'sai__phone'); phoneRow.dir = 'ltr';
+            var code = make('select'); code.setAttribute('aria-label', B.code || ''); code.setAttribute('data-lead-code', '');
+            countries.forEach(function (country) {
+                var option = make('option', '', country.code + '  ' + country.name); option.value = country.code;
+                if (country.code === saved.code && !code.querySelector('[selected]')) option.setAttribute('selected', '');
+                code.appendChild(option);
+            });
+            var phone = make('input'); phone.type = 'tel'; phone.dir = 'ltr'; phone.autocomplete = 'tel-national'; phone.inputMode = 'tel'; phone.placeholder = B.phone || ''; phone.setAttribute('aria-label', B.phone || ''); phone.setAttribute('data-lead-phone', '');
+            phone.setAttribute('value', saved.phone);
+            if (countries.length) phoneRow.appendChild(code);
+            phoneRow.appendChild(phone);
+            var error = make('p', 'sai__book-error hidden');
+            var go = make('button', 'sai__book-go', L.go || ''); go.type = 'button'; go.setAttribute('data-ai-lead-go', '');
+            fields.appendChild(name); fields.appendChild(phoneRow); fields.appendChild(error); fields.appendChild(go);
+            box.appendChild(fields);
+            list.appendChild(box);
+        }
+        function submitLead(go) {
+            var box = go.closest('.sai__lead');
+            if (!box || go.disabled) return;
+            var L = U.lead || {};
+            var nameField = box.querySelector('[data-lead-name]');
+            var phoneField = box.querySelector('[data-lead-phone]');
+            var codeField = box.querySelector('[data-lead-code]');
+            var error = box.querySelector('.sai__book-error');
+            function fail(text, field) { error.textContent = text || ''; error.classList.remove('hidden'); if (field) field.focus(); }
+            saved.name = nameField.value; saved.phone = phoneField.value; if (codeField) saved.code = codeField.value;
+            var name = saved.name.replace(/\s+/g, ' ').trim();
+            if (name.length < 2) return fail(B.err_name, nameField);
+            var digits = cleanPhone(saved.code, saved.phone);
+            if (!digits) return fail(B.err_phone, phoneField);
+            error.classList.add('hidden');
+            go.disabled = true; go.textContent = L.sending || B.sending || '';
+            var data = { name: name, phone: digits, country_code: saved.code, message: lastText, source: 'shary-ai', answers: plainAnswers(), context: context, session: session };
+            var finished = false;
+            function done(ok, message) {
+                if (finished) return;
+                finished = true;
+                if (ok === false) { go.disabled = false; go.textContent = L.go || ''; return fail(message || B.err_send); }
+                var okBox = make('div', 'sai__booked');
+                var okHead = make('div', 'sai__booked-head');
+                var mark = make('span'); mark.innerHTML = ICONS.check;
+                okHead.appendChild(mark); okHead.appendChild(make('b', '', L.done_title || ''));
+                okBox.appendChild(okHead);
+                okBox.appendChild(make('p', 'sai__booked-note', message || String(L.done || '').replace(':name', name)));
+                if (box.parentNode) box.parentNode.replaceChild(okBox, box);
+                save();
+            }
+            if (!panel.dispatchEvent(new CustomEvent('shary:ai-lead', { bubbles: true, cancelable: true, detail: { data: data, done: done } }))) return;
+            var url = String(contact.lead || '');
+            if (!url || url.charAt(0) === '#') { window.setTimeout(function () { done(true); }, 500); return; }   // معاينة من غير سيرفر
+            post(url, data).then(function (result) { done(true, result && result.message); }).catch(function () { done(false); });
         }
         // ---------- حجز الميتنج جوه الشات ----------
         // آخر كروت اتعرضت في المحادثة (عشان "الميتنج بخصوص إيه؟") — من الصفحة نفسها عشان تفضل شغالة بعد استرجاع المحادثة
@@ -4824,19 +5212,14 @@
             function fail(text, field) { error.textContent = text || ''; error.classList.remove('hidden'); if (field) field.focus(); toBottom(); }
             var name = saved.name.replace(/\s+/g, ' ').trim();
             if (name.length < 2) return fail(B.err_name, nameField);
-            // الموبايل: أرقام بس من غير الصفر الأول — مصر: 10 أرقام بتبدأ بـ 10 / 11 / 12 / 15 ، باقي الدول: 6 إلى 12 رقم
-            var digits = saved.phone.replace(/[٠-٩]/g, function (digit) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(digit); }).replace(/\D+/g, '');
-            var prefix = String(saved.code).replace(/\D+/g, '');
-            if (prefix && digits.indexOf('00' + prefix) === 0) digits = digits.slice(prefix.length + 2);
-            digits = digits.replace(/^0+/, '');
-            if (saved.code === '+20' && digits.length === 12 && digits.indexOf('20') === 0) digits = digits.slice(2);
-            if (saved.code === '+20' ? !/^1[0125]\d{8}$/.test(digits) : !/^\d{6,12}$/.test(digits)) return fail(B.err_phone, phoneField);
+            var digits = cleanPhone(saved.code, saved.phone);
+            if (!digits) return fail(B.err_phone, phoneField);
             error.classList.add('hidden');
             go.disabled = true; go.textContent = B.sending || '';
             var data = {
                 meeting_type: state.type, meeting_date: state.day.value, meeting_time: state.time.value, name: name, phone: digits, country_code: saved.code,
                 subject: state.subject ? state.subject.name : '', subject_type: state.subject ? state.subject.type : 'general', subject_url: state.subject ? state.subject.url : '',
-                source: 'shary-ai', answers: plainAnswers(), session: session
+                source: 'shary-ai', answers: plainAnswers(), context: context, session: session
             };
             var finished = false;
             function done(ok, message) {
@@ -4917,72 +5300,190 @@
         }
         function grow() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px'; }
 
-        function send(text, extra) {
+        // رد المعاينة (من غير سيرفر): لو الرسالة فيها كلمة من sample.intents[].words بيرجع الرد ده — وإلا الرد الأساسي
+        function sampleFor(text) {
+            var sample = config.sample;
+            if (!sample) return null;
+            var lower = String(text).toLowerCase();
+            var hit = (Array.isArray(sample.intents) ? sample.intents : []).filter(function (one) {
+                return one && (one.words || []).some(function (word) { return word && lower.indexOf(String(word).toLowerCase()) > -1; });
+            })[0];
+            return hit || sample;
+        }
+        // الرد على مراحل (ndjson / event-stream): كل سطر JSON — status / delta / وباقي المفاتيح بتتجمع في الرد الأخير
+        function readStream(reader, onStatus, onDelta) {
+            var decoder = new TextDecoder();
+            var buffer = '';
+            var last = {};
+            function line(raw) {
+                raw = String(raw).replace(/^data:\s*/, '').trim();
+                if (!raw || raw === '[DONE]' || raw.charAt(0) === ':' || /^(event|id|retry):/.test(raw)) return;
+                var item = null;
+                try { item = JSON.parse(raw); } catch (error) { item = null; }
+                if (!item || typeof item !== 'object') return;
+                if (item.status) onStatus(item.status);
+                if (item.delta) onDelta(item.delta);
+                Object.keys(item).forEach(function (key) { if (key !== 'status' && key !== 'delta') last[key] = item[key]; });
+            }
+            function pump() {
+                return reader.read().then(function (chunk) {
+                    if (chunk.done) { if (buffer) line(buffer); return last; }
+                    buffer += decoder.decode(chunk.value, { stream: true });
+                    var parts = buffer.split(/\r?\n/);
+                    buffer = parts.pop();
+                    parts.forEach(line);
+                    return pump();
+                });
+            }
+            return pump();
+        }
+
+        // again = إعادة المحاولة بعد خطأ (من غير ما رسالة العميل تتكرر)
+        function send(text, extra, again) {
             text = String(text || '').trim();
             if (!text || busy) return;
             showChat();
-            bubble(text, true);
+            if (!again) bubble(text, true);
             input.value = ''; grow();
             // العميل طالب ميتنج: الحجز بيبدأ على طول جوه الشات
-            if (!extra && wantsMeeting(text)) { startMeeting(null); return; }
+            if (!extra && !again && wantsMeeting(text)) { startMeeting(null); return; }
+            lastText = text;
             busy = true;
             form.classList.add('is-busy');
+            if (sendButton) sendButton.setAttribute('aria-label', U.stop || '');
+            var anchor = list.lastElementChild;   // رسالة العميل — الرد بيبدأ بعدها
 
             var typingCol = row(false);
             var typing = make('div', 'sai__msg sai__msg--bot sai__typing');
             typing.setAttribute('aria-label', T.typing || '');
             typing.innerHTML = '<i></i><i></i><i></i>';
+            var statusNode = make('span', 'sai__status', '');
+            typing.appendChild(statusNode);
             typingCol.appendChild(typing);
             toBottom();
 
+            // حالات الانتظار: بتتغير لوحدها لحد ما السيرفر يبعت status بنفسه
+            var steps = Array.isArray(U.steps) ? U.steps : [];
+            var stepIndex = 0;
+            var manual = false;
+            function nextStep() { if (manual || !steps.length) return; statusNode.textContent = steps[Math.min(stepIndex, steps.length - 1)]; stepIndex += 1; }
+            var first = window.setTimeout(nextStep, 350);
+            var timer = window.setInterval(nextStep, 1300);
+
             var done = false;
-            function reply(answer, more) {
-                if (done) return;
-                done = true; busy = false;
-                form.classList.remove('is-busy');
+            var live = null;       // رسالة بتتكتب قدام العميل (stream)
+            var liveText = '';
+            var controller = window.AbortController ? new AbortController() : null;
+
+            function dropTyping() {
                 var line = typingCol.parentNode;
                 if (line && line.parentNode) line.parentNode.removeChild(line);
+            }
+            function status(value) {
+                if (done || !value) return;
+                manual = true;
+                statusNode.textContent = String(value);
+            }
+            function stream(delta) {
+                if (done || !delta) return;
+                if (!live) { dropTyping(); live = bubble('', false, true); live.classList.add('sai__msg--live'); }
+                var follow = scroll.scrollHeight - scroll.scrollTop - scroll.clientHeight < 90;
+                liveText += String(delta);
+                live.textContent = '';
+                fill(live, liveText);
+                if (follow) toBottom();
+            }
+            function reply(answer, more) {
+                if (done) return;
+                done = true; busy = false; stopNow = null;
+                window.clearTimeout(first); window.clearInterval(timer);
+                form.classList.remove('is-busy');
+                if (sendButton) sendButton.setAttribute('aria-label', sendLabel);
+                dropTyping();
                 more = more || {};
-                if (answer) bubble(answer, false);
-                cards(more.cards);
-                if (more.meeting) meeting();
+                var textOut = answer || liveText;
+                var node = live;
+                if (live) { live.classList.remove('sai__msg--live'); live.textContent = ''; fill(live, textOut); }
+                else if (textOut) node = bubble(textOut, false, true);
+                if (node && more.id != null) node.closest('.sai__row').setAttribute('data-id', String(more.id));
+                if (more.error) {
+                    // خطأ في الاتصال: رسالة + "حاول تاني" (بتبعت نفس السؤال من غير تكرار)
+                    var err = make('div', 'sai__err');
+                    err.appendChild(make('span', '', T.error || ''));
+                    var retry = make('button', '', U.retry || ''); retry.type = 'button';
+                    retry.setAttribute('data-ai-retry', text);
+                    if (extra) retry.setAttribute('data-steps', '1');
+                    err.appendChild(retry);
+                    list.appendChild(err);
+                } else {
+                    if (Array.isArray(more.criteria)) { understood = more.criteria.filter(Boolean).map(String); renderCriteria(); }
+                    statsBlock(more.stats);
+                    cards(more.cards, more.results);
+                    compareBlock(more.compare);
+                    sourcesBlock(more.sources);
+                    optionsBlock(more.options);
+                    actionsBlock(more.actions);
+                    if (more.meeting) meeting();
+                    if (more.lead) leadBlock(more.lead);
+                    if (more.feedback !== false && (textOut || (Array.isArray(more.cards) && more.cards.length))) feedbackBar(more.id);
+                    if (Array.isArray(more.chips)) chips(more.chips);
+                    if (more.session) session = more.session;
+                }
+                // الرد بيبدأ من فوق: أول حاجة في الرد (النص وأول كارت) — مش آخر كارت
+                var top = anchor && anchor.parentNode === list ? anchor.nextElementSibling : list.firstElementChild;
                 if (more.book) startMeeting(typeof more.book === 'object' ? more.book : null);
-                if (Array.isArray(more.chips)) chips(more.chips);
-                if (more.session) session = more.session;
-                toBottom();
+                else toNode(top);
                 save();
             }
+            function fail() { reply('', { error: true }); }
+            // "إيقاف": اللي اتكتب بيفضل ، والطلب بيتلغي
+            stopNow = function () {
+                if (controller) { try { controller.abort(); } catch (error) { /* اتلغى */ } }
+                reply(liveText ? '' : (U.stopped || ''), { feedback: false });
+            };
 
-            var detail = { text: text, answers: (extra && extra.answers) || null, reply: reply, sample: config.sample || null };
+            var answersNow = (extra && extra.answers) || plainAnswers();
+            var detail = {
+                text: text, answers: answersNow, context: context, session: session, lang: english ? 'en' : 'ar', via: extra ? 'steps' : 'text',
+                reply: reply, status: status, stream: stream, fail: fail, signal: controller ? controller.signal : null, sample: sampleFor(text)
+            };
             var go = panel.dispatchEvent(new CustomEvent('shary:ai-send', { bubbles: true, cancelable: true, detail: detail }));
             if (!go) return;
 
             var endpoint = panel.getAttribute('data-endpoint');
             if (!endpoint) {
-                // من غير سيرفر (معاينة): الكروت التجريبية لو موجودة
-                window.setTimeout(function () { reply(config.sample && config.sample.reply ? config.sample.reply : '', config.sample || {}); }, 600);
+                // من غير سيرفر (معاينة): الرد التجريبي لو موجود
+                window.setTimeout(function () { reply(detail.sample && detail.sample.reply ? detail.sample.reply : '', detail.sample || {}); }, 1500);
                 return;
             }
             var token = document.querySelector('meta[name="csrf-token"]');
             fetch(endpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '' },
-                body: JSON.stringify({ message: text, answers: detail.answers, session: session })
-            }).then(function (response) { return response.json(); })
-              .then(function (data) { data = data || {}; reply(data.reply || '', data); })
-              .catch(function () { reply(T.error || ''); });
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, application/x-ndjson, text/event-stream', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                body: JSON.stringify({ message: text, answers: answersNow, context: context, session: session, lang: detail.lang, via: detail.via, page: window.location.pathname }),
+                signal: controller ? controller.signal : undefined
+            }).then(function (response) {
+                if (!response.ok) throw new Error('failed');
+                var kind = response.headers.get('Content-Type') || '';
+                if (/ndjson|event-stream/.test(kind) && response.body && response.body.getReader && window.TextDecoder) return readStream(response.body.getReader(), status, stream);
+                return response.json();
+            }).then(function (data) { data = data || {}; reply(data.reply || '', data); })
+              .catch(fail);
         }
 
         function restart() {
-            answers = {}; session = ''; busy = false; stepsShown = 0; book = null;
+            if (stopNow) stopNow();
+            answers = {}; session = ''; busy = false; stepsShown = 0; book = null; understood = []; lastText = '';
             form.classList.remove('is-busy');
             list.textContent = '';
             input.value = ''; grow();
             scroll.classList.add('hidden');
             if (chipsBox) chipsBox.classList.add('hidden');
+            if (critBox) critBox.classList.add('hidden');
             if (onb) { onb.classList.remove('hidden'); onb.scrollTop = 0; }
             chips(config.chips);
             renderSteps();
+            onbLabels();
             save();
         }
 
@@ -4997,7 +5498,7 @@
                 window.sessionStorage.setItem(STORE, JSON.stringify({
                     open: !panel.classList.contains('hidden'), chat: !scroll.classList.contains('hidden'), html: copy.innerHTML,
                     chips: chipsBox ? Array.prototype.map.call(chipsBox.children, function (button) { return button.textContent; }) : [],
-                    answers: answers, session: session, lang: english ? 'en' : 'ar'
+                    answers: answers, session: session, lang: english ? 'en' : 'ar', top: scroll.scrollTop, understood: understood, last: lastText
                 }));
             } catch (error) { /* التخزين مقفول */ }
         }
@@ -5007,14 +5508,17 @@
             if (!state || state.lang !== (english ? 'en' : 'ar')) return;
             answers = state.answers || {};
             session = state.session || '';
+            understood = Array.isArray(state.understood) ? state.understood : [];
+            lastText = state.last || '';
             if (state.chat) {
                 list.innerHTML = state.html || '';
                 showChat();
                 if (Array.isArray(state.chips) && state.chips.length) chips(state.chips);
-                toBottom();
+                if (window.SharyCards) window.SharyCards.refresh(list);
+                scroll.scrollTop = state.top || 0;
             } else renderSteps();
-            // ديسك توب بس: النافذة بترجع مفتوحة لوحدها في الصفحة الجديدة
-            if (state.open && wide.matches && !panel.closest('[hidden]')) { open(null); toBottom(); }
+            // ديسك توب بس: النافذة بترجع مفتوحة لوحدها في الصفحة الجديدة — على نفس المكان اللي العميل كان واقف عنده
+            if (state.open && wide.matches && !panel.closest('[hidden]')) { open(null); if (state.chat) scroll.scrollTop = state.top || 0; }
         }
 
         function open(from) {
@@ -5039,11 +5543,66 @@
         }
         panel.sharyOpen = open;
         panel.sharyClose = close;
+        // تغيير سياق الصفحة من بره (زرار عليه data-ai-context) — من غير قيمة بيرجع لسياق الصفحة الأصلي ($aiContext)
+        panel.sharyContext = function (value) {
+            context = value && value.name ? value : (config.context && config.context.name ? config.context : null);
+            renderContext();
+        };
+        // سؤال جاهز من بره (زرار عليه data-ai-ask="السؤال")
+        panel.sharyAsk = function (text) { send(text); };
 
         panel.querySelectorAll('[data-ai-close]').forEach(function (node) { node.addEventListener('click', close); });
         // لينك كارت (صفحة الوحدة / المشروع): صفحة Shary AI بتتقفل والعميل بيروح للصفحة
         list.addEventListener('click', function (event) {
             if (!event.target.closest) return;
+            // "اعرض كمان": باقي الكروت بتظهر مكانها
+            var moreCards = event.target.closest('[data-ai-more]');
+            if (moreCards) {
+                var holder = moreCards.closest('.sai__cards');
+                Array.prototype.forEach.call(holder ? holder.querySelectorAll('.sai__card[hidden]') : [], function (node) { node.hidden = false; });
+                if (moreCards.parentNode) moreCards.parentNode.removeChild(moreCards);
+                save();
+                return;
+            }
+            // "حاول تاني" بعد خطأ الاتصال
+            var retry = event.target.closest('[data-ai-retry]');
+            if (retry) {
+                var again = retry.getAttribute('data-ai-retry');
+                var fromSteps = retry.hasAttribute('data-steps');
+                var errBox = retry.closest('.sai__err');
+                if (errBox && errBox.parentNode) errBox.parentNode.removeChild(errBox);
+                send(again, fromSteps ? { answers: plainAnswers() } : null, true);
+                return;
+            }
+            // التقييم: 👍 / 👎 (+ السبب) / نسخ
+            var fb = event.target.closest('[data-fb]');
+            if (fb) {
+                var bar = fb.closest('.sai__fb');
+                var kind = fb.getAttribute('data-fb');
+                if (kind === 'copy') {
+                    var copied = answerOf(bar);
+                    var okCopy = function () { fb.classList.add('is-on'); window.setTimeout(function () { fb.classList.remove('is-on'); }, 1400); };
+                    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(copied).then(okCopy, function () { /* النسخ مقفول */ });
+                    return;
+                }
+                var note = bar.querySelector('.sai__fb-why');
+                if (note) bar.removeChild(note);
+                if (kind === 'reason') {
+                    sendFeedback(bar, 'down', fb.textContent);
+                    bar.appendChild(make('p', 'sai__fb-why', U.fb_thanks || ''));
+                } else {
+                    Array.prototype.forEach.call(bar.querySelectorAll('[data-fb="up"], [data-fb="down"]'), function (button) { button.classList.toggle('is-on', button === fb); });
+                    sendFeedback(bar, kind, '');
+                    var reasons = Array.isArray(U.fb_reasons) ? U.fb_reasons : [];
+                    var box = make('p', 'sai__fb-why', kind === 'down' && reasons.length ? (U.fb_ask || '') : (U.fb_thanks || ''));
+                    if (kind === 'down') reasons.forEach(function (reason) { var one = make('button', '', reason); one.type = 'button'; one.setAttribute('data-fb', 'reason'); box.appendChild(one); });
+                    bar.appendChild(box);
+                }
+                save();
+                return;
+            }
+            var leadGo = event.target.closest('[data-ai-lead-go]');
+            if (leadGo) { submitLead(leadGo); return; }
             // "احجز ميتنج" (تحت كارت أو في كارت المستشار) و "تعديل الميعاد": بالتفويض عشان يشتغلوا بعد استرجاع المحادثة
             var meet = event.target.closest('[data-ai-meet]');
             if (meet) {
@@ -5066,11 +5625,20 @@
             if (link && !link.target && !/^(tel:|mailto:|#)/.test(link.getAttribute('href'))) { if (wide.matches) save(); else close(); }
         });
         document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !wide.matches) close(); });
+        // زرار جاهز جوه الصفحة (أسئلة الصفحة / السؤال التوضيحي / زراير الرد): الضغط بيبعت النص كرسالة
+        panel.addEventListener('click', function (event) {
+            var say = event.target.closest ? event.target.closest('[data-ai-say]') : null;
+            if (say) { send(say.getAttribute('data-ai-say') || say.textContent); return; }
+            if (event.target.closest && event.target.closest('[data-ai-edit]')) editCriteria();
+        });
         form.addEventListener('submit', function (event) { event.preventDefault(); send(input.value); });
+        // زرار الإرسال وقت الرد = "إيقاف"
+        if (sendButton) sendButton.addEventListener('click', function (event) { if (busy && stopNow) { event.preventDefault(); stopNow(); } });
+        window.addEventListener('pagehide', function () { if (list.children.length) save(); });
         input.addEventListener('input', grow);
         input.addEventListener('keydown', function (event) { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(input.value); } });
         if (startButton) startButton.addEventListener('click', function () { if (!startButton.disabled) send(queryText(), { answers: plainAnswers() }); });
-        if (skipButton) skipButton.addEventListener('click', function () { showChat(); input.focus(); });
+        if (skipButton) skipButton.addEventListener('click', function () { showChat(); if (!wide.matches || list.children.length < 2) input.focus(); });
 
         var reset = panel.querySelector('[data-ai-reset]');
         if (reset) {
@@ -5100,6 +5668,7 @@
 
         chips(config.chips);
         renderSteps();
+        renderContext();
         // بعد ما الصفحة تجهز: رجّع المحادثة المحفوظة (ولو النافذة كانت مفتوحة على الديسك توب بتفتح لوحدها)
         window.setTimeout(restore, 300);
     });
@@ -5114,7 +5683,16 @@
         event.preventDefault();
         // ديسك توب: الضغط على زرار Shary AI العايم والنافذة مفتوحة بيقفلها
         if (!panel.classList.contains('hidden') && opener.classList.contains('area-fab') && window.matchMedia('(min-width: 1024px)').matches) { panel.sharyClose(); return; }
+        // السياق: من الزرار نفسه (data-ai-context='{"type":"project","id":"scenes","name":"سينز","url":"..."}' — مثلًا "اسأل Shary AI عن المشروع ده" على كارت)
+        // أو من علامة الصفحة [data-ai-page-context] — وإلا سياق الصفحة الأصلي ($aiContext)
+        var holder = opener.hasAttribute('data-ai-context') ? opener : (scope ? scope.querySelector('[data-ai-page-context]') : null);
+        var value = null;
+        if (holder) { try { value = JSON.parse(holder.getAttribute(holder === opener ? 'data-ai-context' : 'data-ai-page-context') || 'null'); } catch (error) { value = null; } }
+        if (panel.sharyContext) panel.sharyContext(value);
         panel.sharyOpen(opener);
+        // data-ai-ask="السؤال": الصفحة بتفتح والسؤال بيتبعت على طول
+        var ask = opener.getAttribute('data-ai-ask');
+        if (ask && panel.sharyAsk) panel.sharyAsk(ask);
     });
 })();
 

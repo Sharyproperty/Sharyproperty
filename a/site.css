@@ -9684,11 +9684,6 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   transition: opacity 0.15s;
 }
 
-.sai__composer.is-busy .sai__send {
-  opacity: 0.45;
-  pointer-events: none;
-}
-
 .sai__mic {
   border: 1px solid var(--sai-line);
   color: var(--sai-blue-dark);
@@ -9708,6 +9703,624 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   font-weight: 700;
   line-height: 1.6;
   color: #9aaab6;
+}
+
+/* ===== الإيجنت: شريط "طلبك" / سياق الصفحة / حالات الانتظار / كروت أذكى / مقارنة / أرقام السوق / تقييم / مستشار يكلمك ===== */
+
+.sai__crit {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--sai-line);
+  background-color: #fff;
+  padding: 8px 12px;
+}
+
+.sai__crit.hidden {
+  display: none;
+}
+
+.sai__crit > b {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--sai-muted);
+}
+
+.sai__crit-list {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sai__crit-list::-webkit-scrollbar {
+  display: none;
+}
+
+.sai__crit-list span {
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 999px;
+  background-color: #e8f1fc;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--sai-blue-dark);
+}
+
+.sai__crit > button {
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1.5px solid var(--sai-blue);
+  background-color: #fff;
+  padding: 3px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: var(--sai-blue-dark);
+}
+
+.sai__ctx {
+  margin-bottom: 16px;
+  border-radius: 16px;
+  border: 1px solid #cfe1f6;
+  background-color: #eef5fd;
+  padding: 12px 13px;
+}
+
+.sai__ctx.hidden {
+  display: none;
+}
+
+.sai__ctx-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--sai-muted);
+}
+
+.sai__ctx-head b {
+  font-weight: 800;
+  color: var(--sai-navy);
+}
+
+.sai__asks {
+  margin-top: 9px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.sai__asks button,
+    .sai__act {
+  border-radius: 999px;
+  border: 1px solid #c5d9f1;
+  background-color: #fff;
+  padding: 7px 13px;
+  text-align: start;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--sai-blue-dark);
+}
+
+.sai__asks button:hover,
+    .sai__act:hover {
+  border-color: var(--sai-blue);
+  background-color: #f3f8fe;
+}
+
+.sai__asks--chat,
+    .sai__acts,
+    .sai__fb,
+    .sai__src {
+  margin-top: -4px;
+  padding-inline-start: 43px;
+}
+
+.sai__acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.sai__act {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-color: var(--sai-blue);
+  font-weight: 800;
+}
+
+.sai__act span {
+  display: inline;
+}
+
+/* حالة الانتظار جنب نقط الكتابة + الرسالة اللي بتتكتب */
+
+.sai__status {
+  margin-inline-start: 5px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--sai-muted);
+}
+
+.sai__status:empty {
+  display: none;
+}
+
+.sai__msg--live p:last-child::after {
+  content: "";
+  margin-inline-start: 3px;
+  display: inline-block;
+  height: 14px;
+  width: 7px;
+  border-radius: 2px;
+  background-color: var(--sai-blue);
+  vertical-align: -2px;
+  animation: area-blink 0.9s ease-in-out infinite;
+}
+
+.sai__err {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  border-radius: 14px;
+  border: 1px solid #f2c9c9;
+  background-color: #fdf3f3;
+  padding: 10px 13px;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #a23b3b;
+}
+
+.sai__err span {
+  min-width: 0;
+  flex: 1 1 160px;
+}
+
+.sai__err button {
+  flex-shrink: 0;
+  border-radius: 999px;
+  background-color: var(--sai-navy);
+  padding: 6px 15px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* عنوان النتايج + "اعرض كمان" */
+
+.sai__res {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-inline: 3px;
+}
+
+.sai__res b {
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.sai__res a {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: var(--sai-blue-dark);
+}
+
+.sai__res a:hover {
+  text-decoration: underline;
+}
+
+.sai__card {
+  position: relative;
+}
+
+.sai__card[hidden] {
+  display: none;
+}
+
+.sai__more {
+  display: flex;
+  height: 44px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1.5px dashed #b9cfe8;
+  background-color: #fff;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: var(--sai-blue-dark);
+}
+
+.sai__more:hover {
+  border-color: var(--sai-blue);
+  background-color: #f3f8fe;
+}
+
+.sai__more--all {
+  border-style: solid;
+  border-color: var(--sai-navy);
+  background-color: var(--sai-navy);
+  color: #fff;
+}
+
+.sai__more--all:hover {
+  border-color: var(--sai-navy-deep);
+  background-color: var(--sai-navy-deep);
+}
+
+/* المفضلة + المقارنة على صورة الكارت */
+
+.sai__card-tools {
+  position: absolute;
+  top: 9px;
+  inset-inline-end: 9px;
+  z-index: 2;
+  display: flex;
+  gap: 6px;
+}
+
+.sai__tool {
+  display: flex;
+  height: 34px;
+  width: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.94);
+  color: var(--sai-navy);
+  box-shadow: 0 4px 10px -4px rgba(13, 43, 68, 0.5);
+}
+
+.sai__tool--fav[aria-pressed="true"] {
+  color: #e0245e;
+}
+
+.sai__tool--fav[aria-pressed="true"] svg {
+  fill: currentColor;
+}
+
+.sai__tool--cmp[aria-pressed="true"] {
+  background-color: var(--sai-navy);
+  color: #fff;
+}
+
+/* نسبة المطابقة + ليه رشحناها */
+
+.sai__card-fit {
+  margin-top: 10px;
+}
+
+.sai__card-fit p {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--sai-muted);
+}
+
+.sai__card-fit p b {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--sai-blue-dark);
+}
+
+.sai__card-fit > i {
+  margin-top: 5px;
+  display: block;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background-color: #e6edf4;
+}
+
+.sai__card-fit > i > i {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background-image: linear-gradient(270deg, var(--sai-blue-dark), var(--sai-blue));
+}
+
+[dir="ltr"] .sai__card-fit > i > i {
+  background-image: linear-gradient(90deg, var(--sai-blue-dark), var(--sai-blue));
+}
+
+.sai__card-why {
+  margin-top: 10px;
+  border-radius: 12px;
+  background-color: #f3f8fe;
+  padding: 9px 11px;
+}
+
+.sai__card-why > b {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: var(--sai-blue-dark);
+}
+
+.sai__card-why li {
+  margin-top: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.sai__card-why li svg {
+  margin-top: 4px;
+  flex-shrink: 0;
+  color: #1e9e62;
+}
+
+/* بلوكات الرد: أرقام السوق + جدول المقارنة + مستشار يكلمك */
+
+.sai__blk {
+  border-radius: 18px;
+  border: 1px solid var(--sai-line);
+  background-color: #fff;
+  padding: 13px;
+  box-shadow: 0 10px 22px -18px rgba(18, 58, 92, 0.55);
+  animation: sai-in 0.25s ease;
+}
+
+.sai__blk-title {
+  margin-bottom: 10px;
+  display: block;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.sai__blk-note {
+  margin-top: 9px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--sai-muted);
+}
+
+.sai__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sai__stat {
+  min-width: 0;
+  border-radius: 13px;
+  background-color: var(--sai-bg);
+  padding: 10px 11px;
+}
+
+.sai__stat > span {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--sai-muted);
+}
+
+.sai__stat p {
+  margin-top: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.sai__stat p b {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: var(--sai-navy);
+}
+
+.sai__stat p small {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--sai-muted);
+}
+
+.sai__stat em {
+  margin-top: 3px;
+  display: block;
+  font-size: 11.5px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--sai-muted);
+}
+
+.sai__stat em.is-up {
+  color: #1e9e62;
+}
+
+.sai__stat em.is-down {
+  color: #c0453b;
+}
+
+.sai__cmp-scroll {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--sai-line);
+}
+
+.sai__cmp table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.sai__cmp th,
+    .sai__cmp td {
+  padding: 8px 10px;
+  text-align: start;
+  white-space: nowrap;
+}
+
+.sai__cmp thead th {
+  background-color: var(--sai-navy);
+  font-weight: 800;
+  color: #fff;
+}
+
+.sai__cmp tbody th {
+  font-weight: 700;
+  color: var(--sai-muted);
+}
+
+.sai__cmp tbody td {
+  font-weight: 800;
+}
+
+.sai__cmp tbody tr + tr {
+  border-top: 1px solid var(--sai-line);
+}
+
+.sai__cmp td.is-best {
+  background-color: #eaf7f0;
+  color: #14774a;
+}
+
+.sai__src {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--sai-muted);
+}
+
+.sai__src a {
+  color: var(--sai-blue-dark);
+  text-decoration: underline;
+}
+
+/* التقييم تحت الرد */
+
+.sai__fb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.sai__fb-btn {
+  display: flex;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  color: #8b9aa8;
+}
+
+.sai__fb-btn:hover {
+  background-color: #e9eff5;
+  color: var(--sai-navy);
+}
+
+.sai__fb-btn.is-on {
+  background-color: #e8f1fc;
+  color: var(--sai-blue-dark);
+}
+
+.sai__fb-why {
+  display: flex;
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--sai-muted);
+}
+
+.sai__fb-why button {
+  border-radius: 999px;
+  border: 1px solid var(--sai-line);
+  background-color: #fff;
+  padding: 4px 11px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sai-navy);
+}
+
+.sai__fb-why button:hover {
+  border-color: var(--sai-blue);
+}
+
+.sai__lead-head {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sai__lead-head b {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.sai__lead-head small {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--sai-muted);
+}
+
+/* زرار الإرسال وقت الرد = إيقاف */
+
+.sai__send-stop {
+  display: none;
+}
+
+.sai__composer.is-busy .sai__send {
+  background-image: none;
+  background-color: var(--sai-navy);
+}
+
+.sai__composer.is-busy .sai__send-go {
+  display: none;
+}
+
+.sai__composer.is-busy .sai__send-stop {
+  display: block;
 }
 
 /* ديسك توب: نافذة ثابتة على يمين الشاشة (جنب زراير التواصل) من غير أي تغميق — الصفحة وراها شغالة والعميل بيكمّل تصفح */
@@ -16819,6 +17432,74 @@ img.abroad-dev__logo {
     display: none;
   }
 
+  .max-lg\:hidden.sai__crit {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__chips {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__mic {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__crit {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__ctx {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__chips {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__mic {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__crit {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__ctx {
+    display: none;
+  }
+
   @media (min-width: 1024px) {
     /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
 
@@ -16848,6 +17529,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.sai__mic {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__crit {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__ctx {
     display: none;
   }
 
@@ -16882,6 +17571,14 @@ img.abroad-dev__logo {
   }
 
   .md\:hidden.sai__mic {
+    display: none;
+  }
+
+  .md\:hidden.sai__crit {
+    display: none;
+  }
+
+  .md\:hidden.sai__ctx {
     display: none;
   }
 
@@ -17144,6 +17841,14 @@ img.abroad-dev__logo {
   }
 
   .lg\:hidden.sai__mic {
+    display: none;
+  }
+
+  .lg\:hidden.sai__crit {
+    display: none;
+  }
+
+  .lg\:hidden.sai__ctx {
     display: none;
   }
 
@@ -20212,6 +20917,8 @@ img.abroad-dev__logo {
 .pv-desktop .md\:hidden.sai {display: none;}
 .pv-desktop .md\:hidden.sai__chips {display: none;}
 .pv-desktop .md\:hidden.sai__mic {display: none;}
+.pv-desktop .md\:hidden.sai__crit {display: none;}
+.pv-desktop .md\:hidden.sai__ctx {display: none;}
 .pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
 
     .home-filter .md\:hidden.search-side {display: none !important;}
@@ -20403,6 +21110,8 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:hidden.sai {display: none;}
 .pv-desktop .lg\:hidden.sai__chips {display: none;}
 .pv-desktop .lg\:hidden.sai__mic {display: none;}
+.pv-desktop .lg\:hidden.sai__crit {display: none;}
+.pv-desktop .lg\:hidden.sai__ctx {display: none;}
 .pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
 
     .home-filter .lg\:hidden.search-side {display: none !important;}
