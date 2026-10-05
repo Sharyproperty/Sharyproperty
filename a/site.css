@@ -11343,6 +11343,239 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   backdrop-filter: blur(6px);
 }
 
+/* شريط الدول السريع: علم في دايرة + الاسم + عدد المشاريع */
+
+.abroad-flags {
+  display: flex;
+  gap: 10px;
+  margin-inline: -20px;
+  overflow-x: auto;
+  padding: 2px 20px 6px;
+  scrollbar-width: none;
+}
+
+.abroad-flags::-webkit-scrollbar,
+    .abroad-jump::-webkit-scrollbar {
+  display: none;
+}
+
+.abroad-flag {
+  display: flex;
+  min-width: 86px;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 16px;
+  border: 1px solid #e3e9ef;
+  background-color: #fff;
+  padding: 10px 10px 9px;
+  text-align: center;
+  color: #123a5c;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.abroad-flag:hover {
+  border-color: #9fc4e6;
+  box-shadow: 0 10px 20px -14px rgba(18, 58, 92, 0.5);
+}
+
+.abroad-flag__img {
+  display: flex;
+  height: 46px;
+  width: 46px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #eaf1fa;
+  background-color: #eaf1fa;
+}
+
+.abroad-flag__img img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.abroad-flag b {
+  margin-top: 6px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.abroad-flag small {
+  white-space: nowrap;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #5b7189;
+}
+
+/* ليه تستثمر برا مصر مع شاري: 4 مميزات */
+
+.abroad-benefit {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  border: 1px solid #e3e9ef;
+  background-color: #fff;
+  padding: 14px;
+  color: #123a5c;
+}
+
+.abroad-benefit__icon {
+  display: flex;
+  height: 42px;
+  width: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background-color: #e7f6f3;
+  color: #1f7f72;
+}
+
+.abroad-benefit b {
+  margin-top: 10px;
+  font-size: 14.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.abroad-benefit small {
+  margin-top: 2px;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: #5b7189;
+}
+
+/* زراير هيدر الدولة + التنقل السريع بين الأقسام */
+
+.abroad-hero__actions {
+  margin-top: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.abroad-hero__btn {
+  display: inline-flex;
+  height: 44px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  white-space: nowrap;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.abroad-hero__btn--main {
+  background-color: #fff;
+  color: #123a5c;
+}
+
+.abroad-hero__btn--wa {
+  background-color: #25c05f;
+  color: #fff;
+}
+
+.abroad-jump {
+  position: sticky;
+  top: var(--prop-header, 76px);
+  z-index: 20;
+  display: flex;
+  gap: 6px;
+  margin: 10px -20px 0;
+  overflow-x: auto;
+  background-color: rgba(255, 255, 255, 0.96);
+  padding: 8px 20px;
+  scrollbar-width: none;
+}
+
+.abroad-jump a {
+  flex: 1 0 auto;
+  white-space: nowrap;
+  border-radius: 999px;
+  background-color: #f1f6fb;
+  padding: 7px 14px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.abroad-jump a:hover {
+  background-color: #1e4166;
+  color: #fff;
+}
+
+@media (min-width: 1024px) {
+  .abroad-flags {
+    margin-inline: 0;
+    gap: 16px;
+    padding-inline: 0;
+  }
+
+  .abroad-flag {
+    padding: 16px 12px 14px;
+  }
+
+  .abroad-flag__img {
+    height: 58px;
+    width: 58px;
+  }
+
+  .abroad-flag b {
+    font-size: 15px;
+  }
+
+  .abroad-flag small {
+    font-size: 13px;
+  }
+
+  .abroad-benefit {
+    padding: 20px;
+  }
+
+  .abroad-benefit b {
+    font-size: 16.5px;
+  }
+
+  .abroad-benefit small {
+    font-size: 14px;
+  }
+
+  .abroad-hero__actions {
+    gap: 12px;
+  }
+
+  .abroad-hero__btn {
+    height: 48px;
+    flex: 0 0 auto;
+    padding-inline: 22px;
+    font-size: 15px;
+  }
+
+  .abroad-jump {
+    top: 96px;
+    margin: 14px 0 0;
+    gap: 10px;
+    border-radius: 14px;
+    padding: 10px 0;
+  }
+
+  .abroad-jump a {
+    flex: 0 0 auto;
+    padding: 9px 22px;
+    font-size: 14.5px;
+  }
+}
+
 /* إزاي بتشتري: 3 خطوات */
 
 .abroad-step {
@@ -18204,6 +18437,30 @@ img.abroad-dev__logo {
     bottom: 28px;
     width: 440px;
     font-size: 14px;}
+.pv-desktop .abroad-flags {margin-inline: 0;
+    gap: 16px;
+    padding-inline: 0;}
+.pv-desktop .abroad-flag {padding: 16px 12px 14px;}
+.pv-desktop .abroad-flag__img {height: 58px;
+    width: 58px;}
+.pv-desktop .abroad-flag b {font-size: 15px;}
+.pv-desktop .abroad-flag small {font-size: 13px;}
+.pv-desktop .abroad-benefit {padding: 20px;}
+.pv-desktop .abroad-benefit b {font-size: 16.5px;}
+.pv-desktop .abroad-benefit small {font-size: 14px;}
+.pv-desktop .abroad-hero__actions {gap: 12px;}
+.pv-desktop .abroad-hero__btn {height: 48px;
+    flex: 0 0 auto;
+    padding-inline: 22px;
+    font-size: 15px;}
+.pv-desktop .abroad-jump {top: 96px;
+    margin: 14px 0 0;
+    gap: 10px;
+    border-radius: 14px;
+    padding: 10px 0;}
+.pv-desktop .abroad-jump a {flex: 0 0 auto;
+    padding: 9px 22px;
+    font-size: 14.5px;}
 .pv-desktop .abroad-country {aspect-ratio: 4 / 3;
     border-radius: 22px;}
 .pv-desktop .abroad-country__flag {top: 16px;
