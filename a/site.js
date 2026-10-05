@@ -307,7 +307,7 @@
     function openShareMenu(button, url, title, en) {
         var u = encodeURIComponent(url), t = encodeURIComponent(title);
         openMenu(button, [
-            ['shary-share__icon--whatsapp', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(title + '\n' + url)],
+            ['shary-share__icon--whatsapp', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(shareMessage(button, url, title))],
             ['shary-share__icon--facebook', '<i class="fa-brands fa-facebook-f" aria-hidden="true"></i>', en ? 'Facebook' : 'فيسبوك', 'https://www.facebook.com/sharer/sharer.php?u=' + u],
             ['shary-share__icon--x', '<i class="fa-brands fa-x-twitter" aria-hidden="true"></i>', en ? 'X' : 'منصة إكس', 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t],
             ['shary-share__icon--telegram', '<i class="fa-brands fa-telegram" aria-hidden="true"></i>', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + u + '&text=' + t],
@@ -351,12 +351,8 @@
 
         var u = encodeURIComponent(url);
         var t = encodeURIComponent(title);
-        // واتساب: الرسالة الجاهزة ببيانات الوحدة / المشروع (data-wa-text على الكارت ، أو data-wa-page لو المشاركة لصفحة العنصر نفسها) — وإلا العنوان + اللينك
-        var waText = title + '\n' + url;
-        if (button && button.closest) {
-            var waPage = button.closest('[data-wa-page]');
-            if (button.closest('[data-wa-text]') || (waPage && !button.closest('[data-card], [data-unit], [data-project], article'))) waText = whatsappText(button);
-        }
+        // واتساب: رسالة المشاركة الكاملة (بيانات الوحدة / المشروع + اللينك + لينك الصورة) — من الكارت أو من صفحة العنصر نفسها
+        var waText = shareMessage(button, url, title);
         var targets = [
             ['shary-share__icon--whatsapp', 'fa-brands fa-whatsapp', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(waText)],
             ['shary-share__icon--telegram', 'fa-brands fa-telegram', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + u + '&text=' + t],
@@ -405,7 +401,8 @@
             more.innerHTML = '<span class="shary-share__icon shary-share__icon--more"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></span><span></span>';
             more.lastChild.textContent = en ? 'More' : 'المزيد';
             more.addEventListener('click', function () {
-                navigator.share({ title: title, text: title, url: url }).then(closeShareSheet, function (error) {
+                // قايمة الموبايل: نفس الرسالة الكاملة (اللينك جواها) — ولو مفيش بيانات: العنوان + اللينك
+                navigator.share(waText.indexOf(url) > -1 ? { title: title, text: waText } : { title: title, text: title, url: url }).then(closeShareSheet, function (error) {
                     if (!error || error.name !== 'AbortError') { nativeShareBlocked = true; more.remove(); }
                 });
             });
@@ -442,7 +439,7 @@
     // ---- واتساب: رسالة جاهزة فيها بيانات الوحدة / المشروع وكوده ولينكه (واتساب بيعرض اللينك بصورة الصفحة og:image)
     // النص من أقرب عنصر عليه data-wa-text (كارت) ، وإلا من data-wa-page اللي على صفحة الوحدة / المشروع (لأي زرار واتساب في الصفحة) ،
     // وإلا رسالة عامة باسم الصفحة. اللينك من data-wa-url. حدث shary:whatsapp ({ text }) — غيّروا detail.text أو امنعوه.
-    function whatsappText(link) {
+    function whatsappText(link, shareUrl) {
         var en = english(link);
         var holder = link.closest('[data-wa-text]');
         var scope = link.closest('main') || document;
@@ -454,10 +451,22 @@
         if (!source) return (en ? 'Hello Shary, I would like to ask about:' : 'مرحبًا شاري، أريد الاستفسار عن:') + '\n' + document.title + '\n' + location.href;
         // نفس ترتيب رسالة الموقع: البيانات ، سطر اللينك ، سطر فاضي ، لينك الصورة
         var text = (source.getAttribute(holder ? 'data-wa-text' : 'data-wa-page') || '').replace(/^\s+|\s+$/g, '');
-        var url = absolute(source.getAttribute('data-wa-url') || '') || location.href;
+        var url = shareUrl || absolute(source.getAttribute('data-wa-url') || '') || location.href;
         var photo = holder ? holder.querySelector('img.card-photo') : null;   // الكارت: صورته نفسها
         var image = absolute(source.getAttribute('data-wa-image') || (photo ? photo.currentSrc || photo.getAttribute('src') : '') || '', true);
         return text + ' ' + url + (image ? '\n\n' + image : '');
+    }
+
+    // رسالة المشاركة (زرار المشاركة على الكارت أو جوه صفحة الوحدة / المشروع) — نفس شكل رسالة الموقع:
+    //   بيانات الوحدة / المشروع (الاسم ، المرجع ، المشروع / المطور ، السعر ، المنطقة) ← "رابط الوحدة: اللينك" ← سطر فاضي ← لينك الصورة.
+    //   واتساب بيعرض فوقها معاينة اللينك (الصورة + العنوان + الوصف) من og:image / og:title / og:description بتوع صفحة الوحدة / المشروع.
+    //   لو الزرار مش على كارت ولا في صفحة فيها بيانات: العنوان + اللينك. حدث shary:whatsapp ({ text }) بيتبعت هنا كمان.
+    function shareMessage(button, url, title) {
+        var page = button && button.closest ? button.closest('[data-wa-page]') : null;
+        var has = button && button.closest && (button.closest('[data-wa-text]') || (page && !button.closest('[data-card], [data-unit], [data-project], article')));
+        var detail = { text: has ? whatsappText(button, url) : title + '\n' + url };
+        if (button && button.dispatchEvent) button.dispatchEvent(new CustomEvent('shary:whatsapp', { bubbles: true, cancelable: true, detail: detail }));
+        return detail.text;
     }
 
     function whatsappHref(link) {
@@ -690,7 +699,7 @@
 
 /**
  * زرار التطبيق في الهيدر [data-app-button]:
- * - الافتراضي "حمّل التطبيق" (data-state="get") واللينك بيبقى المتجر المناسب للجهاز: data-ios-url على آيفون/آيباد ، data-android-url على الباقي.
+ * - الافتراضي "حمل التطبيق" (data-state="get") واللينك بيبقى المتجر المناسب للجهاز: data-ios-url على آيفون/آيباد ، data-android-url على الباقي.
  * - لو التطبيق متسطّب بيتحوّل لـ "افتح التطبيق" (data-state="open") واللينك بيبقى data-open-url. بنعرف إنه متسطّب من:
  *   1) أندرويد (كروم): navigator.getInstalledRelatedApps() — محتاج related_applications في manifest الموقع + assetlinks.json في التطبيق.
  *   2) الصفحة مفتوحة من جوه التطبيق نفسه (User-Agent فيه SharyApp) أو اللينك جاي من التطبيق (?from=app) — وبيتحفظ على الجهاز.
@@ -817,7 +826,7 @@
 /**
  * سيستم اللوجوهات — مفيش لوجو يبان "مربع" جوه الدايرة:
  * اللوجو بيتعرض كامل (object-contain) جوه دايرة ، ولو صورة اللوجو خلفيتها لون ثابت (مش شفافة) الدايرة بتاخد نفس لون الخلفية فالمربع بيختفي.
- * بيشتغل لوحده على لوجوهات المطورين في كل الكروت والصفحات (والصور اللي بتتحمّل بعدين). لأي صورة تانية: حطوا عليها data-logo-fit.
+ * بيشتغل لوحده على لوجوهات المطورين في كل الكروت والصفحات (والصور اللي بتتحمل بعدين). لأي صورة تانية: حطوا عليها data-logo-fit.
  * ملاحظة: قراءة لون الخلفية بتشتغل لما الصورة من نفس الدومين (أو عليها CORS) — غير كده اللوجو بيفضل على خلفية بيضا.
  * الأفضل من لوحة التحكم: رفع اللوجو PNG شفاف أو مربع 400×400 — راجعوا README.
  */
@@ -853,6 +862,29 @@
     }, true);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { scan(); }); else scan();
     window.SharyLogoFit = { scan: scan };
+})();
+
+/**
+ * سيستم "الصورة الطبيعية" (photo-fit) — مع ستايل .rent-gallery في app.css:
+ * معرض الصور (المشروع / الوحدة / الإيجار) بياخد نسبة أول صورة فيه: السكربت بيحط --photo-ratio (العرض ÷ الارتفاع ، بين 5:4 و 16:9) على المعرض أول ما الصورة تحمل ،
+ * فالصورة الكبيرة على الموبايل بتتعرض كاملة بنسبتها الطبيعية (من غير تكبير ولا قص ولا صورة وراها). من أي كود بعد تغيير الصور: window.SharyPhotoFit.scan().
+ */
+(function () {
+    function fit(gallery) {
+        var img = gallery.querySelector('[data-gallery-item] img');
+        if (!img || !img.naturalWidth || !img.naturalHeight) return;
+        var ratio = Math.max(1.25, Math.min(1.78, img.naturalWidth / img.naturalHeight));
+        gallery.style.setProperty('--photo-ratio', ratio.toFixed(3));
+        if (gallery.parentNode && gallery.parentNode.style) gallery.parentNode.style.setProperty('--photo-ratio', ratio.toFixed(3));
+    }
+    function scan(scope) { (scope || document).querySelectorAll('[data-rent-gallery]').forEach(fit); }
+    document.addEventListener('load', function (event) {
+        var img = event.target;
+        var gallery = img && img.tagName === 'IMG' && img.closest ? img.closest('[data-rent-gallery]') : null;
+        if (gallery && gallery.querySelector('[data-gallery-item] img') === img) fit(gallery);
+    }, true);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { scan(); }); else scan();
+    window.SharyPhotoFit = { scan: scan };
 })();
 
 /**
@@ -1591,7 +1623,7 @@
             if (!open) section.scrollIntoView({ block: 'nearest' });
         });
     });
-    // خريطة جوجل جوه كارت المؤشر: بتتحمّل أول ما الكارت يظهر على الشاشة، وزرار السهمين بيكبّرها جوه نفس الصفحة ويرجّعها
+    // خريطة جوجل جوه كارت المؤشر: بتتحمل أول ما الكارت يظهر على الشاشة، وزرار السهمين بيكبّرها جوه نفس الصفحة ويرجّعها
     // لو الصفحة مفتوحة في مكان بيمنع تضمين خرائط جوجل (سياسة أمان الصفحة): الخريطة المرسومة بتفضل ظاهرة بدل مربع فاضي
     document.addEventListener('securitypolicyviolation', function (e) {
         if (String(e.violatedDirective || '').indexOf('frame') !== 0) return;
@@ -1612,7 +1644,7 @@
             frame.addEventListener('load', function () { if (!box.classList.contains('is-blocked')) box.classList.add('is-live'); });
             frame.setAttribute('src', frame.getAttribute('data-src'));
         }
-        // الخريطة تقيلة: بتتحمّل بعد ما الصفحة نفسها تخلص تحميل، ولما الكارت يقرّب يظهر على الشاشة
+        // الخريطة تقيلة: بتتحمل بعد ما الصفحة نفسها تخلص تحميل، ولما الكارت يقرّب يظهر على الشاشة
         function watch() {
             if ('IntersectionObserver' in window) {
                 var seen = new IntersectionObserver(function (entries) {
@@ -2733,21 +2765,42 @@
 
 /**
  * خريطة شاري التفاعلية (resources/views/map/show.blade.php)
- * - اختيار مشروع [data-smap-item] (كارت في القايمة أو علامة السعر على الخريطة) بيحرّك الخريطة على مكانه (data-lat / data-lng) وبيظهر أزراره.
- * - "اختر المنطقة" [data-smap-areas-toggle] بيفتح قايمة المناطق [data-smap-areas] ، واختيار منطقة [data-smap-area] بيفلتر المشاريع.
- * - البحث [data-smap-search] ، قمر صناعي (h) / خريطة (m) [data-smap-type] ، تكبير / تصغير [data-smap-zoom] ، كل المشاريع [data-smap-reset].
+ * - بتفتح على الكرة الأرضية (قمر صناعي) وبتقرّب بحركة: على المشروع المطلوب (data-focus="1") ، أو على المنطقة (data-area) ،
+ *   وإلا بتقف على الكرة الأرضية فوق مصر وقايمة "اختر المنطقة" مفتوحة — واختيار منطقة بيطير عليها.
+ * - اختيار مشروع [data-smap-item] (كارت أو علامة السعر على الخريطة) بيحرّك الخريطة على مكانه وبيظهر أزراره.
+ * - "اختر المنطقة" [data-smap-areas-toggle] بيفتح القايمة الجلاسي [data-smap-areas] — بتتقفل بالضغط على أي مكان فاضي (الخريطة نفسها أو [data-smap-areas-close]) أو Esc.
+ * - الشريط الأبيض: البحث [data-smap-search] ، "استلام فوري" [data-smap-ready] ، وزراير الفلاتر [data-smap-filter-open="types | delivery | price | (فاضي = الكل)"]
+ *   بتفتح لوحة الفلاتر [data-smap-sheet] — الاختيارات [data-smap-f="types | delivery | price"] بتفلتر الكروت والعلامات فورًا.
+ *   الفلتر عمره ما بيرجّع فاضي: لو مفيش مشروع مطابق بالظبط بيتعرض أقرب المشاريع (مع تنبيه صغير).
+ * - أزرار الجنب: نوع الخريطة [data-smap-layers] (قمر صناعي ⇄ خريطة) ، كل المشاريع في الكادر [data-smap-reset] ، موقعي [data-smap-locate] ، تكبير / تصغير [data-smap-zoom].
  * - "عرض القائمة" [data-smap-list-link]: صفحة البحث على المنطقة المختارة (?area[]=) — التبديل وحدات ⇄ كمبوندات من جوه صفحة البحث.
  * - الاختيار بيطلع حدث shary:map-select على الصفحة: detail = بيانات المشروع. من أي كود: window.SharyMap.select('slug') / window.SharyMap.area('north-coast').
- *
- * الخريطة نفسها (أول محرك متاح):
- *   1) Mapbox GL (لو data-mapbox-token موجود ومكتبة mapboxgl محمّلة): خريطة حقيقية بعلامة سعر لكل مشروع — نفس خريطة الموقع الحالية.
- *   2) Leaflet (من غير توكن): المكتبة بتتحمّل لوحدها من data-leaflet-src ، صور قمر صناعي (Esri World Imagery) + أسماء الأماكن + علامة سعر لكل مشروع.
- *   3) لو مفيش مكتبة اتحمّلت: تضمين خرائط جوجل بالقمر الصناعي على المشروع المختار (من غير أي مفتاح).
  * - زرار الرجوع [data-smap-back]: بيرجّع للصفحة اللي قبلها (ولو مفيش: لينك الزرار = الرئيسية).
+ *
+ * الخريطة نفسها (أول محرك متاح) — الاتنين نفس الـ API فالكود واحد:
+ *   1) Mapbox GL (لو data-mapbox-token موجود ومكتبة mapboxgl محملة): نفس خريطة الموقع الحالية ، بالكرة الأرضية (projection: globe).
+ *   2) MapLibre GL (من غير توكن): المكتبة بتتحمل لوحدها من data-gl-src (+ data-gl-css) ، كرة أرضية + صور قمر صناعي (Esri World Imagery) + أسماء الأماكن.
+ *   3) لو مفيش WebGL / المكتبة ما اتحملتش: تضمين خرائط جوجل بالقمر الصناعي على المشروع المختار (من غير أي مفتاح).
  */
 (function () {
     var maps = [];
-    var STYLES = { h: 'mapbox://styles/mapbox/satellite-streets-v12', m: 'mapbox://styles/mapbox/streets-v12' };
+    var MAPBOX_STYLES = { h: 'mapbox://styles/mapbox/satellite-streets-v12', m: 'mapbox://styles/mapbox/streets-v12' };
+    var ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
+    var EGYPT = [30.2, 27.4];                     // [lng, lat] — نص مصر
+    var START = { center: [14, 16], zoom: 0.7 };  // أول فتحة: الكرة الأرضية كلها
+
+    // ستايل MapLibre (من غير توكن): كرة أرضية + قمر صناعي وأسماء الأماكن (h) أو خريطة الشوارع (m)
+    function libreStyle(type) {
+        var sources = type === 'h' ? {
+            base: { type: 'raster', tiles: [ESRI + 'World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 19, attribution: 'Imagery &copy; Esri' },
+            labels: { type: 'raster', tiles: [ESRI + 'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 19 }
+        } : {
+            base: { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256, maxzoom: 19, attribution: '&copy; OpenStreetMap' }
+        };
+        var layers = [{ id: 'ground', type: 'background', paint: { 'background-color': type === 'h' ? '#0d2238' : '#dfe9f3' } }, { id: 'base', type: 'raster', source: 'base' }];
+        if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
+        return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers, sky: { 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0] } };
+    }
 
     document.querySelectorAll('[data-smap]').forEach(function (root) {
         var frame = root.querySelector('[data-smap-frame]');
@@ -2757,14 +2810,22 @@
         var empty = root.querySelector('[data-smap-empty]');
         var areasBox = root.querySelector('[data-smap-areas]');
         var areasToggle = root.querySelector('[data-smap-areas-toggle]');
+        var areasVeil = root.querySelector('[data-smap-areas-close]');
         var areaLabel = root.querySelector('[data-smap-area-label]');
         var listLink = root.querySelector('[data-smap-list-link]');
-        var count = (root.closest('main') || document).querySelector('[data-smap-count]');
+        var counts = root.querySelectorAll('[data-smap-count]');
+        var sheet = root.querySelector('[data-smap-sheet]');
+        var note = root.querySelector('[data-smap-note]');
+        var layersButton = root.querySelector('[data-smap-layers]');
         var lang = root.getAttribute('data-lang') || 'ar';
-        var state = { type: 'h', zoom: 16, current: null, live: false, area: root.getAttribute('data-area') || '' };
-        var gl = null;
-        var lf = null, lfLayers = {}, lfState = '';   // Leaflet: '' لسه ، loading ، ready ، failed
-        var areasVeil = root.querySelector('[data-smap-areas-close]');
+        var token = root.getAttribute('data-mapbox-token') || '';
+        var state = {
+            type: 'h', zoom: 16, current: null, live: false, intro: false,
+            area: root.getAttribute('data-area') || '', focus: root.getAttribute('data-focus') === '1',
+            types: [], delivery: [], price: ''
+        };
+        var gl = null, glLib = null, libState = '';   // المكتبة: '' لسه ، loading ، ready ، failed
+        var noteTimer = null, meMarker = null;
         if (!frame || !items.length) return;
 
         function priceLabel(p) {
@@ -2782,15 +2843,66 @@
 
         function shown() { return items.filter(function (item) { return !item.parentNode.hidden; }); }
 
-        // ---- Mapbox: خريطة حقيقية بعلامات الأسعار
+        function say(text) {
+            if (!note || !text) return;
+            note.textContent = text;
+            note.hidden = false;
+            clearTimeout(noteTimer);
+            noteTimer = setTimeout(function () { note.hidden = true; }, 3800);
+        }
+
+        // الخروج من وضع "الكرة الأرضية" (أول ما العميل يختار منطقة / مشروع / فلتر): كروت المشاريع بتظهر
+        function leaveGlobe() { root.classList.remove('is-globe'); }
+
+        // ---- المكتبة: Mapbox (بتوكن — متحملة في الصفحة) أو MapLibre (بتتحمل لوحدها مرة واحدة)
+        function loadLib() {
+            if (libState) return;
+            if (token) { libState = window.mapboxgl ? 'ready' : 'failed'; return; }
+            if (window.maplibregl) { libState = 'ready'; return; }
+            var src = root.getAttribute('data-gl-src');
+            if (!src) { libState = 'failed'; return; }
+            libState = 'loading';
+            var done = function (ok) { if (libState !== 'loading') return; libState = ok && window.maplibregl ? 'ready' : 'failed'; paint(); };
+            var css = root.getAttribute('data-gl-css');
+            if (css) { var sheetLink = document.createElement('link'); sheetLink.rel = 'stylesheet'; sheetLink.href = css; document.head.appendChild(sheetLink); }
+            var script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onload = function () { done(true); };
+            script.onerror = function () { done(false); };
+            document.head.appendChild(script);
+            window.setTimeout(function () { done(false); }, 12000);
+        }
+
+        function bounds(list) {
+            var box = new glLib.LngLatBounds();
+            list.forEach(function (item) { var p = info(item); box.extend([p.lng, p.lat]); });
+            return box;
+        }
+
+        // كل المشاريع الظاهرة في الكادر
+        function fitAll(duration) {
+            var list = shown();
+            if (!gl || !list.length) return;
+            var wide = window.matchMedia('(min-width: 1024px)').matches;
+            gl.fitBounds(bounds(list), { padding: wide ? 90 : { top: 70, right: 46, bottom: 230, left: 46 }, maxZoom: 13.5, duration: duration || 1400, essential: true });
+        }
+
+        // ---- الخريطة: الكرة الأرضية + علامة سعر لكل مشروع
         function startGL() {
-            var token = root.getAttribute('data-mapbox-token');
-            if (gl || !token || !window.mapboxgl || !glBox) return !!gl;
+            if (gl) return true;
+            var lib = token ? window.mapboxgl : window.maplibregl;
+            if (!lib || !lib.Map || !glBox) return false;
             try {
-                var first = info(state.current || items[0]);
-                window.mapboxgl.accessToken = token;
+                if (token) lib.accessToken = token;
                 glBox.hidden = false;
-                gl = new window.mapboxgl.Map({ container: glBox, style: STYLES[state.type], center: [first.lng, first.lat], zoom: 12 });
+                glBox.setAttribute('dir', 'ltr');
+                var options = { container: glBox, style: token ? MAPBOX_STYLES[state.type] : libreStyle(state.type), center: START.center, zoom: START.zoom, attributionControl: false };
+                if (token) options.projection = 'globe';
+                gl = new lib.Map(options);
+                glLib = lib;
+                if (lib.AttributionControl) gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
+                if (token) gl.on('style.load', function () { try { gl.setFog({}); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
@@ -2801,8 +2913,14 @@
                     pin.addEventListener('click', function (event) { event.stopPropagation(); select(item, true); });
                     pin.style.display = item.parentNode.hidden ? 'none' : '';
                     item.__pin = pin;
-                    item.__marker = new window.mapboxgl.Marker({ element: pin, anchor: 'bottom' }).setLngLat([p.lng, p.lat]).addTo(gl);
+                    item.__marker = new lib.Marker({ element: pin, anchor: 'bottom' }).setLngLat([p.lng, p.lat]).addTo(gl);
                 });
+                // الضغط على أي مكان فاضي في الخريطة بيقفل قايمة المناطق
+                gl.on('click', function () { toggleAreas(false); });
+                var started = false;
+                var begin = function () { if (started) return; started = true; intro(); };
+                gl.on('load', begin);
+                window.setTimeout(begin, 2600);   // لو صور الخريطة اتأخرت: الحركة بتبدأ برضه
                 frame.hidden = true;
                 root.classList.add('is-gl');
                 return true;
@@ -2813,96 +2931,48 @@
             }
         }
 
-        // ---- Leaflet: قمر صناعي + علامات الأسعار (من غير توكن)
-        function startLeaflet() {
-            if (lf) return true;
-            var Lf = window.L;
-            if (!Lf || !Lf.map || !glBox) return false;
-            try {
-                var first = info(state.current || items[0]);
-                glBox.hidden = false;
-                glBox.setAttribute('dir', 'ltr');
-                lf = Lf.map(glBox, { zoomControl: false }).setView([first.lat, first.lng], 12);
-                var esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
-                lfLayers.h = Lf.layerGroup([
-                    Lf.tileLayer(esri + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagery &copy; Esri' }),
-                    Lf.tileLayer(esri + 'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 })
-                ]);
-                lfLayers.m = Lf.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
-                lfLayers[state.type].addTo(lf);
-                items.forEach(function (item) {
-                    var p = info(item);
-                    var marker = Lf.marker([p.lat, p.lng], { icon: Lf.divIcon({ className: 'smap__pin', html: '<span class="smap__marker">' + priceLabel(p) + '</span>', iconSize: [0, 0] }), keyboard: false, title: p.name || '' });
-                    marker.on('click', function () { select(item, true); });
-                    item.__lf = marker;
-                    if (!item.parentNode.hidden) marker.addTo(lf);
-                });
-                frame.hidden = true;
-                root.classList.add('is-gl');
-                return true;
-            } catch (error) {
-                lf = null;
-                if (glBox) glBox.hidden = true;
-                return false;
-            }
-        }
-
-        // بيحمّل مكتبة Leaflet مرة واحدة (data-leaflet-src) — لو فشلت أو اتأخرت بنرجع لتضمين خرائط جوجل
-        function loadLeaflet() {
-            var src = root.getAttribute('data-leaflet-src');
-            if (lfState || !src) { if (!src) lfState = 'failed'; return; }
-            if (window.L && window.L.map) { lfState = 'ready'; return; }
-            lfState = 'loading';
-            var done = function (ok) { if (lfState !== 'loading') return; lfState = ok && window.L && window.L.map ? 'ready' : 'failed'; paint(); };
-            var script = document.createElement('script');
-            script.src = src;
-            script.async = true;
-            script.onload = function () { done(true); };
-            script.onerror = function () { done(false); };
-            document.head.appendChild(script);
-            window.setTimeout(function () { done(false); }, 8000);
-        }
-
-        // كل المشاريع الظاهرة في الكادر
-        function fitAll() {
-            var list = shown();
-            if (lf && list.length) {
-                lf.fitBounds(window.L.latLngBounds(list.map(function (item) { var p = info(item); return [p.lat, p.lng]; })), { padding: [70, 70], maxZoom: 14 });
+        // أول حركة بعد ما الخريطة تفتح: من الكرة الأرضية للمشروع / المنطقة — أو تقريب بسيط على مصر والقايمة مفتوحة
+        function intro() {
+            state.intro = true;
+            if (state.focus && state.current) {
+                var p = info(state.current);
+                leaveGlobe();
+                gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: 5200, essential: true });
                 return;
             }
-            if (!gl || !list.length || !window.mapboxgl.LngLatBounds) return;
-            var bounds = new window.mapboxgl.LngLatBounds();
-            list.forEach(function (item) { var p = info(item); bounds.extend([p.lng, p.lat]); });
-            gl.fitBounds(bounds, { padding: 70, maxZoom: 14, duration: 700 });
+            if (state.area) { leaveGlobe(); fitAll(4600); return; }
+            gl.flyTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: 2600, essential: true });
+            toggleAreas(true);
         }
 
         // الخريطة بتتحدّث لما تبقى ظاهرة بس (ولما المشروع / النوع / التكبير يتغيّر)
         function paint(fly) {
-            if (!state.live || !state.current) return;
-            var p = info(state.current);
-            if (startGL()) {
+            if (!state.live) return;
+            loadLib();
+            if (libState === 'loading') return;   // مستنيين المكتبة
+            if (libState === 'ready' && startGL()) {
                 items.forEach(function (item) { if (item.__pin) item.__pin.classList.toggle('is-on', item === state.current); });
-                if (fly !== false) gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(13, Math.min(18, state.zoom)), duration: 900 });
+                if (fly !== false && state.intro && state.current) {
+                    var p = info(state.current);
+                    gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(13, Math.min(18, state.zoom)), duration: 1600, essential: true });
+                }
                 return;
             }
-            if (!root.getAttribute('data-mapbox-token')) {
-                loadLeaflet();
-                if (lfState === 'loading') return;   // مستنيين المكتبة
-                if (lfState === 'ready' && startLeaflet()) {
-                    items.forEach(function (item) { var pin = item.__lf && item.__lf.getElement && item.__lf.getElement(); if (pin) pin.classList.toggle('is-on', item === state.current); });
-                    if (fly !== false) lf.flyTo([p.lat, p.lng], Math.max(13, Math.min(18, state.zoom)), { duration: 0.8 });
-                    return;
-                }
-            }
-            var url = 'https://www.google.com/maps?q=' + p.lat + ',' + p.lng + '&t=' + state.type + '&z=' + state.zoom + '&hl=' + lang + '&output=embed';
+            // من غير WebGL: تضمين خرائط جوجل على المشروع المختار (أو أول مشروع ظاهر)
+            var item = state.current || shown()[0] || items[0];
+            var q = info(item);
+            frame.hidden = false;
+            leaveGlobe();
+            var url = 'https://www.google.com/maps?q=' + q.lat + ',' + q.lng + '&t=' + state.type + '&z=' + state.zoom + '&hl=' + lang + '&output=embed';
             if (frame.getAttribute('src') !== url) frame.setAttribute('src', url);
-            frame.setAttribute('title', (root.getAttribute('data-frame-title') || '').replace(':name', p.name || ''));
+            frame.setAttribute('title', (root.getAttribute('data-frame-title') || '').replace(':name', q.name || ''));
         }
 
         function select(item, reveal) {
-            if (!item) return;
-            state.current = item;
+            state.current = item || null;
             items.forEach(function (other) { other.setAttribute('aria-current', other === item ? 'true' : 'false'); });
+            if (!item) { paint(false); return; }
+            if (state.intro || !gl) leaveGlobe();
             paint();
             if (reveal) {
                 // الكارت المختار يبان في القايمة (بالعرض على الموبايل / بالطول على الديسك توب) من غير ما الصفحة تتحرك
@@ -2914,23 +2984,60 @@
             root.dispatchEvent(new CustomEvent('shary:map-select', { bubbles: true, detail: info(item) }));
         }
 
+        // ---- الفلترة: المنطقة + البحث + أنواع الوحدات + التسليم + السعر. لو مفيش مطابق بالظبط: بنفك الشروط واحد واحد لحد ما يبقى فيه نتيجة
+        function matches(item, use) {
+            var p = info(item);
+            if (state.area && item.getAttribute('data-area') !== state.area) return false;
+            if (use.words && use.words.length) {
+                if (!item.__hay) item.__hay = plain([p.name, p.developer_name, p.area_label, p.group_label, p.location, p.slug].join(' '));
+                if (!use.words.every(function (word) { return item.__hay.indexOf(word) > -1; })) return false;
+            }
+            if (use.types && state.types.length && !(p.type_keys || []).some(function (key) { return state.types.indexOf(key) > -1; })) return false;
+            if (use.delivery && state.delivery.length && state.delivery.indexOf(String(p.delivery)) === -1) return false;
+            if (use.price && state.price !== '') {
+                var chip = root.querySelector('[data-smap-f="price"][data-value="' + state.price + '"]');
+                var min = chip ? Number(chip.getAttribute('data-min')) : 0, max = chip ? Number(chip.getAttribute('data-max')) : 0;
+                if (p.price_value < min || (max && p.price_value > max)) return false;
+            }
+            return true;
+        }
+
         function filter(keep) {
             var words = plain(search && search.value).split(' ').filter(Boolean);
-            var list = [];
+            var levels = [
+                { words: words, types: 1, delivery: 1, price: 1 },
+                { words: words, types: 1, delivery: 1 },
+                { words: words, types: 1 },
+                { words: words },
+                {}
+            ];
+            var list = [], level = 0;
+            for (; level < levels.length; level++) {
+                list = items.filter(function (item) { return matches(item, levels[level]); });
+                if (list.length) break;
+            }
+            if (!list.length) { list = items.slice(); }
+            if (level > 0) say(root.getAttribute('data-closest'));
             items.forEach(function (item) {
-                var p = info(item);
-                if (!item.__hay) item.__hay = plain([p.name, p.developer_name, p.area_label, p.group_label, p.location, p.slug].join(' '));
-                var ok = (!state.area || item.getAttribute('data-area') === state.area) && words.every(function (word) { return item.__hay.indexOf(word) > -1; });
+                var ok = list.indexOf(item) > -1;
                 item.parentNode.hidden = !ok;
                 if (item.__pin) item.__pin.style.display = ok ? '' : 'none';
-                if (item.__lf && lf) { if (ok) item.__lf.addTo(lf); else lf.removeLayer(item.__lf); }
-                if (ok) list.push(item);
             });
-            if (empty) empty.classList.toggle('hidden', list.length > 0);
-            if (count) count.textContent = list.length;
+            if (empty) empty.classList.add('hidden');
+            Array.prototype.forEach.call(counts, function (count) { count.textContent = list.length; });
             if (listLink) listLink.setAttribute('href', (root.getAttribute('data-search-url') || '#') + (state.area ? '?area[]=' + state.area : ''));
-            if (list.length && list.indexOf(state.current) === -1) select(list[0], true);
-            if (!keep && (gl || lf)) fitAll();
+            // شارات عدد الاختيارات على زراير الفلاتر
+            [['types', state.types.length], ['delivery', state.delivery.length], ['price', state.price !== '' ? 1 : 0]].forEach(function (pair) {
+                var badge = root.querySelector('[data-smap-fcount="' + pair[0] + '"]');
+                if (badge) { badge.textContent = pair[1]; badge.hidden = !pair[1]; badge.parentNode.classList.toggle('is-set', !!pair[1]); }
+            });
+            var ready = root.querySelector('[data-smap-ready]');
+            if (ready) ready.setAttribute('aria-pressed', state.delivery.length === 1 && state.delivery[0] === '0' ? 'true' : 'false');
+            if (keep) return;
+            if (state.current && list.indexOf(state.current) === -1) select(null);
+            leaveGlobe();
+            if (gl) { if (state.intro) fitAll(); }
+            else { if (!state.current) select(list[0], true); else paint(); }
         }
 
         function setArea(slug) {
@@ -2950,6 +3057,23 @@
             if (areasToggle) areasToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         }
 
+        // ---- لوحة الفلاتر: section = types | delivery | price | '' (الكل)
+        function toggleSheet(open, section) {
+            if (!sheet) return;
+            sheet.hidden = !open;
+            if (!open) return;
+            toggleAreas(false);
+            sheet.querySelectorAll('[data-smap-fsec]').forEach(function (part) { part.hidden = !!section && part.getAttribute('data-smap-fsec') !== section; });
+        }
+
+        function paintChips() {
+            root.querySelectorAll('[data-smap-f]').forEach(function (chip) {
+                var kind = chip.getAttribute('data-smap-f'), value = chip.getAttribute('data-value');
+                var on = kind === 'price' ? state.price === value : state[kind].indexOf(value) > -1;
+                chip.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+        }
+
         items.forEach(function (item) {
             item.addEventListener('click', function (event) { if (!event.target.closest('a')) select(item, true); });
             item.addEventListener('keydown', function (event) { if ((event.key === 'Enter' || event.key === ' ') && event.target === item) { event.preventDefault(); select(item, true); } });
@@ -2957,65 +3081,101 @@
 
         if (areasToggle) areasToggle.addEventListener('click', function () { toggleAreas(areasBox.hidden); });
         if (areasVeil) areasVeil.addEventListener('click', function () { toggleAreas(false); });
-        document.addEventListener('keydown', function (event) { if (event.key === 'Escape') toggleAreas(false); });
+        document.addEventListener('keydown', function (event) { if (event.key === 'Escape') { toggleAreas(false); toggleSheet(false); } });
+        document.addEventListener('click', function (event) {
+            if (areasBox && !areasBox.hidden && !event.target.closest('[data-smap-areas], [data-smap-areas-toggle]')) toggleAreas(false);
+        });
+        root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
+            chip.addEventListener('click', function () { setArea(chip.getAttribute('data-smap-area')); toggleAreas(false); filter(); });
+        });
 
         // زرار الرجوع: الصفحة اللي قبلها (لو جاي من صفحة في الموقع) — وإلا لينك الزرار (الرئيسية)
         var back = root.querySelector('[data-smap-back]');
         if (back) back.addEventListener('click', function (event) {
             if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) > -1) { event.preventDefault(); window.history.back(); }
         });
-        root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
-            chip.addEventListener('click', function () { setArea(chip.getAttribute('data-smap-area')); toggleAreas(false); filter(); });
-        });
-        document.addEventListener('click', function (event) {
-            if (areasBox && !areasBox.hidden && !event.target.closest('[data-smap-areas], [data-smap-areas-toggle]')) toggleAreas(false);
-        });
 
         if (search) search.addEventListener('input', function () { filter(); });
 
-        root.querySelectorAll('[data-smap-type]').forEach(function (button) {
-            button.addEventListener('click', function () {
-                state.type = button.getAttribute('data-smap-type');
-                root.querySelectorAll('[data-smap-type]').forEach(function (other) { other.setAttribute('aria-pressed', other === button ? 'true' : 'false'); });
-                if (gl) gl.setStyle(STYLES[state.type]);
-                else if (lf) { Object.keys(lfLayers).forEach(function (key) { if (key === state.type) lfLayers[key].addTo(lf); else lf.removeLayer(lfLayers[key]); }); }
-                else paint();
+        root.querySelectorAll('[data-smap-filter-open]').forEach(function (button) {
+            button.addEventListener('click', function () { toggleSheet(true, button.getAttribute('data-smap-filter-open')); });
+        });
+        root.querySelectorAll('[data-smap-sheet-close]').forEach(function (button) {
+            button.addEventListener('click', function () { toggleSheet(false); });
+        });
+        root.querySelectorAll('[data-smap-f]').forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                var kind = chip.getAttribute('data-smap-f'), value = chip.getAttribute('data-value');
+                if (kind === 'price') state.price = state.price === value ? '' : value;
+                else { var at = state[kind].indexOf(value); if (at > -1) state[kind].splice(at, 1); else state[kind].push(value); }
+                paintChips();
+                filter();
             });
+        });
+        var clear = root.querySelector('[data-smap-fclear]');
+        if (clear) clear.addEventListener('click', function () { state.types = []; state.delivery = []; state.price = ''; paintChips(); filter(); });
+        // "استلام فوري": المشاريع اللي فيها وحدات جاهزة بس
+        var readyButton = root.querySelector('[data-smap-ready]');
+        if (readyButton) readyButton.addEventListener('click', function () {
+            state.delivery = state.delivery.length === 1 && state.delivery[0] === '0' ? [] : ['0'];
+            paintChips();
+            filter();
+        });
+
+        // نوع الخريطة: قمر صناعي ⇄ خريطة
+        if (layersButton) layersButton.addEventListener('click', function () {
+            state.type = state.type === 'h' ? 'm' : 'h';
+            layersButton.setAttribute('data-type', state.type);
+            layersButton.classList.toggle('is-on', state.type === 'm');
+            root.classList.toggle('is-roadmap', state.type === 'm');
+            if (gl) gl.setStyle(token ? MAPBOX_STYLES[state.type] : libreStyle(state.type));
+            else paint();
         });
 
         root.querySelectorAll('[data-smap-zoom]').forEach(function (button) {
             button.addEventListener('click', function () {
                 var step = Number(button.getAttribute('data-smap-zoom'));
                 if (gl) { if (step > 0) gl.zoomIn(); else gl.zoomOut(); return; }
-                if (lf) { if (step > 0) lf.zoomIn(); else lf.zoomOut(); return; }
                 state.zoom = Math.max(9, Math.min(20, state.zoom + step));
                 paint();
             });
         });
 
-        // "كل المشاريع": بيرجّع كل المناطق ويمسح البحث
+        // "كل المشاريع في الكادر"
         var reset = root.querySelector('[data-smap-reset]');
         if (reset) reset.addEventListener('click', function () {
-            if (search) search.value = '';
-            setArea('');
-            state.zoom = 16;
-            filter();
-            if (!gl && !lf) paint();
+            toggleAreas(false);
+            leaveGlobe();
+            if (gl) fitAll(); else { state.zoom = 12; paint(); }
+        });
+
+        // "موقعي": الخريطة بتروح لمكان العميل (بعد إذن المتصفح)
+        var locate = root.querySelector('[data-smap-locate]');
+        if (locate) locate.addEventListener('click', function () {
+            var fail = function () { say(root.getAttribute('data-locate-fail')); };
+            if (!navigator.geolocation || !gl) { fail(); return; }
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var here = [position.coords.longitude, position.coords.latitude];
+                toggleAreas(false);
+                leaveGlobe();
+                if (!meMarker) { var dot = document.createElement('span'); dot.className = 'smap__me'; meMarker = new glLib.Marker({ element: dot }).setLngLat(here).addTo(gl); } else meMarker.setLngLat(here);
+                gl.flyTo({ center: here, zoom: 12, duration: 2200, essential: true });
+            }, fail, { enableHighAccuracy: false, timeout: 8000 });
         });
 
         function bySlug(slug) { return items.filter(function (item) { return item.getAttribute('data-slug') === slug; })[0]; }
 
-        // البداية: فلتر المنطقة (لو موجود) + المشروع المطلوب
+        // البداية: فلتر المنطقة (لو موجود) + المشروع المطلوب (لو اللينك جاي عليه)
         if (state.area) setArea(state.area);
-        select(bySlug(root.getAttribute('data-selected')) || items[0], false);
+        if (state.focus) { state.current = bySlug(root.getAttribute('data-selected')) || null; if (state.current) state.current.setAttribute('aria-current', 'true'); }
+        if (state.focus || state.area) leaveGlobe();
         filter(true);
 
         if ('IntersectionObserver' in window) {
-            // أول ما الخريطة تظهر بتتحمّل — ولو اتخفت ورجعت (صفحة واحدة بأكتر من عرض) بنظبط مقاسها
+            // أول ما الخريطة تظهر بتتحمل — ولو اتخفت ورجعت (صفحة واحدة بأكتر من عرض) بنظبط مقاسها
             new IntersectionObserver(function (entries) {
                 if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
                 if (!state.live) { state.live = true; paint(); return; }
-                if (lf) lf.invalidateSize();
                 if (gl && gl.resize) gl.resize();
             }, { rootMargin: '200px' }).observe(frame.parentNode);
         } else { state.live = true; paint(); }
@@ -3026,7 +3186,9 @@
             select: function (slug) {
                 var item = bySlug(slug);
                 if (!item) return false;
-                if (item.parentNode.hidden) { if (search) search.value = ''; setArea(''); filter(true); }
+                if (item.parentNode.hidden) { if (search) search.value = ''; setArea(''); state.types = []; state.delivery = []; state.price = ''; paintChips(); filter(true); }
+                toggleAreas(false);
+                state.focus = true;
                 select(item, true);
                 return true;
             }
@@ -3052,12 +3214,12 @@
  *
  * ديسك توب (1024px وأكبر) — أرقام الصفحات [data-pagination]:
  *   الضغط على رقم بيجيب الصفحة دي من السيرفر (نفس لينك ?page=N العادي) وبيبدّل الكروت وأرقام الصفحات مكانهم،
- *   من غير ما الصفحة كلها تتحمّل ولا ترجع لفوق. اللينك في المتصفح بيتغير (pushState) وزرار الرجوع شغال.
+ *   من غير ما الصفحة كلها تتحمل ولا ترجع لفوق. اللينك في المتصفح بيتغير (pushState) وزرار الرجوع شغال.
  *   لو التحميل فشل، اللينك بيفتح عادي.
  *   حدث shary:page ({ url, replace(nodes, paginationHtml, nextUrl) }): امنعوه (preventDefault) لو هتجيبوا الكروت بطريقتكم ونادوا replace.
  *
  * موبايل وتابلت — من غير "عرض المزيد": القايمة اللي عليها data-auto-more="3" بتكمّل لوحدها وأنت نازل:
- *   الأول بتظهر الكروت المتحمّلة والمخفية على الموبايل (class="hidden lg:block") 3 بـ 3،
+ *   الأول بتظهر الكروت المتحملة والمخفية على الموبايل (class="hidden lg:block") 3 بـ 3،
  *   وبعدها بتطلب الصفحة اللي بعدها (data-next-url اللي على [data-pagination]) وتضيف كروتها تحت.
  *   حدث shary:load-more ({ url, append(nodes, nextUrl) }): امنعوه لو هتجيبوا الكروت بطريقتكم ونادوا append.
  *   العنصر [data-auto-sentinel] تحت القايمة: data-state="idle | loading | done".
@@ -3662,7 +3824,7 @@
         window.addEventListener('scroll', function () {
             if (waiting) return;
             waiting = true;
-            // مكان الشريط بيتحسب تاني مع السكرول: لو ارتفاع أو مكان الهيدر اتغير بعد التحميل (شريط فوقه، خط اتحمّل) الشريط ما يتغطاش بالهيدر
+            // مكان الشريط بيتحسب تاني مع السكرول: لو ارتفاع أو مكان الهيدر اتغير بعد التحميل (شريط فوقه، خط اتحمل) الشريط ما يتغطاش بالهيدر
             window.requestAnimationFrame(function () { waiting = false; place(); });
         }, { passive: true });
         window.addEventListener('resize', place);
@@ -3942,7 +4104,7 @@
         });
 
         // فورم الفلاتر والترتيب: "عرض النتائج" / "مسح" / اختيار ترتيب بيطلعوا حدث shary:filter (js/shary/area-page.js) —
-        // هنا الفلترة بتتم على كروت الصفحة من غير ما الفورم يتبعت ولا الصفحة تتحمّل
+        // هنا الفلترة بتتم على كروت الصفحة من غير ما الفورم يتبعت ولا الصفحة تتحمل
         if (form) {
             form.addEventListener('shary:filter', function (event) {
                 event.preventDefault();
