@@ -1,7 +1,7 @@
 <!doctype html><html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=90ea4832">
+<link rel="stylesheet" href="a/site.css?v=3b8939c1">
 </head><body>
 
 
@@ -375,49 +375,27 @@ data-compare-link data-base="compare.html" >
 </nav>
 </header>
 <main data-view="shary-map">
-<div class="pb-1 lg:pb-2">
-<div class="site-container pt-3 lg:pt-4" data-breadcrumb>
-<nav aria-label="مسار الصفحة">
-<ol class="flex min-w-0 items-center gap-1.5 text-[13px] font-semibold leading-normal lg:text-[14px]">
 
-<li class="shrink-0">
-<a href="#pv:/" class="flex min-w-0 items-center gap-1.5 text-shary-link hover:underline">
-
-<svg class="shrink-0 text-shary-hint" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 9.2L10 3l7 6.2V16a1 1 0 0 1-1 1h-3.5v-4.5h-5V17H4a1 1 0 0 1-1-1V9.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-<span class="truncate">الرئيسية</span>
-</a>
-</li>
-<li class="shrink-0 text-shary-hint" aria-hidden="true">
-<svg class="ltr:rotate-180" width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M11.25 4.5L6.75 9L11.25 13.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-</li>
-<li class="min-w-0 truncate text-shary-muted" aria-current="page">خريطة شاري التفاعلية</li>
-</ol>
-</nav>
-</div>
-</div>
-
-<div class="site-container pb-8 lg:pb-12">
-<div class="mb-3 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 lg:mb-4">
-<div class="min-w-0">
-<h1 class="text-[20px] font-extrabold leading-[1.4] lg:text-[26px]">خريطة شاري التفاعلية</h1>
-<p class="text-[13px] font-medium leading-[1.7] text-shary-muted lg:text-[15px]">اختار المشروع وشوف مكانه على الطبيعة بالقمر الصناعي.</p>
-</div>
-<p class="hidden text-[14px] font-bold text-shary-teal lg:block"><span data-smap-count>31</span> مشروع</p>
-</div>
-
+<div>
 <div class="smap" data-smap data-selected="scenes" data-area="" data-lang="ar"
 data-frame-title="موقع :name على الخريطة" data-search-url="search-all.html" data-all-label="اختر المنطقة"
-data-mapbox-token="" data-million="م">
+data-mapbox-token="" data-million="م"
+data-leaflet-src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js">
 
 <div class="smap__map">
 <div class="smap__gl" data-smap-gl hidden></div>
 <iframe class="smap__frame" data-smap-frame title="خريطة شاري التفاعلية" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
 
 <div class="smap__top">
+<div class="smap__row">
+<a href="#pv:/" class="smap__back" data-smap-back aria-label="رجوع">
+<svg class="ltr:rotate-180" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M6.750 4.500 11.250 9l-4.500 4.500" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</a>
 <label class="smap__search">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.600-3.600"/></svg>
 <input type="search" placeholder="ابحث باسم المشروع أو المطور" aria-label="ابحث باسم المشروع أو المطور" data-smap-search autocomplete="off">
 </label>
+</div>
 <div class="smap__bar">
 <button type="button" class="smap__pill" data-smap-areas-toggle aria-expanded="false" aria-controls="smap-areas-shary-map">
 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.200 7-11.500A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg>
@@ -443,6 +421,8 @@ data-mapbox-token="" data-million="م">
 </div>
 </div>
 
+<div class="smap__veil" data-smap-areas-close hidden></div>
+
 <div class="smap__tools">
 <button type="button" data-smap-zoom="1" aria-label="تكبير">+</button>
 <button type="button" data-smap-zoom="-1" aria-label="تصغير">−</button>
@@ -453,6 +433,10 @@ data-mapbox-token="" data-million="م">
 </div>
 
 <aside class="smap__panel">
+<div class="smap__head">
+<h1>خريطة شاري التفاعلية</h1>
+<p><span data-smap-count>31</span> مشروع · اختار المشروع وشوف مكانه على الطبيعة بالقمر الصناعي.</p>
+</div>
 <a href="search-all.html" class="smap__list-btn" data-smap-list-link>
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="6" height="6" rx="1.500"/><rect x="3" y="14" width="6" height="6" rx="1.500"/><path d="M13 6h8M13 9h5M13 16h8M13 19h5"/></svg>
 عرض القائمة                </a>
@@ -1664,7 +1648,7 @@ data-label-get="حمّل التطبيق الآن" data-label-open="افتح ال
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "90ea4832";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "3b8939c1";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -1681,7 +1665,7 @@ data-label-get="حمّل التطبيق الآن" data-label-open="افتح ال
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=90ea4832"></script>
+<script src="a/site.js?v=3b8939c1"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');

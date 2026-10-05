@@ -772,6 +772,14 @@
     document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
     window.SharyAppPopup = { open: open, close: close };
 
+    // الكارت كله كليكابل: الضغط على أي مكان فيه (غير زرار القفل) = الضغط على زرار التحميل
+    var card = pop.querySelector('.app-pop__card');
+    if (card) card.addEventListener('click', function (event) {
+        if (event.target.closest('[data-app-popup-close], [data-app-button]')) return;
+        var cta = card.querySelector('[data-app-button]');
+        if (cta) cta.click();
+    });
+
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
     if (!mobile || seen() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
     window.setTimeout(function () {
@@ -782,20 +790,25 @@
 })();
 
 /**
- * تنبيه سياسة الخصوصية [data-privacy-note] (partials/privacy-notice.blade.php): بيظهر أول زيارة لحد ما العميل يضغط "موافق" [data-privacy-accept].
- * الموافقة بتتحفظ على الجهاز (localStorage: shary-privacy). حدث shary:privacy-accept على العنصر — اسمعوه لو عايزين تسجلوها على السيرفر.
+ * تنبيه سياسة الخصوصية [data-privacy-note] (partials/privacy-notice.blade.php): بيظهر في كل زيارة لحد ما العميل يضغط "موافق" [data-privacy-accept].
+ * الموافقة بتتحفظ لحد قفل المتصفح (sessionStorage: shary-privacy) — EVERY_VISIT = false يخليها مرة واحدة على الجهاز. حدث shary:privacy-accept على العنصر — اسمعوه لو عايزين تسجلوها على السيرفر.
  */
 (function () {
     var note = document.querySelector('[data-privacy-note]');
     if (!note) return;
     var KEY = 'shary-privacy';
+    // بيظهر في كل زيارة لحد ما العميل يضغط "موافق" (محفوظ لحد قفل المتصفح — sessionStorage).
+    // عايزينه مرة واحدة بس على الجهاز؟ خلّوا EVERY_VISIT = false (localStorage).
+    var EVERY_VISIT = true;
+    var store = null;
+    try { store = EVERY_VISIT ? window.sessionStorage : window.localStorage; } catch (error) { /* التخزين مقفول: التنبيه بيظهر */ }
     var accepted = false;
-    try { accepted = window.localStorage.getItem(KEY) === '1'; } catch (error) { /* التخزين مقفول: التنبيه بيظهر */ }
+    try { accepted = !!store && store.getItem(KEY) === '1'; } catch (error) { /* التخزين مقفول: التنبيه بيظهر */ }
     if (accepted || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
     note.classList.remove('hidden');
     note.addEventListener('click', function (event) {
         if (!event.target.closest('[data-privacy-accept]')) return;
-        try { window.localStorage.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ }
+        try { if (store) store.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ }
         note.classList.add('hidden');
         note.dispatchEvent(new CustomEvent('shary:privacy-accept', { bubbles: true }));
     });
@@ -2726,9 +2739,11 @@
  * - "عرض القائمة" [data-smap-list-link]: صفحة البحث على المنطقة المختارة (?area[]=) — التبديل وحدات ⇄ كمبوندات من جوه صفحة البحث.
  * - الاختيار بيطلع حدث shary:map-select على الصفحة: detail = بيانات المشروع. من أي كود: window.SharyMap.select('slug') / window.SharyMap.area('north-coast').
  *
- * الخريطة نفسها:
+ * الخريطة نفسها (أول محرك متاح):
  *   1) Mapbox GL (لو data-mapbox-token موجود ومكتبة mapboxgl محمّلة): خريطة حقيقية بعلامة سعر لكل مشروع — نفس خريطة الموقع الحالية.
- *   2) غير كده: تضمين خرائط جوجل بالقمر الصناعي على المشروع المختار (من غير أي مفتاح).
+ *   2) Leaflet (من غير توكن): المكتبة بتتحمّل لوحدها من data-leaflet-src ، صور قمر صناعي (Esri World Imagery) + أسماء الأماكن + علامة سعر لكل مشروع.
+ *   3) لو مفيش مكتبة اتحمّلت: تضمين خرائط جوجل بالقمر الصناعي على المشروع المختار (من غير أي مفتاح).
+ * - زرار الرجوع [data-smap-back]: بيرجّع للصفحة اللي قبلها (ولو مفيش: لينك الزرار = الرئيسية).
  */
 (function () {
     var maps = [];
@@ -2748,7 +2763,13 @@
         var lang = root.getAttribute('data-lang') || 'ar';
         var state = { type: 'h', zoom: 16, current: null, live: false, area: root.getAttribute('data-area') || '' };
         var gl = null;
+        var lf = null, lfLayers = {}, lfState = '';   // Leaflet: '' لسه ، loading ، ready ، failed
+        var areasVeil = root.querySelector('[data-smap-areas-close]');
         if (!frame || !items.length) return;
+
+        function priceLabel(p) {
+            return p.price_value ? (Math.round(p.price_value / 100000) / 10) + (root.getAttribute('data-million') || 'M') : '•';
+        }
 
         function info(item) {
             if (!item.__project) { try { item.__project = JSON.parse(item.getAttribute('data-project')); } catch (e) { item.__project = {}; } }
@@ -2776,7 +2797,7 @@
                     pin.type = 'button';
                     pin.className = 'smap__marker';
                     pin.setAttribute('aria-label', p.name || '');
-                    pin.textContent = p.price_value ? (Math.round(p.price_value / 100000) / 10) + (root.getAttribute('data-million') || 'M') : (p.name || '');
+                    pin.textContent = priceLabel(p);
                     pin.addEventListener('click', function (event) { event.stopPropagation(); select(item, true); });
                     pin.style.display = item.parentNode.hidden ? 'none' : '';
                     item.__pin = pin;
@@ -2792,9 +2813,63 @@
             }
         }
 
+        // ---- Leaflet: قمر صناعي + علامات الأسعار (من غير توكن)
+        function startLeaflet() {
+            if (lf) return true;
+            var Lf = window.L;
+            if (!Lf || !Lf.map || !glBox) return false;
+            try {
+                var first = info(state.current || items[0]);
+                glBox.hidden = false;
+                glBox.setAttribute('dir', 'ltr');
+                lf = Lf.map(glBox, { zoomControl: false }).setView([first.lat, first.lng], 12);
+                var esri = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
+                lfLayers.h = Lf.layerGroup([
+                    Lf.tileLayer(esri + 'World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19, attribution: 'Imagery &copy; Esri' }),
+                    Lf.tileLayer(esri + 'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', { maxZoom: 19 })
+                ]);
+                lfLayers.m = Lf.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19, attribution: '&copy; OpenStreetMap' });
+                lfLayers[state.type].addTo(lf);
+                items.forEach(function (item) {
+                    var p = info(item);
+                    var marker = Lf.marker([p.lat, p.lng], { icon: Lf.divIcon({ className: 'smap__pin', html: '<span class="smap__marker">' + priceLabel(p) + '</span>', iconSize: [0, 0] }), keyboard: false, title: p.name || '' });
+                    marker.on('click', function () { select(item, true); });
+                    item.__lf = marker;
+                    if (!item.parentNode.hidden) marker.addTo(lf);
+                });
+                frame.hidden = true;
+                root.classList.add('is-gl');
+                return true;
+            } catch (error) {
+                lf = null;
+                if (glBox) glBox.hidden = true;
+                return false;
+            }
+        }
+
+        // بيحمّل مكتبة Leaflet مرة واحدة (data-leaflet-src) — لو فشلت أو اتأخرت بنرجع لتضمين خرائط جوجل
+        function loadLeaflet() {
+            var src = root.getAttribute('data-leaflet-src');
+            if (lfState || !src) { if (!src) lfState = 'failed'; return; }
+            if (window.L && window.L.map) { lfState = 'ready'; return; }
+            lfState = 'loading';
+            var done = function (ok) { if (lfState !== 'loading') return; lfState = ok && window.L && window.L.map ? 'ready' : 'failed'; paint(); };
+            var script = document.createElement('script');
+            script.src = src;
+            script.async = true;
+            script.onload = function () { done(true); };
+            script.onerror = function () { done(false); };
+            document.head.appendChild(script);
+            window.setTimeout(function () { done(false); }, 8000);
+        }
+
         // كل المشاريع الظاهرة في الكادر
         function fitAll() {
             var list = shown();
+            if (lf && list.length) {
+                lf.fitBounds(window.L.latLngBounds(list.map(function (item) { var p = info(item); return [p.lat, p.lng]; })), { padding: [70, 70], maxZoom: 14 });
+                return;
+            }
             if (!gl || !list.length || !window.mapboxgl.LngLatBounds) return;
             var bounds = new window.mapboxgl.LngLatBounds();
             list.forEach(function (item) { var p = info(item); bounds.extend([p.lng, p.lat]); });
@@ -2809,6 +2884,15 @@
                 items.forEach(function (item) { if (item.__pin) item.__pin.classList.toggle('is-on', item === state.current); });
                 if (fly !== false) gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(13, Math.min(18, state.zoom)), duration: 900 });
                 return;
+            }
+            if (!root.getAttribute('data-mapbox-token')) {
+                loadLeaflet();
+                if (lfState === 'loading') return;   // مستنيين المكتبة
+                if (lfState === 'ready' && startLeaflet()) {
+                    items.forEach(function (item) { var pin = item.__lf && item.__lf.getElement && item.__lf.getElement(); if (pin) pin.classList.toggle('is-on', item === state.current); });
+                    if (fly !== false) lf.flyTo([p.lat, p.lng], Math.max(13, Math.min(18, state.zoom)), { duration: 0.8 });
+                    return;
+                }
             }
             var url = 'https://www.google.com/maps?q=' + p.lat + ',' + p.lng + '&t=' + state.type + '&z=' + state.zoom + '&hl=' + lang + '&output=embed';
             if (frame.getAttribute('src') !== url) frame.setAttribute('src', url);
@@ -2839,13 +2923,14 @@
                 var ok = (!state.area || item.getAttribute('data-area') === state.area) && words.every(function (word) { return item.__hay.indexOf(word) > -1; });
                 item.parentNode.hidden = !ok;
                 if (item.__pin) item.__pin.style.display = ok ? '' : 'none';
+                if (item.__lf && lf) { if (ok) item.__lf.addTo(lf); else lf.removeLayer(item.__lf); }
                 if (ok) list.push(item);
             });
             if (empty) empty.classList.toggle('hidden', list.length > 0);
             if (count) count.textContent = list.length;
             if (listLink) listLink.setAttribute('href', (root.getAttribute('data-search-url') || '#') + (state.area ? '?area[]=' + state.area : ''));
             if (list.length && list.indexOf(state.current) === -1) select(list[0], true);
-            if (!keep && gl) fitAll();
+            if (!keep && (gl || lf)) fitAll();
         }
 
         function setArea(slug) {
@@ -2861,6 +2946,7 @@
         function toggleAreas(open) {
             if (!areasBox) return;
             areasBox.hidden = !open;
+            if (areasVeil) areasVeil.hidden = !open;   // طبقة شفافة فوق الخريطة: الضغط على أي مكان فاضي بيقفل القايمة
             if (areasToggle) areasToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         }
 
@@ -2870,6 +2956,14 @@
         });
 
         if (areasToggle) areasToggle.addEventListener('click', function () { toggleAreas(areasBox.hidden); });
+        if (areasVeil) areasVeil.addEventListener('click', function () { toggleAreas(false); });
+        document.addEventListener('keydown', function (event) { if (event.key === 'Escape') toggleAreas(false); });
+
+        // زرار الرجوع: الصفحة اللي قبلها (لو جاي من صفحة في الموقع) — وإلا لينك الزرار (الرئيسية)
+        var back = root.querySelector('[data-smap-back]');
+        if (back) back.addEventListener('click', function (event) {
+            if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) > -1) { event.preventDefault(); window.history.back(); }
+        });
         root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
             chip.addEventListener('click', function () { setArea(chip.getAttribute('data-smap-area')); toggleAreas(false); filter(); });
         });
@@ -2883,7 +2977,9 @@
             button.addEventListener('click', function () {
                 state.type = button.getAttribute('data-smap-type');
                 root.querySelectorAll('[data-smap-type]').forEach(function (other) { other.setAttribute('aria-pressed', other === button ? 'true' : 'false'); });
-                if (gl) gl.setStyle(STYLES[state.type]); else paint();
+                if (gl) gl.setStyle(STYLES[state.type]);
+                else if (lf) { Object.keys(lfLayers).forEach(function (key) { if (key === state.type) lfLayers[key].addTo(lf); else lf.removeLayer(lfLayers[key]); }); }
+                else paint();
             });
         });
 
@@ -2891,6 +2987,7 @@
             button.addEventListener('click', function () {
                 var step = Number(button.getAttribute('data-smap-zoom'));
                 if (gl) { if (step > 0) gl.zoomIn(); else gl.zoomOut(); return; }
+                if (lf) { if (step > 0) lf.zoomIn(); else lf.zoomOut(); return; }
                 state.zoom = Math.max(9, Math.min(20, state.zoom + step));
                 paint();
             });
@@ -2903,7 +3000,7 @@
             setArea('');
             state.zoom = 16;
             filter();
-            if (!gl) paint();
+            if (!gl && !lf) paint();
         });
 
         function bySlug(slug) { return items.filter(function (item) { return item.getAttribute('data-slug') === slug; })[0]; }
@@ -2914,8 +3011,12 @@
         filter(true);
 
         if ('IntersectionObserver' in window) {
-            new IntersectionObserver(function (entries, observer) {
-                if (entries.some(function (entry) { return entry.isIntersecting; })) { state.live = true; paint(); observer.disconnect(); }
+            // أول ما الخريطة تظهر بتتحمّل — ولو اتخفت ورجعت (صفحة واحدة بأكتر من عرض) بنظبط مقاسها
+            new IntersectionObserver(function (entries) {
+                if (!entries.some(function (entry) { return entry.isIntersecting; })) return;
+                if (!state.live) { state.live = true; paint(); return; }
+                if (lf) lf.invalidateSize();
+                if (gl && gl.resize) gl.resize();
             }, { rootMargin: '200px' }).observe(frame.parentNode);
         } else { state.live = true; paint(); }
 
