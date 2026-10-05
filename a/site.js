@@ -5706,22 +5706,22 @@
             var name = isUnit ? item.title : item.name;
             var box = make('article', 'sai__card');
             box.setAttribute('data-subject', JSON.stringify(subjectOf(item) || {}));
-            // قارن + المفضلة + شارك: نفس زراير وأيقونات كروت الموقع بالظبط (.area-action — site-chrome.js) — محتاجة slug الوحدة / المشروع
+            // قارن + المفضلة + شارك: نفس زراير وأيقونات صفحة المشروع بالظبط (.area-action.prop-action — site-chrome.js) — محتاجة slug الوحدة / المشروع
             if (item.slug && item.image) {
                 var tools = make('div', 'sai__card-tools');
-                var fav = make('button', 'area-action group'); fav.type = 'button';
+                var fav = make('button', 'area-action prop-action group'); fav.type = 'button';
                 fav.setAttribute('data-favorite-toggle', '');
                 fav.setAttribute('data-favorite-id', item.favorite_id || ((isUnit ? 'units/' : 'projects/') + item.slug));
                 fav.setAttribute('aria-pressed', 'false'); fav.setAttribute('aria-label', U.fav || ''); fav.title = U.fav || '';
                 fav.innerHTML = ICONS.heart;
-                var cmp = make('button', 'area-action'); cmp.type = 'button';
+                var cmp = make('button', 'area-action prop-action'); cmp.type = 'button';
                 cmp.setAttribute('data-compare-toggle', '');
                 cmp.setAttribute('data-compare-type', isUnit ? 'unit' : 'project');
                 cmp.setAttribute('data-compare-id', item.slug);
                 cmp.setAttribute('aria-pressed', 'false'); cmp.setAttribute('aria-label', U.compare || ''); cmp.title = U.compare || '';
                 cmp.innerHTML = ICONS.compare;
                 // شارك: نفس زرار المشاركة بتاع الموقع (رسالة ببيانات الوحدة / المشروع + اللينك + الصورة)
-                var share = make('button', 'area-action'); share.type = 'button';
+                var share = make('button', 'area-action prop-action'); share.type = 'button';
                 share.setAttribute('data-share-url', item.url || ''); share.setAttribute('data-share-title', item.title || item.name || '');
                 share.setAttribute('aria-label', U.share || ''); share.title = U.share || '';
                 share.innerHTML = ICONS.shareCard;
