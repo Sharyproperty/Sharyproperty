@@ -3296,23 +3296,21 @@
 })();
 
 /**
- * قوايم الكروت في الموقع كله (مشاريع المنطقة / مشاريع المطور / مقالات المدونة):
+ * قوايم الكروت في الموقع كله (مشاريع المنطقة / مشاريع المطور / الإيجار / العروض / التريندي / القوايم الجاهزة):
  *
- * ديسك توب (1024px وأكبر) — أرقام الصفحات [data-pagination]:
- *   الضغط على رقم بيجيب الصفحة دي من السيرفر (نفس لينك ?page=N العادي) وبيبدّل الكروت وأرقام الصفحات مكانهم،
- *   من غير ما الصفحة كلها تتحمل ولا ترجع لفوق. اللينك في المتصفح بيتغير (pushState) وزرار الرجوع شغال.
- *   لو التحميل فشل، اللينك بيفتح عادي.
- *   حدث shary:page ({ url, replace(nodes, paginationHtml, nextUrl) }): امنعوه (preventDefault) لو هتجيبوا الكروت بطريقتكم ونادوا replace.
- *
- * موبايل وتابلت — من غير "عرض المزيد": القايمة اللي عليها data-auto-more="3" بتكمّل لوحدها وأنت نازل:
- *   الأول بتظهر الكروت المتحملة والمخفية على الموبايل (class="hidden lg:block") 3 بـ 3،
- *   وبعدها بتطلب الصفحة اللي بعدها (data-next-url اللي على [data-pagination]) وتضيف كروتها تحت.
+ * من غير أرقام صفحات ولا "عرض المزيد" — موبايل وديسك توب: القايمة بتكمّل لوحدها وأنت نازل (زي صفحة البحث).
+ *   - القايمة اللي عليها data-auto-more="3": شغالة على الموبايل والديسك توب.
+ *     موبايل: الأول بتظهر الكروت المتحملة والمخفية على الموبايل (class="hidden lg:block") 3 بـ 3 ، وبعدها بتطلب الصفحة اللي بعدها.
+ *     ديسك توب: كروت الصفحة الأولى كلها ظاهرة ، ولما العميل ينزل بتطلب الصفحة اللي بعدها وتضيف كروتها تحت.
+ *   - القايمة اللي عليها data-auto-desktop (مشاريع المنطقة): ديسك توب بس (الموبايل عليه زرار "شوف الكل").
+ *   لينك الصفحة اللي بعدها: data-next-url على [data-pagination] (أرقام الصفحات نفسها مخفية — blog/partials/pagination).
  *   حدث shary:load-more ({ url, append(nodes, nextUrl) }): امنعوه لو هتجيبوا الكروت بطريقتكم ونادوا append.
  *   العنصر [data-auto-sentinel] تحت القايمة: data-state="idle | loading | done".
  *
- * (شريط الإعلانات [data-ad-strip] بقى في js/shary/site-chrome.js عشان يشتغل في كل الصفحات.)
+ * (تبديل الصفحات بالأرقام [data-pagination] a لسه مدعوم لو حد رجّع الأرقام ، بس هي مخفية دلوقتي.)
+ * (شريط الإعلانات [data-ad-strip] في js/shary/site-chrome.js عشان يشتغل في كل الصفحات.)
  *
- * السيرفر مش محتاج endpoint جديد: نفس الصفحة بـ ?page=N، والسكربت بياخد منها القايمة وأرقام الصفحات.
+ * السيرفر مش محتاج endpoint جديد: نفس الصفحة بـ ?page=N، والسكربت بياخد منها القايمة ولينك اللي بعدها.
  */
 (function () {
     if (!window.fetch || !window.DOMParser) return;
@@ -3402,18 +3400,21 @@
     });
     document.addEventListener('shary:page', function (event) { event.target.__turned = true; });
 
-    // ---------- موبايل: القايمة بتكمّل لوحدها ----------
-    document.querySelectorAll('[data-auto-more]').forEach(function (grid) {
+    // ---------- القايمة بتكمّل لوحدها وأنت نازل (موبايل وديسك توب) ----------
+    var AUTO = '[data-auto-more], [data-auto-desktop]';
+    document.querySelectorAll(AUTO).forEach(function (grid) {
+        var mobileToo = grid.hasAttribute('data-auto-more');   // data-auto-desktop لوحدها = ديسك توب بس
         var step = parseInt(grid.getAttribute('data-auto-more'), 10) || 3;
         var box = grid.parentNode;
         var sentinel = box.querySelector('[data-auto-sentinel]');
         if (!sentinel) return;
-        var gridIndex = Array.prototype.indexOf.call(document.querySelectorAll('[data-auto-more]'), grid);
+        var gridIndex = Array.prototype.indexOf.call(document.querySelectorAll(AUTO), grid);
         var busy = false;
         var observer = null;
 
         function state(name) { sentinel.setAttribute('data-state', name); }
-        function waiting() { return Array.prototype.slice.call(grid.querySelectorAll(':scope > .hidden.lg\\:block')); }
+        // الكروت المتحملة والمخفية على الموبايل — على الديسك توب هي ظاهرة أصلًا
+        function waiting() { return desktop.matches ? [] : Array.prototype.slice.call(grid.querySelectorAll(':scope > .hidden.lg\\:block')); }
         function nextUrl() { var nav = box.querySelector('[data-pagination]'); return nav ? nav.getAttribute('data-next-url') || '' : ''; }
 
         function finish() {
@@ -3435,7 +3436,7 @@
         }
 
         function more() {
-            if (busy || desktop.matches) return;
+            if (busy || (!desktop.matches && !mobileToo)) return;
             var hidden = waiting();
             if (hidden.length) {
                 busy = true;
@@ -3466,7 +3467,7 @@
             if (!grid.dispatchEvent(new CustomEvent('shary:load-more', { bubbles: true, cancelable: true, detail: detail }))) return;
             load(url)
                 .then(function (page) {
-                    var incoming = page.querySelectorAll('[data-auto-more]')[gridIndex];
+                    var incoming = page.querySelectorAll(AUTO)[gridIndex];
                     var nav = incoming ? incoming.parentNode.querySelector('[data-pagination]') : null;
                     detail.append(copies(incoming), nav ? nav.getAttribute('data-next-url') : '');
                 })
@@ -3480,6 +3481,61 @@
         } else {
             window.addEventListener('scroll', function () { if (near()) more(); });
         }
+    });
+})();
+
+/**
+ * صفحة المدونة — موبايل وديسك توب: من غير أرقام صفحات.
+ * لما المستخدم يوصل لآخر المقالات بتتحمل الصفحة التالية وتتضاف تحتها تلقائي (زي صفحة البحث).
+ * بيعتمد على لينك الصفحة التالية الموجود في data-next-url على عنصر ترقيم الصفحات [data-pagination] (العنصر نفسه مخفي).
+ * حدث shary:load-more ({ url, append(nodes, nextUrl) }) على [data-articles-grid]: امنعوه لو هتجيبوا المقالات بطريقتكم ونادوا append.
+ */
+(function () {
+    if (!window.fetch || !('IntersectionObserver' in window)) return;
+    var separator = ['mt-7', 'border-t', 'border-shary-line', 'pt-7', 'md:mt-0', 'md:border-t-0', 'md:pt-0'];
+
+    function usable(url) { return !!url && url.charAt(0) !== '#'; }
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-articles-grid]'), function (grid, gridIndex) {
+        var pager = grid.parentNode.querySelector('[data-pagination]');
+        if (!pager) return;
+        var next = pager.getAttribute('data-next-url') || '';
+        if (!usable(next)) return;
+        var loading = false;
+
+        var sentinel = document.createElement('div');
+        sentinel.setAttribute('aria-hidden', 'true');
+        grid.insertAdjacentElement('afterend', sentinel);
+
+        function append(nodes, nextUrl) {
+            Array.prototype.slice.call(nodes || []).forEach(function (item) {
+                var card = item.ownerDocument === document ? item : document.importNode(item, true);
+                separator.forEach(function (name) { card.classList.add(name); });
+                grid.appendChild(card);
+            });
+            next = nextUrl || '';
+            loading = false;
+            if (!usable(next)) observer.disconnect();
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting || loading) return;
+            loading = true;
+            var detail = { url: next, append: append };
+            if (!grid.dispatchEvent(new CustomEvent('shary:load-more', { bubbles: true, cancelable: true, detail: detail }))) return;
+
+            fetch(next, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(function (response) { return response.ok ? response.text() : Promise.reject(); })
+                .then(function (html) {
+                    var page = new DOMParser().parseFromString(html, 'text/html');
+                    var more = page.querySelectorAll('[data-articles-grid]')[gridIndex];
+                    var nextPager = more ? more.parentNode.querySelector('[data-pagination]') : null;
+                    append(more ? more.children : [], nextPager ? nextPager.getAttribute('data-next-url') || '' : '');
+                })
+                .catch(function () { observer.disconnect(); });
+        }, { rootMargin: '400px' });
+
+        observer.observe(sentinel);
     });
 })();
 
@@ -3712,8 +3768,8 @@
  *   التبويب [data-unit-tab=" | developer | resale | invest"] بيظهر كروت النوع ده بس.
  *   "تصفية" والترتيب: نفس فورم فلاتر الموقع (areas/partials/filters.blade.php مع projectFilters) — صفحة الفلاتر بتفتح من js/shary/area-page.js،
  *   و"عرض النتائج" بيفلتر كروت الصفحة هنا من غير تحميل (type[] ، bedrooms[] ، bathrooms[] ، finishing[] ، delivery[] ، years[] ، السعر ، المساحة ، sort).
- *   ديسك توب: أرقام الصفحات [data-units-pages] بتبدّل الكروت مكانها (من غير تحميل ولا رجوع لأول الصفحة).
- *   موبايل: 3 كروت والباقي بيكمّل لوحده وأنت نازل ([data-units-sentinel]) — من غير "عرض المزيد".
+ *   من غير أرقام صفحات ولا "عرض المزيد" — الوحدات بتكمّل لوحدها وأنت نازل ([data-units-sentinel]):
+ *   موبايل: 3 كروت في المرة. ديسك توب: صفحة كاملة (data-per-page = 9) في المرة.
  *   حدث shary:project-units ({ tab, sort, filters, url }) قبل التبديل: امنعوه (preventDefault) لو هتجيبوا الكروت من السيرفر بطريقتكم،
  *   وبعد ما تحطوا الكروت الجديدة في [data-project-grid] نادوا section.__renderUnits().
  */
@@ -4137,12 +4193,11 @@
         var form = section.querySelector('form[data-area-filters]');   // فورم الفلاتر والترتيب (areas/partials/filters.blade.php)
         var count = section.querySelector('[data-units-count]');
         var empty = section.querySelector('[data-units-empty]');
-        var pages = section.querySelector('[data-units-pages]');
         var sentinel = section.querySelector('[data-units-sentinel]');
         var perPage = parseInt(section.getAttribute('data-per-page'), 10) || 9;
         var STEP = 3;          // موبايل: 3 كروت في كل مرة
-        var page = 1;
-        var shown = STEP;
+        function step() { return desktop.matches ? perPage : STEP; }   // ديسك توب: صفحة كاملة في المرة
+        var shown = step();
         var busy = false;
 
         function current(list, name) {
@@ -4193,26 +4248,9 @@
                 .sort(function (a, b) { return by(a, b) || number(a, 'data-order') - number(b, 'data-order'); });
         }
 
-        function arrow(next) {
-            return '<svg width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="' + (next ? 'M6.75 4.5L11.25 9L6.75 13.5' : 'M11.25 4.5L6.75 9L11.25 13.5') + '" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        }
-        function pageButton(label, target, options) {
-            var button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'prop-page';
-            if (options.html) button.innerHTML = options.html; else button.textContent = label;
-            if (options.title) button.setAttribute('aria-label', options.title);
-            if (options.current) button.setAttribute('aria-current', 'page');
-            if (options.disabled) button.disabled = true;
-            else button.addEventListener('click', function () { turn(target); });
-            pages.appendChild(button);
-        }
-
         function render() {
             var list = matching();
-            var total = Math.max(1, Math.ceil(list.length / perPage));
-            page = Math.min(page, total);
-            var visible = desktop.matches ? list.slice((page - 1) * perPage, page * perPage) : list.slice(0, shown);
+            var visible = list.slice(0, shown);
             Array.prototype.forEach.call(grid.querySelectorAll(':scope > [data-unit]'), function (card) {
                 card.classList.remove('lg:block');
                 card.classList.add('hidden');
@@ -4221,38 +4259,20 @@
             visible.forEach(function (card) { card.classList.remove('hidden'); });
             if (count) count.textContent = list.length;
             if (empty) empty.classList.toggle('hidden', list.length > 0);
-            if (pages) {
-                pages.textContent = '';
-                if (total > 1) {
-                    pageButton('', page - 1, { html: arrow(false), title: pages.getAttribute('data-prev'), disabled: page === 1 });
-                    for (var n = 1; n <= total; n++) pageButton(n, n, { current: n === page, title: (pages.getAttribute('data-page') || '').replace(':n', n) });
-                    pageButton('', page + 1, { html: arrow(true), title: pages.getAttribute('data-next'), disabled: page === total });
-                }
-            }
             if (sentinel) {
-                var more = !desktop.matches && shown < list.length;
+                var more = shown < list.length;
                 sentinel.classList.toggle('hidden', !more);
                 sentinel.setAttribute('data-state', more ? 'idle' : 'done');
             }
         }
 
-        // ديسك توب: رقم الصفحة بيبدّل الكروت مكانها، ولو أول القسم فوق الشاشة بننزّله بهدوء لأول كارت
-        function turn(target) {
-            page = target;
-            render();
-            var bar = document.querySelector('[data-prop-bar]');
-            var offset = (bar ? bar.getBoundingClientRect().bottom : 96) + 16;
-            var top = section.getBoundingClientRect().top;
-            if (top < offset) window.scrollTo({ top: window.pageYOffset + top - offset, behavior: 'smooth' });
-        }
-
-        // موبايل: الوحدات بتكمّل لوحدها وأنت نازل
+        // الوحدات بتكمّل لوحدها وأنت نازل (موبايل وديسك توب)
         function more() {
-            if (busy || desktop.matches || shown >= matching().length) return;
+            if (busy || shown >= matching().length) return;
             busy = true;
             if (sentinel) sentinel.setAttribute('data-state', 'loading');
             setTimeout(function () {
-                shown += STEP;
+                shown += step();
                 busy = false;
                 render();
                 if (sentinel && !sentinel.classList.contains('hidden') && sentinel.getBoundingClientRect().top < window.innerHeight + 200) more();
@@ -4265,7 +4285,7 @@
                 window.addEventListener('scroll', function () { if (sentinel.getBoundingClientRect().top < window.innerHeight + 300) more(); });
             }
         }
-        if (desktop.addEventListener) desktop.addEventListener('change', render);
+        if (desktop.addEventListener) desktop.addEventListener('change', function () { shown = Math.max(shown, step()); render(); });
 
         // قبل أي تبديل: حدث shary:project-units ({ tab, sort, filters, url }) — امنعوه لو الكروت هتيجي من السيرفر
         function apply(url) {
@@ -4273,8 +4293,7 @@
             if (form && window.FormData) new FormData(form).forEach(function (value, key) { if (value !== '') (filters[key] = filters[key] || []).push(value); });
             var detail = { tab: current(tabs, 'data-unit-tab'), sort: sortValue(), filters: filters, url: url || '' };
             if (!section.dispatchEvent(new CustomEvent('shary:project-units', { bubbles: true, cancelable: true, detail: detail }))) return;
-            page = 1;
-            shown = STEP;
+            shown = step();
             render();
         }
 
@@ -4304,7 +4323,7 @@
         }
 
         // لو الكروت اتبدّلت من بره (مثلاً من السيرفر): section.__renderUnits() بيعيد العرض من أول صفحة
-        section.__renderUnits = function () { page = 1; shown = STEP; render(); };
+        section.__renderUnits = function () { shown = step(); render(); };
         render();
     });
 })();
