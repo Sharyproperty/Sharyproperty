@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>شاري — ضبط الماستر بلان على الخريطة</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="a/maplibre-gl.css">
+<script src="a/maplibre-gl.js"></script>
+<style>
+    :root { --navy: #123a5c; --navy-deep: #0d2b44; --blue: #1f5fc4; --sky: #5aa9ee; --line: #dfe7ef; --muted: #6f8091; --bg: #f4f7f9; --ok: #1e9e62; --bad: #c0453b; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font: 600 14px/1.6 Tajawal, Tahoma, Arial, sans-serif; color: var(--navy); background: var(--bg); overflow: hidden; }
+    button, input, select { font: inherit; color: inherit; }
+    button { cursor: pointer; border: 0; background: none; }
+    .app { display: flex; height: 100%; }
+    #map { flex: 1; min-width: 0; height: 100%; }
+    .side { width: 340px; flex-shrink: 0; display: flex; flex-direction: column; background: #fff; border-inline-start: 1px solid var(--line); height: 100%; }
+    .side__head { padding: 14px 16px 12px; border-bottom: 1px solid var(--line); }
+    .side__head h1 { margin: 0; font-size: 16px; font-weight: 800; line-height: 1.4; }
+    .side__head p { margin: 2px 0 0; font-size: 12px; color: var(--muted); }
+    .side__body { flex: 1; min-height: 0; overflow-y: auto; padding: 12px 16px 16px; }
+    .side__foot { padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); display: flex; gap: 8px; }
+    .box { border: 1px solid var(--line); border-radius: 14px; padding: 11px 12px; margin-bottom: 10px; background: #fff; }
+    .box > b { display: block; font-size: 13px; font-weight: 800; margin-bottom: 7px; }
+    .box small { display: block; font-size: 11.5px; font-weight: 600; color: var(--muted); line-height: 1.6; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .row + .row { margin-top: 8px; }
+    .row label { flex-shrink: 0; width: 62px; font-size: 12.5px; color: var(--muted); }
+    .row input[type="range"] { flex: 1; min-width: 0; accent-color: var(--blue); }
+    .row input[type="number"], .row input[type="text"] { width: 78px; height: 34px; border: 1px solid var(--line); border-radius: 9px; padding: 0 8px; text-align: center; direction: ltr; background: #fff; }
+    .row input[type="text"] { flex: 1; width: auto; min-width: 0; text-align: start; }
+    .row .btn { flex-shrink: 0; }
+    .btns { display: flex; flex-wrap: wrap; gap: 6px; }
+    .btn { height: 36px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--line); background: #fff; font-size: 12.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+    .btn:hover { border-color: var(--sky); }
+    .btn.is-on { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .btn--main { flex: 1; height: 46px; background: var(--navy); border-color: var(--navy); color: #fff; font-size: 14.5px; border-radius: 12px; }
+    .btn--main:hover { background: var(--navy-deep); }
+    .btn--main:disabled { opacity: .5; cursor: default; }
+    .btn--ghost { height: 46px; border-radius: 12px; padding: 0 16px; }
+    .pad { display: grid; grid-template-columns: repeat(3, 36px); gap: 5px; direction: ltr; }
+    .pad .btn { padding: 0; width: 36px; }
+    .file { display: block; border: 1.5px dashed #b9cfe8; border-radius: 12px; padding: 12px; text-align: center; font-size: 12.5px; font-weight: 800; color: var(--blue); cursor: pointer; }
+    .file input { display: none; }
+    .steps { margin: 0; padding-inline-start: 18px; font-size: 12px; color: var(--muted); font-weight: 600; }
+    .steps li + li { margin-top: 2px; }
+    .state { font-size: 12px; font-weight: 800; border-radius: 10px; padding: 8px 10px; margin-bottom: 10px; background: #eef5fd; color: var(--blue); }
+    .state.is-ok { background: #eaf7f0; color: var(--ok); }
+    .state.is-bad { background: #fdf3f3; color: var(--bad); }
+    textarea { width: 100%; height: 118px; border: 1px solid var(--line); border-radius: 10px; padding: 8px; font: 600 11px/1.5 ui-monospace, Menlo, Consolas, monospace; direction: ltr; resize: vertical; color: var(--navy); background: var(--bg); }
+    .h { width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 3px solid var(--blue); box-shadow: 0 2px 8px rgba(13, 43, 68, .5); display: flex; align-items: center; justify-content: center; font: 800 11px/1 Arial, sans-serif; color: var(--blue); cursor: grab; direction: ltr; }
+    .h--move { width: 34px; height: 34px; border-color: var(--navy); background: var(--navy); color: #fff; font-size: 15px; }
+    .h--rot { border-color: #c9922b; color: #c9922b; font-size: 14px; }
+    .h--pick { width: 22px; height: 22px; border-color: #e0245e; background: #e0245e; color: #fff; cursor: default; }
+    .is-preview .h { display: none; }
+    .hint { position: absolute; top: 12px; inset-inline-start: 12px; z-index: 5; max-width: min(420px, calc(100% - 24px)); background: rgba(13, 43, 68, .92); color: #fff; border-radius: 12px; padding: 9px 13px; font-size: 13px; font-weight: 700; display: none; }
+    .hint.is-on { display: block; }
+    .mapwrap { position: relative; flex: 1; min-width: 0; }
+    @media (max-width: 860px) {
+        body { overflow: auto; }
+        .app { flex-direction: column; height: auto; min-height: 100%; }
+        .mapwrap { height: 56vh; flex: none; }
+        .side { width: 100%; height: auto; border-inline-start: 0; border-top: 1px solid var(--line); }
+        .side__body { overflow: visible; }
+        .side__foot { position: sticky; bottom: 0; background: #fff; }
+    }
+</style>
+</head>
+<body>
+<div class="app">
+    <div class="mapwrap">
+        <div id="map"></div>
+        <div class="hint" id="hint"></div>
+    </div>
+    <aside class="side">
+        <div class="side__head">
+            <h1>ضبط الماستر بلان على الخريطة</h1>
+            <p id="projectName">—</p>
+        </div>
+        <div class="side__body">
+            <div class="state" id="state">ارفع صورة الماستر بلان المفرّغة للبدء.</div>
+
+            <div class="box" id="imageBox">
+                <b>1) الصورة</b>
+                <label class="file"><input type="file" id="file" accept="image/png,image/webp,image/jpeg">اختر صورة الماستر بلان (PNG / WebP مفرّغة)</label>
+                <div class="row"><label>أو لينك</label><input type="text" id="imageUrl" placeholder="https://…/masterplan.png"><button class="btn" id="loadUrl">تحميل</button></div>
+                <small id="imageInfo"></small>
+            </div>
+
+            <div class="box">
+                <b>2) روح لمكان المشروع</b>
+                <div class="row"><label>الإحداثيات</label><input type="text" id="goto" placeholder="30.0200, 31.4700 (lat, lng)"><button class="btn" id="go">اذهب</button></div>
+                <div class="btns" style="margin-top:8px">
+                    <button class="btn" id="here">حط الصورة في نص الشاشة</button>
+                    <button class="btn" id="fitPoly" hidden>طابق على حدود المشروع</button>
+                </div>
+            </div>
+
+            <div class="box">
+                <b>3) الضبط</b>
+                <div class="row"><label>الشفافية</label><input type="range" id="opacity" min="0" max="100" value="65"><input type="number" id="opacityN" min="0" max="100" value="65"></div>
+                <div class="row"><label>الدوران °</label><input type="range" id="rot" min="-180" max="180" step="0.1" value="0"><input type="number" id="rotN" step="0.1" value="0"></div>
+                <div class="row"><label>العرض (م)</label><input type="range" id="size" min="1" max="1000" step="1" value="500"><input type="number" id="sizeN" step="1" value="0"></div>
+                <div class="row" style="align-items:flex-start">
+                    <div class="pad">
+                        <span></span><button class="btn" data-nudge="0,1" title="فوق">▲</button><span></span>
+                        <button class="btn" data-nudge="-1,0" title="شمال">◀</button><button class="btn" id="stepBtn" title="حجم الخطوة">1م</button><button class="btn" data-nudge="1,0" title="يمين">▶</button>
+                        <span></span><button class="btn" data-nudge="0,-1" title="تحت">▼</button><span></span>
+                    </div>
+                    <div class="btns" style="flex:1">
+                        <button class="btn" data-rot="-90">⟲ 90°</button>
+                        <button class="btn" data-rot="90">⟳ 90°</button>
+                        <button class="btn" id="flipH">قلب أفقي ⇋</button>
+                        <button class="btn" id="flipV">قلب رأسي ⇵</button>
+                        <button class="btn" id="free">أركان حرة</button>
+                        <button class="btn" id="two">ضبط بنقطتين</button>
+                    </div>
+                </div>
+                <small style="margin-top:8px">اسحب <b style="display:inline;color:var(--navy)">✥</b> للتحريك ، أي ركن (1–4) للتكبير والدوران ، و<b style="display:inline;color:#c9922b">⟳</b> للدوران بس. الأسهم على الكيبورد بتحرك ، و Ctrl+Z تراجع.</small>
+            </div>
+
+            <div class="box">
+                <b>4) النتيجة (بتتحفظ مع المشروع)</b>
+                <textarea id="out" readonly></textarea>
+                <div class="btns" style="margin-top:8px">
+                    <button class="btn" id="copy">نسخ</button>
+                    <button class="btn" id="preview">معاينة زي العميل</button>
+                    <button class="btn" id="undo">تراجع</button>
+                    <button class="btn" id="reset">من الأول</button>
+                </div>
+            </div>
+
+            <div class="box">
+                <b>خطوات سريعة</b>
+                <ol class="steps">
+                    <li>ارفع الصورة المفرّغة (خلفية شفافة ومقصوصة على حدود المشروع).</li>
+                    <li>روح لمكان المشروع وقلّل الشفافية عشان تشوف القمر الصناعي تحتها.</li>
+                    <li>"ضبط بنقطتين": اختار معلم واضح في الصورة ومكانه الحقيقي — مرتين — والصورة تتظبط لوحدها.</li>
+                    <li>ظبّط الباقي بالأركان والدوران ، ولو الصورة معكوسة استخدم القلب.</li>
+                    <li>اضغط حفظ — المكان بيتسجل للمشروع ده بس وبيرجع زي ما هو كل مرة.</li>
+                </ol>
+            </div>
+        </div>
+        <div class="side__foot">
+            <button class="btn btn--main" id="save" disabled>حفظ مكان الماستر بلان</button>
+        </div>
+    </aside>
+</div>
+
+<script>
+/**
+ * أداة ضبط الماستر بلان على الخريطة (لوحة التحكم).
+ * بتشتغل مع Mapbox GL (لو mapboxgl موجود + token) أو MapLibre GL (من غير token — قمر صناعي Esri).
+ *
+ * الإعدادات: window.MP_ALIGNER = {
+ *     project:  { id, name },                 // المشروع اللي بنضبط له
+ *     image:    'https://…/masterplan.png',   // صورة الماستر بلان الخاصة بالخريطة (اختياري — ممكن تترفع من الأداة)
+ *     corners:  [[lng,lat] × 4] | null,       // المكان المحفوظ قبل كده (masterplan_corners) — بيتفتح زي ما هو
+ *     polygon:  [[lng,lat], …] | null,        // حدود المشروع (اختياري) — بتترسم خط أصفر للمساعدة
+ *     center:   [lng, lat], zoom: 15,         // مكان البداية لو مفيش corners ولا polygon
+ *     saveUrl:  '/admin/compounds/12/masterplan-placement',   // POST JSON — من غيره الزرار بينسخ النتيجة
+ *     csrf:     '…', method: 'POST',
+ *     mapboxToken: 'pk.…', mapboxStyle: 'mapbox://styles/mapbox/satellite-streets-v12'
+ * }
+ * الحفظ بيبعت: { masterplan_corners: [[lng,lat] × 4], masterplan_placement: { center, width_m, height_m, rotation, flip_x, flip_y, free } }
+ *   masterplan_corners بالترتيب: أعلى-يسار الصورة ، أعلى-يمين ، أسفل-يمين ، أسفل-يسار — وده اللي خريطة العميل بتعرضه بالظبط.
+ * حدث على window بعد الحفظ: shary:masterplan-saved ({ detail: payload }).
+ */
+(function () {
+    var CFG = window.MP_ALIGNER || {};
+    var query = new URLSearchParams(location.search);
+    ['image', 'saveUrl'].forEach(function (key) { if (!CFG[key] && query.get(key)) CFG[key] = query.get(key); });
+    if (!CFG.center && query.get('lat') && query.get('lng')) CFG.center = [Number(query.get('lng')), Number(query.get('lat'))];
+    var project = CFG.project || { id: query.get('id') || 'demo', name: query.get('name') || '' };
+    var GL = (window.mapboxgl && CFG.mapboxToken) ? window.mapboxgl : (window.maplibregl || window.mapboxgl);
+    var $ = function (id) { return document.getElementById(id); };
+    $('projectName').textContent = project.name ? project.name + ' — #' + project.id : 'مشروع #' + project.id;
+    if (!GL) { setState('مكتبة الخريطة مش محمّلة.', 'bad'); return; }
+    if (GL === window.mapboxgl && CFG.mapboxToken) GL.accessToken = CFG.mapboxToken;
+
+    // ---------- هندسة: كل الحسابات على مستوى ميركاتور (نفس إسقاط الخريطة) ----------
+    var R = 6378137;
+    function toM(p) { return [R * p[0] * Math.PI / 180, R * Math.log(Math.tan(Math.PI / 4 + p[1] * Math.PI / 360))]; }
+    function toLL(p) { return [p[0] / R * 180 / Math.PI, (2 * Math.atan(Math.exp(p[1] / R)) - Math.PI / 2) * 180 / Math.PI]; }
+    function sub(a, b) { return [a[0] - b[0], a[1] - b[1]]; }
+    function add(a, b) { return [a[0] + b[0], a[1] + b[1]]; }
+    function mul(a, b) { return [a[0] * b[0] - a[1] * b[1], a[0] * b[1] + a[1] * b[0]]; }      // ضرب مركّب = دوران + تكبير
+    function div(a, b) { var d = b[0] * b[0] + b[1] * b[1]; return [(a[0] * b[0] + a[1] * b[1]) / d, (a[1] * b[0] - a[0] * b[1]) / d]; }
+    function len(a) { return Math.hypot(a[0], a[1]); }
+    function centroid(c) { return [(c[0][0] + c[1][0] + c[2][0] + c[3][0]) / 4, (c[0][1] + c[1][1] + c[2][1] + c[3][1]) / 4]; }
+    function signedArea(c) { var s = 0; for (var i = 0; i < 4; i++) { var a = c[i], b = c[(i + 1) % 4]; s += a[0] * b[1] - b[0] * a[1]; } return s / 2; }
+    function kAt(c) { return 1 / Math.cos(toLL(centroid(c))[1] * Math.PI / 180); }                 // متر حقيقي ← وحدة ميركاتور
+
+    // ---------- الحالة: 4 أركان الصورة على ميركاتور (TL, TR, BR, BL) ----------
+    var C = null;               // الأركان الحالية
+    var free = false;           // أركان حرة (كل ركن لوحده)
+    var history = [];
+    var img = { url: '', w: 0, h: 0 };
+    var stepIndex = 1, STEPS = [0.2, 1, 5, 25];
+    var DRAFT = 'shary-mp-aligner-' + project.id;
+    var dirty = false;
+
+    function mirrored() { return C ? signedArea(C) > 0 : false; }
+    // الدوران (مع عقارب الساعة) = اتجاه حافة الصورة العليا بعد فك القلب
+    function rotation() {
+        if (!C) return 0;
+        var a = mirrored() ? C[1] : C[0], b = mirrored() ? C[0] : C[1];
+        var v = sub(b, a);
+        return Math.atan2(-v[1], v[0]) * 180 / Math.PI;
+    }
+    function widthM() { return C ? len(sub(C[1], C[0])) / kAt(C) : 0; }
+    function heightM() { return C ? len(sub(C[3], C[0])) / kAt(C) : 0; }
+    function transform(a, pivot, b) { C = C.map(function (p) { return add(mul(sub(p, pivot), a), b || pivot); }); }   // z ← a·(z − pivot) + b
+    function remember() { if (C) { history.push(JSON.stringify({ C: C, free: free })); if (history.length > 80) history.shift(); } }
+    function undo() { var last = history.pop(); if (!last) return; var s = JSON.parse(last); C = s.C; free = s.free; changed(true); }
+
+    function rectangle(centerLL, widthMeters, rot, fx, fy) {
+        var k = 1 / Math.cos(centerLL[1] * Math.PI / 180);
+        var hw = widthMeters * k / 2, hh = hw * (img.h && img.w ? img.h / img.w : 0.7);
+        var t = (rot || 0) * Math.PI / 180, right = [Math.cos(t), -Math.sin(t)], up = [Math.sin(t), Math.cos(t)], c = toM(centerLL);
+        function at(sx, sy) { return [c[0] + right[0] * hw * sx + up[0] * hh * sy, c[1] + right[1] * hw * sx + up[1] * hh * sy]; }
+        var out = [at(-1, 1), at(1, 1), at(1, -1), at(-1, -1)];
+        if (fx) out = [out[1], out[0], out[3], out[2]];
+        if (fy) out = [out[3], out[2], out[1], out[0]];
+        return out;
+    }
+
+    // ---------- الخريطة ----------
+    var start = CFG.center || [31.2357, 30.0444];
+    var style = (GL === window.mapboxgl && CFG.mapboxToken)
+        ? (CFG.mapboxStyle || 'mapbox://styles/mapbox/satellite-streets-v12')
+        : { version: 8, sources: { sat: { type: 'raster', tiles: ['https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 19, attribution: 'Imagery © Esri' } }, layers: [{ id: 'bg', type: 'background', paint: { 'background-color': '#22303c' } }, { id: 'sat', type: 'raster', source: 'sat' }] };
+    var map = window.__aligner = new GL.Map({ container: 'map', style: CFG.style || style, center: start, zoom: CFG.zoom || 15, maxZoom: 21, pitchWithRotate: false, dragRotate: false, attributionControl: false });
+    map.addControl(new GL.NavigationControl({ showCompass: false }), 'bottom-left');
+    if (map.touchZoomRotate && map.touchZoomRotate.disableRotation) map.touchZoomRotate.disableRotation();
+
+    var handles = [];
+    function handle(className, text) { var el = document.createElement('div'); el.className = 'h ' + className; el.textContent = text; return new GL.Marker({ element: el, draggable: true }); }
+    var corners = [0, 1, 2, 3].map(function (i) { return handle('', String(i + 1)); });
+    var mover = handle('h--move', '✥');
+    var rotator = handle('h--rot', '⟳');
+    var dragStart = null;
+
+    corners.forEach(function (marker, i) {
+        marker.on('dragstart', function () { remember(); dragStart = { C: C.slice(), pivot: centroid(C) }; });
+        marker.on('drag', function () {
+            var p = toM(lngLat(marker));
+            if (free) { C[i] = p; }
+            else {
+                // سحب الركن = دوران + تكبير حوالين مركز الصورة (النسبة ثابتة)
+                var a = div(sub(p, dragStart.pivot), sub(dragStart.C[i], dragStart.pivot));
+                if (!isFinite(a[0]) || !isFinite(a[1]) || len(a) < 1e-6) return;
+                C = dragStart.C.map(function (q) { return add(mul(sub(q, dragStart.pivot), a), dragStart.pivot); });
+            }
+            changed(false, marker);
+        });
+        marker.on('dragend', function () { changed(true); });
+    });
+    mover.on('dragstart', function () { remember(); dragStart = { C: C.slice(), pivot: centroid(C) }; });
+    mover.on('drag', function () { var d = sub(toM(lngLat(mover)), dragStart.pivot); C = dragStart.C.map(function (q) { return add(q, d); }); changed(false, mover); });
+    mover.on('dragend', function () { changed(true); });
+    rotator.on('dragstart', function () { remember(); dragStart = { C: C.slice(), pivot: centroid(C), from: toM(lngLat(rotator)) }; });
+    rotator.on('drag', function () {
+        var a = div(sub(toM(lngLat(rotator)), dragStart.pivot), sub(dragStart.from, dragStart.pivot));
+        var n = len(a); if (!n) return;
+        a = [a[0] / n, a[1] / n];                                   // دوران بس من غير تكبير
+        C = dragStart.C.map(function (q) { return add(mul(sub(q, dragStart.pivot), a), dragStart.pivot); });
+        changed(false, rotator);
+    });
+    rotator.on('dragend', function () { changed(true); });
+    function lngLat(marker) { var p = marker.getLngLat(); return [p.lng, p.lat]; }
+
+    // مكان يد الدوران: فوق منتصف الحافة العليا بـ 44px على الشاشة
+    function rotatorPosition() {
+        var top = [(C[0][0] + C[1][0]) / 2, (C[0][1] + C[1][1]) / 2], c = centroid(C);
+        var a = map.project(toLL(top)), b = map.project(toLL(c));
+        var v = [a.x - b.x, a.y - b.y], n = Math.hypot(v[0], v[1]) || 1;
+        var p = map.unproject([a.x + v[0] / n * 44, a.y + v[1] / n * 44]);
+        return [p.lng, p.lat];
+    }
+    function placeHandles(skip) {
+        if (!C) return;
+        corners.forEach(function (marker, i) { if (marker !== skip) marker.setLngLat(toLL(C[i])).addTo(map); });
+        if (mover !== skip) mover.setLngLat(toLL(centroid(C))).addTo(map);
+        if (rotator !== skip) rotator.setLngLat(rotatorPosition()).addTo(map);
+    }
+    map.on('move', function () { if (C && !dragStart) rotator.setLngLat(rotatorPosition()); });
+
+    function coordsLL() { return C.map(toLL); }
+    function draw() {
+        if (!C || !img.url || !map.getStyle()) return;
+        var source = map.getSource('mp');
+        if (!source) {
+            map.addSource('mp', { type: 'image', url: img.url, coordinates: coordsLL() });
+            map.addLayer({ id: 'mp', type: 'raster', source: 'mp', paint: { 'raster-opacity': Number($('opacity').value) / 100, 'raster-fade-duration': 0 } });
+            map.addSource('mp-frame', { type: 'geojson', data: frame() });
+            map.addLayer({ id: 'mp-frame', type: 'line', source: 'mp-frame', paint: { 'line-color': '#5aa9ee', 'line-width': 1.5, 'line-dasharray': [3, 2] } });
+        } else {
+            source.setCoordinates(coordsLL());
+            map.getSource('mp-frame').setData(frame());
+        }
+    }
+    function frame() { var ring = coordsLL(); ring.push(ring[0]); return { type: 'Feature', geometry: { type: 'LineString', coordinates: ring } }; }
+
+    function payload() {
+        var c = toLL(centroid(C));
+        var round = function (n, d) { var f = Math.pow(10, d); return Math.round(n * f) / f; };
+        return {
+            masterplan_corners: coordsLL().map(function (p) { return [round(p[0], 7), round(p[1], 7)]; }),
+            masterplan_placement: { center: [round(c[0], 7), round(c[1], 7)], width_m: round(widthM(), 2), height_m: round(heightM(), 2), rotation: round(rotation(), 2), flip_x: mirrored(), flip_y: false, free: free }
+        };
+    }
+    var busy = false;
+    function changed(final, skip) {
+        if (!C) return;
+        draw();
+        placeHandles(skip);
+        if (final) dragStart = null;
+        busy = true;
+        var r = rotation(), w = widthM();
+        $('rot').value = r; $('rotN').value = r.toFixed(1);
+        if (w > Number($('size').max) * 0.9 || w < Number($('size').max) * 0.15) $('size').max = Math.max(100, Math.round(w * 2.2));
+        $('size').value = w; $('sizeN').value = Math.round(w);
+        $('flipH').classList.toggle('is-on', mirrored());
+        $('free').classList.toggle('is-on', free);
+        busy = false;
+        $('out').value = JSON.stringify(payload(), null, 1);
+        $('save').disabled = false;
+        if (final) {
+            dirty = true;
+            try { localStorage.setItem(DRAFT, JSON.stringify({ corners: coordsLL(), free: free })); } catch (e) { /* التخزين مقفول */ }
+            setState('فيه تعديلات لسه ما اتحفظتش.', '');
+        }
+    }
+    function setState(text, kind) { var el = $('state'); el.textContent = text; el.className = 'state' + (kind ? ' is-' + kind : ''); }
+    function hint(text) { var el = $('hint'); el.textContent = text || ''; el.classList.toggle('is-on', !!text); }
+
+    // ---------- الصورة ----------
+    function setImage(url, keepPlace) {
+        var probe = new Image();
+        probe.onload = function () {
+            img = { url: url, w: probe.naturalWidth, h: probe.naturalHeight };
+            $('imageInfo').textContent = img.w + ' × ' + img.h + 'px' + (Math.max(img.w, img.h) < 2000 ? ' — الدقة قليلة: الأفضل 3000px أو أكتر عشان الزوم.' : ' — دقة كويسة.');
+            if (map.getLayer('mp')) { ['mp', 'mp-frame'].forEach(function (id) { map.removeLayer(id); }); ['mp', 'mp-frame'].forEach(function (id) { map.removeSource(id); }); }
+            if (!C || !keepPlace) placeInView();
+            else changed(false);
+            setState(C && keepPlace ? 'المكان المحفوظ اتفتح زي ما هو.' : 'الصورة اتحطت في نص الشاشة — ابدأ الضبط.', keepPlace ? 'ok' : '');
+        };
+        probe.onerror = function () { setState('الصورة ما اتحملتش — تأكد من اللينك أو ارفعها من جهازك.', 'bad'); };
+        if (!/^(blob:|data:)/.test(url)) probe.crossOrigin = 'anonymous';
+        probe.src = url;
+    }
+    function placeInView() {
+        var b = map.getBounds(), c = map.getCenter();
+        var viewMeters = (toM([b.getEast(), c.lat])[0] - toM([b.getWest(), c.lat])[0]) * Math.cos(c.lat * Math.PI / 180);
+        remember();
+        free = false;
+        C = rectangle([c.lng, c.lat], Math.max(20, viewMeters * 0.45), 0, false, false);
+        changed(true);
+    }
+    $('file').addEventListener('change', function (event) {
+        var file = event.target.files && event.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function () { setImage(reader.result, !!C); };
+        reader.readAsDataURL(file);
+    });
+    $('loadUrl').addEventListener('click', function () { var url = $('imageUrl').value.trim(); if (url) setImage(url, !!C); });
+
+    // ---------- التحكم ----------
+    function setOpacity(value) {
+        value = Math.max(0, Math.min(100, Number(value) || 0));
+        $('opacity').value = value; $('opacityN').value = value;
+        if (map.getLayer('mp')) map.setPaintProperty('mp', 'raster-opacity', value / 100);
+    }
+    $('opacity').addEventListener('input', function () { setOpacity(this.value); });
+    $('opacityN').addEventListener('input', function () { setOpacity(this.value); });
+    function rotateTo(value) {
+        if (!C || busy) return;
+        var d = ((Number(value) || 0) - rotation()) * Math.PI / 180;
+        transform([Math.cos(d), -Math.sin(d)], centroid(C));
+        changed(true);
+    }
+    ['rot', 'rotN'].forEach(function (id) {
+        $(id).addEventListener('pointerdown', remember);
+        $(id).addEventListener('focus', remember);
+        $(id).addEventListener('input', function () { rotateTo(this.value); });
+    });
+    function resizeTo(value) {
+        if (!C || busy) return;
+        var w = widthM(); value = Number(value);
+        if (!w || !(value > 0)) return;
+        transform([value / w, 0], centroid(C));
+        changed(true);
+    }
+    ['size', 'sizeN'].forEach(function (id) {
+        $(id).addEventListener('pointerdown', remember);
+        $(id).addEventListener('focus', remember);
+        $(id).addEventListener(id === 'size' ? 'input' : 'change', function () { resizeTo(this.value); });
+    });
+    function nudge(dx, dy) {
+        if (!C) return;
+        remember();
+        var m = STEPS[stepIndex] * kAt(C);
+        C = C.map(function (p) { return [p[0] + dx * m, p[1] + dy * m]; });
+        changed(true);
+    }
+    document.querySelectorAll('[data-nudge]').forEach(function (button) { button.addEventListener('click', function () { var d = button.getAttribute('data-nudge').split(',').map(Number); nudge(d[0], d[1]); }); });
+    $('stepBtn').addEventListener('click', function () { stepIndex = (stepIndex + 1) % STEPS.length; this.textContent = STEPS[stepIndex] + 'م'; });
+    document.querySelectorAll('[data-rot]').forEach(function (button) {
+        button.addEventListener('click', function () {
+            if (!C) return;
+            remember();
+            var d = Number(button.getAttribute('data-rot')) * Math.PI / 180;
+            transform([Math.cos(d), -Math.sin(d)], centroid(C));
+            changed(true);
+        });
+    });
+    // القلب: الصورة بتتعكس في مكانها (الأركان بتتبدل) — نفس الإطار على الخريطة
+    $('flipH').addEventListener('click', function () { if (!C) return; remember(); C = [C[1], C[0], C[3], C[2]]; changed(true); });
+    $('flipV').addEventListener('click', function () { if (!C) return; remember(); C = [C[3], C[2], C[1], C[0]]; changed(true); });
+    $('free').addEventListener('click', function () { if (!C) return; remember(); free = !free; changed(true); hint(free ? 'أركان حرة: كل ركن بيتحرك لوحده (للصور اللي محتاجة شدّ بسيط). اضغط تاني للرجوع.' : ''); });
+    $('undo').addEventListener('click', undo);
+    $('reset').addEventListener('click', function () { if (!img.url) return; placeInView(); });
+    $('here').addEventListener('click', function () { if (img.url) placeInView(); });
+    $('preview').addEventListener('click', function () {
+        var on = document.body.classList.toggle('is-preview');
+        this.classList.toggle('is-on', on);
+        if (map.getLayer('mp-frame')) map.setLayoutProperty('mp-frame', 'visibility', on ? 'none' : 'visible');
+        if (map.getLayer('mp')) map.setPaintProperty('mp', 'raster-opacity', on ? 1 : Number($('opacity').value) / 100);
+    });
+    $('go').addEventListener('click', function () {
+        var parts = $('goto').value.split(/[,\s]+/).map(Number).filter(function (n) { return isFinite(n); });
+        if (parts.length < 2) return;
+        var lat = parts[0], lng = parts[1];
+        if (Math.abs(lat) > 90) { lat = parts[1]; lng = parts[0]; }
+        map.jumpTo({ center: [lng, lat], zoom: Math.max(map.getZoom(), 15) });
+    });
+    document.addEventListener('keydown', function (event) {
+        if (/^(INPUT|TEXTAREA|SELECT)$/.test(event.target.tagName)) return;
+        var keys = { ArrowUp: [0, 1], ArrowDown: [0, -1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] };
+        if (keys[event.key]) { event.preventDefault(); nudge(keys[event.key][0], keys[event.key][1]); }
+        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); undo(); }
+    });
+
+    // ---------- ضبط بنقطتين: (نقطة في الصورة ← مكانها الحقيقي) × 2 ⇒ تحريك + دوران + تكبير مرة واحدة ----------
+    var picks = null, pins = [];
+    var PICK_TEXT = ['1/4 — اضغط على معلم واضح في صورة الماستر بلان (بوابة ، ناصية ، دوران).', '2/4 — اضغط على مكان المعلم ده على القمر الصناعي.', '3/4 — اضغط على معلم تاني في الصورة (بعيد عن الأول).', '4/4 — اضغط على مكانه الحقيقي على القمر الصناعي.'];
+    function endPicking() { picks = null; pins.forEach(function (pin) { pin.remove(); }); pins = []; hint(''); $('two').classList.remove('is-on'); map.getCanvas().style.cursor = ''; }
+    $('two').addEventListener('click', function () {
+        if (!C) return;
+        if (picks) { endPicking(); return; }
+        picks = []; this.classList.add('is-on'); hint(PICK_TEXT[0]); map.getCanvas().style.cursor = 'crosshair';
+    });
+    map.on('click', function (event) {
+        if (!picks || !C) return;
+        picks.push(toM([event.lngLat.lng, event.lngLat.lat]));
+        var el = document.createElement('div'); el.className = 'h h--pick'; el.textContent = picks.length % 2 ? 'ص' : 'خ';
+        pins.push(new GL.Marker({ element: el }).setLngLat(event.lngLat).addTo(map));
+        if (picks.length < 4) { hint(PICK_TEXT[picks.length]); return; }
+        var p1 = picks[0], q1 = picks[1], p2 = picks[2], q2 = picks[3];
+        if (len(sub(p2, p1)) < 1e-6) { endPicking(); setState('النقطتين قريبين قوي من بعض — جرّب تاني بنقط أبعد.', 'bad'); return; }
+        remember();
+        var a = div(sub(q2, q1), sub(p2, p1));                       // z ← a·(z − p1) + q1
+        C = C.map(function (p) { return add(mul(sub(p, p1), a), q1); });
+        endPicking();
+        changed(true);
+        setState('اتظبطت بالنقطتين — راجع الأطراف وظبّط لو محتاج.', 'ok');
+    });
+
+    // ---------- حدود المشروع (اختياري) ----------
+    function polygonLL() {
+        var p = CFG.polygon;
+        if (typeof p === 'string') { try { p = JSON.parse(p); } catch (e) { p = null; } }
+        if (p && p.type === 'Polygon') p = p.coordinates[0];
+        return Array.isArray(p) && p.length >= 3 ? p.map(function (q) { return [Number(q[0]), Number(q[1])]; }) : null;
+    }
+    function fitPolygon() {
+        var ring = polygonLL();
+        if (!ring) return;
+        var xs = ring.map(function (p) { return p[0]; }), ys = ring.map(function (p) { return p[1]; });
+        map.fitBounds([[Math.min.apply(null, xs), Math.min.apply(null, ys)], [Math.max.apply(null, xs), Math.max.apply(null, ys)]], { padding: 90, duration: 0 });
+    }
+    $('fitPoly').addEventListener('click', function () {
+        var ring = polygonLL();
+        if (!ring || !img.url) return;
+        var m = ring.map(toM), xs = m.map(function (p) { return p[0]; }), ys = m.map(function (p) { return p[1]; });
+        var w = Math.max.apply(null, xs) - Math.min.apply(null, xs), h = Math.max.apply(null, ys) - Math.min.apply(null, ys);
+        var c = toLL([(Math.max.apply(null, xs) + Math.min.apply(null, xs)) / 2, (Math.max.apply(null, ys) + Math.min.apply(null, ys)) / 2]);
+        var k = 1 / Math.cos(c[1] * Math.PI / 180), ratio = img.h / img.w;
+        remember(); free = false;
+        C = rectangle(c, Math.min(w, h / ratio) / k, 0, false, false);
+        changed(true);
+    });
+
+    // ---------- الحفظ ----------
+    function copyOut() {
+        var text = $('out').value;
+        if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
+        $('out').select(); document.execCommand('copy'); return Promise.resolve();
+    }
+    $('copy').addEventListener('click', function () { copyOut().then(function () { setState('النتيجة اتنسخت.', 'ok'); }); });
+    $('save').addEventListener('click', function () {
+        if (!C) return;
+        var data = payload(), button = this;
+        function done(ok, message) {
+            button.disabled = false;
+            if (!ok) { setState(message || 'الحفظ ما تمش — جرّب تاني.', 'bad'); return; }
+            dirty = false;
+            try { localStorage.removeItem(DRAFT); } catch (e) { /* التخزين مقفول */ }
+            setState(message || 'تم الحفظ ✓ المكان ده هيظهر للعميل زي ما هو.', 'ok');
+            window.dispatchEvent(new CustomEvent('shary:masterplan-saved', { detail: data }));
+        }
+        if (!CFG.saveUrl) { copyOut().then(function () { done(true, 'النتيجة اتنسخت — احفظها في حقل masterplan_corners للمشروع.'); }); return; }
+        button.disabled = true;
+        fetch(CFG.saveUrl, {
+            method: CFG.method || 'POST', credentials: 'same-origin',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': CFG.csrf || '', 'X-Requested-With': 'XMLHttpRequest' },
+            body: JSON.stringify(data)
+        }).then(function (response) { if (!response.ok) throw new Error(response.status); return response.json().catch(function () { return {}; }); })
+          .then(function (result) { done(true, result && result.message); })
+          .catch(function () { done(false); });
+    });
+    window.addEventListener('beforeunload', function (event) { if (dirty && CFG.saveUrl) { event.preventDefault(); event.returnValue = ''; } });
+
+    // ---------- البداية ----------
+    function parseCorners(value) {
+        if (typeof value === 'string') { try { value = JSON.parse(value); } catch (e) { value = null; } }
+        if (!Array.isArray(value) || value.length < 4) return null;
+        var out = value.slice(0, 4).map(function (p) { return [Number(p[0]), Number(p[1])]; });
+        return out.every(function (p) { return isFinite(p[0]) && isFinite(p[1]); }) ? out : null;
+    }
+    map.on('load', function () {
+        var ring = polygonLL();
+        if (ring) {
+            ring = ring.slice(); ring.push(ring[0]);
+            map.addSource('poly', { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: ring } } });
+            map.addLayer({ id: 'poly', type: 'line', source: 'poly', paint: { 'line-color': '#ffd400', 'line-width': 2.5 } });
+            $('fitPoly').hidden = false;
+        }
+        var saved = parseCorners(CFG.corners), draft = null;
+        try { draft = JSON.parse(localStorage.getItem(DRAFT) || 'null'); } catch (e) { draft = null; }
+        var first = saved || (draft && parseCorners(draft.corners));
+        if (first) {
+            C = first.map(toM);
+            free = !saved && draft ? !!draft.free : !!(CFG.placement && CFG.placement.free);
+            var xs = first.map(function (p) { return p[0]; }), ys = first.map(function (p) { return p[1]; });
+            map.fitBounds([[Math.min.apply(null, xs), Math.min.apply(null, ys)], [Math.max.apply(null, xs), Math.max.apply(null, ys)]], { padding: 90, duration: 0 });
+        } else if (ring) fitPolygon();
+        if (CFG.image) { $('imageUrl').value = CFG.image; setImage(CFG.image, !!C); }
+        else if (C) setState('المكان المحفوظ موجود — ارفع الصورة عشان تشوفها.', '');
+    });
+    // تغيير شكل الخريطة بيمسح الطبقات: نرجّعها
+    map.on('style.load', function () { if (C && img.url) draw(); });
+    window.MPAligner = { map: map, get corners() { return C ? coordsLL() : null; }, payload: function () { return C ? payload() : null; }, setImage: setImage };
+})();
+</script>
+</body>
+</html>
