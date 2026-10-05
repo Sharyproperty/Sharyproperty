@@ -6190,6 +6190,13 @@ input:focus-visible + .area-chip,
   filter: drop-shadow(0 4px 6px rgba(18, 58, 92, 0.3));
 }
 
+/* خريطة المشروع (المصغّرة): كارت جوجل اللي فوق ("عرض خريطة أكبر") بيتقص بره الكادر — الخريطة بس */
+
+.prop-map:not(.is-expanded) .area-map__frame {
+  top: -92px !important;
+  height: calc(100% + 92px) !important;
+}
+
 .prop-map.is-live .prop-map__pin {
   display: none;
 }
@@ -6889,10 +6896,19 @@ input:focus-visible + .area-chip,
 
 /* عارض الصور (بنفس شكل تطبيق شاري): الصفحة بتغمق، الصورة في النص، وصف الصور الصغيرة تحت */
 
-/* الخلفية: كحلي غامق مصمت — الصفحة (وصور المعرض) مش بتبان ورا الصورة المفتوحة خالص */
+/* الخلفية: بلور قوي فوق الصفحة (مش لون مصمت) — الصفحة وصور المعرض بتتموّه خالص فمفيش صورة بتبان ورا الصورة المفتوحة.
+       المتصفح اللي ما بيدعمش البلور: تغميق أغمق بداله */
 
 .rent-viewer__dim {
-  background-color: #0b1c2d;
+  background-color: rgba(16, 34, 52, 0.9);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .rent-viewer__dim {
+    background-color: rgba(18, 38, 58, 0.42);
+    -webkit-backdrop-filter: blur(28px) saturate(1.15);
+    backdrop-filter: blur(28px) saturate(1.15);
+  }
 }
 
 .rent-viewer [data-lightbox-count],
@@ -8888,7 +8904,7 @@ input:focus-visible + .area-chip,
   z-index: 70;
   display: flex;
   flex-direction: column;
-  background-color: #071320;
+  background-color: #3f7fa1;
   color: #123a5c;
 }
 
@@ -9032,15 +9048,15 @@ input:focus-visible + .area-chip,
   color: #3c5068;
 }
 
-/* الخريطة: خلفية الفضا ورا الكرة الأرضية */
+/* الخريطة: الخلفية ورا الكرة الأرضية سماوي سحابي (مش كحلي) — أفتح حوالين الكرة وأغمق سنة على الأطراف */
 
 .smap__map {
   position: relative;
   min-height: 0;
   flex: 1 1 0%;
   overflow: hidden;
-  background-color: #071320;
-  background-image: radial-gradient(90% 70% at 50% 45%, #173957 0%, #0b1d30 55%, #050d17 100%);
+  background-color: #3f7fa1;
+  background-image: radial-gradient(85% 62% at 50% 52%, #b9d9ea 0%, #7fb2cf 38%, #4c8aad 72%, #2f6c8f 100%);
 }
 
 .smap__frame,
@@ -9408,7 +9424,7 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
-/* كارت المشروع: زجاج كحلي شفاف فوق الخريطة (مش أبيض مصمت) */
+/* كارت المشروع: زجاج فاتح مصنفر فوق الخريطة (لبني أبيض — مش أسود ولا رمادي ، ومش شفاف قوي) */
 
 .smap__item {
   display: flex;
@@ -9417,19 +9433,21 @@ input:focus-visible + .area-chip,
   flex-direction: column;
   gap: 9px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background-color: rgba(11, 28, 45, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background-color: rgba(241, 247, 253, 0.82);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.55) 0%, rgba(228, 240, 251, 0.25) 100%);
   padding: 9px;
-  color: #fff;
-  box-shadow: 0 14px 28px -16px rgba(3, 12, 22, 0.9);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
+  color: #123a5c;
+  box-shadow: 0 16px 30px -16px rgba(3, 12, 22, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
   transition: border-color 0.2s, background-color 0.2s;
 }
 
 .smap__item[aria-current="true"] {
-  border-color: #4fd3c2;
-  background-color: rgba(11, 28, 45, 0.82);
+  border-color: #2fb5a5;
+  background-color: rgba(246, 251, 255, 0.92);
+  box-shadow: 0 16px 30px -16px rgba(3, 12, 22, 0.85), 0 0 0 1.5px #2fb5a5;
 }
 
 .smap__item-main {
@@ -9443,7 +9461,7 @@ input:focus-visible + .area-chip,
   width: 60px;
   flex-shrink: 0;
   border-radius: 13px;
-  background-color: #24415d;
+  background-color: #dbe7f3;
   -o-object-fit: cover;
      object-fit: cover;
 }
@@ -9465,22 +9483,22 @@ input:focus-visible + .area-chip,
 
 .smap__item-meta {
   font-size: 12.5px;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.6;
-  color: #c5d5e4;
+  color: #4c6377;
 }
 
 .smap__item-price {
   font-size: 13.5px;
   font-weight: 800;
   line-height: 1.5;
-  color: #6fe3d3;
+  color: #178f81;
 }
 
 .smap__item-price small {
   font-size: 11px;
   font-weight: 600;
-  color: #c5d5e4;
+  color: #4c6377;
 }
 
 .smap__item-actions {
@@ -9501,13 +9519,13 @@ input:focus-visible + .area-chip,
   justify-content: center;
   gap: 5px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(30, 65, 102, 0.22);
+  background-color: rgba(255, 255, 255, 0.75);
   padding-inline: 6px;
   font-size: 12px;
   font-weight: 700;
   line-height: 1;
-  color: #fff;
+  color: #123a5c;
   white-space: nowrap;
 }
 
@@ -9516,9 +9534,9 @@ input:focus-visible + .area-chip,
 }
 
 .smap__btn--main {
-  border-color: #fff;
-  background-color: #fff;
-  color: #123a5c;
+  border-color: #1e4166;
+  background-color: #1e4166;
+  color: #fff;
 }
 
 .smap__empty {
@@ -10921,209 +10939,15 @@ input:focus-visible + .area-chip,
   margin-top: 12px;
 }
 
-/* التليفون (HTML + CSS): إطار غامق + شاشة التطبيق */
+/* التليفون: شاشة التطبيق الحقيقية — الجزء اللي تحت بيدخل ورا الجزء الكحلي */
 
-.app-pop__phone {
+.app-pop__device {
   position: relative;
-  height: 300px;
-  width: 158px;
+  height: 344px;
+  width: auto;
+  max-width: none;
   flex-shrink: 0;
-  overflow: hidden;
-  border-radius: 26px 26px 0 0;
-  border: 5px solid #0a1f33;
-  border-bottom: 0;
-  background-color: #f3f7fb;
-  background-image: linear-gradient(180deg, #1e4166 0, #2a5a8a 74px, #f3f7fb 74px);
-  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.45), 0 26px 40px -18px rgba(3, 12, 22, 0.85);
-  text-align: start;
-  color: #123a5c;
-}
-
-.app-pop__notch {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  z-index: 2;
-  height: 11px;
-  width: 46px;
-  border-radius: 999px;
-  background-color: #0a1f33;
-  transform: translateX(-50%);
-}
-
-.app-pop__screen {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  padding: 22px 8px 0;
-}
-
-.app-pop__ui-top {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.app-pop__ui-top b {
-  flex: 1 1 0%;
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 1;
-  color: #fff;
-}
-
-.app-pop__ui-top .app-pop__dots i {
-  height: 7px;
-  width: 7px;
-}
-
-.app-pop__ui-bell {
-  height: 14px;
-  width: 14px;
-  border-radius: 50%;
-  border: 1.5px solid #fff;
-}
-
-.app-pop__ui-search {
-  display: flex;
-  height: 22px;
-  align-items: center;
-  gap: 4px;
-  border-radius: 999px;
-  background-color: #fff;
-  padding-inline: 8px;
-  font-size: 7.5px;
-  font-weight: 700;
-  line-height: 1;
-  color: #6f8399;
-  box-shadow: 0 2px 6px -3px rgba(18, 58, 92, 0.5);
-  white-space: nowrap;
-}
-
-.app-pop__ui-search svg {
-  flex-shrink: 0;
-  color: #1e4166;
-}
-
-.app-pop__ui-card {
-  overflow: hidden;
-  border-radius: 10px;
-  background-color: #fff;
-  padding-bottom: 6px;
-  box-shadow: 0 4px 10px -6px rgba(18, 58, 92, 0.6);
-}
-
-.app-pop__ui-photo {
-  position: relative;
-  height: 62px;
-  background-image: linear-gradient(180deg, #8fc6ee 0%, #d7ecfb 100%);
-}
-
-.app-pop__ui-photo svg {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 44px;
-  width: 100%;
-}
-
-.app-pop__ui-photo span {
-  position: absolute;
-  top: 5px;
-  inset-inline-start: 5px;
-  border-radius: 999px;
-  background-color: #fcb424;
-  padding: 2.5px 6px;
-  font-size: 6.5px;
-  font-weight: 800;
-  line-height: 1.2;
-  color: #123a5c;
-}
-
-.app-pop__ui-card b,
-    .app-pop__ui-card small {
-  display: block;
-  overflow: hidden;
-  padding-inline: 7px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.app-pop__ui-card b {
-  margin-top: 5px;
-  font-size: 8.5px;
-  font-weight: 800;
-  line-height: 1.5;
-}
-
-.app-pop__ui-card small {
-  font-size: 7.5px;
-  font-weight: 700;
-  line-height: 1.5;
-  color: #1f9a8b;
-}
-
-.app-pop__ui-tiles {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
-}
-
-.app-pop__ui-tiles span {
-  border-radius: 9px;
-  background-color: #1e4166;
-  padding: 6px 7px;
-  color: #fff;
-}
-
-.app-pop__ui-tiles span + span {
-  background-color: #fff;
-  color: #123a5c;
-  box-shadow: 0 4px 10px -6px rgba(18, 58, 92, 0.6);
-}
-
-.app-pop__ui-tiles small,
-    .app-pop__ui-tiles b {
-  display: block;
-  white-space: nowrap;
-}
-
-.app-pop__ui-tiles small {
-  font-size: 6.5px;
-  font-weight: 700;
-  line-height: 1.5;
-  opacity: 0.85;
-}
-
-.app-pop__ui-tiles b {
-  font-size: 10.5px;
-  font-weight: 800;
-  line-height: 1.4;
-  text-align: start;
-}
-
-.app-pop__ui-tiles span:first-child b {
-  color: #5fe0cf;
-}
-
-.app-pop__ui-nav {
-  display: flex;
-  justify-content: space-around;
-  border-radius: 10px;
-  background-color: #fff;
-  padding: 7px 0;
-}
-
-.app-pop__ui-nav i {
-  height: 8px;
-  width: 8px;
-  border-radius: 3px;
-  background-color: #cfdbe8;
-}
-
-.app-pop__ui-nav i.is-on {
-  background-color: #1e4166;
+  filter: drop-shadow(0 22px 26px rgba(3, 12, 22, 0.55));
 }
 
 .app-pop__chip {

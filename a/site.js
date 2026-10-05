@@ -2799,7 +2799,9 @@
         };
         var layers = [{ id: 'ground', type: 'background', paint: { 'background-color': type === 'h' ? '#0d2238' : '#dfe9f3' } }, { id: 'base', type: 'raster', source: 'base' }];
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
-        return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers, sky: { 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0] } };
+        // السما حوالين الكرة: سماوي فاتح (مش أسود) — نفس خلفية .smap__map
+        return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
+            sky: { 'sky-color': '#7fb2cf', 'horizon-color': '#d6e9f3', 'fog-color': '#d6e9f3', 'sky-horizon-blend': 0.6, 'horizon-fog-blend': 0.6, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.9, 5, 0.9, 7, 0] } };
     }
 
     document.querySelectorAll('[data-smap]').forEach(function (root) {
@@ -2902,7 +2904,8 @@
                 gl = new lib.Map(options);
                 glLib = lib;
                 if (lib.AttributionControl) gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
-                if (token) gl.on('style.load', function () { try { gl.setFog({}); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                // Mapbox: السما ورا الكرة سماوي فاتح بدل الأسود
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#d6e9f3', 'high-color': '#7fb2cf', 'space-color': '#4c8aad', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
