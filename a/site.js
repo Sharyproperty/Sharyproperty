@@ -2787,7 +2787,8 @@
     var MAPBOX_STYLES = { h: 'mapbox://styles/mapbox/satellite-streets-v12', m: 'mapbox://styles/mapbox/streets-v12' };
     var ESRI = 'https://server.arcgisonline.com/ArcGIS/rest/services/';
     var EGYPT = [30.2, 27.4];                     // [lng, lat] — نص مصر
-    var START = { center: [14, 16], zoom: 0.7 };  // أول فتحة: الكرة الأرضية كلها
+    var START = { center: [8, 12], zoom: -0.6 };  // أول فتحة: الكرة الأرضية صغيرة من بعيد — وبتكبر بحركة ناعمة
+    function easeOut(t) { return 1 - Math.pow(1 - t, 2.2); }
 
     // ستايل MapLibre (من غير توكن): كرة أرضية + قمر صناعي وأسماء الأماكن (h) أو خريطة الشوارع (m)
     function libreStyle(type) {
@@ -2799,9 +2800,9 @@
         };
         var layers = [{ id: 'ground', type: 'background', paint: { 'background-color': type === 'h' ? '#0d2238' : '#dfe9f3' } }, { id: 'base', type: 'raster', source: 'base' }];
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
-        // السما حوالين الكرة: سماوي فاتح (مش أسود) — نفس خلفية .smap__map
+        // السما حوالين الكرة: سحابي فاتح (مش أسود ولا كحلي) — نفس خلفية .smap__map
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
-            sky: { 'sky-color': '#7fb2cf', 'horizon-color': '#d6e9f3', 'fog-color': '#d6e9f3', 'sky-horizon-blend': 0.6, 'horizon-fog-blend': 0.6, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.9, 5, 0.9, 7, 0] } };
+            sky: { 'sky-color': '#dbe9f4', 'horizon-color': '#ffffff', 'fog-color': '#ffffff', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
     }
 
     document.querySelectorAll('[data-smap]').forEach(function (root) {
@@ -2899,13 +2900,13 @@
                 if (token) lib.accessToken = token;
                 glBox.hidden = false;
                 glBox.setAttribute('dir', 'ltr');
-                var options = { container: glBox, style: token ? MAPBOX_STYLES[state.type] : libreStyle(state.type), center: START.center, zoom: START.zoom, attributionControl: false };
+                var options = { container: glBox, style: token ? MAPBOX_STYLES[state.type] : libreStyle(state.type), center: START.center, zoom: START.zoom, minZoom: -1, attributionControl: false };
                 if (token) options.projection = 'globe';
                 gl = new lib.Map(options);
                 glLib = lib;
                 if (lib.AttributionControl) gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
-                // Mapbox: السما ورا الكرة سماوي فاتح بدل الأسود
-                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#d6e9f3', 'high-color': '#7fb2cf', 'space-color': '#4c8aad', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#ffffff', 'high-color': '#dbe9f4', 'space-color': '#dce9f4', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
@@ -2922,8 +2923,8 @@
                 gl.on('click', function () { toggleAreas(false); });
                 var started = false;
                 var begin = function () { if (started) return; started = true; intro(); };
-                gl.on('load', begin);
-                window.setTimeout(begin, 2600);   // لو صور الخريطة اتأخرت: الحركة بتبدأ برضه
+                gl.on('load', function () { window.setTimeout(begin, 350); });
+                window.setTimeout(begin, 2200);   // لو صور الخريطة اتأخرت: الحركة بتبدأ برضه
                 frame.hidden = true;
                 root.classList.add('is-gl');
                 return true;
@@ -2940,12 +2941,13 @@
             if (state.focus && state.current) {
                 var p = info(state.current);
                 leaveGlobe();
-                gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: 5200, essential: true });
+                gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: 9000, essential: true });
                 return;
             }
-            if (state.area) { leaveGlobe(); fitAll(4600); return; }
-            gl.flyTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: 2600, essential: true });
-            toggleAreas(true);
+            if (state.area) { leaveGlobe(); fitAll(8500); return; }
+            // الكرة بتيجي من بعيد وتكبر بالراحة لحد ما تقف فوق مصر — وبعدها قايمة "اختر المنطقة" بتنزل
+            gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: 9000, easing: easeOut, essential: true });
+            window.setTimeout(function () { if (root.classList.contains('is-globe') && !state.area && !state.current) toggleAreas(true); }, 5600);
         }
 
         // الخريطة بتتحدّث لما تبقى ظاهرة بس (ولما المشروع / النوع / التكبير يتغيّر)

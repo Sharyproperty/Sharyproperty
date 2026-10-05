@@ -6896,19 +6896,38 @@ input:focus-visible + .area-chip,
 
 /* عارض الصور (بنفس شكل تطبيق شاري): الصفحة بتغمق، الصورة في النص، وصف الصور الصغيرة تحت */
 
-/* الخلفية: بلور قوي فوق الصفحة (مش لون مصمت) — الصفحة وصور المعرض بتتموّه خالص فمفيش صورة بتبان ورا الصورة المفتوحة.
-       المتصفح اللي ما بيدعمش البلور: تغميق أغمق بداله */
+/* الخلفية: بلور خفيف شيك فوق الصفحة (من غير أي لون كحلي) — تفاصيل الصفحة بتفضل باينة من وراه.
+       الماستر بلان ومخطط الوحدة: بلور أبسط (الصفحة أوضح).
+       معرض الصور: صور المعرض اللي في الصفحة بتستخبى طول ما العارض مفتوح ، فالصورة المفتوحة بتيجي مكانها ومفيش صورة بتبان وراها.
+       المتصفح اللي ما بيدعمش البلور: خلفية فاتحة شفافة بداله */
 
 .rent-viewer__dim {
-  background-color: rgba(16, 34, 52, 0.9);
+  background-color: rgba(238, 243, 248, 0.82);
 }
 
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .rent-viewer__dim {
-    background-color: rgba(18, 38, 58, 0.42);
-    -webkit-backdrop-filter: blur(28px) saturate(1.15);
-    backdrop-filter: blur(28px) saturate(1.15);
+    background-color: rgba(238, 243, 248, 0.3);
+    -webkit-backdrop-filter: blur(9px);
+    backdrop-filter: blur(9px);
   }
+
+  .rent-viewer[data-group="floor"] .rent-viewer__dim,
+        .rent-viewer[data-group="master"] .rent-viewer__dim {
+    background-color: rgba(238, 243, 248, 0.2);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+}
+
+body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
+  visibility: hidden;
+}
+
+/* الصورة المفتوحة: ظل أوضح عشان تبان فوق الخلفية الفاتحة */
+
+.rent-viewer__frame {
+  box-shadow: 0 24px 60px -24px rgba(13, 32, 51, 0.6), 0 2px 10px rgba(13, 32, 51, 0.12);
 }
 
 .rent-viewer [data-lightbox-count],
@@ -8904,7 +8923,7 @@ input:focus-visible + .area-chip,
   z-index: 70;
   display: flex;
   flex-direction: column;
-  background-color: #3f7fa1;
+  background-color: #dce9f4;
   color: #123a5c;
 }
 
@@ -9048,15 +9067,15 @@ input:focus-visible + .area-chip,
   color: #3c5068;
 }
 
-/* الخريطة: الخلفية ورا الكرة الأرضية سماوي سحابي (مش كحلي) — أفتح حوالين الكرة وأغمق سنة على الأطراف */
+/* الخريطة: الخلفية ورا الكرة الأرضية سحابي فاتح خفيف (أبيض حوالين الكرة ← سماوي فاتح على الأطراف) — مش كحلي ولا مخضر */
 
 .smap__map {
   position: relative;
   min-height: 0;
   flex: 1 1 0%;
   overflow: hidden;
-  background-color: #3f7fa1;
-  background-image: radial-gradient(85% 62% at 50% 52%, #b9d9ea 0%, #7fb2cf 38%, #4c8aad 72%, #2f6c8f 100%);
+  background-color: #dce9f4;
+  background-image: radial-gradient(85% 62% at 50% 52%, #ffffff 0%, #eef5fb 38%, #dbe9f4 72%, #c6dbec 100%);
 }
 
 .smap__frame,
