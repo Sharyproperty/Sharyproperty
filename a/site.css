@@ -4598,19 +4598,35 @@ input:focus-visible + .area-chip,
 
 [data-offer-modal] > [data-offer-close],
     [data-meeting-modal] > [data-meeting-close],
-    [data-filter-sheet] > [data-sheet-close],
-    [data-index-advanced] > [data-adv-close],
-    [data-index-picker] > [data-picker-close],
     .shary-share__dim,
     .app-pop__backdrop {
   background-color: rgba(13, 32, 51, 0.46) !important;
 }
 
-/* صفحة "تصفية" الكاملة على الموبايل: لوحة طالعة من تحت — فوقها جزء من الصفحة ظاهر بنفس التغميق */
+/* الفلاتر (تصفية / المنطقة / المطور / المشروع / السعر / فلتر مؤشر شاري): اللوحة بتطلع من تحت بس — من غير أي تغميق أو بلور على الصفحة.
+       الطبقة الشفافة بتفضل موجودة عشان الضغط بره اللوحة يقفلها ، واللوحة متحددة بظل وخط */
+
+[data-filter-sheet] > [data-sheet-close],
+    [data-index-advanced] > [data-adv-close],
+    [data-index-picker] > [data-picker-close] {
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-filter-sheet] > .area-sheet,
+    [data-filter-sheet] > .meeting-panel,
+    [data-index-advanced] > .area-sheet,
+    [data-index-advanced] > .meeting-panel,
+    [data-index-picker] > .meeting-panel {
+  box-shadow: 0 -14px 44px -8px rgba(13, 32, 51, 0.42) !important;
+}
+
+/* صفحة "تصفية" الكاملة على الموبايل: لوحة طالعة من تحت — فوقها جزء من الصفحة ظاهر من غير تغميق */
 
 @media (max-width: 1023px) {
   [data-filter-sheet="all"] {
-    background-color: rgba(13, 32, 51, 0.46);
+    background-color: transparent;
   }
 
   [data-filter-sheet="all"] > .area-sheet {
@@ -9472,6 +9488,42 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   opacity: 1;
 }
 
+/* صف "الخريطة" في تفاصيل الوحدة: ديسك توب بس (على الموبايل زرار "على الخريطة" فوق) */
+
+@media (max-width: 1023px) {
+  .prop-rows > [data-desk-only] {
+    display: none;
+  }
+}
+
+/* مؤشر شاري — "الأعلى طلبًا": الرقم جوه دايرة بتتملى على قد الرقم (من 100) */
+
+.index-ring {
+  position: relative;
+  display: flex;
+  height: 42px;
+  width: 42px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.index-ring svg {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  transform: rotate(-90deg);
+}
+
+.index-ring b {
+  position: relative;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1;
+  color: #123a5c;
+}
+
 /* ---- فرص إعادة بيع حصرية (opportunities/*) ---- */
 
 .opp-hero {
@@ -11786,6 +11838,41 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
     padding: 24px 28px;
   }
 
+  /* الكلام ياخد المساحة الباقية. لو الكارت في عمود ضيق (أقل من 880px): الزراير بتنزل تحت الكلام صف واحد بعرض الكارت — زي الموبايل */
+
+  .chan-cta {
+    flex-wrap: wrap;
+    container-type: inline-size;
+  }
+
+  .chan-cta__body {
+    min-width: 0;
+    flex: 1 1 340px;
+  }
+
+  @container (max-width: 880px) {
+    .chan-cta__actions {
+      flex: 1 1 100%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chan-cta__actions--1 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .chan-cta__actions--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* صفحة المقال: بوكس الإعلانات بعرض الصفحة فوق (data-article-ad) وكارت القنوات بعرض الصفحة تحت (data-article-channels) — اللي وسط المقال مخفيين على الديسك توب */
+
+  [data-article-page] .article-content .ad-strip,
+        [data-article-page] .article-content .chan-cta,
+        [data-project-page] .prop-about .chan-cta {
+    display: none;
+  }
+
   .chan-cta__bell {
     height: 56px;
     width: 56px;
@@ -12123,7 +12210,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(13, 32, 51, 0.46);
+    background-color: transparent;
   }
 
   .home-filter .search-side {
@@ -14007,6 +14094,10 @@ img.abroad-dev__logo {
   margin-bottom: 1.25rem;
 }
 
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
 .me-2 {
   margin-inline-end: 0.5rem;
 }
@@ -14761,8 +14852,8 @@ img.abroad-dev__logo {
   grid-template-columns: minmax(0,1fr) minmax(0,90px) 38px;
 }
 
-.grid-cols-\[minmax\(0\2c 92px\)_minmax\(0\2c 1fr\)_64px\] {
-  grid-template-columns: minmax(0,92px) minmax(0,1fr) 64px;
+.grid-cols-\[minmax\(0\2c 84px\)_minmax\(0\2c 1fr\)_86px\] {
+  grid-template-columns: minmax(0,84px) minmax(0,1fr) 86px;
 }
 
 .grid-cols-\[repeat\(3\2c minmax\(0\2c 1fr\)\)_52px\] {
@@ -16329,6 +16420,156 @@ img.abroad-dev__logo {
 
 /* ============================== صفحة المنطقة ============================== */
 
+@media not all and (min-width: 1024px) {
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__chips {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__chips {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__mic {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__chips {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__mic {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .max-lg\:hidden.search-side {
+      display: none !important;
+    }
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.compare-table {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__chips {
+    display: none;
+  }
+
+  .max-lg\:hidden.sai__mic {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .max-lg\:hidden.search-side {
+      display: none !important;
+    }
+  }
+
+  .max-lg\:hidden.privacy-note {
+    display: none;
+  }
+}
+
 @media (min-width: 768px) {
   .md\:hidden.saved-empty {
     display: none;
@@ -16899,6 +17140,12 @@ img.abroad-dev__logo {
   fill: currentColor;
 }
 
+@media not all and (min-width: 1024px) {
+  .max-lg\:hidden {
+    display: none;
+  }
+}
+
 @media (min-width: 360px) {
   .min-\[360px\]\:h-\[18px\] {
     height: 18px;
@@ -16965,6 +17212,10 @@ img.abroad-dev__logo {
 
   .min-\[400px\]\:text-\[13px\] {
     font-size: 13px;
+  }
+
+  .min-\[400px\]\:text-\[18px\] {
+    font-size: 18px;
   }
 
   .min-\[400px\]\:text-\[24px\] {
@@ -17746,8 +17997,8 @@ img.abroad-dev__logo {
     grid-template-columns: minmax(0,1.1fr) 48px minmax(0,1fr) 40px;
   }
 
-  .lg\:grid-cols-\[minmax\(0\2c 130px\)_minmax\(0\2c 1fr\)_72px\] {
-    grid-template-columns: minmax(0,130px) minmax(0,1fr) 72px;
+  .lg\:grid-cols-\[minmax\(0\2c 130px\)_minmax\(0\2c 1fr\)_100px\] {
+    grid-template-columns: minmax(0,130px) minmax(0,1fr) 100px;
   }
 
   .lg\:grid-cols-\[minmax\(0\2c 150px\)_34px_minmax\(0\2c 1fr\)_26px\] {
@@ -18532,6 +18783,10 @@ img.abroad-dev__logo {
 
   .lg\:leading-\[1\.35\] {
     line-height: 1.35;
+  }
+
+  .lg\:leading-\[1\.3\] {
+    line-height: 1.3;
   }
 
   .lg\:leading-\[1\.45\] {
@@ -19381,6 +19636,19 @@ img.abroad-dev__logo {
     justify-content: space-between;
     gap: 28px;
     padding: 24px 28px;}
+.pv-desktop /* الكلام ياخد المساحة الباقية. لو الكارت في عمود ضيق (أقل من 880px): الزراير بتنزل تحت الكلام صف واحد بعرض الكارت — زي الموبايل */
+
+  .chan-cta {flex-wrap: wrap;
+    container-type: inline-size;}
+.pv-desktop .chan-cta__body {min-width: 0;
+    flex: 1 1 340px;}
+.pv-desktop .chan-cta__actions {flex: 1 1 100%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));}
+.pv-desktop .chan-cta__actions--1 {grid-template-columns: minmax(0, 1fr);}
+.pv-desktop .chan-cta__actions--3 {grid-template-columns: repeat(3, minmax(0, 1fr));}
+.pv-desktop /* صفحة المقال: بوكس الإعلانات بعرض الصفحة فوق (data-article-ad) وكارت القنوات بعرض الصفحة تحت (data-article-channels) — اللي وسط المقال مخفيين على الديسك توب */
+
+  [data-article-page] .article-content .ad-strip, .pv-desktop [data-article-page] .article-content .chan-cta, .pv-desktop [data-project-page] .prop-about .chan-cta {display: none;}
 .pv-desktop .chan-cta__bell {height: 56px;
     width: 56px;
     border-radius: 16px;}
@@ -19441,7 +19709,7 @@ img.abroad-dev__logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(13, 32, 51, 0.46);}
+    background-color: transparent;}
 .pv-desktop .home-filter .search-side {display: flex !important;
     width: 600px;
     max-width: 94vw;
@@ -19564,6 +19832,12 @@ img.abroad-dev__logo {
 .pv-desktop .search-results [data-results] .area-card .unit-specs svg {height: 20px;
     width: 20px;}
 .pv-desktop .search-results [data-results] .area-card .unit-specs b {font-size: 16px;}
+.pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .max-lg\:hidden.search-side {display: none !important;}
+.pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .max-lg\:hidden.search-side {display: none !important;}
 .pv-desktop .md\:hidden.saved-empty {display: none;}
 .pv-desktop .md\:hidden.compare-table {display: none;}
 .pv-desktop .md\:hidden.sai {display: none;}
@@ -20089,7 +20363,7 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:grid-cols-\[320px_minmax\(0\2c 1fr\)\] {grid-template-columns: 320px minmax(0,1fr);}
 .pv-desktop .lg\:grid-cols-\[320px_minmax\(0\2c 1fr\)_48px\] {grid-template-columns: 320px minmax(0,1fr) 48px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1\.1fr\)_48px_minmax\(0\2c 1fr\)_40px\] {grid-template-columns: minmax(0,1.1fr) 48px minmax(0,1fr) 40px;}
-.pv-desktop .lg\:grid-cols-\[minmax\(0\2c 130px\)_minmax\(0\2c 1fr\)_72px\] {grid-template-columns: minmax(0,130px) minmax(0,1fr) 72px;}
+.pv-desktop .lg\:grid-cols-\[minmax\(0\2c 130px\)_minmax\(0\2c 1fr\)_100px\] {grid-template-columns: minmax(0,130px) minmax(0,1fr) 100px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 150px\)_34px_minmax\(0\2c 1fr\)_26px\] {grid-template-columns: minmax(0,150px) 34px minmax(0,1fr) 26px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_320px\] {grid-template-columns: minmax(0,1fr) 320px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_360px\] {grid-template-columns: minmax(0,1fr) 360px;}
@@ -20316,6 +20590,7 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:leading-\[1\.25\] {line-height: 1.25;}
 .pv-desktop .lg\:leading-\[1\.2\] {line-height: 1.2;}
 .pv-desktop .lg\:leading-\[1\.35\] {line-height: 1.35;}
+.pv-desktop .lg\:leading-\[1\.3\] {line-height: 1.3;}
 .pv-desktop .lg\:leading-\[1\.45\] {line-height: 1.45;}
 .pv-desktop .lg\:shadow-\[0_-20px_60px_-10px_rgba\(18\2c 58\2c 92\2c 0\.38\)\] {--tw-shadow: 0 -20px 60px -10px rgba(18,58,92,0.38);
     --tw-shadow-colored: 0 -20px 60px -10px var(--tw-shadow-color);

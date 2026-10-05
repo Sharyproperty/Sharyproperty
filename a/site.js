@@ -1135,7 +1135,7 @@
         function show(typeKey) {
             var type = data.types[typeKey];
             if (!type) return;
-            ['price', 'change', 'label', 'demand', 'growth', 'index', 'compare_price', 'compare_diff', 'compare_label', 'range', 'units', 'projects'].forEach(function (key) { set(key, type[key]); });
+            ['price', 'price_range', 'change', 'label', 'demand', 'growth', 'index', 'compare_price', 'compare_range', 'compare_diff', 'compare_label', 'range', 'units', 'projects'].forEach(function (key) { set(key, type[key]); });
             var arc = card.querySelector('[data-k-arc]');
             if (arc) arc.setAttribute('stroke-dasharray', (type.index / 100 * 70.7).toFixed(1) + ' 94.2');
             type.bars.forEach(function (value, i) {
@@ -2049,11 +2049,11 @@
                 var from = own || market;
                 if (!from) return;
                 var cell = function (name, value) { var node = row.querySelector('[data-cell="' + name + '"]'); if (node) node.textContent = value; return node; };
-                cell('price', from.price_text);
+                cell('price', from.price_range_text || from.price_text);
                 var yearly = cell('yearly', from.yearly_text);
                 if (yearly) yearly.setAttribute('data-sign', Number(from.yearly) >= 0 ? 'up' : 'down');
                 cell('yield', from.yield_text);
-                cell('range', own ? (own.resale_text || '—') : market.range_text);
+                cell('range', own ? (own.resale_range_text || own.resale_text || '—') : market.range_text);
                 cell('demand', from.demand);
             });
         }
@@ -2063,7 +2063,7 @@
             var type = data.types[typeKey];
             if (!areaKey || !areas[areaKey]) {
                 var market = type.market;
-                return { name: data.scopeAll, price_text: market.price_text, yearly_text: market.yearly_text, monthly_text: market.monthly_text, yield_text: market.yield_text,
+                return { name: data.scopeAll, price_text: market.price_range_text || market.price_text, yearly_text: market.yearly_text, monthly_text: market.monthly_text, yield_text: market.yield_text,
                     units_text: market.units_text, demand: market.demand, range_label: data.range, range_text: market.range_text, series: market.series,
                     headline: data.headlines[typeKey] || '', insights: data.insights[typeKey] || [] };
             }
@@ -2077,9 +2077,9 @@
                 end = start;
             });
             var fill = function (text, map) { return Object.keys(map).reduce(function (out, key) { return out.replace(':' + key, map[key]); }, text); };
-            return { name: area.name, price_text: v.price_text, yearly_text: v.yearly_text, monthly_text: v.monthly_text, yield_text: v.yield_text,
-                units_text: v.units_text, demand: v.demand, range_label: data.resaleRange, range_text: v.resale_text, series: parts[0].concat(parts[1], parts[2]),
-                headline: fill(data.headlineArea, { type: type.label_in, area: area.name, price: v.price_text, yearly: v.yearly_text, verdict: v.verdict_text }),
+            return { name: area.name, price_text: v.price_range_text || v.price_text, yearly_text: v.yearly_text, monthly_text: v.monthly_text, yield_text: v.yield_text,
+                units_text: v.units_text, demand: v.demand, range_label: data.resaleRange, range_text: v.resale_range_text || v.resale_text, series: parts[0].concat(parts[1], parts[2]),
+                headline: fill(data.headlineArea, { type: type.label_in, area: area.name, price: v.price_range_text || v.price_text, yearly: v.yearly_text, verdict: v.verdict_text }),
                 insights: [fill(data.insightYield, { value: v.yield_text }), fill(data.insightResale, { value: v.resale_diff_text }), fill(data.insightDemand, { demand: v.demand, units: v.units_text })] };
         }
 
@@ -2135,7 +2135,7 @@
                 var v = areas[row.getAttribute('data-slug')].values[typeKey];
                 var cell = function (name) { return row.querySelector('[data-c="' + name + '"]'); };
                 var put = function (name, value) { var el = cell(name); if (el) el.textContent = value; };
-                put('price', v.price_text);
+                put('price', v.price_range_text || v.price_text);
                 put('yield', v.yield_text);
                 put('units', v.units_text);
                 put('demand', v.demand);
@@ -2191,7 +2191,7 @@
 
         // ---------- الأبرز هذا الشهر ----------
         function showMovers() {
-            var field = { growth: 'yearly_text', yield: 'yield_text', demand: 'demand', value: 'price_text' };
+            var field = { growth: 'yearly_text', yield: 'yield_text', demand: 'demand', value: 'price_range_text' };
             page.querySelectorAll('[data-movers]').forEach(function (list) {
                 var kind = list.getAttribute('data-movers');
                 var items = Array.prototype.slice.call(list.children);
@@ -2201,7 +2201,11 @@
                     var name = item.querySelector('[data-mover-name]');
                     name.textContent = areas[slug].name;
                     if (areas[slug].url) name.setAttribute('href', areas[slug].url);
-                    item.querySelector('[data-mover-value]').textContent = areas[slug].values[typeKey][field[kind]];
+                    var values = areas[slug].values[typeKey];
+                    item.querySelector('[data-mover-value]').textContent = values[field[kind]] != null ? values[field[kind]] : values.price_text;
+                    // الأعلى طلبًا: الدايرة بتتملى على قد الرقم
+                    var arc = item.querySelector('[data-mover-arc]');
+                    if (arc) arc.setAttribute('stroke-dasharray', Math.max(0, Math.min(100, Number(values.demand) || 0)) + ' 100');
                 });
             });
         }
@@ -2335,7 +2339,7 @@
                     block.querySelector('[data-compare-name="' + entry[0] + '"]').textContent = entry[1].name;
                     block.querySelector('[data-compare-fill="' + entry[0] + '"]').style.width = Math.max(2, Math.abs(value) / top * 100) + '%';
                     block.querySelector('[data-compare-value="' + entry[0] + '"]').textContent =
-                        metric === 'price' || metric === 'resale' ? format(value) : metric === 'yearly' ? percent(value) : metric === 'yield' ? value.toFixed(1) + '%' : value;
+                        metric === 'price' || metric === 'resale' ? (entry[1].values[typeKey][metric + '_range_text'] || format(value)) : metric === 'yearly' ? percent(value) : metric === 'yield' ? value.toFixed(1) + '%' : value;
                 });
             });
         }
@@ -4313,7 +4317,7 @@
  *     بيبدأ من: زرار "احجز ميتنج" تحت أي كارت (الحجز بيتربط بالوحدة/المشروع ده) ، كارت "تحب تتكلم مع مستشار شاري؟" ،
  *     أو لو العميل كتب/ضغط "عايز أحجز ميتنج" (كلمات lang/ai.php ← book.words) ، أو لو السيرفر رجّع book: true.
  *     الخطوات: بخصوص إيه (لو فيه كروت معروضة ومش محدد) ← النوع (زوم / مكتب شاري / زيارة الموقع — الزيارة بس لو فيه وحدة أو مشروع)
- *              ← اليوم (7 أيام) ← الساعة (اللي فات من مواعيد النهارده مقفول) ← الاسم والموبايل بكود الدولة (بيتراجعوا قبل الإرسال) ← تأكيد ← كارت التأكيد.
+ *              ← اليوم (7 أيام من النهارده) ← الساعة (كل المواعيد مفتوحة) ← الاسم والموبايل بكود الدولة (بيتراجعوا قبل الإرسال) ← تأكيد ← كارت التأكيد.
  *     الإرسال: حدث shary:ai-meeting (detail.data + detail.done(ok, message)) — لو ما اتمنعش: POST JSON على contact.meeting ($meetingUrl):
  *       { meeting_type: 'zoom' | 'in_person' | 'site_visit', meeting_date: 'Y-m-d', meeting_time: 'H:i', name, phone, country_code,
  *         subject, subject_type: 'unit' | 'project' | 'general', subject_url, source: 'shary-ai', answers, session }
@@ -4449,8 +4453,11 @@
             });
             renderSteps();
         }
+        // أسماء الاختيارات — ولو العميل اختار "الكل" بس بيتكتب "الكل"
         function labels(key, joiner) {
-            return chosenOf(key).filter(function (item) { return item.value !== ''; }).map(function (item) { return item.label; }).join(joiner);
+            var picked = chosenOf(key);
+            var named = picked.filter(function (item) { return item.value !== ''; });
+            return (named.length ? named : picked).map(function (item) { return item.label; }).join(joiner);
         }
         function queryText() {
             var or = T.or || ' / ';
@@ -4471,8 +4478,10 @@
         function plainAnswers() {
             var out = {};
             flow.forEach(function (step) {
-                var values = chosenOf(step.key).map(function (item) { return item.value; }).filter(function (value) { return value !== ''; });
                 if (!chosenOf(step.key).length) return;
+                var values = chosenOf(step.key).map(function (item) { return item.value; }).filter(function (value) { return value !== ''; });
+                // "الكل": بتتبعت كل قيم السؤال
+                if (!values.length && step.multiple) values = optionsOf(step).map(function (option) { return option.value; }).filter(function (value) { return value !== ''; });
                 out[step.key] = step.multiple ? values : (values[0] || '');
             });
             return out;
@@ -4627,24 +4636,17 @@
             var name = item.title || item.name || '';
             return name ? { name: name, type: item.type === 'project' ? 'project' : 'unit', url: item.url || '' } : null;
         }
-        // مواعيد اليوم: مواعيد النهارده اللي فاتت (أو فاضل عليها أقل من ساعة) بتتقفل
-        function slotsOf(dateValue) {
-            var now = new Date();
-            var today = dateValue === now.getFullYear() + '-' + two(now.getMonth() + 1) + '-' + two(now.getDate());
-            var limit = now.getHours() * 60 + now.getMinutes() + 60;
-            return times.map(function (slot) {
-                var parts = String(slot.value).split(':');
-                return { value: slot.value, label: slot.label, off: today && (Number(parts[0]) * 60 + Number(parts[1] || 0)) < limit };
-            });
+        // مواعيد اليوم: كل المواعيد مفتوحة (من غير قفل أي ميعاد) — القفل بس لو السيرفر رجّع available: false من contact.slots
+        function slotsOf() {
+            return times.map(function (slot) { return { value: slot.value, label: slot.label, off: false }; });
         }
         function dayList() {
             var locale = english ? 'en-GB' : 'ar-EG-u-nu-latn';
             var now = new Date();
             var out = [];
-            for (var index = 0; index < 9 && out.length < 7; index += 1) {
+            for (var index = 0; index < 7; index += 1) {
                 var day = new Date(now.getFullYear(), now.getMonth(), now.getDate() + index);
                 var value = day.getFullYear() + '-' + two(day.getMonth() + 1) + '-' + two(day.getDate());
-                if (index === 0 && !slotsOf(value).some(function (slot) { return !slot.off; })) continue;   // النهارده خلص
                 var weekday = day.toLocaleDateString(locale, { weekday: 'long' });
                 out.push({ value: value, name: index === 0 ? (B.today || weekday) : (index === 1 ? (B.tomorrow || weekday) : weekday), weekday: weekday, date: day.toLocaleDateString(locale, { day: 'numeric', month: 'short' }) });
             }

@@ -8179,3 +8179,22 @@ html, body {
 .shary-home-root .hero-search-note { margin: 0; padding: 8px 12px 6px; font-size: 12.5px; font-weight: 700; line-height: 1.6; color: #5b7189; text-align: start; }
 /* قسم "شاري معاك": خلفية لبني لون واحد ورا التليفون والكتابة */
 .shary-home-root .sh-hero__panel { background: #eaf2fb !important; }
+/* ---- فلتر البحث في الهوم (ديسك توب): الاختيارات اللي تحت "للبيع / للإيجار" (الكل / من المطور / إعادة بيع — الكل / مفروش / غير مفروش): المختار أزرق واضح ---- */
+.shary-home-root .property-status { border-radius: 999px !important; transition: background-color .15s ease, color .15s ease; }
+.shary-home-root .property-status.active { background: #1f5fc4 !important; color: #fff !important; box-shadow: 0 5px 12px -7px rgba(31, 95, 196, .8); }
+.shary-home-root .property-status:not(.active):hover { background: #e8f1fc; color: #1f5fc4; }
+/* ---- قسم "شاري معاك" على الديسك توب: التليفون أكبر ، العنوان والكلام جوه الخلفية (في نصها) ، ومن غير السطور الصغيرة — الموبايل زي ما هو ---- */
+@media (min-width: 960px) {
+  .shary-home-root .sh-hero { --phone-w: 280px !important; padding-bottom: 40px !important; }
+  .shary-home-root .sh-hero__inner { align-items: stretch !important; }
+  .shary-home-root .sh-hero__panel { top: calc(var(--phone-w) * 1.89 * .26) !important; }
+  .shary-home-root .sh-body { display: none !important; }
+  .shary-home-root .sh-stage { align-self: flex-end; }
+  .shary-home-root .sh-hero .sh-copy { display: flex; flex-direction: column; justify-content: center; align-self: stretch; margin-top: 0 !important; padding: calc(var(--phone-w) * 1.89 * .26 + 14px) 0 14px !important; }
+  .shary-home-root .sh-title { font-size: 64px !important; line-height: 1.2 !important; margin-bottom: 8px !important; }
+  .shary-home-root .sh-sub { font-size: 21px !important; margin-bottom: 16px !important; }
+  .shary-home-root .sh-hero .sh-qr { align-self: center !important; margin-top: calc(var(--phone-w) * 1.89 * .26) !important; margin-bottom: 0 !important; width: 130px !important; }
+}
+@media (min-width: 1536px) {
+  .shary-home-root .sh-hero { --phone-w: 320px !important; }
+}
