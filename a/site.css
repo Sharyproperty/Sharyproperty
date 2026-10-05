@@ -5394,34 +5394,292 @@ input:focus-visible + .area-chip,
   }
 }
 
-/* شاشات اللاب توب القصيرة: الفورم الثابت بيتضغط سِنّة (الأيقونة أصغر والخانات أقصر) عشان زرار "إرسال" يفضل باين وهو ثابت */
+/* ---- فورم الاستشارة (partials/consultation-form): نفس شكل فورم الهوم بيج في كل الصفحات ---- */
+
+.cform {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #cbdceb;
+  border-radius: 10px;
+  background-image: linear-gradient(180deg, #eef5fb 0%, #e5edf6 100%);
+  padding: 20px;
+  color: #123a5c;
+  box-shadow: 0 2px 8px rgba(20, 60, 90, 0.08);
+}
+
+.cform__head {
+  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cform__icon {
+  margin-bottom: 4px;
+  color: #1e4164;
+}
+
+.cform__title {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #073b59;
+}
+
+.cform__kinds {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+.cform__desc {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #71818c;
+}
+
+.cform__field {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cform__field > span:first-child {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #0d2033;
+}
+
+.cform__field > span:first-child b {
+  font-weight: 700;
+  color: #d35454;
+}
+
+.cform input[type="text"],
+    .cform select,
+    .cform textarea,
+    .cform__phone {
+  width: 100%;
+  border: 0;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #123a5c;
+  outline: none;
+}
+
+.cform input[type="text"],
+    .cform select {
+  height: 40px;
+  padding: 0 12px;
+}
+
+.cform select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  cursor: pointer;
+}
+
+.cform textarea {
+  height: 70px;
+  resize: none;
+  padding: 10px 12px;
+}
+
+.cform__phone {
+  display: flex;
+  height: 40px;
+  align-items: center;
+}
+
+.cform__phone input {
+  height: 100%;
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  border-radius: 6px;
+  background-color: transparent;
+  padding: 0 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #123a5c;
+  outline: none;
+}
+
+.cform input::-moz-placeholder, .cform textarea::-moz-placeholder {
+  font-weight: 500;
+  color: #8a99a6;
+}
+
+.cform input::placeholder,
+    .cform textarea::placeholder {
+  font-weight: 500;
+  color: #8a99a6;
+}
+
+.cform input[type="text"]:focus,
+    .cform select:focus,
+    .cform textarea:focus,
+    .cform__phone:focus-within {
+  box-shadow: 0 0 0 2px rgba(30, 65, 102, 0.35);
+}
+
+.cform__buttons {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.cform__btn {
+  display: flex;
+  height: 40px;
+  width: 90%;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  background-image: linear-gradient(to bottom, #39749e 0%, #245a80 25%, #12466d 55%, #0b3b60 100%);
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35), inset 0 -2px 3px rgba(0, 20, 40, 0.35), 0 4px 6px rgba(5, 42, 70, 0.28);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.cform__btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+@media (min-width: 1024px) {
+  .cform {
+    padding: 22px 24px;
+  }
+
+  .cform input[type="text"],
+        .cform select,
+        .cform textarea,
+        .cform__phone input {
+    font-size: 14.5px;
+  }
+}
+
+/* شاشات اللاب توب القصيرة: الفورم الثابت (صفحة المشروع / الوحدة / المقال) بيتضغط سِنّة عشان الزراير تفضل باينة وهو ثابت */
 
 @media (min-width: 1024px) and (max-height: 840px) {
-  .prop-aside--stick form {
-    gap: 9px;
-    padding-top: 14px;
-    padding-bottom: 14px;
+  .prop-aside--stick .cform,
+        [data-stick-under-header] .cform {
+    gap: 6px;
+    padding: 12px 20px;
   }
 
-  .prop-aside--stick .consult-form__icon {
-    height: 32px;
-    width: 32px;
+  .prop-aside--stick .cform__icon,
+        [data-stick-under-header] .cform__icon {
+    height: 24px;
+    width: 24px;
+    margin-bottom: 0;
   }
 
-  .prop-aside--stick form input[type="text"],
-        .prop-aside--stick form select,
-        .prop-aside--stick form [data-phone-field] > div:first-child,
-        .prop-aside--stick form button[type="submit"] {
-    height: 42px;
+  .prop-aside--stick .cform__title,
+        [data-stick-under-header] .cform__title {
+    font-size: 16px;
   }
 
-  .prop-aside--stick form select + img {
-    top: 12px;
+  .prop-aside--stick .cform__kinds,
+        [data-stick-under-header] .cform__kinds {
+    font-size: 14px;
   }
 
-  .prop-aside--stick form textarea {
-    height: 54px;
-    padding-top: 10px;
+  .prop-aside--stick .cform__desc,
+        [data-stick-under-header] .cform__desc {
+    display: none;
+  }
+
+  .prop-aside--stick .cform__field,
+        [data-stick-under-header] .cform__field {
+    gap: 2px;
+  }
+
+  .prop-aside--stick .cform__field > span:first-child,
+        [data-stick-under-header] .cform__field > span:first-child {
+    font-size: 13px;
+  }
+
+  .prop-aside--stick .cform input[type="text"],
+        [data-stick-under-header] .cform input[type="text"],
+        .prop-aside--stick .cform select,
+        [data-stick-under-header] .cform select,
+        .prop-aside--stick .cform__phone,
+        [data-stick-under-header] .cform__phone,
+        .prop-aside--stick .cform__btn,
+        [data-stick-under-header] .cform__btn {
+    height: 36px;
+  }
+
+  .prop-aside--stick .cform textarea,
+        [data-stick-under-header] .cform textarea {
+    height: 46px;
+    padding-top: 8px;
+  }
+
+  .prop-aside--stick .cform__buttons,
+        [data-stick-under-header] .cform__buttons {
+    margin-top: 4px;
+    gap: 6px;
+  }
+}
+
+/* لاب توب قصير جدًا (ارتفاع الشاشة 720px أو أقل): الفورم الثابت أصغر — من غير السماعة وسطر "سكن، بيع..." والزرارين جنب بعض — عشان اتصال / واتساب يفضلوا باينين */
+
+@media (min-width: 1024px) and (max-height: 720px) {
+  .prop-aside--stick .cform {
+    gap: 5px;
+    padding: 10px 18px;
+  }
+
+  .prop-aside--stick .cform__icon,
+        .prop-aside--stick .cform__kinds {
+    display: none;
+  }
+
+  .prop-aside--stick .cform input[type="text"],
+        .prop-aside--stick .cform select,
+        .prop-aside--stick .cform__phone,
+        .prop-aside--stick .cform__btn {
+    height: 34px;
+  }
+
+  .prop-aside--stick .cform textarea {
+    height: 40px;
+    padding-top: 6px;
+  }
+
+  .prop-aside--stick .cform__buttons {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .prop-aside--stick .cform__btn {
+    width: 48%;
+    font-size: 13.5px;
+  }
+
+  .prop-aside--stick .consult-form > div:last-child a {
+    height: 40px;
   }
 }
 
@@ -14022,12 +14280,8 @@ img.abroad-dev__logo {
   top: 1rem;
 }
 
-.top-\[15px\] {
-  top: 15px;
-}
-
-.top-\[54px\] {
-  top: 54px;
+.top-\[46px\] {
+  top: 46px;
 }
 
 .top-\[58px\] {
@@ -14811,10 +15065,6 @@ img.abroad-dev__logo {
   cursor: pointer;
 }
 
-.resize-none {
-  resize: none;
-}
-
 .resize {
   resize: both;
 }
@@ -14850,12 +15100,6 @@ img.abroad-dev__logo {
 
 .list-none {
   list-style-type: none;
-}
-
-.appearance-none {
-  -webkit-appearance: none;
-     -moz-appearance: none;
-          appearance: none;
 }
 
 .break-inside-avoid {
@@ -15786,6 +16030,10 @@ img.abroad-dev__logo {
 
 .pe-16 {
   padding-inline-end: 4rem;
+}
+
+.pe-3 {
+  padding-inline-end: 0.75rem;
 }
 
 .pe-3\.5 {
@@ -17102,11 +17350,6 @@ img.abroad-dev__logo {
 .focus\:ring-shary-link:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(31 99 198 / var(--tw-ring-opacity, 1));
-}
-
-.focus\:ring-shary-teal:focus {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(31 127 114 / var(--tw-ring-opacity, 1));
 }
 
 .active\:border-shary-link:active {
@@ -18933,6 +19176,10 @@ img.abroad-dev__logo {
   padding-inline-end: 0.5rem;
 }
 
+.ltr\:ps-3:where([dir="ltr"], [dir="ltr"] *) {
+  padding-inline-start: 0.75rem;
+}
+
 .ltr\:ps-4:where([dir="ltr"], [dir="ltr"] *) {
   padding-inline-start: 1rem;
 }
@@ -19145,6 +19392,8 @@ img.abroad-dev__logo {
 
   .prop-aside--stick {position: sticky;
     top: calc(var(--prop-header, 76px) + 147px);}
+.pv-desktop .cform {padding: 22px 24px;}
+.pv-desktop .cform input[type="text"], .pv-desktop .cform select, .pv-desktop .cform textarea, .pv-desktop .cform__phone input {font-size: 14.5px;}
 .pv-desktop .prop-bar--project .prop-bar__head {display: flex;
     flex-wrap: wrap;
     align-items: center;

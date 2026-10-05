@@ -1,7 +1,7 @@
 <!doctype html><html lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=f1c0d126">
+<link rel="stylesheet" href="a/site.css?v=1a81c230">
 <script>(function(){var h=(location.hash||"").slice(1).replace(/\/en$/,"");var M=["new-capital"];if(h&&h!==M[0]&&M.indexOf(h)>-1){document.write('<style id="pv-first">main[data-view][data-view]{display:none!important}main[data-view="'+h+'"][data-view]{display:block!important}</style>');setTimeout(function(){var s=document.getElementById("pv-first");if(s)s.parentNode.removeChild(s)},6000)}})();</script>
 </head><body>
 
@@ -1891,18 +1891,43 @@ data-compare-link data-base="compare.html" >
 <div class="lg:pt-[59px]">
 
 <div class="consult-form mx-auto flex w-full max-w-[400px] flex-col gap-3 lg:me-0">
-<form novalidate data-consult class="flex flex-col items-center gap-3 rounded-2xl bg-shary-form px-5 pb-5 pt-6">
+<form novalidate data-consult class="cform">
 
-<div class="flex flex-col items-center gap-1 text-center">
-<img loading="lazy" src="a/images/shary/icons/contact-mail.svg" data-img="images/shary/icons/contact-mail.svg" alt="" width="46" height="46" class="consult-form__icon">
-<h2 class="text-[20px] font-bold leading-normal">هل تحتاج استشارة عقارية؟</h2>
-<p class="text-[13.5px] font-medium leading-[1.6] text-shary-muted">املأ بياناتك وسيتواصل معك مستشار عقاري</p>
+<div class="cform__head">
+<svg class="consult-form__icon cform__icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a9 9 0 0 0-9 9v5.200A2.800 2.800 0 0 0 5.800 19H7a1 1 0 0 0 1-1v-5.500a1 1 0 0 0-1-1H5V11a7 7 0 0 1 14 0v.500h-2a1 1 0 0 0-1 1V18a1 1 0 0 0 1 1h1.800c-.400 1.100-1.500 1.500-2.900 1.500h-1.400a1.700 1.700 0 1 0 0 2H15.900c2.800 0 5.100-1.500 5.100-4.400V11a9 9 0 0 0-9-9Z"/></svg>
+<h2 class="cform__title">تحتاج استشارة عقارية؟</h2>
+<p class="cform__kinds">سكن، بيع، استثمار، إيجار</p>
+<p class="cform__desc">سجّل بياناتك وسيتواصل معك مستشار عقاري.</p>
 </div>
 
-<input type="text" name="name" placeholder="الاسم" aria-label="الاسم" required class="h-12 w-full rounded-[10px] border-0 bg-white px-4 text-start text-[16px] font-semibold text-shary-navy placeholder:font-medium placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal">
+<label class="cform__field">
+<span>الاسم <b aria-hidden="true">*</b></span>
+<input type="text" name="name" placeholder="اكتب اسمك" required autocomplete="name">
+</label>
 
-<div class="relative w-full">
-<select name="area" aria-label="المنطقة" class="h-12 w-full appearance-none rounded-[10px] border-0 bg-white px-4 text-[16px] font-semibold text-shary-navy focus:outline-none focus:ring-2 focus:ring-shary-teal">
+<div class="cform__field">
+<span>رقم الهاتف <b aria-hidden="true">*</b></span>
+<div class="relative w-full" data-phone-field>
+<div class="cform__phone ltr:flex-row-reverse">
+<input type="tel" name="phone" dir="ltr" placeholder="رقم الموبايل" aria-label="رقم الهاتف" required autocomplete="tel-national" class="text-left rtl:text-right">
+
+<button type="button" class="flex h-full shrink-0 items-center gap-1.5 pe-3 ps-2 ltr:flex-row-reverse ltr:pe-2 ltr:ps-3" data-phone-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="كود الدولة">
+<span class="text-[14px] font-bold leading-normal text-shary-navy" dir="ltr" data-phone-code>+20</span>
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="13" height="13">
+<img loading="lazy" src="a/images/shary/flags/eg.svg" data-img="images/shary/flags/eg.svg" alt="" width="24" height="18" class="h-[18px] w-6 rounded-[3px] border border-shary-line object-cover" data-phone-flag>
+</button>
+</div>
+
+<input type="hidden" name="country_code" value="+20" data-phone-value>
+
+<ul class="shary-scroll absolute inset-x-0 top-[46px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[8px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="كود الدولة" data-phone-list data-phone-shared></ul>
+</div>
+</div>
+
+<label class="cform__field">
+<span>المنطقة <b aria-hidden="true">*</b></span>
+<span class="relative block w-full">
+<select name="area" aria-label="المنطقة">
 <option value="العاصمة الإدارية">العاصمة الإدارية</option>
 <option value="القاهرة الجديدة">القاهرة الجديدة</option>
 <option value="التجمع الخامس">التجمع الخامس</option>
@@ -1912,40 +1937,25 @@ data-compare-link data-base="compare.html" >
 <option value="الشروق">الشروق</option>
 <option value="القطامية">القطامية</option>
 </select>
-<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="18" height="18" class="pointer-events-none absolute end-4 top-[15px]">
+<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="16" height="16" class="cform__chevron pointer-events-none absolute end-3 top-1/2 -translate-y-1/2">
+</span>
+</label>
+
+<label class="cform__field">
+<span>الرسالة</span>
+<textarea name="message" placeholder="اكتب رسالتك"></textarea>
+</label>
+
+<div class="cform__buttons">
+<button type="submit" class="cform__btn"><span>إرسال</span></button>
+<a href="#pv:/meetings/request" data-meeting-open class="cform__btn">
+<svg width="18" height="18" viewBox="0 0 28 28" fill="currentColor" aria-hidden="true"><path d="M14 3a4 4 0 1 0 0 8a4 4 0 0 0 0-8M2 9.500a3.500 3.500 0 1 1 7 0a3.500 3.500 0 0 1-7 0M22.500 6a3.500 3.500 0 1 0 0 7a3.500 3.500 0 0 0 0-7m-11.750 7A1.750 1.750 0 0 0 9 14.750V20a5 5 0 0 0 10 0v-5.250A1.750 1.750 0 0 0 17.250 13zM7.500 14.750c0-.630.180-1.230.490-1.730a2 2 0 0 0-.240-.020h-4A1.750 1.750 0 0 0 2 14.750V19a4 4 0 0 0 5.970 3.480A6.500 6.500 0 0 1 7.500 20zm13 5.250c0 .880-.170 1.720-.490 2.490A4 4 0 0 0 26 19v-4.250A1.750 1.750 0 0 0 24.250 13h-4q-.120 0-.240.020c.310.500.490 1.090.490 1.730z"/></svg>
+<span>اطلب اجتماع</span>
+</a>
 </div>
-
-<div class="relative w-full" data-phone-field>
-<div class="flex h-12 w-full items-center rounded-[10px] bg-white focus-within:ring-2 focus-within:ring-shary-teal ltr:flex-row-reverse">
-<input type="tel" name="phone" dir="ltr" placeholder="رقم الهاتف" aria-label="رقم الهاتف" required class="h-full min-w-0 flex-1 rounded-[10px] border-0 bg-transparent px-4 text-left rtl:text-right text-[16px] font-semibold text-shary-navy placeholder:font-medium placeholder:text-shary-hint focus:outline-none">
-
-<button type="button" class="flex h-full shrink-0 items-center gap-1.5 rounded-[10px] pe-4 ps-2 ltr:flex-row-reverse ltr:pe-2 ltr:ps-4" data-phone-toggle aria-haspopup="listbox" aria-expanded="false" aria-label="كود الدولة">
-<span class="text-[15px] font-bold leading-normal text-shary-navy" dir="ltr" data-phone-code>+20</span>
-<img loading="lazy" src="a/images/shary/icons/chevron-down-sm.svg" data-img="images/shary/icons/chevron-down-sm.svg" alt="" width="14" height="14">
-<img loading="lazy" src="a/images/shary/flags/eg.svg" data-img="images/shary/flags/eg.svg" alt="" width="26" height="20" class="h-5 w-[26px] rounded-[3px] border border-shary-line object-cover" data-phone-flag>
-</button>
-</div>
-
-<input type="hidden" name="country_code" value="+20" data-phone-value>
-
-<ul class="shary-scroll absolute inset-x-0 top-[54px] z-20 hidden max-h-[236px] overflow-y-auto rounded-[10px] border border-shary-line bg-white py-1 shadow-lg" role="listbox" aria-label="كود الدولة" data-phone-list data-phone-shared></ul>
-</div>
-
-<textarea name="message" placeholder="رسالتك" aria-label="رسالتك" class="h-[84px] w-full resize-none rounded-[10px] border-0 bg-white px-4 pt-3.5 text-start text-[16px] font-bold leading-[1.3] text-shary-navy placeholder:font-semibold placeholder:text-shary-hint focus:outline-none focus:ring-2 focus:ring-shary-teal"></textarea>
-
-<button type="submit" class="flex h-12 w-full items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[16px] font-bold leading-[1.2] text-white">
-<img loading="lazy" src="a/images/shary/icons/send.svg" data-img="images/shary/icons/send.svg" alt="" width="20" height="20">
-<span>إرسال</span>
-</button>
 </form>
 
 <div class="flex flex-col gap-3">
-
-<a href="#pv:/meetings/request" data-meeting-open class="flex h-12 items-center justify-center gap-2.5 rounded-[10px] border-[1.5px] border-shary-navy bg-white text-[16px] font-bold leading-[1.2] text-shary-navy">
-<img loading="lazy" src="a/images/shary/icons/calendar.svg" data-img="images/shary/icons/calendar.svg" alt="" width="20" height="20">
-<span>طلب مقابلة</span>
-</a>
-
 <div class="flex gap-3">
 <a href="tel:+201000730208" class="flex h-12 min-w-0 flex-1 items-center justify-center gap-2.5 rounded-[10px] bg-shary-action text-[16px] font-bold leading-[1.2] text-white">
 <img loading="lazy" src="a/images/shary/icons/phone.svg" data-img="images/shary/icons/phone.svg" alt="" width="20" height="20">
@@ -2731,7 +2741,7 @@ data-label-get="حمل التطبيق الآن" data-label-open="افتح الت
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "f1c0d126";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "ar"; window.PV_VER = "1a81c230";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -2748,7 +2758,7 @@ data-label-get="حمل التطبيق الآن" data-label-open="افتح الت
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=f1c0d126"></script>
+<script src="a/site.js?v=1a81c230"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
