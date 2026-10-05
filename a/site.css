@@ -11650,12 +11650,14 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   position: relative;
   z-index: 1;
   width: 100%;
-  padding: 64px 18px 18px;
+  padding: 40px 18px 18px;
 }
 
+/* العلم فوق العنوان جوه نفس العمود (مش فوق الصورة) عشان ما يركبش على العنوان في أي مقاس */
+
 .abroad-hero__flag {
-  top: 16px;
-  inset-inline-start: 18px;
+  position: static;
+  margin-bottom: 10px;
   height: 42px;
   width: 42px;
 }
@@ -11975,8 +11977,7 @@ img.abroad-dev__logo {
   }
 
   .abroad-hero__flag {
-    top: 28px;
-    inset-inline-start: 48px;
+    margin-bottom: 14px;
     height: 56px;
     width: 56px;
   }
@@ -18477,8 +18478,7 @@ img.abroad-dev__logo {
 .pv-desktop .abroad-hero {min-height: 380px;
     border-radius: 24px;}
 .pv-desktop .abroad-hero__body {padding: 48px;}
-.pv-desktop .abroad-hero__flag {top: 28px;
-    inset-inline-start: 48px;
+.pv-desktop .abroad-hero__flag {margin-bottom: 14px;
     height: 56px;
     width: 56px;}
 .pv-desktop .abroad-hero h1 {font-size: 46px;
