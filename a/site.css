@@ -6694,6 +6694,106 @@ input:focus-visible + .area-chip,
   padding: 14px 16px;
 }
 
+/* إعلان صورة (مرفوعة من لوحة التحكم): الصورة مالية البوكس والإعلان كله لينك */
+
+.ad-card--image {
+  min-height: 0;
+  padding: 0;
+  aspect-ratio: 32 / 9;
+}
+
+.ad-card--image img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+/* البوكس جوه المقال / الخبر (.article-content): من غير تنسيق عناوين ولينكات المقال */
+
+.article-content .ad-strip,
+    .article-content .photo-box {
+  margin-block: 22px;
+}
+
+.article-content .ad-card__title,
+    .article-content .ad-card__kicker,
+    .article-content .ad-card__text {
+  margin: 0;
+  color: #ffffff;
+}
+
+.article-content .ad-card__title {
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.article-content .ad-card__cta {
+  color: #123a5c;
+  text-decoration: none;
+}
+
+/* بوكس الصور (partials/photo-box): صور مرفوعة جوه بوكس واحد بكيرف — صورة واحدة ظاهرة والباقي بيتحرك جواه (سحب أو لوحده) + نقط */
+
+.photo-box {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  background-color: #e3eaf3;
+}
+
+.photo-box__track {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.photo-box__track::-webkit-scrollbar {
+  display: none;
+}
+
+.photo-box__slide {
+  flex: 0 0 100%;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  scroll-snap-align: start;
+}
+
+.photo-box__slide img {
+  display: block;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  border-radius: 0;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.photo-box__dots {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.photo-box__dots button {
+  height: 7px;
+  width: 7px;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 1px 3px rgba(13, 36, 58, 0.45);
+  transition: width 0.2s ease, background-color 0.2s ease;
+}
+
+.photo-box__dots button[aria-current="true"] {
+  width: 18px;
+  background-color: #fff;
+}
+
 .ad-card__body {
   min-width: 0;
 }
@@ -9129,21 +9229,51 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   color: #3c5068;
 }
 
-/* الخريطة: الخلفية ورا الكرة الأرضية "جلاسي" حيّة — درجات أزرق سماوي ولمسة بنفسجي هادية مموّهة في الأركان + هالة بيضا ورا الكرة (مش لون واحد صامت) */
+/* الخريطة: الخلفية ورا الكرة الأرضية زجاج مموّه (blur) — مش لون مصمت: طبقة ألوان متحركة ::before تحت */
 
 .smap__map {
   position: relative;
   min-height: 0;
   flex: 1 1 0%;
   overflow: hidden;
-  background-color: #cfe0f3;
+  background-color: #d3e2f3;
+}
+
+/* طبقة الزجاج المموّه ورا الكرة: بقع ألوان (أزرق سماوي / كحلي / بنفسجي هادي / أبيض) عليها blur قوي وبتتحرك بالراحة — فالخلفية شكلها زجاج حيّ مش لون واحد */
+
+.smap__map::before {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  z-index: 0;
   background-image:
-            radial-gradient(44% 32% at 50% 52%, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 72%),
-            radial-gradient(58% 42% at 12% 16%, rgba(118, 170, 236, 0.5) 0%, rgba(118, 170, 236, 0) 70%),
-            radial-gradient(56% 40% at 90% 14%, rgba(168, 160, 236, 0.34) 0%, rgba(168, 160, 236, 0) 70%),
-            radial-gradient(62% 46% at 88% 88%, rgba(64, 116, 190, 0.4) 0%, rgba(64, 116, 190, 0) 70%),
-            radial-gradient(58% 42% at 8% 86%, rgba(146, 200, 242, 0.5) 0%, rgba(146, 200, 242, 0) 70%),
-            linear-gradient(160deg, #e8f0fa 0%, #d0e0f3 46%, #b6cdea 100%);
+            radial-gradient(circle at 50% 50%, #ffffff 0 20%, transparent 21%),
+            radial-gradient(circle at 18% 24%, #5f9fe6 0 19%, transparent 20%),
+            radial-gradient(circle at 82% 18%, #a79cf0 0 14%, transparent 15%),
+            radial-gradient(circle at 78% 82%, #2c5c9c 0 21%, transparent 22%),
+            radial-gradient(circle at 14% 80%, #8fd2f2 0 19%, transparent 20%),
+            radial-gradient(circle at 52% 6%, #cfe6fb 0 15%, transparent 16%);
+  filter: blur(58px);
+  opacity: 0.92;
+  pointer-events: none;
+  animation: smap-drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes smap-drift {
+  from {
+    transform: translate3d(-3%, -2%, 0) rotate(0deg) scale(1);
+  }
+
+  to {
+    transform: translate3d(3%, 2%, 0) rotate(8deg) scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .smap__map::before {
+    animation: none;
+  }
 }
 
 .smap__frame,
@@ -9162,7 +9292,6 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 .smap.is-roadmap .smap__map {
-  background-image: none;
   background-color: #c9d8e6;
 }
 
@@ -10875,7 +11004,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   overflow: hidden;
   border-radius: 28px;
   background-color: #fff;
-  padding: 0 0 22px;
+  padding: 0 0 18px;
   text-align: center;
   color: #123a5c;
   box-shadow: 0 30px 60px -24px rgba(6, 20, 34, 0.6);
@@ -10910,65 +11039,71 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 
 /* التليفون فوق دايرة تركواز واحدة — الجزء اللي تحت من التليفون بيدخل ورا النص */
 
+/* البوب أب مستطيل بالطول (مناسب لشاشة الموبايل): التليفون كامل بنسبته الطبيعية فوق دايرة تركواز ، وتحته العنوان والزرار */
+
 .app-pop__art {
   position: relative;
   display: flex;
-  height: min(280px, 38vh);
-  align-items: flex-start;
+  height: min(350px, 50vh);
+  align-items: center;
   justify-content: center;
   overflow: hidden;
   background-color: #eef8f6;
-  padding-top: 26px;
+  padding: 38px 0 30px;
 }
 
 .app-pop__art::before {
   content: "";
   position: absolute;
-  top: 34px;
+  top: 50%;
   left: 50%;
-  height: 320px;
-  width: 320px;
+  height: 400px;
+  width: 400px;
   border-radius: 50%;
   background-color: #4cbfae;
-  transform: translateX(-50%);
+  transform: translate(-50%, -42%);
 }
+
+/* التليفون كامل بنسبته الطبيعية (طوله وعرضه زي ما هو — من غير ضغط ولا قص) */
 
 .app-pop__device {
   position: relative;
-  height: 330px;
+  height: 100%;
   width: auto;
-  max-width: none;
+  max-width: 86%;
   flex-shrink: 0;
+  -o-object-fit: contain;
+     object-fit: contain;
   filter: drop-shadow(0 20px 24px rgba(13, 44, 73, 0.35));
 }
 
 .app-pop__body {
   position: relative;
   z-index: 2;
-  margin-top: -22px;
+  margin-top: -20px;
   border-radius: 26px 26px 0 0;
   background-color: #fff;
-  padding-top: 20px;
+  padding-top: 16px;
 }
 
 .app-pop__title {
   margin: 0 24px;
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 800;
   line-height: 1.45;
   color: #123a5c;
 }
 
 .app-pop__text {
-  margin: 6px 28px 0;
-  font-size: 14.5px;
+  margin: 2px 28px 0;
+  font-size: 13.5px;
   font-weight: 500;
   line-height: 1.7;
   color: #5b7189;
 }
 
 .app-pop__cta {
-  margin: 18px 22px 0;
+  margin: 12px 22px 0;
   display: flex;
   height: 52px;
   align-items: center;
