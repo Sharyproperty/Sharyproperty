@@ -1197,62 +1197,6 @@
 })();
 
 /**
- * صفحات "أفضل المشاريع" / "المشاريع الجديدة" / "الموصى به" (collections/show): بحث فوق الكروت + مناطق المشاريع.
- * - [data-collection-search]: وهو بيكتب الكروت بتتفلتر (الاسم / المطور / المنطقة — بيفهم الهمزات والتاء المربوطة).
- * - [data-collection-area="slug"]: الضغط على المنطقة بيعرض مشاريعها ("الكل" = '').
- * كل كارت: [data-collection-item] عليه data-area و data-search. من غير السكربت: الفورم واللينكات بيبعتوا ?q= و ?area= للسيرفر.
- * حدث على الصفحة: shary:collection-filter ({ q, area, shown }) — لو البيانات هتيجي من السيرفر (AJAX) اسمعوه.
- */
-(function () {
-    function plain(text) {
-        return String(text || '').toLowerCase().replace(/[\u064b-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim();
-    }
-    document.querySelectorAll('[data-collection-tools]').forEach(function (tools) {
-        var scope = tools.closest('[data-collection]') || document;
-        var cards = Array.prototype.slice.call(scope.querySelectorAll('[data-collection-item]'));
-        var form = tools.querySelector('[data-collection-form]');
-        var input = tools.querySelector('[data-collection-search]');
-        var chips = Array.prototype.slice.call(tools.querySelectorAll('[data-collection-area]'));
-        var empty = tools.querySelector('[data-collection-empty]');
-        var area = tools.getAttribute('data-area') || '';
-        // المعاينة (من غير سيرفر): الفلترة كلها في الصفحة. الموقع: الكتابة بتفلتر الكروت الظاهرة على طول ، و Enter والمناطق بيروحوا للسيرفر (?q= / ?area=) عشان النتيجة تبقى من كل الصفحات
-        var action = form ? (form.getAttribute('action') || '') : '';
-        var local = !action || action.charAt(0) === '#' || tools.hasAttribute('data-local');
-
-        function apply() {
-            var words = plain(input ? input.value : '').split(' ').filter(Boolean);
-            var active = !!(words.length || area);
-            var shown = 0;
-            cards.forEach(function (card) {
-                if (card.__hay == null) card.__hay = plain(card.getAttribute('data-search'));
-                var ok = (!area || card.getAttribute('data-area') === area) && words.every(function (word) { return card.__hay.indexOf(word) > -1; });
-                card.style.display = ok ? '' : 'none';
-                if (active && ok) card.classList.remove('hidden');   // الكروت اللي كانت مستنية "وأنت نازل" بتظهر مع الفلترة
-                if (ok) shown += 1;
-            });
-            if (empty) empty.hidden = shown > 0;
-            scope.classList.toggle('is-filtered', active);
-            chips.forEach(function (chip) { chip.setAttribute('aria-pressed', chip.getAttribute('data-collection-area') === area ? 'true' : 'false'); });
-            tools.dispatchEvent(new CustomEvent('shary:collection-filter', { bubbles: true, detail: { q: input ? input.value : '', area: area, shown: shown } }));
-        }
-
-        if (input) { input.addEventListener('input', apply); input.addEventListener('search', apply); }
-        if (form) form.addEventListener('submit', function (event) { if (!local) return; event.preventDefault(); apply(); if (input) input.blur(); });
-        chips.forEach(function (chip) {
-            chip.addEventListener('click', function (event) {
-                if (!local) return;
-                event.preventDefault();
-                event.stopPropagation();
-                area = chip.getAttribute('data-collection-area') || '';
-                apply();
-                if (chip.scrollIntoView) chip.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
-            });
-        });
-        if (area || (input && input.value)) apply();
-    });
-})();
-
-/**
  * فورم "طلب اجتماع":
  * - أي عنصر عليه data-meeting-open (زرار "طلب مقابلة") بيفتح الفورم، وبتتقفل من علامة X أو الضغط براها أو Esc.
  * - زووم / اجتماع حضوري، واختيار اليوم والوقت: الاختيار بيتسجل في الحقول المخفية meeting_type و meeting_date و meeting_time.
@@ -5385,8 +5329,10 @@
         calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15" rx="2.500"/><path d="M8 3v4M16 3v4M3.500 10h17"/></svg>',
         check: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.500 4.500 4.500L19 7.500"/></svg>',
         pin: '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.200 7 13 7 13s7-7.800 7-13a7 7 0 0 0-7-7Zm0 9.500A2.500 2.500 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5Z"/></svg>',
-        heart: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.500s-7.500-4.600-7.500-10.200A4.300 4.300 0 0 1 12 7.600a4.300 4.300 0 0 1 7.500 2.700c0 5.600-7.500 10.200-7.500 10.200Z"/></svg>',
-        compare: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 4v16M16 4v16M4 8l4-4 4 4M12 16l4 4 4-4"/></svg>',
+        // نفس أيقونات كروت الموقع بالظبط (search/partials/unit-card): قارن / المفضلة / شارك
+        heart: '<svg class="group-aria-pressed:fill-current" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 20.3s-7.5-4.6-7.5-10.1A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.6c0 5.5-7.5 10.1-7.5 10.1Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></svg>',
+        compare: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5v19"/><path d="M9 5H6.5A2.5 2.5 0 0 0 4 7.5v9A2.5 2.5 0 0 0 6.5 19H9"/><path d="M15 5h2.5A2.5 2.5 0 0 1 20 7.5v9a2.5 2.5 0 0 1-2.5 2.5H15V5Z" fill="currentColor"/></svg>',
+        shareCard: '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.2 10.8l7.6-4.1M8.2 13.2l7.6 4.1"/></svg>',
         up: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11v9H4v-9h3ZM7 11l4-7a2 2 0 0 1 2 2v4h5.500a1.500 1.500 0 0 1 1.500 1.800l-1.300 6A1.500 1.500 0 0 1 17.200 19H7"/></svg>',
         down: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 13V4h3v9h-3ZM17 13l-4 7a2 2 0 0 1-2-2v-4H5.500A1.500 1.500 0 0 1 4 12.200l1.300-6A1.500 1.500 0 0 1 6.800 5H17"/></svg>',
         copy: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.500" y="8.500" width="11" height="11" rx="2.500"/><path d="M15.500 5.500v-1a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1"/></svg>',
@@ -5760,21 +5706,36 @@
             var name = isUnit ? item.title : item.name;
             var box = make('article', 'sai__card');
             box.setAttribute('data-subject', JSON.stringify(subjectOf(item) || {}));
-            // المفضلة + المقارنة: نفس زراير الموقع (site-chrome.js) — محتاجة slug الوحدة / المشروع
+            // قارن + المفضلة + شارك: نفس زراير وأيقونات كروت الموقع بالظبط (.area-action — site-chrome.js) — محتاجة slug الوحدة / المشروع
             if (item.slug && item.image) {
                 var tools = make('div', 'sai__card-tools');
-                var fav = make('button', 'sai__tool sai__tool--fav'); fav.type = 'button';
+                var fav = make('button', 'area-action group'); fav.type = 'button';
                 fav.setAttribute('data-favorite-toggle', '');
                 fav.setAttribute('data-favorite-id', item.favorite_id || ((isUnit ? 'units/' : 'projects/') + item.slug));
                 fav.setAttribute('aria-pressed', 'false'); fav.setAttribute('aria-label', U.fav || ''); fav.title = U.fav || '';
                 fav.innerHTML = ICONS.heart;
-                var cmp = make('button', 'sai__tool sai__tool--cmp'); cmp.type = 'button';
+                var cmp = make('button', 'area-action'); cmp.type = 'button';
                 cmp.setAttribute('data-compare-toggle', '');
                 cmp.setAttribute('data-compare-type', isUnit ? 'unit' : 'project');
                 cmp.setAttribute('data-compare-id', item.slug);
                 cmp.setAttribute('aria-pressed', 'false'); cmp.setAttribute('aria-label', U.compare || ''); cmp.title = U.compare || '';
                 cmp.innerHTML = ICONS.compare;
+                // شارك: نفس زرار المشاركة بتاع الموقع (رسالة ببيانات الوحدة / المشروع + اللينك + الصورة)
+                var share = make('button', 'area-action'); share.type = 'button';
+                share.setAttribute('data-share-url', item.url || ''); share.setAttribute('data-share-title', item.title || item.name || '');
+                share.setAttribute('aria-label', U.share || ''); share.title = U.share || '';
+                share.innerHTML = ICONS.shareCard;
+                // رسالة المشاركة بنفس شكل كروت الموقع: البيانات + اللينك + صورة الكارت (data-wa-text / data-wa-url / data-wa-image)
+                var shareLines = [
+                    (isUnit ? (english ? 'Unit' : 'اسم الوحدة') : (english ? 'Project' : 'اسم المشروع')) + ': ' + (item.title || item.name || ''),
+                    item.ref ? (english ? 'Reference' : 'المرجع') + ': ' + item.ref : '',
+                    item.price ? (english ? 'Price' : 'السعر') + ': ' + item.price : '',
+                    item.location ? (english ? 'Location' : 'المنطقة') + ': ' + item.location : '',
+                    isUnit ? (english ? 'Unit link:' : 'رابط الوحدة:') : (english ? 'Project link:' : 'رابط المشروع:')
+                ].filter(Boolean).join('\n');
+                share.setAttribute('data-wa-text', shareLines); share.setAttribute('data-wa-url', item.url || ''); share.setAttribute('data-wa-image', item.image || '');
                 tools.appendChild(cmp); tools.appendChild(fav);
+                if (item.url) tools.appendChild(share);
                 box.appendChild(tools);
             }
             if (item.image) {

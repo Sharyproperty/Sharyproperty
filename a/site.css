@@ -2196,7 +2196,7 @@ video {
   border: 4px solid #17a398;
 }
 
-/* صفحات عرض الكل (أفضل المشاريع / المشاريع الجديدة / الموصى به): بحث + فلتر متقدم ← إعلان ← مناطق المشاريع */
+/* صفحات عرض الكل (أفضل المشاريع / المشاريع الجديدة / الموصى به): اسم الصفحة ← إعلان ← لينكات المناطق (البحث والفلتر: search-strip بتاع الموقع) */
 
 .coll-tools {
   margin-bottom: 16px;
@@ -2242,84 +2242,6 @@ video {
   }
 }
 
-.coll-tools__row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* الأماكن ثابتة في اللغتين: البحث يمين وزرار الفلتر شمال (الإنجليزي ما بيعكسش) */
-
-[dir="ltr"] .coll-tools__row,
-    [lang="en"] .coll-tools__row {
-  flex-direction: row-reverse;
-}
-
-.coll-search {
-  display: flex;
-  height: 52px;
-  min-width: 0;
-  flex: 1 1 0%;
-  align-items: center;
-  gap: 10px;
-  border-radius: 16px;
-  border: 1px solid #dbe4ee;
-  background-color: #f5f8fb;
-  padding-inline: 16px;
-  color: #6f8399;
-  transition: border-color 0.2s, background-color 0.2s;
-}
-
-.coll-search:focus-within {
-  border-color: #1f5fc4;
-  background-color: #fff;
-}
-
-.coll-search input {
-  min-width: 0;
-  flex: 1 1 0%;
-  border: 0;
-  background: transparent;
-  font-size: 15.5px;
-  font-weight: 600;
-  color: #123a5c;
-  outline: none;
-}
-
-.coll-search input::-moz-placeholder {
-  color: #8494a6;
-}
-
-.coll-search input::placeholder {
-  color: #8494a6;
-}
-
-.coll-filter {
-  display: flex;
-  height: 52px;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border-radius: 16px;
-  border: 1px solid #dbe4ee;
-  background-color: #f5f8fb;
-  padding-inline: 15px;
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #123a5c;
-  transition: border-color 0.2s, color 0.2s;
-}
-
-.coll-filter:hover {
-  border-color: #1f5fc4;
-  color: #1f5fc4;
-}
-
-.coll-filter span {
-  display: none;
-}
-
 .coll-chips {
   margin: 14px -20px 0;
   display: flex;
@@ -2351,61 +2273,14 @@ video {
   transition: border-color 0.2s, background-color 0.2s, color 0.2s;
 }
 
-.coll-chip small {
-  font-size: 12px;
-  font-weight: 700;
-  color: #8a9aab;
-}
-
 .coll-chip:hover {
   border-color: #1f5fc4;
   color: #123a5c;
 }
 
-.coll-chip[aria-pressed="true"] {
-  border-color: #123a5c;
-  background-color: #123a5c;
-  color: #fff;
-}
-
-.coll-chip[aria-pressed="true"] small {
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.coll-empty {
-  margin-top: 14px;
-  border-radius: 14px;
-  border: 1px dashed #cdd8e3;
-  padding: 18px;
-  text-align: center;
-  font-size: 14.5px;
-  font-weight: 600;
-  color: #6f8399;
-}
-
-.coll-empty[hidden] {
-  display: none;
-}
-
-/* وقت الفلترة: الكروت المطابقة كلها ظاهرة — من غير "تحميل المزيد" ولا أرقام الصفحات */
-
-[data-collection].is-filtered [data-auto-sentinel],
-    [data-collection].is-filtered [data-pagination] {
-  display: none;
-}
-
 @media (min-width: 1024px) {
   .coll-tools {
     margin-bottom: 26px;
-  }
-
-  .coll-search,
-        .coll-filter {
-    height: 56px;
-  }
-
-  .coll-filter span {
-    display: inline;
   }
 
   .coll-chips {
@@ -10285,11 +10160,11 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   color: var(--sai-blue-dark);
 }
 
-/* بيسجّل: الزرار تركواز (لون شاري) بينبض — ضغطة تانية بتبعت */
+/* بيسجّل: الزرار بتركواز اللوجو (#4CBFB2) بينبض — ضغطة تانية بتبعت */
 
 .sai__mic[aria-pressed="true"] {
-  border-color: #1f9d8f;
-  background-color: #1f9d8f;
+  border-color: #4cbfb2;
+  background-color: #4cbfb2;
   color: #fff;
   animation: sai-mic-pulse 1.4s ease-out infinite;
 }
@@ -10299,22 +10174,22 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 }
 
 .sai__composer.is-recording textarea::-moz-placeholder {
-  color: #1f8a7c;
+  color: #38b0a3;
   opacity: 1;
 }
 
 .sai__composer.is-recording textarea::placeholder {
-  color: #1f8a7c;
+  color: #38b0a3;
   opacity: 1;
 }
 
 @keyframes sai-mic-pulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(31, 157, 143, 0.5);
+    box-shadow: 0 0 0 0 rgba(76, 191, 178, 0.55);
   }
 
   100% {
-    box-shadow: 0 0 0 12px rgba(31, 157, 143, 0);
+    box-shadow: 0 0 0 12px rgba(76, 191, 178, 0);
   }
 }
 
@@ -10611,31 +10486,6 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   z-index: 2;
   display: flex;
   gap: 6px;
-}
-
-.sai__tool {
-  display: flex;
-  height: 34px;
-  width: 34px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.94);
-  color: var(--sai-navy);
-  box-shadow: 0 4px 10px -4px rgba(13, 43, 68, 0.5);
-}
-
-.sai__tool--fav[aria-pressed="true"] {
-  color: #e0245e;
-}
-
-.sai__tool--fav[aria-pressed="true"] svg {
-  fill: currentColor;
-}
-
-.sai__tool--cmp[aria-pressed="true"] {
-  background-color: var(--sai-navy);
-  color: #fff;
 }
 
 /* نسبة المطابقة + ليه رشحناها */
@@ -15820,10 +15670,6 @@ img.abroad-dev__logo {
   margin-inline-start: -1.25rem;
 }
 
-.-mt-3 {
-  margin-top: -0.75rem;
-}
-
 .mb-1 {
   margin-bottom: 0.25rem;
 }
@@ -16228,10 +16074,6 @@ img.abroad-dev__logo {
 
 .min-h-\[46px\] {
   min-height: 46px;
-}
-
-.min-h-\[50px\] {
-  min-height: 50px;
 }
 
 .min-h-\[60px\] {
@@ -17039,10 +16881,6 @@ img.abroad-dev__logo {
 .border-shary-navy {
   --tw-border-opacity: 1;
   border-color: rgb(18 58 92 / var(--tw-border-opacity, 1));
-}
-
-.border-shary-navy\/25 {
-  border-color: rgb(18 58 92 / 0.25);
 }
 
 .border-shary-navy\/40 {
@@ -18085,12 +17923,6 @@ img.abroad-dev__logo {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
-.shadow-\[0_8px_16px_-10px_rgba\(18\2c 58\2c 92\2c 0\.5\)\] {
-  --tw-shadow: 0 8px 16px -10px rgba(18,58,92,0.5);
-  --tw-shadow-colored: 0 8px 16px -10px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
 .shadow-\[0_8px_22px_-12px_rgba\(18\2c 58\2c 92\2c 0\.45\)\] {
   --tw-shadow: 0 8px 22px -12px rgba(18,58,92,0.45);
   --tw-shadow-colored: 0 8px 22px -12px var(--tw-shadow-color);
@@ -18973,11 +18805,6 @@ img.abroad-dev__logo {
 .group:hover .group-hover\:text-shary-link {
   --tw-text-opacity: 1;
   color: rgb(31 99 198 / var(--tw-text-opacity, 1));
-}
-
-.aria-expanded\:border-shary-link[aria-expanded="true"] {
-  --tw-border-opacity: 1;
-  border-color: rgb(31 99 198 / var(--tw-border-opacity, 1));
 }
 
 .aria-expanded\:text-shary-link[aria-expanded="true"] {
@@ -20208,6 +20035,10 @@ img.abroad-dev__logo {
     border-inline-start-width: 1px;
   }
 
+  .lg\:border-s-0 {
+    border-inline-start-width: 0px;
+  }
+
   .lg\:border-t {
     border-top-width: 1px;
   }
@@ -20734,6 +20565,11 @@ img.abroad-dev__logo {
     padding-inline-start: 0px;
   }
 
+  .lg\:hover\:border-shary-link:hover {
+    --tw-border-opacity: 1;
+    border-color: rgb(31 99 198 / var(--tw-border-opacity, 1));
+  }
+
   .lg\:hover\:bg-shary-navy:hover {
     --tw-bg-opacity: 1;
     background-color: rgb(18 58 92 / var(--tw-bg-opacity, 1));
@@ -20863,8 +20699,6 @@ img.abroad-dev__logo {
 .pv-desktop .coll-title {font-size: 42px;}
 .pv-desktop .coll-sub {font-size: 16px;}
 .pv-desktop .coll-tools {margin-bottom: 26px;}
-.pv-desktop .coll-search, .pv-desktop .coll-filter {height: 56px;}
-.pv-desktop .coll-filter span {display: inline;}
 .pv-desktop .coll-chips {margin: 18px 0 0;
     flex-wrap: wrap;
     overflow: visible;
@@ -22483,6 +22317,7 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:border-b-0 {border-bottom-width: 0px;}
 .pv-desktop .lg\:border-e {border-inline-end-width: 1px;}
 .pv-desktop .lg\:border-s {border-inline-start-width: 1px;}
+.pv-desktop .lg\:border-s-0 {border-inline-start-width: 0px;}
 .pv-desktop .lg\:border-t {border-top-width: 1px;}
 .pv-desktop .lg\:border-t-0 {border-top-width: 0px;}
 .pv-desktop .lg\:border-shary-line {--tw-border-opacity: 1;
@@ -22646,6 +22481,8 @@ img.abroad-dev__logo {
     --tw-shadow-colored: 0 0 #0000;
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);}
 .pv-desktop .lg\:first\:ps-0:first-child {padding-inline-start: 0px;}
+.pv-desktop .lg\:hover\:border-shary-link:hover {--tw-border-opacity: 1;
+    border-color: rgb(31 99 198 / var(--tw-border-opacity, 1));}
 .pv-desktop .lg\:hover\:bg-shary-navy:hover {--tw-bg-opacity: 1;
     background-color: rgb(18 58 92 / var(--tw-bg-opacity, 1));}
 
