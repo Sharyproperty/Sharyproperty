@@ -8620,7 +8620,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   box-shadow: 0 3px 10px -3px rgba(18, 58, 92, 0.25);
 }
 
-/* السعر والتوفير ثابتين تحت الهيدر على الموبايل لما العميل ينزل في صفحة الفرصة */
+/* نفس جزء السعر كامل (اسم الوحدة + المكان + السعر + توفير + السعر المشطوب) ثابت تحت الهيدر على الموبايل لما العميل ينزل في صفحة الفرصة */
 
 .opp-sticky {
   position: fixed;
@@ -8628,16 +8628,13 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   top: 0;
   z-index: 25;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  margin-inline: 10px;
-  border-radius: 14px;
-  border: 1px solid #e3e9ef;
-  background-color: rgba(255, 255, 255, 0.97);
-  padding: 6px 12px;
+  flex-direction: column;
+  gap: 6px;
+  border-radius: 0 0 18px 18px;
+  background-color: #fff;
+  padding: 8px 20px 10px;
   color: #123a5c;
-  box-shadow: 0 10px 20px -14px rgba(18, 58, 92, 0.6);
+  box-shadow: 0 12px 22px -16px rgba(18, 58, 92, 0.6);
   opacity: 0;
   pointer-events: none;
   transform: translateY(-100%);
@@ -8650,71 +8647,90 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   transform: none;
 }
 
-.opp-sticky__price {
+.opp-sticky__head {
   display: flex;
   min-width: 0;
-  flex: 1;
-  align-items: center;
-  gap: 8px;
+  flex-direction: column;
 }
 
-.opp-sticky__price s {
+.opp-sticky__head b {
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.opp-sticky__head small {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
   font-size: 12.5px;
   font-weight: 600;
-  line-height: 1.5;
-  color: #7d8ea1;
+  line-height: 1.6;
+  color: #2f6fa6;
 }
 
-.opp-sticky__price .opp-sticky__off {
-  margin-inline-start: auto;
+.opp-sticky__head small span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.opp-sticky__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.opp-sticky__price {
+  min-width: 0;
+}
+
+.opp-sticky__price > span {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .opp-sticky__price strong {
+  display: block;
   white-space: nowrap;
-  font-size: 17px;
+  font-size: 21px;
   font-weight: 800;
-  line-height: 1.4;
+  line-height: 1.3;
 }
 
-.opp-sticky__price strong span {
-  font-size: 12px;
+.opp-sticky__price strong small {
+  font-size: 14px;
 }
 
-.opp-sticky__save {
-  display: inline-flex;
+.opp-sticky__side {
+  display: flex;
   flex-shrink: 0;
+  flex-direction: column;
   align-items: center;
-  gap: 6px;
-  white-space: nowrap;
-  font-size: 12.5px;
-  font-weight: 800;
-  line-height: 1.6;
-  color: #123a5c;
+  gap: 5px;
 }
 
-.opp-sticky__save b {
-  border-radius: 999px;
-  background-color: #1e4166;
-  padding: 3px 10px;
-  font-size: 12px;
-  font-weight: 800;
-  color: #fff;
+.opp-sticky .opp-save {
+  gap: 8px;
+  padding-inline-start: 12px;
+  font-size: 13.5px;
 }
 
-@media (max-width: 379px) {
+.opp-sticky .opp-save b {
+  padding: 6px 11px;
+  font-size: 13px;
+}
+
+@media (min-width: 400px) {
   .opp-sticky__price strong {
-    font-size: 15.5px;
-  }
-
-  .opp-sticky__price s,
-        .opp-sticky__save {
-    font-size: 11.5px;
-  }
-
-  .opp-sticky__save b {
-    padding: 3px 8px;
-    font-size: 11.5px;
+    font-size: 24px;
   }
 }
 
@@ -11788,7 +11804,7 @@ img.abroad-dev__logo {
   transition: opacity 0.3s;
 }
 
-/* الكارت بسيط وهادي: أبيض ، دايرة تركواز واحدة ورا التليفون (الشاشة الرئيسية للتطبيق) ، عنوان كحلي + سطر واحد + زرار كحلي. الكارت كله بيفتح المتجر */
+/* كارت واحد بلون واحد قوي (أزرق ملكي لكحلي) من فوق لتحت — من غير جزء أبيض منفصل: التليفون واضح فوق هالة نور ، العنوان أبيض ، والزرار أصفر. الكارت كله بيفتح المتجر */
 
 .app-pop__card {
   position: relative;
@@ -11797,11 +11813,15 @@ img.abroad-dev__logo {
   cursor: pointer;
   overflow: hidden;
   border-radius: 30px;
-  background-color: #fff;
-  padding: 0 0 18px;
+  background-color: #1b5fd0;
+  background-image:
+            radial-gradient(70% 38% at 50% 30%, rgba(120, 190, 255, 0.55), rgba(120, 190, 255, 0)),
+            radial-gradient(60% 30% at 100% 0%, rgba(53, 182, 167, 0.5), rgba(53, 182, 167, 0)),
+            linear-gradient(170deg, #2a7cf0 0%, #1a56c4 48%, #0f2f78 100%);
+  padding: 0 0 22px;
   text-align: center;
-  color: #123a5c;
-  box-shadow: 0 30px 60px -24px rgba(6, 20, 34, 0.6);
+  color: #fff;
+  box-shadow: 0 30px 60px -24px rgba(6, 20, 60, 0.75);
   opacity: 0;
   transform: translateX(-118%) rotate(-4deg);
   transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.25, 1.06), opacity 0.3s;
@@ -11827,40 +11847,30 @@ img.abroad-dev__logo {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #123a5c;
+  background-color: rgba(255, 255, 255, 0.18);
+  color: #fff;
 }
 
-/* التليفون فوق دايرة تركواز واحدة — الجزء اللي تحت من التليفون بيدخل ورا النص */
-
-/* البوب أب مستطيل بالطول (مناسب لشاشة الموبايل): التليفون كامل بنسبته الطبيعية فوق دايرة تركواز ، وتحته العنوان والزرار */
-
-/* الخلفية أزرقات منوّرة: سما فاتحة من فوق لأزرق صافي تحت + هالة نور بيضا ورا التليفون ونقطتين نور خفاف. التليفون كبير وواضح */
+/* التليفون كبير وواضح فوق هالة نور خفيفة — على نفس خلفية الكارت */
 
 .app-pop__art {
   position: relative;
   display: flex;
-  height: min(440px, 58vh);
+  height: min(420px, 55vh);
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  background-color: #8ec9fb;
-  background-image:
-            radial-gradient(46% 30% at 12% 12%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0)),
-            radial-gradient(40% 26% at 92% 30%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0)),
-            linear-gradient(180deg, #e6f4ff 0%, #b5dcff 38%, #69b4f6 76%, #3d93ea 100%);
-  padding: 30px 0 34px;
+  padding: 34px 0 6px;
 }
 
 .app-pop__art::before {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 52%;
   left: 50%;
-  height: 380px;
-  width: 380px;
+  height: 330px;
+  width: 330px;
   border-radius: 50%;
-  background-image: radial-gradient(closest-side, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.6) 42%, rgba(255, 255, 255, 0) 100%);
+  background-image: radial-gradient(closest-side, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.16) 55%, rgba(255, 255, 255, 0) 100%);
   transform: translate(-50%, -50%);
 }
 
@@ -11874,49 +11884,45 @@ img.abroad-dev__logo {
   flex-shrink: 0;
   -o-object-fit: contain;
      object-fit: contain;
-  filter: drop-shadow(0 22px 26px rgba(20, 78, 148, 0.38));
+  filter: drop-shadow(0 24px 28px rgba(5, 18, 60, 0.55));
 }
 
 .app-pop__body {
   position: relative;
   z-index: 2;
-  margin-top: -20px;
-  border-radius: 26px 26px 0 0;
-  background-color: #fff;
-  padding-top: 16px;
+  padding-top: 12px;
 }
 
 .app-pop__title {
   margin: 0 24px;
-  font-size: 21px;
+  font-size: 23px;
   font-weight: 800;
   line-height: 1.45;
-  color: #123a5c;
+  color: #fff;
 }
 
 .app-pop__text {
   margin: 2px 28px 0;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 500;
   line-height: 1.7;
-  color: #5b7189;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .app-pop__cta {
-  margin: 12px 22px 0;
+  margin: 14px 22px 0;
   display: flex;
-  height: 52px;
+  height: 54px;
   align-items: center;
   justify-content: center;
   gap: 9px;
   border-radius: 999px;
-  background-color: #1f6fd6;
-  background-image: linear-gradient(90deg, #1c5fbf 0%, #2f8bef 100%);
-  box-shadow: 0 12px 20px -10px rgba(31, 111, 214, 0.75);
-  font-size: 16.5px;
+  background-color: #fcb424;
+  box-shadow: 0 14px 22px -12px rgba(252, 180, 36, 0.9);
+  font-size: 17px;
   font-weight: 800;
   line-height: 1.5;
-  color: #fff;
+  color: #10264a;
 }
 
 .app-pop__cta[data-state="open"] [data-app-icon="get"] {

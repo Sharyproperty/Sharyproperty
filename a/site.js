@@ -2605,8 +2605,8 @@
         var stickyHeader = sticky.closest('[lang]') ? sticky.closest('[lang]').querySelector('header') : document.querySelector('header');
         var placeSticky = function () {
             var box = deal.getBoundingClientRect();
-            // الشريط عايم تحت الهيدر على طول (بمسافة صغيرة) — من غير خلفية داخلة تحت الهيدر
-            var top = stickyHeader ? Math.max(0, stickyHeader.getBoundingClientRect().bottom) + 6 : 6;
+            // الجزء الثابت لازق تحت الهيدر على طول
+            var top = stickyHeader ? Math.max(0, stickyHeader.getBoundingClientRect().bottom) : 0;
             sticky.style.top = top + 'px';
             // ظاهر بس لما قسم السعر يعدّي فوق (والصفحة نفسها ظاهرة)
             sticky.classList.toggle('is-on', box.height > 0 && box.bottom < top + 10);
