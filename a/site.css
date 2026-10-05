@@ -2713,7 +2713,7 @@ video {
 
 /* الهيدر ثابت وله ترتيب طبقات خاص بيه: والقايمة مفتوحة بيطلع فوق شريط التواصل والأزرار العايمة */
 
-header:has(> .site-menu:not(.hidden)) {
+header:has(> .site-menu:not([class~="hidden"])) {
   z-index: 60;
 }
 
@@ -4833,7 +4833,7 @@ input:focus-visible + .area-chip,
 
 .area-ai {
   border: 2px solid transparent;
-  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(180deg, #1f4466, #2a9d8f) border-box;
+  background: linear-gradient(#fff, #fff) padding-box, linear-gradient(180deg, #1f5fc4, #5aa9ee) border-box;
 }
 
 /* ---- صفحة المطور ---- */
@@ -5208,7 +5208,7 @@ input:focus-visible + .area-chip,
 
 /* لو مفيش نتايج: رسالة "مفيش نتايج" بس، من غير سطر التحميل */
 
-[data-results-empty]:not(.hidden) ~ .search-more {
+[data-results-empty]:not([class~="hidden"]) ~ .search-more {
   display: none;
 }
 
@@ -7159,7 +7159,7 @@ input:focus-visible + .area-chip,
   }
 }
 
-body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
+body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-gallery-wrap {
   visibility: hidden;
 }
 
@@ -12114,7 +12114,9 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 }
 
 @media (min-width: 1024px) {
-  .home-filter:has([data-filter-sheet="all"]:not(.hidden)) {
+  /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+  .home-filter:has([data-filter-sheet="all"]:not([class~="hidden"])) {
     position: fixed;
     inset: 0;
     z-index: 70;
@@ -13341,7 +13343,7 @@ img.abroad-dev__logo {
   inset: -5px;
   z-index: -1;
   border-radius: 50%;
-  background: conic-gradient(from 0deg, #1f4466, #2a9d8f, #fcb424, #4cbfb2, #1f4466);
+  background: conic-gradient(from 0deg, #123a5c, #1f5fc4, #5aa9ee, #1f5fc4, #123a5c);
   filter: blur(7px);
   opacity: 0.6;
   animation: fab-spin 6s linear infinite;
@@ -13355,7 +13357,7 @@ img.abroad-dev__logo {
 
 .area-fab__label--pop {
   border-radius: 14px 14px 4px 14px;
-  background-image: linear-gradient(90deg, #1e4166, #2a8d8a);
+  background-image: linear-gradient(90deg, #123a5c, #1f5fc4);
   padding: 9px 14px;
   box-shadow: 0 12px 24px -12px rgba(18, 58, 92, 0.6);
   transform-origin: right center;
@@ -16349,15 +16351,7 @@ img.abroad-dev__logo {
   }
 
   @media (min-width: 1024px) {
-    .home-filter:has([data-filter-sheet="all"]:not(.md\:hidden)) {
-      position: fixed;
-      inset: 0;
-      z-index: 70;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(13, 32, 51, 0.46);
-    }
+    /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
 
     .home-filter .md\:hidden.search-side {
       display: none !important;
@@ -16589,15 +16583,7 @@ img.abroad-dev__logo {
   }
 
   @media (min-width: 1024px) {
-    .home-filter:has([data-filter-sheet="all"]:not(.lg\:hidden)) {
-      position: fixed;
-      inset: 0;
-      z-index: 70;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(13, 32, 51, 0.46);
-    }
+    /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
 
     .home-filter .lg\:hidden.search-side {
       display: none !important;
@@ -19447,7 +19433,9 @@ img.abroad-dev__logo {
 .pv-desktop .opp-gauge__ring b {font-size: 20px;}
 .pv-desktop .opp-gauge__label {font-size: 15px;}
 .pv-desktop .opp-actions {max-width: 560px;}
-.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.hidden)) {position: fixed;
+.pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+  .home-filter:has([data-filter-sheet="all"]:not([class~="hidden"])) {position: fixed;
     inset: 0;
     z-index: 70;
     display: flex;
@@ -19581,23 +19569,13 @@ img.abroad-dev__logo {
 .pv-desktop .md\:hidden.sai {display: none;}
 .pv-desktop .md\:hidden.sai__chips {display: none;}
 .pv-desktop .md\:hidden.sai__mic {display: none;}
-.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.md\:hidden)) {position: fixed;
-      inset: 0;
-      z-index: 70;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(13, 32, 51, 0.46);}
-.pv-desktop .home-filter .md\:hidden.search-side {display: none !important;}
+.pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .md\:hidden.search-side {display: none !important;}
 .pv-desktop .md\:hidden.privacy-note {display: none;}
-.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.md\:hidden)) {position: fixed;
-      inset: 0;
-      z-index: 70;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(13, 32, 51, 0.46);}
-.pv-desktop .home-filter .md\:hidden.search-side {display: none !important;}
+.pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .md\:hidden.search-side {display: none !important;}
 .pv-desktop .lg\:hidden.saved-empty {display: none;}
 .pv-desktop .lg\:hidden.compare-table {display: none;}
 .pv-desktop /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
@@ -19754,14 +19732,9 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:hidden.sai {display: none;}
 .pv-desktop .lg\:hidden.sai__chips {display: none;}
 .pv-desktop .lg\:hidden.sai__mic {display: none;}
-.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.lg\:hidden)) {position: fixed;
-      inset: 0;
-      z-index: 70;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(13, 32, 51, 0.46);}
-.pv-desktop .home-filter .lg\:hidden.search-side {display: none !important;}
+.pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .lg\:hidden.search-side {display: none !important;}
 .pv-desktop .lg\:hidden.privacy-note {display: none;}
 .pv-desktop /* فوق بعرض الصفحة: البحث + الترتيب + الخريطة + التحويل، وتحتهم العنوان — وبعدين عمود الفلاتر والنتايج */
 
@@ -19914,14 +19887,9 @@ img.abroad-dev__logo {
     .search-list label > span.lg\:flex-1 {flex: 0 1 auto;
       font-size: 14.5px;
       font-weight: 500;}
-.pv-desktop .home-filter:has([data-filter-sheet="all"]:not(.lg\:hidden)) {position: fixed;
-      inset: 0;
-      z-index: 70;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(13, 32, 51, 0.46);}
-.pv-desktop .home-filter .lg\:hidden.search-side {display: none !important;}
+.pv-desktop /* [class~="hidden"] بدل .hidden: عشان Tailwind ما يعملش من القاعدة نسخ lg:hidden / md:hidden بتتحقق دايمًا وتغمّق الصفحة */
+
+    .home-filter .lg\:hidden.search-side {display: none !important;}
 .pv-desktop .md\:mt-0 {margin-top: 0px;}
 .pv-desktop .md\:inline {display: inline;}
 .pv-desktop .md\:table-cell {display: table-cell;}
