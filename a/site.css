@@ -10876,13 +10876,6 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   white-space: nowrap;
 }
 
-.opp-pay__rest {
-  margin-top: 10px;
-  border-radius: 14px;
-  border: 1px dashed #c3d2e4;
-  padding: 13px 14px;
-}
-
 .opp-pay__rest-row {
   display: flex;
   align-items: center;
@@ -10898,34 +10891,16 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   white-space: nowrap;
 }
 
-/* القسط + مدة الأقساط (خانتين جنب بعض) */
+/* "المتبقي" سطر لوحده تحت المقدم (فوق كارت خطة الأقساط) */
 
-.opp-pay__terms {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
+.opp-pay__rest-row--line {
   margin-top: 10px;
+  border-radius: 14px;
+  border: 1px dashed #c3d2e4;
+  padding: 11px 16px;
 }
 
-.opp-pay__terms > div {
-  border-radius: 12px;
-  background-color: #fff;
-  padding: 10px 12px;
-}
-
-.opp-pay__terms dt {
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.6;
-  color: #5b7189;
-}
-
-.opp-pay__terms dd {
-  font-size: 15px;
-  font-weight: 800;
-  line-height: 1.6;
-  color: #123a5c;
-}
+/* القسط + مدة الأقساط (خانتين جنب بعض) */
 
 @media (min-width: 1024px) {
   .opp-pay {
@@ -11851,7 +11826,8 @@ img.abroad-dev__logo {
   transition: opacity 0.3s;
 }
 
-/* كارت واحد بلون واحد قوي (أزرق ملكي لكحلي) من فوق لتحت — من غير جزء أبيض منفصل: التليفون واضح فوق هالة نور ، العنوان أبيض ، والزرار أصفر. الكارت كله بيفتح المتجر */
+/* كارت واحد هادي وراقي بألوان شاري: كحلي شاري من فوق لتحت + لمسة تركواز ورا التليفون ولمسة صفرا خفيفة في الركن (ألوان اللوجو) — من غير جزء منفصل ولا زرار مليان:
+       التليفون واضح ، العنوان أبيض ، سطر واحد ، و"حمل التطبيق الآن" سطر نص بسهم (مش زرار). الكارت كله بيفتح المتجر */
 
 .app-pop__card {
   position: relative;
@@ -11860,15 +11836,15 @@ img.abroad-dev__logo {
   cursor: pointer;
   overflow: hidden;
   border-radius: 30px;
-  background-color: #1b5fd0;
+  background-color: #163a5e;
   background-image:
-            radial-gradient(70% 38% at 50% 30%, rgba(120, 190, 255, 0.55), rgba(120, 190, 255, 0)),
-            radial-gradient(60% 30% at 100% 0%, rgba(53, 182, 167, 0.5), rgba(53, 182, 167, 0)),
-            linear-gradient(170deg, #2a7cf0 0%, #1a56c4 48%, #0f2f78 100%);
-  padding: 0 0 22px;
+            radial-gradient(62% 34% at 50% 36%, rgba(76, 191, 174, 0.34), rgba(76, 191, 174, 0)),
+            radial-gradient(42% 22% at 92% 4%, rgba(252, 180, 36, 0.2), rgba(252, 180, 36, 0)),
+            linear-gradient(180deg, #1e4166 0%, #163a5e 52%, #0e2c49 100%);
+  padding: 0 0 26px;
   text-align: center;
   color: #fff;
-  box-shadow: 0 30px 60px -24px rgba(6, 20, 60, 0.75);
+  box-shadow: 0 30px 60px -24px rgba(6, 20, 34, 0.75);
   opacity: 0;
   transform: translateX(-118%) rotate(-4deg);
   transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.25, 1.06), opacity 0.3s;
@@ -11894,7 +11870,7 @@ img.abroad-dev__logo {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.18);
+  background-color: rgba(255, 255, 255, 0.14);
   color: #fff;
 }
 
@@ -11903,10 +11879,10 @@ img.abroad-dev__logo {
 .app-pop__art {
   position: relative;
   display: flex;
-  height: min(420px, 55vh);
+  height: min(430px, 56vh);
   align-items: center;
   justify-content: center;
-  padding: 34px 0 6px;
+  padding: 36px 0 4px;
 }
 
 .app-pop__art::before {
@@ -11914,10 +11890,10 @@ img.abroad-dev__logo {
   position: absolute;
   top: 52%;
   left: 50%;
-  height: 330px;
-  width: 330px;
+  height: 320px;
+  width: 320px;
   border-radius: 50%;
-  background-image: radial-gradient(closest-side, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.16) 55%, rgba(255, 255, 255, 0) 100%);
+  background-image: radial-gradient(closest-side, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 55%, rgba(255, 255, 255, 0) 100%);
   transform: translate(-50%, -50%);
 }
 
@@ -11931,13 +11907,13 @@ img.abroad-dev__logo {
   flex-shrink: 0;
   -o-object-fit: contain;
      object-fit: contain;
-  filter: drop-shadow(0 24px 28px rgba(5, 18, 60, 0.55));
+  filter: drop-shadow(0 24px 28px rgba(4, 16, 30, 0.6));
 }
 
 .app-pop__body {
   position: relative;
   z-index: 2;
-  padding-top: 12px;
+  padding-top: 14px;
 }
 
 .app-pop__title {
@@ -11953,23 +11929,22 @@ img.abroad-dev__logo {
   font-size: 14px;
   font-weight: 500;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.8);
 }
 
+/* "حمل التطبيق الآن": سطر نص بسهم تحته خط رفيع (مش زرار) */
+
 .app-pop__cta {
-  margin: 14px 22px 0;
-  display: flex;
-  height: 54px;
+  margin: 14px auto 0;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 9px;
-  border-radius: 999px;
-  background-color: #fcb424;
-  box-shadow: 0 14px 22px -12px rgba(252, 180, 36, 0.9);
-  font-size: 17px;
+  gap: 8px;
+  border-bottom: 1.5px solid rgba(76, 191, 174, 0.7);
+  padding-bottom: 3px;
+  font-size: 16.5px;
   font-weight: 800;
   line-height: 1.5;
-  color: #10264a;
+  color: #6fd3c4;
 }
 
 .app-pop__cta[data-state="open"] [data-app-icon="get"] {
