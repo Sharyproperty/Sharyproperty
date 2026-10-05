@@ -8615,11 +8615,14 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin-inline: 12px;
-  border-radius: 14px;
+  margin-inline: auto;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: calc(100% - 24px);
+  border-radius: 999px;
   border: 1px solid #e3e9ef;
-  background-color: rgba(255, 255, 255, 0.96);
-  padding: 7px 12px;
+  background-color: rgba(255, 255, 255, 0.97);
+  padding: 5px 14px;
   color: #123a5c;
   box-shadow: 0 10px 20px -14px rgba(18, 58, 92, 0.6);
   opacity: 0;
@@ -8637,8 +8640,21 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .opp-sticky__price {
   display: flex;
   min-width: 0;
+  flex: 1;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
+}
+
+.opp-sticky__price s {
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: #7d8ea1;
+}
+
+.opp-sticky__price .opp-sticky__off {
+  margin-inline-start: auto;
 }
 
 .opp-sticky__price strong {
@@ -8661,18 +8677,6 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
   font-weight: 800;
   line-height: 1.7;
   color: #136a5f;
-}
-
-.opp-sticky__save {
-  flex-shrink: 0;
-  white-space: nowrap;
-  border-radius: 999px;
-  background-color: #1e4166;
-  padding: 4px 11px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.6;
-  color: #fff;
 }
 
 /* ملخص السداد على كارت الفرصة: "المطلوب كاش" (سطر واحد) أو 3 خانات (المقدم / المتبقي / القسط) */
@@ -11130,6 +11134,593 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 @media (min-width: 380px) {
   .app-btn {
     padding-inline: 15px;
+    font-size: 14.5px;
+  }
+}
+
+/* ---- عقارات دولية (abroad/index + abroad/country): الدول ← المناطق ← المطورين ← المشاريع ---- */
+
+/* كارت الدولة: الصورة مالية الكارت + العلم + الاسم والمدن + عدد المشاريع و"يبدأ من" */
+
+.abroad-country {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 18px;
+  background-color: #dfe7ef;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(18, 58, 92, 0.05), 0 16px 30px -22px rgba(18, 58, 92, 0.55);
+}
+
+.abroad-country__photo {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.abroad-country:hover .abroad-country__photo {
+  transform: scale(1.04);
+}
+
+.abroad-country::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(9, 26, 43, 0.9), rgba(9, 26, 43, 0.25) 55%, rgba(9, 26, 43, 0.05));
+}
+
+.abroad-country__flag,
+    .abroad-hero__flag {
+  position: absolute;
+  top: 10px;
+  inset-inline-start: 10px;
+  z-index: 1;
+  display: flex;
+  height: 34px;
+  width: 34px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: #fff;
+  box-shadow: 0 4px 12px -4px rgba(9, 26, 43, 0.55);
+}
+
+.abroad-country__flag img,
+    .abroad-hero__flag img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.abroad-country__text {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.abroad-country__text b {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.abroad-country__text small {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+.abroad-country__meta {
+  margin-top: 7px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.abroad-country__meta > span {
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 2px 9px;
+  white-space: nowrap;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+/* إزاي بتشتري: 3 خطوات */
+
+.abroad-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px;
+  background-color: #f1f6fb;
+  padding: 14px 16px;
+  color: #123a5c;
+}
+
+.abroad-step__num {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #1e4166;
+  font-size: 17px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.abroad-step b {
+  display: block;
+  font-size: 15.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.abroad-step small {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.7;
+  color: #5b7189;
+}
+
+/* هيدر الدولة: الصورة وعليها العلم + الاسم + الأرقام */
+
+.abroad-hero {
+  position: relative;
+  display: flex;
+  min-height: 250px;
+  align-items: flex-end;
+  overflow: hidden;
+  border-radius: 18px;
+  background-color: #1f5487;
+  color: #fff;
+}
+
+.abroad-hero__photo {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.abroad-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(9, 26, 43, 0.92), rgba(9, 26, 43, 0.45) 55%, rgba(9, 26, 43, 0.15));
+}
+
+.abroad-hero__body {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 64px 18px 18px;
+}
+
+.abroad-hero__flag {
+  top: 16px;
+  inset-inline-start: 18px;
+  height: 42px;
+  width: 42px;
+}
+
+.abroad-hero h1 {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.abroad-hero p {
+  margin-top: 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.7;
+  opacity: 0.92;
+}
+
+.abroad-hero__stats {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.abroad-hero__stats li {
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.16);
+  padding: 6px 12px;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+.abroad-hero__stats b {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.abroad-hero__stats span {
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* معلومات سريعة عن الدولة (العملة / التملك / الإقامة / العائد) */
+
+.abroad-facts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: start;
+  gap: 8px;
+}
+
+.abroad-facts > div {
+  border-radius: 14px;
+  background-color: #f1f6fb;
+  padding: 11px 13px;
+}
+
+.abroad-facts dt {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #5b7189;
+}
+
+.abroad-facts dd {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.6;
+  color: #123a5c;
+}
+
+/* المناطق: موبايل بتتسحب بالجنب — ديسك توب 3 في الصف */
+
+.abroad-areas,
+    .abroad-rail {
+  display: flex;
+  gap: 12px;
+  margin-inline: -20px;
+  overflow-x: auto;
+  padding-inline: 20px;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 20px;
+  scrollbar-width: none;
+}
+
+.abroad-areas::-webkit-scrollbar,
+    .abroad-rail::-webkit-scrollbar,
+    .abroad-chips::-webkit-scrollbar {
+  display: none;
+}
+
+.abroad-rail > * {
+  flex: 0 0 46%;
+  scroll-snap-align: start;
+}
+
+.abroad-area {
+  position: relative;
+  display: block;
+  height: 150px;
+  flex: 0 0 72%;
+  overflow: hidden;
+  border-radius: 16px;
+  background-color: #dfe7ef;
+  color: #fff;
+  scroll-snap-align: start;
+  outline: 0 solid #35b6a7;
+  transition: outline-width 0.15s;
+}
+
+.abroad-area[aria-pressed="true"] {
+  outline-width: 3px;
+}
+
+.abroad-area > img {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.abroad-area::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(9, 26, 43, 0.88), rgba(9, 26, 43, 0.1) 70%);
+}
+
+.abroad-area__text {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px;
+}
+
+.abroad-area__text b {
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.abroad-area__text small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.6;
+  opacity: 0.92;
+}
+
+.abroad-area__text > span {
+  margin-top: 5px;
+  align-self: flex-start;
+  border-radius: 999px;
+  background-color: #35b6a7;
+  padding: 1px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+
+/* المطورين في الدولة */
+
+.abroad-devs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.abroad-dev {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px;
+  border: 1px solid #e3e9ef;
+  background-color: #fff;
+  padding: 12px 14px;
+  color: #123a5c;
+  transition: box-shadow 0.2s;
+}
+
+.abroad-dev:hover {
+  box-shadow: 0 10px 22px -14px rgba(18, 58, 92, 0.5);
+}
+
+.abroad-dev__logo {
+  display: flex;
+  height: 52px;
+  width: 52px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid #e3e9ef;
+  background-color: #1e4166;
+  -o-object-fit: contain;
+     object-fit: contain;
+  font-size: 14px;
+  font-weight: 800;
+  color: #fff;
+}
+
+img.abroad-dev__logo {
+  background-color: #fff;
+}
+
+.abroad-dev b {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 15.5px;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.abroad-dev small {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: #5b7189;
+}
+
+/* شريط المناطق فوق "كل المشاريع" */
+
+.abroad-chips {
+  display: flex;
+  gap: 8px;
+  margin-inline: -20px;
+  overflow-x: auto;
+  padding-inline: 20px;
+  scrollbar-width: none;
+}
+
+.abroad-chip {
+  flex-shrink: 0;
+  white-space: nowrap;
+  border-radius: 999px;
+  border: 1.5px solid #d5dfea;
+  background-color: #fff;
+  padding: 7px 16px;
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.abroad-chip[aria-pressed="true"] {
+  border-color: #1e4166;
+  background-color: #1e4166;
+  color: #fff;
+}
+
+@media (min-width: 1024px) {
+  .abroad-country {
+    aspect-ratio: 4 / 3;
+    border-radius: 22px;
+  }
+
+  .abroad-country__flag {
+    top: 16px;
+    inset-inline-start: 16px;
+    height: 44px;
+    width: 44px;
+  }
+
+  .abroad-country__text {
+    padding: 20px;
+  }
+
+  .abroad-country__text b {
+    font-size: 24px;
+  }
+
+  .abroad-country__text small {
+    font-size: 14.5px;
+  }
+
+  .abroad-country__meta {
+    font-size: 13px;
+  }
+
+  .abroad-step {
+    padding: 20px 22px;
+  }
+
+  .abroad-step b {
+    font-size: 17px;
+  }
+
+  .abroad-step small {
+    font-size: 14.5px;
+  }
+
+  .abroad-hero {
+    min-height: 380px;
+    border-radius: 24px;
+  }
+
+  .abroad-hero__body {
+    padding: 48px;
+  }
+
+  .abroad-hero__flag {
+    top: 28px;
+    inset-inline-start: 48px;
+    height: 56px;
+    width: 56px;
+  }
+
+  .abroad-hero h1 {
+    font-size: 46px;
+    line-height: 1.2;
+  }
+
+  .abroad-hero p {
+    font-size: 17px;
+  }
+
+  .abroad-hero__stats b {
+    font-size: 20px;
+  }
+
+  .abroad-hero__stats span {
+    font-size: 13px;
+  }
+
+  .abroad-hero__stats li {
+    padding: 9px 18px;
+  }
+
+  .abroad-facts dt {
+    font-size: 13px;
+  }
+
+  .abroad-facts dd {
+    font-size: 15.5px;
+  }
+
+  .abroad-areas,
+        .abroad-rail,
+        .abroad-chips {
+    margin-inline: 0;
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+  }
+
+  .abroad-areas {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    overflow: visible;
+  }
+
+  .abroad-area {
+    height: 200px;
+    border-radius: 20px;
+  }
+
+  .abroad-area__text {
+    padding: 18px 20px;
+  }
+
+  .abroad-area__text b {
+    font-size: 21px;
+  }
+
+  .abroad-area__text small {
+    font-size: 14px;
+  }
+
+  .abroad-rail {
+    gap: 24px;
+  }
+
+  .abroad-rail > * {
+    flex-basis: calc((100% - 72px) / 4);
+  }
+
+  .abroad-devs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+  }
+
+  .abroad-chip {
+    padding: 9px 20px;
     font-size: 14.5px;
   }
 }
@@ -15822,6 +16413,10 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
     grid-template-columns: minmax(0,1fr) 360px;
   }
 
+  .lg\:grid-cols-\[minmax\(0\2c 1fr\)_380px\] {
+    grid-template-columns: minmax(0,1fr) 380px;
+  }
+
   .lg\:grid-cols-\[minmax\(0\2c 1fr\)_400px\] {
     grid-template-columns: minmax(0,1fr) 400px;
   }
@@ -17516,6 +18111,52 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
     bottom: 28px;
     width: 440px;
     font-size: 14px;}
+.pv-desktop .abroad-country {aspect-ratio: 4 / 3;
+    border-radius: 22px;}
+.pv-desktop .abroad-country__flag {top: 16px;
+    inset-inline-start: 16px;
+    height: 44px;
+    width: 44px;}
+.pv-desktop .abroad-country__text {padding: 20px;}
+.pv-desktop .abroad-country__text b {font-size: 24px;}
+.pv-desktop .abroad-country__text small {font-size: 14.5px;}
+.pv-desktop .abroad-country__meta {font-size: 13px;}
+.pv-desktop .abroad-step {padding: 20px 22px;}
+.pv-desktop .abroad-step b {font-size: 17px;}
+.pv-desktop .abroad-step small {font-size: 14.5px;}
+.pv-desktop .abroad-hero {min-height: 380px;
+    border-radius: 24px;}
+.pv-desktop .abroad-hero__body {padding: 48px;}
+.pv-desktop .abroad-hero__flag {top: 28px;
+    inset-inline-start: 48px;
+    height: 56px;
+    width: 56px;}
+.pv-desktop .abroad-hero h1 {font-size: 46px;
+    line-height: 1.2;}
+.pv-desktop .abroad-hero p {font-size: 17px;}
+.pv-desktop .abroad-hero__stats b {font-size: 20px;}
+.pv-desktop .abroad-hero__stats span {font-size: 13px;}
+.pv-desktop .abroad-hero__stats li {padding: 9px 18px;}
+.pv-desktop .abroad-facts dt {font-size: 13px;}
+.pv-desktop .abroad-facts dd {font-size: 15.5px;}
+.pv-desktop .abroad-areas, .pv-desktop .abroad-rail, .pv-desktop .abroad-chips {margin-inline: 0;
+    padding-inline: 0;
+    scroll-padding-inline: 0;}
+.pv-desktop .abroad-areas {display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    overflow: visible;}
+.pv-desktop .abroad-area {height: 200px;
+    border-radius: 20px;}
+.pv-desktop .abroad-area__text {padding: 18px 20px;}
+.pv-desktop .abroad-area__text b {font-size: 21px;}
+.pv-desktop .abroad-area__text small {font-size: 14px;}
+.pv-desktop .abroad-rail {gap: 24px;}
+.pv-desktop .abroad-rail > * {flex-basis: calc((100% - 72px) / 4);}
+.pv-desktop .abroad-devs {grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;}
+.pv-desktop .abroad-chip {padding: 9px 20px;
+    font-size: 14.5px;}
 .pv-desktop .area-map__rings {width: 128px;}
 .pv-desktop .area-plot {height: 150px;}
 .pv-desktop .area-filter select, .pv-desktop .area-filter button {height: 48px;
@@ -18113,6 +18754,7 @@ body:has(.rent-viewer[data-group="gallery"]:not(.hidden)) .rent-gallery-wrap {
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 170px\)_38px_minmax\(0\2c 1fr\)_26px\] {grid-template-columns: minmax(0,170px) 38px minmax(0,1fr) 26px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_320px\] {grid-template-columns: minmax(0,1fr) 320px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_360px\] {grid-template-columns: minmax(0,1fr) 360px;}
+.pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_380px\] {grid-template-columns: minmax(0,1fr) 380px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_400px\] {grid-template-columns: minmax(0,1fr) 400px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_420px\] {grid-template-columns: minmax(0,1fr) 420px;}
 .pv-desktop .lg\:grid-cols-\[minmax\(0\2c 1fr\)_440px\] {grid-template-columns: minmax(0,1fr) 440px;}
