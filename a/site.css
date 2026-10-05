@@ -6226,6 +6226,33 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
+/* بوكس الإعلانات الموحّد (موبايل وتابلت) — class="ad-box" على أي صف إعلانات (المشروعات الجديدة في صفحة المشروع وصفحة المنطقة ...):
+       بوكس واحد ثابت في مكانه بكيرف ، إعلان واحد ظاهر بعرض البوكس ، والإعلانات بتتحرك جواه (مش بعرض الشاشة). نفس فكرة partials/ad-strip */
+
+@media (max-width: 1023px) {
+  .ad-box {
+    margin-inline: 0 !important;
+    padding: 0 !important;
+    gap: 0 !important;
+    overflow-y: hidden;
+    border-radius: 16px;
+    scroll-snap-type: x mandatory !important;
+    scroll-padding-inline: 0 !important;
+    scrollbar-width: none;
+  }
+
+  .ad-box::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ad-box > * {
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    scroll-snap-align: start;
+  }
+}
+
 /* كارت صورة وعليه الاسم (إعلان مشروع / مرحلة) */
 
 .prop-shot {
