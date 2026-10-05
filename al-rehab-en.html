@@ -1,7 +1,8 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <title>معاينة موقع شاري</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/site.css?v=0673098f">
+<link rel="stylesheet" href="a/site.css?v=660cab13">
+<script>(function(){var h=(location.hash||"").slice(1).replace(/\/en$/,"");var M=["al-rehab"];if(h&&h!==M[0]&&M.indexOf(h)>-1){document.write('<style id="pv-first">main[data-view][data-view]{display:none!important}main[data-view="'+h+'"][data-view]{display:block!important}</style>');setTimeout(function(){var s=document.getElementById("pv-first");if(s)s.parentNode.removeChild(s)},6000)}})();</script>
 </head><body>
 
 
@@ -587,7 +588,7 @@ From <b class="text-shary-navy" data-k="units">17</b> units in <b class="text-sh
 <p class="text-[12px] font-medium text-shary-muted lg:text-[13px]"><span data-projects-count>3</span> results available</p>
 </div>
 
-<form class="area-filterbar mb-3.5 grid grid-cols-[repeat(3,minmax(max-content,1fr))_44px_44px] gap-1.5 lg:mb-5 lg:grid-cols-[240px_240px_240px_48px_48px] lg:justify-start lg:gap-3" data-area-filters>
+<form class="area-filterbar mb-3.5 grid grid-cols-[repeat(3,minmax(max-content,1fr))_44px_44px] gap-1.5 lg:mb-5 lg:grid-cols-[240px_240px_240px_48px_auto_48px] lg:justify-start lg:gap-3" data-area-filters>
 
 <div class="area-filter">
 <button type="button" data-sheet-open="developer" aria-haspopup="dialog" aria-expanded="false">
@@ -611,13 +612,18 @@ From <b class="text-shary-navy" data-k="units">17</b> units in <b class="text-sh
 <svg class="area-filter__chevron" width="16" height="16" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M4.5 6.75L9 11.25L13.5 6.75" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </div>
 
-<button type="button" class="relative flex h-11 items-center justify-center gap-2 rounded-xl text-white transition-colors lg:h-12 bg-shary-action hover:bg-shary-link" data-sheet-open="all" aria-haspopup="dialog" aria-expanded="false" aria-label="Filter">
+<button type="button" class="relative flex h-11 items-center justify-center gap-2 rounded-xl text-white transition-colors lg:h-12 bg-shary-action hover:bg-shary-navy" data-sheet-open="all" aria-haspopup="dialog" aria-expanded="false" aria-label="Filter">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
 <span class="area-filter__count absolute -end-1 -top-1" data-sheet-count="all"></span>
 </button>
 
+<button type="button" class="clear-btn hidden h-12 px-5 text-[14px] lg:inline-flex" data-filter-clear-all>
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+<span>Clear</span>
+</button>
+
 <div class="relative">
-<button type="button" class="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl transition-colors lg:h-12  bg-shary-action text-white hover:bg-shary-link" data-sort-open aria-haspopup="true" aria-expanded="false" aria-label="Sort">
+<button type="button" class="flex h-11 w-full items-center justify-center gap-1.5 rounded-xl transition-colors lg:h-12  bg-shary-action text-white hover:bg-shary-navy" data-sort-open aria-haspopup="true" aria-expanded="false" aria-label="Sort">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14M8 19l-3-3M8 19l3-3M16 19V5M16 5l-3 3M16 5l3 3"/></svg>
 </button>
 <div class="absolute end-0 top-full z-30 mt-2 hidden w-[230px] rounded-2xl border border-shary-line bg-white px-4 py-1.5 shadow-[0_14px_34px_-14px_rgba(18,58,92,0.45)]" data-sort-menu>
@@ -663,7 +669,7 @@ From <b class="text-shary-navy" data-k="units">17</b> units in <b class="text-sh
 <svg class="ltr:rotate-180" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
 </button>
 <p role="heading" aria-level="2" data-filter-title class="flex items-center gap-2.5 text-[20px] font-bold leading-normal lg:gap-3 lg:text-[24px]">
-<span class="flex h-9 w-9 items-center justify-center rounded-xl bg-shary-link text-white lg:h-11 lg:w-11" aria-hidden="true">
+<span class="flex h-9 w-9 items-center justify-center rounded-xl bg-shary-action text-white lg:h-11 lg:w-11" aria-hidden="true">
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
 </span>
 Filter                    </p>
@@ -1306,7 +1312,7 @@ Close                    </button>
 
 <div class="shrink-0 rounded-t-[26px] bg-white shadow-[0_-8px_24px_-14px_rgba(18,58,92,0.35)] lg:rounded-none lg:border-t lg:border-shary-line lg:shadow-none">
 <div class="flex gap-3 px-5 pb-5 pt-4 lg:mx-auto lg:max-w-[1240px] lg:flex-row-reverse lg:items-center lg:justify-between lg:px-10 lg:py-4">
-<button type="button" class="flex h-14 flex-[2] items-center justify-center gap-2.5 rounded-full bg-shary-link text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-action lg:h-[52px] lg:w-[300px] lg:flex-none lg:rounded-2xl" data-sheet-apply>
+<button type="button" class="flex h-14 flex-[2] items-center justify-center gap-2.5 rounded-full bg-shary-action text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy lg:h-[52px] lg:w-[300px] lg:flex-none lg:rounded-2xl" data-sheet-apply>
 Show results                        <svg class="hidden ltr:rotate-180 lg:block" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
 </button>
 <button type="button" class="clear-btn clear-btn--lg flex-1 lg:h-[52px] lg:w-auto lg:flex-none lg:rounded-2xl lg:px-6 lg:text-[16px]" data-filter-clear-all>
@@ -1349,7 +1355,7 @@ Show results                        <svg class="hidden ltr:rotate-180 lg:block" 
 </label>
 </div>
 </div>
-<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>Apply</button>
+<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy" data-sheet-apply>Apply</button>
 </div>
 </div>
 <div class="fixed inset-0 z-[60] hidden" data-filter-sheet="project" role="dialog" aria-modal="true" aria-label="Project">
@@ -1380,7 +1386,7 @@ Show results                        <svg class="hidden ltr:rotate-180 lg:block" 
 </label>
 </div>
 </div>
-<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>Apply</button>
+<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy" data-sheet-apply>Apply</button>
 </div>
 </div>
 <div class="fixed inset-0 z-[60] hidden" data-filter-sheet="area" role="dialog" aria-modal="true" aria-label="Area">
@@ -1429,7 +1435,7 @@ Show results                        <svg class="hidden ltr:rotate-180 lg:block" 
 </label>
 </div>
 </div>
-<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>Apply</button>
+<button type="button" class="mt-4 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-6 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy" data-sheet-apply>Apply</button>
 </div>
 </div>
 
@@ -1458,7 +1464,7 @@ Show results                        <svg class="hidden ltr:rotate-180 lg:block" 
 </label>
 </div>
 </div>
-<button type="button" class="mt-5 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-8 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-link" data-sheet-apply>Apply</button>
+<button type="button" class="mt-5 flex h-14 shrink-0 items-center justify-center rounded-full bg-shary-action lg:mx-auto lg:mt-8 lg:w-[360px] text-[17px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy" data-sheet-apply>Apply</button>
 </div>
 </div>
 </form>
@@ -2170,7 +2176,7 @@ Project link:">
 
 <div class="compare-float fixed bottom-[84px] left-3 z-30 hidden items-center gap-1 rounded-full border border-shary-line bg-white p-1.5 lg:bottom-7 lg:left-7 lg:gap-1.5" data-compare-bar>
 
-<a href="compare-en.html" data-base="compare-en.html" class="flex h-11 items-center gap-2 rounded-full bg-shary-action pe-1.5 ps-4 text-[14px] font-bold leading-normal text-white transition-colors hover:bg-shary-link lg:h-12 lg:ps-5 lg:text-[15px]" data-compare-link>
+<a href="compare-en.html" data-base="compare-en.html" class="flex h-11 items-center gap-2 rounded-full bg-shary-action pe-1.5 ps-4 text-[14px] font-bold leading-normal text-white transition-colors hover:bg-shary-navy lg:h-12 lg:ps-5 lg:text-[15px]" data-compare-link>
 <span>Start compare</span>
 <span class="flex h-8 min-w-[32px] items-center justify-center rounded-full bg-shary-yellow px-2 text-[14px] font-extrabold text-shary-navy" data-compare-count>0</span>
 </a>
@@ -2449,7 +2455,7 @@ data-label-get="Download Now" data-label-open="Open App">
 </div>
 </div>
 
-<button type="submit" class="mt-1 flex h-[54px] w-full items-center justify-center rounded-full bg-shary-action text-[18px] font-bold leading-[1.2] text-white transition-colors hover:bg-shary-link ">
+<button type="submit" class="mt-1 flex h-[54px] w-full items-center justify-center rounded-full bg-shary-action text-[18px] font-bold leading-[1.2] text-white transition-colors hover:bg-shary-navy ">
 <span>Send</span>
 </button>
 </form>
@@ -2664,7 +2670,7 @@ data-label-get="Download Now" data-label-open="Open App">
 </div>
 <div class="pv-toast" dir="rtl" lang="ar" role="status" aria-live="polite" hidden></div>
 
-<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "0673098f";</script>
+<script>window.PV_DOCS = {"home": "home.html", "search-all": "search.html", "search-all-compounds": "search.html", "new-cairo": "new-cairo.html", "mostakbal-city": "mostakbal-city.html", "fifth-settlement": "fifth-settlement.html", "madinaty": "madinaty.html", "al-rehab": "al-rehab.html", "el-shorouk": "el-shorouk.html", "katameya": "katameya.html", "sheikh-zayed": "sheikh-zayed.html", "north-coast": "north-coast.html", "ain-sokhna": "ain-sokhna.html", "new-capital": "new-capital.html", "ras-el-hekma": "ras-el-hekma.html", "sidi-heneish": "sidi-heneish.html", "al-dabaa": "al-dabaa.html", "sidi-abdel-rahman": "sidi-abdel-rahman.html", "al-alamein": "al-alamein.html", "ghazala-bay": "ghazala-bay.html", "alam-al-roum": "alam-al-roum.html", "areas": "areas.html", "shary-index": "shary-index.html", "rent": "rent.html", "rent-unit": "rent.html", "unit": "unit.html", "project": "project.html", "mountain-view": "mountain-view.html", "about": "about.html", "contact": "contact.html", "agents": "agents.html", "favorites": "search.html", "compare": "search.html", "recommended": "recommended.html", "top-projects": "top-projects.html", "new-projects": "new-projects.html", "developers": "developers.html", "sell": "sell.html", "rent-property": "rent-property.html", "offers": "offers.html", "resale-opportunities": "resale-opportunities.html", "resale-opportunity": "resale-opportunities.html", "shary-map": "shary-map.html", "trendy": "trendy.html", "trendy-news": "trendy.html", "trend-article": "trendy.html", "shary-card": "shary-card.html", "careers": "careers.html", "notifications": "notifications.html", "terms": "terms.html", "privacy": "privacy.html", "properties-abroad": "properties-abroad.html", "abroad-uae": "properties-abroad.html", "abroad-saudi": "properties-abroad.html", "abroad-turkey": "properties-abroad.html", "abroad-uk": "properties-abroad.html", "abroad-oman": "properties-abroad.html", "abroad-qatar": "properties-abroad.html", "search-units": "search.html", "search-compounds": "search.html", "blog": "blog.html", "article-egypt-real-estate-2026": "article-egypt-real-estate-2026.html", "article-mortgage-types": "article-mortgage-types.html", "article-new-cairo-prices-q3": "article-new-cairo-prices-q3.html", "article-new-capital-guide": "article-new-capital-guide.html", "article-new-capital-projects-2026": "article-new-capital-projects-2026.html", "article-resale-vs-developer-price": "article-resale-vs-developer-price.html", "article-reservation-contract-checklist": "article-reservation-contract-checklist.html", "article-zayed-vs-october": "article-zayed-vs-october.html"}; window.PV_ASSETS = "a/"; window.PV_LANG = "en"; window.PV_VER = "660cab13";</script>
 <!--pv-scripts-->
 <script>
 // قايمة أكواد الدول متكررة في كل فورم — الملف فيه نسخة واحدة بس (<template data-phone-template>) وبتتنسخ هنا في كل القوايم قبل ما سكربتات الموقع تشتغل
@@ -2681,7 +2687,7 @@ data-label-get="Download Now" data-label-open="Open App">
   document.querySelectorAll('img[data-img]').forEach(function (img) { var src = map[img.getAttribute('data-img')]; if (src) img.src = src; });
 })();
 </script>
-<script src="a/site.js?v=0673098f"></script>
+<script src="a/site.js?v=660cab13"></script>
 <script>
 (function () {
   var root = document.getElementById('shary-preview');
@@ -4347,6 +4353,8 @@ data-label-get="Download Now" data-label-open="Open App">
   else if (DOCS && saved && saved.pvFill && fillFrom(saved.pvFill)) { /* رجوع لصفحة اتملت قبل كده */ }
   else if (DOCS && saved && saved.pvView && (parseSearchKey(saved.pvView) || inDoc(saved.pvView))) show(saved.pvView, true);
   else if (start[0]) show(ALIAS[start[0]] || start[0]);
+  // الصفحة المطلوبة اتفتحت: نشيل الـ style المؤقت اللي كان مظهّرها من أول لحظة (build_pages.py)
+  (function () { var first = document.getElementById('pv-first'); if (first) first.parentNode.removeChild(first); })();
   if (DOCS && saved && saved.pvScroll && !pending) setTimeout(function () { window.scrollTo(0, saved.pvScroll); }, 60);
   // بحث الهوم على "للإيجار": صفحة الإيجار بتفتح على مفروش / غير مفروش (?furnished=) وباقي الاختيارات (?hr= النوع / المنطقة / الغرف / الحمامات)
   try {

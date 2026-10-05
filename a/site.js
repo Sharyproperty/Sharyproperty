@@ -4355,6 +4355,9 @@
  *       { meeting_type: 'zoom' | 'in_person' | 'site_visit', meeting_date: 'Y-m-d', meeting_time: 'H:i', name, phone, country_code,
  *         subject, subject_type: 'unit' | 'project' | 'general', subject_url, source: 'shary-ai', answers, session }
  *     المواعيد الفاضية فعلًا (اختياري): contact.slots ($meetingSlotsUrl) ← GET ?date=Y-m-d&type=zoom والرد { slots: [{ value, label, available }] }.
+ * - ديسك توب (1024px وأكبر): النافذة ثابتة على يمين الشاشة من غير تغميق — الصفحة وراها شغالة عادي والعميل يكمّل تصفح.
+ *   بتفضل مفتوحة بنفس المحادثة وهو بيتنقل بين الصفحات (الحالة محفوظة في sessionStorage: shary-ai-state) لحد ما يقفلها بنفسه.
+ *   موبايل: بملء الشاشة زي ما هي (والضغط على لينك كارت بيقفلها).
  * - "من الأول": محادثة جديدة ورجوع لأسئلة الاختيار. المايك بيظهر بس لو المتصفح بيدعم الإملاء الصوتي.
  */
 (function () {
@@ -4402,7 +4405,8 @@
         var B = T.book || {};      // نصوص حجز الميتنج
         var times = Array.isArray(contact.times) ? contact.times : [];
         var countries = Array.isArray(contact.countries) ? contact.countries : [];
-        var shown = [];            // آخر كروت اتعرضت (عشان "الميتنج بخصوص إيه؟")
+        var wide = window.matchMedia('(min-width: 1024px)');   // ديسك توب: نافذة ثابتة على الجنب
+        var STORE = 'shary-ai-state';
         var book = null;           // حجز الميتنج الشغال: { box, intro, state }
         var saved = { name: user.name || '', phone: user.phone || '', code: countries.length ? countries[0].code : '+20' };
         var langNode = panel.closest ? panel.closest('[lang]') : null;
@@ -4577,14 +4581,15 @@
         // "احجز ميتنج": الحجز بيتم جوه الشات (item = الوحدة/المشروع اللي الزرار تحته — من غيره بنسأل "بخصوص إيه؟")
         function meetButton(label, className, item) {
             var node = action(className || 'sai__way--meet', label || T.meet, ICONS.calendar, '');
-            node.setAttribute('data-ai-meet', '');
-            node.addEventListener('click', function () { startMeeting(item || null); });
+            var subject = subjectOf(item);
+            node.setAttribute('data-ai-meet', subject ? JSON.stringify(subject) : '');
             return node;
         }
         function card(item) {
             var isUnit = item.type !== 'project';
             var name = isUnit ? item.title : item.name;
             var box = make('article', 'sai__card');
+            box.setAttribute('data-subject', JSON.stringify(subjectOf(item) || {}));
             if (item.image) {
                 var photo = make(item.url ? 'a' : 'span', 'sai__card-photo');
                 if (item.url) photo.href = item.url;
@@ -4658,11 +4663,18 @@
         function cards(items) {
             if (!Array.isArray(items) || !items.length) return;
             var wrap = make('div', 'sai__cards');
-            shown = [];
-            items.forEach(function (item) { if (item && typeof item === 'object') { wrap.appendChild(card(item)); shown.push(item); } });
+            items.forEach(function (item) { if (item && typeof item === 'object') wrap.appendChild(card(item)); });
             list.appendChild(wrap);
         }
         // ---------- حجز الميتنج جوه الشات ----------
+        // آخر كروت اتعرضت في المحادثة (عشان "الميتنج بخصوص إيه؟") — من الصفحة نفسها عشان تفضل شغالة بعد استرجاع المحادثة
+        function lastSubjects() {
+            var wraps = list.querySelectorAll('.sai__cards');
+            if (!wraps.length) return [];
+            return Array.prototype.map.call(wraps[wraps.length - 1].querySelectorAll('[data-subject]'), function (node) {
+                try { var one = JSON.parse(node.getAttribute('data-subject')); return one && one.name ? one : null; } catch (error) { return null; }
+            }).filter(Boolean);
+        }
         function two(number) { return (number < 10 ? '0' : '') + number; }
         function subjectOf(item) {
             if (!item) return null;
@@ -4698,7 +4710,7 @@
             showChat();
             dropBook();   // حجز واحد شغال في المرة
             var subject = subjectOf(item);
-            var state = keep || { subject: subject, asked: !subject && shown.length > 0, type: '', day: null, time: null, slots: null };
+            var state = keep || { subject: subject, asked: !subject && lastSubjects().length > 0, type: '', day: null, time: null, slots: null };
             var text = state.subject ? String(B.intro_about || '').replace(':name', state.subject.name) : (B.intro || '');
             var introRow = null;
             if (text) { bubble(text, false); introRow = list.lastElementChild; }
@@ -4759,7 +4771,7 @@
             // 1) بخصوص إيه؟ (لو فيه كروت معروضة والعميل ما حددش)
             if (state.asked) {
                 bookStep(B.subject);
-                var subjects = shown.map(function (item) { var one = subjectOf(item); return one ? { label: one.name, subject: one } : null; }).filter(Boolean).slice(0, 4);
+                var subjects = lastSubjects().map(function (one) { return { label: one.name, subject: one }; }).slice(0, 4);
                 subjects.push({ label: B.general || '', subject: null, general: true });
                 bookOptions(subjects, function (item) { return state.picked && (item.general ? !state.subject : (state.subject && state.subject.name === item.label)); }, function (item) {
                     state.subject = item.subject; state.picked = true;
@@ -4873,16 +4885,14 @@
             wa.insertAdjacentHTML('afterbegin', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>');
             ways.appendChild(wa);
             var edit = action('sai__way--edit', B.edit || '', ICONS.calendar, '');
-            edit.addEventListener('click', function () {
-                if (box.parentNode) box.parentNode.removeChild(box);
-                startMeeting(null, { subject: state.subject, asked: false, type: state.type, day: null, time: null, slots: null });
-            });
+            edit.setAttribute('data-ai-rebook', JSON.stringify({ subject: state.subject, type: state.type }));
             ways.appendChild(edit);
             box.appendChild(ways);
             if (book.box.parentNode) book.box.parentNode.replaceChild(box, book.box);
             book = null;
             bubble(message || String(B.done || '').replace(':name', data.name).replace(':type', kind).replace(':day', when).replace(':time', state.time.label), false);
             toBottom();
+            save();
         }
 
         function meeting() {
@@ -4940,6 +4950,7 @@
                 if (Array.isArray(more.chips)) chips(more.chips);
                 if (more.session) session = more.session;
                 toBottom();
+                save();
             }
 
             var detail = { text: text, answers: (extra && extra.answers) || null, reply: reply, sample: config.sample || null };
@@ -4963,7 +4974,7 @@
         }
 
         function restart() {
-            answers = {}; session = ''; busy = false; stepsShown = 0; shown = []; book = null;
+            answers = {}; session = ''; busy = false; stepsShown = 0; book = null;
             form.classList.remove('is-busy');
             list.textContent = '';
             input.value = ''; grow();
@@ -4972,32 +4983,89 @@
             if (onb) { onb.classList.remove('hidden'); onb.scrollTop = 0; }
             chips(config.chips);
             renderSteps();
+            save();
+        }
+
+        // ---------- حفظ المحادثة (ديسك توب): النافذة بتفضل مفتوحة بنفس الكلام والعميل بيتنقل بين الصفحات ----------
+        function save() {
+            try {
+                var copy = list.cloneNode(true);
+                Array.prototype.forEach.call(copy.querySelectorAll('.sai__book, .sai__typing'), function (node) {
+                    var row = node.classList.contains('sai__typing') ? node.closest('.sai__row') : node;
+                    if (row && row.parentNode) row.parentNode.removeChild(row);
+                });
+                window.sessionStorage.setItem(STORE, JSON.stringify({
+                    open: !panel.classList.contains('hidden'), chat: !scroll.classList.contains('hidden'), html: copy.innerHTML,
+                    chips: chipsBox ? Array.prototype.map.call(chipsBox.children, function (button) { return button.textContent; }) : [],
+                    answers: answers, session: session, lang: english ? 'en' : 'ar'
+                }));
+            } catch (error) { /* التخزين مقفول */ }
+        }
+        function restore() {
+            var state = null;
+            try { state = JSON.parse(window.sessionStorage.getItem(STORE) || 'null'); } catch (error) { state = null; }
+            if (!state || state.lang !== (english ? 'en' : 'ar')) return;
+            answers = state.answers || {};
+            session = state.session || '';
+            if (state.chat) {
+                list.innerHTML = state.html || '';
+                showChat();
+                if (Array.isArray(state.chips) && state.chips.length) chips(state.chips);
+                toBottom();
+            } else renderSteps();
+            // ديسك توب بس: النافذة بترجع مفتوحة لوحدها في الصفحة الجديدة
+            if (state.open && wide.matches && !panel.closest('[hidden]')) { open(null); toBottom(); }
         }
 
         function open(from) {
             if (!panel.classList.contains('hidden')) return;
             opener = from || null;
             panel.classList.remove('hidden');
-            document.documentElement.style.overflow = 'hidden';
-            // زرار الرجوع بيقفل الصفحة دي والعميل بيفضل في صفحته
-            if (window.SharyBack) window.SharyBack.opened(close);
+            if (!wide.matches) {
+                document.documentElement.style.overflow = 'hidden';
+                // موبايل: زرار الرجوع بيقفل الصفحة دي والعميل بيفضل في صفحته
+                if (window.SharyBack) { window.SharyBack.opened(close); panel.__back = true; }
+            }
+            save();
         }
         function close() {
             if (panel.classList.contains('hidden')) return;
             panel.classList.add('hidden');
             document.documentElement.style.overflow = '';
             if (opener) { try { opener.focus({ preventScroll: true }); } catch (error) { /* العنصر اتشال */ } }
-            if (window.SharyBack) window.SharyBack.closed();
+            if (panel.__back && window.SharyBack) window.SharyBack.closed();
+            panel.__back = false;
+            save();
         }
         panel.sharyOpen = open;
+        panel.sharyClose = close;
 
         panel.querySelectorAll('[data-ai-close]').forEach(function (node) { node.addEventListener('click', close); });
         // لينك كارت (صفحة الوحدة / المشروع): صفحة Shary AI بتتقفل والعميل بيروح للصفحة
         list.addEventListener('click', function (event) {
-            var link = event.target.closest ? event.target.closest('a[href]') : null;
-            if (link && !link.target && !/^(tel:|mailto:|#)/.test(link.getAttribute('href'))) close();
+            if (!event.target.closest) return;
+            // "احجز ميتنج" (تحت كارت أو في كارت المستشار) و "تعديل الميعاد": بالتفويض عشان يشتغلوا بعد استرجاع المحادثة
+            var meet = event.target.closest('[data-ai-meet]');
+            if (meet) {
+                var subject = null;
+                try { subject = JSON.parse(meet.getAttribute('data-ai-meet') || 'null'); } catch (error) { subject = null; }
+                startMeeting(subject);
+                return;
+            }
+            var again = event.target.closest('[data-ai-rebook]');
+            if (again) {
+                var keep = {};
+                try { keep = JSON.parse(again.getAttribute('data-ai-rebook') || '{}'); } catch (error) { keep = {}; }
+                var done = again.closest('.sai__booked');
+                if (done && done.parentNode) done.parentNode.removeChild(done);
+                startMeeting(null, { subject: keep.subject || null, asked: false, type: keep.type || '', day: null, time: null, slots: null });
+                return;
+            }
+            // لينك كارت (صفحة الوحدة / المشروع): على الموبايل صفحة Shary AI بتتقفل والعميل بيروح للصفحة — على الديسك توب النافذة بتفضل مفتوحة معاه
+            var link = event.target.closest('a[href]');
+            if (link && !link.target && !/^(tel:|mailto:|#)/.test(link.getAttribute('href'))) { if (wide.matches) save(); else close(); }
         });
-        document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
+        document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !wide.matches) close(); });
         form.addEventListener('submit', function (event) { event.preventDefault(); send(input.value); });
         input.addEventListener('input', grow);
         input.addEventListener('keydown', function (event) { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(input.value); } });
@@ -5032,6 +5100,8 @@
 
         chips(config.chips);
         renderSteps();
+        // بعد ما الصفحة تجهز: رجّع المحادثة المحفوظة (ولو النافذة كانت مفتوحة على الديسك توب بتفتح لوحدها)
+        window.setTimeout(restore, 300);
     });
 
     // أي زرار Shary AI بيفتح الصفحة الأقرب له
@@ -5042,6 +5112,8 @@
         var panel = (scope && scope.querySelector('[data-ai-panel]')) || (opener.closest('[lang]') || document).querySelector('[data-ai-panel]');
         if (!panel || !panel.sharyOpen) return;
         event.preventDefault();
+        // ديسك توب: الضغط على زرار Shary AI العايم والنافذة مفتوحة بيقفلها
+        if (!panel.classList.contains('hidden') && opener.classList.contains('area-fab') && window.matchMedia('(min-width: 1024px)').matches) { panel.sharyClose(); return; }
         panel.sharyOpen(opener);
     });
 })();
