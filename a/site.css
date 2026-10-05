@@ -11876,6 +11876,29 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   background-color: #1f9a8b;
 }
 
+/* العميل قرّب على ماستر بلان معروضة: علامة المشروع بتختفي عشان ما تغطيش المخطط */
+
+.smap.is-close .smap__marker.has-plan {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* صورة المشروع مش موجودة (البيانات الحية) */
+
+.smap__thumb.is-empty {
+  display: block;
+  background-color: #dfe9f3;
+  background-image: linear-gradient(145deg, #e9f1f9, #cddcec);
+}
+
+.smap__list-btn[hidden],
+    .smap__item-actions [hidden],
+    .smap__item-price[hidden],
+    .smap__filters [hidden],
+    .smap__sheet-body [data-empty] {
+  display: none;
+}
+
 /* على الكرة الأرضية (قبل اختيار منطقة): نقط صغيرة بدل علامات الأسعار عشان ما تتزاحمش */
 
 .smap.is-globe .smap__marker {
@@ -17236,6 +17259,18 @@ img.abroad-dev__logo {
 .outline-none {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.\!ring {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color) !important;
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color) !important;
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000) !important;
+}
+
+.ring {
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
 .ring-1 {

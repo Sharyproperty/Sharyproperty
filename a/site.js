@@ -2860,6 +2860,19 @@
  * الخريطة نفسها (أول محرك متاح) — الاتنين نفس الـ API فالكود واحد:
  *   1) Mapbox GL (لو data-mapbox-token موجود ومكتبة mapboxgl محملة): نفس خريطة الموقع الحالية ، بالكرة الأرضية (projection: globe).
  *   2) MapLibre GL (من غير توكن): المكتبة بتتحمل لوحدها من data-gl-src (+ data-gl-css) ، كرة أرضية + صور قمر صناعي (Esri World Imagery) + أسماء الأماكن.
+ *
+ * البيانات — واحد من اتنين:
+ *   أ) من السيرفر (الكنترولر بيبعت $projects والكروت مرسومة في الـ Blade) — زي الأول.
+ *   ب) من الـ API الحي (data-api="/api/map" — نفس API الخريطة الحالية): السكربت بيجيب /cities و /compounds لوحده وبيرسم الكروت من
+ *      <template data-smap-item-tpl> + مناطق "اختر المنطقة" (المدن) + فلاتر الأنواع والتسليم. الحقول المقروءة من كل مشروع:
+ *        id , name_ar , name_en , developer , city_id , lat , lng , image , price_from (بالمليون) , delivery_in , units[].type , price_list_pdf , url (اختياري)
+ *        + الماستر بلان: masterplan , masterplan_corners , masterplan_placement , masterplan_hd , masterplan_tiles(+_meta) , masterplan_version , coordinates / boundary_coords / boundary
+ *      data-compound="12" (أو ?compound_id=12 / ?project=12) بيفتح الخريطة على المشروع ده. data-mode="sahl" + data-sahel-city="16" = خريطة الساحل.
+ *      data-project-url="/compounds/:id" = لينك "صفحة المشروع" لو الـ API ما بيرجّعش url (من غيره الزرار بيختفي وبيظهر "قائمة الأسعار" لو موجودة).
+ * الماستر بلان (js/shary/masterplans.js — لو الملف محمّل): صورة كل مشروع بتتعرض فوق القمر الصناعي في مكانها المحفوظ بالظبط
+ *   (masterplan_corners من البيانات أو من ملف الأماكن data-placements) — واختيار مشروع له ماستر بلان بيقرّب الخريطة على حدودها.
+ *   من أي كود: window.SharyMap.plans() بيرجّع متحكم الماستر بلان (reload / refresh / has ...).
+ *
  *   علامة كل مشروع = اسمه المختصر في تابة صغيرة كحلي (المختار تركواز) — وعلى الكرة الأرضية قبل اختيار منطقة: نقط صغيرة.
  *   3) لو مفيش WebGL / المكتبة ما اتحملتش: تضمين خرائط جوجل بالقمر الصناعي على المشروع المختار (من غير أي مفتاح).
  */
@@ -2887,7 +2900,122 @@
             sky: { 'sky-color': '#c3d6ee', 'horizon-color': '#ffffff', 'fog-color': '#ffffff', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
     }
 
-    document.querySelectorAll('[data-smap]').forEach(function (root) {
+    // ---------- البيانات من الـ API الحي (data-api): بيرسم الكروت والمناطق والفلاتر وبعدها الخريطة بتشتغل عادي ----------
+    function deliveryOf(text) {
+        var value = String(text || ''), year = /20\d{2}/.exec(value);
+        if (year) return Number(year[0]) <= new Date().getFullYear() ? 0 : Number(year[0]);
+        return /فوري|جاهز|ready|immediate/i.test(value) ? 0 : null;
+    }
+    function adapt(p, cities, config) {
+        var lat = parseFloat(p.lat), lng = parseFloat(p.lng);
+        if (!isFinite(lat) || !isFinite(lng) || (!lat && !lng)) return null;
+        var en = config.lang === 'en';
+        var city = cities[p.city_id] || {};
+        var cityName = (en ? (city.name_en || city.name_ar) : (city.name_ar || city.name_en)) || '';
+        // price_from في الـ API بالمليون (3.2 = 3,200,000)
+        var from = parseFloat(p.price_from) || 0, value = from > 0 ? (from < 100000 ? from * 1000000 : from) : 0;
+        var types = [];
+        (p.units || []).forEach(function (unit) { var type = String((unit && unit.type) || '').trim(); if (type && types.indexOf(type) === -1) types.push(type); });
+        var url = p.url || p.link || (config.pattern ? config.pattern.replace(':id', p.id).replace(':slug', p.slug || p.id) : '');
+        return {
+            id: p.id, slug: String(p.id), name: (en ? (p.name_en || p.name_ar) : (p.name_ar || p.name_en)) || '', developer_name: p.developer || '',
+            location: p.address || cityName, area_label: cityName, group: 'c' + p.city_id, group_label: cityName,
+            price: value ? Math.round(value).toLocaleString('en-US') : '', price_value: value, types: types.slice(0, 3).join(' · '), type_keys: types,
+            delivery: deliveryOf(p.delivery_in), image: p.image || '', url: url, price_list_pdf: p.price_list_pdf || '', lat: lat, lng: lng,
+            masterplan: p.masterplan || '', masterplan_corners: p.masterplan_corners || null, masterplan_placement: p.masterplan_placement || null,
+            masterplan_hd: p.masterplan_hd || '', masterplan_tiles: p.masterplan_tiles || '', masterplan_tiles_meta: p.masterplan_tiles_meta || null,
+            masterplan_version: p.masterplan_version || p.masterplan_updated_at || '', masterplan_opacity: p.masterplan_opacity,
+            boundary: p.boundary_coords || p.boundary || p.coordinates || null
+        };
+    }
+    function chip(attribute, value, label, extra) {
+        var button = document.createElement('button');
+        button.type = 'button'; button.className = 'smap__chip'; button.textContent = label;
+        button.setAttribute(attribute, value); button.setAttribute('aria-pressed', 'false');
+        Object.keys(extra || {}).forEach(function (key) { button.setAttribute(key, extra[key]); });
+        return button;
+    }
+    function build(root, list) {
+        var template = root.querySelector('[data-smap-item-tpl]'), box = root.querySelector('[data-smap-list]');
+        if (!template || !box) return;
+        var first = template.content ? template.content.firstElementChild : template.firstElementChild;
+        list.forEach(function (p) {
+            var row = first.cloneNode(true), item = row.querySelector('[data-smap-item]');
+            item.setAttribute('data-slug', p.slug); item.setAttribute('data-area', p.group); item.setAttribute('data-lat', p.lat); item.setAttribute('data-lng', p.lng);
+            item.__project = p;
+            var part = function (name) { return row.querySelector('[data-t="' + name + '"]'); };
+            var image = part('image');
+            if (image) {
+                // من غير صورة (أو الصورة ما اتحملتش): مربع هادي بدل أيقونة الصورة المكسورة
+                var blank = function () { var box = document.createElement('span'); box.className = image.className + ' is-empty'; if (image.parentNode) image.parentNode.replaceChild(box, image); };
+                if (p.image) { image.onerror = blank; image.src = p.image; } else blank();
+            }
+            if (part('name')) part('name').textContent = p.name;
+            if (part('meta')) part('meta').textContent = [p.developer_name, p.area_label].filter(Boolean).join(' · ');
+            if (part('price')) part('price').textContent = p.price;
+            if (part('price-row')) part('price-row').hidden = !p.price;
+            if (part('no-price')) part('no-price').hidden = !!p.price;
+            if (part('url')) { if (p.url) part('url').href = p.url; else part('url').hidden = true; }
+            if (part('pdf')) { if (p.price_list_pdf && !p.url) { part('pdf').href = p.price_list_pdf; part('pdf').hidden = false; } else part('pdf').hidden = true; }
+            if (part('directions')) part('directions').href = 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng;
+            if (part('earth')) part('earth').href = 'https://earth.google.com/web/search/' + p.lat + ',' + p.lng;
+            box.appendChild(row);
+        });
+        // "اختر المنطقة": المدن اللي ليها مشاريع (الأكتر مشاريع الأول) — قبل زرار "الكل"
+        var areas = {}, order = [];
+        list.forEach(function (p) { if (!areas[p.group]) { areas[p.group] = { label: p.group_label || p.group, count: 0 }; order.push(p.group); } areas[p.group].count += 1; });
+        order.sort(function (a, b) { return areas[b].count - areas[a].count; });
+        var all = root.querySelector('[data-smap-areas] [data-smap-area=""]');
+        if (all) order.forEach(function (slug) { all.parentNode.insertBefore(chip('data-smap-area', slug, areas[slug].label, { 'data-label': areas[slug].label }), all); });
+        // فلاتر الأنواع والتسليم من البيانات نفسها
+        var types = [], years = [];
+        list.forEach(function (p) {
+            p.type_keys.forEach(function (type) { if (types.indexOf(type) === -1) types.push(type); });
+            if (p.delivery !== null && years.indexOf(p.delivery) === -1) years.push(p.delivery);
+        });
+        years.sort(function (a, b) { return a - b; });
+        var typesBox = root.querySelector('[data-smap-fsec="types"] .smap__chips'), yearsBox = root.querySelector('[data-smap-fsec="delivery"] .smap__chips');
+        if (typesBox) types.forEach(function (type) { typesBox.appendChild(chip('data-smap-f', 'types', type, { 'data-value': type })); });
+        if (yearsBox) years.forEach(function (year) { yearsBox.appendChild(chip('data-smap-f', 'delivery', year === 0 ? (root.getAttribute('data-ready-label') || '0') : String(year), { 'data-value': String(year) })); });
+        // قسم فلتر من غير اختيارات: يختفي هو وزراره
+        [['types', types.length], ['delivery', years.length]].forEach(function (pair) {
+            if (pair[1]) return;
+            var section = root.querySelector('[data-smap-fsec="' + pair[0] + '"]'), opener = root.querySelector('[data-smap-filter-open="' + pair[0] + '"]');
+            if (section) section.setAttribute('data-empty', '1');
+            if (opener) opener.hidden = true;
+            if (pair[0] === 'delivery' && root.querySelector('[data-smap-ready]')) root.querySelector('[data-smap-ready]').hidden = true;
+        });
+    }
+    function fromApi(root) {
+        var base = String(root.getAttribute('data-api') || '').replace(/\/+$/, '');
+        var query = new URLSearchParams(window.location.search);
+        var mode = root.getAttribute('data-mode') || '', sahel = root.getAttribute('data-sahel-city') || '16';
+        var config = { lang: root.getAttribute('data-lang') || 'ar', pattern: root.getAttribute('data-project-url') || '' };
+        var note = root.querySelector('[data-smap-note]');
+        if (note && root.getAttribute('data-loading')) { note.textContent = root.getAttribute('data-loading'); note.hidden = false; }
+        root.classList.add('is-loading');
+        function get(path) { return fetch(base + path, { headers: { 'Accept': 'application/json' } }).then(function (response) { if (!response.ok) throw new Error(response.status); return response.json(); }); }
+        return Promise.all([get('/cities').catch(function () { return {}; }), get('/compounds' + (mode === 'sahl' ? '?city_id=' + encodeURIComponent(sahel) : ''))]).then(function (results) {
+            var cities = {};
+            ((results[0] && results[0].data) || []).forEach(function (city) { cities[city.id] = city; });
+            var list = ((results[1] && results[1].data) || (Array.isArray(results[1]) ? results[1] : [])).map(function (p) { return adapt(p, cities, config); }).filter(Boolean);
+            build(root, list);
+            var count = root.querySelectorAll('[data-smap-count]');
+            Array.prototype.forEach.call(count, function (node) { node.textContent = list.length; });
+            // المشروع المطلوب: data-compound أو ?compound_id= أو ?project=
+            var wanted = root.getAttribute('data-compound') || query.get('compound_id') || query.get('project') || '';
+            if (wanted && list.some(function (p) { return p.slug === String(wanted); })) { root.setAttribute('data-selected', String(wanted)); root.setAttribute('data-focus', '1'); }
+            else if (mode === 'sahl' && list.length) root.setAttribute('data-area', 'c' + sahel);
+            if (note) note.hidden = true;
+            root.classList.remove('is-loading');
+            if (!list.length) { var empty = root.querySelector('[data-smap-empty]'); if (empty) empty.classList.remove('hidden'); }
+        }, function () {
+            root.classList.remove('is-loading');
+            if (note) { note.textContent = root.getAttribute('data-load-fail') || ''; note.hidden = !note.textContent; }
+        });
+    }
+
+    function setup(root) {
         var frame = root.querySelector('[data-smap-frame]');
         var glBox = root.querySelector('[data-smap-gl]');
         var items = Array.prototype.slice.call(root.querySelectorAll('[data-smap-item]'));
@@ -2911,6 +3039,9 @@
         };
         var gl = null, glLib = null, libState = '';   // المكتبة: '' لسه ، loading ، ready ، failed
         var noteTimer = null, meMarker = null;
+        var plans = null;          // متحكم الماستر بلان (js/shary/masterplans.js)
+        // من غير صفحة بحث (data-search-url فاضي): زرار "عرض القائمة" بيختفي
+        if (listLink && !root.getAttribute('data-search-url')) listLink.hidden = true;
         if (!frame || !items.length) return;
 
         function priceLabel(p) {
@@ -2919,7 +3050,21 @@
 
         function info(item) {
             if (!item.__project) { try { item.__project = JSON.parse(item.getAttribute('data-project')); } catch (e) { item.__project = {}; } }
+            if (item.__project.id == null) item.__project.id = item.__project.slug;
             return item.__project;
+        }
+        // حدود الماستر بلان / حدود المشروع (لو معروفة) — الخريطة بتقرّب عليها بدل نقطة المشروع
+        function planBox(p) { return plans && p.masterplan ? plans.bounds(p.id) : null; }
+        function goTo(p, duration) {
+            var box = planBox(p);
+            if (box) {
+                var wideScreen = window.matchMedia('(min-width: 1024px)').matches;
+                gl.fitBounds([[box[0], box[1]], [box[2], box[3]]], { padding: wideScreen ? 90 : { top: 60, right: 26, bottom: 240, left: 26 }, maxZoom: 17.5, duration: duration, essential: true });
+            } else gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(13, Math.min(18, state.zoom)), duration: duration, essential: true });
+        }
+        // العلامات اللي ماستر بلان مشروعها معروضة: بتختفي لما العميل يقرّب (عشان ما تغطيش المخطط)
+        function markPlans(ids) {
+            items.forEach(function (item) { if (item.__pin) item.__pin.classList.toggle('has-plan', ids.indexOf(String(info(item).id)) > -1); });
         }
 
         function plain(text) {
@@ -3007,6 +3152,17 @@
                 });
                 // الضغط على أي مكان فاضي في الخريطة بيقفل قايمة المناطق
                 gl.on('click', function () { toggleAreas(false); });
+                // الماستر بلان فوق القمر الصناعي — كل مشروع في مكانه المحفوظ (المشاريع الظاهرة بعد الفلتر بس)
+                if (window.SharyMasterplans) {
+                    plans = window.SharyMasterplans.attach(gl, {
+                        projects: function () { return shown().map(info); },
+                        activeId: function () { return state.current ? info(state.current).id : null; },
+                        placementsUrl: root.getAttribute('data-placements') || '',
+                        unplaced: root.getAttribute('data-unplaced') || 'bbox',
+                        onChange: markPlans
+                    });
+                    gl.on('zoom', function () { root.classList.toggle('is-close', gl.getZoom() >= 14.5); });
+                }
                 var started = false;
                 var begin = function () { if (started) return; started = true; intro(); };
                 gl.on('load', function () { window.setTimeout(begin, 350); });
@@ -3027,7 +3183,8 @@
             if (state.focus && state.current) {
                 var p = info(state.current);
                 leaveGlobe();
-                gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: INTRO + 600, essential: true });
+                if (plans) plans.refresh();
+                if (planBox(p)) goTo(p, INTRO + 600); else gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: INTRO + 600, essential: true });
                 return;
             }
             if (state.area) { leaveGlobe(); fitAll(INTRO); return; }
@@ -3043,10 +3200,8 @@
             if (libState === 'loading') return;   // مستنيين المكتبة
             if (libState === 'ready' && startGL()) {
                 items.forEach(function (item) { if (item.__pin) item.__pin.classList.toggle('is-on', item === state.current); });
-                if (fly !== false && state.intro && state.current) {
-                    var p = info(state.current);
-                    gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(13, Math.min(18, state.zoom)), duration: 1600, essential: true });
-                }
+                if (plans) plans.refresh();
+                if (fly !== false && state.intro && state.current) goTo(info(state.current), 1600);
                 return;
             }
             // من غير WebGL: تضمين خرائط جوجل على المشروع المختار (أو أول مشروع ظاهر)
@@ -3124,6 +3279,7 @@
             });
             var ready = root.querySelector('[data-smap-ready]');
             if (ready) ready.setAttribute('aria-pressed', state.delivery.length === 1 && state.delivery[0] === '0' ? 'true' : 'false');
+            if (plans) plans.refresh();
             if (keep) return;
             if (state.current && list.indexOf(state.current) === -1) select(null);
             leaveGlobe();
@@ -3273,6 +3429,7 @@
 
         maps.push({
             root: root,
+            plans: function () { return plans; },
             area: function (slug) { setArea(slug); filter(); },
             select: function (slug) {
                 var item = bySlug(slug);
@@ -3284,9 +3441,20 @@
                 return true;
             }
         });
+    }
+
+    document.querySelectorAll('[data-smap]').forEach(function (root) {
+        // data-api: البيانات من الـ API الحي الأول وبعدها الخريطة — من غيره: الكروت جاية مرسومة من السيرفر
+        if (root.getAttribute('data-api') && window.fetch) fromApi(root).then(function () { setup(root); });
+        else setup(root);
     });
 
     window.SharyMap = {
+        // متحكم الماستر بلان للخريطة الظاهرة (reload / refresh / has / bounds ...)
+        plans: function () {
+            var visible = maps.filter(function (map) { return map.root.offsetParent !== null; });
+            return (visible[0] || maps[0] || { plans: function () { return null; } }).plans();
+        },
         // بيفلتر الخريطة الظاهرة على منطقة (slug المنطقة الرئيسية) — '' = كل المناطق
         area: function (slug) {
             var visible = maps.filter(function (map) { return map.root.offsetParent !== null; });
