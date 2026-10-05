@@ -5307,6 +5307,22 @@
         tabs.forEach(function (tab) { tab.addEventListener('click', function () { open(tab.getAttribute('data-saved-tab')); }); });
         page.querySelectorAll('[data-saved-panel]').forEach(function (panel) { if (panel.querySelector('[data-compare-table]')) mark(panel, panel.querySelector('[data-compare-table]')); });
 
+        // المفضلة: أي عنصر محفوظ على الجهاز واتبعت في اللينك (?ids=) والصفحة ما عرضتهوش (اتمسح / اتباع) بيتشال من المحفوظ ،
+        // عشان عدد القلب في الهيدر يبقى زي اللي ظاهر في الصفحة — والصفحة الفاضية يبقى قلبها فاضي
+        if (page.getAttribute('data-saved-page') === 'favorites') {
+            try {
+                var asked = (/[?&]ids=([^&#]*)/.exec(window.location.search) || ['', ''])[1];
+                asked = asked ? decodeURIComponent(asked).split(',').filter(Boolean) : [];
+                var rendered = Array.prototype.map.call(page.querySelectorAll('[data-saved-item]'), function (item) { return item.getAttribute('data-saved-item'); });
+                var gone = asked.filter(function (id) { return rendered.indexOf(id) === -1; });
+                if (gone.length) {
+                    var kept = (JSON.parse(window.localStorage.getItem('shary-favorites')) || []).filter(function (id) { return gone.indexOf(id) === -1; });
+                    window.localStorage.setItem('shary-favorites', JSON.stringify(kept));
+                    if (window.SharyCards) window.SharyCards.refresh(document);
+                }
+            } catch (error) { /* التخزين مقفول */ }
+        }
+
         // المفضلة: الكارت اللي اتشال قلبه بيختفي
         page.addEventListener('shary:favorite', function (event) {
             if (page.getAttribute('data-saved-page') !== 'favorites' || event.detail.active) return;
