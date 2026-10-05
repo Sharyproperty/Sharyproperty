@@ -9473,6 +9473,65 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   flex-shrink: 0;
 }
 
+/* كود الدولة: علم + الكود بس — الـ select الأصلي شفاف فوقهم (قايمة الموبايل الأصلية) */
+
+.sai__code {
+  position: relative;
+  display: flex;
+  height: 46px;
+  flex-shrink: 0;
+  cursor: pointer;
+  align-items: center;
+  gap: 7px;
+  border-radius: 13px;
+  border: 1px solid var(--sai-line);
+  background-color: var(--sai-bg);
+  padding: 0 11px;
+  direction: ltr;
+}
+
+.sai__code:focus-within {
+  border-color: var(--sai-blue);
+  background-color: #fff;
+}
+
+.sai__code img {
+  height: 18px;
+  width: 24px;
+  flex-shrink: 0;
+  border-radius: 3px;
+  border: 1px solid var(--sai-line);
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.sai__code b {
+  font-size: 14.5px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--sai-navy);
+}
+
+.sai__code-arrow {
+  height: 6px;
+  width: 6px;
+  flex-shrink: 0;
+  border-bottom: 1.8px solid #7d8fa0;
+  border-right: 1.8px solid #7d8fa0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.sai__fields .sai__code select {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  opacity: 0;
+}
+
 .sai__fields input:focus,
     .sai__fields select:focus {
   border-color: var(--sai-blue);
@@ -11598,18 +11657,20 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   min-height: 0;
   flex: 1 1 0%;
   overflow: hidden;
-  background-color: #dbe7f4;
-  background-image: linear-gradient(180deg, #e2ecf7 0%, #d5e3f2 100%);
+  /* ورا الكرة الأرضية: سما مفتوحة (أزرق فاتح لفوق ← أبيض لتحت) */
+  background-color: #a9d6ff;
+  background-image: linear-gradient(180deg, #62b3ff 0%, #93ccff 32%, #cde7ff 68%, #f3faff 100%);
 }
 
-/* لمعة الزجاج: خط نور مايل خفيف على نفس اللون (مش لون تاني) */
+/* بلور زجاجي: سحب نور ناعمة فوق السما (نفس درجات اللون) */
 
 .smap__map::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: -8%;
   z-index: 0;
-  background-image: linear-gradient(125deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 34%, rgba(255, 255, 255, 0) 66%, rgba(255, 255, 255, 0.22) 100%);
+  background-image: radial-gradient(40% 26% at 16% 14%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(34% 22% at 86% 26%, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(48% 28% at 58% 94%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%), radial-gradient(32% 22% at 6% 76%, rgba(96, 178, 255, 0.55) 0%, rgba(96, 178, 255, 0) 100%);
+  filter: blur(26px);
   pointer-events: none;
 }
 
@@ -11937,6 +11998,22 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 .smap .maplibregl-canvas,
     .smap .mapboxgl-canvas {
   outline: none;
+}
+
+/* حقوق صور الخريطة: علامة "i" صغيرة وهادية (مقفولة) — النص بيظهر لما العميل يضغط عليها */
+
+.smap .maplibregl-ctrl-attrib.maplibregl-compact:not(.maplibregl-compact-show),
+    .smap .mapboxgl-ctrl-attrib.mapboxgl-compact:not(.mapboxgl-compact-show) {
+  min-height: 18px;
+  background-color: transparent;
+  opacity: 0.55;
+}
+
+.smap .maplibregl-ctrl-attrib.maplibregl-compact .maplibregl-ctrl-attrib-button,
+    .smap .mapboxgl-ctrl-attrib.mapboxgl-compact .mapboxgl-ctrl-attrib-button {
+  height: 18px;
+  width: 18px;
+  background-size: 18px 18px;
 }
 
 /* المشاريع — موبايل: فوق أسفل الخريطة (زرار "عرض القائمة" + كروت بالعرض) */

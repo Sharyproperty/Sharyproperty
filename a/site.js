@@ -893,6 +893,24 @@
 })();
 
 /**
+ * كل فورم POST (طلب اجتماع / استشارة / بيع عقارك / شاري كارد / وظائف / عرض ...) بيتبعت معاه الصفحة اللي العميل بعت منها:
+ * page_url + page_title — عشان الميل ولوحة التحكم يبان فيهم الطلب جاي منين (SharyLeadController). الخانات مخفية وبتتضاف وقت الإرسال.
+ */
+(function () {
+    function put(form, name, value) {
+        var field = form.querySelector('input[type="hidden"][name="' + name + '"]');
+        if (!field) { field = document.createElement('input'); field.type = 'hidden'; field.name = name; form.appendChild(field); }
+        field.value = value;
+    }
+    document.addEventListener('submit', function (event) {
+        var form = event.target;
+        if (!form || !form.getAttribute || String(form.getAttribute('method') || '').toLowerCase() !== 'post') return;
+        put(form, 'page_url', location.href);
+        put(form, 'page_title', document.title);
+    }, true);
+})();
+
+/**
  * اختيار كود الدولة جنب رقم الهاتف (فورم الاستشارة).
  * بيشتغل على أي عنصر عليه data-phone-field: الزرار بيفتح القايمة، والاختيار بيغيّر العلم والكود
  * وقيمة الحقل المخفي country_code اللي بتتبعت مع الفورم.
@@ -3243,7 +3261,7 @@
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
         // السما حوالين الكرة: سحابي فاتح (مش أسود ولا كحلي) — نفس خلفية .smap__map
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
-            sky: { 'sky-color': '#c3d6ee', 'horizon-color': '#ffffff', 'fog-color': '#ffffff', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
+            sky: { 'sky-color': '#8cc8ff', 'horizon-color': '#ffffff', 'fog-color': '#ffffff', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
     }
 
     // ---------- البيانات من الـ API الحي (data-api): بيرسم الكروت والمناطق والفلاتر وبعدها الخريطة بتشتغل عادي ----------
@@ -3479,9 +3497,17 @@
                 if (token) options.projection = 'globe';
                 gl = new lib.Map(options);
                 glLib = lib;
-                if (lib.AttributionControl) gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
+                // حقوق صور القمر الصناعي (شرط من مزوّد الصور): علامة "i" صغيرة مقفولة — من غير شريط "Imagery" الظاهر. الضغط عليها بيفتح النص.
+                if (lib.AttributionControl) {
+                    gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
+                    var foldCredit = function () {
+                        var credit = glBox.querySelector('.maplibregl-ctrl-attrib, .mapboxgl-ctrl-attrib');
+                        if (credit) { credit.classList.remove('maplibregl-compact-show', 'mapboxgl-compact-show'); credit.removeAttribute('open'); }
+                    };
+                    foldCredit(); gl.once('load', foldCredit); gl.on('styledata', foldCredit);
+                }
                 // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
-                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#ffffff', 'high-color': '#c3d6ee', 'space-color': '#cfe0f3', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#ffffff', 'high-color': '#8cc8ff', 'space-color': '#b5dcff', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
@@ -4984,6 +5010,48 @@
         var startText = startButton ? startButton.textContent : '';
         var skipText = skipButton ? skipButton.textContent : '';
 
+        // كود الدولة: علم + الكود بس (من غير اسم الدولة) — select عادي شفاف فوقهم عشان قايمة الموبايل الأصلية تفتح
+        function flagEmoji(iso) {
+            iso = String(iso || '').toUpperCase();
+            if (!/^[A-Z]{2}$/.test(iso) || !String.fromCodePoint) return '';
+            return String.fromCodePoint(127397 + iso.charCodeAt(0), 127397 + iso.charCodeAt(1));
+        }
+        function codeField(onChange) {
+            var wrap = make('label', 'sai__code');
+            var flag = make('img'); flag.alt = ''; flag.width = 24; flag.height = 18; flag.setAttribute('aria-hidden', 'true');
+            var text = make('b', '');
+            var arrow = make('i', 'sai__code-arrow'); arrow.setAttribute('aria-hidden', 'true');
+            var select = make('select'); select.required = true; select.setAttribute('aria-label', B.code || ''); select.setAttribute('aria-required', 'true');
+            countries.forEach(function (country) {
+                var option = make('option', '', (flagEmoji(country.iso) + ' ' + country.code).trim()); option.value = country.code;
+                option.setAttribute('data-iso', country.iso || ''); option.setAttribute('aria-label', (country.name || '') + ' ' + country.code);
+                if (country.code === saved.code && !select.querySelector('[selected]')) option.setAttribute('selected', '');
+                select.appendChild(option);
+            });
+            function show() {
+                var picked = select.options[select.selectedIndex];
+                var iso = picked ? picked.getAttribute('data-iso') : '';
+                text.textContent = select.value;
+                if (iso && contact.flags) { flag.src = String(contact.flags).replace(/\/$/, '') + '/' + iso + '.svg'; flag.hidden = false; } else flag.hidden = true;
+            }
+            select.value = saved.code;
+            if (!select.value && select.options.length) select.selectedIndex = 0;
+            select.addEventListener('change', function () { show(); if (onChange) onChange(select.value); });
+            flag.addEventListener('error', function () { flag.hidden = true; });
+            wrap.appendChild(flag); wrap.appendChild(text); wrap.appendChild(arrow); wrap.appendChild(select);
+            show();
+            return { wrap: wrap, select: select };
+        }
+        // اللي العميل مهتم بيه (للواتساب والميل): اللي فاتحه + اختياراته + آخر سؤال
+        function interestText() {
+            var parts = [];
+            if (context && context.name) parts.push(context.name);
+            var picked = criteriaLabels().join(U.sep || '، ');
+            if (picked) parts.push(picked);
+            return parts.join(' — ');
+        }
+        function pageInfo() { return { page_url: location.href, page_title: document.title }; }
+
         // ---------- أسئلة الاختيار ----------
         function chosenOf(key) { return answers[key] || []; }
         function optionsOf(step) {
@@ -5004,9 +5072,15 @@
             if (step.all && out.length) out.push({ value: '', label: step.all, exclusive: true });
             return out;
         }
+        // سؤال 'auto' له اختيار واحد بس (مثال: الساحل ← مصيفي): بيتحدد لوحده ومش بيتسأل
+        function autoOption(step) {
+            if (!step.auto) return null;
+            var options = optionsOf(step).filter(function (option) { return option.value !== ''; });
+            return options.length === 1 ? options[0] : null;
+        }
         // الخطوات اللي ليها اختيارات دلوقتي (الحي بيظهر بس لو المنطقة ليها أحياء)
         function activeSteps() {
-            return flow.filter(function (step) { return !step.depends || optionsOf(step).length; });
+            return flow.filter(function (step) { return (!step.depends || optionsOf(step).length) && !autoOption(step); });
         }
         function isOn(key, value) { return chosenOf(key).some(function (item) { return item.value === value; }); }
         function renderSteps(quiet) {
@@ -5055,10 +5129,14 @@
             if (current.length) answers[step.key] = current; else delete answers[step.key];
             // الأسئلة المعتمدة على السؤال ده: بنشيل منها الاختيارات اللي ما بقتش متاحة
             flow.forEach(function (next) {
-                if (!next.depends || !answers[next.key]) return;
-                var allowed = optionsOf(next).map(function (one) { return one.value; });
-                var kept = answers[next.key].filter(function (one) { return allowed.indexOf(one.value) > -1; });
-                if (kept.length) answers[next.key] = kept; else delete answers[next.key];
+                if (!next.depends) return;
+                if (answers[next.key]) {
+                    var allowed = optionsOf(next).map(function (one) { return one.value; });
+                    var kept = answers[next.key].filter(function (one) { return allowed.indexOf(one.value) > -1; });
+                    if (kept.length) answers[next.key] = kept; else delete answers[next.key];
+                }
+                var only = autoOption(next);
+                if (only) answers[next.key] = [{ value: only.value, label: only.label, exclusive: false }];
             });
             renderSteps();
         }
@@ -5518,13 +5596,9 @@
             var name = make('input'); name.type = 'text'; name.autocomplete = 'name'; name.placeholder = B.name || ''; name.setAttribute('aria-label', B.name || ''); name.setAttribute('data-lead-name', '');
             name.setAttribute('value', saved.name);
             var phoneRow = make('div', 'sai__phone'); phoneRow.dir = 'ltr';
-            var code = make('select'); code.setAttribute('aria-label', B.code || ''); code.setAttribute('data-lead-code', '');
-            countries.forEach(function (country) {
-                var option = make('option', '', country.code + '  ' + country.name); option.value = country.code;
-                if (country.code === saved.code && !code.querySelector('[selected]')) option.setAttribute('selected', '');
-                code.appendChild(option);
-            });
-            var phone = make('input'); phone.type = 'tel'; phone.dir = 'ltr'; phone.autocomplete = 'tel-national'; phone.inputMode = 'tel'; phone.placeholder = B.phone || ''; phone.setAttribute('aria-label', B.phone || ''); phone.setAttribute('data-lead-phone', '');
+            var codeBox = codeField(); var code = codeBox.wrap; codeBox.select.setAttribute('data-lead-code', '');
+            name.required = true; name.setAttribute('aria-required', 'true');
+            var phone = make('input'); phone.type = 'tel'; phone.dir = 'ltr'; phone.autocomplete = 'tel-national'; phone.inputMode = 'tel'; phone.placeholder = B.phone || ''; phone.setAttribute('aria-label', B.phone || ''); phone.setAttribute('data-lead-phone', ''); phone.required = true; phone.setAttribute('aria-required', 'true');
             phone.setAttribute('value', saved.phone);
             if (countries.length) phoneRow.appendChild(code);
             phoneRow.appendChild(phone);
@@ -5550,7 +5624,8 @@
             if (!digits) return fail(B.err_phone, phoneField);
             error.classList.add('hidden');
             go.disabled = true; go.textContent = L.sending || B.sending || '';
-            var data = { name: name, phone: digits, country_code: saved.code, message: lastText, source: 'shary-ai', answers: plainAnswers(), context: context, session: session };
+            var data = { name: name, phone: digits, country_code: saved.code, message: lastText, interest: interestText(), source: 'shary-ai', form: 'ai-lead', answers: plainAnswers(), context: context, session: session };
+            var where = pageInfo(); data.page_url = where.page_url; data.page_title = where.page_title;
             var finished = false;
             function done(ok, message) {
                 if (finished) return;
@@ -5707,10 +5782,8 @@
             var name = make('input'); name.type = 'text'; name.autocomplete = 'name'; name.placeholder = B.name || ''; name.setAttribute('aria-label', B.name || ''); name.value = saved.name;
             name.addEventListener('input', function () { saved.name = name.value; });
             var phoneRow = make('div', 'sai__phone'); phoneRow.dir = 'ltr';
-            var code = make('select'); code.setAttribute('aria-label', B.code || '');
-            countries.forEach(function (country) { var option = make('option', '', country.code + '  ' + country.name); option.value = country.code; code.appendChild(option); });
-            code.value = saved.code;
-            code.addEventListener('change', function () { saved.code = code.value; });
+            var code = codeField(function (value) { saved.code = value; }).wrap;
+            name.required = true; name.setAttribute('aria-required', 'true');
             var phone = make('input'); phone.type = 'tel'; phone.dir = 'ltr'; phone.autocomplete = 'tel-national'; phone.inputMode = 'tel'; phone.placeholder = B.phone || ''; phone.setAttribute('aria-label', B.phone || ''); phone.value = saved.phone;
             phone.addEventListener('input', function () { saved.phone = phone.value; });
             if (countries.length) phoneRow.appendChild(code);
@@ -5735,8 +5808,9 @@
             var data = {
                 meeting_type: state.type, meeting_date: state.day.value, meeting_time: state.time.value, name: name, phone: digits, country_code: saved.code,
                 subject: state.subject ? state.subject.name : '', subject_type: state.subject ? state.subject.type : 'general', subject_url: state.subject ? state.subject.url : '',
-                source: 'shary-ai', answers: plainAnswers(), context: context, session: session
+                interest: interestText(), message: lastText, source: 'shary-ai', form: 'ai-meeting', answers: plainAnswers(), context: context, session: session
             };
+            var where = pageInfo(); data.page_url = where.page_url; data.page_title = where.page_title;
             var finished = false;
             function done(ok, message) {
                 if (finished) return;
@@ -5760,6 +5834,21 @@
             }).then(function (result) { done(true, result && result.message); })
               .catch(function () { done(false); });
         }
+        // رسالة الواتساب بعد الحجز: الاسم + الموبايل + نوع الاجتماع + الميعاد + اللي العميل مهتم بيه (مش الميعاد بس)
+        function bookingText(data, kind, when) {
+            function line(label, value) { return value ? (label ? label + ': ' : '') + value : ''; }
+            return [
+                B.wa_text,
+                line(B.row_name || B.name, data.name),
+                line(B.row_phone || B.phone, data.phone ? String(data.country_code || '') + data.phone : ''),
+                line(B.row_type, kind),
+                line(B.row_when, when),
+                line(B.row_about, data.subject || B.general),
+                data.subject_url,
+                line(B.row_interest, data.interest && data.interest !== data.subject ? data.interest : ''),
+                line(B.row_asked, data.message)
+            ].filter(Boolean).join('\n');
+        }
         // كارت التأكيد مكان كارت الحجز + رسالة تأكيد
         function booked(data, state, message) {
             var kind = (B.types || {})[data.meeting_type] || '';
@@ -5780,7 +5869,7 @@
             var note = (B.notes || {})[data.meeting_type];
             if (note) box.appendChild(make('p', 'sai__booked-note', note));
             var ways = make('div', 'sai__ways');
-            var wa = action('sai__way--wa', B.whatsapp || T.whatsapp, '', waLink([B.wa_text, kind, when + ' — ' + state.time.label, data.subject || B.general, data.name, data.subject_url].filter(Boolean).join('\n')));
+            var wa = action('sai__way--wa', B.whatsapp || T.whatsapp, '', waLink(bookingText(data, kind, when + ' — ' + state.time.label)));
             wa.insertAdjacentHTML('afterbegin', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>');
             ways.appendChild(wa);
             var edit = action('sai__way--edit', B.edit || '', ICONS.calendar, '');
