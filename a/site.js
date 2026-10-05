@@ -911,7 +911,8 @@
 })();
 
 /**
- * اختيار كود الدولة جنب رقم الهاتف (فورم الاستشارة).
+ * اختيار كود الدولة جنب رقم الهاتف (فورم الاستشارة / طلب الاجتماع / بيع وتأجير عقار / العروض / التحقق من الوسيط).
+ * فوق القايمة خانة بحث (بتتضاف من هنا): العميل يكتب اسم الدولة أو الكود.
  * بيشتغل على أي عنصر عليه data-phone-field: الزرار بيفتح القايمة، والاختيار بيغيّر العلم والكود
  * وقيمة الحقل المخفي country_code اللي بتتبعت مع الفورم.
  */
@@ -925,6 +926,44 @@
         var input = field.querySelector('input[type="tel"]');
         var options = Array.prototype.slice.call(list.querySelectorAll('[role="option"]'));
 
+        // بحث فوق القايمة: العميل يكتب اسم الدولة أو الكود (966 / +966 / السعودية / sa) والقايمة بتتفلتر
+        var langHost = field.closest('[lang]');
+        var english = ((langHost && langHost.lang) || document.documentElement.lang || 'ar').indexOf('en') === 0;
+        var searchRow = document.createElement('li');
+        searchRow.className = 'phone-search';
+        searchRow.setAttribute('role', 'presentation');
+        var search = document.createElement('input');
+        search.type = 'search';
+        search.autocomplete = 'off';
+        search.placeholder = english ? 'Search country or code' : 'ابحث باسم الدولة أو الكود';
+        search.setAttribute('aria-label', search.placeholder);
+        searchRow.appendChild(search);
+        list.insertBefore(searchRow, list.firstChild);
+
+        function simple(text) {
+            return String(text || '').toLowerCase().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim();
+        }
+        function visible() { return options.filter(function (option) { return option.style.display !== 'none'; }); }
+        function filter() {
+            var q = simple(search.value).replace(/^\+|^00/, '');
+            options.forEach(function (option) {
+                if (!option.__hay) {
+                    var image = option.querySelector('img');
+                    var iso = image ? (/([a-z]{2})\.svg/i.exec(image.getAttribute('src') || '') || [])[1] : '';
+                    option.__hay = simple(option.textContent + ' ' + (iso || '') + ' ' + String(option.getAttribute('data-code')).replace(/\D+/g, ''));
+                }
+                option.style.display = !q || option.__hay.indexOf(q) > -1 ? '' : 'none';
+            });
+        }
+        search.addEventListener('input', filter);
+        search.addEventListener('click', function (e) { e.stopPropagation(); });
+        search.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') { open(false); toggle.focus(); return; }
+            var first = visible()[0];
+            if (e.key === 'ArrowDown' && first) { e.preventDefault(); first.focus(); }
+            if (e.key === 'Enter') { e.preventDefault(); if (first) select(first); }
+        });
+
         function isOpen() {
             return !list.classList.contains('hidden');
         }
@@ -933,8 +972,10 @@
             list.classList.toggle('hidden', !state);
             toggle.setAttribute('aria-expanded', state ? 'true' : 'false');
             if (state) {
-                var current = list.querySelector('[aria-selected="true"]') || options[0];
-                current.focus();
+                search.value = '';
+                filter();
+                list.scrollTop = 0;
+                search.focus();
             }
         }
 
@@ -957,8 +998,9 @@
                     select(option);
                 } else if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                     e.preventDefault();
-                    var next = options[index + (e.key === 'ArrowDown' ? 1 : -1)];
-                    if (next) next.focus();
+                    var shown = visible();
+                    var next = shown[shown.indexOf(option) + (e.key === 'ArrowDown' ? 1 : -1)];
+                    if (next) next.focus(); else if (e.key === 'ArrowUp') search.focus();
                 } else if (e.key === 'Escape') {
                     open(false);
                     toggle.focus();
@@ -969,6 +1011,244 @@
         document.addEventListener('click', function (e) {
             if (isOpen() && !field.contains(e.target)) open(false);
         });
+    });
+})();
+
+/**
+ * ستوري المطور: الضغط على لوجو المطور اللي له ستوري بيفتح الستوري على الشاشة كلها (فيديو أو صورة) —
+ * ولما الستوري يخلص بيفتح صفحة المطور لوحده. علامة X (أو زرار الرجوع / Esc) بتقفل الستوري والعميل يفضل في مكانه.
+ *
+ * أي عنصر عليه data-story (JSON):
+ *   { "name": "اسم المطور", "logo": "لينك اللوجو", "url": "لينك صفحة المطور",
+ *     "items": [ { "type": "video", "src": "story.mp4", "poster": "صورة" } , { "type": "image", "src": "صورة", "seconds": 5 } ],
+ *     "go": "صفحة المطور", "close": "إغلاق", "sound": "الصوت" }
+ * أكتر من ستوري لنفس المطور = أكتر من عنصر في items (بيتعرضوا ورا بعض). الضغط يمين / شمال = اللي بعده / اللي قبله ، والضغط المطوّل = إيقاف مؤقت.
+ * حدث على العنصر: shary:story-end (قبل فتح صفحة المطور — امنعوه بـ preventDefault لو عايزين تصرف تاني).
+ */
+(function () {
+    'use strict';
+    var view = null;       // { box, data, index, timer, video, started, left, paused, trigger }
+
+    function make(tag, className, text) {
+        var el = document.createElement(tag);
+        if (className) el.className = className;
+        if (text != null) el.textContent = text;
+        return el;
+    }
+
+    function close(silent) {
+        if (!view) return;
+        window.clearTimeout(view.timer);
+        window.cancelAnimationFrame(view.frame);
+        if (view.video) { try { view.video.pause(); } catch (error) { /* خلص */ } }
+        view.box.remove();
+        document.documentElement.style.overflow = view.overflow;
+        var back = view.back;
+        view = null;
+        if (!silent && back && window.SharyBack) window.SharyBack.closed();
+    }
+
+    // الستوري خلص: صفحة المطور
+    function finish() {
+        if (!view) return;
+        var trigger = view.trigger, url = view.data.url;
+        var ok = trigger.dispatchEvent(new CustomEvent('shary:story-end', { bubbles: true, cancelable: true, detail: { url: url } }));
+        close();
+        if (!ok) return;
+        // صفحة المطور: لينك المطور نفسه اللي في الكارت (لو موجود) — وإلا لينك الستوري
+        var card = trigger.closest('.dev-icon, [data-developer-tile], [data-story-card]');
+        var real = card ? card.querySelector('a[href]:not([data-story])') : null;
+        if (real) real.click(); else if (url) window.location.href = url;
+    }
+
+    function bars() {
+        var now = view.index;
+        Array.prototype.forEach.call(view.bars.children, function (bar, at) {
+            bar.firstChild.style.width = at < now ? '100%' : (at > now ? '0%' : bar.firstChild.style.width);
+        });
+    }
+
+    function tick() {
+        if (!view) return;
+        var bar = view.bars.children[view.index];
+        var ratio = 0;
+        if (view.video && view.video.duration) ratio = view.video.currentTime / view.video.duration;
+        else if (view.length) ratio = (view.spent + (view.paused ? 0 : Date.now() - view.started)) / view.length;
+        if (bar) bar.firstChild.style.width = Math.max(0, Math.min(100, ratio * 100)) + '%';
+        view.frame = window.requestAnimationFrame(tick);
+    }
+
+    function show(index) {
+        if (!view) return;
+        var items = view.data.items;
+        if (index >= items.length) return finish();
+        index = Math.max(0, index);
+        window.clearTimeout(view.timer);
+        if (view.video) { try { view.video.pause(); } catch (error) { /* خلص */ } }
+        view.index = index; view.video = null; view.length = 0; view.spent = 0; view.paused = false;
+        view.stage.textContent = '';
+        Array.prototype.forEach.call(view.bars.children, function (bar, at) { bar.firstChild.style.width = at < index ? '100%' : '0%'; });
+        var item = items[index];
+        if (item.type === 'video') {
+            var video = make('video');
+            video.setAttribute('playsinline', ''); video.setAttribute('webkit-playsinline', '');
+            video.preload = 'auto';
+            if (item.poster) video.poster = item.poster;
+            video.src = item.src;
+            video.muted = view.muted;
+            video.addEventListener('ended', function () { if (view && view.video === video) show(index + 1); });
+            video.addEventListener('error', function () { if (view && view.video === video) show(index + 1); });   // الفيديو ما حملش: اللي بعده (أو صفحة المطور)
+            view.stage.appendChild(video);
+            view.video = video;
+            view.sound.hidden = false;
+            var playing = video.play();
+            // المتصفح منع الصوت من غير ضغطة: يشتغل صامت والعميل يفتح الصوت من الزرار
+            if (playing && playing.catch) playing.catch(function () { if (!view || view.video !== video) return; view.muted = true; video.muted = true; soundIcon(); var again = video.play(); if (again && again.catch) again.catch(function () { /* هيتشغّل بضغطة */ }); });
+        } else {
+            var image = make('img'); image.alt = view.data.name || ''; image.src = item.src;
+            view.stage.appendChild(image);
+            view.sound.hidden = true;
+            view.length = Math.max(2, Number(item.seconds) || 5) * 1000;
+            view.started = Date.now();
+            view.timer = window.setTimeout(function () { show(index + 1); }, view.length);
+        }
+    }
+
+    function pause(state) {
+        if (!view || view.paused === state) return;
+        view.paused = state;
+        if (view.video) { if (state) view.video.pause(); else { var p = view.video.play(); if (p && p.catch) p.catch(function () {}); } return; }
+        if (!view.length) return;
+        if (state) { window.clearTimeout(view.timer); view.spent += Date.now() - view.started; }
+        else { view.started = Date.now(); var index = view.index; view.timer = window.setTimeout(function () { show(index + 1); }, Math.max(0, view.length - view.spent)); }
+    }
+
+    var SOUND_ON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.500v5h3.500L12 18.500v-13L7.500 9.500H4Z" fill="currentColor"/><path d="M15.500 9a4 4 0 0 1 0 6M18 6.500a7.500 7.500 0 0 1 0 11"/></svg>';
+    var SOUND_OFF = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.500v5h3.500L12 18.500v-13L7.500 9.500H4Z" fill="currentColor"/><path d="m16 9.500 5 5M21 9.500l-5 5"/></svg>';
+    function soundIcon() { if (view) { view.sound.innerHTML = view.muted ? SOUND_OFF : SOUND_ON; view.sound.setAttribute('aria-pressed', view.muted ? 'false' : 'true'); } }
+
+    function open(trigger, data) {
+        close(true);
+        var host = trigger.closest('[lang]');
+        var english = ((host && host.lang) || document.documentElement.lang || 'ar').indexOf('en') === 0;
+        var box = make('div', 'story');
+        box.setAttribute('role', 'dialog'); box.setAttribute('aria-modal', 'true'); box.setAttribute('aria-label', data.name || '');
+        box.dir = english ? 'ltr' : 'rtl'; box.lang = english ? 'en' : 'ar';
+        var frame = make('div', 'story__frame');
+        var stage = make('div', 'story__stage');
+        var top = make('div', 'story__top');
+        var barsBox = make('div', 'story__bars');
+        data.items.forEach(function () { var bar = make('span'); bar.appendChild(make('i')); barsBox.appendChild(bar); });
+        var head = make('div', 'story__head');
+        var who = make('div', 'story__who');
+        if (data.logo) { var logo = make('img'); logo.alt = ''; logo.src = data.logo; logo.addEventListener('error', function () { logo.remove(); }); who.appendChild(logo); }
+        who.appendChild(make('b', '', data.name || ''));
+        var sound = make('button', 'story__btn'); sound.type = 'button'; sound.setAttribute('aria-label', data.sound || (english ? 'Sound' : 'الصوت'));
+        var shut = make('button', 'story__btn'); shut.type = 'button'; shut.setAttribute('aria-label', data.close || (english ? 'Close' : 'إغلاق'));
+        shut.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+        head.appendChild(who); head.appendChild(sound); head.appendChild(shut);
+        top.appendChild(barsBox); top.appendChild(head);
+        // الضغط: نص الشاشة اللي في اتجاه القراءة = اللي بعده ، التاني = اللي قبله. الضغط المطوّل = إيقاف مؤقت
+        var prev = make('button', 'story__tap story__tap--prev'); prev.type = 'button'; prev.setAttribute('aria-label', english ? 'Previous' : 'السابق');
+        var next = make('button', 'story__tap story__tap--next'); next.type = 'button'; next.setAttribute('aria-label', english ? 'Next' : 'التالي');
+        var go = make('a', 'story__go', data.go || (english ? 'Developer page' : 'صفحة المطور'));
+        go.href = data.url || '#';
+        frame.appendChild(stage); frame.appendChild(prev); frame.appendChild(next); frame.appendChild(top); frame.appendChild(go);
+        box.appendChild(frame);
+        document.body.appendChild(box);
+        view = { box: box, data: data, index: 0, stage: stage, bars: barsBox, sound: sound, go: go, trigger: trigger, muted: false, overflow: document.documentElement.style.overflow, back: false };
+        document.documentElement.style.overflow = 'hidden';
+        soundIcon();
+        var held = 0, long = false;
+        [prev, next].forEach(function (zone) {
+            zone.addEventListener('pointerdown', function () { long = false; held = window.setTimeout(function () { long = true; pause(true); }, 220); });
+            ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (name) { zone.addEventListener(name, function () { window.clearTimeout(held); if (long) pause(false); }); });
+            zone.addEventListener('click', function () { if (long) { long = false; return; } if (!view) return; show(view.index + (zone === next ? 1 : -1)); });
+        });
+        sound.addEventListener('click', function () { view.muted = !view.muted; if (view.video) view.video.muted = view.muted; soundIcon(); });
+        shut.addEventListener('click', function () { close(); });
+        // "صفحة المطور" دلوقتي: نفس نهاية الستوري
+        go.addEventListener('click', function (event) { event.preventDefault(); finish(); });
+        box.addEventListener('click', function (event) { if (event.target === box) close(); });
+        if (window.SharyBack) { view.back = true; window.SharyBack.opened(function () { close(true); }); }
+        show(0);
+        tick();
+        shut.focus({ preventScroll: true });
+    }
+
+    document.addEventListener('click', function (event) {
+        var trigger = event.target.closest ? event.target.closest('[data-story]') : null;
+        if (!trigger) return;
+        var data = null;
+        try { data = JSON.parse(trigger.getAttribute('data-story')); } catch (error) { data = null; }
+        if (!data || !Array.isArray(data.items) || !data.items.length) return;   // مفيش ستوري: اللينك بيشتغل عادي
+        event.preventDefault();
+        event.stopPropagation();
+        open(trigger, data);
+    }, true);
+    document.addEventListener('keydown', function (event) {
+        if (!view) return;
+        if (event.key === 'Escape') close();
+        else if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') show(view.index + ((event.key === 'ArrowLeft') === (view.box.dir === 'rtl') ? 1 : -1));
+    });
+    document.addEventListener('visibilitychange', function () { if (view) pause(document.hidden); });
+
+    window.SharyStory = { open: open, close: function () { close(); } };
+})();
+
+/**
+ * صفحات "أفضل المشاريع" / "المشاريع الجديدة" / "الموصى به" (collections/show): بحث فوق الكروت + مناطق المشاريع.
+ * - [data-collection-search]: وهو بيكتب الكروت بتتفلتر (الاسم / المطور / المنطقة — بيفهم الهمزات والتاء المربوطة).
+ * - [data-collection-area="slug"]: الضغط على المنطقة بيعرض مشاريعها ("الكل" = '').
+ * كل كارت: [data-collection-item] عليه data-area و data-search. من غير السكربت: الفورم واللينكات بيبعتوا ?q= و ?area= للسيرفر.
+ * حدث على الصفحة: shary:collection-filter ({ q, area, shown }) — لو البيانات هتيجي من السيرفر (AJAX) اسمعوه.
+ */
+(function () {
+    function plain(text) {
+        return String(text || '').toLowerCase().replace(/[\u064b-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim();
+    }
+    document.querySelectorAll('[data-collection-tools]').forEach(function (tools) {
+        var scope = tools.closest('[data-collection]') || document;
+        var cards = Array.prototype.slice.call(scope.querySelectorAll('[data-collection-item]'));
+        var form = tools.querySelector('[data-collection-form]');
+        var input = tools.querySelector('[data-collection-search]');
+        var chips = Array.prototype.slice.call(tools.querySelectorAll('[data-collection-area]'));
+        var empty = tools.querySelector('[data-collection-empty]');
+        var area = tools.getAttribute('data-area') || '';
+        // المعاينة (من غير سيرفر): الفلترة كلها في الصفحة. الموقع: الكتابة بتفلتر الكروت الظاهرة على طول ، و Enter والمناطق بيروحوا للسيرفر (?q= / ?area=) عشان النتيجة تبقى من كل الصفحات
+        var action = form ? (form.getAttribute('action') || '') : '';
+        var local = !action || action.charAt(0) === '#' || tools.hasAttribute('data-local');
+
+        function apply() {
+            var words = plain(input ? input.value : '').split(' ').filter(Boolean);
+            var active = !!(words.length || area);
+            var shown = 0;
+            cards.forEach(function (card) {
+                if (card.__hay == null) card.__hay = plain(card.getAttribute('data-search'));
+                var ok = (!area || card.getAttribute('data-area') === area) && words.every(function (word) { return card.__hay.indexOf(word) > -1; });
+                card.style.display = ok ? '' : 'none';
+                if (active && ok) card.classList.remove('hidden');   // الكروت اللي كانت مستنية "وأنت نازل" بتظهر مع الفلترة
+                if (ok) shown += 1;
+            });
+            if (empty) empty.hidden = shown > 0;
+            scope.classList.toggle('is-filtered', active);
+            chips.forEach(function (chip) { chip.setAttribute('aria-pressed', chip.getAttribute('data-collection-area') === area ? 'true' : 'false'); });
+            tools.dispatchEvent(new CustomEvent('shary:collection-filter', { bubbles: true, detail: { q: input ? input.value : '', area: area, shown: shown } }));
+        }
+
+        if (input) { input.addEventListener('input', apply); input.addEventListener('search', apply); }
+        if (form) form.addEventListener('submit', function (event) { if (!local) return; event.preventDefault(); apply(); if (input) input.blur(); });
+        chips.forEach(function (chip) {
+            chip.addEventListener('click', function (event) {
+                if (!local) return;
+                event.preventDefault();
+                event.stopPropagation();
+                area = chip.getAttribute('data-collection-area') || '';
+                apply();
+                if (chip.scrollIntoView) chip.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+            });
+        });
+        if (area || (input && input.value)) apply();
     });
 })();
 
@@ -1153,6 +1433,8 @@
 
         function set(key, value) {
             card.querySelectorAll('[data-k="' + key + '"]').forEach(function (el) { el.textContent = value; });
+            // مؤشر الطلب: الدايرة (مفتوحة من تحت — القوس 75 من 100) بتتملى على قد الرقم
+            if (key === 'demand') card.querySelectorAll('[data-demand-arc]').forEach(function (arc) { arc.setAttribute('stroke-dasharray', (Math.max(0, Math.min(100, parseFloat(value) || 0)) * 0.75).toFixed(1) + ' 100'); });
         }
 
         function show(typeKey) {
@@ -2075,6 +2357,8 @@
 
         function set(key, value) {
             page.querySelectorAll('[data-k="' + key + '"]').forEach(function (el) { el.textContent = value; });
+            // مؤشر الطلب: الدايرة (مفتوحة من تحت — القوس 75 من 100) بتتملى على قد الرقم
+            if (key === 'demand') page.querySelectorAll('[data-demand-arc]').forEach(function (arc) { arc.setAttribute('stroke-dasharray', (Math.max(0, Math.min(100, parseFloat(value) || 0)) * 0.75).toFixed(1) + ' 100'); });
         }
 
         // جدول "متوسط سعر المتر حسب نوع الوحدة" [data-type-row]: أرقام المنطقة المختارة في الفلتر (أو السوق كله لو "مصر كلها")
@@ -3282,7 +3566,7 @@
         (p.units || []).forEach(function (unit) { var type = String((unit && unit.type) || '').trim(); if (type && types.indexOf(type) === -1) types.push(type); });
         var url = p.url || p.link || (config.pattern ? config.pattern.replace(':id', p.id).replace(':slug', p.slug || p.id) : '');
         return {
-            id: p.id, slug: String(p.id), alias: p.slug ? String(p.slug) : '', name: (en ? (p.name_en || p.name_ar) : (p.name_ar || p.name_en)) || '', developer_name: p.developer || '',
+            id: p.id, slug: String(p.id), alias: p.slug ? String(p.slug) : '', alt: (en ? p.name_ar : p.name_en) || '', name: (en ? (p.name_en || p.name_ar) : (p.name_ar || p.name_en)) || '', developer_name: p.developer || '',
             location: p.address || cityName, area_label: cityName, group: 'c' + p.city_id, group_label: cityName,
             price: value ? Math.round(value).toLocaleString('en-US') : '', price_value: value, types: types.slice(0, 3).join(' · '), type_keys: types,
             delivery: deliveryOf(p.delivery_in), image: p.image || '', url: url, price_list_pdf: p.price_list_pdf || '', lat: lat, lng: lng,
@@ -3497,15 +3781,13 @@
                 if (token) options.projection = 'globe';
                 gl = new lib.Map(options);
                 glLib = lib;
-                // حقوق صور القمر الصناعي (شرط من مزوّد الصور): علامة "i" صغيرة مقفولة — من غير شريط "Imagery" الظاهر. الضغط عليها بيفتح النص.
-                if (lib.AttributionControl) {
-                    gl.addControl(new lib.AttributionControl({ compact: true }), 'bottom-left');
-                    var foldCredit = function () {
-                        var credit = glBox.querySelector('.maplibregl-ctrl-attrib, .mapboxgl-ctrl-attrib');
-                        if (credit) { credit.classList.remove('maplibregl-compact-show', 'mapboxgl-compact-show'); credit.removeAttribute('open'); }
-                    };
-                    foldCredit(); gl.once('load', foldCredit); gl.on('styledata', foldCredit);
-                }
+                // مصدر صور الخريطة: مفيش علامة فوق الخريطة — المصدر مكتوب سطر صغير آخر قايمة "اختر المنطقة" ([data-smap-credit]) وبيتحدّث مع نوع الخريطة
+                var creditNode = root.querySelector('[data-smap-credit]');
+                var showCredit = function () {
+                    if (!creditNode) return;
+                    creditNode.textContent = token ? '\u00a9 Mapbox \u00a9 OpenStreetMap' : (state.type === 'h' ? 'Imagery \u00a9 Esri' : '\u00a9 OpenStreetMap');
+                };
+                showCredit(); gl.on('styledata', showCredit);
                 // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
                 if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#ffffff', 'high-color': '#8cc8ff', 'space-color': '#b5dcff', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
@@ -3609,7 +3891,7 @@
             var p = info(item);
             if (state.area && item.getAttribute('data-area') !== state.area) return false;
             if (use.words && use.words.length) {
-                if (!item.__hay) item.__hay = plain([p.name, p.developer_name, p.area_label, p.group_label, p.location, p.slug].join(' '));
+                if (!item.__hay) item.__hay = plain([p.name, p.alt, p.developer_name, p.area_label, p.group_label, p.location, p.types, String(p.slug || '').replace(/-/g, ' ')].join(' '));
                 if (!use.words.every(function (word) { return item.__hay.indexOf(word) > -1; })) return false;
             }
             if (use.types && state.types.length && !(p.type_keys || []).some(function (key) { return state.types.indexOf(key) > -1; })) return false;
@@ -3716,7 +3998,153 @@
             if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) > -1) { event.preventDefault(); window.history.back(); }
         });
 
-        if (search) search.addEventListener('input', function () { filter(); });
+
+        // ---- البحث الذكي: اقتراحات وهو بيكتب — مشروع / مطور / منطقة / نوع وحدة (بيفهم الهمزات والتاء المربوطة و"ال" وغلطة حرف)
+        var suggestBox = null, suggestRows = [];
+        var suggestText = {};
+        try { suggestText = JSON.parse(root.getAttribute('data-suggest') || '{}') || {}; } catch (e) { suggestText = {}; }
+        var SUGGEST_ICONS = {
+            project: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5h6v5M9 10h.01M15 10h.01M9 13h.01M15 13h.01"/></svg>',
+            developer: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/></svg>',
+            area: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.500C5 14.800 12 21 12 21Z"/><circle cx="12" cy="9.500" r="2.500"/></svg>',
+            type: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.500 12 4l9 7.500M5.500 10v10h13V10M10 20v-5h4v5"/></svg>'
+        };
+        function bare(word) { return word.length > 4 && word.indexOf('ال') === 0 ? word.slice(2) : word; }
+        function near(a, b) {   // غلطة حرف واحد (زيادة / نقص / تبديل)
+            if (Math.abs(a.length - b.length) > 1) return false;
+            var i = 0, j = 0, miss = 0;
+            while (i < a.length && j < b.length) {
+                if (a[i] === b[j]) { i++; j++; continue; }
+                if (++miss > 1) return false;
+                if (a.length > b.length) i++; else if (b.length > a.length) j++; else { i++; j++; }
+            }
+            return miss + (a.length - i) + (b.length - j) <= 1;
+        }
+        // درجة تطابق كلمات البحث مع نص: 0 = مفيش ، أعلى = أقرب (أول الاسم > أول كلمة > جوه الكلمة > غلطة حرف)
+        function rank(text, words) {
+            var hay = plain(text);
+            if (!hay) return 0;
+            var parts = hay.split(' ').map(bare), total = 0;
+            for (var n = 0; n < words.length; n++) {
+                var word = bare(words[n]), best = 0;
+                if (bare(hay).indexOf(word) === 0 && n === 0) best = 4;
+                else if (parts.some(function (part) { return part.indexOf(word) === 0; })) best = 3;
+                else if (hay.indexOf(word) > -1) best = 2;
+                else if (word.length >= 4 && parts.some(function (part) { return near(part.slice(0, Math.max(word.length, Math.min(part.length, word.length + 1))), word) || near(part.slice(0, word.length), word); })) best = 1;
+                if (!best) return 0;
+                total += best;
+            }
+            return total / words.length;
+        }
+        function closeSuggest() { if (suggestBox) suggestBox.hidden = true; suggestRows = []; if (search) search.setAttribute('aria-expanded', 'false'); }
+        function resetFilters() { state.types = []; state.delivery = []; state.price = ''; paintChips(); }
+        function suggest() {
+            if (!search) return;
+            var words = plain(search.value).split(' ').filter(Boolean);
+            if (!words.length) return closeSuggest();
+            if (!suggestBox) {
+                suggestBox = document.createElement('div');
+                suggestBox.className = 'smap__suggest shary-scroll';
+                suggestBox.setAttribute('role', 'listbox');
+                suggestBox.setAttribute('data-smap-suggest', '');
+                (search.closest('.smap__row') || search.parentNode).appendChild(suggestBox);
+            }
+            var found = [];
+            // مشاريع: الاسم (بالعربي والإنجليزي) + المطور + المنطقة
+            var developers = {};
+            items.forEach(function (item) {
+                var p = info(item);
+                var byName = Math.max(rank(p.name, words), rank(p.alt, words), rank(String(p.slug || '').replace(/-/g, ' '), words));
+                var score = byName ? byName + 1 : Math.max(rank([p.name, p.developer_name, p.area_label, p.group_label, p.location, p.types].join(' '), words) - 1.5, 0);
+                if (score > 0) found.push({ kind: 'project', score: score, title: p.name, sub: [p.developer_name, p.area_label || p.group_label].filter(Boolean).join(' · '), item: item });
+                if (p.developer_name) (developers[p.developer_name] = developers[p.developer_name] || []).push(item);
+            });
+            Object.keys(developers).forEach(function (name) {
+                var score = rank(name, words);
+                if (score > 0) found.push({ kind: 'developer', score: score + 0.5, title: name, sub: String(suggestText.count || ':n').replace(':n', developers[name].length), name: name });
+            });
+            root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
+                var slug = chip.getAttribute('data-smap-area'), label = chip.getAttribute('data-label') || chip.textContent.trim();
+                if (!slug) return;
+                var score = rank(label, words);
+                var count = items.filter(function (item) { return item.getAttribute('data-area') === slug; }).length;
+                if (score > 0 && count) found.push({ kind: 'area', score: score + 0.6, title: label, sub: String(suggestText.count || ':n').replace(':n', count), area: slug });
+            });
+            var seenTypes = {};
+            root.querySelectorAll('[data-smap-f="types"]').forEach(function (chip) {
+                var value = chip.getAttribute('data-value'), label = chip.textContent.trim();
+                if (seenTypes[value]) return;
+                seenTypes[value] = true;
+                var score = rank(label, words);
+                var count = items.filter(function (item) { return (info(item).type_keys || []).indexOf(value) > -1; }).length;
+                if (score > 0 && count) found.push({ kind: 'type', score: score + 0.2, title: label, sub: String(suggestText.count || ':n').replace(':n', count), type: value });
+            });
+            found.sort(function (a, b) { return b.score - a.score; });
+            var room = { project: 6, developer: 3, area: 3, type: 3 };
+            suggestRows = found.filter(function (row) { return room[row.kind]-- > 0; }).slice(0, 10);
+            suggestBox.textContent = '';
+            if (!suggestRows.length) {
+                var none = document.createElement('p');
+                none.className = 'smap__suggest-none';
+                none.textContent = suggestText.none || '';
+                suggestBox.appendChild(none);
+            }
+            suggestRows.forEach(function (row, at) {
+                var button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'smap__suggest-row';
+                button.setAttribute('role', 'option');
+                button.setAttribute('data-kind', row.kind);
+                var icon = document.createElement('span'); icon.className = 'smap__suggest-icon'; icon.innerHTML = SUGGEST_ICONS[row.kind];
+                var body = document.createElement('span'); body.className = 'smap__suggest-body';
+                var title = document.createElement('b'); title.textContent = row.title;
+                var subText = document.createElement('small'); subText.textContent = row.sub;
+                body.appendChild(title); if (row.sub) body.appendChild(subText);
+                var tag = document.createElement('i'); tag.textContent = suggestText[row.kind] || '';
+                button.appendChild(icon); button.appendChild(body); button.appendChild(tag);
+                button.addEventListener('click', function () { pickSuggest(at); });
+                suggestBox.appendChild(button);
+            });
+            suggestBox.hidden = false;
+            search.setAttribute('aria-expanded', 'true');
+        }
+        function pickSuggest(at) {
+            var row = suggestRows[at];
+            if (!row) return;
+            closeSuggest();
+            toggleAreas(false);
+            if (search.blur) search.blur();
+            if (row.kind === 'project') {
+                search.value = '';
+                if (state.area && row.item.getAttribute('data-area') !== state.area) setArea('');
+                resetFilters();
+                filter(true);
+                leaveGlobe();
+                state.focus = true;
+                select(row.item, true);
+                return;
+            }
+            resetFilters();
+            if (row.kind === 'developer') { setArea(''); search.value = row.name; }
+            if (row.kind === 'area') { search.value = ''; setArea(row.area); }
+            if (row.kind === 'type') { search.value = ''; state.types = [row.type]; paintChips(); }
+            filter();
+            if (gl) fitAll(900);
+        }
+        if (search) {
+            search.setAttribute('role', 'combobox'); search.setAttribute('aria-autocomplete', 'list'); search.setAttribute('aria-expanded', 'false');
+            search.addEventListener('input', function () { filter(true); suggest(); });
+            search.addEventListener('focus', function () { if (search.value) suggest(); });
+            search.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') { closeSuggest(); return; }
+                if (event.key !== 'Enter') return;
+                event.preventDefault();
+                if (suggestRows.length) pickSuggest(0); else { closeSuggest(); filter(); if (search.blur) search.blur(); }
+            });
+            // ✕ بتاعة خانة البحث (type=search): بترجّع كل المشاريع
+            search.addEventListener('search', function () { if (!search.value) { closeSuggest(); filter(); } });
+            document.addEventListener('click', function (event) { if (suggestBox && !suggestBox.hidden && !event.target.closest('.smap__row')) closeSuggest(); });
+        }
 
         root.querySelectorAll('[data-smap-filter-open]').forEach(function (button) {
             button.addEventListener('click', function () { toggleSheet(true, button.getAttribute('data-smap-filter-open')); });
@@ -5017,28 +5445,61 @@
             return String.fromCodePoint(127397 + iso.charCodeAt(0), 127397 + iso.charCodeAt(1));
         }
         function codeField(onChange) {
-            var wrap = make('label', 'sai__code');
+            var wrap = make('div', 'sai__code-box');
+            var button = make('button', 'sai__code'); button.type = 'button'; button.setAttribute('aria-haspopup', 'listbox'); button.setAttribute('aria-expanded', 'false'); button.setAttribute('aria-label', B.code || '');
             var flag = make('img'); flag.alt = ''; flag.width = 24; flag.height = 18; flag.setAttribute('aria-hidden', 'true');
             var text = make('b', '');
             var arrow = make('i', 'sai__code-arrow'); arrow.setAttribute('aria-hidden', 'true');
-            var select = make('select'); select.required = true; select.setAttribute('aria-label', B.code || ''); select.setAttribute('aria-required', 'true');
-            countries.forEach(function (country) {
-                var option = make('option', '', (flagEmoji(country.iso) + ' ' + country.code).trim()); option.value = country.code;
-                option.setAttribute('data-iso', country.iso || ''); option.setAttribute('aria-label', (country.name || '') + ' ' + country.code);
-                if (country.code === saved.code && !select.querySelector('[selected]')) option.setAttribute('selected', '');
-                select.appendChild(option);
-            });
+            // القيمة المختارة (بتتقري زي أي خانة: .value)
+            var select = make('input'); select.type = 'hidden'; select.value = saved.code || (countries[0] ? countries[0].code : '');
+            var menu = make('div', 'sai__code-menu'); menu.hidden = true;
+            // بحث فوق القايمة: باسم الدولة أو الكود
+            var find = make('input'); find.type = 'search'; find.autocomplete = 'off'; find.placeholder = B.code_search || ''; find.setAttribute('aria-label', B.code_search || '');
+            var rows = make('ul'); rows.setAttribute('role', 'listbox'); rows.setAttribute('aria-label', B.code || '');
+            var flagUrl = function (iso) { return iso && contact.flags ? String(contact.flags).replace(/\/$/, '') + '/' + iso + '.svg' : ''; };
             function show() {
-                var picked = select.options[select.selectedIndex];
-                var iso = picked ? picked.getAttribute('data-iso') : '';
+                var picked = countries.filter(function (country) { return country.code === select.value; })[0] || countries[0] || {};
                 text.textContent = select.value;
-                if (iso && contact.flags) { flag.src = String(contact.flags).replace(/\/$/, '') + '/' + iso + '.svg'; flag.hidden = false; } else flag.hidden = true;
+                var src = flagUrl(picked.iso);
+                if (src) { flag.src = src; flag.hidden = false; } else flag.hidden = true;
             }
-            select.value = saved.code;
-            if (!select.value && select.options.length) select.selectedIndex = 0;
-            select.addEventListener('change', function () { show(); if (onChange) onChange(select.value); });
+            function open(state) {
+                menu.hidden = !state;
+                button.setAttribute('aria-expanded', state ? 'true' : 'false');
+                if (state) { find.value = ''; filterRows(); find.focus(); }
+            }
+            function pickCode(code) { select.value = code; show(); open(false); if (onChange) onChange(code); button.focus(); }
+            function simple(value) { return String(value || '').toLowerCase().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim(); }
+            function filterRows() {
+                var q = simple(find.value).replace(/^\+|^00/, '');
+                Array.prototype.forEach.call(rows.children, function (row) { row.hidden = !!q && row.__hay.indexOf(q) === -1; });
+            }
+            countries.forEach(function (country) {
+                var row = make('li'); row.setAttribute('role', 'option'); row.tabIndex = -1;
+                row.__hay = simple([country.name, country.name_en, country.iso, String(country.code).replace(/\D+/g, '')].join(' '));
+                var src = flagUrl(country.iso);
+                if (src) { var image = make('img'); image.alt = ''; image.width = 24; image.height = 18; image.loading = 'lazy'; image.src = src; row.appendChild(image); }
+                row.appendChild(make('span', '', country.name || ''));
+                var codeText = make('b', '', country.code); codeText.dir = 'ltr';
+                row.appendChild(codeText);
+                row.addEventListener('click', function () { pickCode(country.code); });
+                row.addEventListener('keydown', function (event) { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); pickCode(country.code); } });
+                rows.appendChild(row);
+            });
+            button.addEventListener('click', function () { open(menu.hidden); });
+            find.addEventListener('input', filterRows);
+            find.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') { open(false); button.focus(); return; }
+                if (event.key !== 'Enter') return;
+                event.preventDefault();
+                var first = Array.prototype.filter.call(rows.children, function (row) { return !row.hidden; })[0];
+                if (first) first.click();
+            });
+            document.addEventListener('click', function (event) { if (!menu.hidden && !wrap.contains(event.target)) open(false); });
             flag.addEventListener('error', function () { flag.hidden = true; });
-            wrap.appendChild(flag); wrap.appendChild(text); wrap.appendChild(arrow); wrap.appendChild(select);
+            button.appendChild(flag); button.appendChild(text); button.appendChild(arrow);
+            menu.appendChild(find); menu.appendChild(rows);
+            wrap.appendChild(button); wrap.appendChild(menu); wrap.appendChild(select);
             show();
             return { wrap: wrap, select: select };
         }
@@ -6253,22 +6714,128 @@
             });
         }
 
-        // الإملاء الصوتي (لو المتصفح بيدعمه)
+        // ---------- المايك: العميل يسجّل صوته والكلام بيتكتب في خانة الكتابة (زي الشات) ----------
+        // 1) لو فيه لينك التحويل (contact.voice ← $aiVoiceUrl) أو كود بيسمع shary:ai-voice: تسجيل حقيقي (MediaRecorder) ← بيترفع للباك ← بيرجع النص.
+        //    POST multipart: audio (webm / mp4 / ogg) + lang + seconds  ←  JSON { text: "..." }
+        //    حدث shary:ai-voice على البانل: detail = { blob, lang, seconds, done(text), fail(message) } — امنعوه (preventDefault) لو هتحوّلوا الصوت بطريقتكم.
+        // 2) من غير لينك: إملاء المتصفح نفسه (SpeechRecognition) والكلام بيتكتب وهو بيتكلم.
+        // الزرار بيظهر طول ما واحدة من الطريقتين متاحة. ضغطة = ابدأ ، ضغطة تانية = خلّص — والكلام بيتبعت في الشات على طول.
         var mic = panel.querySelector('[data-ai-mic]');
         var Speech = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (mic && Speech) {
+        var canRecord = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+        var V = U.voice || {};
+        if (mic && (Speech || canRecord)) {
             mic.classList.remove('hidden');
-            var listening = null;
-            mic.addEventListener('click', function () {
-                if (listening) { listening.stop(); return; }
+            var micLabel = mic.getAttribute('aria-label') || '';
+            var basePlaceholder = input.getAttribute('placeholder') || '';
+            var voice = null;          // الشغال دلوقتي: { stop, cancel }
+            var voiceTimer = 0;
+            var micState = function (state, text) {   // '' | rec | busy
+                mic.setAttribute('aria-pressed', state === 'rec' ? 'true' : 'false');
+                mic.classList.toggle('is-busy', state === 'busy');
+                mic.disabled = state === 'busy';
+                mic.setAttribute('aria-label', state === 'rec' ? (V.stop || micLabel) : micLabel);
+                form.classList.toggle('is-recording', state === 'rec');
+                input.setAttribute('placeholder', text || basePlaceholder);
+            };
+            var micNote = function (text) {
+                micState('');
+                if (!text) return;
+                input.setAttribute('placeholder', text);
+                window.setTimeout(function () { if (!voice) input.setAttribute('placeholder', basePlaceholder); }, 4000);
+            };
+            // النص اللي اتحوّل من الصوت بيتبعت في الشات على طول (مع أي كلام كان مكتوب في الخانة)
+            var putText = function (text) {
+                text = String(text || '').replace(/\s+/g, ' ').trim();
+                micState('');
+                if (!text) return micNote(V.empty);
+                input.value = (input.value ? input.value.replace(/\s+$/, '') + ' ' : '') + text;
+                grow();
+                sendVoice();
+            };
+            var sendVoice = function () {
+                if (!input.value.replace(/\s+/g, '')) return;
+                if (form.requestSubmit) form.requestSubmit(); else form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+            };
+            var clock = function (seconds) { return Math.floor(seconds / 60) + ':' + ('0' + (seconds % 60)).slice(-2); };
+
+            // --- إملاء المتصفح: الكلام بيتكتب وهو بيتكلم
+            var dictate = function () {
                 var recognition = new Speech();
+                var before = input.value ? input.value.replace(/\s+$/, '') + ' ' : '';
+                var heard = false, failed = '', dropped = false;
                 recognition.lang = english ? 'en-US' : 'ar-EG';
-                recognition.onresult = function (event) { input.value = event.results[0][0].transcript; grow(); input.focus(); };
-                recognition.onend = recognition.onerror = function () { listening = null; mic.setAttribute('aria-pressed', 'false'); };
-                listening = recognition;
-                mic.setAttribute('aria-pressed', 'true');
-                try { recognition.start(); } catch (error) { listening = null; mic.setAttribute('aria-pressed', 'false'); }
+                recognition.interimResults = true;
+                recognition.continuous = true;
+                recognition.onresult = function (event) {
+                    var text = '';
+                    for (var i = 0; i < event.results.length; i++) text += event.results[i][0].transcript;
+                    heard = heard || !!text;
+                    input.value = before + text; grow();
+                };
+                recognition.onerror = function (event) { failed = event && event.error === 'not-allowed' ? (V.denied || '') : (event && event.error === 'no-speech' ? (V.empty || '') : (V.failed || '')); };
+                recognition.onend = function () { voice = null; if (failed && !heard) micNote(failed); else { micState(''); if (heard && !dropped) sendVoice(); } };
+                voice = { stop: function () { try { recognition.stop(); } catch (error) { voice = null; micState(''); } }, cancel: function () { dropped = true; try { recognition.abort(); } catch (error) { /* خلص */ } } };
+                micState('rec', V.listening);
+                try { recognition.start(); } catch (error) { voice = null; micNote(V.failed); }
+            };
+
+            // --- تسجيل حقيقي ← الباك بيحوّله لنص
+            var record = function () {
+                micState('busy', V.asking);
+                navigator.mediaDevices.getUserMedia({ audio: true }).then(function (stream) {
+                    var types = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4', 'audio/ogg;codecs=opus'];
+                    var type = types.filter(function (one) { return MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(one); })[0] || '';
+                    var recorder = new MediaRecorder(stream, type ? { mimeType: type } : undefined);
+                    var chunks = [], started = Date.now(), cancelled = false;
+                    recorder.ondataavailable = function (event) { if (event.data && event.data.size) chunks.push(event.data); };
+                    recorder.onstop = function () {
+                        window.clearInterval(voiceTimer);
+                        stream.getTracks().forEach(function (track) { track.stop(); });
+                        voice = null;
+                        var seconds = Math.round((Date.now() - started) / 1000);
+                        if (cancelled || !chunks.length) return micState('');
+                        if (seconds < 1) return micNote(V.short);
+                        var blob = new Blob(chunks, { type: recorder.mimeType || type || 'audio/webm' });
+                        micState('busy', V.converting);
+                        var finished = false;
+                        var done = function (text) { if (finished) return; finished = true; putText(text); };
+                        var fail = function (message) { if (finished) return; finished = true; micNote(message || V.failed); };
+                        var detail = { blob: blob, lang: english ? 'en' : 'ar', seconds: seconds, done: done, fail: fail };
+                        if (!panel.dispatchEvent(new CustomEvent('shary:ai-voice', { bubbles: true, cancelable: true, detail: detail }))) return;
+                        var url = String(contact.voice || '');
+                        if (!url || url.charAt(0) === '#') return fail(V.no_backend);
+                        var data = new FormData();
+                        data.append('audio', blob, 'voice.' + ((blob.type.split('/')[1] || 'webm').split(';')[0]));
+                        data.append('lang', detail.lang); data.append('seconds', seconds);
+                        var token = document.querySelector('meta[name="csrf-token"]');
+                        fetch(url, { method: 'POST', headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' }, body: data })
+                            .then(function (response) { if (!response.ok) throw new Error('failed'); return response.json(); })
+                            .then(function (result) { done(result && (result.text || result.transcript)); })
+                            .catch(function () { fail(); });
+                    };
+                    voice = { stop: function () { if (recorder.state !== 'inactive') recorder.stop(); }, cancel: function () { cancelled = true; if (recorder.state !== 'inactive') recorder.stop(); } };
+                    recorder.start();
+                    micState('rec', String(V.recording || '').replace(':time', clock(0)));
+                    voiceTimer = window.setInterval(function () {
+                        var seconds = Math.round((Date.now() - started) / 1000);
+                        input.setAttribute('placeholder', String(V.recording || '').replace(':time', clock(seconds)));
+                        if (seconds >= 120) voice.stop();   // حد أقصى دقيقتين
+                    }, 500);
+                }).catch(function (error) {
+                    voice = null;
+                    // مفيش إذن مايك أو مفيش مايك: لو المتصفح فيه إملاء نجرّبه ، وإلا رسالة واضحة
+                    micNote(error && (error.name === 'NotAllowedError' || error.name === 'SecurityError') ? V.denied : V.no_mic);
+                });
+            };
+
+            mic.addEventListener('click', function () {
+                if (voice) { voice.stop(); return; }
+                var hasBackend = !!String(contact.voice || '').replace(/^#.*/, '') || panel.hasAttribute('data-ai-voice');
+                if (canRecord && (hasBackend || !Speech)) record(); else if (Speech) dictate(); else micNote(V.unsupported);
             });
+            // قفل البانل أو إرسال الرسالة: التسجيل بيقف
+            form.addEventListener('submit', function () { if (voice) voice.cancel(); });
         }
 
         chips(config.chips);
@@ -6855,6 +7422,51 @@
                 detail: { data: new FormData(form), done: finish, fail: function (message) { if (error) { if (message) error.textContent = message; error.classList.remove('hidden'); } } }
             }));
             if (!go) event.preventDefault();   // الإرسال هيتم من اللي سمع الحدث (AJAX) وينادي done()
+        });
+
+        // التاريخ بطريقتين: العميل يكتبه بإيده في الخانة ، أو يضغط على النتيجة ويختار — واللي يختاره بيتكتب في الخانة (يوم/شهر/سنة)
+        Array.prototype.forEach.call(form.querySelectorAll('[data-date-native]'), function (native) {
+            var label = native.closest('label');
+            var text = label ? label.querySelector('[data-date-text]') : null;
+            if (!text) return;
+            native.addEventListener('change', function () {
+                var parts = String(native.value || '').split('-');
+                if (parts.length !== 3) return;
+                text.value = parts[2] + '/' + parts[1] + '/' + parts[0];
+                text.dispatchEvent(new Event('input', { bubbles: true }));
+            });
+            // الضغط على النتيجة بيفتح اختيار التاريخ (مش بيحط المؤشر في خانة الكتابة)
+            native.parentNode.addEventListener('click', function (event) {
+                event.preventDefault();
+                try { if (native.showPicker) native.showPicker(); else native.focus(); } catch (error) { native.focus(); }
+            });
+            // الكتابة: أرقام وبينهم / لوحدها (15032027 ← 15/03/2027)
+            text.addEventListener('input', function (event) {
+                if (event.isTrusted === false) return;
+                var digits = text.value.replace(/[٠-٩]/g, function (d) { return '٠١٢٣٤٥٦٧٨٩'.indexOf(d); });
+                if (/^\d{3,8}$/.test(digits)) text.value = digits.slice(0, 2) + '/' + (digits.length > 4 ? digits.slice(2, 4) + '/' + digits.slice(4) : digits.slice(2));
+                else if (digits !== text.value) text.value = digits;
+            });
+        });
+        // اختيارات جاهزة تحت خانة الكتابة (datalist — سنة التسليم): الخانة بتتربط بالقايمة اللي جنبها حتى لو الـ id اتغيّر
+        Array.prototype.forEach.call(form.querySelectorAll('input[list]'), function (input) {
+            var holder = input.closest('[data-field]');
+            var options = holder ? holder.querySelector('datalist') : null;
+            if (options && options.id && options.id !== input.getAttribute('list')) input.setAttribute('list', options.id);
+        });
+        // "اكتبه بنفسك" في القايمة (other): بيظهر خانة كتابة تحتها — العميل يختار من القايمة أو يكتب بإيده
+        Array.prototype.forEach.call(form.querySelectorAll('[data-select-other]'), function (box) {
+            var holder = box.closest('[data-select]');
+            var select = holder ? holder.querySelector('select') : null;
+            if (!select) return;
+            function sync(focus) {
+                var on = select.value === 'other';
+                box.classList.toggle('hidden', !on);
+                if (on && focus === true) { var input = box.querySelector('input'); if (input) input.focus(); }
+            }
+            select.addEventListener('change', function () { sync(true); });
+            form.addEventListener('reset', function () { window.setTimeout(sync, 0); });
+            sync();
         });
 
         var again = form.querySelector('[data-steps-again]');
