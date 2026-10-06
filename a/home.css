@@ -8228,3 +8228,27 @@ html, body {
 .contact-form #location .hero-dropdown-option { border-radius: 8px; padding: 10px 12px !important; font-size: 15px; font-weight: 600; line-height: 1.5; color: #123a5c; }
 .contact-form #location .hero-dropdown-option:hover,
 .contact-form #location .hero-dropdown-option[aria-selected="true"] { background-color: #e8f0fb; color: #1f63c6; }
+
+/* ---- تحديث: كارت "الأكثر رواجًا" في الهوم (style = trending) — بسيط وهادي: خلفية بيضا بتدرّج دافي ، العنوان والزرار في ناحية ، وزرار التشغيل (SVG) في الناحية التانية. من غير صورة خلفية ---- */
+.investment-promo-card.promo-trending-card { display: grid; grid-template-columns: minmax(0, 1fr) 66px; grid-template-areas: "title art" "cta cta"; align-items: center; column-gap: 8px; row-gap: 8px; padding: 10px 14px 11px; border: 1px solid #f3e3bd; background: linear-gradient(to left, #fff 0%, #fff 30%, #fff1cf 100%) !important; box-shadow: 0 10px 22px -18px rgba(18, 58, 92, .45); filter: none; }
+[dir="ltr"] .investment-promo-card.promo-trending-card { background: linear-gradient(to right, #fff 0%, #fff 30%, #fff1cf 100%) !important; }
+.promo-trending-card .promo-card-content { display: contents; }
+.investment-promo-card.promo-trending-card .promo-title { grid-area: title; display: flex; flex-direction: column !important; align-items: flex-start !important; align-self: center; justify-content: flex-start; gap: 0 !important; height: auto; margin: 0; padding: 0; text-align: start; }
+.investment-promo-card.promo-trending-card .promo-title h3 { margin: 0; padding: 0; font-size: 19px; font-weight: 800; line-height: 1.25; white-space: normal; color: #123a5c; }
+.investment-promo-card.promo-trending-card .promo-title h3 + h3 { color: #1f9a8c; }
+.investment-promo-card.promo-trending-card .promo-icon { grid-area: art; width: 66px; height: 66px; flex: none; align-self: center; }
+.promo-trending-card .promo-trend-art { display: block; width: 100%; height: 100%; }
+.investment-promo-card.promo-trending-card .promo-button { grid-area: cta; align-self: end; justify-self: start; width: auto; max-width: 100%; height: 28px; gap: 4px; padding: 0 13px 0 8px; background: #1e4166; font-size: 12px; font-weight: 800; color: #fff; box-shadow: none; white-space: nowrap; }
+[dir="ltr"] .investment-promo-card.promo-trending-card .promo-button { flex-direction: row-reverse; padding: 0 8px 0 13px; }
+[dir="ltr"] .promo-trending-card .promo-trend-arrow { transform: scaleX(-1); }
+.promo-trending-card .promo-button::before { display: none; }
+.promo-trending-card .promo-trend-arrow { flex: none; }
+/* ديسك توب (الكارت أكبر): الزرار تحت العنوان والرسمة واخدة الارتفاع كله */
+@media (min-width: 960px) {
+  .investment-promo-card.promo-trending-card { grid-template-columns: minmax(0, 1fr) 112px; grid-template-areas: "title art" "cta art"; column-gap: 10px; row-gap: 12px; padding: 14px 18px; }
+  .investment-promo-card.promo-trending-card .promo-title { align-self: end; }
+  .investment-promo-card.promo-trending-card .promo-title h3 { font-size: 23px; }
+  .investment-promo-card.promo-trending-card .promo-icon { width: 112px; height: 112px; }
+  .investment-promo-card.promo-trending-card .promo-button { align-self: start; height: 34px; gap: 5px; padding: 0 15px 0 10px; font-size: 13.5px; }
+  [dir="ltr"] .investment-promo-card.promo-trending-card .promo-button { padding: 0 10px 0 15px; }
+}
