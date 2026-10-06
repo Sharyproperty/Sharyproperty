@@ -8346,3 +8346,15 @@ html, body {
 @media (min-width: 768px) {
   .recommended-section .property-info .property-location { font-size: 18px !important; }
 }
+
+/* ---- تحديث: خط كارت الوحدة في الهوم. الكارت كان على خط "Tajawal" وهو مش محمّل في الصفحة فكان بيظهر بخط الجهاز (رفيع وصغير).
+   دلوقتي: الكارت بخط الموقع (Almarai) ، واسم الوحدة بنفس خط ووزن الاسم على الكارت في صفحة "عرض الكل" (Cairo بولد).
+   مهم للباك إند: صفحة الهوم لازم تحمّل خط Cairo (نفس لينك layouts/site): family=Cairo:wght@500;600;700;800 ---- */
+.property-card { font-family: "Almarai", "Cairo", "Tajawal", sans-serif !important; }
+.recommended-section .property-info .property-location {
+  font-family: "Cairo", "Almarai", sans-serif !important;
+  font-size: 17px !important; font-weight: 700 !important; line-height: 1.35;
+}
+@media (min-width: 768px) {
+  .recommended-section .property-info .property-location { font-size: 18px !important; font-weight: 700 !important; }
+}
