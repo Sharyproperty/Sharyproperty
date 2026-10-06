@@ -1385,8 +1385,8 @@ video {
   border: 1px solid #d3dfee;
   border-radius: 999px;
   background-color: #ffffff;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 /* صورة المنطقة جوه القايمة: مربع بحواف ناعمة والصورة ماليّاه */
@@ -2256,9 +2256,9 @@ video {
   height: 100%;
   width: 100%;
   background-color: #ffffff;
-  /* لوجو المطور مالي الدايرة كلها (من غير مربع جوه الدايرة ومن غير تكبير) */
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
+  padding: 12px;
 }
 
 .dev-icon__logo--story {
@@ -2562,6 +2562,10 @@ video {
     height: 124px;
     width: 124px;
     font-size: 22px;
+  }
+
+  .dev-icon__logo > img {
+    padding: 16px;
   }
 }
 
@@ -6060,105 +6064,104 @@ input:focus-visible + .area-chip,
 /* شاشات اللاب توب القصيرة: الفورم الثابت (صفحة المشروع / الوحدة / المقال) بيتضغط سِنّة عشان الزراير تفضل باينة وهو ثابت */
 
 @media (min-width: 1024px) and (max-height: 840px) {
-  .prop-aside--stick .cform,
+  .prop-aside--stick-compact .cform,
         [data-stick-under-header] .cform {
     gap: 6px;
     padding: 12px 20px;
   }
 
-  .prop-aside--stick .cform__icon,
-        [data-stick-under-header] .cform__icon {
+  [data-stick-under-header] .cform__icon {
     height: 24px;
     width: 24px;
     margin-bottom: 0;
   }
 
-  .prop-aside--stick .cform__title,
-        [data-stick-under-header] .cform__title {
+  [data-stick-under-header] .cform__title {
     font-size: 16px;
   }
 
-  .prop-aside--stick .cform__kinds,
-        [data-stick-under-header] .cform__kinds {
+  [data-stick-under-header] .cform__kinds {
     font-size: 14px;
   }
 
-  .prop-aside--stick .cform__desc,
-        [data-stick-under-header] .cform__desc {
+  [data-stick-under-header] .cform__desc {
     display: none;
   }
 
-  .prop-aside--stick .cform__field,
-        [data-stick-under-header] .cform__field {
+  [data-stick-under-header] .cform__field {
     gap: 2px;
   }
 
-  .prop-aside--stick .cform__field > span:first-child,
-        [data-stick-under-header] .cform__field > span:first-child {
+  [data-stick-under-header] .cform__field > span:first-child {
     font-size: 13px;
   }
 
-  .prop-aside--stick .cform input[type="text"],
-        [data-stick-under-header] .cform input[type="text"],
-        .prop-aside--stick .cform select,
+  [data-stick-under-header] .cform input[type="text"],
         [data-stick-under-header] .cform select,
-        .prop-aside--stick .cform__phone,
         [data-stick-under-header] .cform__phone,
-        .prop-aside--stick .cform__btn,
         [data-stick-under-header] .cform__btn {
     height: 36px;
   }
 
-  .prop-aside--stick .cform textarea,
-        [data-stick-under-header] .cform textarea {
+  [data-stick-under-header] .cform textarea {
     height: 46px;
     padding-top: 8px;
   }
 
-  .prop-aside--stick .cform__buttons,
-        [data-stick-under-header] .cform__buttons {
+  [data-stick-under-header] .cform__buttons {
     margin-top: 4px;
     gap: 6px;
   }
 }
 
-/* لاب توب قصير جدًا (ارتفاع الشاشة 720px أو أقل): الفورم الثابت أصغر — من غير السماعة وسطر "سكن، بيع..." والزرارين جنب بعض — عشان اتصال / واتساب يفضلوا باينين */
+/* الفورم الثابت في صفحة المشروع / الوحدة بيفضل بشكله الطبيعي (مستطيل طولي — من غير ضغط للخانات).
+       على الشاشات القصيرة بيصغر كله بنفس النسبة سِنّة صغيرة بس عشان يفضل باين كله وهو ثابت تحت شريط الملخص. */
 
-@media (min-width: 1024px) and (max-height: 720px) {
-  .prop-aside--stick .cform {
-    gap: 5px;
-    padding: 10px 18px;
+@media (min-width: 1024px) and (max-height: 885px) {
+  .prop-aside--stick > * {
+    zoom: 0.95;
   }
+}
 
-  .prop-aside--stick .cform__icon,
-        .prop-aside--stick .cform__kinds {
-    display: none;
+@media (min-width: 1024px) and (max-height: 855px) {
+  .prop-aside--stick > * {
+    zoom: 0.91;
   }
+}
 
-  .prop-aside--stick .cform input[type="text"],
-        .prop-aside--stick .cform select,
-        .prop-aside--stick .cform__phone,
-        .prop-aside--stick .cform__btn {
-    height: 34px;
+@media (min-width: 1024px) and (max-height: 829px) {
+  .prop-aside--stick > * {
+    zoom: 0.87;
   }
+}
 
-  .prop-aside--stick .cform textarea {
-    height: 40px;
-    padding-top: 6px;
+@media (min-width: 1024px) and (max-height: 803px) {
+  .prop-aside--stick > * {
+    zoom: 0.83;
   }
+}
 
-  .prop-aside--stick .cform__buttons {
-    flex-direction: row;
-    justify-content: center;
+@media (min-width: 1024px) and (max-height: 777px) {
+  .prop-aside--stick > * {
+    zoom: 0.79;
   }
+}
 
-  .prop-aside--stick .cform__btn {
-    width: 48%;
-    font-size: 13.5px;
+@media (min-width: 1024px) and (max-height: 751px) {
+  .prop-aside--stick > * {
+    zoom: 0.75;
   }
+}
 
-  .prop-aside--stick .consult-form > div:last-child a {
-    height: 40px;
+@media (min-width: 1024px) and (max-height: 725px) {
+  .prop-aside--stick > * {
+    zoom: 0.71;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 699px) {
+  .prop-aside--stick > * {
+    zoom: 0.66;
   }
 }
 
@@ -7290,8 +7293,8 @@ input:focus-visible + .area-chip,
 .prop-shot__logo img {
   height: 100%;
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 @media (min-width: 1024px) {
@@ -15420,8 +15423,8 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   border-radius: 50%;
   border: 1px solid #e3e9ef;
   background-color: #1e4166;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
   font-size: 14px;
   font-weight: 800;
   color: #fff;
@@ -17869,6 +17872,10 @@ img.abroad-dev__logo {
 .object-top {
   -o-object-position: top;
      object-position: top;
+}
+
+.p-1 {
+  padding: 0.25rem;
 }
 
 .p-1\.5 {
@@ -21075,6 +21082,10 @@ img.abroad-dev__logo {
     padding: 0px;
   }
 
+  .lg\:p-3 {
+    padding: 0.75rem;
+  }
+
   .lg\:p-4 {
     padding: 1rem;
   }
@@ -21703,6 +21714,7 @@ img.abroad-dev__logo {
 .pv-desktop .dev-icon__logo {height: 124px;
     width: 124px;
     font-size: 22px;}
+.pv-desktop .dev-icon__logo > img {padding: 16px;}
 .pv-desktop .social-brand {height: 48px;
     width: 48px;
     font-size: 23px;}
@@ -23387,6 +23399,7 @@ img.abroad-dev__logo {
 .pv-desktop .lg\:bg-white {--tw-bg-opacity: 1;
     background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));}
 .pv-desktop .lg\:p-0 {padding: 0px;}
+.pv-desktop .lg\:p-3 {padding: 0.75rem;}
 .pv-desktop .lg\:p-4 {padding: 1rem;}
 .pv-desktop .lg\:p-5 {padding: 1.25rem;}
 .pv-desktop .lg\:p-7 {padding: 1.75rem;}

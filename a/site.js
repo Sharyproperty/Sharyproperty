@@ -846,14 +846,26 @@
             var size = canvas.width = canvas.height = 24;
             var context = canvas.getContext('2d');
             context.drawImage(img, 0, 0, size, size);
-            var corners = [[1, 1], [size - 2, 1], [1, size - 2], [size - 2, size - 2]].map(function (point) { return context.getImageData(point[0], point[1], 1, 1).data; });
-            var first = corners[0];
-            var solid = first[3] > 200 && corners.every(function (pixel) {
-                return Math.abs(pixel[0] - first[0]) + Math.abs(pixel[1] - first[1]) + Math.abs(pixel[2] - first[2]) < 30 && pixel[3] > 200;
+            // 8 عينات على أطراف الصورة (الأركان + نص كل ضلع): لون الخلفية = اللون اللي أغلب العينات عليه
+            var mid = Math.floor(size / 2);
+            var samples = [[1, 1], [size - 2, 1], [1, size - 2], [size - 2, size - 2], [mid, 1], [mid, size - 2], [1, mid], [size - 2, mid]].map(function (point) { return context.getImageData(point[0], point[1], 1, 1).data; });
+            var clear = samples.filter(function (pixel) { return pixel[3] < 200; }).length;
+            if (clear >= 4) return;   // لوجو شفاف: بيفضل كامل على الأبيض
+            var best = null, bestCount = 0;
+            samples.forEach(function (base) {
+                var count = samples.filter(function (pixel) { return pixel[3] >= 200 && Math.abs(pixel[0] - base[0]) + Math.abs(pixel[1] - base[1]) + Math.abs(pixel[2] - base[2]) < 60; }).length;
+                if (count > bestCount) { bestCount = count; best = base; }
             });
-            if (!solid) return;   // خلفية شفافة أو مش لون واحد: بيفضل على الأبيض
-            var color = 'rgb(' + first[0] + ',' + first[1] + ',' + first[2] + ')';
+            if (!best || bestCount < 5) {
+                // خلفية اللوجو مش لون واحد (صورة): اللوجو بيملى الدايرة عشان ما يبانش مربع
+                img.style.objectFit = 'cover';
+                img.style.padding = '0';
+                return;
+            }
+            var color = 'rgb(' + best[0] + ',' + best[1] + ',' + best[2] + ')';
             img.style.backgroundColor = color;
+            // اللوجو كامل جوه الدايرة بهامش بسيط (من غير تكبير): الكلام اللي على أطرافه ما يتقصش بحواف الدايرة
+            if (parseFloat(window.getComputedStyle(img).paddingLeft) < 1) img.style.padding = '7%';
             var box = img.parentElement;
             if (box && box.clientWidth && box.clientWidth <= img.clientWidth * 1.7 && window.getComputedStyle(box).borderTopLeftRadius !== '0px') box.style.backgroundColor = color;
         } catch (error) { /* صورة من دومين تاني من غير CORS */ }
