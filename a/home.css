@@ -8158,13 +8158,14 @@ html, body {
 .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon .shary-card-art { width: 92% !important; }
 .shary-home-root .promo-card-shary .promo-trend-arrow { flex: none; }
 @media (min-width: 960px) {
-  .shary-home-root .investment-promo-card.promo-card-shary { grid-template-columns: minmax(0, 1fr) 132px; grid-template-areas: "title art" "cta art"; column-gap: 10px; row-gap: 12px; padding: 14px 18px; }
-  .shary-home-root .investment-promo-card.promo-card-shary .promo-title { align-self: end; }
+  /* الكارد عريض: الزرار في سطر لوحده تحت (زي الموبايل) عشان كلمة الزرار الطويلة في الإنجليزي ما تدخلش في الكارد */
+  .shary-home-root .investment-promo-card.promo-card-shary { grid-template-columns: minmax(0, 1fr) 150px; grid-template-areas: "title art" "cta cta"; column-gap: 10px; row-gap: 8px; padding: 14px 18px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .promo-title { align-self: center; }
   .shary-home-root .investment-promo-card.promo-card-shary .promo-title h3 { font-size: 23px; }
-  .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon { width: 132px; height: 104px; }
-  .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon::before { height: 96px; width: 96px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon { width: 150px; height: 88px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon::before { height: 86px; width: 86px; }
   .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon .shary-card-art { filter: drop-shadow(0 12px 12px rgba(18, 58, 92, .28)); }
-  .shary-home-root .investment-promo-card.promo-card-shary .promo-button { align-self: start; height: 34px; gap: 5px; padding: 0 15px 0 10px; font-size: 13.5px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .promo-button { align-self: end; height: 34px; gap: 5px; padding: 0 15px 0 10px; font-size: 13.5px; }
   [dir="ltr"] .shary-home-root .investment-promo-card.promo-card-shary .promo-button { padding: 0 10px 0 15px; }
 }
 /* ---- كروت العروض الديناميك: كارت من غير شكل جاهز (style فاضي) — الألوان وصورة الخلفية جايين من لوحة التحكم (inline) ، ودي القيم الافتراضية ---- */

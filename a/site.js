@@ -6820,11 +6820,22 @@
                 form.classList.toggle('is-recording', state === 'rec');
                 input.setAttribute('placeholder', text || basePlaceholder);
             };
+            // ملاحظة المايك: بتظهر سطر واضح فوق خانة الكتابة (وفي الـ placeholder) وبتختفي لوحدها
+            var noteBox = null, noteTimer = 0;
             var micNote = function (text) {
                 micState('');
                 if (!text) return;
                 input.setAttribute('placeholder', text);
-                window.setTimeout(function () { if (!voice) input.setAttribute('placeholder', basePlaceholder); }, 4000);
+                if (!noteBox) {
+                    noteBox = document.createElement('p');
+                    noteBox.className = 'sai__voice-note';
+                    noteBox.setAttribute('role', 'status');
+                    form.parentNode.insertBefore(noteBox, form);
+                }
+                noteBox.textContent = text;
+                noteBox.hidden = false;
+                window.clearTimeout(noteTimer);
+                noteTimer = window.setTimeout(function () { if (noteBox) noteBox.hidden = true; if (!voice) input.setAttribute('placeholder', basePlaceholder); }, 6000);
             };
             // النص اللي اتحوّل من الصوت بيتبعت في الشات على طول (مع أي كلام كان مكتوب في الخانة)
             var putText = function (text) {
@@ -6841,25 +6852,43 @@
             };
             var clock = function (seconds) { return Math.floor(seconds / 60) + ':' + ('0' + (seconds % 60)).slice(-2); };
 
-            // --- إملاء المتصفح: الكلام بيتكتب وهو بيتكلم
-            var dictate = function () {
-                var recognition = new Speech();
+            // --- إملاء المتصفح: الكلام بيتكتب وهو بيتكلم ، ولما يسكت (أو يضغط المايك تاني) بيتبعت على طول
+            var mobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+            var dictate = function (fallback) {
+                var recognition;
+                try { recognition = new Speech(); } catch (error) { return fallback ? fallback() : micNote(V.unsupported); }
                 var before = input.value ? input.value.replace(/\s+$/, '') + ' ' : '';
-                var heard = false, failed = '', dropped = false;
+                var finalText = '', heard = false, failed = '', dropped = false, code = '';
                 recognition.lang = english ? 'en-US' : 'ar-EG';
                 recognition.interimResults = true;
-                recognition.continuous = true;
+                // على الموبايل: جملة واحدة وبتخلص لوحدها (الوضع المستمر على أندرويد بيكرر الكلام) — على الكمبيوتر: مستمر لحد ما يضغط المايك
+                recognition.continuous = !mobile;
+                recognition.maxAlternatives = 1;
                 recognition.onresult = function (event) {
-                    var text = '';
-                    for (var i = 0; i < event.results.length; i++) text += event.results[i][0].transcript;
+                    var interim = '';
+                    for (var i = event.resultIndex; i < event.results.length; i++) {
+                        var result = event.results[i];
+                        if (result.isFinal) finalText += result[0].transcript + ' '; else interim += result[0].transcript;
+                    }
+                    var text = (finalText + interim).replace(/\s+/g, ' ').trim();
                     heard = heard || !!text;
                     input.value = before + text; grow();
                 };
-                recognition.onerror = function (event) { failed = event && event.error === 'not-allowed' ? (V.denied || '') : (event && event.error === 'no-speech' ? (V.empty || '') : (V.failed || '')); };
-                recognition.onend = function () { voice = null; if (failed && !heard) micNote(failed); else { micState(''); if (heard && !dropped) sendVoice(); } };
+                recognition.onerror = function (event) {
+                    code = (event && event.error) || 'failed';
+                    failed = code === 'not-allowed' || code === 'service-not-allowed' ? (V.denied || '') : (code === 'no-speech' ? (V.empty || '') : (code === 'audio-capture' ? (V.no_mic || '') : (V.failed || '')));
+                };
+                recognition.onend = function () {
+                    voice = null;
+                    if (heard && !dropped) { micState(''); return sendVoice(); }
+                    if (dropped) return micState('');
+                    // الإملاء مش متاح على الجهاز ده (خدمة الصوت مقفولة / مش موجودة): لو فيه تحويل من السيرفر نسجّل ونبعته له
+                    if (fallback && code && code !== 'no-speech' && code !== 'aborted' && code !== 'not-allowed') { micState(''); return fallback(); }
+                    micNote(failed || V.empty);
+                };
                 voice = { stop: function () { try { recognition.stop(); } catch (error) { voice = null; micState(''); } }, cancel: function () { dropped = true; try { recognition.abort(); } catch (error) { /* خلص */ } } };
                 micState('rec', V.listening);
-                try { recognition.start(); } catch (error) { voice = null; micNote(V.failed); }
+                try { recognition.start(); } catch (error) { voice = null; if (fallback) fallback(); else micNote(V.failed); }
             };
 
             // --- تسجيل حقيقي ← الباك بيحوّله لنص
@@ -6914,7 +6943,9 @@
             mic.addEventListener('click', function () {
                 if (voice) { voice.stop(); return; }
                 var hasBackend = !!String(contact.voice || '').replace(/^#.*/, '') || panel.hasAttribute('data-ai-voice');
-                if (canRecord && (hasBackend || !Speech)) record(); else if (Speech) dictate(); else micNote(V.unsupported);
+                if (canRecord && hasBackend) record();                                   // الموقع: تسجيل ← السيرفر بيحوّله لنص
+                else if (Speech) dictate(canRecord && hasBackend ? record : null);       // من غير سيرفر: إملاء المتصفح
+                else micNote(canRecord ? V.no_backend : V.unsupported);                  // لا سيرفر ولا إملاء: رسالة واضحة
             });
             // قفل البانل أو إرسال الرسالة: التسجيل بيقف
             form.addEventListener('submit', function () { if (voice) voice.cancel(); });
