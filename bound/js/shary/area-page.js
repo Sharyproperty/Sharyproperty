@@ -476,11 +476,15 @@
         }
 
         // خانة البحث جوه لوحة الاختيار: بتفلتر الصفوف بالاسم
+        // (الهمزات والتاء المربوطة والألف المقصورة والتشكيل بيتوحّدوا: "اعمار" بتلقط "إعمار" ، "مدينه" بتلقط "مدينة")
+        function plainText(value) {
+            return String(value || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[\u0623\u0625\u0622]/g, '\u0627').replace(/\u0629/g, '\u0647').replace(/\u0649/g, '\u064A').replace(/\s+/g, ' ').trim();
+        }
         all('[data-list-search]').forEach(function (input) {
             input.addEventListener('input', function () {
-                var words = input.value.trim().toLowerCase();
+                var words = plainText(input.value);
                 all('label', input.closest('[data-filter-sheet]').querySelector('[data-list-body]') || input.closest('[data-filter-sheet]')).forEach(function (row) {
-                    row.classList.toggle('hidden', words !== '' && row.textContent.toLowerCase().indexOf(words) === -1);
+                    row.classList.toggle('hidden', words !== '' && plainText(row.textContent).indexOf(words) === -1);
                 });
             });
             input.addEventListener('keydown', function (event) { if (event.key === 'Enter') event.preventDefault(); });

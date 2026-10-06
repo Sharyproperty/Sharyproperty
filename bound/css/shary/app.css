@@ -2374,6 +2374,14 @@ video {
   margin-inline-start: 18px;
 }
 
+/* المنطقة المختارة في الشريط (الشريط بيفلتر نفس الصفحة) */
+
+.coll-links a[aria-current="true"] {
+  color: #1f5fc4;
+  text-decoration-color: #1f5fc4;
+  text-decoration-thickness: 2px;
+}
+
 @media (min-width: 1024px) {
   .coll-tools {
     margin-bottom: 26px;
@@ -3331,7 +3339,40 @@ header:has(> .site-menu:not([class~="hidden"])) {
 
 /* أرقام مؤشر شاري جوه جداول المقال: متوسط سعر المتر ونسبة التغير (بالأخضر زي شريط المؤشر) */
 
+.article-index {
+  white-space: nowrap;
+  font-weight: 700;
+  color: #123a5c;
+}
+
+.article-change {
+  display: inline-block;
+  white-space: nowrap;
+  font-weight: 700;
+  color: #1f7f72;
+}
+
 /* الأسئلة الشائعة */
+
+.article-faq {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.article-faq details {
+  border: 1px solid #e4e9ef;
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+
+.article-faq summary {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #123a5c;
+}
 
 .article-content .article-faq p {
   padding-top: 8px;
@@ -3916,7 +3957,35 @@ a.index-budget__name:hover {
 
 /* إنفوجراف الأماكن */
 
+.article-places {
+  scroll-margin-top: 16px;
+}
+
+.article-places__box {
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.article-places__title {
+  background-color: #9eddd4;
+  padding: 18px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
 /* الدواير 3 في الصف (6 أماكن = صفين متساويين) — وفي المقال على الديسك توب الستة في صف واحد */
+
+.article-places__list {
+  display: grid;
+  grid-template-columns: repeat(3, max-content);
+  justify-content: center;
+  gap: 16px 18px;
+  background-color: #3aafa0;
+  padding: 24px 12px;
+}
 
 .article-content .article-places__list span,
     .article-content .article-places__list a,
@@ -3966,12 +4035,48 @@ a.index-budget__name:hover {
 
 /* كارت مقال مقترح جوه المقال */
 
+.article-related {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border: 1px solid #e4e9ef;
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.article-related__image {
+  display: block;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  background-color: #e8f0fb;
+}
+
 .article-content .article-related__image img {
   height: 160px;
   width: 100%;
   border-radius: 0;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.article-related__body {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.article-related h3 {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #123a5c;
+}
+
+.article-related h3 a:hover {
+  color: #1f63c6;
 }
 
 .article-content .article-related p {
@@ -3984,6 +4089,49 @@ a.index-budget__name:hover {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   line-clamp: 4;
+}
+
+.article-related__more {
+  align-self: flex-start;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #1f63c6;
+}
+
+.article-related__more:hover {
+  text-decoration: underline;
+}
+
+.article-related__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.article-related__brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+.article-related__share {
+  display: flex;
+  height: 36px;
+  width: 36px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.article-related__share:hover {
+  background-color: #e8f0fb;
 }
 
 /* جدول المقارنة */
@@ -6169,6 +6317,145 @@ input:focus-visible + .area-chip,
   display: none;
 }
 
+/* بوب أب "قريبًا" (Coming Soon): كارت أبيض هادي في نص الشاشة — أيقونة المخطط لما الصورة لسه ما اترفعتش */
+
+.soon-pop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.soon-pop[hidden] {
+  display: none;
+}
+
+.soon-pop__dim {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(18, 58, 92, 0.55);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+
+.soon-pop__card {
+  position: relative;
+  width: 100%;
+  max-width: 360px;
+  border-radius: 26px;
+  background-color: #fff;
+  padding: 30px 24px 22px;
+  text-align: center;
+  box-shadow: 0 30px 60px -24px rgba(18, 58, 92, 0.55);
+  opacity: 0;
+  transform: translateY(14px) scale(0.97);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.soon-pop.is-open .soon-pop__dim {
+  opacity: 1;
+}
+
+.soon-pop.is-open .soon-pop__card {
+  opacity: 1;
+  transform: none;
+}
+
+.soon-pop__close {
+  position: absolute;
+  inset-inline-end: 14px;
+  top: 14px;
+  display: flex;
+  height: 34px;
+  width: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #e8f0fb;
+  color: #123a5c;
+}
+
+.soon-pop__icon {
+  margin-inline: auto;
+  display: flex;
+  height: 68px;
+  width: 68px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #e8f0fb;
+  color: #1f63c6;
+}
+
+.soon-pop__eyebrow {
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #e9a23b;
+}
+
+.soon-pop__title {
+  margin-top: 4px;
+  font-size: 21px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+.soon-pop__text {
+  margin-top: 6px;
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.8;
+  color: #5b6b7c;
+}
+
+.soon-pop__actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.soon-pop__wa,
+    .soon-pop__ok {
+  display: flex;
+  height: 50px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: 14px;
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.soon-pop__wa {
+  background-color: #4dc35a;
+  color: #fff;
+}
+
+.soon-pop__ok {
+  border: 1.5px solid #123a5c;
+  background-color: #fff;
+  color: #123a5c;
+}
+
+/* سطر الاسم المصغّر: للشريط الثابت على الموبايل بس */
+
+.prop-bar__mini {
+  display: none;
+}
+
 /* زرار متابعة المشروع جنب الاسم: كبسولة بإطار، ولما العميل يتابع بتتلوّن كحلي وعليها علامة صح */
 
 .prop-follow {
@@ -6384,6 +6671,104 @@ input:focus-visible + .area-chip,
     order: 6;
     flex: 0 0 100%;
     margin-top: 6px;
+  }
+
+  /* الشريط الثابت على الموبايل: فوق السعر بيظهر (لوجو المطور) + الاسم + سطر صغير — في مكان صف الكود / قارن-مفضلة-شارك (من غير ما ارتفاع الشريط يتغير) */
+
+  .prop-bar .prop-bar__prices {
+    position: relative;
+  }
+
+  .prop-bar .prop-bar__mini {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 100%;
+    display: block;
+    pointer-events: none;
+  }
+
+  .prop-bar .prop-bar__mini-in {
+    display: flex;
+    height: 46px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.15s ease;
+  }
+
+  .prop-bar.is-stuck .prop-bar__mini-in {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* وقت التثبيت: العنوان الكبير واللوجو والمكان وصف الأزرار بيستخبّوا (مكانهم محفوظ) — السطر المصغّر هو اللي ظاهر */
+
+  .prop-bar.is-stuck .prop-bar__logo,
+        .prop-bar.is-stuck .prop-bar__head h1,
+        .prop-bar.is-stuck .prop-bar__head > p,
+        .prop-bar.is-stuck .prop-bar__actions,
+        .prop-bar.is-stuck .prop-bar__head [data-bar-field="code"],
+        .prop-bar.is-stuck .prop-bar__head > .prop-follow {
+    visibility: hidden;
+  }
+
+  .prop-bar__mini-logo {
+    height: 40px;
+    width: 40px;
+    flex: none;
+    border-radius: 9999px;
+    border: 1px solid #e4e9ef;
+    background-color: #fff;
+    -o-object-fit: contain;
+    object-fit: contain;
+  }
+
+  .prop-bar__mini-logo[hidden] {
+    display: none;
+  }
+
+  .prop-bar__mini-logo--text:not([hidden]) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 0;
+    background-color: #123a5c;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+  }
+
+  .prop-bar__mini-text {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 0%;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .prop-bar__mini-text b,
+        .prop-bar__mini-text small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .prop-bar__mini-text b {
+    font-size: 15.5px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #123a5c;
+  }
+
+  .prop-bar__mini-text small {
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.4;
+    color: #5b6b7c;
   }
 
   /* المشروع: لوجو المطور (56px) جنب العنوان والمكان */
@@ -6667,6 +7052,14 @@ input:focus-visible + .area-chip,
   font-weight: 800;
   line-height: 1.1;
   color: #123a5c;
+}
+
+/* نسبة جوه نص الدايرة (+16%): أصغر من الرقم العادي (84) عشان ما تلمسش الحواف */
+
+.prop-gauge b.prop-gauge__long {
+  bottom: 2px;
+  font-size: 18px;
+  letter-spacing: -0.2px;
 }
 
 /* زراير أول صفحة المشروع والوحدة — موبايل: زرارين (الصور / المخطط — مخطط الوحدة / المخطط) ، ديسك توب: + على الخريطة. الأيقونة فوق الاسم */
@@ -7352,6 +7745,11 @@ input:focus-visible + .area-chip,
 
   .prop-gauge b {
     font-size: 36px;
+  }
+
+  .prop-gauge b.prop-gauge__long {
+    bottom: 3px;
+    font-size: 27px;
   }
 
   .prop-prices {

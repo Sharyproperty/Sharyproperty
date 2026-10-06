@@ -191,7 +191,7 @@
         var token = root.getAttribute('data-mapbox-token') || '';
         var state = {
             type: 'h', zoom: 16, current: null, live: false, intro: false,
-            area: root.getAttribute('data-area') || '', focus: root.getAttribute('data-focus') === '1',
+            area: root.getAttribute('data-area') || '', focus: root.getAttribute('data-focus') === '1', fit: root.getAttribute('data-fit') === '1',
             types: [], delivery: [], price: ''
         };
         var gl = null, glLib = null, libState = '';   // المكتبة: '' لسه ، loading ، ready ، failed
@@ -350,7 +350,8 @@
                 if (planBox(p)) goTo(p, INTRO + 600); else gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: INTRO + 600, essential: true });
                 return;
             }
-            if (state.area) { leaveGlobe(); fitAll(INTRO); return; }
+            // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
+            if (state.area || state.fit) { leaveGlobe(); fitAll(INTRO); return; }
             // الكرة بتيجي من بعيد وتكبر بالراحة لحد ما تقف فوق مصر — وبعدها قايمة "اختر المنطقة" بتنزل
             gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: INTRO, easing: easeOut, essential: true });
             window.setTimeout(function () { if (root.classList.contains('is-globe') && !state.area && !state.current) toggleAreas(true); }, INTRO - 1400);
@@ -733,7 +734,7 @@
         // البداية: فلتر المنطقة (لو موجود) + المشروع المطلوب (لو اللينك جاي عليه)
         if (state.area) setArea(state.area);
         if (state.focus) { state.current = bySlug(root.getAttribute('data-selected')) || null; if (state.current) state.current.setAttribute('aria-current', 'true'); }
-        if (state.focus || state.area) leaveGlobe();
+        if (state.focus || state.area || state.fit) leaveGlobe();
         filter(true);
 
         if ('IntersectionObserver' in window) {

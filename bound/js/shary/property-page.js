@@ -12,7 +12,7 @@
  *   لو البيانات اتغيرت بعد التحميل: window.SharyProperty.refresh(root) بيعيد قراية البيانات ويرسم من جديد.
  *
  * - شريط الملخص [data-prop-bar] (property/partials/summary-bar.blade.php): بيفضل ثابت تحت الهيدر وأنت نازل.
- *   ديسك توب: الشريط كله. موبايل: سطر السعر (.prop-bar__prices) بس — السكربت بيحسب المكان من ارتفاع الهيدر. وهو ثابت بياخد class="is-stuck".
+ *   ديسك توب: الشريط كله. موبايل: سطر الاسم المصغّر [data-bar-mini] (لوجو + اسم + مطور / مشروع) وتحته سطر السعر (.prop-bar__prices) — السكربت بيحسب المكان من ارتفاع الهيدر. وهو ثابت بياخد class="is-stuck".
  *
  * - المعرض [data-gallery-slider] (partials/photo-gallery.blade.php مع slider): على الموبايل صورة واحدة بتتسحب بالجنب وتحتها نقط.
  *   الصور بتتقلّب لوحدها كل 4.5 ثانية (موبايل وديسك توب)، وبتقف وقت ما العميل ماسكها أو عارض الصور مفتوح.
@@ -299,8 +299,45 @@
     window.SharyProperty = { refresh: refresh };
     refresh(document);
 
+    // ---------- بوب أب "قريبًا" [data-soon-modal]: أيقونة المخطط / مخطط الوحدة لما الصورة لسه ما اترفعتش ([data-soon-open]) ----------
+    (function () {
+        var modal = document.querySelector('[data-soon-modal]');
+        if (!modal) return;
+        var opener = null;
+        function close() {
+            if (modal.hidden) return;
+            modal.classList.remove('is-open');
+            window.setTimeout(function () { modal.hidden = true; }, 220);
+            document.documentElement.style.overflow = '';
+            if (opener) opener.focus();
+        }
+        function open(button) {
+            opener = button;
+            var name = button.getAttribute('data-soon-name') || '';
+            modal.querySelector('[data-soon-name]').textContent = name;
+            modal.querySelector('[data-soon-text]').textContent = button.getAttribute('data-soon-text') || '';
+            var wa = modal.querySelector('[data-soon-wa]');
+            if (wa) {
+                var page = document.querySelector('[data-wa-url]');
+                var text = (wa.getAttribute('data-wa-text') || '').replace(':name', name) + (page && page.getAttribute('data-wa-url') ? '\n' + page.getAttribute('data-wa-url') : '');
+                wa.href = wa.href.split('?')[0] + '?text=' + encodeURIComponent(text);
+            }
+            modal.hidden = false;
+            document.documentElement.style.overflow = 'hidden';
+            window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { modal.classList.add('is-open'); }); });
+            var ok = modal.querySelector('.soon-pop__ok');
+            if (ok) ok.focus();
+        }
+        document.addEventListener('click', function (event) {
+            var button = event.target.closest ? event.target.closest('[data-soon-open]') : null;
+            if (button) { event.preventDefault(); open(button); return; }
+            if (event.target.closest && event.target.closest('[data-soon-close]')) close();
+        });
+        document.addEventListener('keydown', function (event) { if (event.key === 'Escape') close(); });
+    })();
+
     // ---------- شريط الملخص [data-prop-bar]: بيفضل ثابت تحت الهيدر وأنت نازل ----------
-    // ديسك توب: الشريط كله ثابت. موبايل: سطر العنوان بيطلع مع الصفحة وسطر السعر هو اللي بيفضل ثابت تحت الهيدر.
+    // ديسك توب: الشريط كله ثابت. موبايل: سطر العنوان بيطلع مع الصفحة، واللي بيفضل ثابت تحت الهيدر: الاسم المصغّر + سطر السعر.
     document.querySelectorAll('[data-prop-bar]').forEach(function (bar) {
         var prices = bar.querySelector('.prop-bar__prices');
         var scope = bar.closest('[lang]') || document;
@@ -310,7 +347,10 @@
             if (!bar.offsetHeight) return;   // الصفحة مخفية دلوقتي
             var header = scope.querySelector('header');
             var base = header ? (parseFloat(window.getComputedStyle(header).top) || 0) + header.offsetHeight : 0;
-            var shift = wide.matches || !prices ? 0 : prices.getBoundingClientRect().top - bar.getBoundingClientRect().top - 10;
+            // موبايل: اللي بيفضل ثابت = سطر الاسم المصغّر [data-bar-mini] (الاسم + المطور / المشروع) وتحته سطر السعر
+            var mini = bar.querySelector('[data-bar-mini] > *');
+            var from = mini && mini.offsetHeight ? mini : prices;
+            var shift = wide.matches || !from ? 0 : from.getBoundingClientRect().top - bar.getBoundingClientRect().top - 8;
             top = Math.round(base - shift);
             bar.style.top = top + 'px';
             stuck();
