@@ -8269,3 +8269,48 @@ html, body {
   .investment-promo-card.promo-trending-card .promo-button { align-self: start; height: 34px; gap: 5px; padding: 0 15px 0 10px; font-size: 13.5px; }
   [dir="ltr"] .investment-promo-card.promo-trending-card .promo-button { padding: 0 10px 0 15px; }
 }
+
+/* ---- تحديث: كارت "خريطة الساحل" في الهوم (style = sahel) — بسيط وهادي: خلفية بيضا بتدرّج تركواز فاتح ، العنوان على سطرين والزرار في ناحية ، ودايرة فيها البحر والموج والشمس (SVG) في الناحية التانية. من غير صورة خلفية ---- */
+.investment-promo-card.promo-sahel-map { display: grid; grid-template-columns: minmax(0, 1fr) 66px; grid-template-areas: "title art" "cta cta"; align-items: center; column-gap: 8px; row-gap: 8px; padding: 10px 14px 11px; border: 1px solid #c8e6e0; background: linear-gradient(to left, #fff 0%, #fff 30%, #d5f1ec 100%) !important; box-shadow: 0 10px 22px -18px rgba(18, 58, 92, .45); filter: none; }
+[dir="ltr"] .investment-promo-card.promo-sahel-map { background: linear-gradient(to right, #fff 0%, #fff 30%, #d5f1ec 100%) !important; }
+.promo-sahel-map .promo-card-content { display: contents; }
+.investment-promo-card.promo-sahel-map .promo-title { grid-area: title; align-items: flex-start !important; align-self: center; justify-content: flex-start; gap: 0 !important; height: auto; margin: 0 !important; padding: 0; text-align: start; }
+.investment-promo-card.promo-sahel-map .promo-title h3 { margin: 0; padding: 0; font-size: 19px; font-weight: 800; line-height: 1.25; white-space: normal; color: #123a5c; }
+.investment-promo-card.promo-sahel-map .promo-icon { grid-area: art; width: 66px; height: 66px; flex: none; align-self: center; background: none; }
+.promo-sahel-map .promo-sahel-art { display: block; width: 100%; height: 100%; }
+.investment-promo-card.promo-sahel-map .promo-button { grid-area: cta; align-self: end; justify-self: start; width: auto; max-width: 100%; height: 28px; gap: 4px; padding: 0 13px 0 8px; background: #1e4166 !important; font-size: 12px; font-weight: 800; color: #fff; box-shadow: none; white-space: nowrap; }
+[dir="ltr"] .investment-promo-card.promo-sahel-map .promo-button { flex-direction: row-reverse; padding: 0 8px 0 13px; }
+[dir="ltr"] .promo-sahel-map .promo-trend-arrow { transform: scaleX(-1); }
+.promo-sahel-map .promo-button::before { display: none; }
+.promo-sahel-map .promo-trend-arrow { flex: none; }
+@media (min-width: 960px) {
+  .investment-promo-card.promo-sahel-map { grid-template-columns: minmax(0, 1fr) 112px; grid-template-areas: "title art" "cta art"; column-gap: 10px; row-gap: 12px; padding: 14px 18px; }
+  .investment-promo-card.promo-sahel-map .promo-title { align-self: end; }
+  .investment-promo-card.promo-sahel-map .promo-title h3 { font-size: 23px; }
+  .investment-promo-card.promo-sahel-map .promo-icon { width: 112px; height: 112px; }
+  .investment-promo-card.promo-sahel-map .promo-button { align-self: start; height: 34px; gap: 5px; padding: 0 15px 0 10px; font-size: 13.5px; }
+  [dir="ltr"] .investment-promo-card.promo-sahel-map .promo-button { padding: 0 10px 0 15px; }
+}
+
+/* ---- تحديث: كارت "خريطة مصر" في الهوم (style = map) — بسيط وهادي: خلفية بيضا بتدرّج لبني ، العنوان على سطرين والزرار في ناحية ، وكرة أرضية عليها مصر (SVG) في الناحية التانية. من غير صورة خلفية ---- */
+.investment-promo-card.promo-map { display: grid; grid-template-columns: minmax(0, 1fr) 66px; grid-template-areas: "title art" "cta cta"; align-items: center; column-gap: 8px; row-gap: 8px; padding: 10px 14px 11px; border: 1px solid #d3dfee; background: linear-gradient(to left, #fff 0%, #fff 30%, #dbe9f8 100%) !important; box-shadow: 0 10px 22px -18px rgba(18, 58, 92, .45); filter: none; color: #123a5c; }
+[dir="ltr"] .investment-promo-card.promo-map { background: linear-gradient(to right, #fff 0%, #fff 30%, #dbe9f8 100%) !important; }
+.promo-map .promo-card-content { display: contents; }
+.investment-promo-card.promo-map .promo-title { grid-area: title; display: flex; flex-direction: column !important; align-items: flex-start !important; align-self: center; justify-content: flex-start; gap: 0 !important; height: auto; margin: 0; padding: 0; text-align: start; }
+.investment-promo-card.promo-map .promo-title h3 { margin: 0; padding: 0; font-size: 19px; font-weight: 800; line-height: 1.25; white-space: normal; color: #123a5c; }
+.investment-promo-card.promo-map .promo-title h3 + h3 { color: #1f9a8c; }
+.investment-promo-card.promo-map .promo-icon { grid-area: art; width: 66px; height: 66px; flex: none; align-self: center; }
+.promo-map .promo-map-art { display: block; width: 100%; height: 100%; }
+.investment-promo-card.promo-map .promo-button { grid-area: cta; align-self: end; justify-self: start; width: auto; max-width: 100%; height: 28px; gap: 4px; padding: 0 13px 0 8px; background: #1e4166 !important; font-size: 12px; font-weight: 800; color: #fff; box-shadow: none; white-space: nowrap; }
+[dir="ltr"] .investment-promo-card.promo-map .promo-button { flex-direction: row-reverse; padding: 0 8px 0 13px; }
+[dir="ltr"] .promo-map .promo-trend-arrow { transform: scaleX(-1); }
+.promo-map .promo-button::before { display: none; }
+.promo-map .promo-trend-arrow { flex: none; }
+@media (min-width: 960px) {
+  .investment-promo-card.promo-map { grid-template-columns: minmax(0, 1fr) 112px; grid-template-areas: "title art" "cta art"; column-gap: 10px; row-gap: 12px; padding: 14px 18px; }
+  .investment-promo-card.promo-map .promo-title { align-self: end; }
+  .investment-promo-card.promo-map .promo-title h3 { font-size: 23px; }
+  .investment-promo-card.promo-map .promo-icon { width: 112px; height: 112px; }
+  .investment-promo-card.promo-map .promo-button { align-self: start; height: 34px; gap: 5px; padding: 0 15px 0 10px; font-size: 13.5px; }
+  [dir="ltr"] .investment-promo-card.promo-map .promo-button { padding: 0 10px 0 15px; }
+}
