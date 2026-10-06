@@ -402,6 +402,7 @@
         // ---- وحدات المشروع على الخريطة: لما العميل يقرّب على المشروع المختار بتظهر علامة لكل وحدة (shary/map/units?project=) ،
         //      والضغط على العلامة بيفتح كارت الوحدة بتاع الموقع ([data-smap-unit]) بلينك صفحتها وأزرار المشاركة / المفضلة / المقارنة.
         //      الوحدة اللي ليها مكان متسجل بتتحط فيه ، والباقي بيتوزّع جوه حدود الماستر بلان (أو حوالين نقطة المشروع).
+        var wantedUnit = '';   // ?unit= من اللينك — بيتفتح كارتها أول ما وحدات المشروع تتحمّل
         var UNITS_ZOOM = 15;
         var unitsUrl = root.getAttribute('data-units-url') || '';
         var unitBox = root.querySelector('[data-smap-unit]');
@@ -470,7 +471,7 @@
                 label.textContent = unit.label || '';
                 pin.appendChild(label);
                 pin.addEventListener('click', function (event) { event.stopPropagation(); toggleAreas(false); openUnit(unit, pin); });
-                unitMarkers.push({ pin: pin, marker: new glLib.Marker({ element: pin, anchor: 'bottom' }).setLngLat(at).addTo(gl) });
+                unitMarkers.push({ pin: pin, unit: unit, at: at, marker: new glLib.Marker({ element: pin, anchor: 'bottom' }).setLngLat(at).addTo(gl) });
             });
         }
         function showUnits() {
@@ -488,6 +489,21 @@
                 return;
             }
             if (list === null) return;
+            if (wantedUnit && list.some(function (unit) { return String(unit.id) === wantedUnit; })) {
+                // اللينك جاي على وحدة بعينها (?unit=): علامات وحدات المشروع بتترسم ، والخريطة بتقرّب على مكان الوحدة وكارتها بيتفتح
+                var id = wantedUnit;
+                wantedUnit = '';
+                if (unitsFor !== p.id) drawUnits(p, list);
+                var entry = unitMarkers.filter(function (marker) { return String(marker.unit.id) === id; })[0];
+                if (entry) {
+                    toggleAreas(false);
+                    // الكارت بيغطي نص الشاشة تحت على الموبايل: علامة الوحدة بتقف في الجزء الظاهر فوقه
+                    var wideScreen = window.matchMedia('(min-width: 1024px)').matches;
+                    gl.flyTo({ center: entry.at, zoom: Math.max(17, gl.getZoom()), duration: 900, essential: true, offset: wideScreen ? [0, 0] : [0, -Math.round(window.innerHeight * 0.24)] });
+                    openUnit(entry.unit, entry.pin);
+                }
+                return;
+            }
             if (!close) {
                 if (unitsFor !== null) clearUnits();
                 // المشروع فيه وحدات والخريطة لسه بعيدة: سطر صغير مرة واحدة لكل مشروع
@@ -837,6 +853,17 @@
         });
 
         function bySlug(slug) { return items.filter(function (item) { return item.getAttribute('data-slug') === slug; })[0]; }
+
+        // المشروع / الوحدة المطلوبين من اللينك نفسه: ?project= (رقم المشروع أو الـ slug — و ?compound_id=) و ?unit= (رقم الوحدة).
+        // الخريطة بتفتح عليهم على طول من غير قايمة "اختر المنطقة" — حتى لو السيرفر ما حددش المشروع في الصفحة.
+        var asked = new URLSearchParams(window.location.search);
+        var askedProject = asked.get('project') || asked.get('compound_id') || '';
+        wantedUnit = (asked.get('unit') || '').replace(/[^0-9]/g, '');
+        if (askedProject && !state.focus) {
+            var askedItem = items.filter(function (item) { var p = info(item); return String(p.id) === askedProject || p.slug === askedProject || p.alias === askedProject; })[0];
+            if (askedItem) { state.focus = true; state.area = ''; root.setAttribute('data-selected', askedItem.getAttribute('data-slug')); }
+        }
+        if (!state.focus) wantedUnit = '';
 
         // البداية: فلتر المنطقة (لو موجود) + المشروع المطلوب (لو اللينك جاي عليه)
         if (state.area) setArea(state.area);
