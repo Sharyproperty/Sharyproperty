@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="oKreIBugkvpz8NbXFnmzdYrMl3Tpns08JnNclq54">
+    <meta name="csrf-token" content="u4ISB3eM5sclS7tf3gxTntNkHEgQqEWUD9glNLzT">
     <title>شاري — عقارات مصر: شقق وفلل ومشاريع للبيع والإيجار</title>
     
     <meta name="description" content="شاري منصة عقارية في مصر: تصفح أحدث المشاريع والوحدات للبيع والإيجار ، قارن الأسعار وأنظمة السداد ، وتابع مؤشر شاري لسعر المتر في أهم المناطق.">
@@ -4673,7 +4673,7 @@
 
                 <!-- Form -->
                 <form class="contact-form" action="v2.html" method="POST" id="homeContactForm" data-lead-form>
-                    <input type="hidden" name="_token" value="oKreIBugkvpz8NbXFnmzdYrMl3Tpns08JnNclq54" autocomplete="off">                    <!-- Name -->
+                    <input type="hidden" name="_token" value="u4ISB3eM5sclS7tf3gxTntNkHEgQqEWUD9glNLzT" autocomplete="off">                    <!-- Name -->
                     <div class="contact-field">
                         <label for="contact_name"> الاسم <span>*</span> </label>
 
@@ -7073,32 +7073,46 @@
             function cleanup() {
                 clearTimeout(timer);
                 document.removeEventListener('visibilitychange', onVisibilityChange);
-                window.removeEventListener('pagehide', cleanup);
-                window.removeEventListener('blur', cleanup);
+                window.removeEventListener('pagehide', opened);
+                window.removeEventListener('blur', opened);
 
                 if (window.cancelInvestmentAppRedirect === cleanup) {
                     window.cancelInvestmentAppRedirect = null;
                 }
             }
 
+            // التطبيق اتفتح ← ما نروحش للمتجر ، وزرار الهيدر يبقى "افتح التطبيق" من هنا ورايح
+            function opened() {
+                cleanup();
+                if (window.SharyApp) {
+                    window.SharyApp.remember();
+                }
+            }
+
             function onVisibilityChange() {
                 if (document.hidden) {
-                    cleanup();
+                    opened();
                 }
             }
 
             window.cancelInvestmentAppRedirect = cleanup;
 
-            // التطبيق اتفتح (الصفحة اتخبّت / فقدت التركيز) ← ما نروحش للمتجر
             document.addEventListener('visibilitychange', onVisibilityChange);
-            window.addEventListener('pagehide', cleanup);
-            window.addEventListener('blur', cleanup);
+            window.addEventListener('pagehide', opened);
+            if (isAndroid) {
+                // (على آيفون رسالة سفاري بتاعة اللي مش منزّل التطبيق ما تتحسبش فتح)
+                window.addEventListener('blur', opened);
+            }
 
             timer = setTimeout(() => {
                 const shouldRedirect = !document.hidden;
                 cleanup();
 
                 if (shouldRedirect) {
+                    // التطبيق مش متسطّب: زرار الهيدر يفضل / يرجع "حمل التطبيق"
+                    if (window.SharyApp && window.SharyApp.installed()) {
+                        window.SharyApp.forget();
+                    }
                     window.location.href = storeUrl;
                 }
             }, 2500);
@@ -12490,7 +12504,7 @@
         </div>
 
         <form action="v2.html" method="POST" class="mt-4 flex flex-col gap-4" data-meeting-form>
-            <input type="hidden" name="_token" value="oKreIBugkvpz8NbXFnmzdYrMl3Tpns08JnNclq54" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+            <input type="hidden" name="_token" value="u4ISB3eM5sclS7tf3gxTntNkHEgQqEWUD9glNLzT" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
             <input type="hidden" name="meeting_date" value="" data-meeting-date>
             <input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
 

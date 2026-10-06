@@ -684,6 +684,76 @@
         });
     }
 
+    var android = /Android/i.test(ua);
+    var DEEP_LINK = 'shary://home';
+    // لينك الزرار الأصلي ($appUrl) قبل ما يتبدّل بلينك المتجر / لينك الفتح
+    buttons.forEach(function (button) { button.setAttribute('data-get-url', button.getAttribute('href') || ''); });
+    function forget() { try { window.localStorage.removeItem(KEY); } catch (error) { /* التخزين مقفول */ } }
+    function isStore(url) { return /play\.google\.com|apps\.apple\.com|itunes\.apple\.com/i.test(url || ''); }
+
+    /**
+     * بيجرّب يفتح التطبيق بلينك (shary://... أو intent://...) — done(true) لو الصفحة اتخبّت (التطبيق اتفتح) ، done(false) لو فضلت ظاهرة 2.5 ثانية.
+     * (على آيفون بنعتمد على اختفاء الصفحة بس: رسالة سفاري "العنوان غير صالح" بتاعة اللي مش منزّل التطبيق ما تتحسبش فتح.)
+     */
+    function launch(link, done) {
+        var timer; var finished = false;
+        function finish(opened) {
+            if (finished) return;
+            finished = true;
+            window.clearTimeout(timer);
+            document.removeEventListener('visibilitychange', onHide);
+            window.removeEventListener('pagehide', onGone);
+            window.removeEventListener('blur', onGone);
+            done(opened);
+        }
+        function onHide() { if (document.hidden) finish(true); }
+        function onGone() { finish(true); }
+        document.addEventListener('visibilitychange', onHide);
+        window.addEventListener('pagehide', onGone);
+        if (android) window.addEventListener('blur', onGone);
+        timer = window.setTimeout(function () { finish(document.hidden); }, 2500);
+        window.location.href = link;
+    }
+
+    // للسكربتات التانية (كروت "ما يميزنا" في الرئيسية): لما لينك تطبيق يفتح فعلاً بنفتكر إن التطبيق متسطّب والزرار يبقى "افتح التطبيق"
+    window.SharyApp = {
+        installed: remembered,
+        remember: function () { remember(); apply(true); },
+        forget: function () { forget(); apply(false); },
+        launch: launch,
+    };
+
+    /**
+     * الضغط على الزرار (موبايل):
+     *   "افتح التطبيق": لو data-open-url لينك https خاص بالتطبيق (Universal Link / App Link) بيتفتح زي ما هو — غير كده بيفتح shary://home ،
+     *                   ولو التطبيق ما اتفتحش (اتمسح من الجهاز) الزرار بيرجع "حمل التطبيق" وبيروح للمتجر.
+     *   "حمل التطبيق" على أندرويد: intent:// بتاع كروم — التطبيق متسطّب ← بيفتح ، مش متسطّب ← جوجل بلاي (من غير رسالة خطأ).
+     *   "حمل التطبيق" على آيفون: المتجر على طول (سفاري مش بيسمح بمعرفة التطبيقات المتسطّبة ، وتجربة لينك التطبيق بتطلّع رسالة خطأ للي مش منزّله).
+     */
+    document.addEventListener('click', function (event) {
+        var button = event.target.closest ? event.target.closest('[data-app-button]') : null;
+        if (!button || !(ios || android)) return;
+        var store = button.getAttribute(ios ? 'data-ios-url' : 'data-android-url') || '';
+        var open = button.getAttribute('data-open-url') || '';
+        if (button.getAttribute('data-state') === 'open') {
+            // لينك فتح خاص بالتطبيق = $appOpenUrl مكتوب ومختلف عن لينك التحميل العادي ($appUrl) ومش لينك متجر
+            if (/^https?:/i.test(open) && !isStore(open) && open !== button.getAttribute('data-get-url')) return;
+            event.preventDefault();
+            launch(button.getAttribute('data-deep-link') || DEEP_LINK, function (opened) {
+                if (opened) { remember(); return; }
+                forget();
+                apply(false);
+                if (store) window.location.href = store;
+            });
+        } else if (android && store) {
+            event.preventDefault();
+            var id = button.getAttribute('data-android-package') || '';
+            launch('intent://home#Intent;scheme=shary;' + (id ? 'package=' + id + ';' : '') + 'S.browser_fallback_url=' + encodeURIComponent(store) + ';end', function (opened) {
+                if (!opened) window.location.href = store;
+            });
+        }
+    });
+
     var fromApp = /SharyApp/i.test(ua) || /[?&]from=app(&|$)/.test(window.location.search);
     if (fromApp) remember();
     apply(fromApp || remembered());
