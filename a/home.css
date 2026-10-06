@@ -8139,14 +8139,31 @@ html, body {
   .shary-home-root .hero-project-info { bottom: 84px !important; margin-bottom: 0 !important; }
   .shary-home-root .hero-project-info .hero-dots { position: absolute !important; left: 0 !important; right: 0 !important; bottom: -74px !important; transform: none !important; display: flex !important; justify-content: center !important; margin: 0 !important; z-index: 50 !important; }
 }
-/* ---- كارت "شاري كارد" في الهوم: ألوان البراند (تركواز + قوس كحلي) وصورة الكارت الحقيقية مايلة ---- */
-.shary-home-root .promo-card-shary { background: #4cbfae !important; overflow: hidden; }
-.shary-home-root .promo-card-shary::before { content: ""; position: absolute; z-index: -1; top: -70%; bottom: -70%; inset-inline-end: -34%; aspect-ratio: 1; border-radius: 50%; border: 16px solid #1e4166; background: #46b6a6; }
-.shary-home-root .promo-card-shary .promo-card-content { align-items: center; }
-.shary-home-root .promo-card-shary .promo-title h3 { color: #fff; text-shadow: 0 1px 0 rgba(18, 58, 92, .18); }
-.shary-home-root .promo-card-shary .shary-promo-icon { flex: 0 0 46%; justify-content: center; align-items: center; }
-.shary-home-root .promo-card-shary .shary-promo-icon img { width: 100% !important; max-width: 170px !important; height: auto; border-radius: 9px; transform: rotate(-9deg); box-shadow: 0 14px 22px -10px rgba(10, 32, 52, .7); }
-.shary-home-root .promo-card-shary .shary-promo-button { background: #1e4166 !important; color: #fff; }
+/* ---- كارت "شاري كارد" في الهوم (style = shary) — بسيط وهادي: خلفية بيضا بتدرّج لبني ، العنوان على سطرين والزرار في ناحية ، والكارد نفسه مرسوم كود (SVG — site/partials/shary-card-art) مايل بظل خفيف فوق دايرة هادية في الناحية التانية ---- */
+.shary-home-root .investment-promo-card.promo-card-shary { display: grid; grid-template-columns: minmax(0, 1fr) 104px; grid-template-areas: "title art" "cta cta"; align-items: center; column-gap: 8px; row-gap: 8px; overflow: hidden; padding: 10px 14px 11px; border: 1px solid #d3dfee; background: linear-gradient(to left, #fff 0%, #fff 30%, #dbe9f8 100%) !important; box-shadow: 0 10px 22px -18px rgba(18, 58, 92, .45); filter: none; }
+[dir="ltr"] .shary-home-root .investment-promo-card.promo-card-shary { background: linear-gradient(to right, #fff 0%, #fff 30%, #dbe9f8 100%) !important; }
+.shary-home-root .promo-card-shary .promo-card-content { display: contents; }
+.shary-home-root .investment-promo-card.promo-card-shary .promo-title { grid-area: title; display: flex; flex-direction: column !important; align-items: flex-start !important; align-self: center; justify-content: flex-start; gap: 0 !important; height: auto; margin: 0; padding: 0; text-align: start; }
+.shary-home-root .investment-promo-card.promo-card-shary .promo-title h3 { margin: 0; padding: 0; font-size: 19px; font-weight: 800; line-height: 1.25; white-space: normal; color: #123a5c; text-shadow: none; }
+.shary-home-root .investment-promo-card.promo-card-shary .promo-title h3 + h3 { color: #1f9a8c; }
+.shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon { position: relative; grid-area: art; display: flex; width: 104px; height: 66px; flex: none; align-items: center; align-self: center; justify-content: center; overflow: visible; }
+.shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon::before { content: ""; position: absolute; top: 50%; left: 50%; height: 64px; width: 64px; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff, #dbe6f6); }
+.shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon .shary-card-art, .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon img { position: relative; display: block; width: 100% !important; max-width: none !important; height: auto; transform: rotate(-9deg); overflow: visible; filter: drop-shadow(0 8px 9px rgba(18, 58, 92, .28)); box-shadow: none; }
+.shary-home-root .investment-promo-card.promo-card-shary .promo-button { grid-area: cta; align-self: end; justify-self: start; width: auto; max-width: 100%; height: 28px; gap: 4px; padding: 0 13px 0 8px; background: #1e4166 !important; font-size: 12px; font-weight: 800; color: #fff; box-shadow: none; white-space: nowrap; }
+[dir="ltr"] .shary-home-root .investment-promo-card.promo-card-shary .promo-button { flex-direction: row-reverse; padding: 0 8px 0 13px; }
+[dir="ltr"] .shary-home-root .promo-card-shary .promo-trend-arrow { transform: scaleX(-1); }
+.shary-home-root .promo-card-shary .promo-button::before { display: none; }
+.shary-home-root .promo-card-shary .promo-trend-arrow { flex: none; }
+@media (min-width: 960px) {
+  .shary-home-root .investment-promo-card.promo-card-shary { grid-template-columns: minmax(0, 1fr) 132px; grid-template-areas: "title art" "cta art"; column-gap: 10px; row-gap: 12px; padding: 14px 18px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .promo-title { align-self: end; }
+  .shary-home-root .investment-promo-card.promo-card-shary .promo-title h3 { font-size: 23px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon { width: 132px; height: 104px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon::before { height: 96px; width: 96px; }
+  .shary-home-root .investment-promo-card.promo-card-shary .shary-promo-icon .shary-card-art { filter: drop-shadow(0 12px 12px rgba(18, 58, 92, .28)); }
+  .shary-home-root .investment-promo-card.promo-card-shary .promo-button { align-self: start; height: 34px; gap: 5px; padding: 0 15px 0 10px; font-size: 13.5px; }
+  [dir="ltr"] .shary-home-root .investment-promo-card.promo-card-shary .promo-button { padding: 0 10px 0 15px; }
+}
 /* ---- كروت العروض الديناميك: كارت من غير شكل جاهز (style فاضي) — الألوان وصورة الخلفية جايين من لوحة التحكم (inline) ، ودي القيم الافتراضية ---- */
 .shary-home-root .promo-custom { background-color: #1e4166; color: #fff; }
 .shary-home-root .promo-custom .promo-title h3 { color: inherit; }
