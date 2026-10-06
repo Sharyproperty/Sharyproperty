@@ -784,46 +784,85 @@
 })();
 
 /**
- * سيستم اللوجوهات — مفيش لوجو يبان "مربع" جوه الدايرة:
- * اللوجو بيتعرض كامل (object-contain) جوه دايرة ، ولو صورة اللوجو خلفيتها لون ثابت (مش شفافة) الدايرة بتاخد نفس لون الخلفية فالمربع بيختفي.
+ * سيستم اللوجوهات — اللوجو كله جوه الدايرة زي صورة واتساب: من غير تكبير ومن غير ما حرف منه يتقص.
+ * صورة اللوجو (مربعة أو مستطيلة) بتتحط كاملة جوه مربع مرسوم جوه الدايرة (هامش 16% من قطر الدايرة) ، والدايرة نفسها بتترسم خلفية:
+ *   - لوجو خلفيته لون واحد ← الدايرة بتاخد نفس اللون (المربع ما بيبانش).
+ *   - لوجو شفاف (PNG) ← دايرة بيضا.
+ *   - لوجو خلفيته صورة / تدرّج ← الدايرة بتاخد متوسط لون أطراف الصورة.
  * بيشتغل لوحده على لوجوهات المطورين في كل الكروت والصفحات (والصور اللي بتتحمل بعدين). لأي صورة تانية: حطوا عليها data-logo-fit.
- * ملاحظة: قراءة لون الخلفية بتشتغل لما الصورة من نفس الدومين (أو عليها CORS) — غير كده اللوجو بيفضل على خلفية بيضا.
- * الأفضل من لوحة التحكم: رفع اللوجو PNG شفاف أو مربع 400×400 — راجعوا README.
+ * الصور اللي object-fit بتاعها cover (صور مناطق / مشاريع جوه دايرة) مش لوجوهات وما بتتلمسش.
+ * ملاحظة: قراءة لون الخلفية بتشتغل لما الصورة من نفس الدومين (أو عليها CORS) — غير كده اللوجو بيتحط كامل على دايرة بيضا.
  */
 (function () {
-    var SELECTOR = 'img[data-logo-fit], img.rounded-full.object-contain, .dev-logo-link img, .prop-shot__logo img, .dev-icon__logo img, .prop-bar__logo img, .developer-logo img, .req-menu__logo';
+    var SELECTOR = 'img[data-logo-fit], img.rounded-full.object-contain, .dev-logo-link img, .prop-shot__logo img, .dev-icon__logo img, .prop-bar__logo img, .developer-logo img, .req-menu__logo, .prop-bar__mini-logo, .abroad-dev__logo';
+    var INSET = 0.16;   // الهامش من كل ناحية = 16% من قطر الدايرة: المربع اللي جواه اللوجو كله جوه الدايرة
+    var watcher = window.ResizeObserver ? new ResizeObserver(function (entries) { entries.forEach(function (entry) { size(entry.target); }); }) : null;
+
+    // الهامش بالبيكسل من مقاس الدايرة نفسها (النسبة المئوية في CSS بتتحسب من عرض العنصر الأب مش من الصورة)
+    function size(img) {
+        var width = img.offsetWidth || parseFloat(window.getComputedStyle(img).width) || 0;
+        if (width) img.style.padding = (Math.round(width * INSET * 10) / 10) + 'px';
+    }
+
+    // الدايرة مرسومة خلفية للصورة (ومعاها الإطار لو الصورة كان عليها إطار) — فالصورة نفسها من غير حواف مدوّرة وما بيتقصش منها حاجة
+    function paint(img, color) {
+        var ring = img.__logoRing;
+        var edge = ring ? color + ' calc(100% - ' + (ring.width + 0.6) + 'px), ' + ring.color + ' calc(100% - ' + ring.width + 'px), ' + ring.color + ' calc(100% - 0.6px), transparent 100%'
+            : color + ' calc(100% - 0.6px), transparent 100%';
+        img.style.backgroundColor = 'transparent';
+        img.style.backgroundImage = 'radial-gradient(circle closest-side, ' + edge + ')';
+        img.style.backgroundOrigin = 'border-box';
+        img.style.backgroundRepeat = 'no-repeat';
+        // الصورة مالية إطار دايرة بيقص اللي بره (div مدوّر overflow: hidden بنفس المقاس): الإطار بياخد نفس اللون
+        var box = img.parentElement;
+        var frame = box ? window.getComputedStyle(box) : null;
+        if (frame && box.clientWidth && box.clientWidth <= img.offsetWidth * 1.2 && frame.borderTopLeftRadius !== '0px' && frame.overflow === 'hidden') box.style.backgroundColor = color;
+    }
 
     function fit(img) {
         if (!img.naturalWidth || img.__logoFit === img.currentSrc) return;
+        var style = window.getComputedStyle(img);
+        if (!img.__logoFit) {
+            // صورة بتملى الدايرة بقصد (object-fit: cover — صورة منطقة أو مشروع): مش لوجو
+            if (style.objectFit === 'cover' && !img.hasAttribute('data-logo-fit')) return;
+            var ringWidth = parseFloat(style.borderTopWidth) || 0;
+            img.__logoRing = ringWidth > 0 && style.borderTopStyle !== 'none' ? { width: ringWidth, color: style.borderTopColor } : null;
+            img.style.borderColor = 'transparent';
+            img.style.borderRadius = '0';
+            img.style.objectFit = 'contain';
+            if (watcher) watcher.observe(img);
+        }
         img.__logoFit = img.currentSrc;
+        size(img);
+        paint(img, '#fff');   // الأساس: اللوجو كامل على دايرة بيضا — حتى لو لون الخلفية ما اتقراش
+
         try {
             var canvas = document.createElement('canvas');
-            var size = canvas.width = canvas.height = 24;
+            var side = canvas.width = canvas.height = 32;
             var context = canvas.getContext('2d');
-            context.drawImage(img, 0, 0, size, size);
-            // 8 عينات على أطراف الصورة (الأركان + نص كل ضلع): لون الخلفية = اللون اللي أغلب العينات عليه
-            var mid = Math.floor(size / 2);
-            var samples = [[1, 1], [size - 2, 1], [1, size - 2], [size - 2, size - 2], [mid, 1], [mid, size - 2], [1, mid], [size - 2, mid]].map(function (point) { return context.getImageData(point[0], point[1], 1, 1).data; });
-            var clear = samples.filter(function (pixel) { return pixel[3] < 200; }).length;
-            if (clear >= 4) return;   // لوجو شفاف: بيفضل كامل على الأبيض
-            var best = null, bestCount = 0;
-            samples.forEach(function (base) {
-                var count = samples.filter(function (pixel) { return pixel[3] >= 200 && Math.abs(pixel[0] - base[0]) + Math.abs(pixel[1] - base[1]) + Math.abs(pixel[2] - base[2]) < 60; }).length;
-                if (count > bestCount) { bestCount = count; best = base; }
-            });
-            if (!best || bestCount < 5) {
-                // خلفية اللوجو مش لون واحد (صورة): اللوجو بيملى الدايرة عشان ما يبانش مربع
-                img.style.objectFit = 'cover';
-                img.style.padding = '0';
-                return;
+            context.drawImage(img, 0, 0, side, side);
+            // عينات على محيط الصورة كله (كل بيكسل على الأطراف): لون الخلفية = أكبر مجموعة ألوان متقاربة — الكلام اللي واصل للأركان ما بيلخبطش القراية
+            var data = context.getImageData(0, 0, side, side).data;
+            var solid = [], total = 0;
+            for (var i = 0; i < side; i++) {
+                [[i, 0], [i, side - 1], [0, i], [side - 1, i]].forEach(function (point) {
+                    var at = (point[1] * side + point[0]) * 4;
+                    total++;
+                    if (data[at + 3] >= 200) solid.push([data[at], data[at + 1], data[at + 2]]);
+                });
             }
-            var color = 'rgb(' + best[0] + ',' + best[1] + ',' + best[2] + ')';
-            img.style.backgroundColor = color;
-            // اللوجو كامل جوه الدايرة بهامش بسيط (من غير تكبير): الكلام اللي على أطرافه ما يتقصش بحواف الدايرة
-            if (parseFloat(window.getComputedStyle(img).paddingLeft) < 1) img.style.padding = '7%';
-            var box = img.parentElement;
-            if (box && box.clientWidth && box.clientWidth <= img.clientWidth * 1.7 && window.getComputedStyle(box).borderTopLeftRadius !== '0px') box.style.backgroundColor = color;
-        } catch (error) { /* صورة من دومين تاني من غير CORS */ }
+            if (solid.length < total / 2) return;   // لوجو شفاف: دايرة بيضا
+            var groups = {};
+            solid.forEach(function (pixel) {
+                var key = (pixel[0] >> 4) + '-' + (pixel[1] >> 4) + '-' + (pixel[2] >> 4);
+                (groups[key] = groups[key] || []).push(pixel);
+            });
+            var main = Object.keys(groups).map(function (key) { return groups[key]; }).sort(function (x, y) { return y.length - x.length; })[0];
+            // أقل من 40% من المحيط بلون واحد = الخلفية صورة / تدرّج: الدايرة بمتوسط لون الأطراف كلها
+            var pool = main.length >= solid.length * 0.4 ? main : solid;
+            var best = [0, 1, 2].map(function (channel) { return Math.round(pool.reduce(function (sum, pixel) { return sum + pixel[channel]; }, 0) / pool.length); });
+            paint(img, 'rgb(' + best[0] + ',' + best[1] + ',' + best[2] + ')');
+        } catch (error) { /* صورة من دومين تاني من غير CORS: اللوجو كامل على دايرة بيضا */ }
     }
 
     function scan(scope) { (scope || document).querySelectorAll(SELECTOR).forEach(function (img) { if (img.complete) fit(img); }); }
