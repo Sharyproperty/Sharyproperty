@@ -4529,6 +4529,18 @@ a.dev-logo-link:hover {
   z-index: 3;
 }
 
+/* الخريطة الحرارية لينك لخريطة شاري التفاعلية: كارت جوجل اللي فوق ("افتح في الخرائط") بيتقص بره الكادر — الخريطة بس */
+
+.area-map--link .area-map__frame {
+  top: -92px !important;
+  height: calc(100% + 92px) !important;
+  pointer-events: none;
+}
+
+.area-map--link .area-map__frame ~ .area-map__zoom {
+  z-index: 10;
+}
+
 .area-map:has(.area-map__frame) .area-map__rings {
   z-index: 2;
   pointer-events: none;
