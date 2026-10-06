@@ -5506,6 +5506,40 @@
         window.addEventListener('resize', sync);
         sync();
     });
+    // ---------- الفورم الجانبي الثابت (.prop-aside--stick) بحجمه الطبيعي على الديسك توب ----------
+    // لو الفورم أطول من المساحة اللي تحت شريط الملخص (شاشة قصيرة): بيتحرك مع الصفحة لحد ما آخره يبان وأنت نازل ، ولحد ما أوله يبان وأنت طالع ،
+    // وبعدين يثبت — من غير تصغير ولا قص. لو الفورم داخل في الشاشة كله: ثابت في مكانه العادي تحت الشريط.
+    document.querySelectorAll('.prop-aside--stick').forEach(function (aside) {
+        var wide = window.matchMedia('(min-width: 1024px)');
+        var base = null, current = null, last = window.pageYOffset, waiting = false, GAP = 16;
+        function measure() {
+            aside.style.top = '';
+            base = wide.matches ? (parseFloat(window.getComputedStyle(aside).top) || 0) : null;
+            current = null;
+            move(0);
+        }
+        function move(delta) {
+            if (base === null || !aside.offsetHeight) { aside.style.top = ''; return; }
+            var lowest = Math.min(base, window.innerHeight - aside.offsetHeight - GAP);
+            if (lowest >= base) { if (current !== null) { current = null; aside.style.top = ''; } return; }
+            if (current === null) current = base;
+            current = Math.max(lowest, Math.min(base, current - delta));
+            aside.style.top = Math.round(current) + 'px';
+        }
+        window.addEventListener('scroll', function () {
+            if (waiting) return;
+            waiting = true;
+            window.requestAnimationFrame(function () {
+                waiting = false;
+                var y = window.pageYOffset;
+                move(y - last);
+                last = y;
+            });
+        }, { passive: true });
+        window.addEventListener('resize', measure);
+        if (window.ResizeObserver) new ResizeObserver(function () { move(0); }).observe(aside);
+        measure();
+    });
 })();
 
 /**
