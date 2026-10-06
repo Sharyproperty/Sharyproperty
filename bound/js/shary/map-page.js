@@ -217,7 +217,7 @@
             if (box) {
                 var wideScreen = window.matchMedia('(min-width: 1024px)').matches;
                 gl.fitBounds([[box[0], box[1]], [box[2], box[3]]], { padding: wideScreen ? 90 : { top: 60, right: 26, bottom: 240, left: 26 }, maxZoom: 17.5, duration: duration, essential: true });
-            } else gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(13, Math.min(18, state.zoom)), duration: duration, essential: true });
+            } else gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(16, Math.min(18, state.zoom)), duration: duration, essential: true });   // قريب كفاية عشان علامات وحدات المشروع تبان متفرّقة
         }
         // العلامات اللي ماستر بلان مشروعها معروضة: بتختفي لما العميل يقرّب (عشان ما تغطيش المخطط)
         function markPlans(ids) {
@@ -313,8 +313,10 @@
                     item.__pin = pin;
                     item.__marker = new lib.Marker({ element: pin, anchor: 'bottom' }).setLngLat([p.lng, p.lat]).addTo(gl);
                 });
-                // الضغط على أي مكان فاضي في الخريطة بيقفل قايمة المناطق
-                gl.on('click', function () { toggleAreas(false); });
+                // الضغط على أي مكان فاضي في الخريطة بيقفل قايمة المناطق وكارت الوحدة
+                gl.on('click', function () { toggleAreas(false); closeUnit(); });
+                // وحدات المشروع المختار: بتظهر / تختفي مع التقريب والتحريك
+                gl.on('moveend', showUnits);
                 // الماستر بلان فوق القمر الصناعي — كل مشروع في مكانه المحفوظ (المشاريع الظاهرة بعد الفلتر بس)
                 if (window.SharyMasterplans) {
                     plans = window.SharyMasterplans.attach(gl, {
@@ -347,7 +349,7 @@
                 var p = info(state.current);
                 leaveGlobe();
                 if (plans) plans.refresh();
-                if (planBox(p)) goTo(p, INTRO + 600); else gl.flyTo({ center: [p.lng, p.lat], zoom: 14.5, duration: INTRO + 600, essential: true });
+                goTo(p, INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
                 return;
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
@@ -392,6 +394,111 @@
                 else if (list && list.scrollHeight > list.clientHeight + 4) list.scrollTo({ top: row.offsetTop - list.offsetTop - 8, behavior: 'smooth' });
             }
             root.dispatchEvent(new CustomEvent('shary:map-select', { bubbles: true, detail: info(item) }));
+            // مشروع تاني: علامات وحدات المشروع القديم بتتشال ، ووحدات الجديد بتتحمل (وبتظهر أول ما الخريطة تقرّب عليه)
+            if (unitsFor !== null && unitsFor !== info(item).id) clearUnits();
+            showUnits();
+        }
+
+        // ---- وحدات المشروع على الخريطة: لما العميل يقرّب على المشروع المختار بتظهر علامة لكل وحدة (shary/map/units?project=) ،
+        //      والضغط على العلامة بيفتح كارت الوحدة بتاع الموقع ([data-smap-unit]) بلينك صفحتها وأزرار المشاركة / المفضلة / المقارنة.
+        //      الوحدة اللي ليها مكان متسجل بتتحط فيه ، والباقي بيتوزّع جوه حدود الماستر بلان (أو حوالين نقطة المشروع).
+        var UNITS_ZOOM = 15;
+        var unitsUrl = root.getAttribute('data-units-url') || '';
+        var unitBox = root.querySelector('[data-smap-unit]');
+        var unitBody = unitBox ? unitBox.querySelector('[data-smap-unit-body]') : null;
+        var unitCache = {}, unitMarkers = [], unitsFor = null, unitHinted = {};
+
+        function closeUnit() {
+            if (unitBox) unitBox.hidden = true;
+            unitMarkers.forEach(function (entry) { entry.pin.classList.remove('is-on'); });
+        }
+        function clearUnits() {
+            unitMarkers.forEach(function (entry) { entry.marker.remove(); });
+            unitMarkers = [];
+            unitsFor = null;
+            closeUnit();
+        }
+        // أماكن الوحدات اللي من غير مكان متسجل: شبكة جوه حدود الماستر بلان — ومن غير حدود: دواير حوالين نقطة المشروع
+        function spread(p, count) {
+            var out = [], box = planBox(p), i;
+            if (box) {
+                var w = (box[2] - box[0]) * 0.62, h = (box[3] - box[1]) * 0.62, cx = (box[0] + box[2]) / 2, cy = (box[1] + box[3]) / 2;
+                var ratio = (w * Math.cos(cy * Math.PI / 180)) / Math.max(h, 1e-9);
+                var cols = Math.max(1, Math.min(count, Math.ceil(Math.sqrt(count * ratio)))), rows = Math.ceil(count / cols);
+                for (i = 0; i < count; i++) {
+                    var c = i % cols, r = Math.floor(i / cols);
+                    out.push([cx - w / 2 + (cols === 1 ? w / 2 : w * c / (cols - 1)), cy + h / 2 - (rows === 1 ? h / 2 : h * r / (rows - 1))]);
+                }
+                return out;
+            }
+            var ring = 1, used = 0, stretch = 1 / Math.max(0.2, Math.cos(p.lat * Math.PI / 180));
+            while (used < count) {
+                var size = Math.min(count - used, ring * 6), radius = 0.0013 * ring;
+                for (i = 0; i < size; i++) {
+                    var angle = (i / size) * Math.PI * 2 + ring * 0.5;
+                    out.push([p.lng + Math.cos(angle) * radius * stretch, p.lat + Math.sin(angle) * radius]);
+                }
+                used += size; ring++;
+            }
+            return out;
+        }
+        function openUnit(unit, pin) {
+            if (!unitBox || !unitBody) return;
+            unitBody.innerHTML = unit.html || '';
+            unitMarkers.forEach(function (entry) { entry.pin.classList.toggle('is-on', entry.pin === pin); });
+            unitBox.hidden = false;
+            unitBox.scrollTop = 0;
+            // حالة المفضلة / المقارنة على الكارت الجديد + لوجو المطور جوه الدايرة
+            if (window.SharyCards) window.SharyCards.refresh(unitBody);
+            if (window.SharyLogoFit) window.SharyLogoFit.scan(unitBody);
+            root.dispatchEvent(new CustomEvent('shary:map-unit', { bubbles: true, detail: { id: unit.id } }));
+        }
+        function drawUnits(p, list) {
+            clearUnits();
+            unitsFor = p.id;
+            var loose = list.filter(function (unit) { return !unit.placed || unit.lat == null; });
+            var spots = spread(p, loose.length), next = 0;
+            list.forEach(function (unit) {
+                var at = unit.placed && unit.lat != null ? [Number(unit.lng), Number(unit.lat)] : spots[next++];
+                if (!at || !isFinite(at[0]) || !isFinite(at[1])) return;
+                var pin = document.createElement('button');
+                pin.type = 'button';
+                pin.className = 'smap__marker smap__marker--unit';
+                pin.title = unit.title || unit.label || '';
+                pin.setAttribute('aria-label', unit.title || unit.label || '');
+                var label = document.createElement('span');
+                label.textContent = unit.label || '';
+                pin.appendChild(label);
+                pin.addEventListener('click', function (event) { event.stopPropagation(); toggleAreas(false); openUnit(unit, pin); });
+                unitMarkers.push({ pin: pin, marker: new glLib.Marker({ element: pin, anchor: 'bottom' }).setLngLat(at).addTo(gl) });
+            });
+        }
+        function showUnits() {
+            if (!gl || !unitsUrl) return;
+            var item = state.current;
+            if (!item || item.parentNode.hidden) { if (unitsFor !== null) clearUnits(); return; }
+            var p = info(item), close = gl.getZoom() >= UNITS_ZOOM;
+            var list = unitCache[p.id];
+            if (list === undefined) {
+                unitCache[p.id] = null;   // بيتحمّل
+                // اللينك: shary/map/units?project={id} — أو قالب فيه {id} (ملفات ثابتة: .../units/{id}.json)
+                fetch(unitsUrl.indexOf('{id}') > -1 ? unitsUrl.replace('{id}', encodeURIComponent(p.id)) : unitsUrl + (unitsUrl.indexOf('?') === -1 ? '?' : '&') + 'project=' + encodeURIComponent(p.id), { headers: { 'Accept': 'application/json' } })
+                    .then(function (response) { return response.ok ? response.json() : { units: [] }; })
+                    .then(function (data) { unitCache[p.id] = (data && data.units) || []; showUnits(); }, function () { unitCache[p.id] = []; });
+                return;
+            }
+            if (list === null) return;
+            if (!close) {
+                if (unitsFor !== null) clearUnits();
+                // المشروع فيه وحدات والخريطة لسه بعيدة: سطر صغير مرة واحدة لكل مشروع
+                if (list.length && !unitHinted[p.id]) { unitHinted[p.id] = true; say((root.getAttribute('data-units-hint') || '').replace(':count', list.length)); }
+                return;
+            }
+            if (unitsFor !== p.id) drawUnits(p, list);
+        }
+        if (unitBox) {
+            unitBox.addEventListener('click', function (event) { if (event.target.closest('[data-smap-unit-close]')) closeUnit(); });
+            document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !unitBox.hidden) closeUnit(); });
         }
 
         // ---- الفلترة: المنطقة + البحث + أنواع الوحدات + التسليم + السعر. لو مفيش مطابق بالظبط: بنفك الشروط واحد واحد لحد ما يبقى فيه نتيجة

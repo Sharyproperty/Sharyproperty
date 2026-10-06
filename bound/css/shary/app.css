@@ -13554,6 +13554,97 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   background-color: #1f9a8b;
 }
 
+/* علامة وحدة جوه المشروع (بتظهر لما العميل يقرّب): أصغر من علامة المشروع وبلون أخضر شاري — المختارة كحلي */
+
+.smap__marker--unit {
+  max-width: 96px;
+  border-radius: 8px;
+  background-color: #1f7f72;
+  padding: 2px 7px 3px;
+  font-size: 10.5px;
+  box-shadow: 0 5px 12px -4px rgba(13, 32, 51, 0.65);
+}
+
+.smap__marker--unit::after {
+  bottom: -5px;
+  height: 7px;
+  width: 7px;
+}
+
+.smap__marker--unit.is-on {
+  z-index: 3;
+  background-color: #123a5c;
+}
+
+/* كارت الوحدة فوق الخريطة: موبايل من تحت بعرض الشاشة ، ديسك توب على جنب الخريطة */
+
+.smap__unit {
+  position: fixed;
+  inset-inline: 10px;
+  bottom: 10px;
+  z-index: 1100;
+  max-height: min(78vh, 620px);
+  overflow-y: auto;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 0 24px 60px -18px rgba(13, 32, 51, 0.65);
+  scrollbar-width: none;
+}
+
+.smap__unit[hidden] {
+  display: none;
+}
+
+.smap__unit::-webkit-scrollbar {
+  display: none;
+}
+
+.smap__unit-head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background-color: #fff;
+  padding: 10px 14px 8px 10px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+[dir="ltr"] .smap__unit-head {
+  padding: 10px 10px 8px 14px;
+}
+
+.smap__unit-close {
+  display: flex;
+  height: 32px;
+  width: 32px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #e8f0fb;
+  color: #123a5c;
+}
+
+.smap__unit-body > * {
+  box-shadow: none;
+}
+
+@media (min-width: 1024px) {
+  .smap__unit {
+    position: absolute;
+    inset-inline: auto 20px;
+    bottom: 20px;
+    width: 380px;
+    max-height: calc(100% - 40px);
+  }
+}
+
 /* العميل قرّب على ماستر بلان معروضة: علامة المشروع بتختفي عشان ما تغطيش المخطط */
 
 .smap.is-close .smap__marker.has-plan {
