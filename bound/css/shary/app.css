@@ -12038,6 +12038,34 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   opacity: 0.6;
 }
 
+/* "قدّم عرضك / Make an offer": الكلمة في سطر واحد جوه الزرار — على الموبايل الأيقونات أضيق سِنّة والزرار ياخد الباقي */
+
+.opp-actions__offer {
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+@media (max-width: 480px) {
+  .opp-actions__btn {
+    width: 54px;
+  }
+
+  .opp-actions__offer {
+    padding-inline: 10px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 359px) {
+  .opp-actions__btn {
+    width: 48px;
+  }
+
+  .opp-actions__offer {
+    font-size: 14px;
+  }
+}
+
 /* بوب أب "قدّم عرضك": سطر الوحدة والسعر المطلوب فوق الفورم */
 
 .opp-offer__unit {

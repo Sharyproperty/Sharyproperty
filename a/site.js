@@ -1478,7 +1478,13 @@
         var values = [];
         var toY = function () { return 0; };
 
+        var trend = card.querySelector('[data-area-trend]');
+
         function draw(series) {
+            // القسم اللي مالوش أرقام شهرية (أقل من شهرين): الرسم بيختفي
+            series = Array.isArray(series) ? series : [];
+            if (trend) trend.hidden = series.length < 2;
+            if (series.length < 2) { values = []; return; }
             values = series;
             var min = Math.min.apply(null, series);
             var max = Math.max.apply(null, series);
@@ -1510,8 +1516,8 @@
             if (!type) return;
             ['price', 'price_range', 'change', 'label', 'demand', 'growth', 'index', 'compare_price', 'compare_range', 'compare_diff', 'compare_label', 'range', 'units', 'projects'].forEach(function (key) { set(key, type[key]); });
             var arc = card.querySelector('[data-k-arc]');
-            if (arc) arc.setAttribute('stroke-dasharray', (type.index / 100 * 70.7).toFixed(1) + ' 94.2');
-            type.bars.forEach(function (value, i) {
+            if (arc) arc.setAttribute('stroke-dasharray', ((parseFloat(type.index) || 0) / 100 * 70.7).toFixed(1) + ' 94.2');
+            (type.bars || []).forEach(function (value, i) {
                 var bar = card.querySelector('[data-bar="' + i + '"]');
                 var label = card.querySelector('[data-bar-value="' + i + '"]');
                 if (bar) bar.style.width = value + '%';
