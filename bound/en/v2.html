@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="29o6OZUdOkqL1rwZlEWAvQL2DzSwXZ2aGGvUBw6c">
+    <meta name="csrf-token" content="ueeYm4PlZAMWM8vcPVgIaHLHcBl1qWFG6Wj6N2wx">
     <title>Shary — Egypt real estate: apartments, villas and projects for sale and rent</title>
     
     <meta name="description" content="Shary is a real-estate platform in Egypt: browse the newest projects and units for sale and rent, compare prices and payment plans, and follow the Shary Index for price per meter in the key areas.">
@@ -2272,7 +2272,7 @@
                 <!-- Investment shortcuts -->
                 <div class="horizontal-scroll investment-shortcuts">
                                             <a href="shary://academy"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://shary-academy"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -2282,7 +2282,7 @@
                             </div>
                         </a>
                                             <a href="shary://installments"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://installment-tracking"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -2292,7 +2292,7 @@
                             </div>
                         </a>
                                             <a href="v2/offers.html"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://exclusive-offers"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -2302,7 +2302,7 @@
                             </div>
                         </a>
                                             <a href="v2/limited-offer.html"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://resale-opportunities"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -2312,7 +2312,7 @@
                             </div>
                         </a>
                                             <a href="v2/for-rent.html"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://rent-units"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -2322,7 +2322,7 @@
                             </div>
                         </a>
                                             <a href="v2/for-sale.html"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://resale"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -2332,7 +2332,7 @@
                             </div>
                         </a>
                                             <a href="v2/for-sale.html"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://developer-units"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -2342,7 +2342,7 @@
                             </div>
                         </a>
                                             <a href="shary://home"
-                                                            onclick="handleInvestmentLink(event, this)"
+                             data-app-link="shary://shary-ma3ak"                                                             onclick="handleInvestmentLink(event, this)"
                                                     >
                             <div class="investment-shortcut">
                                 <div class="investment-shortcut-icon">
@@ -4672,7 +4672,7 @@ Unit link:" data-wa-url="v2/for-sale/apartment/New-Cairo/apartment-165m-for-sale
 
                 <!-- Form -->
                 <form class="contact-form" action="v2.html" method="POST" id="homeContactForm" data-lead-form>
-                    <input type="hidden" name="_token" value="29o6OZUdOkqL1rwZlEWAvQL2DzSwXZ2aGGvUBw6c" autocomplete="off">                    <!-- Name -->
+                    <input type="hidden" name="_token" value="ueeYm4PlZAMWM8vcPVgIaHLHcBl1qWFG6Wj6N2wx" autocomplete="off">                    <!-- Name -->
                     <div class="contact-field">
                         <label for="contact_name"> Name <span>*</span> </label>
 
@@ -7021,30 +7021,46 @@ Unit link:" data-wa-url="v2/for-sale/apartment/New-Cairo/apartment-165m-for-sale
             toastr.info("This feature will be available soon.");
         }
 
+        // لينكات المتاجر: من لوحة التحكم (التواصل والقنوات ← لينكات التطبيق) — ولو مش مكتوبة: لينكات التطبيق المعروفة
+        window.SHARY_APP_STORES = {"android":"https:\/\/play.google.com\/store\/apps\/details?id=com.sharyproperties.app","ios":"https:\/\/apps.apple.com\/us\/app\/shary-real-state\/id6743754160"};
+
+        /*
+         * كروت "ما يميزنا" المربوطة بالتطبيق:
+         *   - لينك الكارت لينك تطبيق (shary://...) : التطبيق متحمل ← بيفتح على الشاشة دي ، مش متحمل ← المتجر.
+         *   - لينك الكارت لينك تحميل (المتجر) : التطبيق متحمل ← بيفتح التطبيق (data-app-link = shary://<slug الكارت>) ، مش متحمل ← المتجر.
+         *   - أي لينك تاني (صفحة في الموقع) بيفتح عادي.
+         */
         function handleInvestmentLink(event, link) {
-            const deepLink = link.getAttribute('href') || '';
+            const href = link.getAttribute('href') || '';
+            const isDeep = /^shary:\/\//i.test(href);
+            const isStore = /play\.google\.com\/store\/apps|apps\.apple\.com|itunes\.apple\.com/i.test(href);
 
             // Normal website links follow their href.
-            if (!/^shary:\/\//i.test(deepLink)) {
+            if (!isDeep && !isStore) {
+                return;
+            }
+
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent)
+                || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+            const stores = window.SHARY_APP_STORES || {};
+
+            if (!isAndroid && !isIOS) {
+                // كمبيوتر: مفيش تطبيق يتفتح — لينك المتجر زي ما هو ، ولينك التطبيق ← صفحة التطبيق على المتجر
+                if (isStore) {
+                    return;
+                }
+                event.preventDefault();
+                event.stopPropagation();
+                window.location.href = stores.android;
                 return;
             }
 
             event.preventDefault();
             event.stopPropagation();
 
-            const isAndroid = /Android/i.test(navigator.userAgent);
-            const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent)
-                || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-            if (!isAndroid && !isIOS) {
-                window.location.href =
-                    'https://play.google.com/store/apps/details?id=com.sharyproperties.app';
-                return;
-            }
-
-            const storeUrl = isAndroid
-                ? 'https://play.google.com/store/apps/details?id=com.sharyproperties.app'
-                : 'https://apps.apple.com/us/app/shary-real-state/id6743754160';
+            const storeUrl = isAndroid ? stores.android : stores.ios;
+            const deepLink = isDeep ? href : (link.getAttribute('data-app-link') || 'shary://home');
 
             // Cancel a previous attempt if another card was clicked.
             if (window.cancelInvestmentAppRedirect) {
@@ -7057,6 +7073,7 @@ Unit link:" data-wa-url="v2/for-sale/apartment/New-Cairo/apartment-165m-for-sale
                 clearTimeout(timer);
                 document.removeEventListener('visibilitychange', onVisibilityChange);
                 window.removeEventListener('pagehide', cleanup);
+                window.removeEventListener('blur', cleanup);
 
                 if (window.cancelInvestmentAppRedirect === cleanup) {
                     window.cancelInvestmentAppRedirect = null;
@@ -7071,8 +7088,10 @@ Unit link:" data-wa-url="v2/for-sale/apartment/New-Cairo/apartment-165m-for-sale
 
             window.cancelInvestmentAppRedirect = cleanup;
 
+            // التطبيق اتفتح (الصفحة اتخبّت / فقدت التركيز) ← ما نروحش للمتجر
             document.addEventListener('visibilitychange', onVisibilityChange);
             window.addEventListener('pagehide', cleanup);
+            window.addEventListener('blur', cleanup);
 
             timer = setTimeout(() => {
                 const shouldRedirect = !document.hidden;
@@ -7081,7 +7100,7 @@ Unit link:" data-wa-url="v2/for-sale/apartment/New-Cairo/apartment-165m-for-sale
                 if (shouldRedirect) {
                     window.location.href = storeUrl;
                 }
-            }, 2000);
+            }, 2500);
 
             window.location.href = deepLink;
         }
@@ -12470,7 +12489,7 @@ Unit link:" data-wa-url="v2/for-sale/apartment/New-Cairo/apartment-165m-for-sale
         </div>
 
         <form action="v2.html" method="POST" class="mt-4 flex flex-col gap-4" data-meeting-form>
-            <input type="hidden" name="_token" value="29o6OZUdOkqL1rwZlEWAvQL2DzSwXZ2aGGvUBw6c" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+            <input type="hidden" name="_token" value="ueeYm4PlZAMWM8vcPVgIaHLHcBl1qWFG6Wj6N2wx" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
             <input type="hidden" name="meeting_date" value="" data-meeting-date>
             <input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
 
