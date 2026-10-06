@@ -12390,6 +12390,176 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   color: #9fb0c2;
 }
 
+/* ===== أشهر الأماكن في المنطقة (areas/partials/places): كارت لكل مجموعة — أيقونة لبني + عنوان + قايمة أماكن ===== */
+
+.place-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.place-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e6ebf1;
+}
+
+.place-card__icon {
+  display: flex;
+  height: 46px;
+  width: 46px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1px solid #d3dfee;
+  background-color: #e8f0fb;
+  color: #1e4166;
+}
+
+.place-card__head h3 {
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+.place-card__head p {
+  margin-top: 2px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #5b6b7c;
+}
+
+.place-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.place-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding-block: 10px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.place-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 2px;
+}
+
+.place-list__dot {
+  margin-top: 9px;
+  height: 7px;
+  width: 7px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background-color: #fcb424;
+}
+
+.place-list__name {
+  display: block;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #123a5c;
+}
+
+.place-list__name--link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #1f63c6;
+  transition: color 0.2s;
+}
+
+.place-list__name--link:hover {
+  text-decoration: underline;
+}
+
+.place-list__name--link svg {
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+
+[dir="rtl"] .place-list__name--link svg {
+  transform: scaleX(-1);
+}
+
+.place-list small {
+  display: block;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+  color: #5b6b7c;
+}
+
+.place-card__more {
+  margin-top: auto;
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid #e6ebf1;
+  padding-top: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #1e4166;
+}
+
+.place-card__more:hover {
+  color: #1f63c6;
+}
+
+/* اللينكات الداخلية التلقائية (data-auto-link — SharyPageController::autoLinks) جوه النصوص اللي مش article-content */
+
+.auto-links a,
+    .faq-box__answer a {
+  font-weight: 700;
+  color: #1f63c6;
+  text-decoration: none;
+}
+
+.auto-links a:hover,
+    .faq-box__answer a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 1024px) {
+  .place-card {
+    padding: 22px 24px;
+  }
+
+  .place-card__head h3 {
+    font-size: 18px;
+  }
+
+  .place-card__head p {
+    font-size: 14px;
+  }
+
+  .place-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    -moz-column-gap: 26px;
+         column-gap: 26px;
+  }
+
+  .place-list li:nth-last-child(2):nth-child(odd) {
+    border-bottom: 0;
+  }
+
+  .place-list__name {
+    font-size: 15.5px;
+  }
+}
+
 @media (min-width: 640px) {
   .discover-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -16423,6 +16593,10 @@ img.abroad-dev__logo {
   height: 0.625rem;
 }
 
+.h-3 {
+  height: 0.75rem;
+}
+
 .h-4 {
   height: 1rem;
 }
@@ -16641,6 +16815,10 @@ img.abroad-dev__logo {
 
 .w-2 {
   width: 0.5rem;
+}
+
+.w-3 {
+  width: 0.75rem;
 }
 
 .w-4 {
@@ -19382,6 +19560,15 @@ img.abroad-dev__logo {
     display: none;
   }
 
+  .max-lg\:gap-2 {
+    gap: 0.5rem;
+  }
+
+  .max-lg\:px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
   .max-lg\:\[direction\:ltr\] {
     direction: ltr;
   }
@@ -21859,6 +22046,14 @@ img.abroad-dev__logo {
     font-size: 26px;}
 .pv-desktop .area-article h3 {font-size: 20px;}
 .pv-desktop .area-article p, .pv-desktop .area-article li {font-size: 16px;}
+.pv-desktop .place-card {padding: 22px 24px;}
+.pv-desktop .place-card__head h3 {font-size: 18px;}
+.pv-desktop .place-card__head p {font-size: 14px;}
+.pv-desktop .place-list {grid-template-columns: repeat(2, minmax(0, 1fr));
+    -moz-column-gap: 26px;
+         column-gap: 26px;}
+.pv-desktop .place-list li:nth-last-child(2):nth-child(odd) {border-bottom: 0;}
+.pv-desktop .place-list__name {font-size: 15.5px;}
 .pv-desktop .discover-list {grid-template-columns: repeat(3, minmax(0, 1fr));
     -moz-column-gap: 40px;
          column-gap: 40px;}
