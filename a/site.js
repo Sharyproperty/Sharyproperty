@@ -5311,14 +5311,32 @@
             if (empty) empty.classList.toggle('hidden', list.length > 0);
             if (sentinel) {
                 var more = shown < list.length;
-                sentinel.classList.toggle('hidden', !more);
+                // خلصت الوحدات وكان فيه أكتر من أول صفحة: الزرار بيبقى "عرض أقل" (بيرجّع أول صفحة)
+                var less = !more && !!moreButton && list.length > step();
+                sentinel.classList.toggle('hidden', !more && !less);
                 sentinel.setAttribute('data-state', more ? 'idle' : 'done');
+                if (moreButton) {
+                    var moreText = moreButton.querySelector('span');
+                    var moreArrow = moreButton.querySelector('svg');
+                    if (!moreButton.hasAttribute('data-more-label') && moreText) moreButton.setAttribute('data-more-label', moreText.textContent);
+                    moreButton.setAttribute('data-mode', less ? 'less' : 'more');
+                    if (moreText) moreText.textContent = moreButton.getAttribute(less ? 'data-less-label' : 'data-more-label') || moreText.textContent;
+                    if (moreArrow) moreArrow.style.transform = less ? 'rotate(180deg)' : '';
+                }
             }
         }
 
         // "عرض المزيد": الوحدات ما بتكمّلش لوحدها — كل ضغطة على الزرار (data-units-more) بتظهر صفحة كمان (ديسك توب 6 ، موبايل 3)
         var moreButton = sentinel ? sentinel.querySelector('[data-units-more]') : null;
         function more() {
+            if (moreButton && moreButton.getAttribute('data-mode') === 'less') {
+                // "عرض أقل": نرجع لأول صفحة ونطلع لأول الوحدات
+                shown = step();
+                render();
+                var sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < 0) window.scrollTo({ top: window.pageYOffset + sectionTop - 150, behavior: 'smooth' });
+                return;
+            }
             if (busy || shown >= matching().length) return;
             if (moreButton) { shown += step(); render(); return; }
             busy = true;
@@ -5386,7 +5404,7 @@
 /*
  | "عرض المزيد" لقوايم الكروت (data-more-list) — مثال: "وحدات تانية في نفس المشروع" في صفحة الوحدة.
  | الكروت كلها في الصفحة ؛ الظاهر في الأول بيتحدد بالـ CSS (2 موبايل / 6 ديسك توب) وكل ضغطة بتظهر data-step-mobile / data-step-desktop كمان.
- | لما الكروت تخلص الزرار بيرجع لينك عادي (data-all-label) يفتح صفحة المشروع.
+ | لما الكروت تخلص الزرار بيبقى "عرض أقل" (data-less-label) ويرجّع العدد الأول. "إظهار الكل" فوق هو اللي بيفتح صفحة المشروع.
  */
 (function () {
     'use strict';
@@ -5400,16 +5418,31 @@
         function hidden() {
             return items.filter(function (item) { return item.offsetParent === null; });
         }
+        var opened = false;      // العميل ضغط "عرض المزيد" مرة على الأقل
         function sync() {
             var done = hidden().length === 0;
+            var less = done && opened;          // خلصت الكروت بعد "عرض المزيد": الزرار بيبقى "عرض أقل"
             button.dataset.done = done ? '1' : '';
-            if (text) text.textContent = done ? (button.dataset.allLabel || text.textContent) : (button.dataset.moreLabel || text.textContent);
-            if (arrow) arrow.style.display = done ? 'none' : '';
+            button.style.display = done && !opened ? 'none' : '';     // الكروت كلها ظاهرة من الأول: مفيش زرار
+            if (text) text.textContent = less ? (button.dataset.lessLabel || text.textContent) : (button.dataset.moreLabel || text.textContent);
+            if (arrow) arrow.style.transform = less ? 'rotate(180deg)' : '';
         }
         button.addEventListener('click', function (event) {
             var rest = hidden();
-            if (!rest.length) return;           // خلصت: الزرار لينك لصفحة المشروع
             event.preventDefault();
+            if (!rest.length) {
+                // "عرض أقل": نرجع للعدد الأول (2 موبايل / 6 أكبر) ونطلع لأول القسم
+                items.forEach(function (item, index) {
+                    item.classList.toggle('hidden', index >= 6);
+                    item.classList.toggle('max-md:hidden', index >= 2 && index < 6);
+                });
+                opened = false;
+                sync();
+                var top = list.getBoundingClientRect().top;
+                if (top < 0) window.scrollTo({ top: window.pageYOffset + top - 150, behavior: 'smooth' });
+                return;
+            }
+            opened = true;
             var desktop = window.matchMedia('(min-width: 768px)').matches;
             var step = parseInt(desktop ? list.dataset.stepDesktop : list.dataset.stepMobile, 10) || (desktop ? 6 : 2);
             rest.slice(0, step).forEach(function (item) { item.classList.remove('hidden', 'max-md:hidden'); });
