@@ -7270,6 +7270,8 @@
  * - القايمة بتفتح تحت الخانة دايمًا (مش لفوق)، ولو آخرها مش باين الصفحة بتنزل لها.
  * - اختيار واحد: الضغط بيختار ويقفل. اختيار متعدد (select multiple — مميزات الوحدة): الضغط بيعلّم / يشيل والقايمة بتفضل مفتوحة.
  * - أي تغيير بيطلع حدث change على الـ <select> — ولو كود تاني غيّر قيمته يطلّع change والزرار بيتحدّث لوحده.
+ * - بحث: خانة بحث ثابتة فوق القايمة (بتتضاف هنا لوحدها) في كل قوايم الفلاتر ، وفي قوايم الفورمات اللي فيها أكتر من 6 اختيارات (أو عليها data-select-search) — العميل يكتب أول حروف فالاختيارات تتفلتر. الكتابة بتتجاهل الهمزات والتشكيل والمسافات.
+ *   Enter بيختار أول نتيجة ، والسهم لتحت بينزل للاختيارات. القايمة اللي عليها data-select-nosearch من غير بحث.
  * من غير السكربت: القايمة الأصلية بتشتغل عادي.
  */
 (function () {
@@ -7295,6 +7297,53 @@
         var items = Array.prototype.slice.call(list.querySelectorAll('[role="option"]'));
         var multi = select.multiple;
         var self = { box: box, list: list, toggle: toggle };
+
+        // ---- خانة البحث فوق القايمة
+        var english = (document.documentElement.getAttribute('lang') || '').toLowerCase().indexOf('en') === 0;
+        var plain = function (text) {
+            return String(text || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim();
+        };
+        var search = null, empty = null;
+        var visible = function () { return items.filter(function (item) { return !item.hidden; }); };
+        var filter = function () {
+            var query = plain(search ? search.value : ''), shown = 0;
+            items.forEach(function (item) {
+                var name = item.querySelector('[data-select-name]');
+                var hit = !query || plain((name || item).textContent + ' ' + (item.getAttribute('data-value') || '').replace(/-/g, ' ')).indexOf(query) > -1;
+                item.hidden = !hit;
+                if (hit) shown++;
+            });
+            if (empty) empty.hidden = shown > 0;
+        };
+        // البحث في كل قوايم الفلاتر (فورم GET) — وفي قوايم الفورمات لما الاختيارات تبقى أكتر من 6 (قايمة من 3 اختيارات مش محتاجة بحث)
+        var inFilter = !!(select.form && String(select.form.getAttribute('method') || 'get').toLowerCase() === 'get');
+        if (items.length && !box.hasAttribute('data-select-nosearch') && (inFilter || items.length > 6 || box.hasAttribute('data-select-search'))) {
+            var row = document.createElement('li');
+            row.className = 'req-menu__search';
+            row.setAttribute('role', 'presentation');
+            search = document.createElement('input');
+            search.type = 'search';
+            search.autocomplete = 'off';
+            search.setAttribute('enterkeyhint', 'search');
+            search.placeholder = list.getAttribute('data-search-placeholder') || (english ? 'Search…' : 'ابحث…');
+            search.setAttribute('aria-label', search.placeholder);
+            row.appendChild(search);
+            list.insertBefore(row, list.firstChild);
+            empty = document.createElement('li');
+            empty.className = 'req-menu__empty';
+            empty.setAttribute('role', 'presentation');
+            empty.hidden = true;
+            empty.textContent = list.getAttribute('data-search-empty') || (english ? 'No matches' : 'مفيش نتيجة بالاسم ده');
+            list.appendChild(empty);
+            search.addEventListener('input', filter);
+            search.addEventListener('click', function (event) { event.stopPropagation(); });
+            search.addEventListener('keydown', function (event) {
+                var shown = visible();
+                if (event.key === 'ArrowDown') { event.preventDefault(); event.stopPropagation(); if (shown[0]) shown[0].focus(); }
+                else if (event.key === 'Enter') { event.preventDefault(); event.stopPropagation(); if (search.value && shown[0]) choose(shown[0]); }
+                else if (event.key !== 'Escape') event.stopPropagation();   // المسافة والحروف للكتابة مش لاختيار عنصر
+            });
+        }
 
         native.classList.add('hidden');
         toggle.classList.remove('hidden');
@@ -7327,6 +7376,12 @@
             toggle.setAttribute('aria-expanded', 'true');
             box.classList.add('is-open');
             opened = self;
+            // كل فتحة: البحث فاضي وكل الاختيارات ظاهرة — وعلى الكمبيوتر المؤشر بيبقى في خانة البحث (على الموبايل الكيبورد ما يطلعش غير لما يضغط عليها)
+            if (search) {
+                search.value = '';
+                filter();
+                if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) window.setTimeout(function () { search.focus(); }, 0);
+            }
             var current = list.querySelector('[aria-selected="true"]');
             if (current && !multi) list.scrollTop = Math.max(0, current.offsetTop - 60);
             // القايمة تحت الخانة: لو آخرها تحت الشاشة الصفحة بتنزل لها
@@ -7354,14 +7409,17 @@
             if (item) choose(item);
         });
         list.addEventListener('keydown', function (event) {
-            var index = items.indexOf(document.activeElement);
+            // التنقل بالأسهم بين الاختيارات الظاهرة بس (بعد البحث) — والسهم لفوق من أول اختيار بيرجع لخانة البحث
+            var shown = visible();
+            var index = shown.indexOf(document.activeElement);
             if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
                 event.preventDefault();
-                var next = items[Math.max(0, Math.min(items.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1)))];
+                if (event.key === 'ArrowUp' && index === 0 && search) { search.focus(); return; }
+                var next = shown[Math.max(0, Math.min(shown.length - 1, index + (event.key === 'ArrowDown' ? 1 : -1)))];
                 if (next) next.focus();
             } else if ((event.key === 'Enter' || event.key === ' ') && index > -1) {
                 event.preventDefault();
-                choose(items[index]);
+                choose(shown[index]);
             }
         });
         select.addEventListener('change', sync);
