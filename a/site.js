@@ -5200,6 +5200,16 @@
             if (on) list.push(id);
             try { window.localStorage.setItem('shary:follows', JSON.stringify(list)); } catch (e) {}
             paint(on);
+            // المتابعة بتتسجل على السيرفر (shary_follows) عشان تظهر في لوحة التحكم — data-follow-url
+            var url = button.getAttribute('data-follow-url');
+            if (url && window.fetch) {
+                var meta = document.querySelector('meta[name="csrf-token"]');
+                window.fetch(url, {
+                    method: 'POST', credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': meta ? meta.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                    body: JSON.stringify({ id: id, following: on })
+                }).catch(function () {});
+            }
         });
     });
 
@@ -5306,9 +5316,11 @@
             }
         }
 
-        // الوحدات بتكمّل لوحدها وأنت نازل (موبايل وديسك توب)
+        // "عرض المزيد": الوحدات ما بتكمّلش لوحدها — كل ضغطة على الزرار (data-units-more) بتظهر صفحة كمان (ديسك توب 6 ، موبايل 3)
+        var moreButton = sentinel ? sentinel.querySelector('[data-units-more]') : null;
         function more() {
             if (busy || shown >= matching().length) return;
+            if (moreButton) { shown += step(); render(); return; }
             busy = true;
             if (sentinel) sentinel.setAttribute('data-state', 'loading');
             setTimeout(function () {
@@ -5318,7 +5330,10 @@
                 if (sentinel && !sentinel.classList.contains('hidden') && sentinel.getBoundingClientRect().top < window.innerHeight + 200) more();
             }, 350);
         }
-        if (sentinel) {
+        if (moreButton) {
+            moreButton.addEventListener('click', more);
+        } else if (sentinel) {
+            // (صفحات من غير زرار: الشكل القديم — بتكمّل وأنت نازل)
             if ('IntersectionObserver' in window) {
                 new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) more(); }, { rootMargin: '300px 0px' }).observe(sentinel);
             } else {
@@ -5365,6 +5380,86 @@
         // لو الكروت اتبدّلت من بره (مثلاً من السيرفر): section.__renderUnits() بيعيد العرض من أول صفحة
         section.__renderUnits = function () { shown = step(); render(); };
         render();
+    });
+})();
+
+/*
+ | "عرض المزيد" لقوايم الكروت (data-more-list) — مثال: "وحدات تانية في نفس المشروع" في صفحة الوحدة.
+ | الكروت كلها في الصفحة ؛ الظاهر في الأول بيتحدد بالـ CSS (2 موبايل / 6 ديسك توب) وكل ضغطة بتظهر data-step-mobile / data-step-desktop كمان.
+ | لما الكروت تخلص الزرار بيرجع لينك عادي (data-all-label) يفتح صفحة المشروع.
+ */
+(function () {
+    'use strict';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-more-list]'), function (list) {
+        var button = list.querySelector('[data-more-button]');
+        var items = Array.prototype.slice.call(list.querySelectorAll('[data-more-item]'));
+        if (!button || !items.length) return;
+        var text = button.querySelector('[data-more-text]');
+        var arrow = button.querySelector('[data-more-arrow]');
+
+        function hidden() {
+            return items.filter(function (item) { return item.offsetParent === null; });
+        }
+        function sync() {
+            var done = hidden().length === 0;
+            button.dataset.done = done ? '1' : '';
+            if (text) text.textContent = done ? (button.dataset.allLabel || text.textContent) : (button.dataset.moreLabel || text.textContent);
+            if (arrow) arrow.style.display = done ? 'none' : '';
+        }
+        button.addEventListener('click', function (event) {
+            var rest = hidden();
+            if (!rest.length) return;           // خلصت: الزرار لينك لصفحة المشروع
+            event.preventDefault();
+            var desktop = window.matchMedia('(min-width: 768px)').matches;
+            var step = parseInt(desktop ? list.dataset.stepDesktop : list.dataset.stepMobile, 10) || (desktop ? 6 : 2);
+            rest.slice(0, step).forEach(function (item) { item.classList.remove('hidden', 'max-md:hidden'); });
+            sync();
+        });
+        window.addEventListener('resize', sync);
+        sync();
+    });
+})();
+
+/*
+ | أسهم الصفوف اللي بتتحرك بالجنب على الديسك توب (data-rail-arrows حوالين ul[data-rail]) — مثال: "مراحل أخرى" في صفحة المشروع:
+ | 3 كروت ظاهرين ، ولو فيه أكتر بيظهر سهمين (السابق / التالي) بيحركوا الصف كارت كارت. السحب باللمس / التراك باد شغال زي ما هو.
+ */
+(function () {
+    'use strict';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-rail-arrows]'), function (wrap) {
+        var rail = wrap.querySelector('[data-rail]');
+        if (!rail) return;
+        var rtl = getComputedStyle(rail).direction === 'rtl';
+        function make(dir, label) {
+            var button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'rail-arrow rail-arrow--' + dir;
+            button.setAttribute('aria-label', label || dir);
+            button.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + (dir === 'prev' ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6') + '"/></svg>';
+            wrap.appendChild(button);
+            return button;
+        }
+        var prev = make('prev', wrap.getAttribute('data-prev-label'));
+        var next = make('next', wrap.getAttribute('data-next-label'));
+        function stepSize() {
+            var card = rail.firstElementChild;
+            var gap = parseFloat(getComputedStyle(rail).columnGap || getComputedStyle(rail).gap) || 0;
+            return card ? card.getBoundingClientRect().width + gap : rail.clientWidth;
+        }
+        function sync() {
+            var max = rail.scrollWidth - rail.clientWidth;
+            var pos = Math.abs(rail.scrollLeft);
+            var scrollable = max > 4;
+            wrap.classList.toggle('is-scrollable', scrollable);
+            prev.disabled = !scrollable || pos <= 2;
+            next.disabled = !scrollable || pos >= max - 2;
+        }
+        // في العربي الصف بيبدأ من اليمين: "التالي" بيتحرك ناحية الشمال
+        prev.addEventListener('click', function () { rail.scrollBy({ left: (rtl ? 1 : -1) * stepSize(), behavior: 'smooth' }); });
+        next.addEventListener('click', function () { rail.scrollBy({ left: (rtl ? -1 : 1) * stepSize(), behavior: 'smooth' }); });
+        rail.addEventListener('scroll', sync, { passive: true });
+        window.addEventListener('resize', sync);
+        sync();
     });
 })();
 
