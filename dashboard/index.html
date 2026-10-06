@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>جولة لوحة تحكم شاري</title>
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700;800&family=Cairo:wght@600;700;800&display=swap">
+<style>
+/* layout: one reading column — the straight answer first, three status lists, then the dashboard tour as screenshot + "was missing / done" pairs */
+:root {
+  --bg: #f3f6f9; --surface: #ffffff; --ink: #12283d; --muted: #586779; --line: #dbe3eb;
+  --navy: #123a5c; --accent: #1b7f73; --ok-bg: #e2f4ef; --ok-ink: #116a5f;
+  --warn-bg: #fff3d6; --warn-ink: #7a5200; --wait-bg: #e6eef8; --wait-ink: #1d4d80;
+  --shot-edge: #cfd9e3; --overlay: rgba(8, 20, 33, .86);
+  --display: "Cairo", "Segoe UI", Tahoma, sans-serif; --body: "Almarai", "Segoe UI", Tahoma, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0d1722; --surface: #142131; --ink: #e7eef6; --muted: #a0b1c3; --line: #25364a;
+  --navy: #9cc8f2; --accent: #62d2c1; --ok-bg: #11302d; --ok-ink: #7fe0d0;
+  --warn-bg: #382c0d; --warn-ink: #f3cd74; --wait-bg: #18293d; --wait-ink: #a9cdf3;
+  --shot-edge: #2b3d52; --overlay: rgba(2, 8, 14, .9); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0d1722; --surface: #142131; --ink: #e7eef6; --muted: #a0b1c3; --line: #25364a;
+  --navy: #9cc8f2; --accent: #62d2c1; --ok-bg: #11302d; --ok-ink: #7fe0d0;
+  --warn-bg: #382c0d; --warn-ink: #f3cd74; --wait-bg: #18293d; --wait-ink: #a9cdf3;
+  --shot-edge: #2b3d52; --overlay: rgba(2, 8, 14, .9); color-scheme: dark }
+html { direction: rtl; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 16px; line-height: 1.85; }
+.wrap { max-width: 1080px; margin-inline: auto; padding-inline: 18px; padding-block: 28px 64px; display: flex; flex-direction: column; gap: 34px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; line-height: 1.4; }
+p { margin: 0; }
+.top small { display: block; color: var(--accent); font-weight: 700; font-size: 13.5px; letter-spacing: .2px; }
+.top h1 { font-size: clamp(26px, 5vw, 38px); font-weight: 800; color: var(--navy); margin-top: 4px; }
+.top p { color: var(--muted); max-width: 62ch; margin-top: 8px; }
+.answer { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; display: flex; flex-direction: column; gap: 10px; }
+.answer h2 { font-size: 20px; color: var(--navy); }
+.answer p { max-width: 70ch; }
+.status { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 14px; }
+.col { border-radius: 14px; padding: 16px 18px 18px; min-width: 0; }
+.col h3 { font-size: 16.5px; font-weight: 800; }
+.col ul { margin: 10px 0 0; padding: 0 18px 0 0; display: flex; flex-direction: column; gap: 7px; font-size: 14.5px; line-height: 1.75; }
+.col.ok { background: var(--ok-bg); color: var(--ok-ink); }
+.col.warn { background: var(--warn-bg); color: var(--warn-ink); }
+.col.wait { background: var(--wait-bg); color: var(--wait-ink); }
+.col li { color: var(--ink); }
+.about-shots { border-inline-start: 3px solid var(--accent); padding-inline-start: 14px; color: var(--muted); font-size: 14.5px; max-width: 78ch; }
+.tour-head h2 { font-size: 24px; font-weight: 800; color: var(--navy); }
+.tour-head p { color: var(--muted); margin-top: 4px; }
+nav.jump { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 10px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin; border-bottom: 1px solid var(--line); }
+nav.jump a { flex: 0 0 auto; text-decoration: none; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 14px; font-size: 13.5px; font-weight: 700; white-space: nowrap; }
+nav.jump a:hover, nav.jump a:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+.group { display: flex; flex-direction: column; gap: 18px; scroll-margin-top: 70px; }
+.group > h2 { font-size: 20px; font-weight: 800; color: var(--navy); padding-bottom: 6px; border-bottom: 2px solid var(--line); }
+.screen { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.shot { display: block; padding: 0; border: 1px solid var(--shot-edge); border-radius: 10px; overflow: hidden; background: #f6f7f9; cursor: zoom-in; width: 100%; }
+.shot img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top right; }
+.shot:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.note { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.note h3 { font-size: 17.5px; font-weight: 800; }
+.note b { display: block; font-size: 12.5px; font-weight: 800; letter-spacing: .2px; }
+.note p { font-size: 15px; line-height: 1.8; }
+.was b { color: var(--warn-ink); }
+.was p { color: var(--muted); }
+.now b { color: var(--ok-ink); }
+.next { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.next h2 { font-size: 20px; color: var(--navy); }
+.next ol { margin: 10px 0 0; padding: 0 20px 0 0; display: flex; flex-direction: column; gap: 6px; max-width: 72ch; }
+.box { position: fixed; inset: 0; z-index: 50; background: var(--overlay); display: flex; align-items: flex-start; justify-content: center; overflow: auto; padding: 18px; cursor: zoom-out; }
+.box img { max-width: min(1440px, 100%); height: auto; border-radius: 8px; }
+.box button { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 14px; border: 0; border-radius: 999px; background: #ffffff; color: #12283d; font: 700 14px var(--body); padding: 6px 16px; cursor: pointer; }
+@media (max-width: 760px) { .screen { grid-template-columns: minmax(0, 1fr); gap: 12px; } body { font-size: 15.5px; } }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <small>شاري · ربط الواجهة الجديدة بالباك · 6 أكتوبر 2026</small>
+    <h1>جولة لوحة تحكم شاري</h1>
+    <p>إيه اللي خلص، إيه اللي لسه محتاج تجربة على السيرفر، وشكل كل شاشة جديدة في لوحة التحكم: كان ناقص إيه واتعمل إيه.</p>
+  </header>
+
+  <section class="answer">
+    <h2>هل كل حاجة خلصت؟</h2>
+    <p>الكود خلص: كل صفحات الواجهة مربوطة بقاعدة البيانات، ولوحة التحكم فيها 29 شاشة جديدة بتتحكم في كل نص وصورة ورقم ظاهر في الموقع، ومعاهم Shary AI وأمر الماستر بلان.</p>
+    <p>بس مش هقول «بيرفكت» قبل ما يتركّب على السيرفر. أنا جربته على نسخة تجريبية عندي، مش على قاعدة بياناتكم ولا على MySQL. القايمة الصفرا تحت هي بالظبط اللي لازم يتجرب هناك.</p>
+  </section>
+
+  <section class="status" aria-label="حالة الشغل">
+    <div class="col ok">
+      <h3>خلص واتجرب عندي</h3>
+      <ul>
+        <li>ربط كل صفحات الواجهة بالباك: 237 لينك اختبار سليمين في وضع المعاينة ووضع النهائي.</li>
+        <li>مراجعة كل صفحة على التصميم المعتمد (نص، هيكل، وصورة) — عربي وإنجليزي.</li>
+        <li>شاشات اللوحة الجديدة كلها بتفتح وبتحفظ، والتعديل بيظهر في الموقع.</li>
+        <li>الفورمات، المفضلة، المقارنة، ومتابعة المشروع.</li>
+        <li>Shary AI: فهم السؤال، البحث في بيانات الموقع، الرد، والشات نفسه في المتصفح.</li>
+        <li>محرر المقالات بأزراره الجديدة.</li>
+      </ul>
+    </div>
+    <div class="col warn">
+      <h3>خلص في الكود — لازم يتجرب على السيرفر</h3>
+      <ul>
+        <li>التشغيل على MySQL وبياناتكم الحقيقية.</li>
+        <li>Shary AI بمفتاح Gemini أو OpenAI حقيقي (اتجرب على خدمة محاكاة).</li>
+        <li>الخريطة التفاعلية والماستر بلان: أمر التفريغ اتجرب على صور تجريبية، مش صور مشاريعكم.</li>
+        <li>شكل اللوحة بقالبكم، والرئيسية بملفات السلايدر والبحث بتاعة موقعكم (ماكانوش في ملف الباك).</li>
+      </ul>
+    </div>
+    <div class="col wait">
+      <h3>مستني منك</h3>
+      <ul>
+        <li>كلمة «ارفع» عشان أرفع فرع الكود على GitHub.</li>
+        <li>القرارات المفتوحة (9 نقط) والـ 6 حاجات اللي سيبتها مختلفة عن التصميم بقصد — في ملف التقرير REPORT-AR.</li>
+      </ul>
+    </div>
+  </section>
+
+  <p class="about-shots">عن الصور: الشاشات والبيانات اللي فيها حقيقية من الكود شغال على نسخة تجريبية. اللي تقريبي هو الألوان والخط والقايمة الجانبية، لأن ملفات قالب لوحتكم ماكانتش في ملف الباك. على السيرفر الشاشات هتاخد شكل لوحتكم الحالية. اضغط على أي صورة تكبر.</p>
+
+  <div class="tour-head">
+    <h2>الجولة</h2>
+    <p>كل الشاشات تحت مجموعة واحدة في القايمة الجانبية اسمها «واجهة شاري الجديدة».</p>
+  </div>
+  <nav class="jump" aria-label="مجموعات الشاشات"><a href="#requests">الطلبات والعملاء</a><a href="#units">الوحدات والمشاريع والمطورين</a><a href="#index">مؤشر شاري</a><a href="#areas">المناطق</a><a href="#content">المقالات والمحتوى</a><a href="#pages">صفحات الموقع</a><a href="#ai">Shary AI</a></nav>
+  <section class="group" id="requests"><h2>الطلبات والعملاء</h2><article class="screen">
+  <button type="button" class="shot" data-shot="shots/leads.jpg" aria-label="تكبير صورة صندوق الطلبات"><img src="shots/leads.jpg" alt="شاشة صندوق الطلبات في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>صندوق الطلبات</h3>
+    <div class="was"><b>كان ناقص</b><p>كل فورم في الموقع كان بيتسجل في جدول لوحده، ومفيش مكان واحد تتابع منه كل الطلبات.</p></div>
+    <div class="now"><b>اتعمل</b><p>قايمة واحدة لكل الفورمات (استشارة، مقابلة، بيع عقارك، شاري كارد، وظائف، Shary AI…) بفلترة وتفاصيل وحالة وملاحظة وتصدير CSV. الطلب بيفضل يتسجل في جدوله القديم كمان.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/follows.jpg" aria-label="تكبير صورة متابعات المشاريع"><img src="shots/follows.jpg" alt="شاشة متابعات المشاريع في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>متابعات المشاريع</h3>
+    <div class="was"><b>كان ناقص</b><p>زرار «متابعة» في صفحة المشروع ماكانش بيوصل لحد.</p></div>
+    <div class="now"><b>اتعمل</b><p>كل متابعة بتتسجل. العميل المسجّل باسمه ورقمه وبيدخل كطلب في الصندوق. الزائر مش بيتطلب منه رقم: بيظهر بالجهاز واللغة والمشاريع اللي بيتابعها، ولو بعت أي فورم من نفس المتصفح بيظهر باسمه ورقمه.</p></div>
+  </div>
+</article></section><section class="group" id="units"><h2>الوحدات والمشاريع والمطورين</h2><article class="screen">
+  <button type="button" class="shot" data-shot="shots/units.jpg" aria-label="تكبير صورة الوحدات — القايمة"><img src="shots/units.jpg" alt="شاشة الوحدات — القايمة في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>الوحدات — القايمة</h3>
+    <div class="was"><b>كان ناقص</b><p>الوحدات كانت متوزعة على أكتر من شاشة حسب النوع.</p></div>
+    <div class="now"><b>اتعمل</b><p>قايمة واحدة بتابات (مطور / إعادة بيع / إيجار) وفلاتر ومفاتيح سريعة للنشر والتمييز.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/unit-form.jpg" aria-label="تكبير صورة الوحدة — فورم واحد لكل الأنواع"><img src="shots/unit-form.jpg" alt="شاشة الوحدة — فورم واحد لكل الأنواع في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>الوحدة — فورم واحد لكل الأنواع</h3>
+    <div class="was"><b>كان ناقص</b><p>مفيش تحويل للوحدة من نوع لنوع، ولا وحدة من غير مشروع، ولا عروض للوحدة، ولا شارة «عرض» يدوية.</p></div>
+    <div class="now"><b>اتعمل</b><p>فورم واحد بـ 7 تابات. تغيّر النوع بضغطة واللينك القديم بيتحوّل لوحده. وحدة مستقلة من غير مشروع. عروض الوحدة (كاش / تقسيط بسعر قديم وجديد). شارة «عرض» على الكارت.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/tracking.jpg" aria-label="تكبير صورة وحدة عميل (التراكنج)"><img src="shots/tracking.jpg" alt="شاشة وحدة عميل (التراكنج) في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>وحدة عميل (التراكنج)</h3>
+    <div class="was"><b>كان ناقص</b><p>إضافة وحدة عميل للمتابعة كانت محتاجة أكتر من خطوة.</p></div>
+    <div class="now"><b>اتعمل</b><p>شاشة واحدة بتضيف وحدة العميل وتربطها بسجل المتابعة وتفتحه على طول.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/project-masterplan.jpg" aria-label="تكبير صورة المشروع — الماستر بلان"><img src="shots/project-masterplan.jpg" alt="شاشة المشروع — الماستر بلان في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>المشروع — الماستر بلان</h3>
+    <div class="was"><b>كان ناقص</b><p>ماستر بلان واحد بس، ومفيش نسخة مفرّغة للخريطة التفاعلية.</p></div>
+    <div class="now"><b>اتعمل</b><p>اتنين: ماستر بلان الموقع، ونسخة مفرّغة شفافة للخريطة. زرار «فرّغ وحدد المكان» بيعملها أوتوماتيك، ومعاه أمر واحد على السيرفر لكل المشاريع.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/project-inherit.jpg" aria-label="تكبير صورة المشروع — اللي الوحدات بتسحبه"><img src="shots/project-inherit.jpg" alt="شاشة المشروع — اللي الوحدات بتسحبه في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>المشروع — اللي الوحدات بتسحبه</h3>
+    <div class="was"><b>كان ناقص</b><p>بيانات المشروع ماكانتش بتنزل للوحدات بشكل متحكم فيه.</p></div>
+    <div class="now"><b>اتعمل</b><p>مفاتيح لكل حاجة الوحدة تورثها من المشروع: المعرض، الفيديو، الوصف، المميزات، خطط السداد، الماستر بلان، الموقع، الأماكن القريبة، المؤشرات، الأسئلة.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/project-indicators.jpg" aria-label="تكبير صورة المشروع — المؤشرات والأرقام"><img src="shots/project-indicators.jpg" alt="شاشة المشروع — المؤشرات والأرقام في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>المشروع — المؤشرات والأرقام</h3>
+    <div class="was"><b>كان ناقص</b><p>مؤشرات الاستثمار في صفحة المشروع والوحدة مالهاش مكان تتكتب فيه.</p></div>
+    <div class="now"><b>اتعمل</b><p>تاب واحد لأرقام المشروع (توقع السعر، مكونات المؤشر، نصيحة شاري) — بتظهر في صفحة المشروع وفي كل وحداته.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/n-project-plans.jpg" aria-label="تكبير صورة المشروع — أسماء خطط السداد وملاحظة العرض"><img src="shots/n-project-plans.jpg" alt="شاشة المشروع — أسماء خطط السداد وملاحظة العرض في لوحة التحكم" loading="lazy" width="1440" height="1100"></button>
+  <div class="note">
+    <h3>المشروع — أسماء خطط السداد وملاحظة العرض</h3>
+    <div class="was"><b>كان ناقص</b><p>خطط السداد من غير أسماء، وكارت العرض في صفحة المنطقة من غير ملاحظة («ساري حتى نهاية الشهر»).</p></div>
+    <div class="now"><b>اتعمل</b><p>اسم لكل خطة (الفاضي = الاسم الجاهز المكتوب بالرمادي)، وللخطة المتعلّم عليها «عرض» ملاحظة بتظهر في كروت عروض المنطقة.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/developers.jpg" aria-label="تكبير صورة بيانات وأرقام المطورين"><img src="shots/developers.jpg" alt="شاشة بيانات وأرقام المطورين في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>بيانات وأرقام المطورين</h3>
+    <div class="was"><b>كان ناقص</b><p>أرقام صفحة المطور ومؤشره كانوا في الكود.</p></div>
+    <div class="now"><b>اتعمل</b><p>الاسم المختصر، سنة التأسيس، الشارة، أرقام الهيدر، عدّادات يدوية، مؤشر المطور و«إزاي اتحسب»، والأسئلة الشائعة.</p></div>
+  </div>
+</article></section><section class="group" id="index"><h2>مؤشر شاري</h2><article class="screen">
+  <button type="button" class="shot" data-shot="shots/index-areas.jpg" aria-label="تكبير صورة أرقام المناطق"><img src="shots/index-areas.jpg" alt="شاشة أرقام المناطق في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>أرقام المناطق</h3>
+    <div class="was"><b>كان ناقص</b><p>أرقام كل منطقة كانت بتتعدل منطقة منطقة.</p></div>
+    <div class="now"><b>اتعمل</b><p>جدول واحد لكل المناطق: يظهر في المؤشر، متوسط سعر المتر، النمو، الطلب، المؤشر، العائد الإيجاري، العائد المتوقع، درجة الاستثمار.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/index-monthly.jpg" aria-label="تكبير صورة الأسعار الشهرية"><img src="shots/index-monthly.jpg" alt="شاشة الأسعار الشهرية في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>الأسعار الشهرية</h3>
+    <div class="was"><b>كان ناقص</b><p>الرسم البياني (12 شهر) مالوش بيانات.</p></div>
+    <div class="now"><b>اتعمل</b><p>سعر المتر شهر بشهر لكل منطقة — وهو اللي بيرسم الرسم في صفحة المنطقة والمؤشر.</p></div>
+  </div>
+</article></section><section class="group" id="areas"><h2>المناطق</h2><article class="screen">
+  <button type="button" class="shot" data-shot="shots/n-area-extras.jpg" aria-label="تكبير صورة محتوى صفحة المنطقة"><img src="shots/n-area-extras.jpg" alt="شاشة محتوى صفحة المنطقة في لوحة التحكم" loading="lazy" width="1440" height="1500"></button>
+  <div class="note">
+    <h3>محتوى صفحة المنطقة</h3>
+    <div class="was"><b>كان ناقص</b><p>صفحة المنطقة من غير منطقة أم ولا دليل ولا مسافات ولا أسئلة، ومقدمة المقال وعنوان كارت الموقع مالهمش مكان.</p></div>
+    <div class="now"><b>اتعمل</b><p>المنطقة الأم، السطر التعريفي، <b>فقرات مقدمة «نبذة عن المنطقة»</b>، <b>عنوان كارت الموقع ومؤشر شاري</b>، مجموعة المنطقة في المؤشر، نص الموقع، المسافات، الطرق، دليل المنطقة، والأسئلة الشائعة. ومعاها شاشة «أشهر الأماكن».</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/n-area-tree.jpg" aria-label="تكبير صورة المناطق الرئيسية والفرعية"><img src="shots/n-area-tree.jpg" alt="شاشة المناطق الرئيسية والفرعية في لوحة التحكم" loading="lazy" width="1440" height="1300"></button>
+  <div class="note">
+    <h3>المناطق الرئيسية والفرعية</h3>
+    <div class="was"><b>كان ناقص</b><p>مفيش مكان يحدد إن التجمع الخامس ومدينة المستقبل جوه القاهرة الجديدة، أو رأس الحكمة جوه الساحل.</p></div>
+    <div class="now"><b>اتعمل</b><p>شاشة واحدة لكل منطقة رئيسية: تضيف أو تشيل المناطق الفرعية اللي جواها. بتظهر في قسم «المناطق في القاهرة الجديدة»، وأرقام ومشاريع الفرعية بتتجمع في الرئيسية.</p></div>
+  </div>
+</article></section><section class="group" id="content"><h2>المقالات والمحتوى</h2><article class="screen">
+  <button type="button" class="shot" data-shot="shots/n-editor-hub.jpg" aria-label="تكبير صورة المقالات والمحتوى — مكان واحد"><img src="shots/n-editor-hub.jpg" alt="شاشة المقالات والمحتوى — مكان واحد في لوحة التحكم" loading="lazy" width="1440" height="1000"></button>
+  <div class="note">
+    <h3>المقالات والمحتوى — مكان واحد</h3>
+    <div class="was"><b>كان ناقص</b><p>مقال المشروع والمنطقة والمطور كل واحد في شاشة، ومفيش مقال لصفحات البحث، ومحتوى التصميم مالوش طريقة يدخل الموقع.</p></div>
+    <div class="now"><b>اتعمل</b><p>مكان واحد لمقالات: المدونة، المشاريع، الوحدات، المناطق، المطورين، وصفحات البحث. ومعاه: تشغيل «التقسيمة الجاهزة» لكل نوع صفحة، وزرار <b>«محتوى التصميم»</b> (مقالات المدونة، أشهر الأماكن، كلمات اللينكات، ونصوص القاهرة الجديدة وسينز وماونتن فيو) — إضافة فقط.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/editor.jpg" aria-label="تكبير صورة محرر المقال"><img src="shots/editor.jpg" alt="شاشة محرر المقال في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>محرر المقال</h3>
+    <div class="was"><b>كان ناقص</b><p>المحرر من غير أحجام خط ولا زرار تواصل ولا لينكات داخلية ولا معاينة.</p></div>
+    <div class="now"><b>اتعمل</b><p>كتابة حرة طويلة أو قصيرة: عناوين 2 و3 و4، حجم الخط، المحاذاة، صور وجداول، «زر تواصل»، «لينك داخلي» ببحث، و«معاينة» قبل الحفظ. عربي وإنجليزي.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/links.jpg" aria-label="تكبير صورة الروابط الداخلية"><img src="shots/links.jpg" alt="شاشة الروابط الداخلية في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>الروابط الداخلية</h3>
+    <div class="was"><b>كان ناقص</b><p>مفيش قاموس للينكات الداخلية.</p></div>
+    <div class="now"><b>اتعمل</b><p>كلمة ← لينك، بتتحول لوحدها جوه المقالات. ومعاها إضافة مجمّعة.</p></div>
+  </div>
+</article></section><section class="group" id="pages"><h2>صفحات الموقع</h2><article class="screen">
+  <button type="button" class="shot" data-shot="shots/hero.jpg" aria-label="تكبير صورة صور هيدر الرئيسية"><img src="shots/hero.jpg" alt="شاشة صور هيدر الرئيسية في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>صور هيدر الرئيسية</h3>
+    <div class="was"><b>كان ناقص</b><p>صورة واحدة للديسك توب والموبايل، فكانت بتتزوّم وتتقص.</p></div>
+    <div class="now"><b>اتعمل</b><p>صورة للديسك توب (2880×847) وصورة للموبايل (1170×965) بأداة قص جوه اللوحة. في النسخة التجريبية الصور فاضية.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/home-cards.jpg" aria-label="تكبير صورة كروت الصفحة الرئيسية"><img src="shots/home-cards.jpg" alt="شاشة كروت الصفحة الرئيسية في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>كروت الصفحة الرئيسية</h3>
+    <div class="was"><b>كان ناقص</b><p>الكروت الخمسة كانت مكتوبة في الكود.</p></div>
+    <div class="now"><b>اتعمل</b><p>العنوان والنص والصورة واللينك لكل كارت.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/contact.jpg" aria-label="تكبير صورة التواصل والقنوات"><img src="shots/contact.jpg" alt="شاشة التواصل والقنوات في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>التواصل والقنوات</h3>
+    <div class="was"><b>كان ناقص</b><p>لينكات قنوات واتساب وتليجرام ويوتيوب كانت ثابتة في الملفات.</p></div>
+    <div class="now"><b>اتعمل</b><p>أرقام التليفون والواتساب والإيميل، القنوات التلاتة، السوشيال، ولينكات التطبيق — في شاشة واحدة.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/site-content.jpg" aria-label="تكبير صورة نصوص وصور الصفحات"><img src="shots/site-content.jpg" alt="شاشة نصوص وصور الصفحات في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>نصوص وصور الصفحات</h3>
+    <div class="was"><b>كان ناقص</b><p>نصوص الصفحات العامة ونصوص الواجهة كانت في ملفات الكود.</p></div>
+    <div class="now"><b>اتعمل</b><p>7 صفحات محتوى و24 مجموعة نصوص واجهة، كلها بتتعدل من هنا.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/site-content-edit.jpg" aria-label="تكبير صورة نصوص وصور الصفحات — التعديل"><img src="shots/site-content-edit.jpg" alt="شاشة نصوص وصور الصفحات — التعديل في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>نصوص وصور الصفحات — التعديل</h3>
+    
+    <div class="now"><b>اتعمل</b><p>كل نص عربي قصاده الإنجليزي، والصور برفع مباشر، ومعاها «رجّعه للأصل».</p></div>
+  </div>
+</article></section><section class="group" id="ai"><h2>Shary AI</h2><article class="screen">
+  <button type="button" class="shot" data-shot="shots/ai.jpg" aria-label="تكبير صورة الإعدادات و«جرّب المساعد»"><img src="shots/ai.jpg" alt="شاشة الإعدادات و«جرّب المساعد» في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>الإعدادات و«جرّب المساعد»</h3>
+    <div class="was"><b>كان ناقص</b><p>الشات كان معتمد على خدمة خارجية مش موجودة في الكود، ومن غير أي تحكم.</p></div>
+    <div class="now"><b>اتعمل</b><p>المساعد بيرد من بيانات الموقع مباشرة. تختار الخدمة (Gemini / OpenAI) والموديل، تكتب تعليمات و«كلمات العملاء»، وتجرب أي سؤال وتشوف الرد الحقيقي.</p></div>
+  </div>
+</article><article class="screen">
+  <button type="button" class="shot" data-shot="shots/ai-log.jpg" aria-label="تكبير صورة سجل أسئلة العملاء"><img src="shots/ai-log.jpg" alt="شاشة سجل أسئلة العملاء في لوحة التحكم" loading="lazy" width="1440" height="900"></button>
+  <div class="note">
+    <h3>سجل أسئلة العملاء</h3>
+    <div class="was"><b>كان ناقص</b><p>مفيش طريقة تعرف العملاء بيسألوا عن إيه.</p></div>
+    <div class="now"><b>اتعمل</b><p>آخر 100 سؤال: السؤال، اللي اتفهم، عدد النتايج. وفلتر «من غير نتايج» بيعرّفك الناس بتدوّر على إيه ومش لاقياه.</p></div>
+  </div>
+</article></section>
+
+  <section class="next">
+    <h2>الخطوة الجاية</h2>
+    <ol>
+      <li>المبرمج يركّب ملف shary-laravel-integration.zip على نسخة تجريبية من السيرفر (الخطوات في README-AR).</li>
+      <li>يشغّل الموقع في وضع المعاينة: الموقع الحالي زي ما هو، والجديد على ‎/ar/v2.</li>
+      <li>يجرب القايمة الصفرا، ويبعتلي أي خطأ يظهر في اللوج وأنا أصلّحه.</li>
+      <li>بعدها التحويل للوضع النهائي بسطر واحد، والرجوع منه بنفس السطر.</li>
+    </ol>
+  </section>
+</div>
+<div class="box" id="box" hidden><button type="button" id="boxClose">إغلاق</button><img id="boxImg" alt="الشاشة مكبّرة"></div>
+<script>
+(function () {
+  var box = document.getElementById('box'), img = document.getElementById('boxImg'), last = null;
+  function close() { box.hidden = true; img.removeAttribute('src'); if (last) last.focus(); }
+  document.querySelectorAll('.shot').forEach(function (button) {
+    button.addEventListener('click', function () { last = button; img.src = button.getAttribute('data-shot'); box.hidden = false; box.scrollTop = 0; document.getElementById('boxClose').focus(); });
+  });
+  box.addEventListener('click', close);
+  document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !box.hidden) close(); });
+})();
+</script>
+
+</body>
+</html>
