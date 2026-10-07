@@ -769,8 +769,10 @@
 
 /**
  * بوب أب تحميل التطبيق [data-app-popup] (موبايل بس): بيظهر بعد data-delay من فتح الصفحة وبيدخل من الشمال.
- * - بيظهر أول ما العميل يفتح الموقع (مرة في الزيارة الواحدة — sessionStorage) ، ومش بيظهر لو التطبيق متسطّب (زرار التطبيق data-state="open").
- *   عايزينه أقل؟ غيّروا DAYS لعدد الأيام (بيتحفظ في localStorage بدل الزيارة).
+ * - بيظهر مرة واحدة في الزيارة: أول ما يظهر بيتسجّل (sessionStorage) فما يظهرش تاني وهو بيتنقل بين الصفحات — ولما يقفل المتصفح ويفتح الموقع تاني بيظهر مرة.
+ * - بيفضل كده لحد ما العميل يضغط زرار التحميل (في البوب أب أو الهيدر): ساعتها بيتسجّل على الجهاز (localStorage: shary-app-got) وما يظهرش تاني خالص.
+ *   ومش بيظهر كمان لو التطبيق متسطّب (زرار التطبيق data-state="open").
+ *   عايزينه أقل؟ غيّروا DAYS لعدد الأيام بين كل ظهور (بيتحفظ في localStorage بدل الزيارة).
  * - القفل: × أو الضغط براه أو Esc أو الضغط على زرار التحميل. window.SharyAppPopup.open() / .close() للتحكم من أي كود.
  * - حدث shary:app-popup ({ open }) على العنصر.
  */
@@ -783,6 +785,13 @@
     function store() { return DAYS > 0 ? window.localStorage : window.sessionStorage; }
     function seen() { try { var at = Number(store().getItem(KEY)); return !!at && (DAYS === 0 || Date.now() - at < DAYS * 86400000); } catch (error) { return false; } }
     function mark() { try { store().setItem(KEY, String(Date.now())); } catch (error) { /* التخزين مقفول */ } }
+    // العميل ضغط "حمل التطبيق" قبل كده: البوب أب ما يظهرش تاني على الجهاز ده
+    var GOT = 'shary-app-got';
+    function got() { try { return window.localStorage.getItem(GOT) === '1'; } catch (error) { return false; } }
+    document.addEventListener('click', function (event) {
+        if (!event.target.closest('[data-app-button]')) return;
+        try { window.localStorage.setItem(GOT, '1'); } catch (error) { /* التخزين مقفول */ }
+    }, true);
 
     function close() {
         if (pop.hidden) return;
@@ -794,6 +803,7 @@
     }
 
     function open() {
+        mark();   // اتعرض في الزيارة دي: ما يظهرش تاني في الصفحات اللي بعدها حتى لو العميل ما قفلوش
         pop.hidden = false;
         pop.setAttribute('aria-hidden', 'false');
         window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { pop.classList.add('is-open'); }); });
@@ -815,39 +825,39 @@
     });
 
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
-    if (!mobile || seen() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    if (!mobile || seen() || got() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
     // العميل فاتح Shary AI: البوب أب ما يقطعش المحادثة — بيستنى لحد ما يقفلها
     function show() {
         var button = pop.querySelector('[data-app-button]');
         if (button && button.getAttribute('data-state') === 'open') return;   // التطبيق متسطّب
         var ai = document.querySelector('[data-ai-panel]');
         if (ai && Array.prototype.some.call(document.querySelectorAll('[data-ai-panel]'), function (panel) { return !panel.classList.contains('hidden'); })) { window.setTimeout(show, 4000); return; }
-        if (seen()) return;
+        if (seen() || got()) return;
         open();
     }
     window.setTimeout(show, Number(pop.getAttribute('data-delay')) || 1800);
 })();
 
 /**
- * تنبيه سياسة الخصوصية [data-privacy-note] (partials/privacy-notice.blade.php): بيظهر في كل زيارة لحد ما العميل يضغط "موافق" [data-privacy-accept].
- * الموافقة بتتحفظ لحد قفل المتصفح (sessionStorage: shary-privacy) — EVERY_VISIT = false يخليها مرة واحدة على الجهاز. حدث shary:privacy-accept على العنصر — اسمعوه لو عايزين تسجلوها على السيرفر.
+ * تنبيه سياسة الخصوصية [data-privacy-note] (partials/privacy-notice.blade.php): بيظهر أول مرة بس — لحد ما العميل يضغط "موافق" [data-privacy-accept].
+ * الموافقة بتتحفظ على الجهاز (localStorage: shary-privacy) فالتنبيه ما يظهرش تاني في أي صفحة ولا في أي زيارة بعد كده (حتى صفحة سياسة الخصوصية نفسها).
+ * حدث shary:privacy-accept على العنصر — اسمعوه لو عايزين تسجّلوا الموافقة في السيرفر.
  */
 (function () {
     var note = document.querySelector('[data-privacy-note]');
     if (!note) return;
     var KEY = 'shary-privacy';
-    // بيظهر في كل زيارة لحد ما العميل يضغط "موافق" (محفوظ لحد قفل المتصفح — sessionStorage).
-    // عايزينه مرة واحدة بس على الجهاز؟ خلّوا EVERY_VISIT = false (localStorage).
-    var EVERY_VISIT = true;
-    var store = null;
-    try { store = EVERY_VISIT ? window.sessionStorage : window.localStorage; } catch (error) { /* التخزين مقفول: التنبيه بيظهر */ }
-    var accepted = false;
-    try { accepted = !!store && store.getItem(KEY) === '1'; } catch (error) { /* التخزين مقفول: التنبيه بيظهر */ }
-    if (accepted || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    function read(store) { try { return !!store && store.getItem(KEY) === '1'; } catch (error) { return false; } }
+    var local = null, session = null;
+    try { local = window.localStorage; } catch (error) { /* التخزين مقفول */ }
+    try { session = window.sessionStorage; } catch (error) { /* التخزين مقفول */ }
+    // وافق قبل كده (على الجهاز — أو في الزيارة دي لو التخزين الدائم مقفول)
+    if (read(local) || read(session) || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
     note.classList.remove('hidden');
     note.addEventListener('click', function (event) {
         if (!event.target.closest('[data-privacy-accept]')) return;
-        try { if (store) store.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ }
+        try { if (local) local.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ }
+        try { if (session) session.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ }
         note.classList.add('hidden');
         note.dispatchEvent(new CustomEvent('shary:privacy-accept', { bubbles: true }));
     });
@@ -984,4 +994,38 @@
         put(form, 'page_url', location.href);
         put(form, 'page_title', document.title);
     }, true);
+})();
+
+/**
+ * دايرة البحث الكحلي في أي خانة بحث (‎.search-bar .search-input > svg في صفحات الموقع ، و ‎.search-input-icon في بحث الرئيسية):
+ * الماوس عليها إيد (cursor: pointer في الستايل) والضغط عليها = نفس الضغط على Enter في الخانة (بحث) — ولو الخانة فاضية بيتحط فيها المؤشر.
+ */
+(function () {
+    document.addEventListener('click', function (event) {
+        var target = event.target;
+        if (!target || !target.closest) return;
+        // ---- بحث الرئيسية
+        var homeIcon = target.closest('.search-input-icon');
+        if (homeIcon) {
+            var holder = homeIcon.closest('.property-search-input') || homeIcon.parentNode;
+            var homeInput = holder ? holder.querySelector('input') : null;
+            event.preventDefault();
+            if (homeInput && !homeInput.value.trim()) { homeInput.focus(); }
+            if (typeof window.submitHomeSearchMobile === 'function' && (!homeInput || homeInput.value.trim())) window.submitHomeSearchMobile();
+            return;
+        }
+        // ---- خانة البحث في باقي الصفحات
+        var icon = target.closest('.search-bar .search-input > svg');
+        if (!icon) return;
+        var input = icon.parentNode.querySelector('input');
+        if (!input) return;
+        event.preventDefault();
+        if (!input.value.trim()) { input.focus(); return; }
+        // نفس طريق Enter: صفحة البحث بتسمع keydown وتبعت الفلتر — وباقي الخانات بتتبعت بالفورم (submit)
+        var handled = !input.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }));
+        var form = input.form || input.closest('form');
+        if (handled || !form) return;
+        if (typeof form.requestSubmit === 'function') form.requestSubmit();
+        else if (form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))) form.submit();
+    });
 })();

@@ -184,7 +184,10 @@
             set('scope', now.name);
             set('headline', now.headline);
             page.querySelectorAll('[data-k="headline"]').forEach(function (el) { el.classList.toggle('hidden', !now.headline); });
-            set('trend_title', areaKey ? data.trendTitleIn.replace(':area', now.name) : (now.series_title || data.trendTitle || ''));
+            // "اتجاه سعر المتر [النوع] في [المنطقة]": النوع (سكني / تجاري / إداري / طبي / فندقي) بعد "سعر المتر" على طول — ومع "كل الأنواع" من غير نوع
+            var trendTitle = (areaKey ? String(data.trendTitleIn || '').replace(':area', now.name) : String(data.trendTitle || '')).replace(':type', type.label_in || '').replace(/\s+/g, ' ').trim();
+            trendTitle = trendTitle.charAt(0).toUpperCase() + trendTitle.slice(1);
+            set('trend_title', areaKey ? trendTitle : (now.series_title || trendTitle));
             set('price', dash(now.price_text));
             set('yearly', dash(now.yearly_text));
             set('monthly', dash(now.monthly_text));

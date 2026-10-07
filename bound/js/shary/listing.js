@@ -177,12 +177,28 @@
                 .catch(function () { busy = false; finish(); });
         }
 
-        if (!waiting().length && !usable(nextUrl())) { finish(); return; }
-        if ('IntersectionObserver' in window) {
-            observer = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) more(); }, { rootMargin: '300px 0px' });
-            observer.observe(sentinel);
-        } else {
-            window.addEventListener('scroll', function () { if (near()) more(); });
+        function watch() {
+            if (observer) return;
+            if ('IntersectionObserver' in window) {
+                observer = new IntersectionObserver(function (entries) { if (entries[0].isIntersecting) more(); }, { rootMargin: '300px 0px' });
+                observer.observe(sentinel);
+            } else if (!sentinel.__scrollBound) {
+                sentinel.__scrollBound = true;
+                window.addEventListener('scroll', function () { if (near()) more(); });
+            }
         }
+
+        // الكروت اتبدّلت من غير تحميل الصفحة (js/shary/filter-live.js): التحميل وأنت نازل بيبدأ من الأول على القايمة الجديدة
+        grid.addEventListener('shary:list-replaced', function () {
+            busy = false;
+            sentinel.classList.remove('hidden');
+            if (!waiting().length && !usable(nextUrl())) { finish(); return; }
+            state('idle');
+            watch();
+            setTimeout(function () { if (near()) more(); }, 80);
+        });
+
+        if (!waiting().length && !usable(nextUrl())) { finish(); return; }
+        watch();
     });
 })();

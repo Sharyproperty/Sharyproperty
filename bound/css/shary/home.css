@@ -8391,25 +8391,38 @@ html, body {
   .shary-home-root .developer-card { flex: 0 0 calc((100cqi - 96px) / 9); width: calc((100cqi - 96px) / 9); height: calc((100cqi - 96px) / 9); }
 }
 
-/* ---- أفضل الكمبوندات: من غير التظليلة السودة ورا الاسم — الاسم والمنطقة في شريط أبيض هادي (زجاجي) تحت الصورة والصورة باينة كلها ---- */
+/* ---- أفضل الكمبوندات: الاسم مكتوب على الصورة على طول (من غير خلفية ولا تظليلة على الصورة كلها) —
+   ولما الماوس / صباع اليوزر ييجي على الكارت بيظهر ظل خفيف ورا الكلمة بس ---- */
 .shary-home-root .best-projects-track .project-card .card-overlay { display: none !important; }
 .shary-home-root .best-projects-track .project-card .compounds-content,
 .shary-home-root .best-projects-track .project-card .compounds-content:hover {
-  left: 8px; right: 8px; bottom: 8px !important; width: auto;
-  padding: 5px 10px 6px !important;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.92);
-  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  box-shadow: 0 4px 14px rgba(18, 58, 92, 0.18);
-  color: #123a5c;
+  left: 0; right: 0; bottom: 0 !important; width: auto;
+  padding: 10px 12px 11px !important;
+  border-radius: 0;
+  background: none;
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  box-shadow: none;
+  color: #ffffff;
   gap: 1px;
+  isolation: isolate;
+  text-shadow: 0 1px 2px rgba(4, 31, 56, 0.85), 0 0 12px rgba(4, 31, 56, 0.6);
 }
-.shary-home-root .best-projects-track .project-card .compounds-content .compound-name:first-child { font-size: 14.5px; line-height: 20px; -webkit-line-clamp: 1; }
-.shary-home-root .best-projects-track .project-card .compounds-content .compound-name:not(:first-child) { font-size: 11.5px; line-height: 16px; }
-.shary-home-root .best-projects-track .project-card .compound-name { color: #123a5c; }
+.shary-home-root .best-projects-track .project-card .compounds-content::before {
+  content: ""; position: absolute; z-index: -1; inset: 2px 12% 4px;
+  border-radius: 999px; background: rgba(4, 31, 56, 0.44); filter: blur(14px);
+  opacity: 0; transition: opacity 0.25s ease; pointer-events: none;
+}
+.shary-home-root .best-projects-track a:hover .project-card .compounds-content::before,
+.shary-home-root .best-projects-track a:active .project-card .compounds-content::before,
+.shary-home-root .best-projects-track a:focus-visible .project-card .compounds-content::before,
+.shary-home-root .best-projects-track .project-card:hover .compounds-content::before,
+.shary-home-root .best-projects-track .project-card:active .compounds-content::before { opacity: 1; }
+.shary-home-root .best-projects-track .project-card .compounds-content .compound-name:first-child { font-size: 15.5px; font-weight: 800; line-height: 21px; -webkit-line-clamp: 1; }
+.shary-home-root .best-projects-track .project-card .compounds-content .compound-name:not(:first-child) { font-size: 12px; line-height: 17px; }
+.shary-home-root .best-projects-track .project-card .compound-name { color: #ffffff; }
 .shary-home-root .best-projects-track .project-card .compound-name + .compound-name,
-.shary-home-root .best-projects-track .project-card .compounds-content > .compound-name:last-of-type { color: #5b6b7c; font-weight: 700; }
-.shary-home-root .best-projects-track .project-card .compounds-content .material-symbols-rounded { color: #1f63c6; }
+.shary-home-root .best-projects-track .project-card .compounds-content > .compound-name:last-of-type { color: #ffffff; font-weight: 700; }
+.shary-home-root .best-projects-track .project-card .compounds-content .material-symbols-rounded { color: #ffffff; }
 .shary-home-root .best-projects-track .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .shary-home-root .best-projects-track a:hover .project-card { box-shadow: 0 10px 24px -12px rgba(18, 58, 92, 0.45); }
 
@@ -8442,4 +8455,52 @@ html, body {
 @media (min-width: 960px) and (max-width: 1199px) {
   .shary-home-root .sh-sub { font-size: 23px !important; }
   .shary-home-root .sh-hero .sh-pill { height: 44px; font-size: 15px; padding: 0 16px !important; }
+}
+
+/* ---- قسم "شاري معاك" (ديسك توب): مساحة الكلام أوسع شوية (المسافات اللي حوالين التليفون أقل) عشان الكبسولات التلاتة تفضل صف واحد قبل التليفون.
+   بالإنجليزي كلامها أطول فمقاسها أصغر — ولو المساحة ما كفتش على شاشة ضيقة بينزلوا سطر تاني بدل ما يدخلوا ورا التليفون (لأي لغة) ---- */
+@media (min-width: 960px) {
+  .shary-home-root .sh-hero__inner { gap: 36px !important; }
+  .shary-home-root .sh-hero .sh-stage { margin-inline-end: 28px !important; }
+  .shary-home-root .sh-hero .sh-copy { min-width: 0; }
+  .shary-home-root .sh-hero .sh-pills { flex-wrap: wrap; max-width: 100%; }
+  .shary-home-root .sh-hero .sh-pill { white-space: nowrap; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 8px; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 42px; border-radius: 21px; font-size: 14px; padding: 0 14px !important; }
+  html[lang="en"] .shary-home-root .sh-sub { font-size: 24px !important; }
+}
+@media (min-width: 960px) and (max-width: 1199px) {
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 38px; font-size: 12.5px; padding: 0 11px !important; }
+  html[lang="en"] .shary-home-root .sh-sub { font-size: 21px !important; }
+}
+@media (min-width: 1536px) {
+  html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 6px; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { font-size: 13.5px; padding: 0 12px !important; }
+}
+
+/* ---- دايرة البحث الكحلي في بحث الرئيسية: زرار — الماوس عليها إيد والضغط عليها بيبحث (js/shary/site-chrome.js) ---- */
+.search-input-icon { cursor: pointer; pointer-events: auto; transition: background-color 0.15s, transform 0.15s; }
+.search-input-icon:hover { background: #0d5a8a; }
+
+/* ---- ديسك توب: بوكس البحث في الرئيسية — التبويبات (جميع العقارات / للبيع / للإيجار) واختيارات (الكل / من المطور / إعادة بيع / مفروش / غير مفروش)
+   وعناوين الفلاتر وأزرار البحث: بولد وبمقاس واضح مريح للعين (عربي وإنجليزي) ---- */
+@media (min-width: 1024px) {
+  .shary-home-root .property-search-tabs { height: auto; gap: 8px; margin-bottom: 12px; }
+  .shary-home-root .search-tab { height: 42px; padding: 0 18px; gap: 6px; font-size: 16.5px; font-weight: 800; }
+  .shary-home-root .search-tab-icon { width: 24px; height: 24px; }
+  .shary-home-root .search-tab-icon svg { width: 22px; height: 22px; }
+  .shary-home-root .property-search-row { height: 48px; }
+  .shary-home-root .property-status-filter { height: 48px; padding: 4px; }
+  .shary-home-root .property-status { height: 40px; padding: 0 15px; font-size: 16px; font-weight: 800; }
+  .shary-home-root .property-search-input, .shary-home-root .property-search-input input { height: 48px; }
+  .shary-home-root .property-search-input input { font-size: 16px; font-weight: 700; }
+  .shary-home-root .property-search-input input::placeholder { font-weight: 600; }
+  .shary-home-root .desktop-filters { height: auto; }
+  .shary-home-root .desktop-filters > * { height: 50px; }
+  .shary-home-root .desktop-filters > * > button, .shary-home-root .desktop-filters > button { height: 50px; }
+  .shary-home-root .desktop-filters > * > button span, .shary-home-root .desktop-filters > * > button { font-size: 16px; font-weight: 700; }
+  .shary-home-root .advanced-search-btn, .shary-home-root .property-search-btn { height: 50px; font-size: 16.5px; font-weight: 800; }
+  /* البوكس أطول بنفس الزيادة — وفاضل نصه نازل تحت صورة الهيرو زي ما هو */
+  .shary-home-root .property-search-box { height: 222px !important; bottom: -111px !important; }
+  .shary-home-root .market-ticker-section { margin-top: 92px !important; }
 }

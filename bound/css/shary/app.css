@@ -694,6 +694,90 @@ button.site-login {
   transform: scale(0.96);
 }
 
+/* لينكات الهيدر على الديسك توب (الرئيسية / المطورين / المشاريع / بحث / المدونة / من نحن / اتصل بنا / الوكلاء):
+       خط أكبر وبولد ومسافات مريحة — وبيصغر درجة على الشاشات الأضيق (أو الزوم العالي) عشان الهيدر كله يفضل في سطر واحد. عربي وإنجليزي */
+
+@media (min-width: 1024px) {
+  header .site-nav {
+    gap: 13px;
+  }
+
+  header .site-nav .site-nav__link {
+    font-size: 15.5px;
+    font-weight: 700;
+  }
+}
+
+@media (min-width: 1160px) {
+  header .site-nav {
+    gap: 18px;
+  }
+
+  header .site-nav .site-nav__link {
+    font-size: 17px;
+  }
+
+  .site-login {
+    font-size: 17.5px;
+  }
+
+  header [data-lang-toggle].lang-btn {
+    height: 44px;
+    min-width: 92px;
+    font-size: 15.5px;
+  }
+}
+
+@media (min-width: 1300px) {
+  header .site-nav {
+    gap: 26px;
+  }
+
+  header .site-nav .site-nav__link {
+    font-size: 18.5px;
+  }
+
+  .site-login {
+    font-size: 18.5px;
+  }
+
+  header [data-lang-toggle].lang-btn {
+    font-size: 16px;
+  }
+}
+
+/* إنجليزي: الكلمات أطول — درجة أصغر ومسافة أقل */
+
+@media (min-width: 1024px) and (max-width: 1159px) {
+  [lang="en"] header .site-nav {
+    gap: 10px;
+  }
+
+  [lang="en"] header .site-nav .site-nav__link {
+    font-size: 14.5px;
+  }
+}
+
+@media (min-width: 1160px) {
+  [lang="en"] header .site-nav {
+    gap: 16px;
+  }
+
+  [lang="en"] header .site-nav .site-nav__link {
+    font-size: 16.5px;
+  }
+}
+
+@media (min-width: 1300px) {
+  [lang="en"] header .site-nav {
+    gap: 22px;
+  }
+
+  [lang="en"] header .site-nav .site-nav__link {
+    font-size: 17.5px;
+  }
+}
+
 /* زرار اللغة (ديسك توب): مش مصمت — مع الماوس لمعة بتعدّي على الزرار والحروف بتنوّر لبني وتتحرك لفوق سِنّة ، ومع الضغط بيصغر سِنّة */
 
 @media (min-width: 1024px) {
@@ -914,21 +998,38 @@ button.site-login {
   transform: scale(1.04);
 }
 
-/* من غير تظليلة سودة على الصورة: الاسم والمكان في شريط أبيض هادي (زجاجي) تحت — والصورة باينة كلها (نفس كروت "أفضل الكمبوندات" في الرئيسية) */
+/* الاسم والمكان مكتوبين على الصورة على طول (من غير خلفية ولا تظليلة على الصورة كلها) —
+       ولما الماوس / صباع اليوزر ييجي على الكارت بيظهر ظل خفيف ورا الكلمة بس (نفس كروت "أفضل الكمبوندات" في الرئيسية) */
 
 .shot-card__text {
   position: absolute;
-  inset-inline: 10px;
-  bottom: 10px;
+  inset-inline: 0;
+  bottom: 0;
   z-index: 1;
-  border-radius: 14px;
-  background-color: rgba(255, 255, 255, 0.92);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 14px rgba(18, 58, 92, 0.18);
-  padding: 8px 14px 9px;
+  isolation: isolate;
+  padding: 12px 14px 12px;
   text-align: center;
-  color: #123a5c;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(4, 31, 56, 0.85), 0 0 12px rgba(4, 31, 56, 0.6);
+}
+
+.shot-card__text::before {
+  content: "";
+  position: absolute;
+  inset: 4px 14% 6px;
+  z-index: -1;
+  border-radius: 999px;
+  background-color: rgba(4, 31, 56, 0.44);
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.shot-card:hover .shot-card__text::before,
+    .shot-card:active .shot-card__text::before,
+    .shot-card:focus-within .shot-card__text::before {
+  opacity: 1;
 }
 
 .shot-card__name {
@@ -964,11 +1065,11 @@ button.site-login {
   font-size: 13px;
   font-weight: 700;
   line-height: 1.5;
-  color: #5b6b7c;
+  color: #ffffff;
 }
 
 .shot-card__place svg {
-  color: #1f63c6;
+  color: #ffffff;
 }
 
 .shot-card__badge {
@@ -1769,6 +1870,214 @@ button.site-login {
   font-size: 15px;
   font-weight: 700;
   color: #ffffff;
+}
+
+/* صفحة "فرص إعادة بيع حصرية": المنطقة / النوع / السعر + "فلتر متقدم" + "مسح" — الخمسة بنفس المقاس ، ولوحة الفلتر المتقدم تحتهم */
+
+.offer-filter__adv {
+  display: inline-flex;
+  height: 44px;
+  min-width: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #d3dfee;
+  border-radius: 12px;
+  background-color: #ffffff;
+  padding-inline: 10px;
+  font-size: 13.5px;
+  font-weight: 800;
+  line-height: 1;
+  color: #123a5c;
+  white-space: nowrap;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+
+.offer-filter__adv:hover,
+    .offer-filter__adv[aria-expanded="true"],
+    .offer-filter__adv.is-active {
+  border-color: #1e4166;
+}
+
+.offer-filter__adv.is-active {
+  background-color: #eef4fc;
+}
+
+.offer-filter__adv-count {
+  display: inline-flex;
+  height: 20px;
+  min-width: 20px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: #1e4166;
+  padding-inline: 5px;
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.offer-filter__adv-count.hidden {
+  display: none;
+}
+
+.offer-filter--opps .offer-filter__field,
+    .offer-filter--opps .offer-filter__reset {
+  height: 44px;
+}
+
+@media (max-width: 1023px) {
+  .offer-filter--opps .offer-filter__adv {
+    grid-column: 1 / -1;
+  }
+
+  .offer-filter--opps:has(.offer-filter__reset.is-active) .offer-filter__adv {
+    grid-column: 1 / 3;
+  }
+
+  .offer-filter.offer-filter--opps .offer-filter__reset {
+    grid-column: auto;
+    justify-self: stretch;
+    height: 44px;
+  }
+}
+
+.opps-adv {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  border: 1px solid #d3dfee;
+  border-radius: 14px;
+  background-color: #f7faff;
+  padding: 14px;
+}
+
+.opps-adv.hidden {
+  display: none;
+}
+
+.opps-adv__group {
+  min-width: 0;
+  border: 0;
+  padding: 0;
+}
+
+.opps-adv__group legend {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.5;
+  color: #123a5c;
+}
+
+.opps-adv__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.opps-chip {
+  position: relative;
+  cursor: pointer;
+}
+
+.opps-chip input {
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.opps-chip span {
+  display: inline-flex;
+  height: 40px;
+  min-width: 46px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d3dfee;
+  border-radius: 999px;
+  background-color: #ffffff;
+  padding-inline: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #123a5c;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.opps-chip input:checked + span {
+  border-color: #1e4166;
+  background-color: #1e4166;
+  color: #ffffff;
+}
+
+.opps-chip input:focus-visible + span {
+  outline: 2px solid #1f63c6;
+  outline-offset: 2px;
+}
+
+.opps-adv__range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #8a99a8;
+}
+
+.opps-adv__range input {
+  height: 40px;
+  min-width: 0;
+  flex: 1 1 0%;
+  border: 1px solid #d3dfee;
+  border-radius: 12px;
+  background-color: #ffffff;
+  padding-inline: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #123a5c;
+  outline: none;
+}
+
+.opps-adv__range input:focus {
+  border-color: #1e4166;
+}
+
+@media (min-width: 1024px) {
+  .offer-filter.offer-filter--opps {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .offer-filter--opps .offer-filter__field,
+        .offer-filter--opps .offer-filter__adv,
+        .offer-filter.offer-filter--opps .offer-filter__reset {
+    height: 46px;
+    justify-self: stretch;
+    padding-inline: 14px;
+    font-size: 14.5px;
+  }
+
+  .offer-filter--opps .offer-filter__field select,
+        .offer-filter--opps .offer-filter__field [data-select-label] {
+    font-size: 14.5px;
+  }
+
+  .offer-filter.offer-filter--opps:not(.is-live) {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .offer-filter--opps:not(.is-live) .offer-filter__apply {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .opps-adv {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    padding: 18px 20px;
+  }
 }
 
 .offer-badge {
@@ -3359,10 +3668,6 @@ header:has(> .site-menu:not([class~="hidden"])) {
   overflow: hidden;
 }
 
-.index-ticker__track {
-  animation: index-ticker 36s linear infinite;
-}
-
 .index-ticker:hover .index-ticker__track {
   animation-play-state: paused;
 }
@@ -3380,10 +3685,6 @@ header:has(> .site-menu:not([class~="hidden"])) {
 }
 
 /* في النسخة الإنجليزي (ltr) الحركة في الاتجاه العكسي */
-
-[dir="ltr"] .index-ticker__track {
-  animation-name: index-ticker-ltr;
-}
 
 @keyframes index-ticker-ltr {
   from {
@@ -5640,10 +5941,22 @@ input:focus-visible + .area-chip,
   box-sizing: content-box;
   height: 20px;
   width: 20px;
+  cursor: pointer;
   border-radius: 999px;
   background-color: #123a5c;
   padding: 11px;
   color: #fff;
+  transition: background-color 0.15s, transform 0.15s;
+}
+
+/* دايرة البحث زرار: الماوس عليها إيد والضغط عليها بيبحث (js/shary/site-chrome.js) */
+
+.search-bar .search-input > svg:hover {
+  background-color: #1e4166;
+}
+
+.search-bar .search-input > svg:active {
+  transform: scale(0.94);
 }
 
 [lang="en"] .search-bar .search-input input,
@@ -7660,6 +7973,50 @@ input:focus-visible + .area-chip,
   font-size: 15.5px;
 }
 
+/* رقم الموبايل في صفحة التسجيل: كود الدولة (الكود + سهم + العلم) جوه الخانة على الطرف ، وبينه وبين الرقم خط رفيع */
+
+.auth-phone {
+  padding-inline-end: 6px;
+}
+
+.auth-phone__code {
+  display: inline-flex;
+  height: 40px;
+  flex-shrink: 0;
+  cursor: pointer;
+  align-items: center;
+  gap: 6px;
+  border-inline-start: 1.5px solid #c9d7ea;
+  padding-inline: 10px 6px;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1;
+  color: #123a5c;
+}
+
+/* إنجليزي: الكود قبل الرقم (العلم ← الكود ← الرقم) */
+
+[dir="ltr"] .auth-phone {
+  padding-inline-end: 16px;
+}
+
+[dir="ltr"] .auth-phone__code {
+  order: 1;
+  flex-direction: row-reverse;
+  border-inline-start: 0;
+  border-inline-end: 1.5px solid #c9d7ea;
+  padding-inline: 0 10px;
+}
+
+[dir="ltr"] .auth-phone .req-field__control {
+  order: 2;
+}
+
+.auth-phone__code:focus-visible {
+  border-radius: 10px;
+  outline: 2px solid #1f63c6;
+}
+
 .auth-eye {
   display: flex;
   height: 36px;
@@ -8471,9 +8828,25 @@ input:focus-visible + .area-chip,
     grid-row: 1;
   }
 
+  /* التبويبات (الكل / مفروش / غير مفروش) وعناوين الفلاتر: بولد وبمقاس واضح على الديسك توب (عربي وإنجليزي) */
+
   .rent-tabs span {
-    height: 44px;
-    font-size: 15px;
+    height: 46px;
+    padding-inline: 22px;
+    font-size: 16.5px;
+    font-weight: 800;
+  }
+
+  .rent-bar .area-filter button {
+    height: 50px;
+    font-size: 16px;
+    font-weight: 800;
+  }
+
+  .rent-bar__tools > * {
+    height: 50px;
+    font-size: 15.5px;
+    font-weight: 800;
   }
 
   .rent-bar .area-filter {
@@ -14936,22 +15309,6 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 
 /* زرار "مؤشر شاري" في الشريط: نبضة ضغط + حلقة بتكبر وتختفي */
 
-.index-badge {
-  position: relative;
-  animation: index-badge-tap 3.2s ease-in-out 1.2s infinite;
-}
-
-.index-badge::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  border: 2px solid rgba(76, 191, 178, 0.8);
-  opacity: 0;
-  pointer-events: none;
-  animation: index-badge-ring 3.2s ease-out 1.2s infinite;
-}
-
 @keyframes index-badge-tap {
   0%,
         62%,
@@ -14986,13 +15343,6 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   100% {
     opacity: 0;
     transform: scale(1.25, 1.6);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .index-badge,
-        .index-badge::after {
-    animation: none;
   }
 }
 
@@ -17428,6 +17778,10 @@ img.abroad-dev__logo {
   top: 72px;
 }
 
+.top-\[calc\(100\%\+6px\)\] {
+  top: calc(100% + 6px);
+}
+
 .top-full {
   top: 100%;
 }
@@ -18180,11 +18534,6 @@ img.abroad-dev__logo {
   width: 100%;
 }
 
-.w-max {
-  width: -moz-max-content;
-  width: max-content;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -18547,10 +18896,6 @@ img.abroad-dev__logo {
   gap: 2px;
 }
 
-.gap-\[5px\] {
-  gap: 5px;
-}
-
 .gap-x-1 {
   -moz-column-gap: 0.25rem;
        column-gap: 0.25rem;
@@ -18829,10 +19174,6 @@ img.abroad-dev__logo {
 
 .border-b {
   border-bottom-width: 1px;
-}
-
-.border-e {
-  border-inline-end-width: 1px;
 }
 
 .border-s {
@@ -19116,11 +19457,6 @@ img.abroad-dev__logo {
 .bg-shary-action {
   --tw-bg-opacity: 1;
   background-color: rgb(30 65 102 / var(--tw-bg-opacity, 1));
-}
-
-.bg-shary-deep {
-  --tw-bg-opacity: 1;
-  background-color: rgb(20 56 90 / var(--tw-bg-opacity, 1));
 }
 
 .bg-shary-emerald {
@@ -20108,11 +20444,6 @@ img.abroad-dev__logo {
   color: rgb(31 99 198 / var(--tw-text-opacity, 1));
 }
 
-.text-shary-mint {
-  --tw-text-opacity: 1;
-  color: rgb(95 211 196 / var(--tw-text-opacity, 1));
-}
-
 .text-shary-mist {
   --tw-text-opacity: 1;
   color: rgb(185 201 216 / var(--tw-text-opacity, 1));
@@ -20360,16 +20691,6 @@ img.abroad-dev__logo {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
-.ring-\[3px\] {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-.ring-shary-teal\/20 {
-  --tw-ring-color: rgb(31 127 114 / 0.2);
-}
-
 .ring-white\/40 {
   --tw-ring-color: rgb(255 255 255 / 0.4);
 }
@@ -20467,6 +20788,42 @@ img.abroad-dev__logo {
     display: none;
   }
 
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
+    display: none;
+  }
+
+  .max-lg\:hidden {
+    display: none;
+  }
+
+  .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
+    display: none;
+  }
+
   .max-lg\:hidden.compare-table {
     display: none;
   }
@@ -20476,6 +20833,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -20492,6 +20857,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -20512,6 +20885,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -20536,6 +20917,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -20564,6 +20953,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -20596,6 +20993,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -20636,6 +21041,14 @@ img.abroad-dev__logo {
   }
 
   .max-lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -20693,6 +21106,42 @@ img.abroad-dev__logo {
     display: none;
   }
 
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden {
+    display: none;
+  }
+
+  .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
+    display: none;
+  }
+
+  .max-md\:hidden {
+    display: none;
+  }
+
+  .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
+    display: none;
+  }
+
   .max-md\:hidden.compare-table {
     display: none;
   }
@@ -20702,6 +21151,14 @@ img.abroad-dev__logo {
   }
 
   .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
     display: none;
   }
 
@@ -20718,6 +21175,14 @@ img.abroad-dev__logo {
   }
 
   .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
     display: none;
   }
 
@@ -20738,6 +21203,14 @@ img.abroad-dev__logo {
   }
 
   .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
     display: none;
   }
 
@@ -20762,6 +21235,14 @@ img.abroad-dev__logo {
   }
 
   .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
     display: none;
   }
 
@@ -20790,6 +21271,14 @@ img.abroad-dev__logo {
   }
 
   .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
     display: none;
   }
 
@@ -20822,6 +21311,14 @@ img.abroad-dev__logo {
   }
 
   .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
     display: none;
   }
 
@@ -20862,6 +21359,14 @@ img.abroad-dev__logo {
   }
 
   .max-md\:hidden.saved-empty {
+    display: none;
+  }
+
+  .max-md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .max-md\:hidden.opps-adv {
     display: none;
   }
 
@@ -20907,6 +21412,14 @@ img.abroad-dev__logo {
     display: none;
   }
 
+  .md\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .md\:hidden.opps-adv {
+    display: none;
+  }
+
   .md\:hidden.compare-table {
     display: none;
   }
@@ -20946,6 +21459,14 @@ img.abroad-dev__logo {
 
 @media (min-width: 1024px) {
   .lg\:hidden.saved-empty {
+    display: none;
+  }
+
+  .lg\:hidden.offer-filter__adv-count {
+    display: none;
+  }
+
+  .lg\:hidden.opps-adv {
     display: none;
   }
 
@@ -21344,11 +21865,6 @@ img.abroad-dev__logo {
 .hover\:border-white:hover {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity, 1));
-}
-
-.hover\:bg-shary-cloud:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(214 226 236 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:bg-shary-form:hover {
@@ -23001,11 +23517,6 @@ img.abroad-dev__logo {
   .lg\:px-3 {
     padding-left: 0.75rem;
     padding-right: 0.75rem;
-  }
-
-  .lg\:px-3\.5 {
-    padding-left: 0.875rem;
-    padding-right: 0.875rem;
   }
 
   .lg\:px-4 {
