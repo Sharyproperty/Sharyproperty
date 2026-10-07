@@ -8184,8 +8184,11 @@ input:focus-visible + .area-chip,
        object-fit: contain;
   }
 
+  /* زرارين المتجر جنب بعض (مش تحت بعض) */
+
   .auth-promo__stores {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
 }
 
@@ -8199,77 +8202,86 @@ input:focus-visible + .area-chip,
   }
 
   .auth-wrap {
-    zoom: 0.94;
+    zoom: 0.98;
     gap: 32px;
-    padding: 26px 40px;
-  }
-
-  .auth-wrap .auth-card {
-    padding-top: 26px;
-    padding-bottom: 22px;
-  }
-
-  .auth-wrap .auth-promo {
-    gap: 12px;
-  }
-
-  .auth-wrap .auth-promo__art {
-    height: 400px;
-  }
-
-  .auth-wrap .auth-promo__art::before {
-    height: 340px;
-    width: 340px;
-  }
-
-  .auth-wrap .auth-promo__art::after {
-    box-shadow: 300px 260px 0 3px #2a9d8f;
-  }
-
-  .auth-wrap .auth-promo__qr {
-    width: 150px;
-    padding: 9px 9px 8px;
-    font-size: 12.5px;
-  }
-
-  .auth-wrap .auth-promo__qr img {
-    height: 124px;
-    width: 124px;
-  }
-}
-
-@media (min-width: 1024px) and (max-height: 860px) {
-  .auth-wrap {
-    zoom: 0.86;
-  }
-}
-
-@media (min-width: 1024px) and (max-height: 780px) {
-  .auth-wrap {
-    zoom: 0.79;
-  }
-}
-
-@media (min-width: 1024px) and (max-height: 720px) {
-  .auth-wrap {
-    zoom: 0.73;
-    padding-block: 20px;
-  }
-
-  .auth-wrap .auth-promo__art {
-    height: 360px;
-  }
-}
-
-@media (min-width: 1024px) and (max-height: 640px) {
-  .auth-wrap {
-    zoom: 0.68;
-    padding-block: 16px;
+    padding: 16px 40px;
   }
 
   .auth-wrap .auth-card {
     padding-top: 20px;
     padding-bottom: 16px;
+  }
+
+  .auth-wrap .auth-promo {
+    gap: 10px;
+  }
+
+  .auth-wrap .auth-promo__art {
+    height: 450px;
+    max-width: 480px;
+  }
+
+  .auth-wrap .auth-promo__art::before {
+    height: 380px;
+    width: 380px;
+  }
+
+  .auth-wrap .auth-promo__art::after {
+    box-shadow: 330px 290px 0 3px #2a9d8f;
+  }
+
+  /* كارت الكود: الكود وتحته «امسح الكود وحمّل التطبيق» سطر واحد */
+
+  .auth-wrap .auth-promo__qr {
+    width: 190px;
+    gap: 5px;
+    padding: 9px 8px 7px;
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+
+  .auth-wrap .auth-promo__qr img {
+    height: 116px;
+    width: 116px;
+  }
+
+  .auth-wrap .auth-promo__get {
+    gap: 18px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 860px) {
+  .auth-wrap {
+    zoom: 0.9;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 780px) {
+  .auth-wrap {
+    zoom: 0.83;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 720px) {
+  .auth-wrap {
+    zoom: 0.77;
+    padding-block: 12px;
+  }
+
+  .auth-wrap .auth-promo__art {
+    height: 420px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 640px) {
+  .auth-wrap {
+    zoom: 0.71;
+    padding-block: 10px;
+  }
+
+  .auth-wrap .auth-card {
+    padding-top: 16px;
+    padding-bottom: 12px;
   }
 }
 
@@ -12945,6 +12957,91 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 @media (min-width: 1760px) {
   .quick-fabs {
     right: 28px;
+  }
+}
+
+/* الفوتر على الديسك توب: القوايم (المناطق / المشاريع / المطورين / الأعلى بحثًا) دايمًا صف واحد جنب بعض — مفيش قايمة بتنزل سطر تاني —
+       و«الأعلى بحثًا» عمودين جنب بعض (وعلى أصغر اللابتوبات عمود واحد عشان المساحة) */
+
+@media (min-width: 1024px) {
+  .site-footer__cols {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    -moz-column-gap: 28px;
+         column-gap: 28px;
+  }
+
+  .site-footer__col {
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+
+  .site-footer__col li {
+    white-space: nowrap;
+  }
+
+  .site-footer__col--wide li {
+    white-space: normal;
+  }
+
+  .site-footer__col--wide > ul {
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .site-footer__col li {
+    white-space: normal;
+  }
+}
+
+@media (min-width: 1340px) {
+  .site-footer__col--wide > ul {
+    display: grid;
+    max-width: none;
+    grid-template-columns: repeat(2, minmax(0, auto));
+    -moz-column-gap: 44px;
+         column-gap: 44px;
+    row-gap: 12px;
+  }
+}
+
+/* الفورمات ولوحات الفلاتر (طلب مقابلة / طلب عرض / فلاتر البحث والمناطق / اختيارات المؤشر): من غير أي تغميق ورا اللوحة —
+       الصفحة بتفضل ظاهرة زي ما هي ، واللوحة نفسها ليها ظل خفيف حواليها عشان تبان. الضغط بره اللوحة لسه بيقفلها (no-form-dim) */
+
+[data-meeting-modal] > .absolute.inset-0,
+    [data-offer-modal] > .absolute.inset-0,
+    [data-index-advanced] > .absolute.inset-0,
+    [data-index-picker] > .absolute.inset-0,
+    [data-filter-sheet] > .absolute.inset-0 {
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-meeting-modal] > .absolute.inset-0 + *,
+    [data-offer-modal] > .absolute.inset-0 + *,
+    [data-index-advanced] > .absolute.inset-0 + *,
+    [data-index-picker] > .absolute.inset-0 + *,
+    [data-filter-sheet] > .absolute.inset-0 + * {
+  box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+}
+
+/* صفحة الوظائف: لما العميل يضغط «قدّم الآن» فورم التقديم بينوّر حواليه (career-pick) عشان يبان إن الوظيفة اتختارت فيه */
+
+[data-career-form].is-picked {
+  animation: career-pick 1.5s ease-out;
+}
+
+@keyframes career-pick {
+  0%,
+        55% {
+    box-shadow: 0 0 0 4px rgba(96, 177, 255, 0.55), 0 14px 34px -14px rgba(31, 99, 198, 0.55);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(96, 177, 255, 0);
   }
 }
 
@@ -21194,6 +21291,26 @@ img.abroad-dev__logo {
 
 /* ============================== صفحة المنطقة ============================== */
 
+[data-meeting-modal] > .after\:absolute.inset-0::after,
+    [data-offer-modal] > .after\:absolute.inset-0::after,
+    [data-index-advanced] > .after\:absolute.inset-0::after,
+    [data-index-picker] > .after\:absolute.inset-0::after,
+    [data-filter-sheet] > .after\:absolute.inset-0::after {
+  content: var(--tw-content);
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-meeting-modal] > .after\:absolute.inset-0 + *::after,
+    [data-offer-modal] > .after\:absolute.inset-0 + *::after,
+    [data-index-advanced] > .after\:absolute.inset-0 + *::after,
+    [data-index-picker] > .after\:absolute.inset-0 + *::after,
+    [data-filter-sheet] > .after\:absolute.inset-0 + *::after {
+  content: var(--tw-content);
+  box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+}
+
 @media not all and (min-width: 1024px) {
   .max-lg\:hidden {
     display: none;
@@ -22153,6 +22270,186 @@ img.abroad-dev__logo {
 
   .lg\:hidden.sai__ctx {
     display: none;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
   }
 
   @media (min-width: 1024px) {

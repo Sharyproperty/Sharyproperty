@@ -24,8 +24,15 @@
             var button = event.target.closest ? event.target.closest('[data-job-apply]') : null;
             if (!button) return;
             if (select) { select.value = button.getAttribute('data-job-apply'); mark(); select.dispatchEvent(new Event('change', { bubbles: true })); }   // change: زرار القايمة (form-select.js) بيتحدّث
+            var desktop = window.matchMedia && window.matchMedia('(min-width: 1024px)').matches;
             var top = form.getBoundingClientRect().top + window.pageYOffset - 96;
-            window.scrollTo({ top: top, behavior: 'smooth' });
+            // موبايل: بينزل للفورم. ديسك توب: الفورم ثابت جنب الوظائف — بينوّر حواليه وبيقف المؤشر في خانة الاسم عشان يبان إن الوظيفة اتختارت
+            if (!desktop || form.getBoundingClientRect().top < 60 || form.getBoundingClientRect().top > window.innerHeight - 200) window.scrollTo({ top: top, behavior: 'smooth' });
+            form.classList.remove('is-picked');
+            void form.offsetWidth;
+            form.classList.add('is-picked');
+            setTimeout(function () { form.classList.remove('is-picked'); }, 1600);
+            if (desktop) { var first = form.querySelector('input[name="name"]'); if (first) setTimeout(function () { try { first.focus({ preventScroll: true }); } catch (e) { first.focus(); } }, 250); }
         });
 
         if (select) select.addEventListener('change', mark);
