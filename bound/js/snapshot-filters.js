@@ -8,7 +8,7 @@
     var m = file.match(/^(for-rent|for-sale)(?:--(furnished|offer)-([a-z]+))?\.html$/);
     var base = m ? m[1] : '', key = base === 'for-rent' ? 'furnished' : 'offer';
     var allowed = base === 'for-rent' ? ['furnished', 'unfurnished'] : ['resale', 'rent'];
-    var IGNORE = ['furnished', 'offer', 'sale_type', 'status', 'v', 'ver', 'sort', 'snap', 'view'];
+    var IGNORE = ['furnished', 'offer', 'sale_type', 'status', 'v', 'ver', 'sort', 'snap', 'view', 'fresh'];
     function note(text) {
         var old = document.querySelector('[data-snapshot-note]');
         if (old) { if (!text) return; old.remove(); }
