@@ -8465,17 +8465,17 @@ html, body {
   .shary-home-root .sh-hero .sh-copy { min-width: 0; }
   .shary-home-root .sh-hero .sh-pills { flex-wrap: wrap; max-width: 100%; }
   .shary-home-root .sh-hero .sh-pill { white-space: nowrap; }
-  html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 8px; }
-  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 42px; border-radius: 21px; font-size: 14px; padding: 0 14px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 9px; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 46px; border-radius: 23px; font-size: 15.5px; padding: 0 16px !important; }
   html[lang="en"] .shary-home-root .sh-sub { font-size: 24px !important; }
 }
 @media (min-width: 960px) and (max-width: 1199px) {
-  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 38px; font-size: 12.5px; padding: 0 11px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 41px; font-size: 13.5px; padding: 0 12px !important; }
   html[lang="en"] .shary-home-root .sh-sub { font-size: 21px !important; }
 }
 @media (min-width: 1536px) {
-  html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 6px; }
-  html[lang="en"] .shary-home-root .sh-hero .sh-pill { font-size: 13.5px; padding: 0 12px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 8px; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { font-size: 15px; padding: 0 15px !important; }
 }
 
 /* ---- دايرة البحث الكحلي في بحث الرئيسية: زرار — الماوس عليها إيد والضغط عليها بيبحث (js/shary/site-chrome.js) ---- */
@@ -8503,4 +8503,13 @@ html, body {
   /* البوكس أطول بنفس الزيادة — وفاضل نصه نازل تحت صورة الهيرو زي ما هو */
   .shary-home-root .property-search-box { height: 222px !important; bottom: -111px !important; }
   .shary-home-root .market-ticker-section { margin-top: 92px !important; }
+}
+
+/* ---- قسم "شاري معاك": القسم كله بيفتح تحميل التطبيق — الماوس عليه (التليفون وأي مكان) إيد ---- */
+.sh-hero[onclick], .sh-hero[onclick] * { cursor: pointer; }
+
+/* ---- "شاري معاك" بالعربي على لابتوب 1200 – 1349 (الموقع مكبّر 110% فالمساحة أقل): الكبسولات درجة أصغر عشان التلاتة يفضلوا صف واحد قبل التليفون (ar-pills-mid) ---- */
+@media (min-width: 1200px) and (max-width: 1349px) {
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pills { gap: 9px; }
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 46px; font-size: 16px; padding: 0 17px !important; }
 }

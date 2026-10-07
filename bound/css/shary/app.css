@@ -637,25 +637,23 @@ video {
 
 :root {
   --z: 1;
-  --shary-w: min(calc(100vw / var(--z, 1)) - 112px, 1180px);
+  --shary-w: min(calc(100vw / var(--z, 1)) - 108px, 1240px);
 }
 
-/* ديسك توب: الموقع كله بيتعرض مكبّر (زي زوم 110% في المتصفح) عشان الخط والعناصر تبقى مريحة للعين:
-         شاشة 1280 – 1339 ← 105% ، ومن 1340 وطالع ← 110%. الموبايل والتابلت واللابتوب الصغير (أقل من 1280) زي ما هم.
+/* ديسك توب: الموقع كله بيتعرض مكبّر 110% (زي زوم 110% في المتصفح) عشان الخط والعناصر تبقى مريحة للعين.
+       من أول شاشة عرضها 1124px ← 110%. اللابتوب الأصغر: 1072 – 1123 ← 105% ، و1024 – 1071 ← 100% (عشان المحتوى ما يتزنقش). الموبايل والتابلت زي ما هم.
        ‎--z هو نسبة التكبير: كل قيمة vw / vh في ملفات الـ CSS بتتقسم عليه (resources/shary-src/zoom-units.cjs بعد البناء) عشان مفيش حاجة تطلع بره الشاشة.
        عرض المحتوى سايب هامش على الجنب قد زرارين التواصل العايمين (Shary AI وواتساب) فما بيغطوش الصفحة. */
 
-@media (min-width: 1280px) {
+@media (min-width: 1072px) {
   :root {
     --z: 1.05;
-    --shary-w: min(calc(91vw / var(--z, 1)), 1200px);
   }
 }
 
-@media (min-width: 1340px) {
+@media (min-width: 1124px) {
   :root {
     --z: 1.1;
-    --shary-w: min(calc(91vw / var(--z, 1)), 1240px);
   }
 }
 
@@ -692,7 +690,7 @@ button.site-login {
 
 /* شاشات الديسك توب الصغيرة (أو زوم عالي): مسافات أقل عشان الهيدر كله يفضل في سطر واحد */
 
-@media (max-width: 1159px) {
+@media (max-width: 1249px) {
   .site-login {
     padding-inline: 8px;
     font-size: 15px;
@@ -738,7 +736,7 @@ button.site-login {
   }
 }
 
-@media (min-width: 1160px) {
+@media (min-width: 1250px) {
   header .site-nav {
     gap: 22px;
   }
@@ -778,7 +776,7 @@ button.site-login {
 
 /* إنجليزي: الكلمات أطول — درجة أصغر ومسافة أقل */
 
-@media (min-width: 1024px) and (max-width: 1159px) {
+@media (min-width: 1024px) and (max-width: 1249px) {
   [lang="en"] header .site-nav {
     gap: 12px;
   }
@@ -788,7 +786,7 @@ button.site-login {
   }
 }
 
-@media (min-width: 1160px) {
+@media (min-width: 1250px) {
   [lang="en"] header .site-nav {
     gap: 20px;
   }
@@ -7963,9 +7961,11 @@ input:focus-visible + .area-chip,
 .auth-promo__art {
   position: relative;
   display: flex;
-  height: 250px;
+  height: 320px;
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
+  cursor: pointer;
+  transition: transform 0.25s;
   align-items: flex-end;
   justify-content: center;
   isolation: isolate;
@@ -7979,8 +7979,8 @@ input:focus-visible + .area-chip,
   bottom: 6px;
   left: 50%;
   z-index: -1;
-  height: 210px;
-  width: 210px;
+  height: 260px;
+  width: 260px;
   transform: translateX(-50%);
   border-radius: 999px;
   background: radial-gradient(circle at 35% 30%, #ffffff 0%, #cfe2fb 70%);
@@ -7996,7 +7996,11 @@ input:focus-visible + .area-chip,
   width: 16px;
   border-radius: 999px;
   background-color: #f5a623;
-  box-shadow: 190px 150px 0 2px #2a9d8f;
+  box-shadow: 205px 200px 0 2px #2a9d8f;
+}
+
+.auth-promo__art:hover {
+  transform: translateY(-4px);
 }
 
 .auth-promo__phone {
@@ -8101,55 +8105,51 @@ input:focus-visible + .area-chip,
   }
 
   .auth-promo__art {
-    height: 380px;
-    max-width: 380px;
+    height: 480px;
+    max-width: 460px;
   }
 
   .auth-promo__art::before {
-    height: 320px;
-    width: 320px;
+    height: 400px;
+    width: 400px;
   }
 
   .auth-promo__art::after {
-    top: 60px;
-    left: 10%;
-    height: 20px;
-    width: 20px;
-    box-shadow: 270px 240px 0 3px #2a9d8f;
+    top: 70px;
+    left: 8%;
+    height: 22px;
+    width: 22px;
+    box-shadow: 340px 310px 0 3px #2a9d8f;
   }
 
   .auth-promo__get {
     gap: 22px;
   }
 
+  /* كود QR: الكود أكبر وتحته «امسح الكود وحمّل التطبيق» (زي كارت الكود في الرئيسية) */
+
   .auth-promo__qr {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
-    border-radius: 16px;
+    gap: 8px;
+    width: 200px;
+    border-radius: 18px;
     background-color: #ffffff;
-    padding: 10px 16px 10px 10px;
+    padding: 12px 12px 11px;
     box-shadow: 0 12px 28px -18px rgba(18, 58, 92, 0.5);
-    font-size: 15px;
+    font-size: 14.5px;
     font-weight: 800;
     line-height: 1.5;
-    text-align: start;
-  }
-
-  [dir="rtl"] .auth-promo__qr {
-    padding: 10px 10px 10px 16px;
+    text-align: center;
   }
 
   .auth-promo__qr img {
-    height: 92px;
-    width: 92px;
+    height: 168px;
+    width: 168px;
     border-radius: 8px;
     -o-object-fit: contain;
        object-fit: contain;
-  }
-
-  .auth-promo__qr span {
-    max-width: 110px;
   }
 
   .auth-promo__stores {
@@ -9524,12 +9524,13 @@ input:focus-visible + .area-chip,
 
 @media (min-width: 1024px) {
   /* ارتفاع المعرض على قد الشاشة (زي الموقع الحالي): مستطيل عريض بحيث شريط الملخص تحته — الاسم والمطور والسعر وزراير التواصل —
-           يبان في أول شاشة من غير نزول. أقصى ارتفاع 440px على الشاشات الكبيرة وأقل ارتفاع 300px. (296px = الهيدر + مسار الصفحة + شريط الملخص) */
+           يبان في أول شاشة من غير نزول. أقصى ارتفاع 500px على الشاشات الكبيرة وأقل ارتفاع 320px.
+           (240px = الهيدر + مسار الصفحة + سطر الاسم: الصورة أكبر شوية والاسم لسه باين في أول شاشة — السعر والزراير ممكن ينزلوا تحت سِنّة) */
 
   .rent-gallery {
     display: flex;
-    height: 440px;
-    height: clamp(300px, calc(calc(100vh / var(--z, 1)) - 296px), 440px);
+    height: 500px;
+    height: clamp(320px, calc(calc(100vh / var(--z, 1)) - 240px), 500px);
     gap: 10px;
   }
 
@@ -24303,21 +24304,23 @@ img.abroad-dev__logo {
 }
 
 @media (min-width: 1160px) {
-  .min-\[1160px\]\:ms-8 {
-    margin-inline-start: 2rem;
-  }
-
   .min-\[1160px\]\:min-w-\[84px\] {
     min-width: 84px;
-  }
-
-  .min-\[1160px\]\:gap-4 {
-    gap: 1rem;
   }
 
   .min-\[1160px\]\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+}
+
+@media (min-width: 1250px) {
+  .min-\[1250px\]\:ms-8 {
+    margin-inline-start: 2rem;
+  }
+
+  .min-\[1250px\]\:gap-4 {
+    gap: 1rem;
   }
 }
 

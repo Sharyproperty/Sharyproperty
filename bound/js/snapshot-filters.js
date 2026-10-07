@@ -9,12 +9,13 @@
     var base = m ? m[1] : '', key = base === 'for-rent' ? 'furnished' : 'offer';
     var allowed = base === 'for-rent' ? ['furnished', 'unfurnished'] : ['resale', 'rent'];
     var IGNORE = ['furnished', 'offer', 'sale_type', 'status', 'v', 'ver', 'sort', 'snap', 'view'];
-    function note() {
-        if (document.querySelector('[data-snapshot-note]')) return;
+    function note(text) {
+        var old = document.querySelector('[data-snapshot-note]');
+        if (old) { if (!text) return; old.remove(); }
         var bar = document.createElement('div');
         bar.setAttribute('role', 'status'); bar.setAttribute('data-snapshot-note', '');
         bar.style.cssText = 'position:fixed;inset-inline:12px;bottom:84px;z-index:9999;margin:auto;max-width:560px;border-radius:14px;background:#123a5c;color:#fff;padding:12px 16px;font:600 14px/1.7 system-ui,sans-serif;text-align:center;box-shadow:0 10px 30px rgba(18,58,92,.35)';
-        bar.textContent = en ? 'Preview copy (static): this filter works on the live server. The furnished / sale-type tabs work here.' : 'نسخة معاينة ثابتة: الفلتر ده بيشتغل على السيرفر. تبويبات (مفروش / غير مفروش) و(إعادة البيع / للإيجار) شغالة هنا.';
+        bar.textContent = text || (en ? 'Preview copy (static): this filter works on the live server. The furnished / sale-type tabs work here.' : 'نسخة معاينة ثابتة: الفلتر ده بيشتغل على السيرفر. تبويبات (مفروش / غير مفروش) و(إعادة البيع / للإيجار) شغالة هنا.');
         document.body.appendChild(bar);
         setTimeout(function () { bar.remove(); }, 7000);
     }
@@ -37,6 +38,21 @@
         var next = target(want);
         if (next !== file) { location.href = next + (other ? '?snap=1' : ''); return; }
         if (other) note();
+    }, true);
+
+    // sign-in page: Facebook / Google / Apple. On the server the button goes to the provider and returns signed in (/login/{provider});
+    // the static copy has no server, so it opens the provider's own sign-in page in a new tab and says so.
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest ? event.target.closest('[data-auth-provider]') : null;
+        if (!link) return;
+        event.preventDefault();
+        var key = link.getAttribute('data-auth-provider');
+        var pages = { facebook: 'https://www.facebook.com/login/', google: 'https://accounts.google.com/', apple: 'https://appleid.apple.com/sign-in' };
+        var names = en ? { facebook: 'Facebook', google: 'Google', apple: 'Apple' } : { facebook: 'فيسبوك', google: 'جوجل', apple: 'أبل' };
+        var name = names[key] || key;
+        note(en ? 'Preview copy (static): on the live site this button signs you in with ' + name + ' and brings you back to Shary signed in. Here it only opens the ' + name + ' sign-in page.'
+                : 'نسخة معاينة ثابتة: على الموقع الحقيقي الزرار ده بيدخّلك بحساب ' + name + ' ويرجّعك لشاري وإنت مسجّل دخول. هنا بيفتح صفحة دخول ' + name + ' بس للتوضيح.');
+        if (pages[key]) window.open(pages[key], '_blank', 'noopener');
     }, true);
 
     if (!base) return;
