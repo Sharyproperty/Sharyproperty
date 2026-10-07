@@ -8513,3 +8513,45 @@ html, body {
   html[lang="ar"] .shary-home-root .sh-hero .sh-pills { gap: 9px; }
   html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 46px; font-size: 16px; padding: 0 17px !important; }
 }
+
+/* ---- "شاري معاك" (ديسك توب) — الكبسولات التلاتة أتخن (أطول لتحت) وبولد (pills-tall):
+   عربي: أتخن وأعرض سِنّة. إنجليزي: الخط زي ما هو (عشان ما تدخلش ورا التليفون) بس الكبسولة نفسها أتخن وباينة ---- */
+@media (min-width: 960px) {
+  .shary-home-root .sh-hero .sh-pill { font-weight: 800 !important; }
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pills { gap: 11px; }
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 58px; border-radius: 29px; font-size: 17.5px; padding: 0 23px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 7px; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 52px; border-radius: 26px; font-size: 13.5px; padding: 0 10px !important; }
+}
+@media (min-width: 960px) and (max-width: 1349px) {
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pills { gap: 9px; }
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 52px; border-radius: 26px; font-size: 16.5px; padding: 0 19px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 48px; border-radius: 24px; font-size: 13.5px; padding: 0 12px !important; }
+}
+@media (min-width: 960px) and (max-width: 1199px) {
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 48px; font-size: 15px; padding: 0 16px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 44px; font-size: 12.5px; padding: 0 11px !important; }
+}
+
+/* ---- بحث الرئيسية (ديسك توب): أسهم القوايم (نوع العقار / الغرف والحمامات / نطاق السعر) أكبر وأغمق وفي نص الخانة (filter-arrows-big) ---- */
+@media (min-width: 1024px) {
+  .property-search-box .filter-arrow { top: 50%; inset-inline-end: 14px; display: flex; height: 28px; width: 28px; align-items: center; justify-content: center; transform: translateY(-50%); }
+  .property-search-box .filter-arrow svg { height: 28px; width: 28px; flex: none; }
+  .property-search-box .filter-arrow svg path[fill="#777"] { fill: #123a5c; }
+}
+
+/* ---- كروت الرئيسية (عروض حصرية / خريطة مصر / خريطة الساحل / شاري كارد) على الديسك توب: الكارت أعرض سِنّة (promo-wide)
+   عشان زرار «استكشف الخريطة» ياخد راحته وما يلمسش رسمة الخريطة — والزرار دايمًا سطر واحد وفوق الرسمة ---- */
+@media (min-width: 960px) {
+  .shary-home-root .investment-promo-card { width: 362px; flex: 0 0 362px; }
+  .investment-promo-card.promo-map, .investment-promo-card.promo-sahel-map { grid-template-columns: minmax(0, 1fr) 104px; column-gap: 14px; }
+  .investment-promo-card.promo-map .promo-icon, .investment-promo-card.promo-sahel-map .promo-icon { width: 104px; height: 104px; }
+  .investment-promo-card .promo-button { position: relative; z-index: 3; white-space: nowrap; }
+}
+
+/* ---- زرار «بحث متقدم» في بحث الرئيسية: علامة التلات شُرط في نفس مكانها (يمين الكلمة) في اللغتين — تغيير اللغة بيغيّر الترجمة بس (adv-icon-same-side) ---- */
+html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
+
+/* ---- فورم طلب المقابلة في الرئيسية: من غير تغميق ورا الفورم (no-form-dim) ---- */
+.shary-home-root #zoomMeetingStatic, #zoomMeetingStatic { background-color: transparent !important; }
+#zoomMeetingStatic > div { box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 10px 50px -10px rgba(18, 58, 92, 0.4) !important; }

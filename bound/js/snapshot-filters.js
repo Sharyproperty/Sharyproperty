@@ -64,6 +64,11 @@
         var legacyMap = { rent: 'rent', resale: 'resale', developer_sale: 'developer' };
         [q.get('status'), q.get('sale_type')].some(function (value) { if (value && legacyMap[value]) { want = legacyMap[value]; return true; } return false; });
     }
+    if (want === null && base === 'for-rent') {
+        // home page search with the "for rent" tab: status = 1 (furnished) | 0 (unfurnished) — same rule as the server
+        var st = q.get('status');
+        if (st === '1') want = 'furnished'; else if (st === '0') want = 'unfurnished';
+    }
     var other = q.get('snap') === '1';
     q.forEach(function (value, name) { if (value !== '' && IGNORE.indexOf(name.replace(/\[\]$/, '')) === -1) other = true; });
     if (want !== null && target(want) !== file) { location.replace(target(want) + (other ? '?snap=1' : '')); return; }

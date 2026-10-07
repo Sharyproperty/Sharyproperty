@@ -637,23 +637,30 @@ video {
 
 :root {
   --z: 1;
-  --shary-w: min(calc(100vw / var(--z, 1)) - 108px, 1240px);
+  --shary-w: min(calc(100vw / var(--z, 1)) - 134px, 1240px);
 }
 
 /* ديسك توب: الموقع كله بيتعرض مكبّر 110% (زي زوم 110% في المتصفح) عشان الخط والعناصر تبقى مريحة للعين.
-       من أول شاشة عرضها 1124px ← 110%. اللابتوب الأصغر: 1072 – 1123 ← 105% ، و1024 – 1071 ← 100% (عشان المحتوى ما يتزنقش). الموبايل والتابلت زي ما هم.
+       من أول شاشة عرضها 1072px ← 110% (يعني كل اللابتوبات والشاشات) ، وأصغر مقاس ديسك توب (1024 – 1071) ← 105% عشان الهيدر يفضل سطر واحد. الموبايل والتابلت زي ما هم.
        ‎--z هو نسبة التكبير: كل قيمة vw / vh في ملفات الـ CSS بتتقسم عليه (resources/shary-src/zoom-units.cjs بعد البناء) عشان مفيش حاجة تطلع بره الشاشة.
        عرض المحتوى سايب هامش على الجنب قد زرارين التواصل العايمين (Shary AI وواتساب) فما بيغطوش الصفحة. */
 
-@media (min-width: 1072px) {
+@media (min-width: 1024px) {
   :root {
     --z: 1.05;
+    --shary-w: min(calc(100vw / var(--z, 1)) - 116px, 1240px);
+  }
+}
+
+@media (min-width: 1072px) {
+  :root {
+    --z: 1.1;
   }
 }
 
 @media (min-width: 1124px) {
   :root {
-    --z: 1.1;
+    --shary-w: min(calc(100vw / var(--z, 1)) - 134px, 1240px);
   }
 }
 
@@ -771,6 +778,43 @@ button.site-login {
 
   header [data-lang-toggle].lang-btn {
     font-size: 16px;
+  }
+}
+
+/* عربي على اللابتوب الصغير: مسافات أقل سِنّة عشان الهيدر كله يفضل جوه عرض المحتوى */
+
+@media (min-width: 1024px) and (max-width: 1249px) {
+  [lang="ar"] header .site-nav {
+    gap: 11px;
+  }
+
+  [lang="ar"] header .site-nav .site-nav__link {
+    font-size: 14px;
+  }
+}
+
+/* أصغر مقاسات الديسك توب (1024 – 1123) مع التكبير: الهيدر درجة أصغر عشان يفضل سطر واحد جوه عرض المحتوى */
+
+@media (min-width: 1024px) and (max-width: 1123px) {
+  header .site-nav,
+        [lang="ar"] header .site-nav {
+    gap: 9px;
+  }
+
+  html[lang="en"] header .site-nav {
+    gap: 8px;
+  }
+
+  header .site-nav .site-nav__link,
+        [lang="ar"] header .site-nav .site-nav__link,
+        html[lang="en"] header .site-nav .site-nav__link {
+    font-size: 13.5px;
+  }
+}
+
+@media (min-width: 1250px) and (max-width: 1309px) {
+  [lang="ar"] header .site-nav {
+    gap: 16px;
   }
 }
 
@@ -12797,45 +12841,31 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   right: 28px;
 }
 
+/* الزرارين بحجمهم الأصلي (64px على الشاشة — 58px × تكبير 110%) ولازقين في أقصى اليمين جوه الهامش الأبيض */
+
 @media (min-width: 1024px) {
   .quick-fabs {
-    right: 5px;
+    right: 4px;
     bottom: 92px;
-    gap: 10px;
+    gap: 12px;
   }
 
   .quick-fabs .area-fab {
-    height: 44px;
-    width: 44px;
+    height: 50px;
+    width: 50px;
   }
+}
 
-  .quick-fabs .area-ai > img {
-    height: auto;
-    width: 26px;
-  }
-
-  .quick-fabs .area-fab--wa i {
-    font-size: 23px;
+@media (min-width: 1124px) {
+  .quick-fabs .area-fab {
+    height: 58px;
+    width: 58px;
   }
 }
 
 @media (min-width: 1536px) {
   .quick-fabs {
     right: 10px;
-    gap: 12px;
-  }
-
-  .quick-fabs .area-fab {
-    height: 52px;
-    width: 52px;
-  }
-
-  .quick-fabs .area-ai > img {
-    width: 30px;
-  }
-
-  .quick-fabs .area-fab--wa i {
-    font-size: 27px;
   }
 }
 
@@ -12843,6 +12873,27 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   .quick-fabs {
     right: 28px;
   }
+}
+
+/* الفورمات ولوحات الفلاتر (طلب مقابلة / طلب عرض / فلاتر البحث والمناطق / اختيارات المؤشر): من غير أي تغميق ورا اللوحة —
+       الصفحة بتفضل ظاهرة زي ما هي ، واللوحة نفسها ليها ظل خفيف حواليها عشان تبان. الضغط بره اللوحة لسه بيقفلها (no-form-dim) */
+
+[data-meeting-modal] > .absolute.inset-0,
+    [data-offer-modal] > .absolute.inset-0,
+    [data-index-advanced] > .absolute.inset-0,
+    [data-index-picker] > .absolute.inset-0,
+    [data-filter-sheet] > .absolute.inset-0 {
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-meeting-modal] > .absolute.inset-0 + *,
+    [data-offer-modal] > .absolute.inset-0 + *,
+    [data-index-advanced] > .absolute.inset-0 + *,
+    [data-index-picker] > .absolute.inset-0 + *,
+    [data-filter-sheet] > .absolute.inset-0 + * {
+  box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
 }
 
 .area-fab__label {
@@ -21095,6 +21146,26 @@ img.abroad-dev__logo {
 
 /* ============================== صفحة المنطقة ============================== */
 
+[data-meeting-modal] > .after\:absolute.inset-0::after,
+    [data-offer-modal] > .after\:absolute.inset-0::after,
+    [data-index-advanced] > .after\:absolute.inset-0::after,
+    [data-index-picker] > .after\:absolute.inset-0::after,
+    [data-filter-sheet] > .after\:absolute.inset-0::after {
+  content: var(--tw-content);
+  background-color: transparent !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+[data-meeting-modal] > .after\:absolute.inset-0 + *::after,
+    [data-offer-modal] > .after\:absolute.inset-0 + *::after,
+    [data-index-advanced] > .after\:absolute.inset-0 + *::after,
+    [data-index-picker] > .after\:absolute.inset-0 + *::after,
+    [data-filter-sheet] > .after\:absolute.inset-0 + *::after {
+  content: var(--tw-content);
+  box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+}
+
 @media not all and (min-width: 1024px) {
   .max-lg\:hidden {
     display: none;
@@ -22054,6 +22125,186 @@ img.abroad-dev__logo {
 
   .lg\:hidden.sai__ctx {
     display: none;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0,
+    [data-offer-modal] > .lg\:absolute.inset-0,
+    [data-index-advanced] > .lg\:absolute.inset-0,
+    [data-index-picker] > .lg\:absolute.inset-0,
+    [data-filter-sheet] > .lg\:absolute.inset-0 {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute,
+    [data-offer-modal] > .lg\:inset-0.absolute,
+    [data-index-advanced] > .lg\:inset-0.absolute,
+    [data-index-picker] > .lg\:inset-0.absolute,
+    [data-filter-sheet] > .lg\:inset-0.absolute {
+    background-color: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
+    [data-offer-modal] > .lg\:absolute.inset-0 + *,
+    [data-index-advanced] > .lg\:absolute.inset-0 + *,
+    [data-index-picker] > .lg\:absolute.inset-0 + *,
+    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
+  }
+
+  [data-meeting-modal] > .lg\:inset-0.absolute + *,
+    [data-offer-modal] > .lg\:inset-0.absolute + *,
+    [data-index-advanced] > .lg\:inset-0.absolute + *,
+    [data-index-picker] > .lg\:inset-0.absolute + *,
+    [data-filter-sheet] > .lg\:inset-0.absolute + * {
+    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
   }
 
   @media (min-width: 1024px) {
