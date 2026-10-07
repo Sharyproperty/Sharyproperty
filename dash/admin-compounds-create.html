@@ -1,0 +1,2175 @@
+<script src="a/assets/js/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+<script>CKEDITOR.config.versionCheck = false;</script>
+
+<script>
+    $(document).ready(function () {
+        $("#developer_id").select2();
+        $("#phases").select2();
+        $('#has_shary_index_data').change(function () {
+            $('.shary-index-fields').toggle($(this).is(':checked'));
+        }).trigger('change');
+        // Initialize CKEditor
+        CKEDITOR.replace('desc_en');
+        CKEDITOR.replace('desc_ar');
+
+
+        $('#country_id').on('change', function () {
+            var country_id = this.value;
+            var lang = $('#lang').val();
+            $('#city_id').html('');
+            $.ajax({
+                url: '/getCities?country_id=' + country_id,
+                type: 'get',
+                dataType: 'json',
+                success: function (res) {
+                    if (res.length > 0) { // all was ok
+                        var city_text = "اختر المنطقة"
+                        $('#city_id').html('<option value="" disabled> ' + city_text + ' </option>');
+                        $.each(res, function (key, value) {
+                            $('#city_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    } else {
+                        $('#city_id').html('<option value="" disabled selected>لا يوجد بيانات </option>');
+                    }
+                }
+            });
+        });
+
+        $('#developer_id').on('change', function () {
+            var developer_id = this.value;
+            var lang = $('#lang').val();
+            $('#front').html('');
+            $('#purpose').html('');
+            $('#building_type').html('');
+            $('#external_construction').html('');
+            $('#property_status').html('');
+            $.ajax({
+                url: '/getMainInfo?developer_id=' + developer_id,
+                type: 'get',
+                dataType: 'json',
+                success: function (res) {
+                    var subcategory_text = "أختر";
+
+                    if (res.property.length > 0) { // all was ok
+                        $('#property_id').html('<option value=""> ' + subcategory_text + ' </option>');
+                        $.each(res.property, function (key, value) {
+                            $('#property_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    } else {
+                        $('#property_id').html('<option value="" disabled selected>لا يوجد بيانات </option>');
+                    }
+                    if (res.types_finishing.length > 0) { // all was ok
+                        $('#finishing_type_id').html('<option value="" disabled> ' + subcategory_text + ' </option>');
+                        $.each(res.types_finishing, function (key, value) {
+                            $('#finishing_type_id').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    } else {
+                        $('#finishing_type_id').html('<option value="" disabled selected>لا يوجد بيانات </option>');
+                    }
+
+                }
+            });
+        });
+
+
+        function validateForm() {
+            var userInput = document.getElementById("desc_en");
+            // Perform validation and sanitize userInput
+            // Example validation: Ensure no JavaScript code is present
+            if ((userInput.textContent.includes("<script>")) || (userInput.textContent.includes("<SCRIPT>"))) {
+                alert("مدخل غير صالح. الرجاء إزالة أي كود جافا سكريبت");
+                // alert("Invalid input. Please remove any JavaScript code.");
+                return false;
+            }
+            return true;
+        }
+
+        $('#add_product').click(function (event) {
+            $('#edit-course-button').prop('disabled', true);
+            event.preventDefault();
+            $('#add_product_form').submit();
+        });
+
+        $(document).on('submit', '#add_product_form', function (event) {
+            event.preventDefault();
+
+            // Update the textarea fields with CKEditor content before sending via AJAX
+            for (instance in CKEDITOR.instances) {
+                CKEDITOR.instances[instance].updateElement();
+            }
+
+
+            var formData = new FormData(this);
+
+            var $submitButton = $(this).find('button[type="submit"]');
+
+            // Show progress bar
+            $('.progress').show();
+            $('#upload-progress-bar').css('width', '0%').text('0%');
+
+            formData.append('_method', 'POST');
+            var submitButton = $('#add_product');
+            submitButton.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> جارى رفع المشروع برجاء الانتظار ');
+            $.ajax({
+                url: "/admin/compounds",
+                method: "POST",
+                processData: false, // important
+                contentType: false, // important
+                data: formData,
+                dataType: 'JSON',
+                beforeSend: function () {
+                    $(".overlay").toggleClass('d-none');
+                },
+                xhr: function () {
+                    var xhr = new XMLHttpRequest();
+                    xhr.upload.addEventListener('progress', function (e) {
+                        if (e.lengthComputable) {
+                            var percentComplete = Math.round((e.loaded / e.total) * 100);
+                            $('#upload-progress-bar')
+                                .css('width', percentComplete + '%')
+                                .text(percentComplete + '%');
+                        }
+                    });
+                    return xhr;
+                },
+                success: function (data) {
+                    swalNormal(data);
+                    $(".overlay").toggleClass('d-none');
+                    submitButton.prop('disabled', false).html('إرسال'); // Reset button
+
+                    $('.progress').hide();
+                    $('#upload-progress-bar').css('width', '0%').text('0%');
+                    window.location.replace(data.route);
+                },
+                error: function (data) {
+                    // Reset progress bar and overlay on error
+                    $(".overlay").toggleClass('d-none');
+                    submitButton.prop('disabled', false).html('إرسال'); // Reset button
+
+                    $('.progress').hide();
+                    $('#upload-progress-bar').css('width', '0%').text('0%');
+                    sweetAlertErrorResponse(data);
+                }
+                // error: function (data) {
+                //     sweetAlertErrorResponse(data);
+                // }
+            })
+        });
+
+        function swalNormal(data) {
+            Swal.fire({
+                title: data.title,
+                text: data.message,
+                type: data.type,
+                confirmButtonText: "Ok"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
+        }
+
+        function sweetAlertErrorResponse(data) {
+            var span = document.createElement("span");
+            span.innerHTML = "";
+            $.each(data.responseJSON.errors, function (index, value) {
+                span.innerHTML += value + "<br>";
+            });
+            Swal.fire({
+                html: span,
+                type: "error",
+                confirmButtonText: "Ok",
+            });
+        }
+
+
+
+
+
+
+
+        // Toggle size_append section
+        $('#payment_plan').change(function () {
+            if ($(this).is(':checked')) {
+                $('#payment_append').show();
+            } else {
+                $('#payment_append').hide();
+                $('#payment_append').find('.payment').remove(); // Clear all rows when unchecked
+            }
+
+        });
+
+        // Toggle color_append section
+        $('#cash').change(function () {
+            if ($(this).is(':checked')) {
+                $('#cash_append').show();
+            } else {
+                $('#cash_append').hide();
+                $('#cash_append').find('.cash-row').remove(); // Clear all rows when unchecked
+            }
+        });
+
+        // Add a row for size
+        $('#add_payment_plan_row').click(function () {
+            // Add a new size row
+            let PaymentRow = `
+        <div class="row payment-row mb-3">
+            <div class="col-lg-4 col-sm-4 col-12">
+                <div class="form-group">
+                    <label>مقدم (%)</label>
+                    <input type="number" class="form-control" name="down_payment[]" value="0"  min="0" max="100" required>
+                </div>
+            </div>
+               <div class="col-lg-4 col-sm-4 col-12">
+                <div class="form-group">
+                    <label>سنوات التقسيط</label>
+                    <input type="number" class="form-control" name="installment_years[]" value="0" min="0" max="100" required>
+                </div>
+            </div>
+
+                 <div class="col-lg-2 col-sm-2 col-12">
+                <div class="form-group">
+                    <label>العرض</label>
+                     <select class="form-control offer" name="offer[]" id="offer" required>
+                        <option value="1">نعم</option>
+                        <option value="0" selected>لا</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-sm-2 col-12">
+            <div class="form-group">
+             <label>حذف</label>
+                <button type="button" class="btn btn-danger remove-payment-row">حذف</button>
+            </div>
+            </div>
+        </div>`;
+
+            // Append the new row
+            $('#payment_append').append(PaymentRow);
+
+            // Get the last added `.variant_id` select
+            let newSelect = $('#payment_append .payment-row:last .variant_id');
+
+        });
+
+
+        // Add a row for color
+        $('#add_cash_row').click(function () {
+            let cashRow = `
+            <div class="row cash-row mb-3">
+                <div class="col-lg-4 col-sm-4 col-12">
+                    <div class="form-group">
+                        <label>خصومات المشروع (%)</label>
+                          <input type="number" class="form-control" name="cash_discount[]"  min="0" max="100" required>
+                    </div>
+                </div>
+             <div class="col-lg-2 col-sm-2 col-12">
+                 <div class="form-group">
+                   <label>حذف</label>
+                    <button type="button" class="btn btn-danger remove-cash-row">حذف</button>
+                </div>
+                </div>
+            </div>`;
+            $('#cash_append').append(cashRow);
+            // Get the last added `.variant_id` select
+            let newSelect = $('#cash_append .cash-row:last .color_id');
+        });
+
+        $('#add_compound_faq_row').click(function () {
+            $('#compoundFaqRows').append(`
+                <div class="row compound-faq-row mb-3">
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Question English</label>
+                            <input type="text" class="form-control" name="faq_question_en[]">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Question Arabic</label>
+                            <input type="text" class="form-control" name="faq_question_ar[]">
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Answer English</label>
+                            <textarea class="form-control" name="faq_answer_en[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                        <div class="form-group">
+                            <label>Answer Arabic</label>
+                            <textarea class="form-control" name="faq_answer_ar[]" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-danger remove-compound-faq-row">حذف</button>
+                    </div>
+                </div>
+            `);
+        });
+
+        // Remove a size row
+        $(document).on('click', '.remove-payment-row', function () {
+            $(this).closest('.payment-row').remove();
+        });
+
+        // Remove a color row
+        $(document).on('click', '.remove-cash-row', function () {
+            $(this).closest('.cash-row').remove();
+        });
+
+        $(document).on('click', '.remove-compound-faq-row', function () {
+            $(this).closest('.compound-faq-row').remove();
+        });
+    });
+
+</script>
+
+
+<!DOCTYPE html>
+<html lang="ar">
+  
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Shary">
+<meta name="keywords" content="Shary">
+<meta name="author" content="">
+<meta name="robots" content="noindex, nofollow">
+<meta name="csrf-token" content="preview">
+
+<title>شارى</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="a/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="a/assets_rtl/css/bootstrap.rtl.min.css">
+
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- animation CSS -->
+<link rel="stylesheet" href="a/assets/css/animate.css">
+
+<!-- Datetimepicker CSS -->
+<link rel="stylesheet" href="a/assets/css/bootstrap-datetimepicker.min.css">
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.theme.default.min.css">
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="a/assets/plugins/select2/css/select2.min.css">
+
+<!-- Dragula CSS -->
+<link rel="stylesheet" href="a/assets/plugins/dragula/css/dragula.min.css">
+
+
+
+
+
+
+<link rel="stylesheet" href="a/assets/plugins/summernote/summernote-bs4.min.css">
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="a/assets/css/dataTables.bootstrap4.min.css">
+
+<!-- Main CSS -->
+    <link rel="stylesheet" href="a/assets_rtl/css/style.css">
+<link rel="stylesheet" href="a/assets/css/admin-polish.css">
+
+<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
+<style type="text/css">
+    body, h1, h2, h3, h4, h5, h6, * {
+        font-family: 'Tajawal', serif;
+        font-weight: bold;
+    }
+</style>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="a/css/shary-admin/shell.css">
+       </head>
+  <body class="sx" dir="rtl">
+ <div id="global-loader" >
+    <div class="whirly-loader"> </div>
+</div>  <!-- Main Wrapper -->
+<div class="main-wrapper">
+      <a class="sx-skip" href="#sx-main">روح للمحتوى</a>
+<header class="sx-top" data-sx-top>
+    <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="افتح القايمة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+    <a class="sx-top__brand" href="index.html"><i aria-hidden="true"></i><span>لوحة تحكم شاري</span></a>
+            <div class="sx-find" role="search" data-sx-find>
+            <label class="sx-sr" for="sx-q">بحث في لوحة التحكم</label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            <input type="search" id="sx-q" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="ابحث عن مشروع ، وحدة ، مطور ، منطقة أو شاشة…" role="combobox" aria-expanded="false" aria-controls="sx-q-out" aria-autocomplete="list">
+            <button type="button" class="sx-find__x" data-sx-find-close aria-label="امسح البحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+            <div class="sx-find__out" id="sx-q-out" role="listbox" aria-label="بحث في لوحة التحكم" hidden></div>
+        </div>
+        <div class="sx-top__end">
+                    <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="بحث في لوحة التحكم"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+</button>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 4"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>4</b></a>
+                <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="افتح الموقع" title="افتح الموقع"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
+</a>
+        <a class="sx-lang" href="#" data-sx-missing="1" data-sx-note="القايمة بالإنجليزي موجودة على السيرفر — لينك المعاينة بالعربي." lang="en">English</a>
+        <details class="sx-user" data-sx-user>
+            <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
+</summary>
+            <div class="sx-user__menu">
+                <a href="profile.html">حسابي</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">خروج</a>
+            </div>
+        </details>
+    </div>
+</header>
+<aside class="sx-side" id="sx-side" data-sx-side>
+    <div class="sx-side__head">
+        <a class="sx-side__brand" href="index.html"><i aria-hidden="true"></i><span>لوحة تحكم شاري</span></a>
+        <button type="button" class="sx-ico sx-side__close" data-sx-menu-close aria-label="اقفل القايمة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+    </div>
+    <nav class="sx-nav" aria-label="لوحة تحكم شاري">
+                                                                    <a class="sx-one " href="index.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+                        <span>الرئيسية</span>
+                                            </a>
+                                                                <a class="sx-one " href="admin-shary-guide.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
+                        <span>فين أعدّل إيه؟</span>
+                                            </a>
+                                                                <div class="sx-grp " data-sx-grp="agent">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
+                            <span>الإيجنت</span>
+                            <b class="sx-tag">10</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-agent">
+                                                            <li><a href="admin-shary-agent.html" class="" ><span>النهاردة</span></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">10</b></a></li>
+                                                            <li><a href="admin-shary-agent-commands.html" class="" ><span>الأوامر</span></a></li>
+                                                            <li><a href="admin-shary-agent-tasks.html" class="" ><span>المهام اليومية</span></a></li>
+                                                            <li><a href="admin-shary-agent-data.html" class="" ><span>طلبات الداتا</span></a></li>
+                                                            <li><a href="admin-shary-agent-projects.html" class="" ><span>المشاريع والأخبار</span></a></li>
+                                                            <li><a href="admin-shary-agent-requests.html" class="" ><span>طلبات العملاء</span></a></li>
+                                                            <li><a href="admin-shary-agent-reports.html" class="" ><span>التقارير</span></a></li>
+                                                            <li><a href="admin-shary-agent-market.html" class="" ><span>تحليل السوق</span></a></li>
+                                                            <li><a href="admin-shary-agent-seo.html" class="" ><span>السيو والمقالات</span></a></li>
+                                                            <li><a href="admin-shary-agent-log.html" class="" ><span>السجل والتراجع</span></a></li>
+                                                            <li><a href="admin-shary-agent-settings.html" class="" ><span>الصلاحيات والربط</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">الشغل اليومي</h6>                                                <div class="sx-grp " data-sx-grp="requests">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
+                            <span>الطلبات والرسائل</span>
+                            <b class="sx-tag">30</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-requests">
+                                                            <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">30</b></a></li>
+                                                            <li><a href="ContactUs.html" class="" ><span>رسائل اتصل بنا</span></a></li>
+                                                            <li><a href="admin-shary-leads_form_meeting.html" class="" ><span>طلبات المقابلة</span></a></li>
+                                                            <li><a href="request-meetings.html" class="" ><span>طلبات الاجتماع (زووم)</span></a></li>
+                                                            <li><a href="request-sell-property.html" class="" ><span>طلبات بيع عقار</span></a></li>
+                                                            <li><a href="request-rent-property.html" class="" ><span>طلبات تأجير عقار</span></a></li>
+                                                            <li><a href="exclusive-resale-admin_tab_requests.html" class="" ><span>عروض على فرص إعادة البيع</span></a></li>
+                                                            <li><a href="admin-shary-follows.html" class="" ><span>متابعات المشاريع</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="units">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-units">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+                            <span>الوحدات</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-units">
+                                                            <li><a href="admin-shary-units.html" class="" ><span>كل الوحدات</span></a></li>
+                                                            <li><a href="admin-shary-units-create.html" class="" ><span>إضافة وحدة</span></a></li>
+                                                            <li><a href="admin-shary-units-sheet.html" class="" ><span>رفع شيت وحدات</span></a></li>
+                                                            <li><a href="admin-shary-units_type_developer_sale.html" class="" ><span>وحدات المطور</span></a></li>
+                                                            <li><a href="admin-shary-units_type_resale.html" class="" ><span>وحدات إعادة البيع</span></a></li>
+                                                            <li><a href="admin-shary-units_type_rent.html" class="" ><span>وحدات الإيجار</span></a></li>
+                                                            <li><a href="exclusive-resale-admin.html" class="" ><span>فرص إعادة البيع الحصرية</span></a></li>
+                                                            <li><a href="admin-shary-tracking-units.html" class="" ><span>وحدات التراكنج (وحدة عميل)</span></a></li>
+                                                            <li><a href="unit-tracking-admin.html" class="" ><span>متابعة الوحدات في التطبيق</span></a></li>
+                                                            <li><a href="admin-shary-type-photos.html" class="" ><span>مكتبة صور الأنواع</span></a></li>
+                                                            <li><a href="admin-shary-extras-units.html" class="" ><span>بيانات صفحة الوحدة</span></a></li>
+                                                            <li><a href="units-list.html" class="" ><span>الوحدات (الشاشة القديمة)</span></a></li>
+                                                            <li><a href="top-unit.html" class="" ><span>أفضل الوحدات (الرئيسية)</span></a></li>
+                                                            <li><a href="limited-offer-units.html" class="" ><span>عروض لفترة محدودة</span></a></li>
+                                                            <li><a href="units-0.html" class="" ><span>إدارة العقارات</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="projects">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-projects">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+                            <span>المشاريع</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-projects">
+                                                            <li><a href="admin-compounds.html" class="" ><span>كل المشاريع</span></a></li>
+                                                            <li><a href="admin-compounds-create.html" class="is-on"  aria-current="page" ><span>إضافة مشروع</span></a></li>
+                                                            <li><a href="admin-shary-projects.html" class="" ><span>بيانات المشروع للموقع</span></a></li>
+                                                            <li><a href="admin-new-launches.html" class="" ><span>أحدث الإطلاقات</span></a></li>
+                                                            <li><a href="top-compound.html" class="" ><span>أفضل المشاريع</span></a></li>
+                                                            <li><a href="project-landing-pages.html" class="" ><span>صفحات الهبوط</span></a></li>
+                                                            <li><a href="compounds-boundaries.html" class="" ><span>حدود المشاريع على الخريطة</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="developers">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-developers">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+                            <span>المطورين</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-developers">
+                                                            <li><a href="services-developers.html" class="" ><span>كل المطورين (إضافة وتعديل)</span></a></li>
+                                                            <li><a href="admin-shary-extras-developers.html" class="" ><span>بيانات صفحة المطور</span></a></li>
+                                                            <li><a href="admin-shary-developers-page.html" class="" ><span>أفضل المطورين وصفحة «عرض الكل»</span></a></li>
+                                                            <li><a href="top-developer.html" class="" ><span>أفضل المطورين (التطبيق)</span></a></li>
+                                                            <li><a href="storyList.html" class="" ><span>ستوري المطورين</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="areas">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-areas">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                            <span>المناطق</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-areas">
+                                                            <li><a href="admin-shary-area-tree.html" class="" ><span>كل المناطق والمناطق الفرعية</span></a></li>
+                                                            <li><a href="cities.html" class="" ><span>المناطق (إضافة وتعديل)</span></a></li>
+                                                            <li><a href="admin-shary-extras-areas.html" class="" ><span>بيانات صفحة المنطقة</span></a></li>
+                                                            <li><a href="admin-shary-area-places.html" class="" ><span>أشهر الأماكن</span></a></li>
+                                                            <li><a href="top-area.html" class="" ><span>أفضل المناطق</span></a></li>
+                                                            <li><a href="popular-areas.html" class="" ><span>المناطق الأكثر طلبًا</span></a></li>
+                                                            <li><a href="countries.html" class="" ><span>الدول</span></a></li>
+                                                            <li><a href="admin-shary-extras-countries.html" class="" ><span>بيانات صفحة الدولة</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="index">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-index">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+                            <span>مؤشر شاري</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-index">
+                                                            <li><a href="admin-shary-index.html" class="" ><span>أرقام المناطق</span></a></li>
+                                                            <li><a href="admin-shary-index-monthly.html" class="" ><span>الأسعار الشهرية</span></a></li>
+                                                            <li><a href="admin-shary-extras-index-page.html" class="" ><span>محتوى صفحة المؤشر</span></a></li>
+                                                            <li><a href="shary-index-admin.html" class="" ><span>المؤشر (الشاشة القديمة)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">المحتوى والموقع</h6>                                                <div class="sx-grp " data-sx-grp="content">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-content">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+                            <span>المقالات والمحتوى</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-content">
+                                                            <li><a href="admin-shary-content-editor.html" class="" ><span>المدونة ومحرر الكتابة</span></a></li>
+                                                            <li><a href="admin-shary-extras-blogs.html" class="" ><span>بيانات المقالات</span></a></li>
+                                                            <li><a href="news.html" class="" ><span>الأخبار</span></a></li>
+                                                            <li><a href="trendyList.html" class="" ><span>التريند</span></a></li>
+                                                            <li><a href="storyList.html" class="" ><span>الستوري</span></a></li>
+                                                            <li><a href="admin-shary-extras-trend-videos.html" class="" ><span>فيديوهات التريند</span></a></li>
+                                                            <li><a href="admin-shary-extras-news-posts.html" class="" ><span>بيانات أخبار التريند</span></a></li>
+                                                            <li><a href="admin-shary-internal-links.html" class="" ><span>الروابط الداخلية</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="pages">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-pages">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11"/></svg>
+                            <span>صفحات الموقع</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-pages">
+                                                            <li><a href="admin-shary-hero.html" class="" ><span>صور الهيدر (الرئيسية)</span></a></li>
+                                                            <li><a href="sliders.html" class="" ><span>السلايدر</span></a></li>
+                                                            <li><a href="admin-shary-home-cards.html" class="" ><span>كروت الرئيسية (الحصرية · ماب مصر · الساحل · شاري كارد)</span></a></li>
+                                                            <li><a href="investment-cards.html" class="" ><span>ما يميزنا</span></a></li>
+                                                            <li><a href="admin-shary-site-content.html" class="" ><span>نصوص وصور الصفحات</span></a></li>
+                                                            <li><a href="admin-shary-extras-listing-pages.html" class="" ><span>صفحات القوائم (بيع / إيجار / فرص)</span></a></li>
+                                                            <li><a href="admin-shary-extras-property-types.html" class="" ><span>أنواع العقارات</span></a></li>
+                                                            <li><a href="admin-shary-extras-about-page.html" class="" ><span>من نحن</span></a></li>
+                                                            <li><a href="executive-management.html" class="" ><span>الفريق</span></a></li>
+                                                            <li><a href="categories-executive-management.html" class="" ><span>أقسام الفريق</span></a></li>
+                                                            <li><a href="admin-shary-extras-team.html" class="" ><span>بيانات صفحة الفريق</span></a></li>
+                                                            <li><a href="jobs.html" class="" ><span>الوظائف</span></a></li>
+                                                            <li><a href="ads-images.html" class="" ><span>الإعلانات</span></a></li>
+                                                            <li><a href="footer-links.html" class="" ><span>الأكثر بحثًا (الفوتر)</span></a></li>
+                                                            <li><a href="settings-privacy.html" class="" ><span>سياسة الخصوصية</span></a></li>
+                                                            <li><a href="settings-terms.html" class="" ><span>الشروط والأحكام</span></a></li>
+                                                            <li><a href="settings-about.html" class="" ><span>من نحن (النص القديم)</span></a></li>
+                                                            <li><a href="settings-help_center.html" class="" ><span>مركز المساعدة</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="contact">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-contact">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
+                            <span>التواصل وأزرار الإجراء</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-contact">
+                                                            <li><a href="admin-shary-contact.html" class="" ><span>أرقام وقنوات التواصل</span></a></li>
+                                                            <li><a href="Communications.html" class="" ><span>السوشيال ميديا</span></a></li>
+                                                            <li><a href="contact_us_information.html" class="" ><span>بيانات اتصل بنا</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <a class="sx-one " href="admin-shary-ai.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
+                        <span>Shary AI</span>
+                                            </a>
+                                                                <div class="sx-grp " data-sx-grp="seo">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-seo">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+                            <span>السيو والتحويلات</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-seo">
+                                                            <li><a href="admin-redirections.html" class="" ><span>التحويلات (Redirects)</span></a></li>
+                                                            <li><a href="admin-shary-refresh.html" class="" ><span>تحديث الموقع</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">التطبيق</h6>                                                <div class="sx-grp " data-sx-grp="app">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-app">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg>
+                            <span>خدمات التطبيق</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-app">
+                                                            <li><a href="reservations.html" class="" ><span>حجز مع المطور</span></a></li>
+                                                            <li><a href="reservations-bank-accounts.html" class="" ><span>حسابات البنك</span></a></li>
+                                                            <li><a href="legal-assistant-admin.html" class="" ><span>المساعد القانوني</span></a></li>
+                                                            <li><a href="sharyCard-setting.html" class="" ><span>شاري كارد</span></a></li>
+                                                            <li><a href="settings-shary_card.html" class="" ><span>شروط شاري كارد</span></a></li>
+                                                            <li><a href="notifications.html" class="" ><span>الإشعارات</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">الإدارة</h6>                                                <div class="sx-grp " data-sx-grp="users">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-users">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>
+                            <span>المستخدمين والصلاحيات</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-users">
+                                                            <li><a href="users-client.html" class="" ><span>العملاء</span></a></li>
+                                                            <li><a href="users-agent.html" class="" ><span>الوكلاء</span></a></li>
+                                                            <li><a href="supervisor.html" class="" ><span>المشرفين والصلاحيات</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="options">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-options">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+                            <span>الإعدادات والخيارات</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-options">
+                                                            <li><a href="generalDetails-property.html" class="" ><span>أنواع الوحدات</span></a></li>
+                                                            <li><a href="generalDetails-main_category.html" class="" ><span>الأقسام الرئيسية</span></a></li>
+                                                            <li><a href="generalDetails-types_finishing.html" class="" ><span>أنواع التشطيب</span></a></li>
+                                                            <li><a href="generalDetails-featured.html" class="" ><span>المميزات</span></a></li>
+                                                            <li><a href="services-services_list.html" class="" ><span>مرافق الوحدات</span></a></li>
+                                                    </ul>
+                    </div>
+                                        </nav>
+</aside>
+<div class="sx-shade" data-sx-shade hidden></div>
+
+ <style>
+            .shary-ed { position: fixed; inset: 0; z-index: 20000; display: flex; align-items: flex-start; justify-content: center; background: rgba(10, 20, 35, .6); padding: 5vh 16px; overflow: auto; }
+            .shary-ed__box { width: min(620px, 100%); border-radius: 10px; background: #fff; box-shadow: 0 20px 60px rgba(0, 0, 0, .3); }
+            .shary-ed--wide .shary-ed__box { width: min(1180px, 100%); }
+            .shary-ed__head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e9ecef; font-size: 16px; }
+            .shary-ed__x { border: 0; background: none; font-size: 26px; line-height: 1; color: #6c757d; cursor: pointer; }
+            .shary-ed__body { padding: 14px 16px 16px; }
+            .shary-ed__kinds, .shary-ed__checks { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 12px; }
+            .shary-ed__kinds label, .shary-ed__checks label { margin: 0; cursor: pointer; font-weight: normal; }
+            .shary-ed__label { display: block; margin: 8px 0 4px; font-weight: 600; }
+            .shary-ed__hint { color: #6c757d; margin: 4px 0 10px; }
+            .shary-ed__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+            .shary-ed__bar select { max-width: 180px; }
+            .shary-ed__bar input { flex: 1 1 220px; }
+            .shary-ed__results { max-height: 46vh; overflow: auto; border: 1px solid #e9ecef; border-radius: 8px; margin-top: 8px; }
+            .shary-ed__results .shary-ed__hint { padding: 12px; margin: 0; }
+            .shary-ed__row { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; border-bottom: 1px solid #f1f3f5; background: #fff; padding: 9px 12px; text-align: start; cursor: pointer; }
+            .shary-ed__row:hover { background: #f4f8fc; }
+            .shary-ed__row small { margin-inline-start: auto; color: #8a97a6; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .shary-ed__tag { flex: 0 0 auto; border-radius: 999px; background: #e8f0fb; color: #123a5c; font-size: 12px; padding: 2px 9px; }
+            .shary-ed__name { font-weight: 600; }
+            .shary-ed__foot { margin-top: 14px; }
+            .shary-ed__frame { background: #e9edf2; border-radius: 8px; padding: 10px; text-align: center; }
+            .shary-ed__frame iframe { width: 100%; height: 70vh; border: 0; border-radius: 6px; background: #fff; transition: width .2s; }
+            /* the three Shary buttons show their names (they have no icon) */
+            .cke_button__sharycta .cke_button_icon, .cke_button__sharylink .cke_button_icon, .cke_button__sharypreview .cke_button_icon { display: none !important; }
+            .cke_button__sharycta .cke_button_label, .cke_button__sharylink .cke_button_label, .cke_button__sharypreview .cke_button_label { display: inline !important; padding: 0 6px; font-weight: 700; color: #0d3b66; }
+            .cke_button__sharycta, .cke_button__sharylink, .cke_button__sharypreview { background: #e8f0fb !important; border-radius: 4px; margin: 0 2px !important; }
+        </style>
+        <script>
+            window.SharyEditorConfig = {
+                token: "3asXUS6vz6YG1C9elmwl4GIhrYPasa5P20AsImbm",
+                lang: "ar",
+                linksUrl: "\/admin\/shary\/content-editor\/links",
+                previewUrl: "\/admin\/shary\/content-editor\/preview",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=3asXUS6vz6YG1C9elmwl4GIhrYPasa5P20AsImbm",
+                contentCss: "\/css\/shary-admin\/editor-content.css",
+                types: {"project":"\u0645\u0634\u0631\u0648\u0639","area":"\u0645\u0646\u0637\u0642\u0629","developer":"\u0645\u0637\u0648\u0631","blog":"\u0645\u0642\u0627\u0644","search":"\u0635\u0641\u062d\u0629 \u0628\u062d\u062b"},
+                labels: {"cta":"\u0632\u0631 \u062a\u0648\u0627\u0635\u0644","link":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview":"\u0645\u0639\u0627\u064a\u0646\u0629","cta_title":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0648\u0633\u0637 \u0627\u0644\u0645\u062d\u062a\u0648\u0649:","link_title":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview_title":"\u0645\u0639\u0627\u064a\u0646\u0629 \u2014 \u0632\u064a \u0627\u0644\u0645\u0648\u0642\u0639","kind_cta":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644","kind_form":"\u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629","kind_channels":"\u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a","kind_project":"\u0643\u0627\u0631\u062a \u0645\u0634\u0631\u0648\u0639","kind_area":"\u0643\u0627\u0631\u062a \u0645\u0646\u0637\u0642\u0629","cta_buttons":"\u0627\u0644\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0644\u064a \u062a\u0638\u0647\u0631","btn_meeting":"\u0637\u0644\u0628 \u0645\u0642\u0627\u0628\u0644\u0629","btn_call":"\u0627\u062a\u0635\u0627\u0644","btn_whatsapp":"\u0648\u0627\u062a\u0633\u0627\u0628","cta_heading":"\u0627\u0644\u062c\u0645\u0644\u0629 \u0627\u0644\u0644\u064a \u0641\u0648\u0642 \u0627\u0644\u0623\u0632\u0631\u0627\u0631 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","cta_ph_ar":"\u0645\u062b\u0627\u0644: \u0627\u062d\u062c\u0632 \u0648\u062d\u062f\u062a\u0643 \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u062d\u0635\u0644 \u0639\u0644\u0649 \u0623\u062d\u062f\u062b \u0642\u0627\u0626\u0645\u0629 \u0623\u0633\u0639\u0627\u0631","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"\u0628\u064a\u062d\u0637 \u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629 (\u0627\u0644\u0627\u0633\u0645 \u060c \u0627\u0644\u0645\u0648\u0628\u0627\u064a\u0644 \u060c \u0627\u0644\u0645\u0646\u0637\u0642\u0629) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","channels_hint":"\u0628\u064a\u062d\u0637 \u0643\u0627\u0631\u062a \u0022\u0627\u0634\u062a\u0631\u0643 \u0641\u064a \u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a\u0022 (\u0648\u0627\u062a\u0633\u0627\u0628 \/ \u062a\u0644\u064a\u062c\u0631\u0627\u0645 \/ \u064a\u0648\u062a\u064a\u0648\u0628) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","search_ph":"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639 \/ \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \/ \u0627\u0644\u0645\u0637\u0648\u0631 \/ \u0627\u0644\u0645\u0642\u0627\u0644","insert":"\u0625\u0636\u0627\u0641\u0629","cta_note":"\u0628\u064a\u062a\u062d\u0637 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u2014 \u0648\u062a\u0642\u062f\u0631 \u062a\u0645\u0633\u062d\u0647 \u0632\u064a \u0623\u064a \u0633\u0637\u0631.","link_selected":"\u0627\u0644\u0644\u064a\u0646\u0643 \u0647\u064a\u062a\u062d\u0637 \u0639\u0644\u0649:","link_none":"\u0645\u0641\u064a\u0634 \u0643\u0644\u0627\u0645 \u0645\u062a\u0638\u0644\u0644: \u0647\u064a\u062a\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u064a\u0628\u0642\u0649 \u0647\u0648 \u0627\u0644\u0644\u064a\u0646\u0643.","all_types":"\u0643\u0644 \u0627\u0644\u0623\u0646\u0648\u0627\u0639","searching":"\u062c\u0627\u0631\u064a \u0627\u0644\u0628\u062d\u062b\u2026","nothing":"\u0645\u0641\u064a\u0634 \u0646\u062a\u0627\u064a\u062c.","failed":"\u062d\u0635\u0644\u062a \u0645\u0634\u0643\u0644\u0629 \u2014 \u062c\u0631\u0651\u0628 \u062a\u0627\u0646\u064a.","desktop":"\u062f\u064a\u0633\u0643 \u062a\u0648\u0628","mobile":"\u0645\u0648\u0628\u0627\u064a\u0644","preview_note":"\u0627\u0644\u0645\u0639\u0627\u064a\u0646\u0629 \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638 \u2014 \u0627\u062d\u0641\u0638 \u0639\u0634\u0627\u0646 \u064a\u0638\u0647\u0631 \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639."}            };
+        </script>
+        <script src="a/js/shary-admin/editor.js"></script>
+     
+    <template data-sx-crumb><div class="sx-crumb">المشاريع ‹ إضافة مشروع</div></template>
+
+                <style>
+        .d-none {
+            display: none !important;
+        }
+        #boundsMap {
+            height: 380px;
+            width: 100%;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+        }
+    </style>
+
+    <script>
+        var marker = null;
+        var placeSearch, autocomplete;
+        var boundsMap = null;
+        var boundsMarkers = [];
+        var boundsPolygon = null;
+        var boundsAutocomplete = null;
+
+        function updateBoundsInput(lat, lng) {
+            var boundsInput = document.getElementById('bounds');
+            if (!boundsInput || isNaN(lat) || isNaN(lng)) {
+                return;
+            }
+
+            var padding = 0.002;
+            boundsInput.value = JSON.stringify({
+                type: 'Polygon',
+                coordinates: [[
+                    [Number((lng - padding).toFixed(6)), Number((lat + padding).toFixed(6))],
+                    [Number((lng + padding).toFixed(6)), Number((lat + padding).toFixed(6))],
+                    [Number((lng + padding).toFixed(6)), Number((lat - padding).toFixed(6))],
+                    [Number((lng - padding).toFixed(6)), Number((lat - padding).toFixed(6))],
+                    [Number((lng - padding).toFixed(6)), Number((lat + padding).toFixed(6))]
+                ]]
+            });
+            syncMapDerivedInputs();
+        }
+
+        function syncMapDerivedInputs() {
+            var boundsInput = document.getElementById('bounds');
+            var coordinatesInput = document.getElementById('coordinates');
+            if (!boundsInput || !boundsInput.value) {
+                return;
+            }
+
+            if (coordinatesInput) {
+                coordinatesInput.value = boundsInput.value;
+            }
+        }
+
+        function syncProjectLocation(latLng) {
+            var lat = latLng.lat();
+            var lng = latLng.lng();
+
+            document.getElementById("lat").value = lat;
+            document.getElementById("lng").value = lng;
+
+            updateBoundsInput(lat, lng);
+            loadExistingBounds();
+        }
+
+        function initMap() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'),
+                {types: ['geocode']}
+            );
+            var initialLat = parseFloat(document.getElementById('lat').value) || 26.8206;
+            var initialLng = parseFloat(document.getElementById('lng').value) || 30.8025;
+
+            var map = new google.maps.Map(document.getElementById('shoplocation'), {
+                zoom: 10,
+                center: {
+                    lat: initialLat,
+                    lng: initialLng
+                },
+                mapTypeId: 'hybrid'
+            });
+            var MaekerPos = new google.maps.LatLng(initialLat, initialLng);
+            marker = new google.maps.Marker({
+                position: MaekerPos,
+                map: map
+            });
+            if (!document.getElementById('bounds').value.trim()) {
+                updateBoundsInput(initialLat, initialLng);
+            }
+
+            autocomplete.addListener('place_changed', function () {
+                var place = autocomplete.getPlace();
+                if (!place.geometry) return;
+
+                placeMarkerAndPanTo(place.geometry.location, map);
+                syncProjectLocation(place.geometry.location);
+            });
+
+            map.addListener('click', function (e) {
+                placeMarkerAndPanTo(e.latLng, map);
+                syncProjectLocation(e.latLng);
+            });
+
+            initBoundsMap(initialLat, initialLng);
+        }
+
+        function placeMarkerAndPanTo(latLng, map) {
+            map.setZoom(9);
+            marker.setPosition(latLng);
+            map.panTo(latLng);
+        }
+
+        function parseMapJson(value) {
+            var parsed = value;
+
+            if (!parsed) {
+                return null;
+            }
+
+            if (typeof parsed === 'string') {
+                try {
+                    parsed = JSON.parse(parsed);
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            if (typeof parsed === 'string') {
+                try {
+                    parsed = JSON.parse(parsed);
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            return parsed;
+        }
+
+        function panSearchMap(autocompleteInstance, mapInstance) {
+            if (!autocompleteInstance || !mapInstance) {
+                return;
+            }
+
+            var place = autocompleteInstance.getPlace();
+            if (!place.geometry) {
+                return;
+            }
+
+            if (place.geometry.viewport) {
+                mapInstance.fitBounds(place.geometry.viewport);
+            } else {
+                mapInstance.setCenter(place.geometry.location);
+                mapInstance.setZoom(16);
+            }
+        }
+
+        function initBoundsMap(initialLat, initialLng) {
+            boundsMap = new google.maps.Map(document.getElementById('boundsMap'), {
+                zoom: 15,
+                center: {lat: initialLat, lng: initialLng},
+                mapTypeId: 'hybrid'
+            });
+
+            boundsAutocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('boundsSearch'),
+                {types: ['geocode']}
+            );
+
+            boundsAutocomplete.addListener('place_changed', function () {
+                panSearchMap(boundsAutocomplete, boundsMap);
+            });
+
+            boundsMap.addListener('click', function (event) {
+                addBoundsPoint(event.latLng);
+            });
+
+            document.getElementById('resetBounds').addEventListener('click', function () {
+                clearBounds();
+                updateBoundsInput(
+                    parseFloat(document.getElementById('lat').value) || initialLat,
+                    parseFloat(document.getElementById('lng').value) || initialLng
+                );
+                loadExistingBounds();
+            });
+
+            loadExistingBounds();
+            initMasterplanOverlay(initialLat, initialLng);
+        }
+
+        // Master plan positioning: a custom move/resize/rotate overlay. Native
+        // google.maps.GroundOverlay only supports an axis-aligned LatLngBounds
+        // rectangle (no rotation), which is useless for master plans that aren't
+        // drawn perfectly north-aligned. This renders the image as a rotated
+        // rectangle via a projected CSS matrix transform instead, and stores the
+        // 4 true corners in masterplan_corners (already the format the public
+        // Mapbox-based map consumes, which supports arbitrary/rotated corners).
+        var masterplanImageUrl = null;
+        var masterplanState = null; // {center:{lat,lng}, halfWidth, halfHeight, rotation}
+        var masterplanOverlayView = null;
+        var masterplanCenterMarker = null;
+        var masterplanResizeMarker = null;
+        var masterplanRotateMarker = null;
+        var MP_METERS_PER_DEG_LAT = 111320;
+
+        function mpMetersPerDegLng(lat) {
+            return 111320 * Math.cos(lat * Math.PI / 180);
+        }
+
+        function mpOffsetLatLng(base, dx, dy) {
+            return {
+                lat: base.lat + dy / MP_METERS_PER_DEG_LAT,
+                lng: base.lng + dx / mpMetersPerDegLng(base.lat)
+            };
+        }
+
+        function mpMetersOffset(base, point) {
+            return {
+                dx: (point.lng - base.lng) * mpMetersPerDegLng(base.lat),
+                dy: (point.lat - base.lat) * MP_METERS_PER_DEG_LAT
+            };
+        }
+
+        function mpRotate(lx, ly, rotDeg) {
+            var rad = rotDeg * Math.PI / 180;
+            return {
+                x: lx * Math.cos(rad) - ly * Math.sin(rad),
+                y: lx * Math.sin(rad) + ly * Math.cos(rad)
+            };
+        }
+
+        function mpUnrotate(x, y, rotDeg) {
+            var rad = rotDeg * Math.PI / 180;
+            return {
+                x: x * Math.cos(rad) + y * Math.sin(rad),
+                y: -x * Math.sin(rad) + y * Math.cos(rad)
+            };
+        }
+
+        function mpCornerLatLng(local) {
+            var rotated = mpRotate(local[0], local[1], masterplanState.rotation);
+            return mpOffsetLatLng(masterplanState.center, rotated.x, rotated.y);
+        }
+
+        function masterplanCorners() {
+            if (!masterplanState) {
+                return null;
+            }
+
+            var s = masterplanState;
+            var order = [
+                [-s.halfWidth, s.halfHeight],
+                [s.halfWidth, s.halfHeight],
+                [s.halfWidth, -s.halfHeight],
+                [-s.halfWidth, -s.halfHeight]
+            ];
+
+            return order.map(function (local) {
+                var ll = mpCornerLatLng(local);
+                return [Number(ll.lng.toFixed(6)), Number(ll.lat.toFixed(6))];
+            });
+        }
+
+        function syncMasterplanCornersInput() {
+            var corners = masterplanCorners();
+            document.getElementById('masterplan_corners').value = corners ? JSON.stringify(corners) : '';
+        }
+
+        function currentMasterplanCorners() {
+            var parsed = parseMapJson(document.getElementById('masterplan_corners').value);
+            return (Array.isArray(parsed) && parsed.length === 4) ? parsed : null;
+        }
+
+        function masterplanStateFromCorners(points) {
+            var lngSum = 0, latSum = 0;
+            points.forEach(function (p) {
+                lngSum += Number(p[0]);
+                latSum += Number(p[1]);
+            });
+            var center = {lat: latSum / 4, lng: lngSum / 4};
+
+            var tl = {lat: Number(points[0][1]), lng: Number(points[0][0])};
+            var tr = {lat: Number(points[1][1]), lng: Number(points[1][0])};
+            var bl = {lat: Number(points[3][1]), lng: Number(points[3][0])};
+
+            var tlM = mpMetersOffset(center, tl);
+            var trM = mpMetersOffset(center, tr);
+            var blM = mpMetersOffset(center, bl);
+
+            var wVec = {dx: trM.dx - tlM.dx, dy: trM.dy - tlM.dy};
+            var hVec = {dx: blM.dx - tlM.dx, dy: blM.dy - tlM.dy};
+
+            return {
+                center: center,
+                halfWidth: Math.hypot(wVec.dx, wVec.dy) / 2 || 60,
+                halfHeight: Math.hypot(hVec.dx, hVec.dy) / 2 || 60,
+                rotation: Math.atan2(wVec.dy, wVec.dx) * 180 / Math.PI
+            };
+        }
+
+        function repositionMasterplanHandles() {
+            var s = masterplanState;
+
+            var br = mpCornerLatLng([s.halfWidth, -s.halfHeight]);
+            masterplanResizeMarker.setPosition(new google.maps.LatLng(br.lat, br.lng));
+
+            var gap = Math.max(15, s.halfHeight * 0.35);
+            var rot = mpCornerLatLng([0, s.halfHeight + gap]);
+            masterplanRotateMarker.setPosition(new google.maps.LatLng(rot.lat, rot.lng));
+
+            masterplanCenterMarker.setPosition(new google.maps.LatLng(s.center.lat, s.center.lng));
+        }
+
+        function afterMasterplanChange() {
+            repositionMasterplanHandles();
+            syncMasterplanCornersInput();
+            if (masterplanOverlayView) {
+                masterplanOverlayView.draw();
+            }
+        }
+
+        var MasterplanImageOverlayClass = null;
+
+        function getMasterplanOverlayClass() {
+            if (MasterplanImageOverlayClass) {
+                return MasterplanImageOverlayClass;
+            }
+
+            function MasterplanImageOverlay() {
+                this.opacity = 0.75;
+            }
+            MasterplanImageOverlay.prototype = new google.maps.OverlayView();
+
+            MasterplanImageOverlay.prototype.onAdd = function () {
+                var div = document.createElement('div');
+                div.style.position = 'absolute';
+                div.style.width = '100px';
+                div.style.height = '100px';
+                div.style.transformOrigin = '0 0';
+                div.style.pointerEvents = 'none';
+
+                var img = document.createElement('img');
+                img.style.width = '100%';
+                img.style.height = '100%';
+                img.style.display = 'block';
+                img.draggable = false;
+                div.appendChild(img);
+
+                this.div = div;
+                this.img = img;
+                this.getPanes().overlayLayer.appendChild(div);
+            };
+
+            MasterplanImageOverlay.prototype.draw = function () {
+                if (!this.div) {
+                    return;
+                }
+
+                if (!masterplanState || !masterplanImageUrl) {
+                    this.div.style.display = 'none';
+                    return;
+                }
+
+                this.div.style.display = '';
+                if (this.img.src !== masterplanImageUrl) {
+                    this.img.src = masterplanImageUrl;
+                }
+                this.img.style.opacity = this.opacity;
+
+                var projection = this.getProjection();
+                var tl = mpCornerLatLng([-masterplanState.halfWidth, masterplanState.halfHeight]);
+                var tr = mpCornerLatLng([masterplanState.halfWidth, masterplanState.halfHeight]);
+                var bl = mpCornerLatLng([-masterplanState.halfWidth, -masterplanState.halfHeight]);
+
+                var tlPx = projection.fromLatLngToDivPixel(new google.maps.LatLng(tl.lat, tl.lng));
+                var trPx = projection.fromLatLngToDivPixel(new google.maps.LatLng(tr.lat, tr.lng));
+                var blPx = projection.fromLatLngToDivPixel(new google.maps.LatLng(bl.lat, bl.lng));
+
+                var BASE = 100;
+                var a = (trPx.x - tlPx.x) / BASE;
+                var b = (trPx.y - tlPx.y) / BASE;
+                var c = (blPx.x - tlPx.x) / BASE;
+                var d = (blPx.y - tlPx.y) / BASE;
+
+                this.div.style.transform = 'matrix(' + a + ',' + b + ',' + c + ',' + d + ',' + tlPx.x + ',' + tlPx.y + ')';
+            };
+
+            MasterplanImageOverlay.prototype.onRemove = function () {
+                if (this.div && this.div.parentNode) {
+                    this.div.parentNode.removeChild(this.div);
+                }
+                this.div = null;
+            };
+
+            MasterplanImageOverlayClass = MasterplanImageOverlay;
+            return MasterplanImageOverlayClass;
+        }
+
+        function initMasterplanOverlay(initialLat, initialLng) {
+            var saved = currentMasterplanCorners();
+            masterplanState = saved
+                ? masterplanStateFromCorners(saved)
+                : {center: {lat: initialLat, lng: initialLng}, halfWidth: 60, halfHeight: 60, rotation: 0};
+
+            var OverlayClass = getMasterplanOverlayClass();
+            masterplanOverlayView = new OverlayClass();
+            masterplanOverlayView.setMap(boundsMap);
+
+            masterplanCenterMarker = new google.maps.Marker({
+                map: boundsMap,
+                draggable: true,
+                icon: {path: google.maps.SymbolPath.CIRCLE, scale: 7, fillColor: '#ff6a00', fillOpacity: 1, strokeColor: '#fff', strokeWeight: 2},
+                title: 'اسحب لتحريك الماستر بلان بالكامل'
+            });
+
+            masterplanResizeMarker = new google.maps.Marker({
+                map: boundsMap,
+                draggable: true,
+                icon: {path: google.maps.SymbolPath.CIRCLE, scale: 6, fillColor: '#1b84ff', fillOpacity: 1, strokeColor: '#fff', strokeWeight: 2},
+                title: 'اسحب لتكبير/تصغير الماستر بلان'
+            });
+
+            masterplanRotateMarker = new google.maps.Marker({
+                map: boundsMap,
+                draggable: true,
+                icon: {path: google.maps.SymbolPath.CIRCLE, scale: 6, fillColor: '#22c55e', fillOpacity: 1, strokeColor: '#fff', strokeWeight: 2},
+                title: 'اسحب لتدوير الماستر بلان'
+            });
+
+            repositionMasterplanHandles();
+            syncMasterplanCornersInput();
+
+            masterplanCenterMarker.addListener('drag', function () {
+                var pos = masterplanCenterMarker.getPosition();
+                masterplanState.center = {lat: pos.lat(), lng: pos.lng()};
+                afterMasterplanChange();
+            });
+
+            masterplanResizeMarker.addListener('drag', function () {
+                var pos = masterplanResizeMarker.getPosition();
+                var offset = mpMetersOffset(masterplanState.center, {lat: pos.lat(), lng: pos.lng()});
+                var local = mpUnrotate(offset.dx, offset.dy, masterplanState.rotation);
+                masterplanState.halfWidth = Math.max(5, Math.abs(local.x));
+                masterplanState.halfHeight = Math.max(5, Math.abs(local.y));
+                afterMasterplanChange();
+            });
+
+            masterplanRotateMarker.addListener('drag', function () {
+                var pos = masterplanRotateMarker.getPosition();
+                var offset = mpMetersOffset(masterplanState.center, {lat: pos.lat(), lng: pos.lng()});
+                masterplanState.rotation = Math.atan2(offset.dy, offset.dx) * 180 / Math.PI - 90;
+                afterMasterplanChange();
+            });
+
+            var opacityInput = document.getElementById('masterplanOpacity');
+            if (opacityInput) {
+                opacityInput.addEventListener('input', function () {
+                    masterplanOverlayView.opacity = Number(opacityInput.value) / 100;
+                    masterplanOverlayView.draw();
+                });
+                masterplanOverlayView.opacity = Number(opacityInput.value) / 100;
+            }
+
+            var fileInput = document.querySelector('input[name="master_plan"]');
+            if (fileInput) {
+                fileInput.addEventListener('change', function () {
+                    if (this.files && this.files[0]) {
+                        masterplanImageUrl = URL.createObjectURL(this.files[0]);
+                        masterplanOverlayView.draw();
+                    }
+                });
+            }
+
+            var toggleBtn = document.getElementById('toggleMasterplanRect');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function () {
+                    var visible = masterplanCenterMarker.getMap() !== null;
+                    var nextMap = visible ? null : boundsMap;
+                    masterplanCenterMarker.setMap(nextMap);
+                    masterplanResizeMarker.setMap(nextMap);
+                    masterplanRotateMarker.setMap(nextMap);
+                    toggleBtn.textContent = visible ? 'إظهار أدوات الماستر بلان' : 'إخفاء أدوات الماستر بلان';
+                });
+            }
+        }
+
+        function addBoundsPoint(latLng) {
+            var markerInstance = new google.maps.Marker({
+                position: latLng,
+                map: boundsMap,
+                draggable: true,
+                label: String(boundsMarkers.length + 1)
+            });
+
+            markerInstance.addListener('drag', function () {
+                redrawBoundsPolygon();
+                syncBoundsInput();
+            });
+
+            markerInstance.addListener('dragend', function () {
+                redrawBoundsPolygon();
+                syncBoundsInput();
+            });
+
+            boundsMarkers.push(markerInstance);
+            redrawBoundsPolygon();
+            syncBoundsInput();
+        }
+
+        function redrawBoundsPolygon() {
+            if (boundsPolygon) {
+                boundsPolygon.setMap(null);
+            }
+
+            if (boundsMarkers.length < 2) {
+                return;
+            }
+
+            boundsPolygon = new google.maps.Polygon({
+                paths: boundsMarkers.map(function (markerItem) {
+                    return markerItem.getPosition();
+                }),
+                strokeColor: '#1b84ff',
+                strokeOpacity: 1,
+                strokeWeight: 2,
+                fillColor: '#1b84ff',
+                fillOpacity: 0.18
+            });
+
+            boundsPolygon.setMap(boundsMap);
+        }
+
+        function syncBoundsInput() {
+            var boundsInput = document.getElementById('bounds');
+            var status = document.getElementById('boundsStatus');
+
+            if (!boundsMarkers.length) {
+                status.textContent = 'اختر نقاط حدود المشروع من الخريطة.';
+                return;
+            }
+
+            var coordinates = boundsMarkers.map(function (markerItem) {
+                var position = markerItem.getPosition();
+                return [
+                    Number(position.lng().toFixed(6)),
+                    Number(position.lat().toFixed(6))
+                ];
+            });
+
+            if (coordinates.length >= 3) {
+                coordinates.push(coordinates[0]);
+            }
+
+            boundsInput.value = JSON.stringify({
+                type: 'Polygon',
+                coordinates: [coordinates]
+            });
+            syncMapDerivedInputs();
+
+            status.textContent = coordinates.length >= 4
+                ? 'تم تحديث حدود المشروع. يمكنك سحب النقاط لتعديلها.'
+                : 'أضف 3 نقاط على الأقل لتكوين حدود المشروع.';
+        }
+
+        function clearBounds() {
+            boundsMarkers.forEach(function (markerItem) {
+                markerItem.setMap(null);
+            });
+            boundsMarkers = [];
+
+            if (boundsPolygon) {
+                boundsPolygon.setMap(null);
+                boundsPolygon = null;
+            }
+        }
+
+        function loadExistingBounds() {
+            var boundsInput = document.getElementById('bounds');
+            var status = document.getElementById('boundsStatus');
+            var rawValue = boundsInput.value ? boundsInput.value.trim() : '';
+
+            clearBounds();
+
+            if (!rawValue) {
+                status.textContent = 'اختر نقاط حدود المشروع من الخريطة.';
+                return;
+            }
+
+            try {
+                var parsed = parseMapJson(rawValue);
+                if (!parsed) {
+                    throw new Error('Invalid bounds payload');
+                }
+
+                if (Array.isArray(parsed) && parsed.length === 4) {
+                    var west = parseFloat(parsed[0]);
+                    var south = parseFloat(parsed[1]);
+                    var east = parseFloat(parsed[2]);
+                    var north = parseFloat(parsed[3]);
+
+                    parsed = {
+                        type: 'Polygon',
+                        coordinates: [[
+                            [west, north],
+                            [east, north],
+                            [east, south],
+                            [west, south],
+                            [west, north]
+                        ]]
+                    };
+                }
+
+                var polygon = parsed.geometry && parsed.geometry.type === 'Polygon' ? parsed.geometry : parsed;
+                var ring = polygon && polygon.coordinates && polygon.coordinates[0] ? polygon.coordinates[0] : [];
+
+                if (ring.length && ring.length > 1) {
+                    var isClosed = ring[0][0] === ring[ring.length - 1][0] && ring[0][1] === ring[ring.length - 1][1];
+                    if (isClosed) {
+                        ring = ring.slice(0, -1);
+                    }
+                }
+
+                ring.forEach(function (point) {
+                    if (Array.isArray(point) && point.length >= 2) {
+                        addBoundsPoint(new google.maps.LatLng(parseFloat(point[1]), parseFloat(point[0])));
+                    }
+                });
+
+                if (boundsMarkers.length) {
+                    var bounds = new google.maps.LatLngBounds();
+                    boundsMarkers.forEach(function (markerItem) {
+                        bounds.extend(markerItem.getPosition());
+                    });
+                    boundsMap.fitBounds(bounds);
+                } else {
+                    status.textContent = 'اختر نقاط حدود المشروع من الخريطة.';
+                }
+            } catch (error) {
+                console.error('Invalid bounds JSON', error);
+                status.textContent = 'قيمة bounds الحالية غير صالحة.';
+            }
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=PREVIEW&libraries=places&callback=initMap">
+    </script>
+
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>إضافة كمبوند </h4>
+                </div>
+            </div>
+
+            <!-- /add -->
+            <div class="card">
+                <div class="card-body">
+                    <div class="spinner-border text-warning ajax-overlay d-none" role="status">
+                        <span class="sr-only">admin.Loading...</span>
+                    </div>
+                    <form method="post" id="add_product_form" action="#preview/admin/compounds"
+                          enctype="multipart/form-data" class="" class="was-validated needs-validation">
+                        <input type="hidden" name="_token" value="preview" autocomplete="off">                        <h5 class="card-title">المعلومات الرئيسية</h5>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>الاسم بالإنجليزية</label>
+                                    <input type="text" name="name_en" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>الاسم بالعربية</label>
+                                    <input type="text" name="name_ar" required>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="slug_en">Slug URL (English)</label>
+                                    <input type="text" name="slug_en" id="slug_en" value="" placeholder="compound-url">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="slug_ar">Slug URL (Arabic)</label>
+                                    <input type="text" name="slug_ar" id="slug_ar" value="" placeholder="رابط-الكمبوند">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="country_id">الدول</label>
+                                    <select class="select" name="country_id" id="country_id" required>
+                                        <option>اختر</option>
+                                                                                    <option
+                                                value="22">السعودية</option>
+                                                                                    <option
+                                                value="21">اليونان</option>
+                                                                                    <option
+                                                value="20">الإمارات</option>
+                                                                                    <option
+                                                value="24">تركيا</option>
+                                                                                    <option
+                                                value="25">بريطانيا</option>
+                                                                                    <option
+                                                value="26">عُمان</option>
+                                                                                    <option
+                                                value="27">قطر</option>
+                                                                                    <option
+                                                value="19">مصر</option>
+                                                                            </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="city_id">المنطقة </label>
+                                    <select class="select" name="city_id" id="city_id" required>
+                                        <option>اختر المنطقة </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="category_id">اختر المطور</label>
+                                    <select class="form-control js-example-basic-single select2" name="developer_id" id="developer_id" required>
+                                        <option>اختر </option>
+                                                                                    <option value="9">إيجين ليفينج</option>
+                                                                                    <option value="8">جلف هورايزون العقارية</option>
+                                                                                    <option value="7">مصر إيطاليا العقارية</option>
+                                                                                    <option value="6">تطوير مصر</option>
+                                                                                    <option value="5">أورا ديفلوبرز</option>
+                                                                                    <option value="4">ماونتن فيو</option>
+                                                                                    <option value="3">سوديك</option>
+                                                                                    <option value="2">بالم هيلز للتعمير</option>
+                                                                                    <option value="1">إعمار مصر</option>
+                                                                            </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="category_id">نوع البيع</label>
+                                    <select class="select" name="sale_type" id="sale_type" required>
+                                        <option value="">اختر </option>
+                                        <option value="developer_sale">بيع المطور</option>
+                                        <option value="resale">إعادة البيع</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="developer_price">سعر المطور</label>
+                                    <input type="number" class="form-control" name="developer_price" id="developer_price" min="0" step="1" value="">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="currency">العملة / Currency</label>
+                                    <select class="select" name="currency" id="currency">
+                                        <option value="EGP" selected>مصري - جنيه</option>
+                                        <option value="USD" >دولار - USD</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="phases">Phases</label>
+                                    <select class="form-control select2" name="phases[]" id="phases" multiple>
+                                                                                    <option value="301">مارينا هايتس</option>
+                                                                                    <option value="302">مارينا جيت</option>
+                                                                                    <option value="303">كريك جاردنز</option>
+                                                                                    <option value="304">فلل السعديات</option>
+                                                                                    <option value="305">بوليفارد الرياض</option>
+                                                                                    <option value="306">حدائق الرياض</option>
+                                                                                    <option value="307">واجهة جدة</option>
+                                                                                    <option value="308">بوسفور فيو</option>
+                                                                                    <option value="309">أنطاليا كوست</option>
+                                                                                    <option value="310">كناري كوارتر</option>
+                                                                                    <option value="311">مانشستر سنترال</option>
+                                                                                    <option value="312">خليج مسقط</option>
+                                                                                    <option value="313">تلال مسقط</option>
+                                                                                    <option value="314">لوسيل مارينا</option>
+                                                                                    <option value="315">بيرل ريزيدنسز</option>
+                                                                                    <option value="244">تلال السخنة</option>
+                                                                                    <option value="243">أزها</option>
+                                                                                    <option value="242">كمبوند ماونتن فيو السخنة</option>
+                                                                                    <option value="241">قرية فور</option>
+                                                                                    <option value="240">بو آيلاند</option>
+                                                                                    <option value="239">غزالة باي</option>
+                                                                                    <option value="238">منتجع لفلز</option>
+                                                                                    <option value="237">مزارين</option>
+                                                                                    <option value="236">نورث إيدج</option>
+                                                                                    <option value="235">كمبوند ماونتن فيو نورث كوست</option>
+                                                                                    <option value="234">ستيلا هايتس</option>
+                                                                                    <option value="233">قرية تلال</option>
+                                                                                    <option value="232">دي باي</option>
+                                                                                    <option value="231">قرية لافيستا باي ايست</option>
+                                                                                    <option value="230">سيزار</option>
+                                                                                    <option value="229">قرية بيوند بلو</option>
+                                                                                    <option value="228">قرية لافيستا باي</option>
+                                                                                    <option value="227">كمبوند جراند فاليز</option>
+                                                                                    <option value="226">ميدتاون سكاي</option>
+                                                                                    <option value="225">سيتي أوف أوديسيا</option>
+                                                                                    <option value="224">كينجز واي</option>
+                                                                                    <option value="223">أو ويست</option>
+                                                                                    <option value="222">كمبوند ماونتن فيو هايد بارك</option>
+                                                                                    <option value="221">كارمل</option>
+                                                                                    <option value="220">ذا إستيتس</option>
+                                                                                    <option value="219">كايرو جيت</option>
+                                                                                    <option value="218">الباتيو سولا</option>
+                                                                                    <option value="217">قطامية كريكس</option>
+                                                                                    <option value="216">ذا بالس</option>
+                                                                                    <option value="215">كمبوند سبرنجز</option>
+                                                                                    <option value="214">الباتيو 5 ايست</option>
+                                                                                    <option value="213">الباتيو كازا</option>
+                                                                                    <option value="212">الباتيو برايم</option>
+                                                                                    <option value="211">سوان ليك</option>
+                                                                                    <option value="210">ذا بروكس</option>
+                                                                                    <option value="209">ايتاج</option>
+                                                                                    <option value="208">سيليا</option>
+                                                                                    <option value="207">كمبوند بريفادو</option>
+                                                                                    <option value="206">كمبوند بلو تري</option>
+                                                                                    <option value="205">كمبوند جارنيت</option>
+                                                                                    <option value="204">كمبوند افيلين</option>
+                                                                                    <option value="203">كمبوند ايست فالي</option>
+                                                                                    <option value="202">كمبوند ذا بترفلاي</option>
+                                                                                    <option value="201">كمبوند سينز</option>
+                                                                                    <option value="291">سينز - المرحلة الأولى</option>
+                                                                                    <option value="292">سينز - المرحلة التانية</option>
+                                                                                    <option value="293">سينز - المرحلة التالتة</option>
+                                                                                    <option value="23">فيلات كريت البحرية</option>
+                                                                                    <option value="22">أثينا ريفييرا ريزيدنسز</option>
+                                                                                    <option value="21">سعديات لاجونز</option>
+                                                                                    <option value="20">كريك هاربور ريزيدنسز</option>
+                                                                                    <option value="19">هيدن هايتس</option>
+                                                                                    <option value="18">مراسي مارينا</option>
+                                                                                    <option value="17">ميفيدا باركس</option>
+                                                                                    <option value="16">البوسكو</option>
+                                                                                    <option value="15">المونت جلالة</option>
+                                                                                    <option value="14">جون</option>
+                                                                                    <option value="13">فوكا باي</option>
+                                                                                    <option value="12">هاسيندا باي</option>
+                                                                                    <option value="11">مراسي</option>
+                                                                                    <option value="10">بادية</option>
+                                                                                    <option value="9">بيل في</option>
+                                                                                    <option value="8">زيد ويست</option>
+                                                                                    <option value="7">أليفا</option>
+                                                                                    <option value="6">كمبوند بلوم فيلدز</option>
+                                                                                    <option value="5">ماونتن فيو آي سيتي</option>
+                                                                                    <option value="4">فيليت</option>
+                                                                                    <option value="3">زيد إيست</option>
+                                                                                    <option value="2">بالم هيلز القاهرة الجديدة</option>
+                                                                                    <option value="1">ميفيدا</option>
+                                                                                    <option value="90">مشروع تجريبي بدون وحدات</option>
+                                                                            </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="front">نوع العقار </label>
+                                    <select class="select" name="property_id" id="property_id">
+                                        <option value="">أختر </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="purpose">نوع التشطيب </label>
+                                    <select class="select" name="finishing_type_id" id="finishing_type_id" required>
+                                        <option>أختر </option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="property_status">ميعاد التسليم </label>
+                                    <select class="select" name="delivery_in" id="delivery_in" required>
+                                        <option value="1">جاهز التسليم </option>
+                                                                                    <option value="2025">2025 </option>
+                                                                                    <option value="2026">2026 </option>
+                                                                                    <option value="2027">2027 </option>
+                                                                                    <option value="2028">2028 </option>
+                                                                                    <option value="2029">2029 </option>
+                                                                                    <option value="2030">2030 </option>
+                                                                                    <option value="2031">2031 </option>
+                                                                                    <option value="2032">2032 </option>
+                                                                                    <option value="2033">2033 </option>
+                                                                                    <option value="2034">2034 </option>
+                                                                                    <option value="2035">2035 </option>
+                                                                                    <option value="2036">2036 </option>
+                                                                                    <option value="2037">2037 </option>
+                                                                                    <option value="2038">2038 </option>
+                                                                                    <option value="2039">2039 </option>
+                                                                                    <option value="2040">2040 </option>
+                                                                            </select>
+                                </div>
+                            </div>
+
+                                <div class="col-lg-4 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="property_status">حالة المشروع </label>
+                                    <select class="select" name="status" id="status" required>
+                                        <option value="1">نشر </option>
+                                        <option value="0" selected>عدم نشر </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                        <input type="checkbox" name="has_shary_index_data" value="1" id="has_shary_index_data" style="width: 24px; height: 24px;" >
+                                        إضافة بيانات شاري إندكس لهذا المشروع                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-12 shary-index-fields" style="display: none;">
+                                <div class="row">
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>متوسط السعر / م²</label><input type="number" step="0.01" min="0" class="form-control" name="avg_price_per_m" value=""></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>العائد على الاستثمار (ROI)</label><input type="number" step="0.01" class="form-control" name="roi" value=""></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>المؤشر</label><input type="number" min="0" max="100" class="form-control" name="index" value=""></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>معدل النمو</label><input type="number" step="0.01" class="form-control" name="growth_rate" value=""></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>نسبة الملاءة القانونية</label><input type="number" min="0" max="100" class="form-control" name="legal_solvency" value=""></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>الطلب</label><input type="number" min="0" max="100" class="form-control" name="demand" value=""></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>العائد الإيجاري</label><input type="number" step="0.01" class="form-control" name="rental_yield" value=""></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>السيولة</label><input type="text" class="form-control" name="liquidity" value="" placeholder="45 Day"></div></div>
+                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>اتحرك بسرعة</label><input type="text" class="form-control" name="act_fast" value="" placeholder="Act Fast"></div></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <h5 class="card-title">عنوان المشروع</h5>
+                        <div class="row">
+
+                            <div class="form-group">
+                                <div id="shoplocation" style="width:100%;height:350px"></div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>عنوان المشروع </label>
+                                    <input type="text" class="form-control" name="address"
+                                           value=""
+                                           id="autocomplete"
+                                           placeholder="بحث عن مكان" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mb-3" style="display: none">
+                                <label for="validationCustom04">Latitude</label>
+                                <input type="text"  class="form-control" name="lat"
+                                       value=""
+                                       id="lat" placeholder="ادخل موقع المشروع">
+                            </div>
+                            <div class="col-md-6 mb-3" style="display: none">
+                                <label for="validationCustom04">longitude</label>
+                                <input type="text"  class="form-control" name="lng"
+                                       value=""
+                                       id="lng" placeholder="ادخل موقع المشروع">
+                            </div>
+
+                            <div class="col-lg-12 col-sm-12 col-12">
+                                <div class="form-group">
+                                    <label>Project Bounds</label>
+                                    <input type="text" id="boundsSearch" class="form-control mb-2" placeholder="ابحث عن مكان للوصول السريع داخل حدود المشروع">
+                                    <div id="boundsMap" class="mb-2"></div>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <button type="button" id="resetBounds" class="btn btn-sm btn-outline-danger">إعادة رسم الحدود</button>
+                                        <small id="boundsStatus" class="text-muted">اختر نقاط حدود المشروع من الخريطة.</small>
+                                    </div>
+                                    <label class="mt-3">موضع الماستر بلان</label>
+                                    <p class="text-muted mb-2" style="font-size: 12px;">
+                                        <span style="color:#ff6a00; font-weight:bold;">النقطة البرتقالية</span> تحرك الماستر بلان بالكامل،
+                                        <span style="color:#1b84ff; font-weight:bold;">النقطة الزرقاء</span> تكبّر/تصغّر,
+                                        <span style="color:#22c55e; font-weight:bold;">النقطة الخضراء</span> تدوّر الصورة عشان تتظبط فوق حدود المشروع حتى لو الماستر بلان مايل.
+                                    </p>
+                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                        <label class="mb-0" style="font-size: 13px;">الشفافية</label>
+                                        <input type="range" id="masterplanOpacity" min="20" max="100" value="75" style="max-width: 200px;">
+                                        <button type="button" id="toggleMasterplanRect" class="btn btn-sm btn-outline-secondary">إخفاء أدوات الماستر بلان</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="bounds" id="bounds" value=''>
+                            <input type="hidden" name="coordinates" id="coordinates" value=''>
+                            <input type="hidden" name="masterplan_corners" id="masterplan_corners" value=''>
+
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>فيديو </label>
+                                    <input type="file" class="form-control" name="video"
+                                           value="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--  technical information  -->
+                        <hr>
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h4>خطط السداد </h4>
+                            </div>
+                        </div>
+
+                        <h5 class="card-title">خطط السداد</h5>
+                        <div class="row">
+
+                            <div class="col-lg-12 col-sm-12 col-12" id="form_payment_plan">
+                                <div class="form-group">
+
+                                    <div style="display: inline-flex; gap: 20px;">
+                                        <label
+                                            style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                            <input type="checkbox" name="payment_plan" value="1"
+                                                   id="payment_plan" style="width: 24px; height: 24px;">
+                                            خطط السداد                                        </label>
+
+                                            <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="payment_plan" value="2"
+                                                       id="cash" style="width: 24px; height: 24px;">
+                                                خصومات المشروع                                            </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row payment_append" id="payment_append" style="display: none;">
+                                <div class="col-lg-12 col-sm-12 col-12">
+                                    <button type="button" id="add_payment_plan_row"
+                                            class="btn btn-primary mb-3">إضافة خطط سداد</button>
+                                </div>
+                            </div>
+
+                            <div class="row cash_append" id="cash_append" style="display: none;">
+                                <div class="col-lg-12 col-sm-12 col-12">
+                                    <button type="button" id="add_cash_row" class="btn btn-primary mb-3">إضافة خصومات الكاش</button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+
+                        <h5 class="card-title">المرافق والميزات</h5>
+                        <div class="row">
+                            <div class="col-lg-12 col-sm-12 col-12" id="form_variation_type">
+                                <div class="form-group">
+                                    <div style="display: inline-flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="12"
+                                                       id="12" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/9fc5780db3e12international-school.svg.svg" alt="مدرسة دولية"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                مدرسة دولية
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="11"
+                                                       id="11" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/b74bff6211351private-beach.svg.svg" alt="شاطئ خاص"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                شاطئ خاص
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="10"
+                                                       id="10" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/ea63d451ca77dlagoons.svg.svg" alt="بحيرات صناعية"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                بحيرات صناعية
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="9"
+                                                       id="9" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/e48167bc27592underground-parking.svg.svg" alt="جراج تحت الأرض"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                جراج تحت الأرض
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="8"
+                                                       id="8" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/af8daa7d95783mosque.svg.svg" alt="مسجد"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                مسجد
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="7"
+                                                       id="7" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/6609784a35a2fjogging-track.svg.svg" alt="مسار للجري"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                مسار للجري
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="6"
+                                                       id="6" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/1a9dba569ae36commercial-area.svg.svg" alt="منطقة تجارية"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                منطقة تجارية
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="5"
+                                                       id="5" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/d582886cec84ekids-area.svg.svg" alt="منطقة ألعاب أطفال"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                منطقة ألعاب أطفال
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="4"
+                                                       id="4" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/566aca348d55c247-security.svg.svg" alt="أمن وحراسة 24 ساعة"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                أمن وحراسة 24 ساعة
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="3"
+                                                       id="3" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/125ab8e1cad00clubhouse.svg.svg" alt="نادي اجتماعي"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                نادي اجتماعي
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="2"
+                                                       id="2" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/fd3d4efe9bddegym.svg.svg" alt="صالة رياضية"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                صالة رياضية
+                                            </label>
+                                                                                    <label
+                                                style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+                                                <input type="checkbox" name="features[]" value="1"
+                                                       id="1" style="width: 24px; height: 24px;">
+                                                <img  src="a/images/services/8a6496ffe392aswimming-pool.svg.svg" alt="حمام سباحة"
+                                                     style="width: 20px; height: 20px; object-fit: contain;">
+                                                حمام سباحة
+                                            </label>
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <h5 class="card-title">بيانات للتواصل</h5>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>رقم الهاتف </label>
+                                    <input type="tel" class="form-control" name="phone"
+                                           value="">
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label>رقم واتس اب </label>
+                                    <input type="tel" class="form-control" name="whatsapp"
+                                           value="">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr>
+                        <h5 class="card-title">تفاصيل عن المشروع</h5>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="desc_en">الوصف بالإنجليزية </label>
+                                    <textarea class="form-control ckeditor_seo" name="desc_en" id="desc_en"
+                                              required></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="desc_ar">الوصف بالعربية</label>
+                                    <textarea class="form-control ckeditor_seo" name="desc_ar" id="desc_ar"
+                                              required></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+                        <h5 class="card-title">الأسئلة الشائعة</h5>
+                        <div id="compoundFaqRows">
+                            <div class="row compound-faq-row mb-3">
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Question English</label>
+                                        <input type="text" class="form-control" name="faq_question_en[]">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Question Arabic</label>
+                                        <input type="text" class="form-control" name="faq_question_ar[]">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Answer English</label>
+                                        <textarea class="form-control" name="faq_answer_en[]" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <label>Answer Arabic</label>
+                                        <textarea class="form-control" name="faq_answer_ar[]" rows="3"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button type="button" class="btn btn-danger remove-compound-faq-row">حذف</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" id="add_compound_faq_row" class="btn btn-primary mb-3">إضافة الأسئلة الشائعة</button>
+
+                        <br>
+                        <div class="row">
+
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <div class="form-group">
+                                    <label> صورة </label>
+                                    <div class="custom-file-container" data-upload-id="myFirstImage">
+                                        <label>تحميل (ملف واحد) <a href="javascript:void(0)"
+                                                                                      class="custom-file-container__image-clear"
+                                                                                      title="Clear PDF">x</a></label>
+                                        <label class="custom-file-container__custom-file">
+                                            <input type="file"
+                                                   class="custom-file-container__custom-file__custom-file-input"
+                                                   name="image" accept="image/*">
+                                            <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+                                            <span
+                                                class="custom-file-container__custom-file__custom-file-control"></span>
+                                        </label>
+                                        <div class="custom-file-container__image-preview"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <div class="form-group">
+                                    <label> مستر بلان </label>
+                                    <div class="custom-file-container" data-upload-id="mySecondImage">
+                                        <label>تحميل (ملف واحد) <a href="javascript:void(0)"
+                                                                                      class="custom-file-container__image-clear"
+                                                                                      title="Clear Image">x</a></label>
+                                        <label class="custom-file-container__custom-file">
+                                            <input type="file"
+                                                   class="custom-file-container__custom-file__custom-file-input"
+                                                   name="master_plan" accept="image/*,.pdf,application/pdf">
+                                            <input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+                                            <span
+                                                class="custom-file-container__custom-file__custom-file-control"></span>
+                                        </label>
+                                        <div class="custom-file-container__image-preview"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <br>
+                                <br>
+                                <div class="form-group">
+                                    <label>صور المشروع (متعددة)  </label>
+                                    <input type="file"
+                                           class="form-control"
+                                           name="images[]" multiple>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <h5 class="card-title">تحسين محركات البحث</h5>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="meta_title_en">عنوان الميتا (إنجليزي) </label>
+                                    <textarea class="form-control" name="meta_title_en"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="meta_title_ar">عنوان الميتا (عربي)</label>
+                                    <textarea class="form-control" name="meta_title_ar"
+                                    ></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="meta_desc_en">وصف الميتا (إنجليزي) </label>
+                                    <textarea class="form-control" name="meta_desc_en"
+                                    ></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                    <label for="meta_desc_ar">وصف الميتا (عربي)</label>
+                                    <textarea class="form-control" name="meta_desc_ar"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+
+                        <input type="hidden" value="" name="lang" id="lang">
+                        <div class="col-lg-12">
+                            <button id="add_product" class="btn btn-submit me-2">إرسال </button>
+                            <a href="admin-compounds-create.html" class="btn btn-cancel">إلغاء </a>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+            <!-- /add -->
+        </div>
+    </div>
+</div>
+<!-- /Main Wrapper -->
+    <!-- jQuery -->
+<script src="a/assets/js/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap Core JS -->
+<script src="a/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- Feather Icon JS -->
+<script src="a/assets/js/feather.min.js"></script>
+
+<!-- Slimscroll JS -->
+<script src="a/assets/js/jquery.slimscroll.min.js"></script>
+
+<!-- Datatable JS -->
+<script src="a/assets/js/jquery.dataTables.min.js"></script>
+<script src="a/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="a/assets/plugins/select2/js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
+<script src="a/assets/js/moment.min.js"></script>
+<script src="a/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Chart JS -->
+<script src="a/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="a/assets/plugins/apexchart/chart-data.js"></script>
+
+<script src="a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+
+
+
+<!-- Owl JS -->
+<script src="a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+<!-- Fileupload JS -->
+<script src="a/assets/plugins/fileupload/fileupload.min.js"></script>
+<!-- Sweetalert 2 -->
+<script src="a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<!-- Custom JS -->
+<script src="a/assets_rtl/js/script.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.confirm-text', function(e) {
+
+            var parentElement = $(this).parent().parent();
+        var deleteUrl = $(this);
+        Swal.fire({
+            title: "هل أنت متأكد؟",
+            text: "سيتم حذف البيانات ولا يمكن استرجاعها مرة اخرى",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "نعم، احذفه!",
+            cancelButtonText: "إلغاء", // Translate "Cancel" here
+            confirmButtonClass: "btn btn-primary",
+            cancelButtonClass: "btn btn-danger ml-1",
+            buttonsStyling: !1,
+        }).then(function (t) {
+
+            if (t.value) {
+                parentElement.hide();
+                deleted = deleteUrl.data("delete-url");
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: deleted,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
+                    },
+                    success: function (result) {
+                        // Hide the parent element (delete the row)
+                        parentElement.hide();
+                        // Display a success message
+                        Swal.fire({
+                            type: "success",
+                            title: "تم الحذف!",
+                            text: "تم الحذف بنجاح",
+                            confirmButtonClass: "btn btn-success",
+                        });
+                        // // Redirect to another URL
+                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
+                    },
+                    // User confirmed, hide the parent element (delete the row)
+                })
+            }
+        });
+    })
+    });
+</script>
+     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة"}};</script>
+<script src="a/js/shary-admin/shell.js" defer></script>
+       <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
+</html>
