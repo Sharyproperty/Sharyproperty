@@ -3,6 +3,7 @@
     //  - rent page tabs (furnished / unfurnished) and search page tabs (resale / rent): a saved copy of each tab opens directly (one step, the tab stays selected)
     //  - any other filter: a short note says it works on the server (on Laravel the list is filtered in place, without reloading the page)
     var file = location.pathname.split('/').pop() || '';
+    if (file && file.indexOf('.') === -1) file += '.html';   // the home page search opens ".../for-sale?..." without ".html" (the host serves the same file)
     var en = document.documentElement.lang === 'en';
     var m = file.match(/^(for-rent|for-sale)(?:--(furnished|offer)-([a-z]+))?\.html$/);
     var base = m ? m[1] : '', key = base === 'for-rent' ? 'furnished' : 'offer';
@@ -43,8 +44,9 @@
     var q = new URLSearchParams(location.search);
     var want = q.has(key) ? q.get(key) : null;
     if (want === null && base === 'for-sale') {
-        var legacy = q.get('sale_type') || q.get('status') || '';
-        if (legacy === 'resale' || legacy === 'rent') want = legacy;
+        // same rule as the server: "status" (the choice next to the home search box) first, then "sale_type" (the tab)
+        var legacyMap = { rent: 'rent', resale: 'resale', developer_sale: 'developer' };
+        [q.get('status'), q.get('sale_type')].some(function (value) { if (value && legacyMap[value]) { want = legacyMap[value]; return true; } return false; });
     }
     var other = q.get('snap') === '1';
     q.forEach(function (value, name) { if (value !== '' && IGNORE.indexOf(name.replace(/\[\]$/, '')) === -1) other = true; });
