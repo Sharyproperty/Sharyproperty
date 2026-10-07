@@ -8380,3 +8380,16 @@ html, body {
 @media (min-width: 1280px) {
   .shary-home-root .best-projects-track .project-card { width: calc((100cqi - 64px) / 4.45) !important; }
 }
+
+/* ---- ديسك توب: الهيدر والفوتر في الهوم واخدين عرض الشاشة زي محتوى الهوم بالظبط (.container-x) ----
+   اللوجو يمين على بداية الكروت ، و"تسجيل الدخول" / زرار اللغة شمال على نهايتها — على أي مقاس شاشة وأي زوم (نفس معادلة .container-x). */
+@media (min-width: 1024px) {
+  header > .site-container, footer .site-container { width: min(95% - 32px, 1180px); max-width: 1240px; padding-left: 0; padding-right: 0; }
+  /* أفضل المطورين: 9 لوجوهات في عرض الصف (والباقي بالسحب) */
+  .shary-home-root .developers-carousel { container-type: inline-size; }
+  .shary-home-root .developers-track { gap: 12px; }
+  .shary-home-root .developer-card { flex: 0 0 calc((100cqi - 96px) / 9); width: calc((100cqi - 96px) / 9); height: calc((100cqi - 96px) / 9); }
+}
+@media (min-width: 1300px) {
+  header > .site-container, footer .site-container { width: 95%; }
+}

@@ -544,7 +544,7 @@
             // خانات الوحدة (غرف / حمامات / مساحة) أو أنواع وحدات المشروع
             if (isUnit) {
                 var cells = make('ul', 'sai__card-cells');
-                [[item.beds, T.beds, ICONS.bed], [item.baths, T.baths, ICONS.bath], [item.area, T.area, ICONS.size]].forEach(function (cell) {
+                [[item.beds, T.beds, ICONS.bed], [item.baths, T.baths, ICONS.bath], [item.area_text || item.area, T.area, ICONS.size]].forEach(function (cell) {
                     if (cell[0] == null || cell[0] === '') return;
                     var li = make('li');
                     li.insertAdjacentHTML('beforeend', cell[2]);
