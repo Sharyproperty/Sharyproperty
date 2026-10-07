@@ -637,32 +637,20 @@ video {
 
 :root {
   --z: 1;
-  --shary-w: min(calc(100vw / var(--z, 1)) - 134px, 1240px);
+  --unz: 1;
+  --z-one: 1;
+  --shary-w: min(calc(95vw / var(--z, 1)) - 32px, calc(100vw / var(--z, 1)) - 132px, 1180px);
 }
 
-/* ديسك توب: الموقع كله بيتعرض مكبّر 110% (زي زوم 110% في المتصفح) عشان الخط والعناصر تبقى مريحة للعين.
-       من أول شاشة عرضها 1072px ← 110% (يعني كل اللابتوبات والشاشات) ، وأصغر مقاس ديسك توب (1024 – 1071) ← 105% عشان الهيدر يفضل سطر واحد. الموبايل والتابلت زي ما هم.
-       ‎--z هو نسبة التكبير: كل قيمة vw / vh في ملفات الـ CSS بتتقسم عليه (resources/shary-src/zoom-units.cjs بعد البناء) عشان مفيش حاجة تطلع بره الشاشة.
-       عرض المحتوى سايب هامش على الجنب قد زرارين التواصل العايمين (Shary AI وواتساب) فما بيغطوش الصفحة. */
-
-@media (min-width: 1024px) {
+@media (min-width: 1300px) {
   :root {
-    --z: 1.05;
-    --shary-w: min(calc(100vw / var(--z, 1)) - 116px, 1240px);
+    --shary-w: min(calc(95vw / var(--z, 1)), calc(100vw / var(--z, 1)) - 152px, 1240px);
   }
 }
 
-@media (min-width: 1072px) {
-  :root {
-    --z: 1.1;
-  }
-}
-
-@media (min-width: 1124px) {
-  :root {
-    --shary-w: min(calc(100vw / var(--z, 1)) - 134px, 1240px);
-  }
-}
+/* الموقع بيفتح بمقاسه العادي 100% (من غير تكبير). عرض المحتوى سايب هامش على الجنب قد زرارين التواصل العايمين (Shary AI وواتساب) فما بيغطوش الصفحة.
+       ‎--z = نسبة تكبير الديسك توب (1 = من غير تكبير). لو حبيتوا تكبّروا الموقع كله بعدين: غيّروا ‎--z (مثلاً 1.1) و‎--unz = 1 / ‎--z جوه media (min-width: 1024px) —
+       كل قيم vw / vh في الـ CSS مقسومة على ‎--z (resources/shary-src/zoom-units.cjs) فمفيش حاجة هتطلع بره الشاشة. */
 
 @media (min-width: 1024px) {
   html {
@@ -723,11 +711,11 @@ button.site-login {
 
 @media (min-width: 1024px) {
   header .site-nav {
-    gap: 15px;
+    gap: 16px;
   }
 
   header .site-nav .site-nav__link {
-    font-size: 14.5px;
+    font-size: 15.5px;
     font-weight: 500;
     color: #1c1c1e;
   }
@@ -745,11 +733,11 @@ button.site-login {
 
 @media (min-width: 1250px) {
   header .site-nav {
-    gap: 22px;
+    gap: 24px;
   }
 
   header .site-nav .site-nav__link {
-    font-size: 15px;
+    font-size: 16.5px;
   }
 
   .site-login {
@@ -765,11 +753,11 @@ button.site-login {
 
 @media (min-width: 1490px) {
   header .site-nav {
-    gap: 28px;
+    gap: 30px;
   }
 
   header .site-nav .site-nav__link {
-    font-size: 15.5px;
+    font-size: 17px;
   }
 
   .site-login {
@@ -785,11 +773,11 @@ button.site-login {
 
 @media (min-width: 1024px) and (max-width: 1249px) {
   [lang="ar"] header .site-nav {
-    gap: 11px;
+    gap: 13px;
   }
 
   [lang="ar"] header .site-nav .site-nav__link {
-    font-size: 14px;
+    font-size: 15px;
   }
 }
 
@@ -798,23 +786,23 @@ button.site-login {
 @media (min-width: 1024px) and (max-width: 1123px) {
   header .site-nav,
         [lang="ar"] header .site-nav {
-    gap: 9px;
+    gap: 11px;
   }
 
   html[lang="en"] header .site-nav {
-    gap: 8px;
+    gap: 9px;
   }
 
   header .site-nav .site-nav__link,
         [lang="ar"] header .site-nav .site-nav__link,
         html[lang="en"] header .site-nav .site-nav__link {
-    font-size: 13.5px;
+    font-size: 14.5px;
   }
 }
 
 @media (min-width: 1250px) and (max-width: 1309px) {
   [lang="ar"] header .site-nav {
-    gap: 16px;
+    gap: 18px;
   }
 }
 
@@ -822,31 +810,31 @@ button.site-login {
 
 @media (min-width: 1024px) and (max-width: 1249px) {
   [lang="en"] header .site-nav {
-    gap: 12px;
+    gap: 13px;
   }
 
   [lang="en"] header .site-nav .site-nav__link {
-    font-size: 14px;
+    font-size: 15px;
   }
 }
 
 @media (min-width: 1250px) {
   [lang="en"] header .site-nav {
-    gap: 20px;
+    gap: 22px;
   }
 
   [lang="en"] header .site-nav .site-nav__link {
-    font-size: 14.5px;
+    font-size: 16px;
   }
 }
 
 @media (min-width: 1490px) {
   [lang="en"] header .site-nav {
-    gap: 26px;
+    gap: 28px;
   }
 
   [lang="en"] header .site-nav .site-nav__link {
-    font-size: 15px;
+    font-size: 16.5px;
   }
 }
 
@@ -8201,6 +8189,90 @@ input:focus-visible + .area-chip,
   }
 }
 
+/* صفحة تسجيل الدخول على الديسك توب (auth-fit): الصفحة كلها (الفورم + التليفون + الكود) تبان في أول شاشة من غير نزول —
+       الفورم والتليفون بمقاس أهدى (مش مكبّرين) ، والمقاس بيتحدد على ارتفاع الشاشة: اللابتوب القصير أصغر والشاشة الطويلة أكبر */
+
+@media (min-width: 1024px) {
+  .site-container.auth-page {
+    padding-top: 14px;
+    padding-bottom: 20px;
+  }
+
+  .auth-wrap {
+    zoom: 0.94;
+    gap: 32px;
+    padding: 26px 40px;
+  }
+
+  .auth-wrap .auth-card {
+    padding-top: 26px;
+    padding-bottom: 22px;
+  }
+
+  .auth-wrap .auth-promo {
+    gap: 12px;
+  }
+
+  .auth-wrap .auth-promo__art {
+    height: 400px;
+  }
+
+  .auth-wrap .auth-promo__art::before {
+    height: 340px;
+    width: 340px;
+  }
+
+  .auth-wrap .auth-promo__art::after {
+    box-shadow: 300px 260px 0 3px #2a9d8f;
+  }
+
+  .auth-wrap .auth-promo__qr {
+    width: 150px;
+    padding: 9px 9px 8px;
+    font-size: 12.5px;
+  }
+
+  .auth-wrap .auth-promo__qr img {
+    height: 124px;
+    width: 124px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 860px) {
+  .auth-wrap {
+    zoom: 0.86;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 780px) {
+  .auth-wrap {
+    zoom: 0.79;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 720px) {
+  .auth-wrap {
+    zoom: 0.73;
+    padding-block: 20px;
+  }
+
+  .auth-wrap .auth-promo__art {
+    height: 360px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 640px) {
+  .auth-wrap {
+    zoom: 0.68;
+    padding-block: 16px;
+  }
+
+  .auth-wrap .auth-card {
+    padding-top: 20px;
+    padding-bottom: 16px;
+  }
+}
+
 .auth-card {
   margin-inline: auto;
   width: 100%;
@@ -9573,8 +9645,8 @@ input:focus-visible + .area-chip,
 
   .rent-gallery {
     display: flex;
-    height: 500px;
-    height: clamp(320px, calc(calc(100vh / var(--z, 1)) - 240px), 500px);
+    height: 540px;
+    height: clamp(340px, calc(calc(100vh / var(--z, 1)) - 256px), 540px);
     gap: 10px;
   }
 
@@ -12839,33 +12911,34 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 
 .quick-fabs {
   right: 28px;
+  bottom: 112px;
 }
 
-/* الزرارين بحجمهم الأصلي (64px على الشاشة — 58px × تكبير 110%) ولازقين في أقصى اليمين جوه الهامش الأبيض */
+/* ديسك توب: الزرارين في أقصى اليمين جوه الهامش الأبيض (مش فوق المحتوى) وبحجمهم الأصلي 64px — على اللابتوب الصغير (أقل من 1300px) 54px عشان الهامش أضيق */
 
 @media (min-width: 1024px) {
   .quick-fabs {
     right: 4px;
-    bottom: 92px;
-    gap: 12px;
+    bottom: 22px;
+    gap: 10px;
   }
 
   .quick-fabs .area-fab {
-    height: 50px;
-    width: 50px;
+    height: 54px;
+    width: 54px;
   }
 }
 
-@media (min-width: 1124px) {
+@media (min-width: 1300px) {
   .quick-fabs .area-fab {
-    height: 58px;
-    width: 58px;
+    height: 64px;
+    width: 64px;
   }
 }
 
 @media (min-width: 1536px) {
   .quick-fabs {
-    right: 10px;
+    right: 12px;
   }
 }
 
@@ -12873,27 +12946,6 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   .quick-fabs {
     right: 28px;
   }
-}
-
-/* الفورمات ولوحات الفلاتر (طلب مقابلة / طلب عرض / فلاتر البحث والمناطق / اختيارات المؤشر): من غير أي تغميق ورا اللوحة —
-       الصفحة بتفضل ظاهرة زي ما هي ، واللوحة نفسها ليها ظل خفيف حواليها عشان تبان. الضغط بره اللوحة لسه بيقفلها (no-form-dim) */
-
-[data-meeting-modal] > .absolute.inset-0,
-    [data-offer-modal] > .absolute.inset-0,
-    [data-index-advanced] > .absolute.inset-0,
-    [data-index-picker] > .absolute.inset-0,
-    [data-filter-sheet] > .absolute.inset-0 {
-  background-color: transparent !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-}
-
-[data-meeting-modal] > .absolute.inset-0 + *,
-    [data-offer-modal] > .absolute.inset-0 + *,
-    [data-index-advanced] > .absolute.inset-0 + *,
-    [data-index-picker] > .absolute.inset-0 + *,
-    [data-filter-sheet] > .absolute.inset-0 + * {
-  box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
 }
 
 .area-fab__label {
@@ -18021,10 +18073,6 @@ img.abroad-dev__logo {
   bottom: 0.625rem;
 }
 
-.bottom-28 {
-  bottom: 7rem;
-}
-
 .bottom-3 {
   bottom: 0.75rem;
 }
@@ -21146,26 +21194,6 @@ img.abroad-dev__logo {
 
 /* ============================== صفحة المنطقة ============================== */
 
-[data-meeting-modal] > .after\:absolute.inset-0::after,
-    [data-offer-modal] > .after\:absolute.inset-0::after,
-    [data-index-advanced] > .after\:absolute.inset-0::after,
-    [data-index-picker] > .after\:absolute.inset-0::after,
-    [data-filter-sheet] > .after\:absolute.inset-0::after {
-  content: var(--tw-content);
-  background-color: transparent !important;
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-}
-
-[data-meeting-modal] > .after\:absolute.inset-0 + *::after,
-    [data-offer-modal] > .after\:absolute.inset-0 + *::after,
-    [data-index-advanced] > .after\:absolute.inset-0 + *::after,
-    [data-index-picker] > .after\:absolute.inset-0 + *::after,
-    [data-filter-sheet] > .after\:absolute.inset-0 + *::after {
-  content: var(--tw-content);
-  box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-}
-
 @media not all and (min-width: 1024px) {
   .max-lg\:hidden {
     display: none;
@@ -22125,186 +22153,6 @@ img.abroad-dev__logo {
 
   .lg\:hidden.sai__ctx {
     display: none;
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0,
-    [data-offer-modal] > .lg\:absolute.inset-0,
-    [data-index-advanced] > .lg\:absolute.inset-0,
-    [data-index-picker] > .lg\:absolute.inset-0,
-    [data-filter-sheet] > .lg\:absolute.inset-0 {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute,
-    [data-offer-modal] > .lg\:inset-0.absolute,
-    [data-index-advanced] > .lg\:inset-0.absolute,
-    [data-index-picker] > .lg\:inset-0.absolute,
-    [data-filter-sheet] > .lg\:inset-0.absolute {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0,
-    [data-offer-modal] > .lg\:absolute.inset-0,
-    [data-index-advanced] > .lg\:absolute.inset-0,
-    [data-index-picker] > .lg\:absolute.inset-0,
-    [data-filter-sheet] > .lg\:absolute.inset-0 {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute,
-    [data-offer-modal] > .lg\:inset-0.absolute,
-    [data-index-advanced] > .lg\:inset-0.absolute,
-    [data-index-picker] > .lg\:inset-0.absolute,
-    [data-filter-sheet] > .lg\:inset-0.absolute {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0,
-    [data-offer-modal] > .lg\:absolute.inset-0,
-    [data-index-advanced] > .lg\:absolute.inset-0,
-    [data-index-picker] > .lg\:absolute.inset-0,
-    [data-filter-sheet] > .lg\:absolute.inset-0 {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute,
-    [data-offer-modal] > .lg\:inset-0.absolute,
-    [data-index-advanced] > .lg\:inset-0.absolute,
-    [data-index-picker] > .lg\:inset-0.absolute,
-    [data-filter-sheet] > .lg\:inset-0.absolute {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0,
-    [data-offer-modal] > .lg\:absolute.inset-0,
-    [data-index-advanced] > .lg\:absolute.inset-0,
-    [data-index-picker] > .lg\:absolute.inset-0,
-    [data-filter-sheet] > .lg\:absolute.inset-0 {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute,
-    [data-offer-modal] > .lg\:inset-0.absolute,
-    [data-index-advanced] > .lg\:inset-0.absolute,
-    [data-index-picker] > .lg\:inset-0.absolute,
-    [data-filter-sheet] > .lg\:inset-0.absolute {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0,
-    [data-offer-modal] > .lg\:absolute.inset-0,
-    [data-index-advanced] > .lg\:absolute.inset-0,
-    [data-index-picker] > .lg\:absolute.inset-0,
-    [data-filter-sheet] > .lg\:absolute.inset-0 {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute,
-    [data-offer-modal] > .lg\:inset-0.absolute,
-    [data-index-advanced] > .lg\:inset-0.absolute,
-    [data-index-picker] > .lg\:inset-0.absolute,
-    [data-filter-sheet] > .lg\:inset-0.absolute {
-    background-color: transparent !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
-    [data-offer-modal] > .lg\:absolute.inset-0 + *,
-    [data-index-advanced] > .lg\:absolute.inset-0 + *,
-    [data-index-picker] > .lg\:absolute.inset-0 + *,
-    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute + *,
-    [data-offer-modal] > .lg\:inset-0.absolute + *,
-    [data-index-advanced] > .lg\:inset-0.absolute + *,
-    [data-index-picker] > .lg\:inset-0.absolute + *,
-    [data-filter-sheet] > .lg\:inset-0.absolute + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
-    [data-offer-modal] > .lg\:absolute.inset-0 + *,
-    [data-index-advanced] > .lg\:absolute.inset-0 + *,
-    [data-index-picker] > .lg\:absolute.inset-0 + *,
-    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute + *,
-    [data-offer-modal] > .lg\:inset-0.absolute + *,
-    [data-index-advanced] > .lg\:inset-0.absolute + *,
-    [data-index-picker] > .lg\:inset-0.absolute + *,
-    [data-filter-sheet] > .lg\:inset-0.absolute + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
-    [data-offer-modal] > .lg\:absolute.inset-0 + *,
-    [data-index-advanced] > .lg\:absolute.inset-0 + *,
-    [data-index-picker] > .lg\:absolute.inset-0 + *,
-    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute + *,
-    [data-offer-modal] > .lg\:inset-0.absolute + *,
-    [data-index-advanced] > .lg\:inset-0.absolute + *,
-    [data-index-picker] > .lg\:inset-0.absolute + *,
-    [data-filter-sheet] > .lg\:inset-0.absolute + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
-    [data-offer-modal] > .lg\:absolute.inset-0 + *,
-    [data-index-advanced] > .lg\:absolute.inset-0 + *,
-    [data-index-picker] > .lg\:absolute.inset-0 + *,
-    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute + *,
-    [data-offer-modal] > .lg\:inset-0.absolute + *,
-    [data-index-advanced] > .lg\:inset-0.absolute + *,
-    [data-index-picker] > .lg\:inset-0.absolute + *,
-    [data-filter-sheet] > .lg\:inset-0.absolute + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:absolute.inset-0 + *,
-    [data-offer-modal] > .lg\:absolute.inset-0 + *,
-    [data-index-advanced] > .lg\:absolute.inset-0 + *,
-    [data-index-picker] > .lg\:absolute.inset-0 + *,
-    [data-filter-sheet] > .lg\:absolute.inset-0 + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
-  }
-
-  [data-meeting-modal] > .lg\:inset-0.absolute + *,
-    [data-offer-modal] > .lg\:inset-0.absolute + *,
-    [data-index-advanced] > .lg\:inset-0.absolute + *,
-    [data-index-picker] > .lg\:inset-0.absolute + *,
-    [data-filter-sheet] > .lg\:inset-0.absolute + * {
-    box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 -6px 44px -10px rgba(18, 58, 92, 0.38);
   }
 
   @media (min-width: 1024px) {
@@ -23331,10 +23179,6 @@ img.abroad-dev__logo {
     height: 2rem;
   }
 
-  .lg\:h-9 {
-    height: 2.25rem;
-  }
-
   .lg\:h-\[10px\] {
     height: 10px;
   }
@@ -23367,8 +23211,16 @@ img.abroad-dev__logo {
     height: 320px;
   }
 
+  .lg\:h-\[33px\] {
+    height: 33px;
+  }
+
   .lg\:h-\[340px\] {
     height: 340px;
+  }
+
+  .lg\:h-\[36px\] {
+    height: 36px;
   }
 
   .lg\:h-\[400px\] {
@@ -23875,11 +23727,6 @@ img.abroad-dev__logo {
          column-gap: 2.5rem;
   }
 
-  .lg\:gap-x-12 {
-    -moz-column-gap: 3rem;
-         column-gap: 3rem;
-  }
-
   .lg\:gap-x-14 {
     -moz-column-gap: 3.5rem;
          column-gap: 3.5rem;
@@ -23913,20 +23760,12 @@ img.abroad-dev__logo {
     row-gap: 2.5rem;
   }
 
-  .lg\:gap-y-3 {
-    row-gap: 0.75rem;
-  }
-
   .lg\:gap-y-5 {
     row-gap: 1.25rem;
   }
 
   .lg\:gap-y-6 {
     row-gap: 1.5rem;
-  }
-
-  .lg\:gap-y-8 {
-    row-gap: 2rem;
   }
 
   .lg\:gap-y-9 {
@@ -23949,10 +23788,6 @@ img.abroad-dev__logo {
 
   .lg\:whitespace-normal {
     white-space: normal;
-  }
-
-  .lg\:whitespace-nowrap {
-    white-space: nowrap;
   }
 
   .lg\:rounded-2xl {

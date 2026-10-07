@@ -8521,16 +8521,15 @@ html, body {
   html[lang="ar"] .shary-home-root .sh-hero .sh-pills { gap: 11px; }
   html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 58px; border-radius: 29px; font-size: 17.5px; padding: 0 23px !important; }
   html[lang="en"] .shary-home-root .sh-hero .sh-pills { gap: 7px; }
-  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 52px; border-radius: 26px; font-size: 13.5px; padding: 0 10px !important; }
-}
-@media (min-width: 960px) and (max-width: 1349px) {
-  html[lang="ar"] .shary-home-root .sh-hero .sh-pills { gap: 9px; }
-  html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 52px; border-radius: 26px; font-size: 16.5px; padding: 0 19px !important; }
-  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 48px; border-radius: 24px; font-size: 13.5px; padding: 0 12px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 52px; border-radius: 26px; font-size: 14.5px; padding: 0 13px !important; }
 }
 @media (min-width: 960px) and (max-width: 1199px) {
-  html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 48px; font-size: 15px; padding: 0 16px !important; }
-  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 44px; font-size: 12.5px; padding: 0 11px !important; }
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pills { gap: 9px; }
+  html[lang="ar"] .shary-home-root .sh-hero .sh-pill { height: 52px; border-radius: 26px; font-size: 16.5px; padding: 0 19px !important; }
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { height: 48px; border-radius: 24px; font-size: 13.5px; padding: 0 11px !important; }
+}
+@media (min-width: 1536px) {
+  html[lang="en"] .shary-home-root .sh-hero .sh-pill { font-size: 13.5px; padding: 0 11px !important; }
 }
 
 /* ---- بحث الرئيسية (ديسك توب): أسهم القوايم (نوع العقار / الغرف والحمامات / نطاق السعر) أكبر وأغمق وفي نص الخانة (filter-arrows-big) ---- */
@@ -8555,3 +8554,36 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
 /* ---- فورم طلب المقابلة في الرئيسية: من غير تغميق ورا الفورم (no-form-dim) ---- */
 .shary-home-root #zoomMeetingStatic, #zoomMeetingStatic { background-color: transparent !important; }
 #zoomMeetingStatic > div { box-shadow: 0 0 0 1px rgba(18, 58, 92, 0.1), 0 10px 50px -10px rgba(18, 58, 92, 0.4) !important; }
+
+/* ---- كروت «ما يميزنا» (متابعة الأقساط / العروض الحصرية / فرص إعادة البيع ...): الاسم على سطرين تحت بعض في نص الكارت (shortcut-two-lines) ---- */
+.investment-shortcut .investment-shortcut-label { display: flex; min-height: 2.7em; flex-direction: column; align-items: center; justify-content: center; text-align: center; line-height: 1.35; white-space: nowrap; }
+
+/* ---- آخر الرئيسية على الديسك توب من غير تكبير (home-bottom-unzoom): قسم «شاري معاك» (التليفون) وفورم التواصل اللي تحته بمقاسهم العادي 100% —
+   التكبير 110% على الداتا والمحتوى اللي فوق بس (والفوتر كمان 100% — app.css). ‎--unz = 1 / ‎--z ، و‎--z: 1 جوه القسمين عشان مقاسات vw تتحسب صح ---- */
+@media (min-width: 1024px) {
+  .shary-home-root .sh-hero, .shary-home-root #contact.contact-section { zoom: var(--unz, 1); --z: 1; }
+}
+
+/* ---- ديسك توب: حركة خفيفة لما الماوس ييجي على الكروت (home-card-hover) — زي كروت المناطق:
+   كروت «ما يميزنا» ، كروت العروض / خريطة مصر / خريطة الساحل / شاري كارد ، «بيع عقارك» و«أجّر عقارك» ، ولوجوهات المطورين.
+   الكارت بيطلع لفوق سِنّة وظله بيكبر. الصفوف اللي بتتحرك أخدت مسافة فوق وتحت عشان الكارت ما يتقصّش وهو طالع ---- */
+@media (hover: hover) and (min-width: 1024px) {
+  .investment-shortcut, .investment-promo-card, .sell-rent-cards, .developer-card { transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease; will-change: transform; }
+  .investment-shortcuts a:hover .investment-shortcut,
+  .investment-promo-card:hover,
+  .sell-rent-cards:hover { transform: translateY(-5px); box-shadow: 0 14px 26px -12px rgba(0, 50, 70, 0.32); }
+  .developer-card:hover { transform: translateY(-4px) scale(1.05); box-shadow: 0 10px 20px -8px rgba(0, 50, 70, 0.32); }
+  .home-area-card:hover { transform: translateY(-5px); box-shadow: 0 12px 22px -10px rgba(0, 50, 70, 0.28); }
+  .horizontal-scroll.investment-shortcuts,
+  .horizontal-scroll.developers-carousel,
+  .horizontal-scroll.areas-carousel { padding-top: 10px; margin-top: -10px; padding-bottom: 14px; margin-bottom: -14px; }
+  .horizontal-scroll.investment-promo-carousel { padding-top: 10px; }
+}
+
+/* ---- كروت «ما يميزنا» على الديسك توب (tiles-desktop-slide): 8 كروت بعرض الصفحة بالظبط — ولو الكروت أكتر من 8 الصف بيتحرك لوحده يمين وشمال
+   زي الموبايل (السكربت في home/index) وبيقف والماوس فوق الكروت ---- */
+@media (min-width: 1024px) {
+  .investment-shortcuts > a { flex: 0 0 calc((100% - 112px) / 8); min-width: 0; }
+  .investment-shortcuts > a > .investment-shortcut { width: 100%; min-width: 0; flex: none; }
+  .investment-shortcut .investment-shortcut-label { white-space: normal; padding-inline: 4px; }
+}
