@@ -641,8 +641,8 @@ video {
   height: 40px;
   border-radius: 9999px;
   padding-inline: 14px;
-  font-size: 14.5px;
-  font-weight: 700;
+  font-size: 16.5px;
+  font-weight: 800;
   line-height: 1;
   white-space: nowrap;
   color: #123a5c;
@@ -658,7 +658,7 @@ button.site-login {
 @media (max-width: 1159px) {
   .site-login {
     padding-inline: 8px;
-    font-size: 13.5px;
+    font-size: 15px;
   }
 }
 
@@ -7680,23 +7680,51 @@ input:focus-visible + .area-chip,
   background-color: #e4e9ef;
 }
 
+/* فيسبوك / جوجل / أبل تحت الفورم: 3 أزرار متساوية في صف واحد */
+
+.auth-socials {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.auth-socials:has(> :nth-child(2):last-child) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.auth-socials:has(> :only-child) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .auth-social {
   display: flex;
   height: 50px;
+  min-width: 0;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   border: 1.5px solid #e4e9ef;
   border-radius: 14px;
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 700;
   color: #123a5c;
-  transition: border-color 0.2s, background-color 0.2s;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.25s, transform 0.15s;
 }
 
-.auth-social:hover {
-  border-color: #c9d6e6;
-  background-color: #f6f9fd;
+.auth-social svg {
+  flex-shrink: 0;
+}
+
+.auth-social:hover,
+    .auth-social:focus-visible {
+  border-color: #a9d3f7;
+  background-color: #f3f9ff;
+  box-shadow: 0 0 0 3px rgba(125, 196, 255, 0.35);
+  outline: none;
+}
+
+.auth-social:active {
+  transform: scale(0.97);
 }
 
 @media (min-width: 1024px) {
