@@ -8381,15 +8381,65 @@ html, body {
   .shary-home-root .best-projects-track .project-card { width: calc((100cqi - 64px) / 4.45) !important; }
 }
 
-/* ---- ديسك توب: الهيدر والفوتر في الهوم واخدين عرض الشاشة زي محتوى الهوم بالظبط (.container-x) ----
-   اللوجو يمين على بداية الكروت ، و"تسجيل الدخول" / زرار اللغة شمال على نهايتها — على أي مقاس شاشة وأي زوم (نفس معادلة .container-x). */
+/* ---- ديسك توب: محتوى الهوم على نفس عرض باقي صفحات الموقع والهيدر والفوتر بالظبط (‎--shary-w من app.css) ----
+   اللوجو يمين على بداية الكروت ، و"تسجيل الدخول" شمال على نهايتها — على أي مقاس شاشة وأي زوم. */
 @media (min-width: 1024px) {
-  header > .site-container, footer .site-container { width: min(95% - 32px, 1180px); max-width: 1240px; padding-left: 0; padding-right: 0; }
+  .shary-home-root .container-x, .container-x { width: var(--shary-w, min(95vw - 32px, 1180px)); max-width: none; margin-inline: auto; }
   /* أفضل المطورين: 9 لوجوهات في عرض الصف (والباقي بالسحب) */
   .shary-home-root .developers-carousel { container-type: inline-size; }
   .shary-home-root .developers-track { gap: 12px; }
   .shary-home-root .developer-card { flex: 0 0 calc((100cqi - 96px) / 9); width: calc((100cqi - 96px) / 9); height: calc((100cqi - 96px) / 9); }
 }
-@media (min-width: 1300px) {
-  header > .site-container, footer .site-container { width: 95%; }
+
+/* ---- أفضل الكمبوندات: من غير التظليلة السودة ورا الاسم — الاسم والمنطقة في شريط أبيض هادي (زجاجي) تحت الصورة والصورة باينة كلها ---- */
+.shary-home-root .best-projects-track .project-card .card-overlay { display: none !important; }
+.shary-home-root .best-projects-track .project-card .compounds-content,
+.shary-home-root .best-projects-track .project-card .compounds-content:hover {
+  left: 8px; right: 8px; bottom: 8px !important; width: auto;
+  padding: 5px 10px 6px !important;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(18, 58, 92, 0.18);
+  color: #123a5c;
+  gap: 1px;
+}
+.shary-home-root .best-projects-track .project-card .compounds-content .compound-name:first-child { font-size: 14.5px; line-height: 20px; -webkit-line-clamp: 1; }
+.shary-home-root .best-projects-track .project-card .compounds-content .compound-name:not(:first-child) { font-size: 11.5px; line-height: 16px; }
+.shary-home-root .best-projects-track .project-card .compound-name { color: #123a5c; }
+.shary-home-root .best-projects-track .project-card .compound-name + .compound-name,
+.shary-home-root .best-projects-track .project-card .compounds-content > .compound-name:last-of-type { color: #5b6b7c; font-weight: 700; }
+.shary-home-root .best-projects-track .project-card .compounds-content .material-symbols-rounded { color: #1f63c6; }
+.shary-home-root .best-projects-track .project-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.shary-home-root .best-projects-track a:hover .project-card { box-shadow: 0 10px 24px -12px rgba(18, 58, 92, 0.45); }
+
+/* ---- ديسك توب: فورم الاستشارة في الهوم بمقاس مريح (كارت أعرض ، خانات 50px ، خط أكبر وبولد) — نفس مقاسات فورم باقي الصفحات ---- */
+@media (min-width: 1024px) {
+  .shary-home-root .contact-card { max-width: 560px; padding: 32px 32px 30px; border-radius: 16px; }
+  .shary-home-root .contact-header h2, .shary-home-root .contact-label { font-size: 24px; font-weight: 800; }
+  .shary-home-root .contact-header h4 { font-size: 19px; }
+  .shary-home-root .contact-description { font-size: 15px; margin-bottom: 20px; }
+  .shary-home-root .contact-form { gap: 14px; }
+  .shary-home-root .contact-form .contact-field { gap: 6px; }
+  .shary-home-root .contact-form .contact-field > label { font-size: 15.5px !important; }
+  .shary-home-root .contact-form .contact-field input,
+  .shary-home-root .contact-form #contact_location_btn { height: 50px; border-radius: 10px !important; font-size: 16.5px; }
+  .shary-home-root .contact-form #contact_location_label { font-size: 16.5px !important; }
+  .shary-home-root .contact-form .contact-field textarea { height: 96px; border-radius: 10px !important; font-size: 16.5px; }
+  .shary-home-root .contact-form .contact-submit, .shary-home-root .contact-form .contact-call { height: 50px !important; min-height: 50px; font-size: 16.5px !important; }
+  .shary-home-root .contact-form .contact-buttons { gap: 10px; margin-top: 4px; }
+}
+
+/* ---- ديسك توب: قسم "شاري معاك" — الجملة والكبسولات (متابعة الأقساط / بعد الشراء / المؤشر العقاري) بولد وبمقاس واضح متناسق مع العنوان ---- */
+@media (min-width: 960px) {
+  .shary-home-root .sh-title { font-weight: 800 !important; }
+  .shary-home-root .sh-sub { font-size: 27px !important; font-weight: 800 !important; line-height: 1.45 !important; margin-bottom: 20px !important; }
+  .shary-home-root .sh-hero .sh-pills { flex-wrap: nowrap; gap: 12px; }
+  .shary-home-root .sh-hero .sh-pill { height: 50px; border-radius: 25px; font-size: 17.5px; font-weight: 800; padding: 0 24px !important; }
+  .shary-home-root .sh-hero .sh-qr { width: 164px !important; padding: 12px !important; border-radius: 16px; }
+  .shary-home-root .sh-hero .sh-qr span { margin-top: 8px; font-size: 14.5px; font-weight: 800; line-height: 1.5; }
+}
+@media (min-width: 960px) and (max-width: 1199px) {
+  .shary-home-root .sh-sub { font-size: 23px !important; }
+  .shary-home-root .sh-hero .sh-pill { height: 44px; font-size: 15px; padding: 0 16px !important; }
 }

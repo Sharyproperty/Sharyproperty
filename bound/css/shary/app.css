@@ -632,6 +632,25 @@ video {
   padding-right: 20px;
 }
 
+/* ديسك توب: عرض المحتوى في كل الصفحات = عرض الصفحة الرئيسية بالظبط (‎--shary-w) — الهيدر والفوتر والمحتوى على نفس الخط ،
+       وبيكبر ويصغر مع الشاشة والزوم: 95% من عرض الشاشة لحد 1240px (وشاشات اللابتوب الصغيرة لحد 1180px). الموبايل والتابلت زي ما هم. */
+
+:root {
+  --shary-w: min(95vw - 32px, 1180px);
+}
+
+@media (min-width: 1300px) {
+  :root {
+    --shary-w: min(95vw, 1240px);
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container {
+    max-width: calc(var(--shary-w) + 40px);
+  }
+}
+
 /* "تسجيل الدخول" / "Login" في آخر الهيدر (ديسك توب): نص بعد زرار اللغة.
        مع الماوس أو الضغط: هالة لبني حوالين الكلمة (شادو ناعم) والنص بيبقى أزرق */
 
@@ -895,29 +914,27 @@ button.site-login {
   transform: scale(1.04);
 }
 
-.shot-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(9, 26, 43, 0.86), rgba(9, 26, 43, 0.15) 52%, rgba(9, 26, 43, 0) 70%);
-  pointer-events: none;
-}
+/* من غير تظليلة سودة على الصورة: الاسم والمكان في شريط أبيض هادي (زجاجي) تحت — والصورة باينة كلها (نفس كروت "أفضل الكمبوندات" في الرئيسية) */
 
 .shot-card__text {
   position: absolute;
-  inset-inline: 0;
-  bottom: 0;
+  inset-inline: 10px;
+  bottom: 10px;
   z-index: 1;
-  padding: 14px 16px 16px;
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(18, 58, 92, 0.18);
+  padding: 8px 14px 9px;
   text-align: center;
-  color: #ffffff;
+  color: #123a5c;
 }
 
 .shot-card__name {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 800;
   line-height: 1.4;
-  text-shadow: 0 1px 6px rgba(9, 26, 43, 0.45);
 }
 
 /* الكارت كله بيفتح صفحة المشروع: لينك شفاف مغطّي الصورة كلها (shot-card__cover) ، والنص فوقه من غير ما يمنع الضغط */
@@ -943,10 +960,15 @@ button.site-login {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin-top: 2px;
+  margin-top: 1px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1.5;
+  color: #5b6b7c;
+}
+
+.shot-card__place svg {
+  color: #1f63c6;
 }
 
 .shot-card__badge {
@@ -974,7 +996,7 @@ button.site-login {
 
 @media (min-width: 1024px) {
   .shot-card__name {
-    font-size: 20px;
+    font-size: 18.5px;
   }
 
   .shot-card__place {
@@ -6211,7 +6233,65 @@ input:focus-visible + .area-chip,
   transform: translateY(-1px);
 }
 
+/* ديسك توب: الفورم بمقاس مريح للعين — خانات أعلى (50px) وخط أكبر وبولد ، والكارت نفسه أعرض (480px) */
+
 @media (min-width: 1024px) {
+  .cform {
+    gap: 14px;
+    border-radius: 16px;
+    padding: 28px 28px 26px;
+  }
+
+  .cform__title {
+    font-size: 23px;
+    font-weight: 800;
+  }
+
+  .cform__kinds {
+    font-size: 18.5px;
+  }
+
+  .cform__desc {
+    font-size: 15px;
+  }
+
+  .cform__field {
+    gap: 6px;
+  }
+
+  .cform__field > span:first-child {
+    font-size: 15.5px;
+  }
+
+  .cform input[type="text"],
+        .cform select,
+        .cform__phone {
+    height: 50px;
+    border-radius: 10px;
+  }
+
+  .cform input[type="text"],
+        .cform select,
+        .cform textarea,
+        .cform__phone input {
+    font-size: 16.5px;
+  }
+
+  .cform textarea {
+    height: 96px;
+    border-radius: 10px;
+  }
+
+  .cform__buttons {
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .cform__btn {
+    height: 50px;
+    font-size: 16.5px;
+  }
+
   .cform {
     padding: 22px 24px;
   }
@@ -8379,11 +8459,11 @@ input:focus-visible + .area-chip,
 }
 
 @media (min-width: 1024px) {
-  /* ديسك توب: 3 خانات كل واحدة بعرض كارت من الصف اللي تحتها (نفس المسافة بين الكروت) — التبويب فوق أول كارت والأدوات في آخر الصف */
+  /* ديسك توب: صف واحد بعرض التلات كروت اللي تحته — المنطقة | النوع | السعر وجنبهم "مسح" و"ترتيب" (مش فوقهم) ، والتبويب في صف لوحده فوق */
 
   .rent-bar {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 16px 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    gap: 16px 12px;
   }
 
   .rent-tabs {
@@ -8405,10 +8485,10 @@ input:focus-visible + .area-chip,
   }
 
   .rent-bar__tools {
-    grid-column: 2 / 4;
-    grid-row: 1;
+    grid-column: 4;
+    grid-row: 2;
     align-self: center;
-    justify-self: end;
+    align-items: center;
     gap: 12px;
   }
 
@@ -12737,6 +12817,13 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   font-size: 10.5px;
   font-weight: 600;
   color: #5b6b7c;
+}
+
+/* نفس الخانات التلاتة على كارت الوحدة العادي (وحدة إعادة بيع عليها أقساط): فوق السعر */
+
+.unit-card__pay {
+  margin-bottom: 8px;
+  max-width: 460px;
 }
 
 .opp-card__pay--cash {
@@ -21884,6 +21971,10 @@ img.abroad-dev__logo {
     top: 1.5rem;
   }
 
+  .lg\:top-\[56px\] {
+    top: 56px;
+  }
+
   .lg\:top-\[92px\] {
     top: 92px;
   }
@@ -22395,12 +22486,12 @@ img.abroad-dev__logo {
     min-width: 0px;
   }
 
-  .lg\:max-w-\[1080px\] {
-    max-width: 1080px;
-  }
-
   .lg\:max-w-\[1240px\] {
     max-width: 1240px;
+  }
+
+  .lg\:max-w-\[480px\] {
+    max-width: 480px;
   }
 
   .lg\:max-w-\[760px\] {
@@ -22417,6 +22508,10 @@ img.abroad-dev__logo {
 
   .lg\:max-w-\[92px\] {
     max-width: 92px;
+  }
+
+  .lg\:max-w-\[calc\(var\(--shary-w\)\+40px\)\] {
+    max-width: calc(var(--shary-w) + 40px);
   }
 
   .lg\:max-w-none {
@@ -22533,12 +22628,8 @@ img.abroad-dev__logo {
     grid-template-columns: minmax(0,1fr) 420px;
   }
 
-  .lg\:grid-cols-\[minmax\(0\2c 1fr\)_440px\] {
-    grid-template-columns: minmax(0,1fr) 440px;
-  }
-
-  .lg\:grid-cols-\[minmax\(0\2c 1fr\)_460px\] {
-    grid-template-columns: minmax(0,1fr) 460px;
+  .lg\:grid-cols-\[minmax\(0\2c 1fr\)_520px\] {
+    grid-template-columns: minmax(0,1fr) 520px;
   }
 
   .lg\:grid-cols-\[minmax\(0\2c 1fr\)_minmax\(0\2c 480px\)\] {
@@ -22706,11 +22797,6 @@ img.abroad-dev__logo {
   .lg\:gap-x-14 {
     -moz-column-gap: 3.5rem;
          column-gap: 3.5rem;
-  }
-
-  .lg\:gap-x-16 {
-    -moz-column-gap: 4rem;
-         column-gap: 4rem;
   }
 
   .lg\:gap-x-3\.5 {
@@ -23307,6 +23393,10 @@ img.abroad-dev__logo {
     font-weight: 700;
   }
 
+  .lg\:font-extrabold {
+    font-weight: 800;
+  }
+
   .lg\:leading-\[1\.25\] {
     line-height: 1.25;
   }
@@ -23325,6 +23415,11 @@ img.abroad-dev__logo {
 
   .lg\:leading-\[1\.45\] {
     line-height: 1.45;
+  }
+
+  .lg\:text-\[\#3d5066\] {
+    --tw-text-opacity: 1;
+    color: rgb(61 80 102 / var(--tw-text-opacity, 1));
   }
 
   .lg\:shadow-\[0_-20px_60px_-10px_rgba\(18\2c 58\2c 92\2c 0\.38\)\] {
