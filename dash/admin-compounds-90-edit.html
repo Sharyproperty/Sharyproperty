@@ -44,8 +44,8 @@
         $('#external_construction').html('');
         $('#property_status').html('');
 
-        let property_id = "19";
-        let finishing_type_id = "7";
+        let property_id = "";
+        let finishing_type_id = "";
 
         $.ajax({
             url: '/getMainInfo?developer_id=' + developer_id,
@@ -430,12 +430,14 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>الإيجنت</span>
-                            <b class="sx-tag">10</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">12</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-agent">
                                                             <li><a href="admin-shary-agent.html" class="" ><span>النهاردة</span></a></li>
-                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">10</b></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">12</b></a></li>
                                                             <li><a href="admin-shary-agent-commands.html" class="" ><span>الأوامر</span></a></li>
+                                                            <li><a href="admin-shary-agent-new-page.html" class="" ><span>صفحة جديدة</span></a></li>
+                                                            <li><a href="admin-shary-agent-pages.html" class="" ><span>الصفحات الناقصة</span></a></li>
                                                             <li><a href="admin-shary-agent-tasks.html" class="" ><span>المهام اليومية</span></a></li>
                                                             <li><a href="admin-shary-agent-data.html" class="" ><span>طلبات الداتا</span></a></li>
                                                             <li><a href="admin-shary-agent-projects.html" class="" ><span>المشاريع والأخبار</span></a></li>
@@ -695,11 +697,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "3asXUS6vz6YG1C9elmwl4GIhrYPasa5P20AsImbm",
+                token: "a73f5UQdoGbbnzFDhLxMNtVEsr9S3OFy0lhOb3rc",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=3asXUS6vz6YG1C9elmwl4GIhrYPasa5P20AsImbm",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=a73f5UQdoGbbnzFDhLxMNtVEsr9S3OFy0lhOb3rc",
                 contentCss: "\/css\/shary-admin\/editor-content.css",
                 types: {"project":"\u0645\u0634\u0631\u0648\u0639","area":"\u0645\u0646\u0637\u0642\u0629","developer":"\u0645\u0637\u0648\u0631","blog":"\u0645\u0642\u0627\u0644","search":"\u0635\u0641\u062d\u0629 \u0628\u062d\u062b"},
                 labels: {"cta":"\u0632\u0631 \u062a\u0648\u0627\u0635\u0644","link":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview":"\u0645\u0639\u0627\u064a\u0646\u0629","cta_title":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0648\u0633\u0637 \u0627\u0644\u0645\u062d\u062a\u0648\u0649:","link_title":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview_title":"\u0645\u0639\u0627\u064a\u0646\u0629 \u2014 \u0632\u064a \u0627\u0644\u0645\u0648\u0642\u0639","kind_cta":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644","kind_form":"\u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629","kind_channels":"\u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a","kind_project":"\u0643\u0627\u0631\u062a \u0645\u0634\u0631\u0648\u0639","kind_area":"\u0643\u0627\u0631\u062a \u0645\u0646\u0637\u0642\u0629","cta_buttons":"\u0627\u0644\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0644\u064a \u062a\u0638\u0647\u0631","btn_meeting":"\u0637\u0644\u0628 \u0645\u0642\u0627\u0628\u0644\u0629","btn_call":"\u0627\u062a\u0635\u0627\u0644","btn_whatsapp":"\u0648\u0627\u062a\u0633\u0627\u0628","cta_heading":"\u0627\u0644\u062c\u0645\u0644\u0629 \u0627\u0644\u0644\u064a \u0641\u0648\u0642 \u0627\u0644\u0623\u0632\u0631\u0627\u0631 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","cta_ph_ar":"\u0645\u062b\u0627\u0644: \u0627\u062d\u062c\u0632 \u0648\u062d\u062f\u062a\u0643 \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u062d\u0635\u0644 \u0639\u0644\u0649 \u0623\u062d\u062f\u062b \u0642\u0627\u0626\u0645\u0629 \u0623\u0633\u0639\u0627\u0631","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"\u0628\u064a\u062d\u0637 \u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629 (\u0627\u0644\u0627\u0633\u0645 \u060c \u0627\u0644\u0645\u0648\u0628\u0627\u064a\u0644 \u060c \u0627\u0644\u0645\u0646\u0637\u0642\u0629) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","channels_hint":"\u0628\u064a\u062d\u0637 \u0643\u0627\u0631\u062a \u0022\u0627\u0634\u062a\u0631\u0643 \u0641\u064a \u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a\u0022 (\u0648\u0627\u062a\u0633\u0627\u0628 \/ \u062a\u0644\u064a\u062c\u0631\u0627\u0645 \/ \u064a\u0648\u062a\u064a\u0648\u0628) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","search_ph":"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639 \/ \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \/ \u0627\u0644\u0645\u0637\u0648\u0631 \/ \u0627\u0644\u0645\u0642\u0627\u0644","insert":"\u0625\u0636\u0627\u0641\u0629","cta_note":"\u0628\u064a\u062a\u062d\u0637 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u2014 \u0648\u062a\u0642\u062f\u0631 \u062a\u0645\u0633\u062d\u0647 \u0632\u064a \u0623\u064a \u0633\u0637\u0631.","link_selected":"\u0627\u0644\u0644\u064a\u0646\u0643 \u0647\u064a\u062a\u062d\u0637 \u0639\u0644\u0649:","link_none":"\u0645\u0641\u064a\u0634 \u0643\u0644\u0627\u0645 \u0645\u062a\u0638\u0644\u0644: \u0647\u064a\u062a\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u064a\u0628\u0642\u0649 \u0647\u0648 \u0627\u0644\u0644\u064a\u0646\u0643.","all_types":"\u0643\u0644 \u0627\u0644\u0623\u0646\u0648\u0627\u0639","searching":"\u062c\u0627\u0631\u064a \u0627\u0644\u0628\u062d\u062b\u2026","nothing":"\u0645\u0641\u064a\u0634 \u0646\u062a\u0627\u064a\u062c.","failed":"\u062d\u0635\u0644\u062a \u0645\u0634\u0643\u0644\u0629 \u2014 \u062c\u0631\u0651\u0628 \u062a\u0627\u0646\u064a.","desktop":"\u062f\u064a\u0633\u0643 \u062a\u0648\u0628","mobile":"\u0645\u0648\u0628\u0627\u064a\u0644","preview_note":"\u0627\u0644\u0645\u0639\u0627\u064a\u0646\u0629 \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638 \u2014 \u0627\u062d\u0641\u0638 \u0639\u0634\u0627\u0646 \u064a\u0638\u0647\u0631 \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639."}            };
@@ -708,14 +710,14 @@
      
 
     <div class="sx-pre">
-        <div class="sx-crumb">المشاريع ‹ بيرل ريزيدنسز</div>
-        <nav class="sx-tabs" aria-label="بيرل ريزيدنسز">
-                            <a href="admin-compounds-315-edit.html" class="is-on"  aria-current="page" >البيانات الأساسية</a>
+        <div class="sx-crumb">المشاريع ‹ مشروع تجريبي بدون وحدات</div>
+        <nav class="sx-tabs" aria-label="مشروع تجريبي بدون وحدات">
+                            <a href="admin-compounds-90-edit.html" class="is-on"  aria-current="page" >البيانات الأساسية</a>
                             <a href="gallery-1318-2.html" data-sx-sample="1" class="" >الصور</a>
-                            <a href="admin-shary-projects-315.html" class="" >بيانات الموقع والمؤشر<em>جديد</em></a>
-                            <a href="admin-shary-content-editor-project-315.html" class="" >المحتوى (المحرر)<em>جديد</em></a>
+                            <a href="admin-shary-projects-315.html" data-sx-sample="1" class="" >بيانات الموقع والمؤشر<em>جديد</em></a>
+                            <a href="admin-shary-content-editor-project-90.html" class="" >المحتوى (المحرر)<em>جديد</em></a>
                             <a href="compounds-1-boundary-edit.html" data-sx-sample="1" class="" >الحدود على الخريطة</a>
-                            <a href="admin-shary-units_compound_id_315.html" class="" >الوحدات (2)</a>
+                            <a href="admin-shary-units_compound_id_90.html" class="" >الوحدات (0)</a>
                         <a class="sx-tabs__site" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">افتح الصفحة على الموقع <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>        </nav>
     </div>
@@ -787,8 +789,8 @@
             autocomplete =
                 new google.maps.places.Autocomplete((document.getElementById('autocomplete')),
                     {types: ['geocode']});
-            var initialLat = parseFloat(document.getElementById('lat').value) || 25.197;
-            var initialLng = parseFloat(document.getElementById('lng').value) || 55.348;
+            var initialLat = parseFloat(document.getElementById('lat').value) || 26.8206;
+            var initialLng = parseFloat(document.getElementById('lng').value) || 30.8025;
             var map = new google.maps.Map(document.getElementById('shoplocation'), {
                 zoom: 10,
                 center: {
@@ -1369,7 +1371,7 @@
             <div class="page-header">
                 <div class="page-title">
                     <h4>تعديل بيانات المشروع </h4>
-                    <h6>تحديث المشروع بيرل ريزيدنسز </h6>
+                    <h6>تحديث المشروع مشروع تجريبي بدون وحدات </h6>
                 </div>
             </div>
 
@@ -1381,7 +1383,7 @@
                         <span class="sr-only">admin.Loading...</span>
                     </div>
                     <form method="post" id="update_compound_form"
-                          action="#preview/admin/compounds/315" enctype="multipart/form-data" class=""
+                          action="#preview/admin/compounds/90" enctype="multipart/form-data" class=""
                           class="was-validated needs-validation">
                         <input type="hidden" name="_token" value="preview" autocomplete="off">                        <input type="hidden" name="_method" value="put">
                         <div class="row">
@@ -1389,27 +1391,27 @@
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>الاسم بالإنجليزية</label>
-                                    <input type="text" name="name_en" value="Pearl Residences" required>
+                                    <input type="text" name="name_en" value="Demo Empty Project" required>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>الاسم بالعربية</label>
-                                    <input type="text" name="name_ar" value="بيرل ريزيدنسز" required>
+                                    <input type="text" name="name_ar" value="مشروع تجريبي بدون وحدات" required>
                                 </div>
                             </div>
 
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="slug_en">Slug URL (English)</label>
-                                    <input type="text" name="slug_en" id="slug_en" value="pearl-residences" placeholder="compound-url">
+                                    <input type="text" name="slug_en" id="slug_en" value="demo-empty-project" placeholder="compound-url">
                                 </div>
                             </div>
 
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="slug_ar">Slug URL (Arabic)</label>
-                                    <input type="text" name="slug_ar" id="slug_ar" value="بيرل-ريزيدنسز" placeholder="رابط-الكمبوند">
+                                    <input type="text" name="slug_ar" id="slug_ar" value="مشروع-تجريبي-بدون-وحدات" placeholder="رابط-الكمبوند">
                                 </div>
                             </div>
 
@@ -1431,9 +1433,9 @@
                                                                                     <option value="26"
                                                     >عُمان</option>
                                                                                     <option value="27"
-                                                     selected >قطر</option>
+                                                    >قطر</option>
                                                                                     <option value="19"
-                                                    >مصر</option>
+                                                     selected >مصر</option>
                                                                             </select>
                                 </div>
                             </div>
@@ -1465,7 +1467,7 @@
                                                                                     <option value="311"
                                                     >لوسيل</option>
                                                                                     <option value="312"
-                                                     selected >اللؤلؤة</option>
+                                                    >اللؤلؤة</option>
                                                                                     <option value="101"
                                                     >مدينتي</option>
                                                                                     <option value="102"
@@ -1507,7 +1509,7 @@
                                                                                     <option value="5"
                                                     >العاصمة الإدارية الجديدة</option>
                                                                                     <option value="4"
-                                                    >مدينة المستقبل</option>
+                                                     selected >مدينة المستقبل</option>
                                                                                     <option value="2"
                                                     >القاهرة الجديدة</option>
                                         
@@ -1524,11 +1526,11 @@
                                                                                     <option value="9"
                                                     >إيجين ليفينج</option>
                                                                                     <option value="8"
-                                                     selected >جلف هورايزون العقارية</option>
+                                                    >جلف هورايزون العقارية</option>
                                                                                     <option value="7"
                                                     >مصر إيطاليا العقارية</option>
                                                                                     <option value="6"
-                                                    >تطوير مصر</option>
+                                                     selected >تطوير مصر</option>
                                                                                     <option value="5"
                                                     >أورا ديفلوبرز</option>
                                                                                     <option value="4"
@@ -1550,9 +1552,9 @@
                                     <select class="select" name="sale_type" id="sale_type" required>
                                         
                                         <option value="developer_sale"
-                                                >بيع المطور</option>
+                                                 selected >بيع المطور</option>
                                         <option value="resale"
-                                                 selected >إعادة البيع</option>
+                                                >إعادة البيع</option>
                                     </select>
                                 </div>
                             </div>
@@ -1560,7 +1562,7 @@
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="developer_price">سعر المطور</label>
-                                    <input type="number" class="form-control" name="developer_price" id="developer_price" min="0" step="1" value="1900000">
+                                    <input type="number" class="form-control" name="developer_price" id="developer_price" min="0" step="1" value="">
                                 </div>
                             </div>
 
@@ -1568,8 +1570,8 @@
                                 <div class="form-group">
                                     <label for="currency">العملة / Currency</label>
                                     <select class="select" name="currency" id="currency">
-                                        <option value="EGP" >مصري - جنيه</option>
-                                        <option value="USD" selected>دولار - USD</option>
+                                        <option value="EGP" selected>مصري - جنيه</option>
+                                        <option value="USD" >دولار - USD</option>
                                     </select>
                                 </div>
                             </div>
@@ -1577,14 +1579,14 @@
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="rating_value">تقييم الكمبوند (من 5)</label>
-                                    <input type="number" class="form-control" name="rating_value" id="rating_value" min="0" max="5" step="0.1" value="4.8">
+                                    <input type="number" class="form-control" name="rating_value" id="rating_value" min="0" max="5" step="0.1" value="">
                                 </div>
                             </div>
 
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="rating_count">عدد المراجعات</label>
-                                    <input type="number" class="form-control" name="rating_count" id="rating_count" min="0" step="1" value="215">
+                                    <input type="number" class="form-control" name="rating_count" id="rating_count" min="0" step="1" value="">
                                 </div>
                             </div>
 
@@ -1647,6 +1649,10 @@
                                                                                     <option value="314"
                                                     >
                                                 لوسيل مارينا
+                                            </option>
+                                                                                    <option value="315"
+                                                    >
+                                                بيرل ريزيدنسز
                                             </option>
                                                                                     <option value="244"
                                                     >
@@ -1928,10 +1934,6 @@
                                                     >
                                                 ميفيدا
                                             </option>
-                                                                                    <option value="90"
-                                                    >
-                                                مشروع تجريبي بدون وحدات
-                                            </option>
                                                                             </select>
                                 </div>
                             </div>
@@ -1967,7 +1969,7 @@
                                                                                     <option value="2026"
                                                     >2026 </option>
                                                                                     <option value="2027"
-                                                     selected >2027 </option>
+                                                    >2027 </option>
                                                                                     <option value="2028"
                                                     >2028 </option>
                                                                                     <option value="2029"
@@ -2043,7 +2045,7 @@
                                 <div class="form-group">
                                     <label>عنوان المشروع </label>
                                     <input type="text" class="form-control" name="address"
-                                           value="The Pearl, Qatar"
+                                           value=""
                                            id="autocomplete"
                                            placeholder="بحث عن مكان" required>
                                 </div>
@@ -2052,13 +2054,13 @@
                             <div class="col-md-6 mb-3" style="display: none">
                                 <label for="validationCustom04">Latitude</label>
                                 <input type="text" required class="form-control" name="lat"
-                                       value="25.197"
+                                       value="0"
                                        id="lat" placeholder="ادخل موقع المشروع">
                             </div>
                             <div class="col-md-6 mb-3" style="display: none">
                                 <label for="validationCustom04">longitude</label>
                                 <input type="text" required class="form-control" name="lng"
-                                       value="55.348"
+                                       value="0"
                                        id="lng" placeholder="ادخل موقع المشروع">
                             </div>
 
@@ -2085,9 +2087,9 @@
                                 </div>
                             </div>
                             <input type="hidden" name="bounds" id="bounds"
-                                   value='{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[[[55.34,25.2034],[55.356,25.2034],[55.356,25.1906],[55.34,25.1906],[55.34,25.2034]]]}'>
+                                   value=''>
                             <input type="hidden" name="coordinates" id="coordinates"
-                                   value='[55.348,25.197]'>
+                                   value=''>
                             <input type="hidden" name="masterplan_corners" id="masterplan_corners"
                                    value=''>
 
@@ -2121,44 +2123,6 @@
                                 </div>
 
                                 <div id="payment_append">
-                                                                            <div class="row payment-row mb-3">
-                                            <div class="col-lg-4 col-sm-4 col-12">
-                                                <div class="form-group">
-                                                    <label>مقدم (%)</label>
-                                                    <input type="number" class="form-control" name="down_payment[]"
-                                                           value="5" min="0" max="100"
-                                                           required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-4 col-sm-4 col-12">
-                                                <div class="form-group">
-                                                    <label>سنوات التقسيط</label>
-                                                    <input type="number" class="form-control" name="installment_years[]"
-                                                           value="6" min="0" max="100"
-                                                           required>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-2 col-sm-2 col-12">
-                                                <div class="form-group">
-                                                    <label>العرض</label>
-                                                    <select class="form-control offer" name="offer[]" required>
-                                                        <option
-                                                            value="1" >نعم</option>
-                                                        <option
-                                                            value="0" selected>لا</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-2 col-sm-2 col-12">
-                                                <div class="form-group">
-                                                    <label>حذف</label>
-                                                    <button type="button" class="btn btn-danger remove-payment-row">حذف</button>
-                                                </div>
-                                            </div>
-                                        </div>
                                                                     </div>
 
                             </div>
@@ -2305,7 +2269,7 @@
                                 <div class="form-group">
                                     <label>رقم الهاتف </label>
                                     <input type="tel" class="form-control" name="phone"
-                                           value="01000000020">
+                                           value="">
                                 </div>
                             </div>
 
@@ -2313,7 +2277,7 @@
                                 <div class="form-group">
                                     <label>رقم واتس اب </label>
                                     <input type="tel" class="form-control" name="whatsapp"
-                                           value="201000000020">
+                                           value="">
                                 </div>
                             </div>
 
@@ -2392,7 +2356,7 @@
                                                 class="custom-file-container__custom-file__custom-file-control"></span>
                                         </label>
                                         <div class="custom-file-container__image-preview"></div>
-                                        <img src="a/images/compounds/bce41dbb97bc2-creek-harbour-residences.webp" alt="img">
+                                        <img src="a/images/logo/logo.png" alt="img">
                                     </div>
                                 </div>
                             </div>
@@ -2427,13 +2391,13 @@
                                 <div class="form-group">
                                     <label for="meta_title_en">عنوان الميتا (إنجليزي) </label>
                                     <textarea class="form-control" name="meta_title_en"
-                                              >Creek Harbour Residences Dubai by Gulf Horizon Properties - prices and payment plans | Shary</textarea>
+                                              ></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="meta_title_ar">عنوان الميتا (عربي)</label>
-                                    <textarea class="form-control" name="meta_title_ar">كريك هاربور ريزيدنسز دبي من جلف هورايزون العقارية - الأسعار وخطط السداد | شاري</textarea>
+                                    <textarea class="form-control" name="meta_title_ar"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2442,13 +2406,13 @@
                                 <div class="form-group">
                                     <label for="meta_desc_en">وصف الميتا (إنجليزي) </label>
                                     <textarea class="form-control" name="meta_desc_en"
-                                    >All about Creek Harbour Residences in Dubai: unit types, prices, master plan, amenities and installment plans.</textarea>
+                                    ></textarea>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label for="meta_desc_ar">وصف الميتا (عربي)</label>
-                                    <textarea class="form-control" name="meta_desc_ar">كل ما تريد معرفته عن كريك هاربور ريزيدنسز في دبي: أنواع الوحدات والأسعار والمخطط العام والخدمات وأنظمة التقسيط.</textarea>
+                                    <textarea class="form-control" name="meta_desc_ar"></textarea>
                                 </div>
                             </div>
                         </div>

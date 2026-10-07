@@ -70,26 +70,6 @@
             .shary-repeater-row .form-group { margin-bottom: 12px; }
             .shary-help { display: block; color: #6c757d; font-weight: normal; margin-bottom: 10px; line-height: 1.6; }
         </style>
-            <style>
-            .shary-tabs { border-bottom: 1px solid #dee2e6; display: flex; flex-wrap: wrap; gap: 4px; padding: 0; list-style: none; }
-            .shary-tabs .nav-link { display: block; padding: 9px 16px; border: 1px solid transparent; border-radius: 6px 6px 0 0; color: #495057; text-decoration: none; margin-bottom: -1px; cursor: pointer; background: none; }
-            .shary-tabs .nav-link:hover { background: #f4f6f8; }
-            .shary-tabs .nav-link.active { background: #fff; border-color: #dee2e6 #dee2e6 #fff; color: #0d1b3e; font-weight: 600; }
-            .shary-tabs .nav-link .badge { font-weight: normal; }
-            .shary-checkered { background-color: #fff; background-image: linear-gradient(45deg, #d9dde2 25%, transparent 25%), linear-gradient(-45deg, #d9dde2 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #d9dde2 75%), linear-gradient(-45deg, transparent 75%, #d9dde2 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0; }
-            .shary-preview { border: 1px solid #e9ecef; border-radius: 8px; padding: 8px; text-align: center; min-height: 120px; display: flex; align-items: center; justify-content: center; }
-            .shary-preview img { max-width: 100%; max-height: 280px; height: auto; }
-            .shary-help { display: block; color: #6c757d; font-weight: normal; margin-bottom: 10px; line-height: 1.6; }
-            .shary-switch-row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #eef0f2; }
-            .shary-switch-row:last-child { border-bottom: 0; }
-            .shary-switch-row input[type=checkbox] { width: 20px; height: 20px; margin-top: 2px; flex: 0 0 auto; }
-            .shary-switch-row label { margin: 0; cursor: pointer; }
-            .shary-where th, .shary-where td { white-space: normal !important; vertical-align: top; }
-            .shary-grid input.form-control, .shary-grid select.form-control { min-width: 92px; padding: 4px 8px; height: 34px; }
-            .shary-auto { background: #f6f8fa; border: 1px dashed #ced4da; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; }
-            .shary-auto dt { font-weight: normal; color: #6c757d; }
-            .shary-auto dd { font-weight: 600; margin-bottom: 6px; }
-        </style>
       </head>
   <body class="sx" dir="rtl">
  <div id="global-loader" >
@@ -145,12 +125,14 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>الإيجنت</span>
-                            <b class="sx-tag">10</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">12</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-agent">
                                                             <li><a href="admin-shary-agent.html" class="" ><span>النهاردة</span></a></li>
-                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">10</b></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">12</b></a></li>
                                                             <li><a href="admin-shary-agent-commands.html" class="" ><span>الأوامر</span></a></li>
+                                                            <li><a href="admin-shary-agent-new-page.html" class="" ><span>صفحة جديدة</span></a></li>
+                                                            <li><a href="admin-shary-agent-pages.html" class="" ><span>الصفحات الناقصة</span></a></li>
                                                             <li><a href="admin-shary-agent-tasks.html" class="" ><span>المهام اليومية</span></a></li>
                                                             <li><a href="admin-shary-agent-data.html" class="" ><span>طلبات الداتا</span></a></li>
                                                             <li><a href="admin-shary-agent-projects.html" class="" ><span>المشاريع والأخبار</span></a></li>
@@ -219,15 +201,15 @@
                                                             <li><a href="compounds-boundaries.html" class="" ><span>حدود المشاريع على الخريطة</span></a></li>
                                                     </ul>
                     </div>
-                                                                <div class="sx-grp " data-sx-grp="developers">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-developers">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="developers">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-developers">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
                             <span>المطورين</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-developers">
                                                             <li><a href="services-developers.html" class="" ><span>كل المطورين (إضافة وتعديل)</span></a></li>
-                                                            <li><a href="admin-shary-extras-developers.html" class="" ><span>بيانات صفحة المطور</span></a></li>
+                                                            <li><a href="admin-shary-extras-developers.html" class="is-on"  aria-current="page" ><span>بيانات صفحة المطور</span></a></li>
                                                             <li><a href="admin-shary-developers-page.html" class="" ><span>أفضل المطورين وصفحة «عرض الكل»</span></a></li>
                                                             <li><a href="top-developer.html" class="" ><span>أفضل المطورين (التطبيق)</span></a></li>
                                                             <li><a href="storyList.html" class="" ><span>ستوري المطورين</span></a></li>
@@ -263,14 +245,14 @@
                                                             <li><a href="shary-index-admin.html" class="" ><span>المؤشر (الشاشة القديمة)</span></a></li>
                                                     </ul>
                     </div>
-                                                <h6 class="sx-nav__title">المحتوى والموقع</h6>                                                <div class="sx-grp is-on is-open" data-sx-grp="content">
-                        <button type="button" aria-expanded="true" aria-controls="sx-grp-content">
+                                                <h6 class="sx-nav__title">المحتوى والموقع</h6>                                                <div class="sx-grp " data-sx-grp="content">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-content">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
                             <span>المقالات والمحتوى</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-content">
-                                                            <li><a href="admin-shary-content-editor.html" class="is-on"  aria-current="page" ><span>المدونة ومحرر الكتابة</span></a></li>
+                                                            <li><a href="admin-shary-content-editor.html" class="" ><span>المدونة ومحرر الكتابة</span></a></li>
                                                             <li><a href="admin-shary-extras-blogs.html" class="" ><span>بيانات المقالات</span></a></li>
                                                             <li><a href="news.html" class="" ><span>الأخبار</span></a></li>
                                                             <li><a href="trendyList.html" class="" ><span>التريند</span></a></li>
@@ -410,11 +392,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "3asXUS6vz6YG1C9elmwl4GIhrYPasa5P20AsImbm",
+                token: "a73f5UQdoGbbnzFDhLxMNtVEsr9S3OFy0lhOb3rc",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=3asXUS6vz6YG1C9elmwl4GIhrYPasa5P20AsImbm",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=a73f5UQdoGbbnzFDhLxMNtVEsr9S3OFy0lhOb3rc",
                 contentCss: "\/css\/shary-admin\/editor-content.css",
                 types: {"project":"\u0645\u0634\u0631\u0648\u0639","area":"\u0645\u0646\u0637\u0642\u0629","developer":"\u0645\u0637\u0648\u0631","blog":"\u0645\u0642\u0627\u0644","search":"\u0635\u0641\u062d\u0629 \u0628\u062d\u062b"},
                 labels: {"cta":"\u0632\u0631 \u062a\u0648\u0627\u0635\u0644","link":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview":"\u0645\u0639\u0627\u064a\u0646\u0629","cta_title":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0648\u0633\u0637 \u0627\u0644\u0645\u062d\u062a\u0648\u0649:","link_title":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview_title":"\u0645\u0639\u0627\u064a\u0646\u0629 \u2014 \u0632\u064a \u0627\u0644\u0645\u0648\u0642\u0639","kind_cta":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644","kind_form":"\u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629","kind_channels":"\u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a","kind_project":"\u0643\u0627\u0631\u062a \u0645\u0634\u0631\u0648\u0639","kind_area":"\u0643\u0627\u0631\u062a \u0645\u0646\u0637\u0642\u0629","cta_buttons":"\u0627\u0644\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0644\u064a \u062a\u0638\u0647\u0631","btn_meeting":"\u0637\u0644\u0628 \u0645\u0642\u0627\u0628\u0644\u0629","btn_call":"\u0627\u062a\u0635\u0627\u0644","btn_whatsapp":"\u0648\u0627\u062a\u0633\u0627\u0628","cta_heading":"\u0627\u0644\u062c\u0645\u0644\u0629 \u0627\u0644\u0644\u064a \u0641\u0648\u0642 \u0627\u0644\u0623\u0632\u0631\u0627\u0631 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","cta_ph_ar":"\u0645\u062b\u0627\u0644: \u0627\u062d\u062c\u0632 \u0648\u062d\u062f\u062a\u0643 \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u062d\u0635\u0644 \u0639\u0644\u0649 \u0623\u062d\u062f\u062b \u0642\u0627\u0626\u0645\u0629 \u0623\u0633\u0639\u0627\u0631","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"\u0628\u064a\u062d\u0637 \u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629 (\u0627\u0644\u0627\u0633\u0645 \u060c \u0627\u0644\u0645\u0648\u0628\u0627\u064a\u0644 \u060c \u0627\u0644\u0645\u0646\u0637\u0642\u0629) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","channels_hint":"\u0628\u064a\u062d\u0637 \u0643\u0627\u0631\u062a \u0022\u0627\u0634\u062a\u0631\u0643 \u0641\u064a \u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a\u0022 (\u0648\u0627\u062a\u0633\u0627\u0628 \/ \u062a\u0644\u064a\u062c\u0631\u0627\u0645 \/ \u064a\u0648\u062a\u064a\u0648\u0628) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","search_ph":"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639 \/ \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \/ \u0627\u0644\u0645\u0637\u0648\u0631 \/ \u0627\u0644\u0645\u0642\u0627\u0644","insert":"\u0625\u0636\u0627\u0641\u0629","cta_note":"\u0628\u064a\u062a\u062d\u0637 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u2014 \u0648\u062a\u0642\u062f\u0631 \u062a\u0645\u0633\u062d\u0647 \u0632\u064a \u0623\u064a \u0633\u0637\u0631.","link_selected":"\u0627\u0644\u0644\u064a\u0646\u0643 \u0647\u064a\u062a\u062d\u0637 \u0639\u0644\u0649:","link_none":"\u0645\u0641\u064a\u0634 \u0643\u0644\u0627\u0645 \u0645\u062a\u0638\u0644\u0644: \u0647\u064a\u062a\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u064a\u0628\u0642\u0649 \u0647\u0648 \u0627\u0644\u0644\u064a\u0646\u0643.","all_types":"\u0643\u0644 \u0627\u0644\u0623\u0646\u0648\u0627\u0639","searching":"\u062c\u0627\u0631\u064a \u0627\u0644\u0628\u062d\u062b\u2026","nothing":"\u0645\u0641\u064a\u0634 \u0646\u062a\u0627\u064a\u062c.","failed":"\u062d\u0635\u0644\u062a \u0645\u0634\u0643\u0644\u0629 \u2014 \u062c\u0631\u0651\u0628 \u062a\u0627\u0646\u064a.","desktop":"\u062f\u064a\u0633\u0643 \u062a\u0648\u0628","mobile":"\u0645\u0648\u0628\u0627\u064a\u0644","preview_note":"\u0627\u0644\u0645\u0639\u0627\u064a\u0646\u0629 \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638 \u2014 \u0627\u062d\u0641\u0638 \u0639\u0634\u0627\u0646 \u064a\u0638\u0647\u0631 \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639."}            };
@@ -423,75 +405,732 @@
      
 
     <div class="sx-pre">
-        <div class="sx-crumb">المطورين ‹ إيجين ليفينج</div>
-        <nav class="sx-tabs" aria-label="إيجين ليفينج">
-                            <a href="admin-shary-extras-developers-9.html" class="" >بيانات الصفحة<em>جديد</em></a>
-                            <a href="admin-shary-content-editor-developer-9.html" class="is-on"  aria-current="page" >المحتوى (المحرر)<em>جديد</em></a>
-                            <a href="admin-compounds_developer_id_9.html" class="" >المشاريع (2)</a>
+        <div class="sx-crumb">المطورين ‹ إعمار مصر</div>
+        <nav class="sx-tabs" aria-label="إعمار مصر">
+                            <a href="admin-shary-extras-developers-1.html" class="is-on"  aria-current="page" >بيانات الصفحة<em>جديد</em></a>
+                            <a href="admin-shary-content-editor-developer-1.html" class="" >المحتوى (المحرر)<em>جديد</em></a>
+                            <a href="admin-compounds_developer_id_1.html" class="" >المشاريع (10)</a>
                             <a href="services-developers.html" class="" >كل المطورين (إضافة وتعديل)</a>
                         <a class="sx-tabs__site" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">افتح الصفحة على الموقع <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>        </nav>
     </div>
-                
-        <div class="page-wrapper cardhead">
+                    <div class="page-wrapper cardhead">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>المطورين — إيجين ليفينج</h4>
-                    <h6><a href="admin-shary-content-editor_type_developer.html">← رجوع إلى القائمة</a></h6>
-                </div>
-                <div class="page-btn">
-                                            <a class="btn btn-added me-1" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">عرض على الموقع</a>
-                                                        </div>
+                    <h4>بيانات وأرقام المطورين — إعمار مصر</h4>
+                                            <h6><a href="admin-shary-extras-developers.html">← رجوع إلى القائمة</a></h6>
+                                    </div>
             </div>
 
             
-            <div class="card">
-                <div class="card-header"><h5 class="card-title">إزاي تكتب</h5></div>
-                <div class="card-body">
-                    <ul class="mb-0" style="padding-inline-start: 18px; line-height: 1.9;">
-                                                    <li>اكتب براحتك: المقال ممكن يبقى طويل أو قصير زي ما تحب — مفيش حد أقصى عملي.</li>
-                                                    <li>العناوين من قايمة "التنسيق": عنوان 2 للعناوين الرئيسية ، عنوان 3 و 4 للفرعية (عنوان الصفحة نفسه هو العنوان الأول).</li>
-                                                    <li>حجم الخط من قايمة "الحجم" لو عايز تكبّر أو تصغّر جزء معيّن ، والمحاذاة يمين / وسط / شمال.</li>
-                                                    <li>زرار "زر تواصل": بيحط أزرار واتساب / اتصال / مقابلة (أو فورم الاستشارة ، أو كارت مشروع / منطقة) في المكان اللي واقف فيه وسط الكلام.</li>
-                                                    <li>زرار "لينك داخلي": ظلّل الكلمة ، دوّر على المشروع أو المنطقة أو المطور أو المقال ، واضغط عليه.</li>
-                                                    <li>الصور من زرار الصورة (تبويب "رفع") ، والجداول من زرار الجدول.</li>
-                                                    <li>زرار "معاينة": بيوريك النص زي ما هيظهر على الموقع بالظبط (ديسك توب وموبايل) قبل الحفظ.</li>
-                                            </ul>
+                            <div class="alert alert-info">
+                    هذه الشاشة للحقول الجديدة الخاصة بالموقع الجديد فقط. البيانات الأساسية ما زالت تُعدَّل من:                    <a href="services-developers.html"><u>شاشة المطورين</u></a>
+                                    </div>
+            
+            <form method="post" action="#preview/admin/shary/extras/developers/1" >
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <div class="row">
+                                            <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">رأس صفحة المطور</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                                                                    <div class="col-lg-6 col-sm-12">
+                <div class="form-group">
+                    <label>الاسم المختصر (إنجليزي) </label>
+                    <input type="text" class="form-control" name="short_name_en" value="Emaar" maxlength="190" dir=ltr>
+                                    </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12">
+                <div class="form-group">
+                    <label>الاسم المختصر (عربي) </label>
+                    <input type="text" class="form-control" name="short_name_ar" value="إعمار" maxlength="190" dir=rtl>
+                                    </div>
+            </div>
+                 <div class="col-12"><small class="shary-help">بيظهر في عناوين الأقسام (&quot;مشاريع ماونتن فيو&quot;). فاضي = اسم المطور.</small></div> 
+<input type="hidden" name="_has[short_name]" value="1">
+                                                                                    <div class="col-lg-6 col-sm-12">
+                <div class="form-group">
+                    <label>سنة التأسيس </label>
+                    <input type="number" class="form-control" name="founded_year" value="2005" dir="ltr"
+                min="1800"   max="2100"  step="1">
+                             <small class="shary-help">بتظهر رقم &quot;في السوق منذ&quot; في رأس الصفحة. مثال: 2005</small>                 </div>
+            </div>
+                
+<input type="hidden" name="_has[founded_year]" value="1">
+                                                                                    <div class="col-lg-6 col-sm-12">
+                <div class="form-group">
+                    <label>نص الشارة (إنجليزي) </label>
+                    <input type="text" class="form-control" name="badge_text_en" value="Among the top 10 developers" maxlength="190" dir=ltr>
+                                    </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12">
+                <div class="form-group">
+                    <label>نص الشارة (عربي) </label>
+                    <input type="text" class="form-control" name="badge_text_ar" value="ضمن أفضل 10 مطورين" maxlength="190" dir=rtl>
+                                    </div>
+            </div>
+                 <div class="col-12"><small class="shary-help">شارة رأس الصفحة — مثال: &quot;ضمن أفضل 10 مطورين&quot;. فاضية = الشارة مخفية.</small></div> 
+<input type="hidden" name="_has[badge_text]" value="1">
+                                                                                    <div class="col-lg-6 col-sm-12">
+                <div class="form-group">
+                    <label>سنة الشارة </label>
+                    <input type="text" class="form-control" name="badge_year" value="2026" maxlength="20" >
+                                    </div>
+            </div>
+                
+<input type="hidden" name="_has[badge_year]" value="1">
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">أرقام رأس الصفحة (لحد 3)</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                                                                    <div class="col-12">
+            <h6 class="mb-1"><strong>الأرقام</strong></h6>
+             <small class="shary-help">الأرقام الكبيرة في رأس صفحة المطور. لو كتبت أرقام هنا بتظهر بدل الأرقام المحسوبة أوتوماتيك (عدد المشاريع / الوحدات / المناطق).</small>             <div class="shary-repeater" data-shary-repeater="hero_stats" data-next="0" data-max="3">
+    <div data-shary-rows>
+            </div>
+    <template data-shary-template>
+        <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number></span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الرقم (مثال: +25 أو 12,000)</label>
+                        <input type="text" class="form-control" name="hero_stats[__i__][value]" value="" maxlength="40" dir=ltr>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الوصف (مثال: مشروع) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="hero_stats[__i__][label_en]" value="" maxlength="80" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الوصف (مثال: مشروع) (عربي)</label>
+                        <input type="text" class="form-control" name="hero_stats[__i__][label_ar]" value="" maxlength="80" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+    </template>
+    <button type="button" class="btn btn-primary mb-3" data-shary-add>إضافة صف</button>
+</div>
+        </div>
+        
+<input type="hidden" name="_has[hero_stats]" value="1">
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">كروت أعداد المشاريع</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                                                                    <div class="col-12"><small class="shary-help">كروت &quot;جاهزة / تحت الإنشاء / جديدة / أقرب تسليم&quot;. الخانة الفاضية = الرقم المحسوب من مشاريع المطور.</small></div>                     <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>مشاريع جاهزة</label>
+                    <input type="number" class="form-control" name="counts_manual[delivered]" value="12" dir="ltr"
+                min="0"   max="100000"  step="1">
+                        </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>تحت الإنشاء</label>
+                    <input type="number" class="form-control" name="counts_manual[building]" value="4" dir="ltr"
+                min="0"   max="100000"  step="1">
+                        </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>مشاريع جديدة</label>
+                    <input type="number" class="form-control" name="counts_manual[new]" value="5" dir="ltr"
+                min="0"   max="100000"  step="1">
+                        </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>أقرب تسليم (عربي)</label>
+                    <input type="text" class="form-control" name="counts_manual[last_ar]" value="ميفيدا · 2025" maxlength="60" dir=rtl>
                 </div>
             </div>
-
-            <form method="post" action="#preview/admin/shary/content-editor/developer/9">
-                <input type="hidden" name="_token" value="preview" autocomplete="off">                <ul class="nav nav-tabs shary-tabs mb-3">
-                    <li class="nav-item"><a class="nav-link active" href="#ar" data-ed-tab="ar">النص العربي</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#en" data-ed-tab="en">النص الإنجليزي</a></li>
-                </ul>
-                                    <div class="card" data-ed-pane="ar" >
-                        <div class="card-body">
-                                                            <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
-                                    <button type="button" class="btn btn-primary" data-ready-insert="ar" data-url="#preview/admin/shary/content-editor/ready/developer/9?lang=ar">حط التقسيمة الجاهزة</button>
-                                    <small class="text-muted" data-ready-note="ar">بتكتب جوه المحرر نفس تقسيمة المقال المعتمدة (العناوين والنقط واللينكات الداخلية وأزرار التواصل) من البيانات الحقيقية — عدّل فيها براحتك وبعدين احفظ.</small>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>أقرب تسليم (إنجليزي)</label>
+                    <input type="text" class="form-control" name="counts_manual[last_en]" value="Mivida · 2025" maxlength="60" dir=ltr>
+                </div>
+            </div>
+                
+<input type="hidden" name="_has[counts_manual]" value="1">
+                                                                            </div>
                                 </div>
-                                                        <textarea class="form-control shary-editor" name="content_ar" rows="24" dir="rtl" data-height="620" data-shary-lang="ar" data-shary-content="developer"></textarea>
+                            </div>
                         </div>
-                    </div>
-                                    <div class="card" data-ed-pane="en"  style="display:none" >
-                        <div class="card-body">
-                                                            <div class="d-flex align-items-center flex-wrap gap-2 mb-2">
-                                    <button type="button" class="btn btn-primary" data-ready-insert="en" data-url="#preview/admin/shary/content-editor/ready/developer/9?lang=en">حط التقسيمة الجاهزة</button>
-                                    <small class="text-muted" data-ready-note="en">بتكتب جوه المحرر نفس تقسيمة المقال المعتمدة (العناوين والنقط واللينكات الداخلية وأزرار التواصل) من البيانات الحقيقية — عدّل فيها براحتك وبعدين احفظ.</small>
+                                            <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">مؤشر شاري للمطور</h5>
                                 </div>
-                                                        <textarea class="form-control shary-editor" name="content_en" rows="24" dir="ltr" data-height="620" data-shary-lang="en" data-shary-content="developer"></textarea>
+                                <div class="card-body">
+                                    <div class="row">
+                                                                                    <div class="col-12"><small class="shary-help">كارت &quot;مؤشر شاري للمطور&quot;. الخانة الفاضية = الرقم المحسوب أوتوماتيك من مؤشرات مشاريعه (متوسط مؤشر المشاريع ، متوسط سعر المتر ، ترتيبه بين المطورين ، المشاريع الجاهزة).</small></div>                     <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>درجة المؤشر (من 100)</label>
+                    <input type="number" class="form-control" name="index_manual[score]" value="88" dir="ltr"
+                min="0"   max="100"  step="1">
                         </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>المشاريع المسلّمة</label>
+                    <input type="number" class="form-control" name="index_manual[delivered_done]" value="11" dir="ltr"
+                min="0"   max="100000"  step="1">
+                        </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>من إجمالي</label>
+                    <input type="number" class="form-control" name="index_manual[delivered_total]" value="12" dir="ltr"
+                min="0"   max="100000"  step="1">
+                        </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>رقم المبيعات / السعر</label>
+                    <input type="text" class="form-control" name="index_manual[sales_value]" value="9.6" maxlength="40" dir=ltr>
+                </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>وحدة الرقم (عربي)</label>
+                    <input type="text" class="form-control" name="index_manual[sales_unit_ar]" value="مليار ج.م" maxlength="40" dir=rtl>
+                </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>وحدة الرقم (إنجليزي)</label>
+                    <input type="text" class="form-control" name="index_manual[sales_unit_en]" value="billion EGP" maxlength="40" dir=ltr>
+                </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>وصف الرقم (عربي)</label>
+                    <input type="text" class="form-control" name="index_manual[sales_label_ar]" value="إجمالي مبيعات 2025" maxlength="80" dir=rtl>
+                </div>
+            </div>
+                    <div class="col-lg-3 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>وصف الرقم (إنجليزي)</label>
+                    <input type="text" class="form-control" name="index_manual[sales_label_en]" value="Total sales in 2025" maxlength="80" dir=ltr>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>الترتيب (عربي) — مثال: ضمن أفضل 5 مطورين</label>
+                    <input type="text" class="form-control" name="index_manual[rank_ar]" value="الترتيب 2 في مصر" maxlength="120" dir=rtl>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>الترتيب (إنجليزي)</label>
+                    <input type="text" class="form-control" name="index_manual[rank_en]" value="Ranked 2 in Egypt" maxlength="120" dir=ltr>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>ملاحظة تحت المؤشر (عربي)</label>
+                    <input type="text" class="form-control" name="index_manual[note_ar]" value="كل عنصر بيتقيّم من 100 وبيتحسب بالوزن الموضّح. أرقام المبيعات من المطور، وباقي المؤشرات بتتحسب من بيانات شاري وبتتحدّث شهريًا." maxlength="300" dir=rtl>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-6 col-12">
+                <div class="form-group">
+                    <label>ملاحظة تحت المؤشر (إنجليزي)</label>
+                    <input type="text" class="form-control" name="index_manual[note_en]" value="Each item is scored out of 100 and counted with the weight shown. Sales figures come from the developer; the other indicators are calculated from Shary data and updated monthly." maxlength="300" dir=ltr>
+                </div>
+            </div>
+                
+<input type="hidden" name="_has[index_manual]" value="1">
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">إزاي المؤشر اتحسب</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                                                                    <div class="col-12">
+            <h6 class="mb-1"><strong>بنود الحساب</strong></h6>
+             <small class="shary-help">البنود اللي بتظهر لما العميل يضغط &quot;إزاي اتحسب؟&quot; — كل بند له درجة من 100. فاضي = الموقع بيعرض مؤشر كل مشروع من مشاريع المطور.</small>             <div class="shary-repeater" data-shary-repeater="index_breakdown" data-next="8" data-max="10">
+    <div data-shary-rows>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>1</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[0][label_en]" value="Liquidity and sales speed" maxlength="120" dir=ltr>
                     </div>
-                                <div style="position: sticky; bottom: 0; z-index: 20; background: #fff; border-top: 1px solid #e3e7ec; padding: 12px 0;">
-                    <button type="submit" class="btn btn-submit me-2">حفظ</button>
-                    <a href="admin-shary-content-editor_type_developer.html" class="btn btn-cancel">إلغاء</a>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[0][label_ar]" value="السيولة وسرعة البيع" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[0][score]" value="76" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[0][detail_en]" value="20% · 42 days on average to sell a unit" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[0][detail_ar]" value="20% · متوسط 42 يوم لبيع الوحدة" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>2</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[1][label_en]" value="Price growth after delivery" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[1][label_ar]" value="نمو الأسعار بعد التسليم" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[1][score]" value="98" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[1][detail_en]" value="20% · +52% on average" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[1][detail_ar]" value="20% · متوسط +52%" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>3</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[2][label_en]" value="Delivery on schedule" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[2][label_ar]" value="الالتزام بمواعيد التسليم" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[2][score]" value="92" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[2][detail_en]" value="15% · 11 of 12 projects" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[2][detail_ar]" value="15% · 11 من 12 مشروع" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>4</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[3][label_en]" value="Financial strength" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[3][label_ar]" value="الملاءة المالية" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[3][score]" value="91" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[3][detail_en]" value="15% · land fully owned" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[3][detail_ar]" value="15% · أرض مملوكة بالكامل" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>5</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[4][label_en]" value="Developer growth" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[4][label_ar]" value="نمو المطور" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[4][score]" value="89" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[4][detail_en]" value="10% · sales +23% on the previous year" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[4][detail_ar]" value="10% · مبيعات +23% عن السنة السابقة" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>6</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[5][label_en]" value="Product quality" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[5][label_ar]" value="جودة المنتج" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[5][score]" value="90" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[5][detail_en]" value="10% · 4.2/5 from 84 reviews" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[5][detail_ar]" value="10% · 4.2/5 من 84 تقييم" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>7</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[6][label_en]" value="Services and facilities" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[6][label_ar]" value="الخدمات والمرافق" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[6][score]" value="87" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[6][detail_en]" value="5% · in delivered projects" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[6][detail_ar]" value="5% · في المشاريع المسلّمة" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>8</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[7][label_en]" value="Service and support" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[7][label_ar]" value="الخدمة والدعم" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[7][score]" value="93" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[7][detail_en]" value="5% · response speed and after-sales" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[7][detail_ar]" value="5% · سرعة الرد وما بعد البيع" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+            </div>
+    <template data-shary-template>
+        <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number></span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[__i__][label_en]" value="" maxlength="120" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>البند (مثال: الالتزام بالتسليم) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[__i__][label_ar]" value="" maxlength="120" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-4 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الدرجة (من 100)</label>
+                        <input type="number" class="form-control" name="index_breakdown[__i__][score]" value="" dir="ltr"
+                min="0"   max="100"  step="1">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (إنجليزي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[__i__][detail_en]" value="" maxlength="200" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>توضيح (اختياري) (عربي)</label>
+                        <input type="text" class="form-control" name="index_breakdown[__i__][detail_ar]" value="" maxlength="200" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+    </template>
+    <button type="button" class="btn btn-primary mb-3" data-shary-add>إضافة صف</button>
+</div>
+        </div>
+        
+<input type="hidden" name="_has[index_breakdown]" value="1">
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                                            <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-title">الأسئلة الشائعة</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                                                                    <div class="col-12">
+            <h6 class="mb-1"><strong>الأسئلة الشائعة</strong></h6>
+             <small class="shary-help">كل سؤال يحتاج إجابته. اللغة المتروكة فارغة تأخذ اللغة الأخرى. يمكن كتابة HTML بسيط في الإجابة (مثال: &lt;a href=&quot;/ar/…&quot;&gt;رابط&lt;/a&gt;).</small>             <div class="shary-repeater" data-shary-repeater="faqs" data-next="0" data-max="40">
+    <div data-shary-rows>
+            </div>
+    <template data-shary-template>
+        <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number></span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="تحريك لأعلى">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="تحريك لأسفل">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>حذف</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>السؤال (إنجليزي)</label>
+                        <input type="text" class="form-control" name="faqs[__i__][question_en]" value="" maxlength="300" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>السؤال (عربي)</label>
+                        <input type="text" class="form-control" name="faqs[__i__][question_ar]" value="" maxlength="300" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الإجابة (إنجليزي)</label>
+                        <textarea class="form-control" name="faqs[__i__][answer_en]" rows="3" maxlength="5000" dir=ltr></textarea>
+                            </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>الإجابة (عربي)</label>
+                        <textarea class="form-control" name="faqs[__i__][answer_ar]" rows="3" maxlength="5000" dir=rtl></textarea>
+                            </div>
+                </div>
+                        </div>
+    </template>
+    <button type="button" class="btn btn-primary mb-3" data-shary-add>إضافة صف</button>
+</div>
+        </div>
+        
+<input type="hidden" name="_has[faqs]" value="1">
+                                                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    <div class="col-lg-12">
+                        <input type="hidden" name="_complete" value="1">
+                        <button type="submit" class="btn btn-submit me-2">حفظ</button>
+                                                    <a href="admin-shary-extras-developers.html" class="btn btn-cancel">إلغاء</a>
+                                            </div>
                 </div>
             </form>
         </div>
     </div>
-            </div>
+    </div>
 <!-- /Main Wrapper -->
     <!-- jQuery -->
 <script src="a/assets/js/jquery-3.6.0.min.js"></script>
@@ -591,9 +1230,7 @@
 </script>
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة"}};</script>
 <script src="a/js/shary-admin/shell.js" defer></script>
-                         <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
-            <script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
-                <script>
+                     <script>
             (function () {
                 var LANG = "ar";
                 var counter = 0;
@@ -680,98 +1317,6 @@
 
                 wire(document);
             })();
-        </script>
-            <script>
-            (function () {
-                var TEXT = {
-                    title: "\u0647\u0644 \u0623\u0646\u062a \u0645\u062a\u0623\u0643\u062f\u061f",
-                    yes: "\u0646\u0639\u0645 \u060c \u0627\u062d\u0630\u0641",
-                    no: "\u0625\u0644\u063a\u0627\u0621"                };
-
-                document.addEventListener('submit', function (event) {
-                    var form = event.target;
-                    if (!form.hasAttribute || !form.hasAttribute('data-shary-confirm') || form.getAttribute('data-shary-ok') === '1') { return; }
-                    event.preventDefault();
-                    var message = form.getAttribute('data-shary-confirm');
-                    var go = function () { form.setAttribute('data-shary-ok', '1'); form.submit(); };
-                    if (window.Swal && Swal.fire) {
-                        Swal.fire({
-                            title: TEXT.title, text: message, type: 'warning', showCancelButton: true,
-                            confirmButtonText: TEXT.yes, cancelButtonText: TEXT.no,
-                            confirmButtonClass: 'btn btn-primary', cancelButtonClass: 'btn btn-danger ml-1', buttonsStyling: false
-                        }).then(function (result) { if (result.value) { go(); } });
-                    } else if (window.confirm(message)) {
-                        go();
-                    }
-                }, true);
-
-                document.addEventListener('click', function (event) {
-                    var button = event.target.closest ? event.target.closest('[data-shary-all]') : null;
-                    if (!button) { return; }
-                    event.preventDefault();
-                    var on = button.getAttribute('data-shary-all') === '1';
-                    var scope = button.closest('form') || document;
-                    scope.querySelectorAll('input[type=checkbox][data-shary-switch]').forEach(function (box) { box.checked = on; });
-                });
-
-                // ---- client-side tabs of one long form (tabbed "extra fields" screens): [data-shary-tabset] > a[data-shary-tab], panes [data-shary-pane]
-                document.querySelectorAll('[data-shary-tabset]').forEach(function (bar) {
-                    var scope = bar.closest('[data-shary-tabbed]') || document;
-                    var memory = scope.querySelector('input[name=_tab]');
-                    function show(key) {
-                        var found = false;
-                        scope.querySelectorAll('[data-shary-pane]').forEach(function (pane) {
-                            var on = pane.getAttribute('data-shary-pane') === key;
-                            pane.style.display = on ? '' : 'none';
-                            found = found || on;
-                        });
-                        if (!found) { return; }
-                        bar.querySelectorAll('[data-shary-tab]').forEach(function (link) { link.classList.toggle('active', link.getAttribute('data-shary-tab') === key); });
-                        if (memory) { memory.value = key; }
-                    }
-                    bar.addEventListener('click', function (event) {
-                        var link = event.target.closest('[data-shary-tab]');
-                        if (!link) { return; }
-                        event.preventDefault();
-                        show(link.getAttribute('data-shary-tab'));
-                        if (window.history && history.replaceState) { history.replaceState(null, '', '#' + link.getAttribute('data-shary-tab')); }
-                    });
-                    var start = (location.hash || '').replace('#', '');
-                    var forced = bar.getAttribute('data-shary-open');
-                    show(forced || (start && bar.querySelector('[data-shary-tab="' + start.replace(/[^a-z0-9_\-]/gi, '') + '"]') ? start : bar.querySelector('[data-shary-tab]').getAttribute('data-shary-tab')));
-                });
-            })();
-        </script>
-            <script>
-            // "حط التقسيمة الجاهزة": بتتكتب جوه المحرر (في آخر النص لو فيه كلام مكتوب) وتتعدل براحتك قبل الحفظ
-            document.querySelectorAll('[data-ready-insert]').forEach(function (button) {
-                button.addEventListener('click', function () {
-                    var code = button.getAttribute('data-ready-insert');
-                    var note = document.querySelector('[data-ready-note="' + code + '"]');
-                    var field = document.querySelector('textarea[name="content_' + code + '"]');
-                    var editor = window.CKEDITOR && field ? (CKEDITOR.instances[field.id] || CKEDITOR.instances[field.name]) : null;
-                    button.disabled = true;
-                    fetch(button.getAttribute('data-url'), { headers: { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }, credentials: 'same-origin' })
-                        .then(function (response) { return response.json(); })
-                        .then(function (json) {
-                            if (!json.html) { if (note) note.textContent = json.message || ''; return; }
-                            var current = editor ? editor.getData() : field.value;
-                            var next = current.replace(/<[^>]+>|&nbsp;|\s/g, '') === '' ? json.html : current + json.html;
-                            if (editor) { editor.setData(next); } else { field.value = next; }
-                            if (note) note.textContent = "\u0627\u0644\u062a\u0642\u0633\u064a\u0645\u0629 \u0627\u062a\u062d\u0637\u062a \u0641\u064a \u0627\u0644\u0645\u062d\u0631\u0631 \u2014 \u0631\u0627\u062c\u0639\u0647\u0627 \u0648\u0639\u062f\u0651\u0644 \u0641\u064a\u0647\u0627 \u0648\u0627\u062d\u0641\u0638.";
-                        })
-                        .catch(function () { if (note) note.textContent = "\u0645\u0641\u064a\u0634 \u0628\u064a\u0627\u0646\u0627\u062a \u0643\u0641\u0627\u064a\u0629 \u0644\u0628\u0646\u0627\u0621 \u0627\u0644\u062a\u0642\u0633\u064a\u0645\u0629 \u0627\u0644\u062c\u0627\u0647\u0632\u0629 \u0644\u0644\u0639\u0646\u0635\u0631 \u062f\u0647."; })
-                        .then(function () { button.disabled = false; });
-                });
-            });
-            document.querySelectorAll('[data-ed-tab]').forEach(function (tab) {
-                tab.addEventListener('click', function (event) {
-                    event.preventDefault();
-                    var code = tab.getAttribute('data-ed-tab');
-                    document.querySelectorAll('[data-ed-tab]').forEach(function (other) { other.classList.toggle('active', other === tab); });
-                    document.querySelectorAll('[data-ed-pane]').forEach(function (pane) { pane.style.display = pane.getAttribute('data-ed-pane') === code ? '' : 'none'; });
-                });
-            });
         </script>
       <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>

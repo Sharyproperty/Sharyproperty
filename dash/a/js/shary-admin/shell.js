@@ -266,7 +266,7 @@
         return rows;
     }
     function wantsSearch(table) {
-        if (table.closest('.modal, form .sx-no-search, .sx-no-search, .note-editor, .cke') || table.classList.contains('sx-no-search') || table.hasAttribute('data-sx-searched')) { return false; }
+        if (table.closest('.modal, form .sx-no-search, .sx-no-search, .note-editor, .cke, .ag-detail') || table.classList.contains('sx-no-search') || table.classList.contains('ag-stack') || table.hasAttribute('data-sx-searched')) { return false; }
         if (!table.tHead && !$('th', table)) { return false; }
         if (!table.offsetParent && !table.getClientRects().length) { return false; }   // inside a closed tab: it gets its box when the tab opens
         var rows = bodyRows(table);
