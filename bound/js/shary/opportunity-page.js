@@ -45,7 +45,8 @@
             var box = deal.getBoundingClientRect();
             // الجزء الثابت لازق تحت الهيدر على طول
             var top = stickyHeader ? Math.max(0, stickyHeader.getBoundingClientRect().bottom) : 0;
-            sticky.style.top = top + 'px';
+            // style بيتحسب قبل تكبير الديسك توب — والقياس بعده
+            sticky.style.top = (top / (window.SharyZoom ? window.SharyZoom() : 1)) + 'px';
             // ظاهر بس لما قسم السعر يعدّي فوق (والصفحة نفسها ظاهرة)
             sticky.classList.toggle('is-on', box.height > 0 && box.bottom < top + 10);
         };

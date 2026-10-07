@@ -222,7 +222,7 @@
         function at(event) {
             var rect = svg.getBoundingClientRect();
             var point = event.touches ? event.touches[0] : event;
-            var ratio = (point.clientX - rect.left - pad.left) / plotW;
+            var ratio = ((point.clientX - rect.left) / (window.SharyZoom ? window.SharyZoom() : 1) - pad.left) / plotW;
             show(clamp(Math.round(ratio * last)));
         }
         svg.addEventListener('mousemove', at);
@@ -428,7 +428,7 @@
             var next = (at + 1) % slides.length;
             if (narrow.matches && !thumbs) {
                 var to = slides[next].getBoundingClientRect(), frame = track.getBoundingClientRect();
-                var left = track.scrollLeft + (to.left + to.width / 2) - (frame.left + frame.width / 2);
+                var left = track.scrollLeft + ((to.left + to.width / 2) - (frame.left + frame.width / 2)) / (window.SharyZoom ? window.SharyZoom() : 1);
                 track.scrollTo({ left: left, behavior: 'smooth' });
             } else {
                 slides.forEach(function (slide, i) { slide.setAttribute('data-active', i === next ? '1' : '0'); });

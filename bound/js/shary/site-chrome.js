@@ -1,4 +1,14 @@
 /**
+ * تكبير الديسك توب (html { zoom } في app.css): getBoundingClientRect وإحداثيات الماوس بترجع بالبيكسل الظاهر على الشاشة ،
+ * لكن أي مقاس بيتكتب في style أو scrollLeft بيتحسب قبل التكبير. window.SharyZoom() = نسبة التكبير الحالية (1 على الموبايل) —
+ * اقسموا عليها أي رقم جاي من getBoundingClientRect / clientX قبل ما يتكتب كـ style أو scroll.
+ */
+window.SharyZoom = function () {
+    var value = parseFloat(window.getComputedStyle(document.documentElement).zoom);
+    return value > 0 ? value : 1;
+};
+
+/**
  * الهيدر والفوتر:
  * - زرار القائمة في الموبايل بيفتح ويقفل روابط الهيدر.
  * - مجموعات الفوتر في الموبايل بتفتح وتقفل (في الديسك توب مفتوحة دايمًا من الـ CSS).
@@ -246,11 +256,13 @@
         });
         document.body.appendChild(menu);
         // مكان القايمة: تحت الزرار (أو فوقه لو مفيش مكان) وجوه حدود الشاشة
-        var box = anchor.getBoundingClientRect();
+        var zoom = window.SharyZoom(), rect = anchor.getBoundingClientRect();
+        var box = { left: rect.left / zoom, top: rect.top / zoom, bottom: rect.bottom / zoom, width: rect.width / zoom };
+        var screenW = window.innerWidth / zoom, screenH = window.innerHeight / zoom;
         var width = menu.offsetWidth, height = menu.offsetHeight;
-        var left = Math.min(Math.max(8, box.left + box.width / 2 - width / 2), window.innerWidth - width - 8);
+        var left = Math.min(Math.max(8, box.left + box.width / 2 - width / 2), screenW - width - 8);
         var top = box.bottom + 8;
-        if (top + height > window.innerHeight - 8) top = Math.max(8, box.top - height - 8);
+        if (top + height > screenH - 8) top = Math.max(8, box.top - height - 8);
         menu.style.left = left + 'px';
         menu.style.top = top + 'px';
         floatMenu = menu;
@@ -624,7 +636,7 @@
 
         function go(index, smooth) {
             at = (index + slides.length) % slides.length;
-            var left = track.scrollLeft + slides[at].getBoundingClientRect().left - track.getBoundingClientRect().left;
+            var left = track.scrollLeft + (slides[at].getBoundingClientRect().left - track.getBoundingClientRect().left) / window.SharyZoom();
             track.scrollTo({ left: left, behavior: smooth === false ? 'auto' : 'smooth' });
         }
         function mark() {

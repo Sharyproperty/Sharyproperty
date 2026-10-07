@@ -636,16 +636,34 @@ video {
        وبيكبر ويصغر مع الشاشة والزوم: 95% من عرض الشاشة لحد 1240px (وشاشات اللابتوب الصغيرة لحد 1180px). الموبايل والتابلت زي ما هم. */
 
 :root {
-  --shary-w: min(95vw - 32px, 1180px);
+  --z: 1;
+  --shary-w: min(calc(100vw / var(--z, 1)) - 112px, 1180px);
 }
 
-@media (min-width: 1300px) {
+/* ديسك توب: الموقع كله بيتعرض مكبّر (زي زوم 110% في المتصفح) عشان الخط والعناصر تبقى مريحة للعين:
+         شاشة 1280 – 1339 ← 105% ، ومن 1340 وطالع ← 110%. الموبايل والتابلت واللابتوب الصغير (أقل من 1280) زي ما هم.
+       ‎--z هو نسبة التكبير: كل قيمة vw / vh في ملفات الـ CSS بتتقسم عليه (resources/shary-src/zoom-units.cjs بعد البناء) عشان مفيش حاجة تطلع بره الشاشة.
+       عرض المحتوى سايب هامش على الجنب قد زرارين التواصل العايمين (Shary AI وواتساب) فما بيغطوش الصفحة. */
+
+@media (min-width: 1280px) {
   :root {
-    --shary-w: min(95vw, 1240px);
+    --z: 1.05;
+    --shary-w: min(calc(91vw / var(--z, 1)), 1200px);
+  }
+}
+
+@media (min-width: 1340px) {
+  :root {
+    --z: 1.1;
+    --shary-w: min(calc(91vw / var(--z, 1)), 1240px);
   }
 }
 
 @media (min-width: 1024px) {
+  html {
+    zoom: var(--z);
+  }
+
   .site-container {
     max-width: calc(var(--shary-w) + 40px);
   }
@@ -695,26 +713,38 @@ button.site-login {
 }
 
 /* لينكات الهيدر على الديسك توب (الرئيسية / المطورين / المشاريع / بحث / المدونة / من نحن / اتصل بنا / الوكلاء):
-       خط أكبر وبولد ومسافات مريحة — وبيصغر درجة على الشاشات الأضيق (أو الزوم العالي) عشان الهيدر كله يفضل في سطر واحد. عربي وإنجليزي */
+       خط هادي مش بولد وبالأسود العادي (الموقع بيفتح مكبّر 110% على الديسك توب فالمقاس محسوب على كده) — عربي وإنجليزي.
+       "تسجيل الدخول" وزرار اللغة والقلب ليهم ستايلهم لوحدهم ومش بيتأثروا بالقواعد دي */
 
 @media (min-width: 1024px) {
   header .site-nav {
-    gap: 13px;
+    gap: 15px;
   }
 
   header .site-nav .site-nav__link {
-    font-size: 15.5px;
-    font-weight: 700;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: #1c1c1e;
+  }
+
+  header .site-nav .site-nav__link.is-active {
+    font-weight: 600;
+  }
+
+  header .site-nav .site-nav__link:hover,
+        header .site-nav .site-nav__link:focus-visible,
+        header .site-nav .site-nav__link[aria-expanded="true"] {
+    color: #1f63c6;
   }
 }
 
 @media (min-width: 1160px) {
   header .site-nav {
-    gap: 18px;
+    gap: 22px;
   }
 
   header .site-nav .site-nav__link {
-    font-size: 17px;
+    font-size: 15px;
   }
 
   .site-login {
@@ -728,13 +758,13 @@ button.site-login {
   }
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1490px) {
   header .site-nav {
-    gap: 26px;
+    gap: 28px;
   }
 
   header .site-nav .site-nav__link {
-    font-size: 18.5px;
+    font-size: 15.5px;
   }
 
   .site-login {
@@ -750,7 +780,17 @@ button.site-login {
 
 @media (min-width: 1024px) and (max-width: 1159px) {
   [lang="en"] header .site-nav {
-    gap: 10px;
+    gap: 12px;
+  }
+
+  [lang="en"] header .site-nav .site-nav__link {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1160px) {
+  [lang="en"] header .site-nav {
+    gap: 20px;
   }
 
   [lang="en"] header .site-nav .site-nav__link {
@@ -758,23 +798,13 @@ button.site-login {
   }
 }
 
-@media (min-width: 1160px) {
+@media (min-width: 1490px) {
   [lang="en"] header .site-nav {
-    gap: 16px;
+    gap: 26px;
   }
 
   [lang="en"] header .site-nav .site-nav__link {
-    font-size: 16.5px;
-  }
-}
-
-@media (min-width: 1300px) {
-  [lang="en"] header .site-nav {
-    gap: 22px;
-  }
-
-  [lang="en"] header .site-nav .site-nav__link {
-    font-size: 17.5px;
+    font-size: 15px;
   }
 }
 
@@ -1788,7 +1818,7 @@ button.site-login {
 .offer-filter__box .req-menu {
   inset-inline: 0 auto;
   width: max(100%, 250px);
-  max-width: calc(100vw - 40px);
+  max-width: calc(calc(100vw / var(--z, 1)) - 40px);
 }
 
 .offer-filter__box:nth-of-type(3) .req-menu {
@@ -2981,7 +3011,7 @@ button.site-login {
 
 @media (min-width: 1024px) {
   .story__frame {
-    height: min(92vh, 860px);
+    height: min(calc(92vh / var(--z, 1)), 860px);
     border-radius: 20px;
   }
 }
@@ -5491,7 +5521,7 @@ input:focus-visible + .area-chip,
   }
 
   [data-filter-sheet="all"] > .area-sheet {
-    top: 7vh !important;
+    top: calc(7vh / var(--z, 1)) !important;
     overflow: hidden;
     border-radius: 28px 28px 0 0;
   }
@@ -5840,7 +5870,7 @@ input:focus-visible + .area-chip,
   bottom: 96px;
   left: 50%;
   z-index: 80;
-  max-width: calc(100vw - 32px);
+  max-width: calc(calc(100vw / var(--z, 1)) - 32px);
   transform: translate(-50%, 12px);
   border-radius: 999px;
   background-color: #0f2f4b;
@@ -6037,7 +6067,7 @@ input:focus-visible + .area-chip,
   inset-inline: 20px;
   top: calc(100% - 4px);
   z-index: 30;
-  max-height: min(60vh, 440px);
+  max-height: min(calc(60vh / var(--z, 1)), 440px);
   overflow-y: auto;
   border: 1px solid #e4e9ef;
   border-radius: 16px;
@@ -7137,7 +7167,7 @@ input:focus-visible + .area-chip,
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: clamp(16px, 4.9vw, 19px);
+    font-size: clamp(16px, calc(4.9vw / var(--z, 1)), 19px);
   }
 
   .prop-bar .prop-bar__head > p {
@@ -9499,7 +9529,7 @@ input:focus-visible + .area-chip,
   .rent-gallery {
     display: flex;
     height: 440px;
-    height: clamp(300px, calc(100vh - 296px), 440px);
+    height: clamp(300px, calc(calc(100vh / var(--z, 1)) - 296px), 440px);
     gap: 10px;
   }
 
@@ -9609,7 +9639,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 }
 
 .rent-viewer__image {
-  max-height: calc(100vh - 196px);
+  max-height: calc(calc(100vh / var(--z, 1)) - 196px);
   max-width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
@@ -9629,7 +9659,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 }
 
 .rent-viewer[data-group="floor"] .rent-viewer__image {
-  max-height: calc(100vh - 160px);
+  max-height: calc(calc(100vh / var(--z, 1)) - 160px);
 }
 
 .rent-viewer[data-group="master"] .rent-viewer__stage {
@@ -9672,12 +9702,22 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 }
 
 @media (min-width: 1024px) {
+  /* ديسك توب: الصورة المفتوحة أكبر — مالية ارتفاع الشاشة (ناقص شريط العدّاد فوق وصف الصور الصغيرة تحت) حتى لو الصورة الأصلية صغيرة */
+
   .rent-viewer__stage {
-    padding: 96px 96px 128px;
+    padding: 70px 56px 112px;
   }
 
   .rent-viewer__image {
-    max-height: calc(100vh - 224px);
+    height: calc(calc(100vh / var(--z, 1)) - 182px);
+    max-height: calc(calc(100vh / var(--z, 1)) - 182px);
+    width: auto;
+    max-width: calc(calc(100vw / var(--z, 1)) - 112px);
+  }
+
+  .rent-viewer[data-group="floor"] .rent-viewer__image,
+        .rent-viewer[data-group="master"] .rent-viewer__image {
+    height: auto;
   }
 
   .rent-viewer__thumbs button {
@@ -9753,7 +9793,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   display: flex;
   width: -moz-max-content;
   width: max-content;
-  max-width: calc(100vw - 16px);
+  max-width: calc(calc(100vw / var(--z, 1)) - 16px);
   margin-inline: auto;
   align-items: center;
   gap: 6px;
@@ -11703,7 +11743,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   z-index: 5;
   display: flex;
   width: 250px;
-  max-width: 78vw;
+  max-width: calc(78vw / var(--z, 1));
   max-height: 270px;
   flex-direction: column;
   overflow: hidden;
@@ -12703,9 +12743,9 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
     position: fixed;
     right: 108px;
     bottom: 20px;
-    height: min(660px, calc(100vh - 104px));
+    height: min(660px, calc(calc(100vh / var(--z, 1)) - 104px));
     width: 400px;
-    max-width: calc(100vw - 132px);
+    max-width: calc(calc(100vw / var(--z, 1)) - 132px);
     overflow: hidden;
     border: 1px solid #c9d7e6;
     border-radius: 22px;
@@ -12747,6 +12787,61 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 
 .area-fab:hover {
   transform: translateY(-2px);
+}
+
+/* ديسك توب: زرارين التواصل العايمين (Shary AI وواتساب) لازقين في حافة الشاشة وبمقاس أصغر —
+       قاعدين في الهامش الأبيض جنب المحتوى فما بيغطوش الصور ولا الكروت. على الشاشات الأوسع الهامش أكبر فالزرار بيكبر ويبعد عن الحافة */
+
+.quick-fabs {
+  right: 28px;
+}
+
+@media (min-width: 1024px) {
+  .quick-fabs {
+    right: 5px;
+    bottom: 92px;
+    gap: 10px;
+  }
+
+  .quick-fabs .area-fab {
+    height: 44px;
+    width: 44px;
+  }
+
+  .quick-fabs .area-ai > img {
+    height: auto;
+    width: 26px;
+  }
+
+  .quick-fabs .area-fab--wa i {
+    font-size: 23px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .quick-fabs {
+    right: 10px;
+    gap: 12px;
+  }
+
+  .quick-fabs .area-fab {
+    height: 52px;
+    width: 52px;
+  }
+
+  .quick-fabs .area-ai > img {
+    width: 30px;
+  }
+
+  .quick-fabs .area-fab--wa i {
+    font-size: 27px;
+  }
+}
+
+@media (min-width: 1760px) {
+  .quick-fabs {
+    right: 28px;
+  }
 }
 
 .area-fab__label {
@@ -14235,7 +14330,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   right: 0;
   left: 0;
   z-index: 6;
-  max-height: min(58vh, 420px);
+  max-height: min(calc(58vh / var(--z, 1)), 420px);
   overflow-y: auto;
   border-radius: 16px;
   border: 1px solid #e3eaf1;
@@ -14780,7 +14875,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   inset-inline: 10px;
   bottom: 10px;
   z-index: 1100;
-  max-height: min(78vh, 620px);
+  max-height: min(calc(78vh / var(--z, 1)), 620px);
   overflow-y: auto;
   border-radius: 20px;
   background-color: #fff;
@@ -16218,8 +16313,8 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   .home-filter .search-side {
     display: flex !important;
     width: 600px;
-    max-width: 94vw;
-    max-height: 88vh;
+    max-width: calc(94vw / var(--z, 1));
+    max-height: calc(88vh / var(--z, 1));
     flex-direction: column;
     overflow: hidden;
     border-radius: 24px;
@@ -16233,7 +16328,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   .home-filter .search-side > .area-sheet {
     display: flex !important;
     min-height: 0;
-    max-height: 88vh;
+    max-height: calc(88vh / var(--z, 1));
     flex: 1;
     flex-direction: column;
     background-color: #e8f0fb !important;
@@ -17309,7 +17404,7 @@ img.abroad-dev__logo {
 .app-pop__art {
   position: relative;
   display: flex;
-  height: min(430px, 56vh);
+  height: min(430px, calc(56vh / var(--z, 1)));
   align-items: center;
   justify-content: center;
   background-image:
@@ -17934,10 +18029,6 @@ img.abroad-dev__logo {
   right: 0px;
 }
 
-.right-7 {
-  right: 1.75rem;
-}
-
 .start-2 {
   inset-inline-start: 0.5rem;
 }
@@ -18522,7 +18613,7 @@ img.abroad-dev__logo {
 }
 
 .h-dvh {
-  height: 100dvh;
+  height: calc(100dvh / var(--z, 1));
 }
 
 .h-full {
@@ -18541,20 +18632,20 @@ img.abroad-dev__logo {
   max-height: 236px;
 }
 
-.max-h-\[82vh\] {
-  max-height: 82vh;
+.max-h-\[calc(82vh / var(--z, 1))\] {
+  max-height: calc(82vh / var(--z, 1));
 }
 
-.max-h-\[86vh\] {
-  max-height: 86vh;
+.max-h-\[calc(86vh / var(--z, 1))\] {
+  max-height: calc(86vh / var(--z, 1));
 }
 
-.max-h-\[88vh\] {
-  max-height: 88vh;
+.max-h-\[calc(88vh / var(--z, 1))\] {
+  max-height: calc(88vh / var(--z, 1));
 }
 
-.max-h-\[92vh\] {
-  max-height: 92vh;
+.max-h-\[calc(92vh / var(--z, 1))\] {
+  max-height: calc(92vh / var(--z, 1));
 }
 
 .max-h-full {
@@ -22213,11 +22304,6 @@ img.abroad-dev__logo {
   color: rgb(31 99 198 / var(--tw-text-opacity, 1));
 }
 
-.aria-expanded\:text-shary-link[aria-expanded="true"] {
-  --tw-text-opacity: 1;
-  color: rgb(31 99 198 / var(--tw-text-opacity, 1));
-}
-
 .aria-pressed\:border-shary-action[aria-pressed="true"] {
   --tw-border-opacity: 1;
   border-color: rgb(30 65 102 / var(--tw-border-opacity, 1));
@@ -23082,16 +23168,16 @@ img.abroad-dev__logo {
     height: 100%;
   }
 
-  .lg\:max-h-\[80vh\] {
-    max-height: 80vh;
+  .lg\:max-h-\[calc(80vh / var(--z, 1))\] {
+    max-height: calc(80vh / var(--z, 1));
   }
 
-  .lg\:max-h-\[86vh\] {
-    max-height: 86vh;
+  .lg\:max-h-\[calc(86vh / var(--z, 1))\] {
+    max-height: calc(86vh / var(--z, 1));
   }
 
-  .lg\:max-h-\[calc\(100vh-48px\)\] {
-    max-height: calc(100vh - 48px);
+  .lg\:max-h-\[calc\(calc(100vh / var(--z, 1))-48px\)\] {
+    max-height: calc(calc(100vh / var(--z, 1)) - 48px);
   }
 
   .lg\:min-h-\[300px\] {
@@ -24232,10 +24318,6 @@ img.abroad-dev__logo {
   .min-\[1160px\]\:px-4 {
     padding-left: 1rem;
     padding-right: 1rem;
-  }
-
-  .min-\[1160px\]\:text-\[16px\] {
-    font-size: 16px;
   }
 }
 
