@@ -277,7 +277,6 @@
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-content">
-                                                            <li><a href="admin-shary-content-editor.html" class="" ><span>Blog &amp; the writing editor</span></a></li>
                                                             <li><a href="admin-shary-extras-blogs.html" class="" ><span>Article data</span></a></li>
                                                             <li><a href="news.html" class="is-on"  aria-current="page" ><span>News</span></a></li>
                                                             <li><a href="trendyList.html" class="" ><span>Trendy</span></a></li>
@@ -410,22 +409,25 @@
             a[class*="cke_button__shary"] { background: #e8f0fb !important; border-radius: 6px; margin: 2px !important; min-height: 28px; }
             a[class*="cke_button__sharysym"] { background: #fff !important; border: 1px solid #cfdbe8 !important; min-width: 30px; text-align: center; }
             a[class*="cke_button__sharysym"] .cke_button_label { font-size: 15px; padding: 0 4px; }
-            .cke_button__sharycta, .cke_button__sharylink, .cke_button__sharypreview { background: #123a5c !important; }
+            a.cke_button__sharycta, a.cke_button__sharylink, a.cke_button__sharypreview { background: #123a5c !important; }
             .cke_button__sharycta .cke_button_label, .cke_button__sharylink .cke_button_label, .cke_button__sharypreview .cke_button_label { color: #fff !important; }
             a[class*="cke_button__shary"].cke_button_on { box-shadow: inset 0 0 0 2px #1f63c6; }
+            /* the blocks of the website's articles (cards, link button, external link, note, places) */
+            a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal, a.cke_button__sharynote, a.cke_button__sharyplaces { background: #e3f3ef !important; }
+            .cke_button__sharycards .cke_button_label, .cke_button__sharybutton .cke_button_label, .cke_button__sharyexternal .cke_button_label, .cke_button__sharynote .cke_button_label, .cke_button__sharyplaces .cke_button_label { color: #0f5d52 !important; }
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "PrhyrfYzx9TArfe508mqsaf34JleFK8pkc8hcXj8",
+                token: "XJshW9S8rGt2pUHKtzMZImVQfFNNAugtc33eJMXR",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=PrhyrfYzx9TArfe508mqsaf34JleFK8pkc8hcXj8",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=XJshW9S8rGt2pUHKtzMZImVQfFNNAugtc33eJMXR",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
-                types: {"project":"Project","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
-                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/"}            };
+                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
+                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
         </script>
         <script src="../a/js/shary-admin/editor.js"></script>
         
@@ -514,7 +516,68 @@
 
                                         </div>
                                     </div>
-
+                                    
+                                    <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-add" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+            <style>
+            .sx-faqs__row { position: relative; border: 1px solid #dfe7ef; border-radius: 10px; padding: 12px; margin-bottom: 10px; background: #fbfcfe; }
+            .sx-faqs__row label { font-weight: 700; margin-bottom: 4px; }
+            .sx-faqs__row .sx-faqs__remove { margin-top: 8px; }
+        </style>
+        <script>
+            // + سؤال جديد / شيل السؤال — في أي صندوق أسئلة في الصفحة (الإضافة والتعديل)
+            document.addEventListener('click', function (event) {
+                var add = event.target.closest && event.target.closest('[data-sx-faq-add]');
+                if (add) {
+                    var box = add.closest('[data-sx-faqs]');
+                    var rows = box.querySelector('[data-sx-faq-rows]');
+                    rows.insertAdjacentHTML('beforeend', box.querySelector('[data-sx-faq-template]').innerHTML.replace(/__i__/g, String(Date.now())));
+                    var first = rows.lastElementChild && rows.lastElementChild.querySelector('input');
+                    if (first) { first.focus(); }
+                    return;
+                }
+                var remove = event.target.closest && event.target.closest('[data-sx-faq-remove]');
+                if (remove) {
+                    var row = remove.closest('[data-sx-faq-row]');
+                    if (row) { row.parentNode.removeChild(row); }
+                }
+            });
+        </script>
+    
                                     <div class="col-12">
                                         <div class="form-group">
                                             <label>Image <span class="manitory">*</span></label>
@@ -998,7 +1061,149 @@
 &lt;/ol&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-43" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="كم تبعد العاصمة الإدارية الجديدة عن القاهرة؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="How far is the New Administrative Capital from Cairo?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">تبعد العاصمة الإدارية نحو 45 كيلومترًا عن وسط القاهرة، ويمكن الوصول إليها من القاهرة الجديدة في دقائق عبر محور محمد بن زايد.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">It is about 45 km from central Cairo, and minutes from New Cairo via the Mohamed Bin Zayed axis.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="ما أفضل حي سكني في العاصمة الإدارية؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="Which residential district is best in the New Capital?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">الحي السكني السابع R7 والحي الثامن R8 الأكثر طلبًا بين مشروعات المطورين، بينما يناسب الحي الثالث R3 من يبحث عن وحدات جاهزة في منطقة مأهولة.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">R7 and R8 are the most in demand among developers’ projects, while R3 suits buyers who want ready units in an inhabited area.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="هل يمكن الوصول إلى العاصمة الإدارية بالمواصلات العامة؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Can you reach the New Capital by public transport?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">نعم، عبر القطار الكهربائي الخفيف من محطة عدلي منصور، ومونوريل شرق النيل من مدينة نصر، بالإضافة إلى خطوط الأتوبيسات.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">Yes: by the Light Rail Transit from Adly Mansour station, the East Nile monorail from Nasr City, and bus lines.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[3][question_ar]" value="هل العاصمة الإدارية مناسبة للاستثمار العقاري؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[3][question_en]" value="Is the New Capital a good real estate investment?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[3][answer_ar]" rows="3" dir="rtl" maxlength="4000">تناسب المستثمر طويل الأجل الذي يختار مطورًا موثوقًا وموقعًا قريبًا من الخدمات ومحاور الحركة، مع مراجعة نسبة التنفيذ ومتوسط الأسعار قبل الشراء.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[3][answer_en]" rows="3" dir="ltr" maxlength="4000">It suits long-term investors who choose a reliable developer and a location close to services and main roads, after checking build progress and average prices.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[4][question_ar]" value="كيف أعرف متوسط سعر المتر الحالي في العاصمة الإدارية؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[4][question_en]" value="How do I find the current average price per meter in the New Capital?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[4][answer_ar]" rows="3" dir="rtl" maxlength="4000">من مؤشر شاري، الذي يعرض متوسط سعر المتر المحدَّث لكل منطقة ونوع وحدة ونسبة التغير.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[4][answer_en]" rows="3" dir="ltr" maxlength="4000">From the Shary Index, which shows the updated average price per meter for each area and unit type, and the rate of change.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -1329,7 +1534,107 @@
 &lt;/aside&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-42" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="ما معنى الأوفر برايس؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="What does “over price” mean?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">هو المبلغ الذي يدفعه المشتري للمالك الحالي زيادة على ما سدده للمطور، ويعبّر عن ارتفاع قيمة الوحدة منذ التعاقد عليها.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">It is the amount the buyer pays the current owner on top of what the owner has paid the developer, reflecting how much the unit has gained in value since it was contracted.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="هل يمكن شراء ريسيل بالتقسيط؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="Can I buy a resale unit in installments?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">نعم، بسداد ما دفعه البائع مع الأوفر برايس نقدًا، ثم استكمال الأقساط المتبقية للمطور بعد التنازل.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">Yes: you pay what the seller has paid plus the over price in cash, then continue the remaining installments to the developer after the assignment.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="من يتحمل رسوم التنازل؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Who pays the assignment fees?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">تُحدَّد بالاتفاق بين البائع والمشتري، وتحصّلها الشركة المطورة وفق ما ينص عليه العقد الأصلي.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">It is agreed between seller and buyer, and the developer collects the fees as set in the original contract.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -1690,7 +1995,107 @@
 &lt;/aside&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-41" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="ما أقل مقدم في مشاريع العاصمة الإدارية؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="What is the lowest down payment in New Capital projects?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">يبدأ المقدم في كثير من المشروعات من 5% إلى 10% من قيمة الوحدة، ويختلف من مطور لآخر ومن عرض لآخر.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">In many projects the down payment starts from 5% to 10% of the unit price, and it varies by developer and offer.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="ما أطول مدة تقسيط؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="What is the longest installment period?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">تصل في كثير من العروض إلى 8 أو 10 سنوات، وكلما طالت المدة ارتفع السعر الإجمالي للوحدة.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">Many offers reach 8 or 10 years. The longer the period, the higher the total price of the unit.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="هل الأفضل السكني أم التجاري؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Is residential or commercial better?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">السكني يناسب السكن والاستثمار الهادئ طويل الأجل، والتجاري والإداري يناسبان من يبحث عن عائد إيجاري ويقبل مخاطرة أعلى مرتبطة بنسب الإشغال.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">Residential suits living and steady long-term investment. Commercial and office units suit buyers who want rental income and accept a higher risk tied to occupancy.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -1997,7 +2402,107 @@
 &lt;/aside&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-40" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="هل مبلغ جدية الحجز يُسترد؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="Is the reservation payment refundable?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">يتوقف ذلك على ما تنص عليه استمارة الحجز: مدة الاسترداد والنسبة التي تخصمها الشركة عند التراجع، لذلك اقرأ هذا البند قبل الدفع.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">It depends on the reservation form: the refund period and the share the company deducts if you withdraw. Read that clause before paying.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="ما المقصود بنسبة التحميل؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="What is the load factor?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">هي نصيب الوحدة من المساحات المشتركة كالسلالم والمداخل، وتُضاف إلى المساحة الصافية لتكوّن المساحة الإجمالية التي يُحسب عليها السعر.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">It is the unit’s share of common areas such as stairs and entrances, added to the net area to give the gross area the price is based on.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="هل يمكن تعديل بنود العقد؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Can contract clauses be changed?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">يمكن طلب إضافة ملحق أو توضيح للبنود غير الواضحة قبل التوقيع، ويُفضَّل أن يراجع العقد محامٍ متخصص.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">You can ask for an annex or a clarification of unclear clauses before signing, and it is best to have a specialised lawyer review the contract.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -2410,7 +2915,107 @@
 &lt;/aside&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-39" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="أيهما أغلى: الشيخ زايد أم 6 أكتوبر؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="Which is more expensive: Sheikh Zayed or 6 October?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">متوسط سعر المتر في الشيخ زايد أعلى في الغالب، مع وجود كمبوندات في 6 أكتوبر بأسعار مقاربة. راجع مؤشر شاري للأرقام المحدَّثة.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">The average price per meter is usually higher in Sheikh Zayed, although some 6 October compounds come close. Check the Shary Index for updated figures.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="كم المسافة بين المدينتين؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="How far apart are the two cities?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">المدينتان متجاورتان، ويربط بينهما محور 26 يوليو وطرق داخلية، والانتقال بينهما يستغرق دقائق.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">They are next to each other, linked by the 26th of July Corridor and local roads, minutes apart.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="أيهما أفضل للاستثمار الإيجاري؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Which is better for rental investment?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">6 أكتوبر تناسب الإيجار للطلاب والعاملين بحكم الجامعات والمنطقة الصناعية، والشيخ زايد تناسب الإيجار العائلي.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">6 October suits rentals to students and workers because of its universities and industrial zone, while Sheikh Zayed suits family rentals.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -2809,7 +3414,107 @@
 &lt;/aside&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-38" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="ما متوسط سعر المتر في التجمع الخامس حاليًا؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="What is the average price per meter in Fifth Settlement now?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">يتغير المتوسط من ربع لآخر، ويعرضه مؤشر شاري محدَّثًا لكل منطقة ونوع وحدة مع نسبة التغير.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">The average changes every quarter. The Shary Index shows it updated for each area and unit type, with the rate of change.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="لماذا يختلف السعر داخل الكمبوند عن خارجه؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="Why is the price inside a compound different from outside?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">لأن سعر الكمبوند يشمل الأمن والمساحات الخضراء والخدمات والصيانة، بينما يعتمد السعر خارجه على الموقع وحالة العقار فقط.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">A compound price covers security, green space, services and maintenance, while the price outside depends only on location and the condition of the property.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="هل القاهرة الجديدة مناسبة للاستثمار الإيجاري؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Is New Cairo good for rental investment?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">تناسبه في المناطق القريبة من الجامعات ومناطق الأعمال وشارع التسعين، حيث يرتفع الطلب على الإيجار.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">Yes, in the areas close to universities, business districts and 90th Street, where rental demand is higher.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -3184,7 +3889,107 @@
 &lt;/aside&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-37" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="هل يمكن تمويل وحدة تحت الإنشاء؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="Can I finance a unit that is still under construction?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">أغلب برامج التمويل العقاري تشترط وحدة مكتملة يمكن رهنها لصالح جهة التمويل. أما الوحدات تحت الإنشاء فتُشترى غالبًا بتقسيط المطور.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">Most mortgage programs require a completed unit that can be mortgaged to the lender. Units under construction are usually bought on the developer’s installment plan.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="كم يكون المقدم في التمويل العقاري؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="How much is the down payment?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">تموّل الجهة نسبة من قيمة الوحدة بعد تقييمها، ويسدد العميل الباقي كمقدم. وتختلف النسبة من جهة لأخرى ومن برنامج لآخر.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">The lender finances a share of the unit’s value after appraising it, and the buyer pays the rest as a down payment. The share differs between lenders and programs.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="هل يمكن سداد التمويل قبل موعده؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Can I repay the loan early?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">نعم، تتيح أغلب الجهات السداد المعجل الكلي أو الجزئي مقابل عمولة يحددها العقد، فاقرأ هذا البند قبل التوقيع.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">Yes. Most lenders allow full or partial early repayment for a fee set in the contract, so read that clause before signing.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -3537,7 +4342,107 @@
 &lt;/aside&gt;</textarea>
                                                                     </div>
                                                                 </div>
-
+                                                                
+                                                                <div class="col-12">
+        <div class="card sx-faqs" id="sx-faqs-news-36" data-sx-faqs>
+            <div class="card-header">
+                <h5 class="card-title mb-1">Frequently asked questions (shown under the text on the page)</h5>
+                <small class="text-muted">Each question with its answer, Arabic and English. A language left empty does not show.</small>
+            </div>
+            <div class="card-body">
+                <input type="hidden" name="sx_faqs_sent" value="1">
+                <div data-sx-faq-rows>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_ar]" value="هل الوقت مناسب لشراء عقار في مصر؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[0][question_en]" value="Is now a good time to buy property in Egypt?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_ar]" rows="3" dir="rtl" maxlength="4000">يتوقف ذلك على هدفك ومدة احتفاظك بالوحدة. من يشتري للسكن أو للاستثمار طويل الأجل يركز على الموقع والمطور ونظام السداد أكثر من توقيت السوق.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[0][answer_en]" rows="3" dir="ltr" maxlength="4000">It depends on your goal and how long you will hold the unit. Buyers looking for a home or a long-term investment should focus on location, developer and payment plan more than on market timing.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_ar]" value="ما أهم مؤشر أتابعه قبل الشراء؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[1][question_en]" value="Which indicator matters most before buying?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_ar]" rows="3" dir="rtl" maxlength="4000">متوسط سعر المتر في المنطقة واتجاهه خلال الفترات الأخيرة، مع مقارنة الوحدة التي تدرسها بوحدات مشابهة في المنطقة نفسها.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[1][answer_en]" rows="3" dir="ltr" maxlength="4000">The average price per meter in the area and its direction over recent periods, comparing the unit you are considering with similar units in the same area.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                            <div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_ar]" value="أين أجد أسعار المتر المحدَّثة؟" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[2][question_en]" value="Where can I find updated prices per meter?" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_ar]" rows="3" dir="rtl" maxlength="4000">في مؤشر شاري، الذي يعرض متوسط سعر المتر لكل منطقة ونوع وحدة ونسبة التغير.</textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[2][answer_en]" rows="3" dir="ltr" maxlength="4000">On the Shary Index, which shows the average price per meter for each area and unit type, and the rate of change.</textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+                                    </div>
+                <button type="button" class="btn btn-sm btn-primary" data-sx-faq-add>+ New question</button>
+                <template data-sx-faq-template><div class="sx-faqs__row" data-sx-faq-row>
+    <div class="row g-2">
+        <div class="col-md-6">
+            <label>Question (Arabic)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_ar]" value="" dir="rtl" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Question (English)</label>
+            <input type="text" class="form-control" name="sx_faqs[__i__][question_en]" value="" dir="ltr" maxlength="300">
+        </div>
+        <div class="col-md-6">
+            <label>Answer (Arabic)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_ar]" rows="3" dir="rtl" maxlength="4000"></textarea>
+        </div>
+        <div class="col-md-6">
+            <label>Answer (English)</label>
+            <textarea class="form-control" name="sx_faqs[__i__][answer_en]" rows="3" dir="ltr" maxlength="4000"></textarea>
+        </div>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-danger sx-faqs__remove" data-sx-faq-remove>Remove the question</button>
+</div>
+</template>
+            </div>
+        </div>
+    </div>
+    
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
@@ -3782,6 +4687,18 @@
             XLSX.writeFile(wb, 'News.xlsx');
         }
     </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var match = /[?&]edit=(\d+)/.exec(window.location.search);
+        var box = match ? document.getElementById('news_' + match[1]) : null;
+        if (!box) { return; }
+        setTimeout(function () {
+            if (window.bootstrap && window.bootstrap.Modal) { window.bootstrap.Modal.getOrCreateInstance(box).show(); }
+            else if (window.jQuery && window.jQuery.fn.modal) { window.jQuery(box).modal('show'); }
+        }, 300);
+    });
+</script>
 </div>
 <!-- /Main Wrapper -->
     <!-- jQuery -->

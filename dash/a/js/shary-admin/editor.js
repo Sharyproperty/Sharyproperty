@@ -5,6 +5,12 @@
  |   زرار تواصل   inserts a call-to-action block in the middle of the text ([shary-cta], form, channels, project / area card)
  |   لينك داخلي   search projects / areas / developers / articles / search pages and link the selected words to one of them
  |   معاينة       shows the text exactly as the website prints it (desktop / mobile)
+ | a row of the blocks the website's articles are made of (the same markup as the approved article design):
+ |   كروت        a project card / an area card / "units of an area" links / "اقرأ كمان" (another article) — [shary-project] [shary-area] [shary-units] [shary-article]
+ |   زرار لينك   a wide link button to any page of the site or any address (a.article-cta)
+ |   لينك خارجي  the selected words link to another website (opens in a new tab)
+ |   ملاحظة      the paragraph becomes a note box (p.article-note)
+ |   أماكن       a "where to go" list: a title, the places (each with its link if any) and a line under it (figure.article-places)
  | and a row of plain-named writing buttons for a beginner (no icons to guess):
  |   عنوان رئيسي (h2) · عنوان فرعي (h3) · نص عادي · نقط · أرقام · نقط بسهم (ul.shary-arrows) · خط فاصل (hr) · مسافة (p.shary-space)
  |   and quick symbols: ،  ؟  —  •  ←
@@ -27,6 +33,9 @@
     var WRITE = [['SharyH2', 'sharyH2', 'w_h2', 'Heading'], ['SharyH3', 'sharyH3', 'w_h3', 'Sub-heading'], ['SharyP', 'sharyP', 'w_p', 'Text'], ['SharyBullets', 'sharyBullets', 'w_bullets', 'Bullets'],
         ['SharyNumbers', 'sharyNumbers', 'w_numbers', 'Numbers'], ['SharyArrows', 'sharyArrows', 'w_arrows', 'Arrows'], ['SharyLine', 'sharyLine', 'w_line', 'Line'], ['SharySpace', 'sharySpace', 'w_space', 'Space']];
     var SYMBOLS = ['،', '؟', '—', '•', '←'];
+    // the blocks of the website's articles: [button, command, label key, fallback label]
+    var BLOCKS = [['SharyCards', 'sharyCards', 'b_cards', 'Cards'], ['SharyButton', 'sharyButton', 'b_button', 'Link button'], ['SharyExternal', 'sharyExternal', 'b_external', 'External link'],
+        ['SharyNote', 'sharyNote', 'b_note', 'Note'], ['SharyPlaces', 'sharyPlaces', 'b_places', 'Places']];
 
     // ------------------------------------------------------------------ hook CKEditor
     function setup(CK) {
@@ -84,6 +93,10 @@
                 editor.addCommand('sharyLink', { exec: function (target) { openLink(target); } });
                 editor.addCommand('sharyVideo', { exec: function (target) { openVideo(target); } });
                 editor.addCommand('sharyPreview', { modes: { wysiwyg: 1, source: 1 }, readOnly: 1, exec: function (target) { openPreview(target); } });
+                editor.addCommand('sharyCards', { exec: function (target) { openCards(target); } });
+                editor.addCommand('sharyButton', { exec: function (target) { openButton(target); } });
+                editor.addCommand('sharyExternal', { exec: function (target) { openExternal(target); } });
+                editor.addCommand('sharyPlaces', { exec: function (target) { openPlaces(target); } });
                 // plain-named writing buttons
                 var snap = function (target, run) { target.focus(); target.fire('saveSnapshot'); run(); setTimeout(function () { target.fire('saveSnapshot'); }, 0); };
                 var block = function (tag) {
@@ -111,6 +124,18 @@
                         if (list) { list.addClass('shary-arrows'); }
                     });
                 } });
+                // ملاحظة: the paragraph under the cursor becomes a note box (again = back to a plain paragraph)
+                editor.addCommand('sharyNote', { exec: function (target) {
+                    snap(target, function () {
+                        var path = target.elementPath();
+                        var current = path && path.block;
+                        if (current && current.is && current.is('p') && !current.hasClass('shary-shortcode')) {
+                            if (current.hasClass('article-note')) { current.removeClass('article-note'); } else { current.addClass('article-note'); }
+                        } else {
+                            target.insertHtml('<p class="article-note">' + escapeHtml(L.note_ph || '…') + '</p>');
+                        }
+                    });
+                } });
                 editor.addCommand('sharyLine', { exec: function (target) { target.focus(); if (target.getCommand('horizontalrule')) { target.execCommand('horizontalrule'); } else { target.insertHtml('<hr>'); } } });
                 editor.addCommand('sharySpace', { exec: function (target) { target.focus(); target.insertHtml('<p class="shary-space">&nbsp;</p>'); } });
                 SYMBOLS.forEach(function (symbol, index) {
@@ -127,6 +152,9 @@
                     editor.ui.addButton('SharyVideo', { label: L.video || 'Video', command: 'sharyVideo', toolbar: 'shary,15' });
                     editor.ui.addButton('SharyLink', { label: L.link || 'Link', command: 'sharyLink', toolbar: 'shary,20' });
                     editor.ui.addButton('SharyPreview', { label: L.preview || 'Preview', command: 'sharyPreview', toolbar: 'shary,30' });
+                    BLOCKS.forEach(function (item, index) {
+                        editor.ui.addButton(item[0], { label: L[item[2]] || item[3], command: item[1], toolbar: 'sharyblocks,' + (index + 1) * 10 });
+                    });
                 }
             }
         });
@@ -141,17 +169,20 @@
                 config.format_tags = 'p;h2;h3;h4';
                 config.fontSize_sizes = FONT_SIZES;
                 add('extraAllowedContent', 'ul(shary-arrows);p(shary-space);hr;p(shary-shortcode);span{font-size,color};p h2 h3 h4{text-align};a[!href,target,rel,title];img[!src,alt,width,height]{width,height,float};table tr td th thead tbody[*]{*}', ';');
+                // the blocks of the article design: note box, wide link button, places list, live index values in tables
+                add('extraAllowedContent', 'p(article-note);a(article-cta)[!href,target,rel];figure(article-places)[id];div(article-places__box,article-places__title,article-places__list);figcaption;span(article-index,article-change)[data-index,dir]', ';');
                 add('removeButtons', 'Font', ',');
                 var group = { name: 'shary', items: ['SharyCta', 'SharyVideo', 'SharyLink', 'SharyPreview'] };
+                var blocks = { name: 'sharyblocks', items: BLOCKS.map(function (item) { return item[0]; }) };
                 var write = { name: 'sharywrite', items: WRITE.map(function (item) { return item[0]; }) };
                 var symbols = { name: 'sharysym', items: SYMBOLS.map(function (symbol, index) { return 'SharySym' + index; }) };
                 if (Object.prototype.toString.call(config.toolbar) === '[object Array]') {
-                    config.toolbar = [write, symbols, group, '/'].concat(config.toolbar, [hasFont ? { name: 'sharysize', items: ['FontSize', 'JustifyRight', 'JustifyCenter', 'JustifyLeft'] } : null].filter(Boolean));
+                    config.toolbar = [write, symbols, group, blocks, '/'].concat(config.toolbar, [hasFont ? { name: 'sharysize', items: ['FontSize', 'JustifyRight', 'JustifyCenter', 'JustifyLeft'] } : null].filter(Boolean));
                 } else if (Object.prototype.toString.call(config.toolbarGroups) === '[object Array]') {
-                    config.toolbarGroups = [{ name: 'sharywrite' }, { name: 'sharysym' }, { name: 'shary' }, '/'].concat(config.toolbarGroups);
+                    config.toolbarGroups = [{ name: 'sharywrite' }, { name: 'sharysym' }, { name: 'shary' }, { name: 'sharyblocks' }, '/'].concat(config.toolbarGroups);
                 } else {
                     config.toolbarGroups = [
-                        { name: 'sharywrite' }, { name: 'sharysym' }, { name: 'shary' }, '/',
+                        { name: 'sharywrite' }, { name: 'sharysym' }, { name: 'shary' }, { name: 'sharyblocks' }, '/',
                         { name: 'clipboard', groups: ['clipboard', 'undo'] }, { name: 'links' }, { name: 'insert' }, { name: 'tools' }, { name: 'document', groups: ['mode'] }, '/',
                         { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] }, { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'] }, { name: 'styles' }
                     ];
@@ -243,7 +274,7 @@
         var timer = null, counter = 0;
         function run() {
             var mine = ++counter;
-            var type = typeSelect ? typeSelect.value : (types || '');
+            var type = typeSelect ? typeSelect.value : (typeof types === 'function' ? types() : (types || ''));
             list.innerHTML = '<div class="shary-ed__hint">' + escapeHtml(L.searching || '…') + '</div>';
             request(CFG.linksUrl + '?lang=' + lang + '&type=' + encodeURIComponent(type) + '&q=' + encodeURIComponent(input.value.trim()))
                 .then(function (response) { return response.json(); })
@@ -267,6 +298,7 @@
         if (typeSelect) { typeSelect.addEventListener('change', run); }
         run();
         setTimeout(function () { input.focus(); }, 30);
+        return run;
     }
 
     function typeOptions(only) {
@@ -280,7 +312,7 @@
         var lang = langOf(editor);
         var box = open(L.cta_title || 'CTA',
             '<div class="shary-ed__kinds">' +
-            ['cta', 'form', 'channels', 'project', 'area'].map(function (kind, index) {
+            ['cta', 'form', 'channels'].map(function (kind, index) {
                 return '<label><input type="radio" name="shary_ed_kind" value="' + kind + '"' + (index === 0 ? ' checked' : '') + '> ' + escapeHtml(L['kind_' + kind] || kind) + '</label>';
             }).join('') + '</div>' +
             '<div data-pane="cta"><label class="shary-ed__label">' + escapeHtml(L.cta_buttons || '') + '</label><div class="shary-ed__checks">' +
@@ -354,12 +386,117 @@
         var selected = selection ? (selection.getSelectedText() || '') : '';
         var box = open(L.link_title || 'Link',
             '<p class="shary-ed__hint">' + escapeHtml(selected ? (L.link_selected || '') + ' «' + selected.slice(0, 80) + '»' : (L.link_none || '')) + '</p>' +
-            '<div class="shary-ed__bar"><select class="form-control" data-type><option value="">' + escapeHtml(L.all_types || 'All') + '</option>' + typeOptions() + '</select>' +
+            '<div class="shary-ed__bar"><select class="form-control" data-type data-sx-pick="off"><option value="">' + escapeHtml(L.all_types || 'All') + '</option>' + typeOptions() + '</select>' +
             '<input type="text" class="form-control" data-q placeholder="' + escapeHtml(L.search_ph || '') + '"></div><div class="shary-ed__results" data-results></div>');
         search(box, lang, '', function (item) {
             editor.focus();
             editor.insertHtml('<a href="' + escapeHtml(item.url) + '">' + escapeHtml(selected || item.label) + '</a>');
             close();
+        });
+    }
+
+    // ------------------------------------------------------------------ 2-b) the blocks of the website's articles
+    function dirOf(lang) { return lang === 'ar' ? 'rtl' : 'ltr'; }
+    function selectedText(editor) { var selection = editor.getSelection(); return selection ? (selection.getSelectedText() || '') : ''; }
+    function insertBlock(editor, html) { editor.focus(); editor.fire('saveSnapshot'); editor.insertHtml(html); editor.fire('saveSnapshot'); close(); }
+    function goodUrl(url) { return /^(https?:\/\/[^\s"<>]+|\/[^\s"<>]*)$/i.test(url); }
+    function external(url) {
+        if (!/^https?:\/\//i.test(url)) { return false; }
+        try { var host = new URL(url).hostname.replace(/^www\./, ''); return host !== location.hostname.replace(/^www\./, '') && host !== 'shary.eg'; } catch (error) { return true; }
+    }
+
+    // كروت: a project card · an area card · "units of an area" links · "اقرأ كمان" (another article) — the website draws them from the live data
+    function openCards(editor) {
+        var lang = langOf(editor);
+        var kinds = ['project', 'area', 'units', 'article'];
+        var box = open(L.cards_title || 'Cards',
+            '<p class="shary-ed__hint">' + escapeHtml(L.cards_hint || '') + '</p>' +
+            '<div class="shary-ed__kinds">' + kinds.map(function (kind, index) {
+                return '<label><input type="radio" name="shary_ed_card" value="' + kind + '"' + (index === 0 ? ' checked' : '') + '> ' + escapeHtml(L['kind_' + kind] || kind) + '</label>';
+            }).join('') + '</div>' +
+            '<input type="text" class="form-control" data-q placeholder="' + escapeHtml(L.search_ph || '') + '"><div class="shary-ed__results" data-results></div>');
+        function kind() { return box.querySelector('input[name="shary_ed_card"]:checked').value; }
+        var source = { project: 'project', area: 'area', units: 'area', article: 'blog' };
+        var run = search(box, lang, function () { return source[kind()]; }, function (item) {
+            var value = kind();
+            var code = value === 'units' ? '[shary-units area="' + attr(item.slug) + '"]' : '[shary-' + value + ' slug="' + attr(item.slug) + '"]';
+            insertBlock(editor, '<p class="shary-shortcode">' + escapeHtml(code) + '</p><p>&nbsp;</p>');
+        });
+        box.querySelectorAll('input[name="shary_ed_card"]').forEach(function (radio) { radio.addEventListener('change', function () { run(); }); });
+    }
+
+    // زرار لينك: a wide button to a page of the site (searched) or to any address
+    function openButton(editor) {
+        var lang = langOf(editor);
+        var box = open(L.button_title || 'Link button',
+            '<p class="shary-ed__hint">' + escapeHtml(L.button_hint || '') + '</p>' +
+            '<label class="shary-ed__label">' + escapeHtml(L.button_text || '') + '</label><input type="text" class="form-control" data-text maxlength="160" dir="' + dirOf(lang) + '" value="' + escapeHtml(selectedText(editor)) + '">' +
+            '<div class="shary-ed__bar" style="margin-top:12px"><select class="form-control" data-type data-sx-pick="off"><option value="">' + escapeHtml(L.all_types || 'All') + '</option>' + typeOptions() + '</select>' +
+            '<input type="text" class="form-control" data-q placeholder="' + escapeHtml(L.search_ph || '') + '"></div><div class="shary-ed__results" data-results></div>' +
+            '<label class="shary-ed__label" style="margin-top:12px">' + escapeHtml(L.button_url || '') + '</label><div class="shary-ed__bar"><input type="text" class="form-control" data-url dir="ltr" placeholder="https://… / /ar/…">' +
+            '<button type="button" class="btn btn-submit" data-insert>' + escapeHtml(L.insert || 'Insert') + '</button></div><p class="shary-ed__hint" data-error hidden style="color:#b42318"></p>');
+        function insert(url, label) {
+            var text = box.querySelector('[data-text]').value.trim() || label || url;
+            insertBlock(editor, '<p><a href="' + escapeHtml(url) + '" class="article-cta"' + (external(url) ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(text) + '</a></p><p>&nbsp;</p>');
+        }
+        search(box, lang, '', function (item) { insert(item.url, item.label); });
+        // the first thing to write is the button's words (the search box takes the focus otherwise)
+        var words = box.querySelector('[data-text]');
+        if (!words.value) { setTimeout(function () { words.focus(); }, 60); }
+        box.querySelector('[data-insert]').addEventListener('click', function () {
+            var url = box.querySelector('[data-url]').value.trim();
+            var error = box.querySelector('[data-error]');
+            if (!goodUrl(url)) { error.textContent = L.bad_url || 'Write a full link'; error.hidden = false; return; }
+            insert(url, '');
+        });
+    }
+
+    // لينك خارجي: the selected words link to another website (a new tab)
+    function openExternal(editor) {
+        var lang = langOf(editor);
+        var selected = selectedText(editor);
+        var box = open(L.ext_title || 'External link',
+            '<p class="shary-ed__hint">' + escapeHtml(L.ext_hint || '') + '</p>' +
+            '<label class="shary-ed__label">' + escapeHtml(L.ext_url || 'Link') + '</label><input type="url" class="form-control" data-url dir="ltr" placeholder="https://" maxlength="500">' +
+            '<label class="shary-ed__label" style="margin-top:10px">' + escapeHtml(L.ext_text || '') + '</label><input type="text" class="form-control" data-text maxlength="200" dir="' + dirOf(lang) + '" value="' + escapeHtml(selected) + '">' +
+            '<p class="shary-ed__hint" data-error hidden style="color:#b42318"></p>' +
+            '<div class="shary-ed__foot"><button type="button" class="btn btn-submit" data-insert>' + escapeHtml(L.insert || 'Insert') + '</button></div>');
+        var input = box.querySelector('[data-url]');
+        setTimeout(function () { input.focus(); }, 30);
+        box.querySelector('[data-insert]').addEventListener('click', function () {
+            var url = input.value.trim();
+            var error = box.querySelector('[data-error]');
+            if (!/^https?:\/\/[^\s"<>]+$/i.test(url)) { error.textContent = L.bad_url || 'Write the full link (https://…)'; error.hidden = false; input.focus(); return; }
+            var text = box.querySelector('[data-text]').value.trim() || url;
+            insertBlock(editor, '<a href="' + escapeHtml(url) + '" target="_blank" rel="noopener">' + escapeHtml(text) + '</a>');
+        });
+    }
+
+    // أماكن: "where to go in …" — a title, the places (each with its link if any), a line under the list
+    function openPlaces(editor) {
+        var lang = langOf(editor);
+        var box = open(L.places_title || 'Places',
+            '<p class="shary-ed__hint">' + escapeHtml(L.places_hint || '') + '</p>' +
+            '<label class="shary-ed__label">' + escapeHtml(L.places_heading || '') + '</label><input type="text" class="form-control" data-title maxlength="160" dir="' + dirOf(lang) + '">' +
+            '<label class="shary-ed__label" style="margin-top:10px">' + escapeHtml(L.places_lines || '') + '</label><textarea class="form-control" data-lines rows="7" dir="' + dirOf(lang) + '"></textarea>' +
+            '<label class="shary-ed__label" style="margin-top:10px">' + escapeHtml(L.places_caption || '') + '</label><input type="text" class="form-control" data-caption maxlength="200" dir="' + dirOf(lang) + '">' +
+            '<p class="shary-ed__hint" data-error hidden style="color:#b42318"></p>' +
+            '<div class="shary-ed__foot"><button type="button" class="btn btn-submit" data-insert>' + escapeHtml(L.insert || 'Insert') + '</button></div>');
+        setTimeout(function () { box.querySelector('[data-title]').focus(); }, 30);
+        box.querySelector('[data-insert]').addEventListener('click', function () {
+            var lines = box.querySelector('[data-lines]').value.split(/\n/).map(function (line) { return line.trim(); }).filter(Boolean);
+            var error = box.querySelector('[data-error]');
+            if (!lines.length) { error.textContent = L.places_none || ''; error.hidden = false; return; }
+            var items = lines.map(function (line) {
+                var parts = line.split('|');
+                var name = parts[0].trim();
+                var url = (parts.slice(1).join('|') || '').trim();
+                return url && goodUrl(url) ? '<a href="' + escapeHtml(url) + '"' + (external(url) ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(name) + '</a>' : '<span>' + escapeHtml(name) + '</span>';
+            }).join('');
+            var title = box.querySelector('[data-title]').value.trim();
+            var caption = box.querySelector('[data-caption]').value.trim();
+            insertBlock(editor, '<figure class="article-places"><div class="article-places__box">' + (title ? '<div class="article-places__title">' + escapeHtml(title) + '</div>' : '') +
+                '<div class="article-places__list">' + items + '</div></div>' + (caption ? '<figcaption>' + escapeHtml(caption) + '</figcaption>' : '') + '</figure><p>&nbsp;</p>');
         });
     }
 
