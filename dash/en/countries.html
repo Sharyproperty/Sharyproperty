@@ -62,6 +62,8 @@
         font-weight: bold;
     }
 </style>
+    
+    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
      <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
@@ -132,11 +134,12 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
-                            <b class="sx-tag">12</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">13</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-agent">
                                                             <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
-                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">12</b></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">13</b></a></li>
+                                                            <li><a href="admin-shary-agent-plan.html" class="" ><span>Ranking plan (SEO + GEO)</span></a></li>
                                                             <li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
                                                             <li><a href="admin-shary-agent-new-page.html" class="" ><span>New page</span></a></li>
                                                             <li><a href="admin-shary-agent-pages.html" class="" ><span>Pages that miss something</span></a></li>
@@ -418,11 +421,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "XJshW9S8rGt2pUHKtzMZImVQfFNNAugtc33eJMXR",
+                token: "f96CPxz0bjWo6IIpJs1FInWICC0qRp9dIFWL1kKn",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=XJshW9S8rGt2pUHKtzMZImVQfFNNAugtc33eJMXR",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=f96CPxz0bjWo6IIpJs1FInWICC0qRp9dIFWL1kKn",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -446,12 +449,12 @@
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>إضافة دول </h4>
-                    <h6>إدارة إضافة الدول </h6>
+                    <h4>Add countries </h4>
+                    <h6>Manage countries </h6>
                 </div>
                 <div class="page-btn">
                     <a class="btn btn-added" data-bs-toggle="modal" data-bs-target="#addModal"><img
-                            src="../a/assets/img/icons/plus.svg" alt="img" class="me-2" loading="lazy" decoding="async">إضافة دولة </a>
+                            src="../a/assets/img/icons/plus.svg" alt="img" class="me-2" loading="lazy" decoding="async">Add country </a>
                 </div>
             </div>
 
@@ -459,7 +462,7 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">إضافة دولة </h5>
+                            <h5 class="modal-title">Add country </h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -487,7 +490,7 @@
 
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label>كود الدولة <span class="manitory">*</span></label>
+                                            <label>Country code <span class="manitory">*</span></label>
                                             <input type="text" class="form-control" name="code" value=""
                                                    required>
                                         </div>
@@ -495,23 +498,23 @@
 
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label>العملة بالانجليزية<span class="manitory">*</span></label>
+                                            <label>Currency (English)<span class="manitory">*</span></label>
                                             <input type="text" name="currency_en" required>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label>العملة بالعربية<span class="manitory">*</span></label>
+                                            <label>Currency (Arabic)<span class="manitory">*</span></label>
                                             <input type="text" name="currency_ar" required>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="form-group mb-0">
-                                            <label>موقع الدولة </label>
+                                            <label>Country location </label>
                                             <select class="select" name="type" required>
-                                                <option value="Gulf" selected> الخليج </option>
-                                                <option value="Europe"> اوروبا </option>
+                                                <option value="Gulf" selected> Gulf </option>
+                                                <option value="Europe"> Europe </option>
                                             </select>
                                         </div>
                                     </div>
@@ -613,10 +616,10 @@
                                 <th>Image </th>
                                 <th>Name With English </th>
                                 <th>Name With Arabic </th>
-                                <th>كود الدولة </th>
-                                <th>العملة بالانجليزية </th>
-                                <th>العملة بالعربية </th>
-                                <th>موقع الدولة </th>
+                                <th>Country code </th>
+                                <th>Currency (English) </th>
+                                <th>Currency (Arabic) </th>
+                                <th>Country location </th>
                                 <th>Description with English </th>
                                 <th>Description with Arabic </th>
                                 <th>Status </th>
@@ -636,7 +639,7 @@
                                     <td>+974</td>
                                     <td>QAR</td>
                                     <td>ريال قطري</td>
-                                                                        <td>الخليج</td>
+                                                                        <td>Gulf</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes27">Description with English</a>
@@ -719,7 +722,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  قطر</h5>
+                                                        <h5 class="modal-title">Edit country  قطر</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -751,7 +754,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+974"
@@ -761,7 +764,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="QAR"
@@ -770,7 +773,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="ريال قطري"
@@ -780,10 +783,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf"  selected > الخليج </option>
-                                                                            <option value="Europe" > اوروبا </option>
+                                                                            <option value="Gulf"  selected > Gulf </option>
+                                                                            <option value="Europe" > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -882,7 +885,7 @@
                                     <td>+968</td>
                                     <td>OMR</td>
                                     <td>ريال عُماني</td>
-                                                                        <td>الخليج</td>
+                                                                        <td>Gulf</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes26">Description with English</a>
@@ -965,7 +968,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  عُمان</h5>
+                                                        <h5 class="modal-title">Edit country  عُمان</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -997,7 +1000,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+968"
@@ -1007,7 +1010,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="OMR"
@@ -1016,7 +1019,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="ريال عُماني"
@@ -1026,10 +1029,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf"  selected > الخليج </option>
-                                                                            <option value="Europe" > اوروبا </option>
+                                                                            <option value="Gulf"  selected > Gulf </option>
+                                                                            <option value="Europe" > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -1128,7 +1131,7 @@
                                     <td>+44</td>
                                     <td>GBP</td>
                                     <td>جنيه إسترليني</td>
-                                                                        <td>اوروبا</td>
+                                                                        <td>Europe</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes25">Description with English</a>
@@ -1211,7 +1214,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  بريطانيا</h5>
+                                                        <h5 class="modal-title">Edit country  بريطانيا</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -1243,7 +1246,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+44"
@@ -1253,7 +1256,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="GBP"
@@ -1262,7 +1265,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="جنيه إسترليني"
@@ -1272,10 +1275,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf" > الخليج </option>
-                                                                            <option value="Europe"  selected > اوروبا </option>
+                                                                            <option value="Gulf" > Gulf </option>
+                                                                            <option value="Europe"  selected > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -1374,7 +1377,7 @@
                                     <td>+90</td>
                                     <td>USD</td>
                                     <td>دولار</td>
-                                                                        <td>اوروبا</td>
+                                                                        <td>Europe</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes24">Description with English</a>
@@ -1457,7 +1460,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  تركيا</h5>
+                                                        <h5 class="modal-title">Edit country  تركيا</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -1489,7 +1492,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+90"
@@ -1499,7 +1502,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="USD"
@@ -1508,7 +1511,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="دولار"
@@ -1518,10 +1521,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf" > الخليج </option>
-                                                                            <option value="Europe"  selected > اوروبا </option>
+                                                                            <option value="Gulf" > Gulf </option>
+                                                                            <option value="Europe"  selected > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -1620,7 +1623,7 @@
                                     <td>+966</td>
                                     <td>SAR</td>
                                     <td>ريال سعودي</td>
-                                                                        <td>الخليج</td>
+                                                                        <td>Gulf</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes22">Description with English</a>
@@ -1703,7 +1706,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  السعودية</h5>
+                                                        <h5 class="modal-title">Edit country  السعودية</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -1735,7 +1738,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+966"
@@ -1745,7 +1748,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="SAR"
@@ -1754,7 +1757,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="ريال سعودي"
@@ -1764,10 +1767,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf"  selected > الخليج </option>
-                                                                            <option value="Europe" > اوروبا </option>
+                                                                            <option value="Gulf"  selected > Gulf </option>
+                                                                            <option value="Europe" > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -1866,7 +1869,7 @@
                                     <td>+30</td>
                                     <td>EUR</td>
                                     <td>يورو</td>
-                                                                        <td>اوروبا</td>
+                                                                        <td>Europe</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes21">Description with English</a>
@@ -1949,7 +1952,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  اليونان</h5>
+                                                        <h5 class="modal-title">Edit country  اليونان</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -1981,7 +1984,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+30"
@@ -1991,7 +1994,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="EUR"
@@ -2000,7 +2003,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="يورو"
@@ -2010,10 +2013,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf" > الخليج </option>
-                                                                            <option value="Europe"  selected > اوروبا </option>
+                                                                            <option value="Gulf" > Gulf </option>
+                                                                            <option value="Europe"  selected > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -2112,7 +2115,7 @@
                                     <td>+971</td>
                                     <td>AED</td>
                                     <td>درهم إماراتي</td>
-                                                                        <td>الخليج</td>
+                                                                        <td>Gulf</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes20">Description with English</a>
@@ -2195,7 +2198,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  الإمارات</h5>
+                                                        <h5 class="modal-title">Edit country  الإمارات</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -2227,7 +2230,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+971"
@@ -2237,7 +2240,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="AED"
@@ -2246,7 +2249,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="درهم إماراتي"
@@ -2256,10 +2259,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf"  selected > الخليج </option>
-                                                                            <option value="Europe" > اوروبا </option>
+                                                                            <option value="Gulf"  selected > Gulf </option>
+                                                                            <option value="Europe" > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -2358,7 +2361,7 @@
                                     <td>+20</td>
                                     <td>EGP</td>
                                     <td>جنيه مصري</td>
-                                                                        <td>مصر</td>
+                                                                        <td>Egypt</td>
                                     
                                     <td>
                                         <a style="color: #6610f2" href="#" class="view-note" data-bs-toggle="modal" data-bs-target="#view-notes19">Description with English</a>
@@ -2441,7 +2444,7 @@
                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h5 class="modal-title">تعديل بيانات الدولة  مصر</h5>
+                                                        <h5 class="modal-title">Edit country  مصر</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
                                                                 aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -2473,7 +2476,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>كود الدولة <span
+                                                                        <label>Country code <span
                                                                                 class="manitory">*</span></label>
                                                                         <input class="form-control" type="text"
                                                                                name="code" value="+20"
@@ -2483,7 +2486,7 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالانجليزية<span
+                                                                        <label>Currency (English)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_en"
                                                                                value="EGP"
@@ -2492,7 +2495,7 @@
                                                                 </div>
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>العملة بالعربية<span
+                                                                        <label>Currency (Arabic)<span
                                                                                 class="manitory">*</span></label>
                                                                         <input type="text" name="currency_ar"
                                                                                value="جنيه مصري"
@@ -2502,10 +2505,10 @@
 
                                                                 <div class="col-12">
                                                                     <div class="form-group">
-                                                                        <label>موقع الدولة </label>
+                                                                        <label>Country location </label>
                                                                         <select class="select" name="type" required>
-                                                                            <option value="Gulf" > الخليج </option>
-                                                                            <option value="Europe" > اوروبا </option>
+                                                                            <option value="Gulf" > Gulf </option>
+                                                                            <option value="Europe" > Europe </option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -2736,6 +2739,7 @@
     })
     });
 </script>
+    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
        <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>

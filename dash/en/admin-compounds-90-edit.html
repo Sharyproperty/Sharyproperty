@@ -168,13 +168,13 @@
         <div class="row payment-row mb-3">
             <div class="col-lg-4 col-sm-4 col-12">
                 <div class="form-group">
-                    <label>مقدم (%)</label>
+                    <label>Down payment (%)</label>
                     <input type="number" class="form-control" name="down_payment[]" value="0"  min="0" max="100" required>
                 </div>
             </div>
                <div class="col-lg-4 col-sm-4 col-12">
                 <div class="form-group">
-                    <label>سنوات التقسيط</label>
+                    <label>Installment years</label>
                     <input type="number" class="form-control" name="installment_years[]" value="0" min="0" max="100" required>
                 </div>
             </div>
@@ -183,8 +183,8 @@
                 <div class="form-group">
                     <label>Offer</label>
                      <select class="form-control offer" name="offer[]" id="offer" required>
-                        <option value="1">نعم</option>
-                        <option value="0" selected>لا</option>
+                        <option value="1">Yes</option>
+                        <option value="0" selected>No</option>
                     </select>
 
                 </div>
@@ -192,8 +192,8 @@
 
             <div class="col-lg-2 col-sm-2 col-12">
             <div class="form-group">
-             <label>حذف</label>
-                <button type="button" class="btn btn-danger remove-payment-row">حذف</button>
+             <label>Remove</label>
+                <button type="button" class="btn btn-danger remove-payment-row">Remove</button>
             </div>
             </div>
         </div>`;
@@ -213,14 +213,14 @@
             <div class="row cash-row mb-3">
                 <div class="col-lg-4 col-sm-4 col-12">
                     <div class="form-group">
-                        <label>خصومات المشروع (%)</label>
+                        <label>Project discounts (%)</label>
                           <input type="number" class="form-control" name="cash_discount[]"  min="0" max="100" required>
                     </div>
                 </div>
              <div class="col-lg-2 col-sm-2 col-12">
                  <div class="form-group">
-                   <label>حذف</label>
-                    <button type="button" class="btn btn-danger remove-cash-row">حذف</button>
+                   <label>Remove</label>
+                    <button type="button" class="btn btn-danger remove-cash-row">Remove</button>
                 </div>
                 </div>
             </div>`;
@@ -257,7 +257,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <button type="button" class="btn btn-danger remove-compound-faq-row">حذف</button>
+                        <button type="button" class="btn btn-danger remove-compound-faq-row">Remove</button>
                     </div>
                 </div>
             `);
@@ -372,6 +372,8 @@
         font-weight: bold;
     }
 </style>
+    
+    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
      <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
@@ -442,11 +444,12 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
-                            <b class="sx-tag">12</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">13</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-agent">
                                                             <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
-                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">12</b></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">13</b></a></li>
+                                                            <li><a href="admin-shary-agent-plan.html" class="" ><span>Ranking plan (SEO + GEO)</span></a></li>
                                                             <li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
                                                             <li><a href="admin-shary-agent-new-page.html" class="" ><span>New page</span></a></li>
                                                             <li><a href="admin-shary-agent-pages.html" class="" ><span>Pages that miss something</span></a></li>
@@ -728,11 +731,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "XJshW9S8rGt2pUHKtzMZImVQfFNNAugtc33eJMXR",
+                token: "f96CPxz0bjWo6IIpJs1FInWICC0qRp9dIFWL1kKn",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=XJshW9S8rGt2pUHKtzMZImVQfFNNAugtc33eJMXR",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=f96CPxz0bjWo6IIpJs1FInWICC0qRp9dIFWL1kKn",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -2079,7 +2082,7 @@
 
                             <div class="col-lg-4 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label for="property_status">ميعاد التسليم </label>
+                                    <label for="property_status">Delivery date </label>
                                     <select class="select" name="delivery_in" id="delivery_in" required>
                                         <option value="1"
                                                  >Ready For Delivery </option>
@@ -2234,19 +2237,19 @@
 
                         <div class="card-header">
                             <div class="card-title">
-                                <h4>خطط السداد </h4>
+                                <h4>Payment plans </h4>
                             </div>
                         </div>
 
-                        <h5 class="card-title">خطط السداد</h5>
+                        <h5 class="card-title">Payment plans</h5>
                         <div class="row">
 
                             <div class="row payment_append" id="payment_append">
                                 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
-                                    خطط السداد                                </label>
+                                    Payment plans                                </label>
 
                                 <div class="col-lg-12 col-sm-12 col-12">
-                                    <button type="button" id="add_payment_plan_row" class="btn btn-primary mb-3">إضافة خطط سداد</button>
+                                    <button type="button" id="add_payment_plan_row" class="btn btn-primary mb-3">Add payment plans</button>
                                 </div>
 
                                 <div id="payment_append">
@@ -2258,12 +2261,12 @@
 
                                 <div class="col-lg-12 col-sm-12 col-12">
                                     <button type="button" id="add_cash_row"
-                                            class="btn btn-primary mb-3">إضافة خصومات الكاش</button>
+                                            class="btn btn-primary mb-3">Add cash discounts</button>
                                 </div>
 
                                 <label
                                     style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
-                                    خصومات المشروع                                </label>
+                                    Project discounts                                </label>
 
                                 
 
@@ -2271,7 +2274,7 @@
                         </div>
                         <hr>
 
-                        <h5 class="card-title">المرافق والميزات</h5>
+                        <h5 class="card-title">Amenities and features</h5>
                         <div class="row">
                             <div class="col-lg-12 col-sm-12 col-12" id="form_variation_type">
                                 <div class="form-group">
@@ -2458,7 +2461,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button type="button" class="btn btn-danger remove-compound-faq-row">حذف</button>
+                                        <button type="button" class="btn btn-danger remove-compound-faq-row">Remove</button>
                                     </div>
                                 </div>
                                                     </div>
@@ -2469,7 +2472,7 @@
 
                             <div class="col-lg-6 col-sm-6 col-12">
                                 <div class="form-group">
-                                    <label> لوجو المشروع </label>
+                                    <label> Project logo </label>
                                     <div class="custom-file-container" data-upload-id="myFirstImage">
                                         <label>Upload (Single File) <a href="javascript:void(0)"
                                                                                       class="custom-file-container__image-clear"
@@ -2664,6 +2667,7 @@
     })
     });
 </script>
+    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
        <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>

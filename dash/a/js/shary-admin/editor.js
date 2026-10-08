@@ -55,6 +55,23 @@
                             if (CK.instances[key] && CK.instances[key].element && CK.instances[key].element.$ === target) { return CK.instances[key]; }
                         }
                     }
+                    // a box inside the edit pop-up of a table row (old list screens): the table moves the rows of its other pages out of the page,
+                    // and an editor started there breaks (its pop-up then can't be written in). Such an editor starts when its pop-up opens.
+                    if (target && typeof target !== 'string' && target.tagName === 'TEXTAREA' && !target.__sxLazy && target.closest) {
+                        var rowModal = target.closest('.modal');
+                        if (rowModal && rowModal.closest('table') && !rowModal.classList.contains('show')) {
+                            target.__sxLazy = true;
+                            var start = function () {
+                                for (var key in CK.instances) {
+                                    if (CK.instances[key] && CK.instances[key].element && CK.instances[key].element.$ === target) { return; }
+                                }
+                                CK.replace(target, config);
+                            };
+                            rowModal.addEventListener('show.bs.modal', start);
+                            if (window.jQuery) { window.jQuery(rowModal).on('show.bs.modal', start); }
+                            return null;
+                        }
+                    }
                     if (target && typeof target !== 'string' && target.tagName === 'TEXTAREA' && !target.id && target.name) {
                         var twins = document.getElementsByName(target.name);
                         if (twins.length > 1 || CK.instances[target.name]) {
