@@ -309,6 +309,8 @@ body.sx .sx-pre { margin-inline-start: var(--sx-side); padding: calc(var(--sx-to
 body.sx .sx-pre .sx-tabs { margin: 0; }
 body.sx .sx-pre ~ .page-wrapper { padding-top: 0 !important; min-height: 0; }
 body.sx .sx-pre ~ .page-wrapper > .content { padding-top: 18px !important; }
+body.sx .sx-pre .sx-pre__home { margin-top: 14px; }
+body.sx .sx-pre .sx-pre__home .sx-hp { margin-bottom: 0; }
 
 body.sx .sx-hint { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; margin: -6px 0 16px; padding: 10px 14px; border: 1px dashed #b9cbe2; border-radius: 14px; background: #fff; font-size: 13px; font-weight: 700; color: var(--sx-muted); line-height: 1.7; }
 body.sx .sx-hint b { color: var(--sx-navy); font-weight: 800; }
@@ -476,3 +478,18 @@ body.sx .select2-container--default .select2-search--dropdown .select2-search__f
 body.sx .ag-main .sx-choice__button { min-height: 44px; }
 body.sx .select2-container--open .select2-dropdown { min-width: 230px; }
 body.sx .select2-results__option { padding: 9px 12px; font-weight: 700; }
+
+/* ---- pop-ups: an open list (the template's select2 opens it at the end of the page) shows above the pop-up layer (Bootstrap 1055) */
+.select2-container--open { z-index: 1065 !important; }
+.select2-container--open .select2-dropdown { z-index: 1066 !important; }
+
+/* ---- required fields: a red * next to the title; left empty on save → red border + "this field is required" under it */
+.sx-req, .manitory, label .text-danger { color: #d92d20 !important; font-weight: 900; }
+.sx-req { margin-inline-start: 2px; }
+.sx-invalid:not(.select2):not(.sx-choice), .select2.sx-invalid .select2-selection, .sx-choice.sx-invalid .sx-choice__button,
+.cke.sx-invalid, .note-editor.sx-invalid { border-color: #d92d20 !important; box-shadow: 0 0 0 3px rgba(217, 45, 32, .14) !important; }
+.sx-req-msg { display: block; margin-top: 6px; color: #b42318; font-size: 13.5px; font-weight: 800; line-height: 1.6; }
+#sx-shell-toast { position: fixed; z-index: 30001; top: 16px; left: 50%; transform: translateX(-50%); display: none; max-width: min(560px, 92vw); padding: 12px 18px; border-radius: 14px; background: #b42318; color: #fff; font: 800 14.5px/1.7 Cairo, Tahoma, sans-serif; text-align: center; box-shadow: 0 18px 40px -16px rgba(80, 10, 10, .55); }
+
+/* ---- a picture inside a dashboard page is never wider than its box (an old form's big master plan preview widened the page on phones) */
+body.sx .page-wrapper .card-body img:not([width]) { max-width: 100%; }

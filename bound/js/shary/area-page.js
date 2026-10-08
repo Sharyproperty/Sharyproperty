@@ -403,10 +403,29 @@
             if (event.key !== 'Escape') return;
             if (stack.length) close(false); else closeSort();
         });
+        // ---- "عرض النتائج" على الموبايل: لو نوع البيع اللي اتختار ليه صفحة تانية (data-offer-urls — ListingPage::offerUrls) بتتفتح هي بنفس الاختيارات:
+        //      للإيجار ← صفحة الإيجار ، إعادة البيع ← صفحة إعادة البيع ، وحدات المطور ← صفحة البحث. الديسك توب (عمود الفلاتر) بيفلتر مكانه زي ما هو.
+        function offerPage() {
+            if (form.closest('[data-home-filter]') || wide()) return false;   // نافذة الفلتر بره صفحة البحث: js/shary/filter-window.js
+            var urls = {};
+            try { urls = JSON.parse(form.getAttribute('data-offer-urls') || '{}') || {}; } catch (error) { urls = {}; }
+            var offer = mode();
+            if (!offer || !urls[offer]) return false;
+            var next = new URL(urls[offer], window.location.href);
+            var plain = function (value) { try { return decodeURIComponent(value).replace(/\/+$/, ''); } catch (error) { return value.replace(/\/+$/, ''); } };
+            if (plain(next.pathname) === plain(window.location.pathname)) return false;   // نفس الصفحة: الفلتر العادي
+            new FormData(form).forEach(function (value, name) {
+                if (typeof value !== 'string' || value === '' || name === 'page' || name === 'view') return;
+                if (name === 'offer' && offer === 'rent') return;   // صفحة الإيجار كلها إيجار — إعادة البيع بتاخد offer=resale مع باقي الفلاتر
+                next.searchParams.append(name, value);
+            });
+            window.location.href = next.toString();
+            return true;
+        }
         all('[data-sheet-apply]').forEach(function (button) {
             button.addEventListener('click', function () {
                 Object.keys(ranges).forEach(function (name) { commit(ranges[name]); });
-                close(true, function () { if (!stack.length) submit(); });
+                close(true, function () { if (!stack.length && !offerPage()) submit(); });
             });
         });
 

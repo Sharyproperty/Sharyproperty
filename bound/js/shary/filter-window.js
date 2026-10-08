@@ -3,7 +3,8 @@
  *   - زرار الفلتر جنب خانة البحث [data-filter-modal-open] (المشروع / الوحدة / الفرصة / صفحات "عرض الكل") بيفتح النافذة.
  *   - الرئيسية: "بحث متقدم" (toggleHeroAdvancedSearch) وزرار الفلتر بتاع الموبايل (#openFilters) بيفتحوا نفس النافذة ،
  *     واختيار التبويب (بيع / إيجار ، من المطور / إعادة بيع) بيتنقل للفلتر.
- *   - "عرض النتائج" [data-sheet-apply] بيفتح صفحة البحث بكل الاختيارات (GET) — تغيير أي اختيار جوه النافذة ما بيبعتش حاجة لوحده.
+ *   - "عرض النتائج" [data-sheet-apply] بيفتح صفحة نوع البيع اللي اتختار بكل الاختيارات (GET) — تغيير أي اختيار جوه النافذة ما بيبعتش حاجة لوحده:
+ *       للإيجار ← صفحة الإيجار ، إعادة البيع ← صفحة إعادة البيع ، وحدات المطور ← صفحة البحث (data-offer-urls على الفورم — ListingPage::offerUrls).
  * الفلتر نفسه (اللوحات والقوايم والعدادات) شغل js/shary/area-page.js — لو الصفحة مش محمّلاه بيتحمّل هنا.
  */
 (function () {
@@ -76,7 +77,14 @@
         var typed = document.getElementById('heroSearchInput') || document.querySelector('[data-search-strip] input[name="q"]');
         if (typed && typed.value.trim() !== '' && !params.has('q')) params.set('q', typed.value.trim());
 
-        var url = box.getAttribute('data-search-url') || form.getAttribute('action') || '';
+        // نوع البيع اللي اتختار ليه صفحته — صفحة الإيجار كلها إيجار (من غير offer في اللينك) ، وصفحة إعادة البيع بتاخد offer=resale مع باقي الفلاتر
+        var offer = (form.querySelector('input[name="offer"]:checked') || {}).value || '';
+        var urls = {};
+        try { urls = JSON.parse(form.getAttribute('data-offer-urls') || '{}') || {}; } catch (error) { urls = {}; }
+        if (!urls.rent && box.getAttribute('data-rent-url')) urls.rent = box.getAttribute('data-rent-url');
+        if (!urls.resale && box.getAttribute('data-resale-url')) urls.resale = box.getAttribute('data-resale-url');
+        var url = urls[offer] || box.getAttribute('data-search-url') || form.getAttribute('action') || '';
+        if (urls[offer] && offer === 'rent') params.delete('offer');
         var query = params.toString();
         window.location.href = url + (query ? (url.indexOf('?') === -1 ? '?' : '&') + query : '');
     }, true);

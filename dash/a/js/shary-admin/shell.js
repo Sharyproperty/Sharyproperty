@@ -662,7 +662,143 @@
         });
         picks = picks.filter(function (pick) { return doc.body.contains(pick.select); });
     }, 600);
-    doc.addEventListener('shown.bs.modal', function () { setTimeout(choiceLists, 30); });
+    doc.addEventListener('shown.bs.modal', function () { setTimeout(choiceLists, 30); setTimeout(markRequired, 30); });
+
+    // ------------------------------------------------------------------ 6 pop-ups: lists and editors inside them work
+    //   · the template's select2 opens its list at the end of the page — under Bootstrap's pop-up layer: shell.css lifts an open list above it
+    //   · Bootstrap's pop-up pulls the focus back inside itself — the list's search box (and an editor's link window) could not be typed in:
+    //     the pop-ups do not hold the focus (data-bs-focus="false" — read when Bootstrap makes the pop-up, and set on one made already)
+    function modalsLetGo() { $$('.modal').forEach(function (modal) { if (!modal.hasAttribute('data-bs-focus')) { modal.setAttribute('data-bs-focus', 'false'); } }); }
+    modalsLetGo();
+    doc.addEventListener('show.bs.modal', function (event) {
+        modalsLetGo();
+        try {
+            var B = window.bootstrap;
+            var instance = B && B.Modal && B.Modal.getInstance ? B.Modal.getInstance(event.target) : null;
+            if (instance && instance._config) { instance._config.focus = false; }
+        } catch (e) { /* another Bootstrap build: its own behaviour */ }
+    }, true);
+
+    // ------------------------------------------------------------------ 7 required fields
+    //   · a red * next to the title of every required field (an * written in the title becomes the red one)
+    //   · saving with a required field empty: the field turns red with "this field is required" under it, and the screen goes to it —
+    //     even when it sits in a tab that is not open or in a closed part (the browser alone would just not save, without saying where)
+    var SKIP = 'input[type=hidden], input[type=submit], input[type=button], input[type=reset], input[type=image]';
+    function fieldBox(control) {
+        return control.closest('.form-group, .input-blocks, .sx-field, .mb-3, .mb-2, .mb-4, [class*="col-"], td') || control.parentElement;
+    }
+    function titleOf(control) {
+        var label = null;
+        var group = control.type === 'radio' || control.type === 'checkbox';
+        if (control.id && !group) {
+            try { label = doc.querySelector('label[for="' + (window.CSS && CSS.escape ? CSS.escape(control.id) : control.id) + '"]'); } catch (e) { label = null; }
+        }
+        if (!label && !group) { label = control.closest('label'); }
+        if (!label) {
+            var box = fieldBox(control);
+            if (box) { label = $$('label, .form-label, h6, strong', box).filter(function (node) { return !node.contains(control) && !node.querySelector('input, select, textarea'); })[0] || null; }
+        }
+        return label;
+    }
+    function markRequired(root) {
+        $$('input[required], select[required], textarea[required]', root && root.nodeType ? root : doc).forEach(function (control) {
+            if (control.matches(SKIP) || control.__sxReq) { return; }
+            control.__sxReq = true;
+            var label = titleOf(control);
+            if (!label || label.querySelector('.sx-req, .manitory, .text-danger')) { return; }
+            var walker = doc.createTreeWalker(label, NodeFilter.SHOW_TEXT, null, false);
+            var node;
+            while ((node = walker.nextNode())) {
+                var at = node.nodeValue.lastIndexOf('*');
+                if (at > -1) {
+                    var rest = node.splitText(at);
+                    rest.nodeValue = rest.nodeValue.slice(1);
+                    var star = el('span', 'sx-req', '*');
+                    star.setAttribute('aria-hidden', 'true');
+                    rest.parentNode.insertBefore(star, rest);
+                    return;
+                }
+            }
+            var mark = el('span', 'sx-req', '*');
+            mark.setAttribute('aria-hidden', 'true');
+            label.appendChild(doc.createTextNode(' '));
+            label.appendChild(mark);
+        });
+    }
+    function shownPart(control) {
+        var next = control.nextElementSibling;
+        if (next && next.classList && next.classList.contains('select2')) { return next; }
+        if (control.__sxPick && control.__sxPick.wrap) { return control.__sxPick.wrap; }
+        return control;
+    }
+    function flagField(control) {
+        control.classList.add('sx-invalid');
+        shownPart(control).classList.add('sx-invalid');
+        var box = fieldBox(control);
+        if (!box) { return; }
+        var message = control.validity && control.validity.valueMissing ? (T.required_field || 'This field is required') : (control.validationMessage || T.required_field || '');
+        var note = null;
+        Array.prototype.forEach.call(box.children, function (child) { if (child.classList && child.classList.contains('sx-req-msg') && child.__sxFor === control) { note = child; } });
+        if (!note) { note = el('div', 'sx-req-msg'); note.__sxFor = control; note.setAttribute('role', 'alert'); box.appendChild(note); }
+        note.textContent = message;
+    }
+    function unflagField(control) {
+        if (!control || !control.classList || !control.classList.contains('sx-invalid')) { return; }
+        if (control.checkValidity && !control.checkValidity()) { return; }
+        control.classList.remove('sx-invalid');
+        shownPart(control).classList.remove('sx-invalid');
+        var box = fieldBox(control);
+        if (box) { Array.prototype.slice.call(box.children).forEach(function (child) { if (child.__sxFor === control) { child.parentNode.removeChild(child); } }); }
+    }
+    var toastTimer = null;
+    function shellToast(text) {
+        var box = $('#sx-shell-toast');
+        if (!box) {
+            box = el('div');
+            box.id = 'sx-shell-toast';
+            box.setAttribute('role', 'alert');
+            doc.body.appendChild(box);
+        }
+        box.textContent = text;
+        box.style.display = 'block';
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () { box.style.display = 'none'; }, 5000);
+    }
+    function revealField(control) {
+        // a tab that is not open: open it
+        var pane = control.closest('.tab-pane');
+        if (pane && !pane.classList.contains('active') && pane.id) {
+            var trigger = $('[data-bs-toggle="tab"][href="#' + pane.id + '"], [data-bs-toggle="tab"][data-bs-target="#' + pane.id + '"], [data-bs-toggle="pill"][href="#' + pane.id + '"], [data-bs-toggle="pill"][data-bs-target="#' + pane.id + '"]');
+            if (trigger) { trigger.click(); }
+        }
+        // a closed part: open it
+        var closed = control.closest('.collapse:not(.show)');
+        if (closed && window.bootstrap && window.bootstrap.Collapse) { try { window.bootstrap.Collapse.getOrCreateInstance(closed).show(); } catch (e) { closed.classList.add('show'); } }
+        setTimeout(function () {
+            var target = shownPart(control);
+            var seen = !!(target.offsetParent || target.getClientRects().length);
+            if (seen) {
+                target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                if (target === control && control.focus) { try { control.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+            }
+            var label = titleOf(control);
+            var name = label ? label.textContent.replace(/\*/g, '').replace(/\s+/g, ' ').trim() : '';
+            shellToast((T.required_save || 'Fill the required fields marked in red, then save.') + (name && !seen ? ' — ' + name : ''));
+        }, 120);
+    }
+    var firstBad = null;
+    doc.addEventListener('invalid', function (event) {
+        var control = event.target;
+        if (!control || !control.closest || control.matches(SKIP)) { return; }
+        flagField(control);
+        if (!firstBad) {
+            firstBad = control;
+            setTimeout(function () { var first = firstBad; firstBad = null; if (first) { revealField(first); } }, 0);
+        }
+    }, true);
+    doc.addEventListener('input', function (event) { unflagField(event.target); }, true);
+    doc.addEventListener('change', function (event) { unflagField(event.target); }, true);
+    if (window.jQuery) { window.jQuery(doc).on('change select2:select', 'select', function () { unflagField(this); }); }
 
     function ready() {
         tidyTables();
@@ -670,6 +806,8 @@
         listSearch();
         pictures();
         choiceLists();
+        modalsLetGo();
+        markRequired();
     }
     // after the template's own scripts (DataTables is created on document ready)
     if (doc.readyState === 'complete') { setTimeout(ready, 0); } else { window.addEventListener('load', function () { setTimeout(ready, 0); }); }

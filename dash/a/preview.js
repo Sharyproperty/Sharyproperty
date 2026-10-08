@@ -112,6 +112,14 @@
                 });
                 return Promise.resolve(new Response(JSON.stringify({ groups: term.length < 2 ? [] : groups }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
             }
+            // the home sections screen: type a name → the matching projects / developers / areas / units (saved with this copy)
+            var hs = /home-sections\/([a-z_]+)\/search/.exec(url);
+            if (hs && method === 'GET') {
+                var want = fold(decodeURIComponent(((url.split('q=')[1] || '').split('&')[0] || '').replace(/\+/g, ' ')));
+                var all = (D.home || {})[hs[1]] || [];
+                var hits = all.filter(function (item) { return !want || fold((item.name || '') + ' ' + (item.sub || '')).indexOf(want) >= 0; }).slice(0, 25);
+                return Promise.resolve(new Response(JSON.stringify({ items: hits }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
+            }
             if (method !== 'GET' || /#preview/.test(url)) {
                 toast(NOTE_SAVE);
                 return Promise.resolve(new Response(JSON.stringify({ status: 0, preview: true, message: NOTE_SAVE }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
