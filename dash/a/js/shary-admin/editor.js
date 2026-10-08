@@ -82,6 +82,7 @@
             init: function (editor) {
                 editor.addCommand('sharyCta', { exec: function (target) { openCta(target); } });
                 editor.addCommand('sharyLink', { exec: function (target) { openLink(target); } });
+                editor.addCommand('sharyVideo', { exec: function (target) { openVideo(target); } });
                 editor.addCommand('sharyPreview', { modes: { wysiwyg: 1, source: 1 }, readOnly: 1, exec: function (target) { openPreview(target); } });
                 // plain-named writing buttons
                 var snap = function (target, run) { target.focus(); target.fire('saveSnapshot'); run(); setTimeout(function () { target.fire('saveSnapshot'); }, 0); };
@@ -123,6 +124,7 @@
                         editor.ui.addButton('SharySym' + index, { label: symbol, title: (L.symbol || 'Insert') + ' ' + symbol, command: 'sharySym' + index, toolbar: 'sharysym,' + (index + 1) * 10 });
                     });
                     editor.ui.addButton('SharyCta', { label: L.cta || 'CTA', command: 'sharyCta', toolbar: 'shary,10' });
+                    editor.ui.addButton('SharyVideo', { label: L.video || 'Video', command: 'sharyVideo', toolbar: 'shary,15' });
                     editor.ui.addButton('SharyLink', { label: L.link || 'Link', command: 'sharyLink', toolbar: 'shary,20' });
                     editor.ui.addButton('SharyPreview', { label: L.preview || 'Preview', command: 'sharyPreview', toolbar: 'shary,30' });
                 }
@@ -140,7 +142,7 @@
                 config.fontSize_sizes = FONT_SIZES;
                 add('extraAllowedContent', 'ul(shary-arrows);p(shary-space);hr;p(shary-shortcode);span{font-size,color};p h2 h3 h4{text-align};a[!href,target,rel,title];img[!src,alt,width,height]{width,height,float};table tr td th thead tbody[*]{*}', ';');
                 add('removeButtons', 'Font', ',');
-                var group = { name: 'shary', items: ['SharyCta', 'SharyLink', 'SharyPreview'] };
+                var group = { name: 'shary', items: ['SharyCta', 'SharyVideo', 'SharyLink', 'SharyPreview'] };
                 var write = { name: 'sharywrite', items: WRITE.map(function (item) { return item[0]; }) };
                 var symbols = { name: 'sharysym', items: SYMBOLS.map(function (symbol, index) { return 'SharySym' + index; }) };
                 if (Object.prototype.toString.call(config.toolbar) === '[object Array]') {
@@ -321,6 +323,28 @@
             insert(code);
         });
         show();
+    }
+
+    // ------------------------------------------------------------------ 1-b) a video by its link (YouTube / TikTok / Facebook / Instagram …): a card that opens the video where it is
+    function openVideo(editor) {
+        var lang = langOf(editor);
+        var box = open(L.video_title || 'Video',
+            '<p class="shary-ed__hint">' + escapeHtml(L.video_hint || '') + '</p>' +
+            '<label class="shary-ed__label">' + escapeHtml(L.video_url || 'Link') + '</label><input type="url" class="form-control" data-url dir="ltr" placeholder="https://www.youtube.com/watch?v=…" maxlength="500">' +
+            '<label class="shary-ed__label" style="margin-top:10px">' + escapeHtml(L.video_caption || 'Title') + '</label><input type="text" class="form-control" data-title maxlength="140" dir="' + (lang === 'ar' ? 'rtl' : 'ltr') + '">' +
+            '<p class="shary-ed__hint" data-error hidden style="color:#b42318"></p>' +
+            '<div class="shary-ed__foot"><button type="button" class="btn btn-submit" data-insert>' + escapeHtml(L.insert || 'Insert') + '</button></div>');
+        var input = box.querySelector('[data-url]');
+        setTimeout(function () { input.focus(); }, 30);
+        box.querySelector('[data-insert]').addEventListener('click', function () {
+            var url = input.value.trim();
+            var error = box.querySelector('[data-error]');
+            if (!/^https?:\/\/[^\s"\[\]]+$/i.test(url)) { error.textContent = L.video_bad || 'Write the full link (https://…)'; error.hidden = false; input.focus(); return; }
+            var title = attr(box.querySelector('[data-title]').value);
+            editor.focus();
+            editor.insertHtml('<p class="shary-shortcode">' + escapeHtml('[shary-video url="' + attr(url) + '"' + (title ? ' title="' + title + '"' : '') + ']') + '</p><p>&nbsp;</p>');
+            close();
+        });
     }
 
     // ------------------------------------------------------------------ 2) internal link

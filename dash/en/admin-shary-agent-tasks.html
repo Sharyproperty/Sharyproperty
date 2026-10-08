@@ -85,7 +85,7 @@
                                                             <li><a href="admin-shary-agent-data.html" class="" ><span>Data requests</span></a></li>
                                                             <li><a href="admin-shary-agent-projects.html" class="" ><span>Projects &amp; news</span></a></li>
                                                             <li><a href="admin-shary-agent-requests.html" class="" ><span>Customer requests</span></a></li>
-                                                            <li><a href="admin-shary-agent-analysis.html" class="" ><span>Daily analysis</span></a></li>
+                                                            <li><a href="admin-shary-agent-analysis.html" class="" ><span>Analysis</span></a></li>
                                                             <li><a href="admin-shary-agent-reports.html" class="" ><span>Reports</span></a></li>
                                                             <li><a href="admin-shary-agent-market.html" class="" ><span>Market analysis</span></a></li>
                                                             <li><a href="admin-shary-agent-seo.html" class="" ><span>SEO &amp; articles</span></a></li>
@@ -687,7 +687,7 @@
                 </form>
                             </td></tr>
                                 <tr>
-                <td style="min-width:230px"><span class="b8">أرقام المطورين</span>                    <br><span class="sm mute">عدد المشاريع ، اللي اتسلّم ، المبيعات — من موقع المطور والأخبار.</span>
+                <td style="min-width:230px"><span class="b8">أرقام المطورين</span>                    <br><span class="sm mute">بيدخل على صفحة كل مطور ويشوف الناقص فيها (سنة التأسيس ، الأرقام الكبيرة ، المشاريع اللي اتسلّمت وتحت الإنشاء ، المبيعات ، الترتيب ، النبذة والأسئلة) ويجيبه من موقع المطور الرسمي والأخبار بمصادرها — للمراجعة.</span>
                     <br><span class="xs mute">محتاجة الموديل</span></td>
                 <td class="nowrap">يوم 2 كل شهر 6:30 ص<br><span class="xs mute">الجاي: 2 نوفمبر 6:30 ص</span></td>
                 <td class="nowrap">مقالات ومحتوى</td>
@@ -709,6 +709,32 @@
                         <div class="ag-field"><label>يوم الشهر (للشهري)</label><input type="number" name="month_day" min="1" max="28" class="ag-input" value="2" dir="ltr"></div>
                     </div>
                                         <label class="ag-check"><input type="hidden" name="notify_email" value="0"><input type="checkbox" name="notify_email" value="1" > ابعت النتيجة على الإيميل كمان</label>
+                    <div class="ag-row"><button class="ag-btn ag-btn--primary ag-btn--sm">احفظ</button></div>
+                </form>
+                            </td></tr>
+                                <tr>
+                <td style="min-width:230px"><span class="b8">التحليل الشهري</span>                    <br><span class="sm mute">نفس أقسام التحليل على آخر 30 يوم ومقارنتها بالشهر اللي فات — بصفحة و PDF وواتساب.</span>
+                    <br><span class="xs mute">شغالة من غير مفاتيح</span></td>
+                <td class="nowrap">يوم 1 كل شهر 6:15 م<br><span class="xs mute">الجاي: 1 نوفمبر 6:15 م</span></td>
+                <td class="nowrap">داتا<br><span class="xs mute">+ إيميل</span></td>
+                <td style="min-width:170px"><span class="ag-pill ">لسه ما اشتغلتش</span></td>
+                <td class="nowrap">
+                    <form method="post" action="#preview/admin/shary/agent/tasks/28"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="toggle" value="1">
+                        <label class="ag-switch"><input type="checkbox" name="enabled" value="1" checked data-ag-autosubmit aria-label="تشغيل التحليل الشهري"><i></i></label></form>
+                    <div class="ag-row" style="margin-top:8px;gap:6px">
+                        <form method="post" action="#preview/admin/shary/agent/tasks/28/run" data-ag-slow="شغالة…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm" style="min-height:32px;padding:0 10px">شغّلها دلوقتي</button></form>
+                        <button type="button" class="ag-btn ag-btn--sm" style="min-height:32px;padding:0 10px" data-ag-toggle="task-edit-28">الميعاد</button>
+                    </div>
+                </td>
+            </tr>
+            <tr id="task-edit-28" class="hide"><td colspan="5" style="background:#FAFBFC">
+                <form method="post" action="#preview/admin/shary/agent/tasks/28" class="ag-col" style="gap:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="ag-grid">
+                                                <div class="ag-field"><label>التكرار</label><select name="frequency" class="ag-input"><option value="hourly" >كل ساعة</option><option value="daily" >كل يوم</option><option value="weekly" >كل أسبوع</option><option value="monthly" selected>كل شهر</option></select></div>
+                        <div class="ag-field"><label>الساعة</label><input type="time" name="run_time" class="ag-input" value="18:15" dir="ltr"></div>
+                        <div class="ag-field"><label>اليوم (للأسبوعي)</label><select name="week_day" class="ag-input"><option value="0" selected>الأحد</option><option value="1" >الإثنين</option><option value="2" >الثلاثاء</option><option value="3" >الأربعاء</option><option value="4" >الخميس</option><option value="5" >الجمعة</option><option value="6" >السبت</option></select></div>
+                        <div class="ag-field"><label>يوم الشهر (للشهري)</label><input type="number" name="month_day" min="1" max="28" class="ag-input" value="1" dir="ltr"></div>
+                    </div>
+                                        <label class="ag-check"><input type="hidden" name="notify_email" value="0"><input type="checkbox" name="notify_email" value="1" checked> ابعت النتيجة على الإيميل كمان</label>
                     <div class="ag-row"><button class="ag-btn ag-btn--primary ag-btn--sm">احفظ</button></div>
                 </form>
                             </td></tr>
@@ -995,6 +1021,32 @@
                         <div class="ag-field"><label>يوم الشهر (للشهري)</label><input type="number" name="month_day" min="1" max="28" class="ag-input" value="1" dir="ltr"></div>
                     </div>
                                         <label class="ag-check"><input type="hidden" name="notify_email" value="0"><input type="checkbox" name="notify_email" value="1" > ابعت النتيجة على الإيميل كمان</label>
+                    <div class="ag-row"><button class="ag-btn ag-btn--primary ag-btn--sm">احفظ</button></div>
+                </form>
+                            </td></tr>
+                                <tr>
+                <td style="min-width:230px"><span class="b8">التحليل الأسبوعي</span>                    <br><span class="sm mute">نفس أقسام التحليل اليومي على آخر 7 أيام: اللي اتضاف ، الأسعار اللي اتحركت عن الأسبوع اللي فات ، الطلبات ، المشاريع والمطورين والمنافسين — بصفحة و PDF وواتساب.</span>
+                    <br><span class="xs mute">شغالة من غير مفاتيح</span></td>
+                <td class="nowrap">كل الخميس 5:45 م<br><span class="xs mute">الجاي: النهاردة 5:45 م</span></td>
+                <td class="nowrap">داتا<br><span class="xs mute">+ إيميل</span></td>
+                <td style="min-width:170px"><span class="ag-pill ">لسه ما اشتغلتش</span></td>
+                <td class="nowrap">
+                    <form method="post" action="#preview/admin/shary/agent/tasks/27"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="toggle" value="1">
+                        <label class="ag-switch"><input type="checkbox" name="enabled" value="1" checked data-ag-autosubmit aria-label="تشغيل التحليل الأسبوعي"><i></i></label></form>
+                    <div class="ag-row" style="margin-top:8px;gap:6px">
+                        <form method="post" action="#preview/admin/shary/agent/tasks/27/run" data-ag-slow="شغالة…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm" style="min-height:32px;padding:0 10px">شغّلها دلوقتي</button></form>
+                        <button type="button" class="ag-btn ag-btn--sm" style="min-height:32px;padding:0 10px" data-ag-toggle="task-edit-27">الميعاد</button>
+                    </div>
+                </td>
+            </tr>
+            <tr id="task-edit-27" class="hide"><td colspan="5" style="background:#FAFBFC">
+                <form method="post" action="#preview/admin/shary/agent/tasks/27" class="ag-col" style="gap:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="ag-grid">
+                                                <div class="ag-field"><label>التكرار</label><select name="frequency" class="ag-input"><option value="hourly" >كل ساعة</option><option value="daily" >كل يوم</option><option value="weekly" selected>كل أسبوع</option><option value="monthly" >كل شهر</option></select></div>
+                        <div class="ag-field"><label>الساعة</label><input type="time" name="run_time" class="ag-input" value="17:45" dir="ltr"></div>
+                        <div class="ag-field"><label>اليوم (للأسبوعي)</label><select name="week_day" class="ag-input"><option value="0" >الأحد</option><option value="1" >الإثنين</option><option value="2" >الثلاثاء</option><option value="3" >الأربعاء</option><option value="4" selected>الخميس</option><option value="5" >الجمعة</option><option value="6" >السبت</option></select></div>
+                        <div class="ag-field"><label>يوم الشهر (للشهري)</label><input type="number" name="month_day" min="1" max="28" class="ag-input" value="1" dir="ltr"></div>
+                    </div>
+                                        <label class="ag-check"><input type="hidden" name="notify_email" value="0"><input type="checkbox" name="notify_email" value="1" checked> ابعت النتيجة على الإيميل كمان</label>
                     <div class="ag-row"><button class="ag-btn ag-btn--primary ag-btn--sm">احفظ</button></div>
                 </form>
                             </td></tr>
