@@ -5,6 +5,11 @@
  |   زرار تواصل   inserts a call-to-action block in the middle of the text ([shary-cta], form, channels, project / area card)
  |   لينك داخلي   search projects / areas / developers / articles / search pages and link the selected words to one of them
  |   معاينة       shows the text exactly as the website prints it (desktop / mobile)
+ | and a row of plain-named writing buttons for a beginner (no icons to guess):
+ |   عنوان رئيسي (h2) · عنوان فرعي (h3) · نص عادي · نقط · أرقام · نقط بسهم (ul.shary-arrows) · خط فاصل (hr) · مسافة (p.shary-space)
+ |   and quick symbols: ،  ؟  —  •  ←
+ | The editor library itself is served from the site (public/vendor/shary-editor — CKEditor 4.22.1 standard, open source) when
+ | SharyEditorConfig.localEditor is set, so no screen depends on an outside CDN; the CDN line of the old screens then does nothing.
  | and gives the writer free hands: headings (H2 / H3 / H4), text size, tables, images (upload), alignment.
  |
  | Loaded on every dashboard page by resources/views/shary_admin/partials/editor-loader.blade.php (window.SharyEditorConfig = urls + labels).
@@ -18,16 +23,55 @@
     var CFG = window.SharyEditorConfig || {};
     var L = CFG.labels || {};
     var FONT_SIZES = '14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;32/32px';
+    // [button, command, label key, fallback label]
+    var WRITE = [['SharyH2', 'sharyH2', 'w_h2', 'Heading'], ['SharyH3', 'sharyH3', 'w_h3', 'Sub-heading'], ['SharyP', 'sharyP', 'w_p', 'Text'], ['SharyBullets', 'sharyBullets', 'w_bullets', 'Bullets'],
+        ['SharyNumbers', 'sharyNumbers', 'w_numbers', 'Numbers'], ['SharyArrows', 'sharyArrows', 'w_arrows', 'Arrows'], ['SharyLine', 'sharyLine', 'w_line', 'Line'], ['SharySpace', 'sharySpace', 'w_space', 'Space']];
+    var SYMBOLS = ['،', '؟', '—', '•', '←'];
 
     // ------------------------------------------------------------------ hook CKEditor
     function setup(CK) {
         if (!CK || CK.__sharyTools || !CK.plugins || !CK.plugins.add || !CK.on) { return false; }
         CK.__sharyTools = true;
 
+        // Older list screens start an editor on every "description" box of every pop-up, all with the same name (desc_ar, desc_en …).
+        // The editor names its parts after the box, so boxes sharing a name fight over the same parts and the later ones break.
+        // Each such box gets its own id first — the name the form sends is not touched.
+        try {
+            var plainReplace = CK.replace, boxCount = 0;
+            CK.replace = function (target, config) {
+                try {
+                    // a box that already has its editor (the screen asked twice): hand back the same editor instead of breaking
+                    if (target && typeof target !== 'string' && target.tagName === 'TEXTAREA') {
+                        for (var key in CK.instances) {
+                            if (CK.instances[key] && CK.instances[key].element && CK.instances[key].element.$ === target) { return CK.instances[key]; }
+                        }
+                    }
+                    if (target && typeof target !== 'string' && target.tagName === 'TEXTAREA' && !target.id && target.name) {
+                        var twins = document.getElementsByName(target.name);
+                        if (twins.length > 1 || CK.instances[target.name]) {
+                            target.id = 'shary_box_' + (++boxCount) + '_' + String(target.name).replace(/[^A-Za-z0-9_]+/g, '_');
+                        }
+                    }
+                } catch (error) {}
+                return plainReplace.call(CK, target, config);
+            };
+        } catch (error) {}
+
         // text size: the "font" plugin is not part of the standard build — load it from the same CDN version
         var hasFont = false;
         try {
-            if (CK.plugins.addExternal && CK.version) {
+            // which copy of the editor is really running? (an older screen may have loaded its own copy before this file)
+            var base = String(CK.basePath || '');
+            var localBase = String(CFG.localBase || '');
+            if (localBase) { try { var probe = document.createElement('a'); probe.href = localBase; localBase = probe.href; } catch (error) {} }   // a full address, whatever form the page gave
+            if (CFG.localEditor && localBase && base.indexOf(localBase) === 0) {
+                hasFont = true;      // the local build carries "font" and "justify" in its own plugins folder
+            } else if (localBase && CK.plugins.addExternal) {
+                // another copy is running (a CDN "standard" build has no font / justify): take the two plugins from the site's own folder
+                CK.plugins.addExternal('font', localBase + 'plugins/font/', 'plugin.js');
+                CK.plugins.addExternal('justify', localBase + 'plugins/justify/', 'plugin.js');
+                hasFont = true;
+            } else if (CK.plugins.addExternal && CK.version) {
                 CK.plugins.addExternal('font', 'https://cdn.ckeditor.com/' + CK.version + '/full-all/plugins/font/', 'plugin.js');
                 CK.plugins.addExternal('justify', 'https://cdn.ckeditor.com/' + CK.version + '/full-all/plugins/justify/', 'plugin.js');
                 hasFont = true;
@@ -39,7 +83,45 @@
                 editor.addCommand('sharyCta', { exec: function (target) { openCta(target); } });
                 editor.addCommand('sharyLink', { exec: function (target) { openLink(target); } });
                 editor.addCommand('sharyPreview', { modes: { wysiwyg: 1, source: 1 }, readOnly: 1, exec: function (target) { openPreview(target); } });
+                // plain-named writing buttons
+                var snap = function (target, run) { target.focus(); target.fire('saveSnapshot'); run(); setTimeout(function () { target.fire('saveSnapshot'); }, 0); };
+                var block = function (tag) {
+                    return { exec: function (target) {
+                        snap(target, function () {
+                            var style = new CK.style({ element: tag });
+                            var on = tag !== 'p' && style.checkActive(target.elementPath(), target);
+                            target.applyStyle(on ? new CK.style({ element: 'p' }) : style);
+                        });
+                    } };
+                };
+                editor.addCommand('sharyH2', block('h2'));
+                editor.addCommand('sharyH3', block('h3'));
+                editor.addCommand('sharyP', block('p'));
+                editor.addCommand('sharyBullets', { exec: function (target) { target.focus(); target.execCommand('bulletedlist'); } });
+                editor.addCommand('sharyNumbers', { exec: function (target) { target.focus(); target.execCommand('numberedlist'); } });
+                editor.addCommand('sharyArrows', { exec: function (target) {
+                    snap(target, function () {
+                        var path = target.elementPath();
+                        var list = path && path.contains('ul');
+                        if (list) { if (list.hasClass('shary-arrows')) { list.removeClass('shary-arrows'); } else { list.addClass('shary-arrows'); } return; }
+                        target.execCommand('bulletedlist');
+                        path = target.elementPath();
+                        list = path && path.contains('ul');
+                        if (list) { list.addClass('shary-arrows'); }
+                    });
+                } });
+                editor.addCommand('sharyLine', { exec: function (target) { target.focus(); if (target.getCommand('horizontalrule')) { target.execCommand('horizontalrule'); } else { target.insertHtml('<hr>'); } } });
+                editor.addCommand('sharySpace', { exec: function (target) { target.focus(); target.insertHtml('<p class="shary-space">&nbsp;</p>'); } });
+                SYMBOLS.forEach(function (symbol, index) {
+                    editor.addCommand('sharySym' + index, { exec: function (target) { target.focus(); target.insertText(symbol); } });
+                });
                 if (editor.ui && editor.ui.addButton) {
+                    WRITE.forEach(function (item, index) {
+                        editor.ui.addButton(item[0], { label: L[item[2]] || item[3], command: item[1], toolbar: 'sharywrite,' + (index + 1) * 10 });
+                    });
+                    SYMBOLS.forEach(function (symbol, index) {
+                        editor.ui.addButton('SharySym' + index, { label: symbol, title: (L.symbol || 'Insert') + ' ' + symbol, command: 'sharySym' + index, toolbar: 'sharysym,' + (index + 1) * 10 });
+                    });
                     editor.ui.addButton('SharyCta', { label: L.cta || 'CTA', command: 'sharyCta', toolbar: 'shary,10' });
                     editor.ui.addButton('SharyLink', { label: L.link || 'Link', command: 'sharyLink', toolbar: 'shary,20' });
                     editor.ui.addButton('SharyPreview', { label: L.preview || 'Preview', command: 'sharyPreview', toolbar: 'shary,30' });
@@ -56,17 +138,20 @@
                 // free writing: headings the page can style (the page title is the only H1), sizes, classes of the inserted blocks
                 config.format_tags = 'p;h2;h3;h4';
                 config.fontSize_sizes = FONT_SIZES;
-                add('extraAllowedContent', 'p(shary-shortcode);span{font-size,color};p h2 h3 h4{text-align};a[!href,target,rel,title];img[!src,alt,width,height]{width,height,float};table tr td th thead tbody[*]{*}', ';');
+                add('extraAllowedContent', 'ul(shary-arrows);p(shary-space);hr;p(shary-shortcode);span{font-size,color};p h2 h3 h4{text-align};a[!href,target,rel,title];img[!src,alt,width,height]{width,height,float};table tr td th thead tbody[*]{*}', ';');
                 add('removeButtons', 'Font', ',');
                 var group = { name: 'shary', items: ['SharyCta', 'SharyLink', 'SharyPreview'] };
+                var write = { name: 'sharywrite', items: WRITE.map(function (item) { return item[0]; }) };
+                var symbols = { name: 'sharysym', items: SYMBOLS.map(function (symbol, index) { return 'SharySym' + index; }) };
                 if (Object.prototype.toString.call(config.toolbar) === '[object Array]') {
-                    config.toolbar = config.toolbar.concat([hasFont ? { name: 'sharysize', items: ['FontSize', 'JustifyRight', 'JustifyCenter', 'JustifyLeft'] } : null, group].filter(Boolean));
+                    config.toolbar = [write, symbols, group, '/'].concat(config.toolbar, [hasFont ? { name: 'sharysize', items: ['FontSize', 'JustifyRight', 'JustifyCenter', 'JustifyLeft'] } : null].filter(Boolean));
                 } else if (Object.prototype.toString.call(config.toolbarGroups) === '[object Array]') {
-                    config.toolbarGroups = config.toolbarGroups.concat([{ name: 'shary' }]);
+                    config.toolbarGroups = [{ name: 'sharywrite' }, { name: 'sharysym' }, { name: 'shary' }, '/'].concat(config.toolbarGroups);
                 } else {
                     config.toolbarGroups = [
+                        { name: 'sharywrite' }, { name: 'sharysym' }, { name: 'shary' }, '/',
                         { name: 'clipboard', groups: ['clipboard', 'undo'] }, { name: 'links' }, { name: 'insert' }, { name: 'tools' }, { name: 'document', groups: ['mode'] }, '/',
-                        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] }, { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'] }, { name: 'styles' }, { name: 'shary' }
+                        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] }, { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align'] }, { name: 'styles' }
                     ];
                 }
                 if (CFG.uploadUrl) {

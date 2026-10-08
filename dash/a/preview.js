@@ -11,6 +11,12 @@
     var NOTE_SAVE = 'ده لينك معاينة: الزرار شغال ، والحفظ نفسه بيتم على السيرفر.';
     var NOTE_SAMPLE = 'في لينك المعاينة بيتفتح مثال واحد من كل شاشة — على السيرفر بيفتح السجل اللي اخترته.';
     var NOTE_MISSING = 'الشاشة دي مش ضمن لينك المعاينة (موجودة على السيرفر).';
+    var EN = D.lang === 'en';
+    if (EN) {
+        NOTE_SAVE = 'This is a preview link: the button works, and the saving itself happens on the server.';
+        NOTE_SAMPLE = 'The preview opens one example of each screen — on the server it opens the record you chose.';
+        NOTE_MISSING = 'This screen is not part of the preview link (it exists on the server).';
+    }
 
     function fold(text) {
         return String(text == null ? '' : text).toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/ؤ/g, 'و').replace(/ئ/g, 'ي')
@@ -38,7 +44,7 @@
     // ---- a small label, so nobody mistakes this copy for the live dashboard
     var pill = doc.createElement('button');
     pill.type = 'button';
-    pill.textContent = 'نسخة معاينة';
+    pill.textContent = EN ? 'Preview copy' : 'نسخة معاينة';
     pill.setAttribute('aria-label', 'نسخة معاينة — اضغط للتوضيح');
     pill.style.cssText = 'position:fixed;z-index:1029;bottom:14px;inset-inline-end:14px;border:0;border-radius:999px;background:#fff3dc;color:#6b4100;padding:6px 14px;font:800 12.5px/1.6 Cairo,Tahoma,sans-serif;box-shadow:0 6px 18px -8px rgba(16,38,63,.5);cursor:pointer';
     pill.addEventListener('click', function () { toast('دي نسخة معاينة من الداشبورد الحقيقية ببيانات التجربة: التنقل والبحث والتبويبات والنوافذ شغالة ، والحفظ بيتم على السيرفر.'); });

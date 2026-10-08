@@ -4,6 +4,7 @@
  *
  *   1 menu (groups, phone drawer)      3 tables: sideways scroll, action buttons
  *   2 header search                    4 list search (rows in the browser · DataTables · the server with ?q=)
+ *   5 choice lists: a search box inside every <select> (our own small list, or the template's select2 with its search switched on)
  */
 (function () {
     'use strict';
@@ -271,7 +272,8 @@
         if (!table.offsetParent && !table.getClientRects().length) { return false; }   // inside a closed tab: it gets its box when the tab opens
         var rows = bodyRows(table);
         var paged = !!dataTable(table) || !!serverPager(table);
-        if (rows.length < 6 && !paged && !(cfg.serverList && cfg.q)) { return false; }
+        // every list gets its search box (even a short one: the box is where people look first) — only an empty table has none
+        if (rows.length < 1 && !paged && !(cfg.serverList && cfg.q)) { return false; }
         // a grid that is filled in (inputs in its rows) is a form, not a list
         if (rows[0] && $$('input:not([type=hidden]):not([type=checkbox]):not([type=radio]), select, textarea', rows[0]).some(function (field) { return !field.closest('.modal'); })) { return false; }
         var scope = table.closest('.card, .ag-card, .tab-pane, .content') || page;
@@ -410,11 +412,264 @@
         header.parentNode.insertBefore(template.content.cloneNode(true), header.nextSibling);
     })();
 
+
+    // ------------------------------------------------------------------ 5 choice lists: a search box inside every list of choices
+    //   · lists the old template turns into "select2": its own search box is switched on (the template hides it)
+    //   · plain <select> lists: a small searchable list of our own (the <select> stays in the form and keeps its name, value and events)
+    //   opt out: <select data-sx-pick="off">   always (even with 2 choices): data-sx-pick="always"
+    var RECORD = /area|city|country|developer|compound|project|unit_id|units|property_id|categor|blog|article|user|admin|owner|parent/i;
+    var picks = [];
+    var openPick = null;
+    function select2On() { return !!(window.jQuery && window.jQuery.fn && window.jQuery.fn.select2); }
+    function searchInSelect2(node) {
+        try {
+            var instance = window.jQuery(node).data('select2');
+            if (instance && instance.dropdown && 'minimumResultsForSearch' in instance.dropdown) { instance.dropdown.minimumResultsForSearch = 0; }
+            if (instance && instance.options && instance.options.options) {
+                var options = instance.options.options;
+                options.minimumResultsForSearch = 0;
+                // typing "اعمار" finds "إعمار" (the same folding as the other searches) — lists that ask the server keep their own search
+                if (!options.ajax && !options.__sxMatcher) {
+                    options.__sxMatcher = true;
+                    options.matcher = function (params, data) {
+                        var term = fold(params && params.term);
+                        if (!term) { return data; }
+                        if (data.children && data.children.length) {
+                            var kept = data.children.filter(function (child) { return fold(child.text).indexOf(term) > -1; });
+                            if (!kept.length) { return null; }
+                            var copy = {}; Object.keys(data).forEach(function (key) { copy[key] = data[key]; }); copy.children = kept;
+                            return copy;
+                        }
+                        return fold(data.text).indexOf(term) > -1 ? data : null;
+                    };
+                }
+                var dict = options.translations && options.translations.dict;
+                if (dict && T.pick_none) { dict.noResults = function () { return T.pick_none; }; }
+            }
+        } catch (e) { /* another select2 build: its own search stays as it is */ }
+    }
+    function hookSelect2() {
+        if (!select2On() || window.jQuery.fn.select2.__sx) { return; }
+        var jq = window.jQuery;
+        var original = jq.fn.select2;
+        var wrapped = function (options) {
+            var result = original.apply(this, arguments);
+            if (options === undefined || typeof options === 'object') { this.each(function () { dropPick(this); searchInSelect2(this); }); }
+            return result;
+        };
+        Object.keys(original).forEach(function (key) { wrapped[key] = original[key]; });
+        wrapped.__sx = true;
+        jq.fn.select2 = wrapped;
+        jq(doc).on('select2:open', function () {
+            setTimeout(function () { $$('.select2-container--open .select2-search__field').forEach(function (field) { if (!field.placeholder) { field.placeholder = T.pick_search || ''; } }); }, 0);
+        });
+        $$('select.select2-hidden-accessible').forEach(searchInSelect2);
+    }
+    function wantsPick(select) {
+        var mode = select.getAttribute('data-sx-pick');
+        if (mode === 'off' || select.multiple || select.size > 1 || select.__sxPick) { return false; }
+        if (select.classList.contains('select2-hidden-accessible') || select.closest('.dataTables_length, .cke, .note-editor, .sx-choice, .flatpickr-calendar, .ui-datepicker')) { return false; }
+        // the template turns these into select2 itself (their search is switched on above)
+        if (select2On() && /(^|\s)(select|select2|js-example-basic-single)(\s|$)/.test(select.className)) { return false; }
+        if (mode === 'always') { return true; }
+        var count = 0;
+        Array.prototype.forEach.call(select.options, function (option) { if (option.value !== '' && !option.disabled) { count++; } });
+        return count >= 4 || (count >= 2 && RECORD.test((select.name || '') + ' ' + (select.id || '')));
+    }
+    function dropPick(select) {
+        var pick = select.__sxPick;
+        if (!pick) { return; }
+        if (openPick === pick) { closePick(); }
+        if (pick.observer) { pick.observer.disconnect(); }
+        if (pick.wrap.parentNode) { pick.wrap.parentNode.insertBefore(select, pick.wrap); pick.wrap.parentNode.removeChild(pick.wrap); }
+        select.classList.remove('sx-choice__native');
+        select.__sxPick = null;
+        picks = picks.filter(function (one) { return one !== pick; });
+    }
+    function closePick() {
+        if (!openPick) { return; }
+        openPick.panel.hidden = true;
+        openPick.button.setAttribute('aria-expanded', 'false');
+        openPick.wrap.classList.remove('is-open');
+        openPick = null;
+    }
+    function placePick(pick) {
+        var box = pick.button.getBoundingClientRect();
+        var below = window.innerHeight - box.bottom;
+        var height = Math.min(340, Math.max(180, (below > 220 ? below : box.top) - 12));
+        pick.panel.style.width = Math.max(box.width, 220) + 'px';
+        pick.panel.style.left = Math.max(8, Math.min(box.left, window.innerWidth - Math.max(box.width, 220) - 8)) + 'px';
+        pick.panel.style.maxHeight = height + 'px';
+        if (below > 220 || below >= box.top) { pick.panel.style.top = (box.bottom + 4) + 'px'; pick.panel.style.bottom = 'auto'; } else { pick.panel.style.bottom = (window.innerHeight - box.top + 4) + 'px'; pick.panel.style.top = 'auto'; }
+    }
+    function fillPick(pick, term) {
+        var needle = fold(term || '');
+        pick.list.textContent = '';
+        var shown = 0;
+        var add = function (option, group) {
+            if (needle && fold(option.textContent).indexOf(needle) < 0) { return; }
+            if (group && group.__sxDone !== pick.round) { group.__sxDone = pick.round; pick.list.appendChild(el('div', 'sx-choice__group', group.label)); }
+            var item = el('button', 'sx-choice__item' + (option.selected ? ' is-on' : '') + (option.value === '' ? ' is-empty' : ''), option.textContent.trim() || '—');
+            item.type = 'button';
+            item.setAttribute('role', 'option');
+            item.setAttribute('aria-selected', option.selected ? 'true' : 'false');
+            if (option.disabled) { item.disabled = true; }
+            item.__sxOption = option;
+            pick.list.appendChild(item);
+            shown++;
+        };
+        pick.round = (pick.round || 0) + 1;
+        Array.prototype.forEach.call(pick.select.children, function (child) {
+            if (child.tagName === 'OPTGROUP') { Array.prototype.forEach.call(child.children, function (option) { add(option, child); }); } else if (child.tagName === 'OPTION') { add(child, null); }
+        });
+        if (!shown) { pick.list.appendChild(el('div', 'sx-choice__none', T.pick_none || '')); }
+        pick.active = -1;
+    }
+    function labelPick(pick) {
+        var option = pick.select.options[pick.select.selectedIndex];
+        var text = option ? option.textContent.trim() : '';
+        pick.text.textContent = text || '—';
+        pick.text.classList.toggle('is-empty', !option || option.value === '');
+        pick.button.disabled = pick.select.disabled;
+        pick.value = pick.select.value;
+        pick.count = pick.select.options.length;
+    }
+    function choosePick(pick, option) {
+        if (!option || option.disabled) { return; }
+        var changed = pick.select.value !== option.value || !option.selected;
+        pick.select.value = option.value;
+        option.selected = true;
+        labelPick(pick);
+        closePick();
+        pick.button.focus();
+        if (changed) {
+            pick.select.dispatchEvent(new Event('input', { bubbles: true }));
+            pick.select.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+    function movePick(pick, step) {
+        var items = $$('.sx-choice__item:not([disabled])', pick.list);
+        if (!items.length) { return; }
+        pick.active = (pick.active + step + items.length) % items.length;
+        items.forEach(function (item, index) { item.classList.toggle('is-active', index === pick.active); });
+        items[pick.active].scrollIntoView({ block: 'nearest' });
+    }
+    function showPick(pick) {
+        if (pick.select.disabled) { return; }
+        closePick();
+        openPick = pick;
+        pick.search.value = '';
+        fillPick(pick, '');
+        pick.panel.hidden = false;
+        pick.wrap.classList.add('is-open');
+        pick.button.setAttribute('aria-expanded', 'true');
+        placePick(pick);
+        var on = $('.sx-choice__item.is-on', pick.list);
+        if (on) { on.scrollIntoView({ block: 'nearest' }); }
+        // on a phone the keyboard would cover a short list: the search takes the focus only when the list is long
+        if (pick.select.options.length > 7 || window.innerWidth > 700) { pick.search.focus(); }
+    }
+    function makePick(select) {
+        if (!wantsPick(select)) { return; }
+        var pick = { select: select };
+        var wrap = pick.wrap = el('div', 'sx-choice');
+        var button = pick.button = el('button', 'sx-choice__button');
+        button.type = 'button';
+        button.setAttribute('aria-haspopup', 'listbox');
+        button.setAttribute('aria-expanded', 'false');
+        var label = select.id ? $('label[for="' + select.id.replace(/"/g, '') + '"]') : null;
+        var group = select.closest('.form-group, .ag-field, .mb-3');
+        label = label || (group ? $('label', group) : null);
+        button.setAttribute('aria-label', ((label ? label.textContent.trim() + ' — ' : '') + (T.pick_search || '')).slice(0, 120));
+        pick.text = el('span', 'sx-choice__text');
+        button.appendChild(pick.text);
+        button.insertAdjacentHTML('beforeend', icon('<path d="m6 9 6 6 6-6"/>', 16));
+        var panel = pick.panel = el('div', 'sx-choice__panel');
+        panel.hidden = true;
+        var searchBox = el('div', 'sx-choice__search');
+        searchBox.innerHTML = icon(ICON_SEARCH, 16);
+        var search = pick.search = el('input');
+        search.type = 'search';
+        search.autocomplete = 'off';
+        search.placeholder = T.pick_search || '';
+        search.setAttribute('aria-label', T.pick_search || '');
+        searchBox.appendChild(search);
+        pick.list = el('div', 'sx-choice__list');
+        pick.list.setAttribute('role', 'listbox');
+        panel.appendChild(searchBox);
+        panel.appendChild(pick.list);
+        if (select.style.maxWidth) { wrap.style.maxWidth = select.style.maxWidth; }
+        if (select.style.width) { wrap.style.width = select.style.width; }
+        if (select.style.flex) { wrap.style.flex = select.style.flex; }
+        select.parentNode.insertBefore(wrap, select);
+        wrap.appendChild(select);
+        wrap.appendChild(button);
+        wrap.appendChild(panel);
+        select.classList.add('sx-choice__native');
+        select.__sxPick = pick;
+        picks.push(pick);
+        labelPick(pick);
+
+        button.addEventListener('click', function () { if (openPick === pick) { closePick(); } else { showPick(pick); } });
+        button.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') { event.preventDefault(); showPick(pick); }
+        });
+        select.addEventListener('focus', function () { button.focus(); });
+        select.addEventListener('change', function () { labelPick(pick); });
+        search.addEventListener('input', function () { fillPick(pick, search.value); });
+        panel.addEventListener('keydown', function (event) {
+            if (event.key === 'ArrowDown') { event.preventDefault(); movePick(pick, 1); }
+            else if (event.key === 'ArrowUp') { event.preventDefault(); movePick(pick, -1); }
+            else if (event.key === 'Enter') {
+                event.preventDefault();
+                var items = $$('.sx-choice__item:not([disabled])', pick.list);
+                var item = items[pick.active] || (items.length === 1 ? items[0] : null) || (search.value ? items[0] : null);
+                if (item) { choosePick(pick, item.__sxOption); }
+            } else if (event.key === 'Escape') { event.stopPropagation(); closePick(); button.focus(); }
+            else if (event.key === 'Tab') { closePick(); }
+        });
+        pick.list.addEventListener('click', function (event) {
+            var item = event.target.closest('.sx-choice__item');
+            if (item) { choosePick(pick, item.__sxOption); }
+        });
+        // choices that arrive later (a project list filled after picking the area …) and values set by the page's own scripts
+        if (window.MutationObserver) {
+            pick.observer = new MutationObserver(function () { labelPick(pick); if (openPick === pick) { fillPick(pick, search.value); } });
+            pick.observer.observe(select, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled', 'selected', 'label'] });
+        }
+        var form = select.form;
+        if (form) { form.addEventListener('reset', function () { setTimeout(function () { labelPick(pick); }, 0); }); }
+    }
+    function choiceLists() {
+        hookSelect2();
+        // the old screens' own search fields say "Search..." in every language
+        if (T.list_search) { $$('.search-set input, input#search', page || doc.body).forEach(function (field) { if (/^search\.{0,3}$/i.test((field.placeholder || '').trim())) { field.placeholder = T.list_search; } }); }
+        if (select2On()) { $$('select.select2-hidden-accessible').forEach(searchInSelect2); }
+        $$('select', page || doc.body).forEach(function (select) { if (!select.__sxPick) { makePick(select); } });
+        $$('.modal select').forEach(function (select) { if (!select.__sxPick && !(page && page.contains(select))) { makePick(select); } });
+    }
+    doc.addEventListener('mousedown', function (event) { if (openPick && !openPick.wrap.contains(event.target)) { closePick(); } });
+    doc.addEventListener('touchstart', function (event) { if (openPick && !openPick.wrap.contains(event.target)) { closePick(); } }, { passive: true });
+    window.addEventListener('resize', function () { if (openPick) { placePick(openPick); } });
+    window.addEventListener('scroll', function (event) { if (openPick && !(event.target && openPick.panel.contains(event.target))) { placePick(openPick); } }, true);
+    // values the page's scripts set without an event ($(select).val(5)) and lists added by AJAX
+    setInterval(function () {
+        if (doc.hidden) { return; }
+        picks.forEach(function (pick) {
+            if (!doc.body.contains(pick.select)) { return; }
+            if (pick.select.classList.contains('select2-hidden-accessible')) { dropPick(pick.select); return; }
+            if (pick.value !== pick.select.value || pick.count !== pick.select.options.length || pick.button.disabled !== pick.select.disabled) { labelPick(pick); }
+        });
+        picks = picks.filter(function (pick) { return doc.body.contains(pick.select); });
+    }, 600);
+    doc.addEventListener('shown.bs.modal', function () { setTimeout(choiceLists, 30); });
+
     function ready() {
         tidyTables();
         stackTables();
         listSearch();
         pictures();
+        choiceLists();
     }
     // after the template's own scripts (DataTables is created on document ready)
     if (doc.readyState === 'complete') { setTimeout(ready, 0); } else { window.addEventListener('load', function () { setTimeout(ready, 0); }); }
