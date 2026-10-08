@@ -1,0 +1,696 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="preview">
+    <meta name="robots" content="noindex, nofollow">
+    <title>التحليل اليومي — لوحة تحكم شاري</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
+</head>
+<body class="ag sx" dir="rtl">
+
+<a class="sx-skip" href="#sx-main">Skip to the content</a>
+<header class="sx-top" data-sx-top>
+    <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+    <a class="sx-top__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
+            <div class="sx-find" role="search" data-sx-find>
+            <label class="sx-sr" for="sx-q">Search the dashboard</label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            <input type="search" id="sx-q" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Search a project, unit, developer, area or screen…" role="combobox" aria-expanded="false" aria-controls="sx-q-out" aria-autocomplete="list">
+            <button type="button" class="sx-find__x" data-sx-find-close aria-label="Clear the search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+            <div class="sx-find__out" id="sx-q-out" role="listbox" aria-label="Search the dashboard" hidden></div>
+        </div>
+        <div class="sx-top__end">
+                    <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="Search the dashboard"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+</button>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 4"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>4</b></a>
+                <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
+</a>
+        <a class="sx-lang" href="../admin-shary-agent-analysis_period_day.html" data-sx-lang="1" lang="ar">عربي</a>
+        <details class="sx-user" data-sx-user>
+            <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
+</summary>
+            <div class="sx-user__menu">
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
+            </div>
+        </details>
+    </div>
+</header>
+<aside class="sx-side" id="sx-side" data-sx-side>
+    <div class="sx-side__head">
+        <a class="sx-side__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
+        <button type="button" class="sx-ico sx-side__close" data-sx-menu-close aria-label="Close the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+    </div>
+    <nav class="sx-nav" aria-label="Shary dashboard">
+                                                                    <div class="sx-grp " data-sx-grp="home">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-home">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+                            <span>Home</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-home">
+                                                            <li><a href="index.html" class="" ><span>Home</span></a></li>
+                                                            <li><a href="index.html" class="" ><span>Old home (the old dashboard figures)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <a class="sx-one " href="admin-shary-how-to.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
+                        <span>How to use the dashboard</span>
+                                            </a>
+                                                                <a class="sx-one " href="admin-shary-guide.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
+                        <span>Where do I edit what?</span>
+                                            </a>
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
+                            <span>Agent</span>
+                            <b class="sx-tag">13</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-agent">
+                                                            <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">13</b></a></li>
+                                                            <li><a href="admin-shary-agent-plan.html" class="" ><span>Ranking plan (SEO + GEO)</span></a></li>
+                                                            <li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
+                                                            <li><a href="admin-shary-agent-new-page.html" class="" ><span>New page</span></a></li>
+                                                            <li><a href="admin-shary-agent-pages.html" class="" ><span>Pages that miss something</span></a></li>
+                                                            <li><a href="admin-shary-agent-tasks.html" class="" ><span>Daily jobs</span></a></li>
+                                                            <li><a href="admin-shary-agent-data.html" class="" ><span>Data requests</span></a></li>
+                                                            <li><a href="admin-shary-agent-projects.html" class="" ><span>Projects &amp; news</span></a></li>
+                                                            <li><a href="admin-shary-agent-requests.html" class="" ><span>Customer requests</span></a></li>
+                                                            <li><a href="admin-shary-agent-analysis.html" class="is-on"  aria-current="page" ><span>Analysis</span></a></li>
+                                                            <li><a href="admin-shary-agent-reports.html" class="" ><span>Reports</span></a></li>
+                                                            <li><a href="admin-shary-agent-market.html" class="" ><span>Market analysis</span></a></li>
+                                                            <li><a href="admin-shary-agent-seo.html" class="" ><span>SEO &amp; articles</span></a></li>
+                                                            <li><a href="admin-shary-agent-log.html" class="" ><span>Log &amp; undo</span></a></li>
+                                                            <li><a href="admin-shary-agent-settings.html" class="" ><span>Access &amp; connections</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Daily work</h6>                                                <div class="sx-grp " data-sx-grp="requests">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
+                            <span>Requests &amp; messages</span>
+                            <b class="sx-tag">51</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-requests">
+                                                            <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">51</b></a></li>
+                                                            <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
+                                                            <li><a href="admin-shary-owner-requests_type_rent.html" class="" ><span>Rent-out requests</span></a></li>
+                                                            <li><a href="request-sell-property.html" class="" ><span>Sell requests (old list)</span></a></li>
+                                                            <li><a href="request-rent-property.html" class="" ><span>Rent-out requests (old list)</span></a></li>
+                                                            <li><a href="admin-shary-leads_form_meeting.html" class="" ><span>Meeting requests</span></a></li>
+                                                            <li><a href="request-meetings.html" class="" ><span>Zoom meeting requests</span></a></li>
+                                                            <li><a href="ContactUs.html" class="" ><span>Contact messages</span></a></li>
+                                                            <li><a href="exclusive-resale-admin_tab_requests.html" class="" ><span>Offers on resale opportunities</span></a></li>
+                                                            <li><a href="admin-shary-follows.html" class="" ><span>Project follows</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="units">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-units">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+                            <span>Units</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-units">
+                                                            <li><a href="admin-shary-units.html" class="" ><span>All units</span></a></li>
+                                                            <li><a href="admin-shary-units-create.html" class="" ><span>Add a unit</span></a></li>
+                                                            <li><a href="admin-shary-units-sheet.html" class="" ><span>Upload a units sheet</span></a></li>
+                                                            <li><a href="admin-shary-units_type_developer_sale.html" class="" ><span>Developer units</span></a></li>
+                                                            <li><a href="admin-shary-units_type_resale.html" class="" ><span>Resale units</span></a></li>
+                                                            <li><a href="admin-shary-units_type_rent.html" class="" ><span>Rental units</span></a></li>
+                                                            <li><a href="exclusive-resale-admin.html" class="" ><span>Exclusive resale opportunities</span></a></li>
+                                                            <li><a href="limited-offer-units.html" class="" ><span>Limited-time offers</span></a></li>
+                                                            <li><a href="admin-shary-extras-units.html" class="" ><span>Unit page data</span></a></li>
+                                                            <li><a href="admin-shary-type-photos.html" class="" ><span>Type photo library</span></a></li>
+                                                            <li><a href="admin-shary-tracking-units.html" class="" ><span>Tracking units (customer unit)</span></a></li>
+                                                            <li><a href="unit-tracking-admin.html" class="" ><span>Unit tracking in the app</span></a></li>
+                                                            <li><a href="units-list.html" class="" ><span>Units (old screen)</span></a></li>
+                                                            <li><a href="units-0.html" class="" ><span>Manage properties</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="projects">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-projects">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+                            <span>Projects</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-projects">
+                                                            <li><a href="admin-compounds.html" class="" ><span>All projects</span></a></li>
+                                                            <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
+                                                            <li><a href="admin-shary-projects.html" class="" ><span>Project data for the website</span></a></li>
+                                                            <li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
+                                                            <li><a href="compounds-boundaries.html" class="" ><span>Project boundaries on the map</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="developers">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-developers">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+                            <span>Developers</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-developers">
+                                                            <li><a href="services-developers.html" class="" ><span>All developers (add &amp; edit)</span></a></li>
+                                                            <li><a href="admin-shary-extras-developers.html" class="" ><span>Developer page data</span></a></li>
+                                                            <li><a href="admin-shary-developers-page.html" class="" ><span>Top developers &amp; the “view all” page</span></a></li>
+                                                            <li><a href="top-developer.html" class="" ><span>Top developers (app)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="areas">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-areas">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                            <span>Areas</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-areas">
+                                                            <li><a href="admin-shary-area-tree.html" class="" ><span>All areas &amp; sub-areas</span></a></li>
+                                                            <li><a href="cities.html" class="" ><span>Areas (add &amp; edit)</span></a></li>
+                                                            <li><a href="admin-shary-extras-areas.html" class="" ><span>Area page data</span></a></li>
+                                                            <li><a href="admin-shary-area-places.html" class="" ><span>Famous places</span></a></li>
+                                                            <li><a href="countries.html" class="" ><span>Countries</span></a></li>
+                                                            <li><a href="admin-shary-extras-countries.html" class="" ><span>Country page data</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="index">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-index">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+                            <span>Shary Index</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-index">
+                                                            <li><a href="admin-shary-index.html" class="" ><span>Area numbers</span></a></li>
+                                                            <li><a href="admin-shary-index-monthly.html" class="" ><span>Monthly prices</span></a></li>
+                                                            <li><a href="admin-shary-extras-index-page.html" class="" ><span>Index page content</span></a></li>
+                                                            <li><a href="shary-index-admin.html" class="" ><span>Index (old screen)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Content &amp; website</h6>                                                <div class="sx-grp " data-sx-grp="homepage">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-homepage">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 13h5v4H7zM15 13h2M15 16h2"/></svg>
+                            <span>Website home page</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-homepage">
+                                                            <li><a href="admin-shary-home-sections.html" class="" ><span>Home page sections (choose)</span></a></li>
+                                                            <li><a href="admin-shary-home-sections_tab_slider.html" class="" ><span>Home slider (choose a project)</span></a></li>
+                                                            <li><a href="sliders.html" class="" ><span>Slider (old screen)</span></a></li>
+                                                            <li><a href="admin-shary-home-cards.html" class="" ><span>Home cards (the five)</span></a></li>
+                                                            <li><a href="investment-cards.html" class="" ><span>What makes us different</span></a></li>
+                                                            <li><a href="admin-new-launches.html" class="" ><span>New launches (app pictures — old screen)</span></a></li>
+                                                            <li><a href="top-unit.html" class="" ><span>Top units (old screen)</span></a></li>
+                                                            <li><a href="top-compound.html" class="" ><span>Top projects (old screen)</span></a></li>
+                                                            <li><a href="top-area.html" class="" ><span>Top areas (old screen)</span></a></li>
+                                                            <li><a href="popular-areas.html" class="" ><span>Popular areas</span></a></li>
+                                                            <li><a href="ads-images.html" class="" ><span>Ads</span></a></li>
+                                                            <li><a href="footer-links.html" class="" ><span>Top searches (footer)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="content">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-content">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+                            <span>Articles &amp; content</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-content">
+                                                            <li><a href="admin-shary-extras-blogs.html" class="" ><span>Article data</span></a></li>
+                                                            <li><a href="news.html" class="" ><span>News</span></a></li>
+                                                            <li><a href="trendyList.html" class="" ><span>Trendy</span></a></li>
+                                                            <li><a href="storyList.html" class="" ><span>Stories</span></a></li>
+                                                            <li><a href="admin-shary-extras-trend-videos.html" class="" ><span>Trend videos</span></a></li>
+                                                            <li><a href="admin-shary-extras-news-posts.html" class="" ><span>Trend news data</span></a></li>
+                                                            <li><a href="admin-shary-internal-links.html" class="" ><span>Internal links</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="pages">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-pages">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11"/></svg>
+                            <span>Website pages</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-pages">
+                                                            <li><a href="admin-shary-site-content.html" class="" ><span>Page texts &amp; photos</span></a></li>
+                                                            <li><a href="settings-about.html" class="" ><span>About us (text)</span></a></li>
+                                                            <li><a href="admin-shary-extras-about-page.html" class="" ><span>About us (photo)</span></a></li>
+                                                            <li><a href="executive-management.html" class="" ><span>Team</span></a></li>
+                                                            <li><a href="categories-executive-management.html" class="" ><span>Team groups</span></a></li>
+                                                            <li><a href="admin-shary-extras-team.html" class="" ><span>Team page data</span></a></li>
+                                                            <li><a href="jobs.html" class="" ><span>Jobs</span></a></li>
+                                                            <li><a href="settings-terms.html" class="" ><span>Terms &amp; conditions</span></a></li>
+                                                            <li><a href="settings-privacy.html" class="" ><span>Privacy policy</span></a></li>
+                                                            <li><a href="settings-help_center.html" class="" ><span>Help center</span></a></li>
+                                                            <li><a href="admin-shary-extras-listing-pages.html" class="" ><span>Listing pages (sale / rent / opportunities)</span></a></li>
+                                                            <li><a href="admin-shary-extras-property-types.html" class="" ><span>Property types</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="contact">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-contact">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
+                            <span>Contact &amp; action buttons</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-contact">
+                                                            <li><a href="admin-shary-contact.html" class="" ><span>Numbers &amp; channels</span></a></li>
+                                                            <li><a href="Communications.html" class="" ><span>Social media</span></a></li>
+                                                            <li><a href="contact_us_information.html" class="" ><span>Contact-us details</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <a class="sx-one " href="admin-shary-ai.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
+                        <span>Shary AI</span>
+                                            </a>
+                                                                <div class="sx-grp " data-sx-grp="seo">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-seo">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+                            <span>SEO &amp; redirects</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-seo">
+                                                            <li><a href="admin-redirections.html" class="" ><span>Redirects</span></a></li>
+                                                            <li><a href="admin-shary-refresh.html" class="" ><span>Refresh the website</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">The app</h6>                                                <div class="sx-grp " data-sx-grp="app">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-app">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg>
+                            <span>App services</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-app">
+                                                            <li><a href="reservations.html" class="" ><span>Book with the developer</span></a></li>
+                                                            <li><a href="reservations-bank-accounts.html" class="" ><span>Bank accounts</span></a></li>
+                                                            <li><a href="legal-assistant-admin.html" class="" ><span>Legal assistant</span></a></li>
+                                                            <li><a href="sharyCard-setting.html" class="" ><span>Shary Card</span></a></li>
+                                                            <li><a href="settings-shary_card.html" class="" ><span>Shary Card terms</span></a></li>
+                                                            <li><a href="notifications.html" class="" ><span>Notifications</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Administration</h6>                                                <div class="sx-grp " data-sx-grp="users">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-users">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>
+                            <span>Users &amp; permissions</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-users">
+                                                            <li><a href="users-client.html" class="" ><span>Clients</span></a></li>
+                                                            <li><a href="users-agent.html" class="" ><span>Agents</span></a></li>
+                                                            <li><a href="supervisor.html" class="" ><span>Supervisors &amp; permissions</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="options">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-options">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+                            <span>Settings &amp; options</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-options">
+                                                            <li><a href="generalDetails-property.html" class="" ><span>Unit types</span></a></li>
+                                                            <li><a href="generalDetails-main_category.html" class="" ><span>Main categories</span></a></li>
+                                                            <li><a href="generalDetails-types_finishing.html" class="" ><span>Finishing types</span></a></li>
+                                                            <li><a href="generalDetails-featured.html" class="" ><span>Features</span></a></li>
+                                                            <li><a href="services-services_list.html" class="" ><span>Unit facilities</span></a></li>
+                                                    </ul>
+                    </div>
+                                        </nav>
+</aside>
+<div class="sx-shade" data-sx-shade hidden></div>
+
+
+    <template data-sx-crumb><div class="sx-crumb">Agent ‹ Analysis</div></template>
+
+<div class="sx-page">
+    <main class="ag-main" id="sx-main">
+                                <div class="ag-head"><div class="ag-col">
+    <h1>التحليل اليومي</h1>
+    <p>السوق والمناطق والمشاريع والمطورين والأسعار — وشاري قدام المنافسين. بيتعمل كل يوم لوحده، وبيقول إيه اللي اتغيّر عن امبارح وإيه المطلوب. مفيش حاجة هنا بتغيّر الموقع.</p>
+</div>
+<form method="post" action="#preview/admin/shary/agent/analysis" class="ag-row no-print" data-ag-slow="الإيجنت بيحسب الأرقام…"><input type="hidden" name="_token" value="preview" autocomplete="off">    <input type="hidden" name="period" value="day">
+    <button class="ag-btn ag-btn--primary">حدّث التحليل دلوقتي</button>
+</form></div>
+
+<nav class="ag-row no-print an-periods" aria-label="فترة التحليل" style="margin-bottom:12px">
+            <a class="ag-tab is-on" href="admin-shary-agent-analysis_period_day.html"  aria-current="page" >يومي</a>
+            <a class="ag-tab " href="admin-shary-agent-analysis_period_week.html" >أسبوعي</a>
+            <a class="ag-tab " href="admin-shary-agent-analysis_period_month.html" >شهري</a>
+    </nav>
+
+<nav class="ag-row an-jump no-print" aria-label="أقسام التحليل">
+    <a class="ag-tab" href="#an-top">أهم حاجة</a><a class="ag-tab" href="#an-shary">شاري</a><a class="ag-tab" href="#an-areas">المناطق</a><a class="ag-tab" href="#an-prices">الأسعار</a>
+    <a class="ag-tab" href="#an-projects">المشاريع</a><a class="ag-tab" href="#an-developers">المطورين</a><a class="ag-tab" href="#an-competitors">المنافسين</a>
+</nav>
+<div class="ag-split">
+    <section class="ag-card ag-detail" style="flex:4 1 640px;min-width:0">
+        <div class="ag-card__head"><h2 style="font-size:19px">تحليل يوم 2026-10-08</h2><span class="sm mute">اتحسب النهاردة 3:34 ص</span></div>
+        <div class="ag-card__body ag-share no-print" data-ag-share data-pdf-box>
+    <div class="ag-row">
+        <a class="ag-btn ag-btn--primary" href="admin-shary-agent-reports-3-print.html" target="_blank" rel="noopener" data-share="pdf">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+            احفظه PDF
+        </a>
+        <button type="button" class="ag-btn ag-btn--wa" data-pdf-share data-pdf-src="admin-shary-agent-reports-3-print.html?noprint=1" data-pdf-name="shary-analysis-2026-10-08.pdf" data-pdf-title="تحليل يوم 2026-10-08" data-share="pdf-whatsapp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"/><path d="M14 3v5h5v3"/><path d="M15 17h6m-3-3 3 3-3 3"/></svg>
+            <span data-pdf-label>شير PDF على واتساب</span>
+        </button>
+        <a class="ag-btn" href="https://wa.me/?text=%2A%D8%AA%D8%AD%D9%84%D9%8A%D9%84%20%D9%8A%D9%88%D9%85%202026-10-08%2A%0A%0A%E2%80%A2%205%20%D9%88%D8%AD%D8%AF%D8%A9%20%D8%B3%D8%B9%D8%B1%D9%87%D8%A7%20%D8%A7%D8%AA%D8%BA%D9%8A%D9%91%D8%B1%20%D8%B9%D9%86%20%D8%A2%D8%AE%D8%B1%20%D8%AA%D8%AD%D9%84%D9%8A%D9%84%20%284%20%D8%B2%D8%A7%D8%AF%D8%AA%20%D9%88%201%20%D9%86%D8%B2%D9%84%D8%AA%29.%0A%E2%80%A2%20%D8%A3%D9%83%D8%AA%D8%B1%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%B9%D9%84%D9%8A%D9%87%20%D8%B7%D9%84%D8%A8%D8%A7%D8%AA%20%D9%81%D9%8A%20%D8%A2%D8%AE%D8%B1%2030%20%D9%8A%D9%88%D9%85%3A%20%D9%85%D9%8A%D9%81%D9%8A%D8%AF%D8%A7%20%2819%20%D8%B7%D9%84%D8%A8%20%E2%80%94%20%D8%B9%D9%86%D8%AF%D9%86%D8%A7%20%D9%81%D9%8A%D9%87%2013%20%D9%88%D8%AD%D8%AF%D8%A9%29.%0A%E2%80%A2%2012%20%D8%AD%D8%A7%D8%AC%D8%A9%20%D8%AC%D9%87%D9%91%D8%B2%D9%87%D8%A7%20%D8%A7%D9%84%D8%A5%D9%8A%D8%AC%D9%86%D8%AA%20%D9%88%D9%85%D8%B3%D8%AA%D9%86%D9%8A%D8%A9%20%D9%85%D8%B1%D8%A7%D8%AC%D8%B9%D8%AA%D9%83%20%D9%88%D9%86%D8%B4%D8%B1%D9%83.%0A%E2%80%A2%206%20%D8%B7%D9%84%D8%A8%20%D8%A8%D9%8A%D8%B9%20%2F%20%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1%20%D9%85%D9%86%20%D9%85%D9%84%D8%A7%D9%83%20%D9%84%D8%B3%D9%87%20%D9%85%D9%81%D8%AA%D9%88%D8%AD.%0A%E2%80%A2%201%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%B8%D8%A7%D9%87%D8%B1%20%D8%B9%D9%84%D9%89%20%D8%A7%D9%84%D9%85%D9%88%D9%82%D8%B9%20%D9%85%D9%86%20%D8%BA%D9%8A%D8%B1%20%D8%B3%D8%B9%D8%B1%20%28%D8%B2%D9%8A%3A%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%AA%D8%AC%D8%B1%D9%8A%D8%A8%D9%8A%20%D8%A8%D8%AF%D9%88%D9%86%20%D9%88%D8%AD%D8%AF%D8%A7%D8%AA%29.%0A%E2%80%A2%201%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%B8%D8%A7%D9%87%D8%B1%20%D9%85%D9%86%20%D8%BA%D9%8A%D8%B1%20%D8%A3%D9%8A%20%D9%88%D8%AD%D8%AF%D8%A9.%0A%E2%80%A2%20377%20%D8%B5%D9%81%D8%AD%D8%A9%20%D9%86%D8%A7%D9%82%D8%B5%D9%87%D8%A7%20%D8%AD%D8%A7%D8%AC%D8%A9%20%28%D9%88%D8%B5%D9%81%20%2F%20%D8%B3%D9%8A%D9%88%20%2F%20%D8%A3%D8%B3%D8%A6%D9%84%D8%A9%20%2F%20%D8%B5%D9%88%D8%B1%29.%0A%E2%80%A2%205%20%D9%83%D9%84%D9%85%D8%A9%20%D8%A8%D8%AD%D8%AB%20%D9%85%D9%86%D8%A7%D9%81%D8%B3%20%D8%B3%D8%A7%D8%A8%D9%82%D9%86%D8%A7%20%D9%81%D9%8A%D9%87%D8%A7%20%E2%80%94%20%D8%A3%D9%87%D9%85%D9%87%D9%85%20%22%D8%B4%D9%82%D9%82%20%D9%84%D9%84%D8%A8%D9%8A%D8%B9%20%D9%81%D9%8A%20%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%22%20%28%D8%AA%D8%B1%D8%AA%D9%8A%D8%A8%D9%86%D8%A7%206%20%D8%8C%20%D9%88%D8%A7%D9%84%D8%A3%D9%88%D9%84%20nawy.com%29.%0A%0A%2A%D8%B3%D8%B9%D8%B1%20%D8%A7%D9%84%D9%85%D8%AA%D8%B1%20%28%D8%AC%D9%86%D9%8A%D9%87%29%3A%2A%0A%D9%85%D8%AF%D9%8A%D9%86%D8%A9%20%D8%A7%D9%84%D9%85%D8%B3%D8%AA%D9%82%D8%A8%D9%84%3A%20139%2C000%0A%D8%A7%D9%84%D9%82%D8%A7%D9%87%D8%B1%D8%A9%20%D8%A7%D9%84%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%3A%2046%2C200%0A%D9%85%D8%AF%D9%8A%D9%86%D8%A9%20%D8%A7%D9%84%D8%B4%D9%8A%D8%AE%20%D8%B2%D8%A7%D9%8A%D8%AF%3A%2095%2C600%0A%D8%A7%D9%84%D8%AA%D8%AC%D9%85%D8%B9%20%D8%A7%D9%84%D8%AE%D8%A7%D9%85%D8%B3%3A%2066%2C800%0A%D9%85%D8%AF%D9%8A%D9%86%D8%A9%206%20%D8%A3%D9%83%D8%AA%D9%88%D8%A8%D8%B1%3A%2059%2C600%0A%D8%A7%D9%84%D8%B9%D9%8A%D9%86%20%D8%A7%D9%84%D8%B3%D8%AE%D9%86%D8%A9%3A%2093%2C200%0A%0A%2A%D8%B4%D8%A7%D8%B1%D9%8A%3A%2A%20241%20%D9%88%D8%AD%D8%AF%D8%A9%20%28186%20%D9%85%D8%B7%D9%88%D8%B1%20%C2%B7%2034%20%D8%A5%D8%B9%D8%A7%D8%AF%D8%A9%20%D8%A8%D9%8A%D8%B9%20%C2%B7%2021%20%D8%A5%D9%8A%D8%AC%D8%A7%D8%B1%29%20%E2%80%94%20%D8%B7%D9%84%D8%A8%D8%A7%D8%AA%20%D8%A2%D8%AE%D8%B1%207%20%D8%A3%D9%8A%D8%A7%D9%85%3A%2051" target="_blank" rel="noopener" data-share="whatsapp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.1A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
+            ابعته رسالة واتساب
+        </a>
+        <button type="button" class="ag-btn" data-ag-toggle="ag-share-mail-3" data-share="mail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            ابعته على الإيميل
+        </button>
+        <button type="button" class="ag-btn" data-ag-copy="*تحليل يوم 2026-10-08*
+
+• 5 وحدة سعرها اتغيّر عن آخر تحليل (4 زادت و 1 نزلت).
+• أكتر مشروع عليه طلبات في آخر 30 يوم: ميفيدا (19 طلب — عندنا فيه 13 وحدة).
+• 12 حاجة جهّزها الإيجنت ومستنية مراجعتك ونشرك.
+• 6 طلب بيع / إيجار من ملاك لسه مفتوح.
+• 1 مشروع ظاهر على الموقع من غير سعر (زي: مشروع تجريبي بدون وحدات).
+• 1 مشروع ظاهر من غير أي وحدة.
+• 377 صفحة ناقصها حاجة (وصف / سيو / أسئلة / صور).
+• 5 كلمة بحث منافس سابقنا فيها — أهمهم &quot;شقق للبيع في التجمع الخامس&quot; (ترتيبنا 6 ، والأول nawy.com).
+
+*سعر المتر (جنيه):*
+مدينة المستقبل: 139,000
+القاهرة الجديدة: 46,200
+مدينة الشيخ زايد: 95,600
+التجمع الخامس: 66,800
+مدينة 6 أكتوبر: 59,600
+العين السخنة: 93,200
+
+*شاري:* 241 وحدة (186 مطور · 34 إعادة بيع · 21 إيجار) — طلبات آخر 7 أيام: 51" data-share="copy">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+            انسخ التقرير
+        </button>
+    </div>
+    <form method="post" action="#preview/admin/shary/agent/reports/3/email" id="ag-share-mail-3" class="ag-row hide" style="margin-top:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <label class="sr" for="ag-share-to-3">الإيميل</label>
+        <input type="email" id="ag-share-to-3" name="to" class="ag-input" style="max-width:320px" dir="ltr" value="" placeholder="name@example.com" required>
+        <button class="ag-btn ag-btn--primary">ابعت</button>
+        <span class="sm mute">بيتبعت التقرير كامل بالجداول.</span>
+    </form>
+        <p class="sm ag-share__note hide" data-pdf-note role="status" aria-live="polite"></p>
+    <p class="sm mute" style="margin-top:8px">"شير PDF على واتساب" بيعمل ملف PDF للتقرير على جهازك ويفتح المشاركة — اختار واتساب والشات وابعت (على الكمبيوتر الملف بيتنزل وتبعته من واتساب ويب). "احفظه PDF" بيفتح صفحة نضيفة ونافذة الحفظ — اختار "Save as PDF". "ابعته رسالة واتساب" بيفتح واتساب والتقرير مكتوب جاهز وتدوس إرسال.</p>
+</div>
+    <script src="../a/js/shary-admin/report-pdf.js" defer></script>
+        <div class="ag-card__body" id="an-top"><h3 class="ag-h2">أهم حاجة النهاردة</h3>
+    <p class="sm mute" style="margin-bottom:8px">المقارنة مع تحليل يوم 2026-10-07.</p>
+    <ul class="ag-checks an-insights">
+                    <li><i aria-hidden="true" style="color:#1F5FC4">•</i>
+                <span>5 وحدة سعرها اتغيّر عن آخر تحليل (4 زادت و 1 نزلت).
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#17665B">✓</i>
+                <span>أكتر مشروع عليه طلبات في آخر 30 يوم: ميفيدا (19 طلب — عندنا فيه 13 وحدة).
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-agent-commands_say_-8f059a.html">اكتب مقال عن المشروع</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#9A5B00">!</i>
+                <span>12 حاجة جهّزها الإيجنت ومستنية مراجعتك ونشرك.
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-agent-review.html">افتح صندوق المراجعة</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#9A5B00">!</i>
+                <span>6 طلب بيع / إيجار من ملاك لسه مفتوح.
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-owner-requests.html">راجعهم وانشر</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#9A5B00">!</i>
+                <span>1 مشروع ظاهر على الموقع من غير سعر (زي: مشروع تجريبي بدون وحدات).
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-agent-pages_kind_projects.html">الصفحات الناقصة</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#1F5FC4">•</i>
+                <span>1 مشروع ظاهر من غير أي وحدة.
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-agent-pages_kind_projects.html">الصفحات الناقصة</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#1F5FC4">•</i>
+                <span>377 صفحة ناقصها حاجة (وصف / سيو / أسئلة / صور).
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-agent-pages.html">خلّي الإيجنت يكمّلها</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#9A5B00">!</i>
+                <span>5 كلمة بحث منافس سابقنا فيها — أهمهم &quot;شقق للبيع في التجمع الخامس&quot; (ترتيبنا 6 ، والأول nawy.com).
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-agent-commands_say_-80e9c0.html">اكتب مقال للكلمة</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#1F5FC4">•</i>
+                <span>متابعة المنافسين في جوجل (ترتيب الكلمات والأخبار) محتاجة مفتاح بحث جوجل على السيرفر — الأرقام اللي فوق من داتا شاري بس.
+                                            <a class="ag-chip ag-chip--blue no-print" style="margin-inline-start:6px" href="admin-shary-agent-settings.html">حالة الربط</a>
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#1F5FC4">•</i>
+                <span>41 وحدة سعرها بالدولار — مش داخلة في متوسطات سعر المتر بالجنيه.
+                                    </span></li>
+                    <li><i aria-hidden="true" style="color:#17665B">▲</i>
+                <span>جرام الذهب عيار 21 زاد 1.46% — دلوقتي 4,860 جنيه.
+                                    </span></li>
+            </ul>
+</div>
+
+
+
+<div class="ag-card__body" id="an-shary"><h3 class="ag-h2">شاري النهاردة</h3>
+    <div class="ag-tiles">
+        <div class="ag-tile"><span>وحدات على الموقع</span><b class="num">241</b><span>مطور <span class="num">186</span> · إعادة بيع <span class="num">34</span> · إيجار <span class="num">21</span></span></div>
+        <div class="ag-tile"><span>وحدات جديدة (7 يوم)</span><b class="num">17</b><span>مطور <span class="num">15</span> · إعادة بيع <span class="num">1</span> · إيجار <span class="num">1</span></span></div>
+        <div class="ag-tile"><span>طلبات العملاء</span><b class="num">51</b><span>آخر 7 أيام · النهاردة <span class="num">21</span> · الأسبوع اللي قبله <span class="num">0</span></span></div>
+        <div class="ag-tile"><span>مشاريع ومطورين</span><b class="num">83</b><span>مشروع ظاهر · <span class="num">9</span> مطور</span></div>
+        <div class="ag-tile"><span>العملة</span><b class="num">200</b><span>بالجنيه · <span class="num">41</span> بالدولار</span></div>
+        <div class="ag-tile"><span>مستني مراجعتك</span><b class="num">12</b><span>اتنشر في 7 يوم <span class="num">1</span> · مقالات جديدة <span class="num">0</span></span></div>
+    </div>
+    <div class="ag-split" style="margin-top:14px">
+        <div style="flex:1 1 300px">
+            <h4 class="an-h4">الطلبات جاية من أنهي صفحات (آخر 30 يوم)</h4>
+                            <div class="an-bar"><span>ميفيدا القاهرة الجديدة من إعمار مصر - الأسعار وخطط السداد</span><b class="num">15</b><i style="width:100%"></i></div>
+                            <div class="an-bar"><span>شقة 130 م² إعادة بيع في ميفيدا</span><b class="num">3</b><i style="width:20%"></i></div>
+                            <div class="an-bar"><span>Mivida New Cairo by Emaar Misr - prices and payment plans</span><b class="num">3</b><i style="width:20%"></i></div>
+                            <div class="an-bar"><span>اتصل بنا</span><b class="num">2</b><i style="width:13%"></i></div>
+                            <div class="an-bar"><span>Mivida</span><b class="num">1</b><i style="width:7%"></i></div>
+                            <div class="an-bar"><span>Sell</span><b class="num">1</b><i style="width:7%"></i></div>
+                            <div class="an-bar"><span>بيع عقارك</span><b class="num">1</b><i style="width:7%"></i></div>
+                            <div class="an-bar"><span>ميفيدا</span><b class="num">1</b><i style="width:7%"></i></div>
+                    </div>
+        <div style="flex:1 1 300px">
+            <h4 class="an-h4">نوع الطلبات (آخر 7 يوم)</h4>
+                            <div class="an-bar"><span>ميتنج من Shary AI</span><b class="num">22</b><i style="width:100%"></i></div>
+                            <div class="an-bar"><span>بيع / إيجار</span><b class="num">6</b><i style="width:27%"></i></div>
+                            <div class="an-bar"><span>استشارة</span><b class="num">5</b><i style="width:23%"></i></div>
+                            <div class="an-bar"><span>عرض سعر</span><b class="num">4</b><i style="width:18%"></i></div>
+                            <div class="an-bar"><span>من Shary AI</span><b class="num">3</b><i style="width:14%"></i></div>
+                            <div class="an-bar"><span>شاري كارد</span><b class="num">3</b><i style="width:14%"></i></div>
+                            <div class="an-bar"><span>ميتنج</span><b class="num">3</b><i style="width:14%"></i></div>
+                            <div class="an-bar"><span>توظيف</span><b class="num">2</b><i style="width:9%"></i></div>
+                            <div class="an-bar"><span>تواصل</span><b class="num">2</b><i style="width:9%"></i></div>
+                            <div class="an-bar"><span>متابعة</span><b class="num">1</b><i style="width:5%"></i></div>
+                        <h4 class="an-h4" style="margin-top:14px">اكتمال الصفحات</h4>
+                            <div class="an-bar"><span>المشاريع <span class="mute">(ناقص <span class="num">86</span> من <span class="num">86</span>)</span></span><b class="num">58%</b><i style="width:58%"></i></div>
+                            <div class="an-bar"><span>المطورين <span class="mute">(ناقص <span class="num">9</span> من <span class="num">9</span>)</span></span><b class="num">47%</b><i style="width:47%"></i></div>
+                            <div class="an-bar"><span>المناطق <span class="mute">(ناقص <span class="num">37</span> من <span class="num">37</span>)</span></span><b class="num">37%</b><i style="width:37%"></i></div>
+                            <div class="an-bar"><span>الوحدات <span class="mute">(ناقص <span class="num">245</span> من <span class="num">245</span>)</span></span><b class="num">74%</b><i style="width:74%"></i></div>
+                            <div class="an-bar"><span>المقالات <span class="mute">(ناقص <span class="num">0</span> من <span class="num">8</span>)</span></span><b class="num">100%</b><i style="width:100%"></i></div>
+                        <p class="sm mute" style="margin-top:6px">السيو: <span class="num">154</span> صفحة اتفحصت — متوسط الدرجة <span class="num">96</span> من 100
+                </p>
+        </div>
+    </div>
+</div>
+
+
+<div class="ag-card__body" id="an-areas"><h3 class="ag-h2">السوق — المناطق</h3>
+    <p class="sm mute" style="margin-bottom:8px">من وحدات البيع بالجنيه على شاري. "التغيير" عن آخر تحليل ، و"النمو السنوي" من أرقام مؤشر شاري. المنطقة اللي وحداتها أقل من 4 رقمها استرشادي.</p>
+        <div class="ag-scroll"><table><thead><tr><th>المنطقة</th><th>وحدات</th><th>مشاريع</th><th>سعر المتر (جنيه)</th><th>من – إلى</th><th>التغيير</th><th>النمو السنوي</th><th>إيجار شهري</th><th>العائد</th><th>طلبات 30 يوم</th></tr></thead><tbody>
+                    <tr><td class="b8 nowrap">مدينة المستقبل</td><td><span class="num">28</span></td><td><span class="num">8</span></td>
+                <td><span class="num b8">139,000</span></td><td class="nowrap sm"><span class="num">64,400</span> – <span class="num">208,200</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">35,000</span> <span class="xs mute">(1)</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">القاهرة الجديدة</td><td><span class="num">23</span></td><td><span class="num">5</span></td>
+                <td><span class="num b8">46,200</span></td><td class="nowrap sm"><span class="num">38,800</span> – <span class="num">87,000</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">60,000</span> <span class="xs mute">(3)</span></td>
+                <td><span class="num">9.6%</span></td><td><span class="num b8">15</span></td></tr>
+                    <tr><td class="b8 nowrap">مدينة الشيخ زايد</td><td><span class="num">17</span></td><td><span class="num">5</span></td>
+                <td><span class="num b8">95,600</span></td><td class="nowrap sm"><span class="num">83,000</span> – <span class="num">104,800</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">89,300</span> <span class="xs mute">(4)</span></td>
+                <td><span class="num">2.9%</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">التجمع الخامس</td><td><span class="num">16</span></td><td><span class="num">5</span></td>
+                <td><span class="num b8">66,800</span></td><td class="nowrap sm"><span class="num">56,300</span> – <span class="num">88,200</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">86,900</span> <span class="xs mute">(4)</span></td>
+                <td><span class="num">7.3%</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">مدينة 6 أكتوبر</td><td><span class="num">13</span></td><td><span class="num">4</span></td>
+                <td><span class="num b8">59,600</span></td><td class="nowrap sm"><span class="num">52,600</span> – <span class="num">91,600</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">—</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">العين السخنة</td><td><span class="num">12</span></td><td><span class="num">4</span></td>
+                <td><span class="num b8">93,200</span></td><td class="nowrap sm"><span class="num">86,300</span> – <span class="num">100,900</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">—</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">العاصمة الإدارية الجديدة</td><td><span class="num">12</span></td><td><span class="num">4</span></td>
+                <td><span class="num b8">40,000</span></td><td class="nowrap sm"><span class="num">36,500</span> – <span class="num">43,900</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">—</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">الشروق</td><td><span class="num">11</span></td><td><span class="num">4</span></td>
+                <td><span class="num b8">73,000</span></td><td class="nowrap sm"><span class="num">64,400</span> – <span class="num">130,800</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">98,100</span> <span class="xs mute">(1)</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">الرحاب</td><td><span class="num">9</span></td><td><span class="num">3</span></td>
+                <td><span class="num b8">81,100</span></td><td class="nowrap sm"><span class="num">59,500</span> – <span class="num">133,600</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">83,700</span> <span class="xs mute">(1)</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">القطامية</td><td><span class="num">9</span></td><td><span class="num">3</span></td>
+                <td><span class="num b8">72,100</span></td><td class="nowrap sm"><span class="num">70,700</span> – <span class="num">103,900</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">—</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">سيدي عبد الرحمن</td><td><span class="num">9</span></td><td><span class="num">3</span></td>
+                <td><span class="num b8">147,500</span></td><td class="nowrap sm"><span class="num">108,000</span> – <span class="num">163,500</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">116,400</span> <span class="xs mute">(2)</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">العلمين</td><td><span class="num">9</span></td><td><span class="num">3</span></td>
+                <td><span class="num b8">142,000</span></td><td class="nowrap sm"><span class="num">117,300</span> – <span class="num">162,200</span></td>
+                <td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td><td><span class="mute">—</span></td>
+                <td><span class="num">121,200</span> <span class="xs mute">(1)</span></td>
+                <td><span class="mute">—</span></td><td><span class="num mute">0</span></td></tr>
+            </tbody></table></div>
+    </div>
+
+
+<div class="ag-card__body" id="an-prices"><h3 class="ag-h2">الأسعار</h3>
+        <h4 class="an-h4">حسب نوع العقار</h4>
+    <div class="ag-scroll"><table><thead><tr><th>النوع</th><th>وحدات</th><th>سعر المتر (جنيه)</th><th>متوسط سعر الوحدة</th><th>التغيير</th></tr></thead><tbody>
+                    <tr><td class="b8">شقة</td><td><span class="num">54</span></td><td><span class="num b8">56,400</span></td><td><span class="num">7,412,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">+0.9%</span></td></tr>
+                    <tr><td class="b8">شاليه</td><td><span class="num">32</span></td><td><span class="num b8">108,900</span></td><td><span class="num">15,588,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td></tr>
+                    <tr><td class="b8">فيلا</td><td><span class="num">28</span></td><td><span class="num b8">115,300</span></td><td><span class="num">47,415,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td></tr>
+                    <tr><td class="b8">تاون هاوس</td><td><span class="num">24</span></td><td><span class="num b8">96,200</span></td><td><span class="num">19,071,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td></tr>
+                    <tr><td class="b8">توين هاوس</td><td><span class="num">18</span></td><td><span class="num b8">144,500</span></td><td><span class="num">35,397,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td></tr>
+                    <tr><td class="b8">دوبلكس</td><td><span class="num">8</span></td><td><span class="num b8">52,000</span></td><td><span class="num">11,867,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td></tr>
+                    <tr><td class="b8">بنتهاوس</td><td><span class="num">4</span></td><td><span class="num b8">123,900</span></td><td><span class="num">29,729,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td></tr>
+                    <tr><td class="b8">ستوديو</td><td><span class="num">4</span></td><td><span class="num b8">121,300</span></td><td><span class="num">8,246,000</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">0%</span></td></tr>
+            </tbody></table></div>
+        <h4 class="an-h4" style="margin-top:14px">وحدات سعرها اتغيّر عن آخر تحليل <span class="ag-pill">5</span></h4>
+        <div class="ag-scroll"><table><thead><tr><th>الوحدة</th><th>كان</th><th>بقى</th><th>الفرق</th></tr></thead><tbody>
+                    <tr><td class="b8">شقة 118 م² للبيع في بلوم فيلدز</td><td><span class="num">6,400,000</span></td><td><span class="num b8">6,912,000</span> <span class="xs mute">جنيه</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">+8%</span></td></tr>
+                    <tr><td class="b8">شاليه 115 م² للبيع في مراسي</td><td><span class="num">14,500,000</span></td><td><span class="num b8">15,370,000</span> <span class="xs mute">جنيه</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">+6%</span></td></tr>
+                    <tr><td class="b8">تاون هاوس 215 م² للبيع في فيليت</td><td><span class="num">15,600,000</span></td><td><span class="num b8">16,380,000</span> <span class="xs mute">جنيه</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">+5%</span></td></tr>
+                    <tr><td class="b8">شقة 148 م² للبيع في زيد ويست</td><td><span class="num">12,800,000</span></td><td><span class="num b8">12,288,000</span> <span class="xs mute">جنيه</span></td><td><span class="num b8" dir="ltr" style="color:#A1261F">-4%</span></td></tr>
+                    <tr><td class="b8">شقة 110 م² للبيع في بادية</td><td><span class="num">5,600,000</span></td><td><span class="num b8">5,768,000</span> <span class="xs mute">جنيه</span></td><td><span class="num b8" dir="ltr" style="color:#17665B">+3%</span></td></tr>
+            </tbody></table></div>
+                <p class="sm mute" style="margin-top:8px">وحدات الإيجار: شهري <span class="num b8">19</span> · يومي <span class="num b8">1</span> · سنوي <span class="num b8">1</span></p>
+            <h4 class="an-h4" style="margin-top:14px">أرقام بره شاري</h4>
+    <div class="ag-row"><span class="ag-pill ag-pill--lg">سعر الدولار <span class="num b8">48.6</span> جنيه <span class="num b8" dir="ltr" style="color:#17665B">+0.52%</span></span><span class="ag-pill ag-pill--lg">جرام الذهب عيار 21 <span class="num b8">4,860</span> جنيه <span class="num b8" dir="ltr" style="color:#17665B">+1.46%</span></span><span class="ag-pill ag-pill--lg">طن الحديد <span class="num b8">39,200</span> جنيه <span class="num b8" dir="ltr" style="color:#17665B">+0.77%</span></span><span class="ag-pill ag-pill--lg">طن الأسمنت <span class="num b8">3,720</span> جنيه <span class="num b8" dir="ltr" style="color:#17665B">+0.54%</span></span></div>
+    </div>
+
+
+<div class="ag-card__body" id="an-projects"><h3 class="ag-h2">المشاريع</h3>
+    <div class="ag-row" style="margin-bottom:10px">
+        <span class="ag-pill ag-pill--lg">كل المشاريع <span class="num b8">86</span></span><span class="ag-pill ag-pill--lg ag-pill--ok">ظاهر <span class="num b8">83</span></span>
+        <span class="ag-pill ag-pill--lg ag-pill--warn">من غير سعر <span class="num b8">1</span></span>
+        <span class="ag-pill ag-pill--lg ag-pill--warn">من غير وحدات <span class="num b8">1</span></span>
+    </div>
+        <p class="sm mute">من غير سعر: مشروع تجريبي بدون وحدات</p>    <div class="ag-split" style="margin-top:10px">
+        <div style="flex:1 1 300px"><h4 class="an-h4">أكتر مشاريع عليها طلبات (30 يوم)</h4>
+                            <div class="an-bar"><span>ميفيدا <span class="mute">(<span class="num">13</span> وحدة)</span></span><b class="num">19</b><i style="width:100%"></i></div>
+                    </div>
+        <div style="flex:1 1 300px"><h4 class="an-h4">مشاريع سعر بدايتها اتغيّر</h4>
+                            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="b8">كمبوند بلوم فيلدز</span>: <span class="num">6,400,000</span> ← <span class="num b8">6,912,000</span> <span class="num b8" dir="ltr" style="color:#17665B">+8%</span></div>
+                            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="b8">مراسي</span>: <span class="num">14,500,000</span> ← <span class="num b8">15,370,000</span> <span class="num b8" dir="ltr" style="color:#17665B">+6%</span></div>
+                            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="b8">فيليت</span>: <span class="num">15,600,000</span> ← <span class="num b8">16,380,000</span> <span class="num b8" dir="ltr" style="color:#17665B">+5%</span></div>
+                            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="b8">زيد ويست</span>: <span class="num">12,800,000</span> ← <span class="num b8">12,288,000</span> <span class="num b8" dir="ltr" style="color:#A1261F">-4%</span></div>
+                            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="b8">بادية</span>: <span class="num">5,600,000</span> ← <span class="num b8">5,768,000</span> <span class="num b8" dir="ltr" style="color:#17665B">+3%</span></div>
+                    </div>
+    </div>
+</div>
+
+
+<div class="ag-card__body" id="an-developers"><h3 class="ag-h2">المطورين</h3>
+        <div class="ag-scroll"><table><thead><tr><th>المطور</th><th>مشاريع</th><th>وحدات</th><th>سعر المتر (جنيه)</th><th>أقل سعر</th><th>طلبات 30 يوم</th></tr></thead><tbody>
+                    <tr><td class="b8 nowrap">جلف هورايزون العقارية</td><td><span class="num">17</span></td><td><span class="num">34</span></td><td><span class="num b8">—</span></td><td><span class="num">—</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">تطوير مصر</td><td><span class="num">16</span></td><td><span class="num">43</span></td><td><span class="num b8">122,000</span></td><td><span class="num">5,100,000</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">ماونتن فيو</td><td><span class="num">12</span></td><td><span class="num">34</span></td><td><span class="num b8">66,200</span></td><td><span class="num">5,151,000</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">بالم هيلز للتعمير</td><td><span class="num">11</span></td><td><span class="num">32</span></td><td><span class="num b8">87,000</span></td><td><span class="num">4,000,000</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">إعمار مصر</td><td><span class="num">10</span></td><td><span class="num">37</span></td><td><span class="num b8">107,200</span></td><td><span class="num">5,000,000</span></td><td><span class="num b8">15</span></td></tr>
+                    <tr><td class="b8 nowrap">سوديك</td><td><span class="num">10</span></td><td><span class="num">27</span></td><td><span class="num b8">88,200</span></td><td><span class="num">6,976,000</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">أورا ديفلوبرز</td><td><span class="num">5</span></td><td><span class="num">15</span></td><td><span class="num b8">120,600</span></td><td><span class="num">7,068,000</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">مصر إيطاليا العقارية</td><td><span class="num">3</span></td><td><span class="num">9</span></td><td><span class="num b8">39,900</span></td><td><span class="num">4,420,000</span></td><td><span class="num mute">0</span></td></tr>
+                    <tr><td class="b8 nowrap">إيجين ليفينج</td><td><span class="num">2</span></td><td><span class="num">3</span></td><td><span class="num b8">—</span></td><td><span class="num">—</span></td><td><span class="num mute">0</span></td></tr>
+            </tbody></table></div>
+        </div>
+
+
+<div class="ag-card__body" id="an-competitors"><h3 class="ag-h2">شاري والمنافسين</h3>
+    <div class="ag-row" style="margin-bottom:10px">
+        <span class="ag-pill ag-pill--lg">كلمات بنتابعها <span class="num b8">7</span></span>
+        <span class="ag-pill ag-pill--lg ag-pill--ok">في الصفحة الأولى <span class="num b8">4</span></span>
+        <span class="ag-pill ag-pill--lg ag-pill--ok">أول 3 <span class="num b8">2</span></span>
+        <span class="ag-pill ag-pill--lg ag-pill--warn">مش ظاهرين فيها <span class="num b8">2</span></span>
+    </div>
+        <div class="ag-scroll"><table><thead><tr><th>المنافس</th><th>كلمات سابقنا فيها</th><th>أهم الكلمات</th><th>جديد عنده (7 يوم)</th><th>بنتابع موقعه؟</th></tr></thead><tbody>
+                    <tr><td class="b8" dir="ltr" style="text-align:right">nawy.com</td><td><span class="num b8">2</span></td><td class="sm">شقق للبيع في التجمع الخامس ، أسعار مدينة المستقبل</td>
+                <td><span class="num mute">0</span></td>
+                <td>أيوه</td></tr>
+                    <tr><td class="b8" dir="ltr" style="text-align:right">bayut.eg</td><td><span class="num b8">2</span></td><td class="sm">فيلات للبيع في القاهرة الجديدة ، إعادة بيع مدينتي</td>
+                <td><span class="num mute">0</span></td>
+                <td>لأ</td></tr>
+                    <tr><td class="b8" dir="ltr" style="text-align:right">propertyfinder.eg</td><td><span class="num b8">1</span></td><td class="sm">شاليهات الساحل الشمالي بالتقسيط</td>
+                <td><span class="num mute">0</span></td>
+                <td>لأ</td></tr>
+                    <tr><td class="b8" dir="ltr" style="text-align:right">aqarmap.com.eg</td><td><span class="num b8">2</span></td><td class="sm">كمبوندات الشيخ زايد ، مؤشر أسعار العقارات في مصر</td>
+                <td><span class="num mute">0</span></td>
+                <td>لأ</td></tr>
+            </tbody></table></div>
+            <h4 class="an-h4" style="margin-top:14px">كلمات محتاجة شغل</h4>
+    <div class="ag-scroll"><table><thead><tr><th>الكلمة</th><th>بحث شهري</th><th>ترتيب شاري</th><th>الأول</th><th class="no-print"><span class="sr">اكتب</span></th></tr></thead><tbody>
+                    <tr><td class="b8">شقق للبيع في التجمع الخامس</td><td><span class="num">14,800</span></td><td><span class="num">6</span></td><td dir="ltr" style="text-align:right">nawy.com</td>
+                <td class="no-print end"><a class="ag-chip ag-chip--blue" href="admin-shary-agent-commands_say_-80e9c0.html">اكتب مقال</a></td></tr>
+                    <tr><td class="b8">كمبوندات الشيخ زايد</td><td><span class="num">9,900</span></td><td><span class="num">12</span></td><td dir="ltr" style="text-align:right">aqarmap.com.eg</td>
+                <td class="no-print end"><a class="ag-chip ag-chip--blue" href="admin-shary-agent-commands_say_-5d2a56.html">اكتب مقال</a></td></tr>
+                    <tr><td class="b8">فيلات للبيع في القاهرة الجديدة</td><td><span class="num">6,600</span></td><td><span class="num">9</span></td><td dir="ltr" style="text-align:right">bayut.eg</td>
+                <td class="no-print end"><a class="ag-chip ag-chip--blue" href="admin-shary-agent-commands_say_-a7e2ec.html">اكتب مقال</a></td></tr>
+                    <tr><td class="b8">أسعار مدينة المستقبل</td><td><span class="num">5,400</span></td><td><span class="mute">مش ظاهر</span></td><td dir="ltr" style="text-align:right">nawy.com</td>
+                <td class="no-print end"><a class="ag-chip ag-chip--blue" href="admin-shary-agent-commands_say_-afb8cc.html">اكتب مقال</a></td></tr>
+                    <tr><td class="b8">إعادة بيع مدينتي</td><td><span class="num">3,600</span></td><td><span class="mute">مش ظاهر</span></td><td dir="ltr" style="text-align:right">bayut.eg</td>
+                <td class="no-print end"><a class="ag-chip ag-chip--blue" href="admin-shary-agent-commands_say_-1f0b71.html">اكتب مقال</a></td></tr>
+            </tbody></table></div>
+            <h4 class="an-h4" style="margin-top:14px">آخر جديد عند المطورين والمنافسين</h4>
+            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="ag-pill">خبر</span>
+            المركزي يثبت أسعار الفايدة <span class="mute">— قرار لجنة السياسة النقدية</span></div>
+            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="ag-pill">مشروع جديد</span>
+            <a href="https://www.emaarmisr.com/" target="_blank" rel="noopener nofollow">سول — الساحل الشمالي</a> <span class="mute">— مشروع جديد مالوش صفحة عندنا — اتضاف لقايمة الكتابة</span></div>
+            <div class="sm" style="padding:5px 0;border-bottom:1px solid #F0F3F6"><span class="ag-pill">لانش</span>
+            <a href="https://www.emaarmisr.com/" target="_blank" rel="noopener nofollow">طرح مرحلة جديدة في مراسي</a> <span class="mute">— مرحلة شاليهات جديدة بمقدم 5%</span></div>
+                        <div class="ag-alert ag-alert--info no-print" style="margin-top:12px"><div class="ag-col"><b>متابعة المنافسين الكاملة محتاجة ربط</b>
+            <span class="sm">اللي فوق من داتا شاري وقايمة الكلمات والمواقع اللي بنتابعها. عشان الإيجنت يدوّر كل يوم على جديد المنافسين وترتيب الكلمات:
+                مفتاح الذكاء الاصطناعي + مفتاح بحث جوجل على السيرفر — و Ahrefs لو عايز كلمات المنافسين والباك لينك.</span></div>
+            <a class="ag-btn ag-btn--sm" href="admin-shary-agent-settings.html#connections">حالة الربط</a></div>
+    </div>
+    </section>
+    <div class="ag-list no-print" style="flex:1 1 220px">
+        <div class="ag-card ag-card--pad sm">
+            <b class="b8">اطلب من الإيجنت</b>
+            <div class="ag-col" style="gap:6px;margin-top:8px">
+                <a class="ag-chip ag-chip--blue" href="admin-shary-agent-commands_say_-68611e.html">اكتب مقال من التحليل</a>
+                <a class="ag-chip" href="admin-shary-agent-commands_say_-4687c3.html">حلّل منطقة معينة</a>
+                <a class="ag-chip" href="admin-shary-agent-commands_say_-723b50.html">قارنّا بمنافس</a>
+                <a class="ag-chip" href="admin-shary-agent-commands_say_-adfc86.html">حلّل مطور</a>
+            </div>
+        </div>
+                    <a class="ag-item is-on" href="admin-shary-agent-analysis.html" data-sx-sample="1">
+                <span class="ag-item__t">تحليل يوم 2026-10-08</span><span class="xs mute">النهاردة 3:34 ص</span>
+            </a>
+                    <a class="ag-item " href="admin-shary-agent-analysis.html" data-sx-sample="1">
+                <span class="ag-item__t">تحليل يوم 2026-10-07</span><span class="xs mute">امبارح 3:34 ص</span>
+            </a>
+            </div>
+</div>
+    </main>
+</div>
+<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+<script src="../a/js/shary-admin/shell.js" defer></script>
+<script src="../a/js/shary-admin/agent.js" defer></script>
+<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+</html>
