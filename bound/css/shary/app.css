@@ -3365,6 +3365,14 @@ button.site-login {
   background-color: #000000;
 }
 
+.social-brand--whatsapp {
+  background-color: #25d366;
+}
+
+.social-brand--telegram {
+  background-color: #26a5e4;
+}
+
 @media (min-width: 1024px) {
   .social-brand {
     height: 48px;
@@ -3983,7 +3991,9 @@ header:has(> .site-menu:not([class~="hidden"])) {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  border: 1.5px solid transparent;
   border-radius: 12px;
+  padding-inline: 6px;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
@@ -3995,6 +4005,12 @@ header:has(> .site-menu:not([class~="hidden"])) {
 .content-cta__button svg,
     .content-cta__button i {
   flex-shrink: 0;
+}
+
+/* اسم الزرار ما يتكسرش على سطرين */
+
+.content-cta__button span {
+  white-space: nowrap;
 }
 
 .content-cta__button i,
@@ -4032,10 +4048,22 @@ header:has(> .site-menu:not([class~="hidden"])) {
   text-decoration: none;
 }
 
-/* زرار واحد أو اتنين (الكاتب اختارهم): زرار واحد بعرض محدود ، اتنين جنب بعض */
+/* زرار واحد أو اتنين (الكاتب اختارهم): زرار واحد بعرض السطر (ديسك توب: بعرض محدود) ، اتنين جنب بعض بالنص —
+       ولو الشاشة أضيق من إن كلام الزرارين يتكتب كامل جنب بعض ، كل زرار بياخد سطر لوحده بدل ما الكلام يتكسر */
 
-.content-cta__buttons--2 .content-cta__button--meeting {
-  grid-column: auto;
+.content-cta__buttons--1 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.content-cta__buttons--2 {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.content-cta__buttons--2 > .content-cta__button {
+  flex: 1 1 0%;
+  min-width: -moz-max-content;
+  min-width: max-content;
 }
 
 .content-cta__button--call:hover {
@@ -4068,8 +4096,8 @@ header:has(> .site-menu:not([class~="hidden"])) {
     grid-template-columns: minmax(0, 320px);
   }
 
-  .content-cta__buttons--2 {
-    grid-template-columns: repeat(2, minmax(0, 260px));
+  .content-cta__buttons--2 > .content-cta__button {
+    flex: 0 1 260px;
   }
 }
 
@@ -8513,6 +8541,7 @@ input:focus-visible + .area-chip,
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 8px;
+  container-type: inline-size;
 }
 
 .auth-socials:has(> :nth-child(2):last-child) {
@@ -8540,6 +8569,36 @@ input:focus-visible + .area-chip,
 
 .auth-social svg {
   flex-shrink: 0;
+}
+
+/* الموبايل (الصف أضيق من 330px): الأيقونة والاسم أصغر سنة عشان أطول اسم (Facebook) ياخد مسافة من الإطار زي جوجل وأبل */
+
+@container (max-width: 330px) {
+  .auth-social {
+    gap: 6px;
+    padding-inline: 6px;
+    font-size: 13px;
+  }
+
+  .auth-social svg {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+/* شاشات 360px وأضيق */
+
+@container (max-width: 290px) {
+  .auth-social {
+    gap: 5px;
+    padding-inline: 4px;
+    font-size: 12px;
+  }
+
+  .auth-social svg {
+    height: 18px;
+    width: 18px;
+  }
 }
 
 .auth-social:hover,
@@ -16001,10 +16060,11 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 }
 
 .chan-cta__actions--3 .chan-cta__btn {
-  height: 64px;
+  height: auto;
+  min-height: 78px;
   flex-direction: column;
-  gap: 4px;
-  padding-inline: 4px;
+  gap: 5px;
+  padding: 8px;
   font-size: 12.5px;
 }
 
@@ -16018,13 +16078,14 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 
 .chan-cta__btn {
   display: flex;
-  height: 52px;
+  height: auto;
+  min-height: 52px;
   min-width: 0;
   align-items: center;
   justify-content: center;
   gap: 9px;
   border-radius: 14px;
-  padding-inline: 12px;
+  padding: 6px 12px;
   font-size: 14.5px;
   font-weight: 800;
   line-height: 1.25;
@@ -16077,6 +16138,37 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 .chan-cta__btn--yt {
   background-color: #e62117;
   box-shadow: 0 12px 20px -12px rgba(230, 33, 23, 0.9);
+}
+
+/* 3 قنوات على الموبايل: الكروت التلاتة بيتقسموا نفس الصفوف (subgrid) — الأيقونات على خط واحد والأسامي بتبدأ من خط واحد
+       حتى لو اسم قناة نزل سطرين (بالإنجليزي) ، والمجموعة كلها في نص الكارت. المتصفحات القديمة: نفس الشكل من غير المحاذاة دي */
+
+@supports (grid-template-rows: subgrid) {
+  .chan-cta__actions--3 {
+    grid-template-rows: minmax(8px, 1fr) auto auto minmax(8px, 1fr);
+    min-height: 78px;
+    row-gap: 0;
+  }
+
+  .chan-cta__actions--3 .chan-cta__btn {
+    display: grid;
+    grid-row: 1 / -1;
+    grid-template-rows: subgrid;
+    row-gap: 0;
+    justify-items: center;
+    min-height: 0;
+    padding-block: 0;
+  }
+
+  .chan-cta__actions--3 .chan-cta__btn > i,
+        .chan-cta__actions--3 .chan-cta__btn > svg {
+    grid-row: 2;
+  }
+
+  .chan-cta__actions--3 .chan-cta__btn > span {
+    grid-row: 3;
+    margin-top: 5px;
+  }
 }
 
 /* وسط المقال: مسافة فوق وتحت — والوسوم بتفضل جنب بعض (مش نقط المقال) */
@@ -16136,21 +16228,6 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
     flex: 1 1 340px;
   }
 
-  @container (max-width: 880px) {
-    .chan-cta__actions {
-      flex: 1 1 100%;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .chan-cta__actions--1 {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .chan-cta__actions--3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
   /* صفحة المقال: بوكس الإعلانات بعرض الصفحة فوق (data-article-ad) وكارت القنوات بعرض الصفحة تحت (data-article-channels) — اللي وسط المقال مخفيين على الديسك توب */
 
   [data-article-page] .article-content .ad-strip,
@@ -16173,25 +16250,40 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
     font-size: 15px;
   }
 
+  /* الكروت بمقاس ثابت (150 / 190 / 220px على الأقل) — ولو اسم القناة أطول (زي الإنجليزي) الكروت بتوسع كلها بنفس المقاس
+           عشان الاسم ييجي في سطر واحد والأيقونة في النص */
+
   .chan-cta__actions {
     flex-shrink: 0;
-    grid-template-columns: repeat(2, 190px);
+    grid-template-columns: repeat(2, minmax(190px, 1fr));
   }
 
   .chan-cta__actions--1 {
-    grid-template-columns: 220px;
+    grid-template-columns: minmax(220px, 1fr);
   }
 
   .chan-cta__actions--3 {
-    grid-template-columns: repeat(3, 150px);
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+    grid-template-rows: none;
+    min-height: 0;
     gap: 10px;
   }
 
   .chan-cta__actions--3 .chan-cta__btn {
-    height: 58px;
+    display: flex;
+    grid-row: auto;
+    min-height: 58px;
     flex-direction: row;
     gap: 8px;
+    padding-block: 6px;
     font-size: 14.5px;
+  }
+
+  .chan-cta__actions--3 .chan-cta__btn > i,
+        .chan-cta__actions--3 .chan-cta__btn > svg,
+        .chan-cta__actions--3 .chan-cta__btn > span {
+    grid-row: auto;
+    margin-top: 0;
   }
 
   .chan-cta__actions--3 .chan-cta__btn span {
@@ -16203,7 +16295,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   }
 
   .chan-cta__btn {
-    height: 58px;
+    min-height: 58px;
     font-size: 15.5px;
   }
 
@@ -16216,7 +16308,24 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
 
   .chan-cta__actions--3 .chan-cta__btn {
     justify-content: center;
-    padding-inline: 10px;
+    padding-inline: 8px;
+  }
+
+  /* لو الكارت في عمود ضيق (أقل من 880px): الزراير تحت الكلام صف واحد بعرض الكارت — زي الموبايل (القاعدة دي بعد المقاسات الثابتة عشان تكسبها) */
+
+  @container (max-width: 880px) {
+    .chan-cta__actions {
+      flex: 1 1 100%;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .chan-cta__actions--1 {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .chan-cta__actions--3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 }
 
@@ -21290,6 +21399,34 @@ img.abroad-dev__logo {
 }
 
 /* ============================== صفحة المنطقة ============================== */
+
+/* ---- كتابة المحتوى من لوحة التحكم (زراير المحرر): «نقط بسهم» ul.shary-arrows ، «مسافة» p.shary-space ، «خط فاصل» hr ---- */
+
+.article-content ul.shary-arrows li {
+  padding-inline-start: 24px;
+}
+
+.article-content ul.shary-arrows li::before {
+  content: "\2190";
+}
+
+[dir="ltr"] .article-content ul.shary-arrows li::before {
+  content: "\2192";
+}
+
+.article-content p.shary-space {
+  height: 14px;
+  margin: 0;
+  font-size: 0;
+  line-height: 0;
+}
+
+.article-content hr {
+  width: 100%;
+  margin: 4px 0;
+  border: 0;
+  border-top: 1px solid #dbe4ee;
+}
 
 [data-meeting-modal] > .after\:absolute.inset-0::after,
     [data-offer-modal] > .after\:absolute.inset-0::after,

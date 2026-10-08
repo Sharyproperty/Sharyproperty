@@ -552,11 +552,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "eLiLKpkYc1qR2A8tVACNgzhOJ1Tis0VVh3d1txZ2",
+                token: "vCvkoyET12F2ykX2pBhRpIwwiYHiZrNKQJNoDPCe",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=eLiLKpkYc1qR2A8tVACNgzhOJ1Tis0VVh3d1txZ2",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=vCvkoyET12F2ykX2pBhRpIwwiYHiZrNKQJNoDPCe",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -1427,7 +1427,7 @@
                             if (!confirm('حذف هذا المخطط؟')) return;
                             fetch(deleteFpUrlTemplate.replace('__ID__', id), {
                                 method: 'POST',
-                                headers: { 'X-CSRF-TOKEN': 'eLiLKpkYc1qR2A8tVACNgzhOJ1Tis0VVh3d1txZ2', 'Accept': 'application/json' }
+                                headers: { 'X-CSRF-TOKEN': 'vCvkoyET12F2ykX2pBhRpIwwiYHiZrNKQJNoDPCe', 'Accept': 'application/json' }
                             }).then(r => r.json()).then(data => {
                                 if (data.status == 1) btn.closest('.fp-existing').remove();
                                 else alert('فشل الحذف');

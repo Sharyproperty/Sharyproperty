@@ -405,11 +405,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "tBaHWRLJbZoTOqCEIb1P1uVYGy7tbZCFUExxwVX1",
+                token: "lwgWT8TOKgQlIWF0RyV8F7otlc9RjEo72hawTwMH",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=tBaHWRLJbZoTOqCEIb1P1uVYGy7tbZCFUExxwVX1",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lwgWT8TOKgQlIWF0RyV8F7otlc9RjEo72hawTwMH",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -441,7 +441,7 @@
             </div>
 
             
-            <div class="alert alert-info">كل كارت بياخد شكله من «الشكل» اللي تختاره، ورسمته الجاهزة بتتبدّل بصورتك لو رفعت «صورة الكارت». عايز كارت جديد خالص؟ اختار الشكل «كارت بصورتي» وارفع صورته واختار ألوانه. ما دام لا يوجد كارت نشط هنا ، الصفحة الرئيسية تعرض الكروت الخمسة الافتراضية الموجودة في كود الموقع.</div>
+            <div class="alert alert-info">كل كارت له طريقتين: «الكارت كله تصميمي» — ترفع صورة الكارت كامل (عربي وإنجليزي، كمبيوتر وموبايل) ويبقى هو الكارت · أو «الشكل الجاهز» — العنوان والزرار من هنا ومعاهم الرسمة الجاهزة أو صورتك. عايز كارت جديد؟ دوس «إضافة كارت». ما دام لا يوجد كارت نشط هنا ، الصفحة الرئيسية تعرض الكروت الخمسة الافتراضية الموجودة في كود الموقع.</div>
 
             <div class="modal fade" id="shary_modal_add" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -455,8 +455,54 @@
                         <form action="#preview/admin/shary/home-cards" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="preview" autocomplete="off">                            <div class="modal-body">
                                 <input type="hidden" name="_form" value="add">
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
+<div class="row" data-card-form>
+            
+        <div class="col-12">
+            <div class="sx-cardmode" role="radiogroup" aria-label="طريقة الكارت">
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="full" checked data-card-mode-radio>
+                    <span><b>الكارت كله تصميمي</b><small>برفع صورة الكارت كامل زي ما مصممه — من غير أي كلام أو رسمة من الموقع.</small></span>
+                </label>
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="behind"  data-card-mode-radio>
+                    <span><b>الشكل الجاهز</b><small>العنوان والزرار من هنا، والرسمة الجاهزة أو صورة صغيرة جنبها.</small></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="col-12" data-card-mode="full">
+            <div class="alert alert-info mb-3" style="line-height:1.9"><b>ارفع الكارت نفسه صورة</b> (مصمم بره: فوتوشوب / كانفا…). الصورة هي الكارت كله — والكارت كله بيفتح اللينك اللي تحت. الكلام جوه الصورة، عشان كده النسخة الإنجليزي لها صورتها. JPG / PNG / WebP لحد 4 ميجا.</div>
+        </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="add-design-image">تصميم الكارت — عربي (كمبيوتر) <span class="manitory">*</span></label>
+                                        <input type="file" class="form-control" id="add-design-image" name="image_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="add-design-image_mobile">تصميم الكارت — عربي (موبايل) </label>
+                                        <input type="file" class="form-control" id="add-design-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها صورة الكمبيوتر بتتستخدم وبتتقص من الجناب</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="add-design-image_en">تصميم الكارت — English (كمبيوتر) </label>
+                                        <input type="file" class="form-control" id="add-design-image_en" name="image_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="add-design-image_mobile_en">تصميم الكارت — English (موبايل) </label>
+                                        <input type="file" class="form-control" id="add-design-image_mobile_en" name="image_mobile_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                <div class="col-12" data-card-mode="full"><hr class="my-2"></div>
+        <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشكل (الرسمة) <span class="manitory">*</span></label>
             <select class="select form-control" name="style" required>
@@ -487,34 +533,29 @@
     </div>
 
             
-        <div class="col-12"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
-                    <div class="col-12">
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
+                    <div class="col-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="add-icon">صورة الكارت (بدل الرسمة)</label>
                                         <input type="file" class="form-control" id="add-icon" name="icon_file" accept="image/jpeg,image/png,image/webp">
                     <small class="text-muted">بتظهر جنب العنوان مكان الرسمة. الأفضل صورة مربعة 300×300 (PNG بخلفية شفافة أو صورة عادية). JPG / PNG / WebP لحد 4 ميجا.</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
-                    <label for="add-image">صورة الكارت كله (خلفية أو تصميم كامل)</label>
+                    <label for="add-image">صورة ورا الكلام (اختياري)</label>
                                         <input type="file" class="form-control" id="add-image" name="image_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">صورة عريضة بمقاس الكارت (الأفضل 724×280). تختار تحت: تبقى ورا الكلام، أو تبقى هي تصميم الكارت كامل لو حضرتك مصمم الكارت بره ورافعه.</small>
-                                            <label class="mt-2" for="add-image-mode">الصورة دي تظهر إزاي؟</label>
-                        <select class="form-control" id="add-image-mode" name="image_mode">
-                            <option value="behind" selected>ورا الكلام (العنوان والزرار يفضلوا ظاهرين)</option>
-                            <option value="full" >تصميم الكارت كامل (الصورة بس — من غير كلام فوقها)</option>
-                        </select>
+                    <small class="text-muted">صورة عريضة بمقاس الكارت (العرض 1086 × الارتفاع 480) بتظهر ورا العنوان والزرار. عايز الكارت كله تصميمك؟ اختار فوق «الكارت كله تصميمي».</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="add-image_mobile">نفس الصورة بمقاس الموبايل (اختياري)</label>
                                         <input type="file" class="form-control" id="add-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (الأفضل 456×248). من غيرها: صورة الديسكتوب بتتستخدم وبتتقص من الجناب.</small>
+                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (العرض 681 × الارتفاع 369). من غيرها: صورة الكمبيوتر بتتستخدم وبتتقص من الجناب.</small>
                                     </div>
             </div>
-                <div class="col-12"><hr class="my-2"></div>
+                <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
     
     <div class="col-lg-6 col-sm-12">
         <div class="form-group">
@@ -526,16 +567,16 @@
         <div class="form-group">
             <label>العنوان (عربي) <span class="manitory">*</span></label>
             <input type="text" class="form-control" name="title_ar" value="" maxlength="255" dir="rtl" required>
-        </div>
+            <small class="text-muted" data-card-mode="full">اسم الكارت — مش بيظهر فوق التصميم، بيتقري لجوجل وقارئ الشاشة وبيظهر في القايمة هنا.</small>        </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (إنجليزي)</label>
             <input type="text" class="form-control" name="accent_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (عربي)</label>
             <input type="text" class="form-control" name="accent_ar" value="" maxlength="255" dir="rtl">
@@ -543,48 +584,48 @@
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (إنجليزي)</label>
             <textarea class="form-control" name="text_en" rows="3" maxlength="500" dir="ltr"></textarea>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (عربي)</label>
             <textarea class="form-control" name="text_ar" rows="3" maxlength="500" dir="rtl"></textarea>
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (إنجليزي)</label>
             <input type="text" class="form-control" name="cta_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (عربي)</label>
             <input type="text" class="form-control" name="cta_ar" value="" maxlength="255" dir="rtl">
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (إنجليزي)</label>
             <input type="text" class="form-control" name="badge_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (عربي)</label>
             <input type="text" class="form-control" name="badge_ar" value="" maxlength="255" dir="rtl">
         </div>
     </div>
 
-            <div class="col-12"><hr class="my-2"></div>
-        <div class="col-12"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
-                                <div class="col-lg-3 col-6">
+            <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="add-bg_color">لون خلفية الكارت</label>
                     <div class="d-flex" style="gap:8px">
@@ -594,7 +635,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="add-text_color">لون العنوان</label>
                     <div class="d-flex" style="gap:8px">
@@ -604,7 +645,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="add-accent_color">لون السطر التاني</label>
                     <div class="d-flex" style="gap:8px">
@@ -614,7 +655,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="add-button_color">لون الزرار</label>
                     <div class="d-flex" style="gap:8px">
@@ -692,8 +733,54 @@
                                                     <form action="#preview/admin/shary/home-cards/2" method="POST" enctype="multipart/form-data">
                                                         <input type="hidden" name="_token" value="preview" autocomplete="off">                                                        <div class="modal-body">
                                                             <input type="hidden" name="_form" value="edit-2">
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
+<div class="row" data-card-form>
+            
+        <div class="col-12">
+            <div class="sx-cardmode" role="radiogroup" aria-label="طريقة الكارت">
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="full"  data-card-mode-radio>
+                    <span><b>الكارت كله تصميمي</b><small>برفع صورة الكارت كامل زي ما مصممه — من غير أي كلام أو رسمة من الموقع.</small></span>
+                </label>
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="behind" checked data-card-mode-radio>
+                    <span><b>الشكل الجاهز</b><small>العنوان والزرار من هنا، والرسمة الجاهزة أو صورة صغيرة جنبها.</small></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="col-12" data-card-mode="full">
+            <div class="alert alert-info mb-3" style="line-height:1.9"><b>ارفع الكارت نفسه صورة</b> (مصمم بره: فوتوشوب / كانفا…). الصورة هي الكارت كله — والكارت كله بيفتح اللينك اللي تحت. الكلام جوه الصورة، عشان كده النسخة الإنجليزي لها صورتها. JPG / PNG / WebP لحد 4 ميجا.</div>
+        </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-2-design-image">تصميم الكارت — عربي (كمبيوتر) <span class="manitory">*</span></label>
+                                        <input type="file" class="form-control" id="edit-2-design-image" name="image_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-2-design-image_mobile">تصميم الكارت — عربي (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-2-design-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها صورة الكمبيوتر بتتستخدم وبتتقص من الجناب</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-2-design-image_en">تصميم الكارت — English (كمبيوتر) </label>
+                                        <input type="file" class="form-control" id="edit-2-design-image_en" name="image_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-2-design-image_mobile_en">تصميم الكارت — English (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-2-design-image_mobile_en" name="image_mobile_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                <div class="col-12" data-card-mode="full"><hr class="my-2"></div>
+        <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشكل (الرسمة) <span class="manitory">*</span></label>
             <select class="select form-control" name="style" required>
@@ -724,34 +811,29 @@
     </div>
 
             
-        <div class="col-12"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
-                    <div class="col-12">
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
+                    <div class="col-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-2-icon">صورة الكارت (بدل الرسمة)</label>
                                         <input type="file" class="form-control" id="edit-2-icon" name="icon_file" accept="image/jpeg,image/png,image/webp">
                     <small class="text-muted">بتظهر جنب العنوان مكان الرسمة. الأفضل صورة مربعة 300×300 (PNG بخلفية شفافة أو صورة عادية). JPG / PNG / WebP لحد 4 ميجا.</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
-                    <label for="edit-2-image">صورة الكارت كله (خلفية أو تصميم كامل)</label>
+                    <label for="edit-2-image">صورة ورا الكلام (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-2-image" name="image_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">صورة عريضة بمقاس الكارت (الأفضل 724×280). تختار تحت: تبقى ورا الكلام، أو تبقى هي تصميم الكارت كامل لو حضرتك مصمم الكارت بره ورافعه.</small>
-                                            <label class="mt-2" for="edit-2-image-mode">الصورة دي تظهر إزاي؟</label>
-                        <select class="form-control" id="edit-2-image-mode" name="image_mode">
-                            <option value="behind" selected>ورا الكلام (العنوان والزرار يفضلوا ظاهرين)</option>
-                            <option value="full" >تصميم الكارت كامل (الصورة بس — من غير كلام فوقها)</option>
-                        </select>
+                    <small class="text-muted">صورة عريضة بمقاس الكارت (العرض 1086 × الارتفاع 480) بتظهر ورا العنوان والزرار. عايز الكارت كله تصميمك؟ اختار فوق «الكارت كله تصميمي».</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-2-image_mobile">نفس الصورة بمقاس الموبايل (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-2-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (الأفضل 456×248). من غيرها: صورة الديسكتوب بتتستخدم وبتتقص من الجناب.</small>
+                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (العرض 681 × الارتفاع 369). من غيرها: صورة الكمبيوتر بتتستخدم وبتتقص من الجناب.</small>
                                     </div>
             </div>
-                <div class="col-12"><hr class="my-2"></div>
+                <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
     
     <div class="col-lg-6 col-sm-12">
         <div class="form-group">
@@ -763,16 +845,16 @@
         <div class="form-group">
             <label>العنوان (عربي) <span class="manitory">*</span></label>
             <input type="text" class="form-control" name="title_ar" value="حصرية" maxlength="255" dir="rtl" required>
-        </div>
+            <small class="text-muted" data-card-mode="full">اسم الكارت — مش بيظهر فوق التصميم، بيتقري لجوجل وقارئ الشاشة وبيظهر في القايمة هنا.</small>        </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (إنجليزي)</label>
             <input type="text" class="form-control" name="accent_en" value="Offers" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (عربي)</label>
             <input type="text" class="form-control" name="accent_ar" value="عروض" maxlength="255" dir="rtl">
@@ -780,48 +862,48 @@
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (إنجليزي)</label>
             <textarea class="form-control" name="text_en" rows="3" maxlength="500" dir="ltr"></textarea>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (عربي)</label>
             <textarea class="form-control" name="text_ar" rows="3" maxlength="500" dir="rtl"></textarea>
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (إنجليزي)</label>
             <input type="text" class="form-control" name="cta_en" value="Discover Offers" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (عربي)</label>
             <input type="text" class="form-control" name="cta_ar" value="اكتشف العروض" maxlength="255" dir="rtl">
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (إنجليزي)</label>
             <input type="text" class="form-control" name="badge_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (عربي)</label>
             <input type="text" class="form-control" name="badge_ar" value="" maxlength="255" dir="rtl">
         </div>
     </div>
 
-            <div class="col-12"><hr class="my-2"></div>
-        <div class="col-12"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
-                                <div class="col-lg-3 col-6">
+            <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-2-bg_color">لون خلفية الكارت</label>
                     <div class="d-flex" style="gap:8px">
@@ -831,7 +913,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-2-text_color">لون العنوان</label>
                     <div class="d-flex" style="gap:8px">
@@ -841,7 +923,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-2-accent_color">لون السطر التاني</label>
                     <div class="d-flex" style="gap:8px">
@@ -851,7 +933,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-2-button_color">لون الزرار</label>
                     <div class="d-flex" style="gap:8px">
@@ -913,8 +995,54 @@
                                                     <form action="#preview/admin/shary/home-cards/3" method="POST" enctype="multipart/form-data">
                                                         <input type="hidden" name="_token" value="preview" autocomplete="off">                                                        <div class="modal-body">
                                                             <input type="hidden" name="_form" value="edit-3">
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
+<div class="row" data-card-form>
+            
+        <div class="col-12">
+            <div class="sx-cardmode" role="radiogroup" aria-label="طريقة الكارت">
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="full"  data-card-mode-radio>
+                    <span><b>الكارت كله تصميمي</b><small>برفع صورة الكارت كامل زي ما مصممه — من غير أي كلام أو رسمة من الموقع.</small></span>
+                </label>
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="behind" checked data-card-mode-radio>
+                    <span><b>الشكل الجاهز</b><small>العنوان والزرار من هنا، والرسمة الجاهزة أو صورة صغيرة جنبها.</small></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="col-12" data-card-mode="full">
+            <div class="alert alert-info mb-3" style="line-height:1.9"><b>ارفع الكارت نفسه صورة</b> (مصمم بره: فوتوشوب / كانفا…). الصورة هي الكارت كله — والكارت كله بيفتح اللينك اللي تحت. الكلام جوه الصورة، عشان كده النسخة الإنجليزي لها صورتها. JPG / PNG / WebP لحد 4 ميجا.</div>
+        </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-3-design-image">تصميم الكارت — عربي (كمبيوتر) <span class="manitory">*</span></label>
+                                        <input type="file" class="form-control" id="edit-3-design-image" name="image_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-3-design-image_mobile">تصميم الكارت — عربي (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-3-design-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها صورة الكمبيوتر بتتستخدم وبتتقص من الجناب</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-3-design-image_en">تصميم الكارت — English (كمبيوتر) </label>
+                                        <input type="file" class="form-control" id="edit-3-design-image_en" name="image_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-3-design-image_mobile_en">تصميم الكارت — English (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-3-design-image_mobile_en" name="image_mobile_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                <div class="col-12" data-card-mode="full"><hr class="my-2"></div>
+        <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشكل (الرسمة) <span class="manitory">*</span></label>
             <select class="select form-control" name="style" required>
@@ -945,34 +1073,29 @@
     </div>
 
             
-        <div class="col-12"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
-                    <div class="col-12">
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
+                    <div class="col-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-3-icon">صورة الكارت (بدل الرسمة)</label>
                                         <input type="file" class="form-control" id="edit-3-icon" name="icon_file" accept="image/jpeg,image/png,image/webp">
                     <small class="text-muted">بتظهر جنب العنوان مكان الرسمة. الأفضل صورة مربعة 300×300 (PNG بخلفية شفافة أو صورة عادية). JPG / PNG / WebP لحد 4 ميجا.</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
-                    <label for="edit-3-image">صورة الكارت كله (خلفية أو تصميم كامل)</label>
+                    <label for="edit-3-image">صورة ورا الكلام (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-3-image" name="image_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">صورة عريضة بمقاس الكارت (الأفضل 724×280). تختار تحت: تبقى ورا الكلام، أو تبقى هي تصميم الكارت كامل لو حضرتك مصمم الكارت بره ورافعه.</small>
-                                            <label class="mt-2" for="edit-3-image-mode">الصورة دي تظهر إزاي؟</label>
-                        <select class="form-control" id="edit-3-image-mode" name="image_mode">
-                            <option value="behind" selected>ورا الكلام (العنوان والزرار يفضلوا ظاهرين)</option>
-                            <option value="full" >تصميم الكارت كامل (الصورة بس — من غير كلام فوقها)</option>
-                        </select>
+                    <small class="text-muted">صورة عريضة بمقاس الكارت (العرض 1086 × الارتفاع 480) بتظهر ورا العنوان والزرار. عايز الكارت كله تصميمك؟ اختار فوق «الكارت كله تصميمي».</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-3-image_mobile">نفس الصورة بمقاس الموبايل (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-3-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (الأفضل 456×248). من غيرها: صورة الديسكتوب بتتستخدم وبتتقص من الجناب.</small>
+                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (العرض 681 × الارتفاع 369). من غيرها: صورة الكمبيوتر بتتستخدم وبتتقص من الجناب.</small>
                                     </div>
             </div>
-                <div class="col-12"><hr class="my-2"></div>
+                <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
     
     <div class="col-lg-6 col-sm-12">
         <div class="form-group">
@@ -984,16 +1107,16 @@
         <div class="form-group">
             <label>العنوان (عربي) <span class="manitory">*</span></label>
             <input type="text" class="form-control" name="title_ar" value="خريطة مصر" maxlength="255" dir="rtl" required>
-        </div>
+            <small class="text-muted" data-card-mode="full">اسم الكارت — مش بيظهر فوق التصميم، بيتقري لجوجل وقارئ الشاشة وبيظهر في القايمة هنا.</small>        </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (إنجليزي)</label>
             <input type="text" class="form-control" name="accent_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (عربي)</label>
             <input type="text" class="form-control" name="accent_ar" value="" maxlength="255" dir="rtl">
@@ -1001,48 +1124,48 @@
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (إنجليزي)</label>
             <textarea class="form-control" name="text_en" rows="3" maxlength="500" dir="ltr"></textarea>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (عربي)</label>
             <textarea class="form-control" name="text_ar" rows="3" maxlength="500" dir="rtl"></textarea>
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (إنجليزي)</label>
             <input type="text" class="form-control" name="cta_en" value="Explore the Map" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (عربي)</label>
             <input type="text" class="form-control" name="cta_ar" value="استكشف الخريطة" maxlength="255" dir="rtl">
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (إنجليزي)</label>
             <input type="text" class="form-control" name="badge_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (عربي)</label>
             <input type="text" class="form-control" name="badge_ar" value="" maxlength="255" dir="rtl">
         </div>
     </div>
 
-            <div class="col-12"><hr class="my-2"></div>
-        <div class="col-12"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
-                                <div class="col-lg-3 col-6">
+            <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-3-bg_color">لون خلفية الكارت</label>
                     <div class="d-flex" style="gap:8px">
@@ -1052,7 +1175,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-3-text_color">لون العنوان</label>
                     <div class="d-flex" style="gap:8px">
@@ -1062,7 +1185,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-3-accent_color">لون السطر التاني</label>
                     <div class="d-flex" style="gap:8px">
@@ -1072,7 +1195,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-3-button_color">لون الزرار</label>
                     <div class="d-flex" style="gap:8px">
@@ -1134,8 +1257,54 @@
                                                     <form action="#preview/admin/shary/home-cards/4" method="POST" enctype="multipart/form-data">
                                                         <input type="hidden" name="_token" value="preview" autocomplete="off">                                                        <div class="modal-body">
                                                             <input type="hidden" name="_form" value="edit-4">
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
+<div class="row" data-card-form>
+            
+        <div class="col-12">
+            <div class="sx-cardmode" role="radiogroup" aria-label="طريقة الكارت">
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="full"  data-card-mode-radio>
+                    <span><b>الكارت كله تصميمي</b><small>برفع صورة الكارت كامل زي ما مصممه — من غير أي كلام أو رسمة من الموقع.</small></span>
+                </label>
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="behind" checked data-card-mode-radio>
+                    <span><b>الشكل الجاهز</b><small>العنوان والزرار من هنا، والرسمة الجاهزة أو صورة صغيرة جنبها.</small></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="col-12" data-card-mode="full">
+            <div class="alert alert-info mb-3" style="line-height:1.9"><b>ارفع الكارت نفسه صورة</b> (مصمم بره: فوتوشوب / كانفا…). الصورة هي الكارت كله — والكارت كله بيفتح اللينك اللي تحت. الكلام جوه الصورة، عشان كده النسخة الإنجليزي لها صورتها. JPG / PNG / WebP لحد 4 ميجا.</div>
+        </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-4-design-image">تصميم الكارت — عربي (كمبيوتر) <span class="manitory">*</span></label>
+                                        <input type="file" class="form-control" id="edit-4-design-image" name="image_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-4-design-image_mobile">تصميم الكارت — عربي (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-4-design-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها صورة الكمبيوتر بتتستخدم وبتتقص من الجناب</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-4-design-image_en">تصميم الكارت — English (كمبيوتر) </label>
+                                        <input type="file" class="form-control" id="edit-4-design-image_en" name="image_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-4-design-image_mobile_en">تصميم الكارت — English (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-4-design-image_mobile_en" name="image_mobile_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                <div class="col-12" data-card-mode="full"><hr class="my-2"></div>
+        <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشكل (الرسمة) <span class="manitory">*</span></label>
             <select class="select form-control" name="style" required>
@@ -1166,34 +1335,29 @@
     </div>
 
             
-        <div class="col-12"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
-                    <div class="col-12">
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
+                    <div class="col-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-4-icon">صورة الكارت (بدل الرسمة)</label>
                                         <input type="file" class="form-control" id="edit-4-icon" name="icon_file" accept="image/jpeg,image/png,image/webp">
                     <small class="text-muted">بتظهر جنب العنوان مكان الرسمة. الأفضل صورة مربعة 300×300 (PNG بخلفية شفافة أو صورة عادية). JPG / PNG / WebP لحد 4 ميجا.</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
-                    <label for="edit-4-image">صورة الكارت كله (خلفية أو تصميم كامل)</label>
+                    <label for="edit-4-image">صورة ورا الكلام (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-4-image" name="image_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">صورة عريضة بمقاس الكارت (الأفضل 724×280). تختار تحت: تبقى ورا الكلام، أو تبقى هي تصميم الكارت كامل لو حضرتك مصمم الكارت بره ورافعه.</small>
-                                            <label class="mt-2" for="edit-4-image-mode">الصورة دي تظهر إزاي؟</label>
-                        <select class="form-control" id="edit-4-image-mode" name="image_mode">
-                            <option value="behind" selected>ورا الكلام (العنوان والزرار يفضلوا ظاهرين)</option>
-                            <option value="full" >تصميم الكارت كامل (الصورة بس — من غير كلام فوقها)</option>
-                        </select>
+                    <small class="text-muted">صورة عريضة بمقاس الكارت (العرض 1086 × الارتفاع 480) بتظهر ورا العنوان والزرار. عايز الكارت كله تصميمك؟ اختار فوق «الكارت كله تصميمي».</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-4-image_mobile">نفس الصورة بمقاس الموبايل (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-4-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (الأفضل 456×248). من غيرها: صورة الديسكتوب بتتستخدم وبتتقص من الجناب.</small>
+                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (العرض 681 × الارتفاع 369). من غيرها: صورة الكمبيوتر بتتستخدم وبتتقص من الجناب.</small>
                                     </div>
             </div>
-                <div class="col-12"><hr class="my-2"></div>
+                <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
     
     <div class="col-lg-6 col-sm-12">
         <div class="form-group">
@@ -1205,16 +1369,16 @@
         <div class="form-group">
             <label>العنوان (عربي) <span class="manitory">*</span></label>
             <input type="text" class="form-control" name="title_ar" value="الساحل" maxlength="255" dir="rtl" required>
-        </div>
+            <small class="text-muted" data-card-mode="full">اسم الكارت — مش بيظهر فوق التصميم، بيتقري لجوجل وقارئ الشاشة وبيظهر في القايمة هنا.</small>        </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (إنجليزي)</label>
             <input type="text" class="form-control" name="accent_en" value="Map" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (عربي)</label>
             <input type="text" class="form-control" name="accent_ar" value="خريطة" maxlength="255" dir="rtl">
@@ -1222,48 +1386,48 @@
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (إنجليزي)</label>
             <textarea class="form-control" name="text_en" rows="3" maxlength="500" dir="ltr"></textarea>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (عربي)</label>
             <textarea class="form-control" name="text_ar" rows="3" maxlength="500" dir="rtl"></textarea>
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (إنجليزي)</label>
             <input type="text" class="form-control" name="cta_en" value="Explore the Map" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (عربي)</label>
             <input type="text" class="form-control" name="cta_ar" value="استكشف الخريطة" maxlength="255" dir="rtl">
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (إنجليزي)</label>
             <input type="text" class="form-control" name="badge_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (عربي)</label>
             <input type="text" class="form-control" name="badge_ar" value="" maxlength="255" dir="rtl">
         </div>
     </div>
 
-            <div class="col-12"><hr class="my-2"></div>
-        <div class="col-12"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
-                                <div class="col-lg-3 col-6">
+            <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-4-bg_color">لون خلفية الكارت</label>
                     <div class="d-flex" style="gap:8px">
@@ -1273,7 +1437,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-4-text_color">لون العنوان</label>
                     <div class="d-flex" style="gap:8px">
@@ -1283,7 +1447,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-4-accent_color">لون السطر التاني</label>
                     <div class="d-flex" style="gap:8px">
@@ -1293,7 +1457,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-4-button_color">لون الزرار</label>
                     <div class="d-flex" style="gap:8px">
@@ -1355,8 +1519,54 @@
                                                     <form action="#preview/admin/shary/home-cards/5" method="POST" enctype="multipart/form-data">
                                                         <input type="hidden" name="_token" value="preview" autocomplete="off">                                                        <div class="modal-body">
                                                             <input type="hidden" name="_form" value="edit-5">
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
+<div class="row" data-card-form>
+            
+        <div class="col-12">
+            <div class="sx-cardmode" role="radiogroup" aria-label="طريقة الكارت">
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="full"  data-card-mode-radio>
+                    <span><b>الكارت كله تصميمي</b><small>برفع صورة الكارت كامل زي ما مصممه — من غير أي كلام أو رسمة من الموقع.</small></span>
+                </label>
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="behind" checked data-card-mode-radio>
+                    <span><b>الشكل الجاهز</b><small>العنوان والزرار من هنا، والرسمة الجاهزة أو صورة صغيرة جنبها.</small></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="col-12" data-card-mode="full">
+            <div class="alert alert-info mb-3" style="line-height:1.9"><b>ارفع الكارت نفسه صورة</b> (مصمم بره: فوتوشوب / كانفا…). الصورة هي الكارت كله — والكارت كله بيفتح اللينك اللي تحت. الكلام جوه الصورة، عشان كده النسخة الإنجليزي لها صورتها. JPG / PNG / WebP لحد 4 ميجا.</div>
+        </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-5-design-image">تصميم الكارت — عربي (كمبيوتر) <span class="manitory">*</span></label>
+                                        <input type="file" class="form-control" id="edit-5-design-image" name="image_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-5-design-image_mobile">تصميم الكارت — عربي (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-5-design-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها صورة الكمبيوتر بتتستخدم وبتتقص من الجناب</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-5-design-image_en">تصميم الكارت — English (كمبيوتر) </label>
+                                        <input type="file" class="form-control" id="edit-5-design-image_en" name="image_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-5-design-image_mobile_en">تصميم الكارت — English (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-5-design-image_mobile_en" name="image_mobile_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                <div class="col-12" data-card-mode="full"><hr class="my-2"></div>
+        <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشكل (الرسمة) <span class="manitory">*</span></label>
             <select class="select form-control" name="style" required>
@@ -1387,34 +1597,29 @@
     </div>
 
             
-        <div class="col-12"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
-                    <div class="col-12">
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
+                    <div class="col-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-5-icon">صورة الكارت (بدل الرسمة)</label>
                                         <input type="file" class="form-control" id="edit-5-icon" name="icon_file" accept="image/jpeg,image/png,image/webp">
                     <small class="text-muted">بتظهر جنب العنوان مكان الرسمة. الأفضل صورة مربعة 300×300 (PNG بخلفية شفافة أو صورة عادية). JPG / PNG / WebP لحد 4 ميجا.</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
-                    <label for="edit-5-image">صورة الكارت كله (خلفية أو تصميم كامل)</label>
+                    <label for="edit-5-image">صورة ورا الكلام (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-5-image" name="image_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">صورة عريضة بمقاس الكارت (الأفضل 724×280). تختار تحت: تبقى ورا الكلام، أو تبقى هي تصميم الكارت كامل لو حضرتك مصمم الكارت بره ورافعه.</small>
-                                            <label class="mt-2" for="edit-5-image-mode">الصورة دي تظهر إزاي؟</label>
-                        <select class="form-control" id="edit-5-image-mode" name="image_mode">
-                            <option value="behind" selected>ورا الكلام (العنوان والزرار يفضلوا ظاهرين)</option>
-                            <option value="full" >تصميم الكارت كامل (الصورة بس — من غير كلام فوقها)</option>
-                        </select>
+                    <small class="text-muted">صورة عريضة بمقاس الكارت (العرض 1086 × الارتفاع 480) بتظهر ورا العنوان والزرار. عايز الكارت كله تصميمك؟ اختار فوق «الكارت كله تصميمي».</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-5-image_mobile">نفس الصورة بمقاس الموبايل (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-5-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (الأفضل 456×248). من غيرها: صورة الديسكتوب بتتستخدم وبتتقص من الجناب.</small>
+                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (العرض 681 × الارتفاع 369). من غيرها: صورة الكمبيوتر بتتستخدم وبتتقص من الجناب.</small>
                                     </div>
             </div>
-                <div class="col-12"><hr class="my-2"></div>
+                <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
     
     <div class="col-lg-6 col-sm-12">
         <div class="form-group">
@@ -1426,16 +1631,16 @@
         <div class="form-group">
             <label>العنوان (عربي) <span class="manitory">*</span></label>
             <input type="text" class="form-control" name="title_ar" value="شاري كارد" maxlength="255" dir="rtl" required>
-        </div>
+            <small class="text-muted" data-card-mode="full">اسم الكارت — مش بيظهر فوق التصميم، بيتقري لجوجل وقارئ الشاشة وبيظهر في القايمة هنا.</small>        </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (إنجليزي)</label>
             <input type="text" class="form-control" name="accent_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (عربي)</label>
             <input type="text" class="form-control" name="accent_ar" value="" maxlength="255" dir="rtl">
@@ -1443,48 +1648,48 @@
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (إنجليزي)</label>
             <textarea class="form-control" name="text_en" rows="3" maxlength="500" dir="ltr"></textarea>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (عربي)</label>
             <textarea class="form-control" name="text_ar" rows="3" maxlength="500" dir="rtl"></textarea>
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (إنجليزي)</label>
             <input type="text" class="form-control" name="cta_en" value="Explore the Card" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (عربي)</label>
             <input type="text" class="form-control" name="cta_ar" value="اكتشف الكارت" maxlength="255" dir="rtl">
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (إنجليزي)</label>
             <input type="text" class="form-control" name="badge_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (عربي)</label>
             <input type="text" class="form-control" name="badge_ar" value="" maxlength="255" dir="rtl">
         </div>
     </div>
 
-            <div class="col-12"><hr class="my-2"></div>
-        <div class="col-12"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
-                                <div class="col-lg-3 col-6">
+            <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-5-bg_color">لون خلفية الكارت</label>
                     <div class="d-flex" style="gap:8px">
@@ -1494,7 +1699,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-5-text_color">لون العنوان</label>
                     <div class="d-flex" style="gap:8px">
@@ -1504,7 +1709,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-5-accent_color">لون السطر التاني</label>
                     <div class="d-flex" style="gap:8px">
@@ -1514,7 +1719,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-5-button_color">لون الزرار</label>
                     <div class="d-flex" style="gap:8px">
@@ -1576,8 +1781,54 @@
                                                     <form action="#preview/admin/shary/home-cards/6" method="POST" enctype="multipart/form-data">
                                                         <input type="hidden" name="_token" value="preview" autocomplete="off">                                                        <div class="modal-body">
                                                             <input type="hidden" name="_form" value="edit-6">
-<div class="row">
-    <div class="col-lg-6 col-sm-12">
+<div class="row" data-card-form>
+            
+        <div class="col-12">
+            <div class="sx-cardmode" role="radiogroup" aria-label="طريقة الكارت">
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="full"  data-card-mode-radio>
+                    <span><b>الكارت كله تصميمي</b><small>برفع صورة الكارت كامل زي ما مصممه — من غير أي كلام أو رسمة من الموقع.</small></span>
+                </label>
+                <label class="sx-cardmode__opt">
+                    <input type="radio" name="image_mode" value="behind" checked data-card-mode-radio>
+                    <span><b>الشكل الجاهز</b><small>العنوان والزرار من هنا، والرسمة الجاهزة أو صورة صغيرة جنبها.</small></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="col-12" data-card-mode="full">
+            <div class="alert alert-info mb-3" style="line-height:1.9"><b>ارفع الكارت نفسه صورة</b> (مصمم بره: فوتوشوب / كانفا…). الصورة هي الكارت كله — والكارت كله بيفتح اللينك اللي تحت. الكلام جوه الصورة، عشان كده النسخة الإنجليزي لها صورتها. JPG / PNG / WebP لحد 4 ميجا.</div>
+        </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-6-design-image">تصميم الكارت — عربي (كمبيوتر) <span class="manitory">*</span></label>
+                                        <input type="file" class="form-control" id="edit-6-design-image" name="image_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-6-design-image_mobile">تصميم الكارت — عربي (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-6-design-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها صورة الكمبيوتر بتتستخدم وبتتقص من الجناب</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-6-design-image_en">تصميم الكارت — English (كمبيوتر) </label>
+                                        <input type="file" class="form-control" id="edit-6-design-image_en" name="image_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 1086 × الارتفاع 480 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                    <div class="col-lg-6 col-sm-12" data-card-mode="full">
+                <div class="form-group sx-cardpic">
+                    <label for="edit-6-design-image_mobile_en">تصميم الكارت — English (موبايل) </label>
+                                        <input type="file" class="form-control" id="edit-6-design-image_mobile_en" name="image_mobile_en_file" accept="image/jpeg,image/png,image/webp">
+                    <small class="text-muted">المقاس: العرض 681 × الارتفاع 369 بكسل — اختياري: من غيرها التصميم العربي بيظهر في النسخة الإنجليزي</small>
+                </div>
+            </div>
+                <div class="col-12" data-card-mode="full"><hr class="my-2"></div>
+        <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشكل (الرسمة) <span class="manitory">*</span></label>
             <select class="select form-control" name="style" required>
@@ -1608,34 +1859,29 @@
     </div>
 
             
-        <div class="col-12"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
-                    <div class="col-12">
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1" style="font-weight:800">صور الكارت</h6><small class="text-muted d-block mb-3">الاتنين اختياري. من غير صور: الكارت بيظهر برسمته الجاهزة زي ما هو.</small></div>
+                    <div class="col-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-6-icon">صورة الكارت (بدل الرسمة)</label>
                                         <input type="file" class="form-control" id="edit-6-icon" name="icon_file" accept="image/jpeg,image/png,image/webp">
                     <small class="text-muted">بتظهر جنب العنوان مكان الرسمة. الأفضل صورة مربعة 300×300 (PNG بخلفية شفافة أو صورة عادية). JPG / PNG / WebP لحد 4 ميجا.</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
-                    <label for="edit-6-image">صورة الكارت كله (خلفية أو تصميم كامل)</label>
+                    <label for="edit-6-image">صورة ورا الكلام (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-6-image" name="image_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">صورة عريضة بمقاس الكارت (الأفضل 724×280). تختار تحت: تبقى ورا الكلام، أو تبقى هي تصميم الكارت كامل لو حضرتك مصمم الكارت بره ورافعه.</small>
-                                            <label class="mt-2" for="edit-6-image-mode">الصورة دي تظهر إزاي؟</label>
-                        <select class="form-control" id="edit-6-image-mode" name="image_mode">
-                            <option value="behind" selected>ورا الكلام (العنوان والزرار يفضلوا ظاهرين)</option>
-                            <option value="full" >تصميم الكارت كامل (الصورة بس — من غير كلام فوقها)</option>
-                        </select>
+                    <small class="text-muted">صورة عريضة بمقاس الكارت (العرض 1086 × الارتفاع 480) بتظهر ورا العنوان والزرار. عايز الكارت كله تصميمك؟ اختار فوق «الكارت كله تصميمي».</small>
                                     </div>
             </div>
-                    <div class="col-lg-6 col-sm-12">
+                    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
                 <div class="form-group sx-cardpic">
                     <label for="edit-6-image_mobile">نفس الصورة بمقاس الموبايل (اختياري)</label>
                                         <input type="file" class="form-control" id="edit-6-image_mobile" name="image_mobile_file" accept="image/jpeg,image/png,image/webp">
-                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (الأفضل 456×248). من غيرها: صورة الديسكتوب بتتستخدم وبتتقص من الجناب.</small>
+                    <small class="text-muted">الكارت على الموبايل أقل عرضًا (العرض 681 × الارتفاع 369). من غيرها: صورة الكمبيوتر بتتستخدم وبتتقص من الجناب.</small>
                                     </div>
             </div>
-                <div class="col-12"><hr class="my-2"></div>
+                <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
     
     <div class="col-lg-6 col-sm-12">
         <div class="form-group">
@@ -1647,16 +1893,16 @@
         <div class="form-group">
             <label>العنوان (عربي) <span class="manitory">*</span></label>
             <input type="text" class="form-control" name="title_ar" value="الأكثر رواجاً" maxlength="255" dir="rtl" required>
-        </div>
+            <small class="text-muted" data-card-mode="full">اسم الكارت — مش بيظهر فوق التصميم، بيتقري لجوجل وقارئ الشاشة وبيظهر في القايمة هنا.</small>        </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (إنجليزي)</label>
             <input type="text" class="form-control" name="accent_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الكلمة الملوّنة (عربي)</label>
             <input type="text" class="form-control" name="accent_ar" value="" maxlength="255" dir="rtl">
@@ -1664,48 +1910,48 @@
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (إنجليزي)</label>
             <textarea class="form-control" name="text_en" rows="3" maxlength="500" dir="ltr"></textarea>
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>النص (عربي)</label>
             <textarea class="form-control" name="text_ar" rows="3" maxlength="500" dir="rtl"></textarea>
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (إنجليزي)</label>
             <input type="text" class="form-control" name="cta_en" value="Explore Trending" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>نص الزر (عربي)</label>
             <input type="text" class="form-control" name="cta_ar" value="شاهد الأكثر رواجاً" maxlength="255" dir="rtl">
         </div>
     </div>
 
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (إنجليزي)</label>
             <input type="text" class="form-control" name="badge_en" value="" maxlength="255" dir="ltr">
         </div>
     </div>
-    <div class="col-lg-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12" data-card-mode="behind">
         <div class="form-group">
             <label>الشارة (عربي)</label>
             <input type="text" class="form-control" name="badge_ar" value="" maxlength="255" dir="rtl">
         </div>
     </div>
 
-            <div class="col-12"><hr class="my-2"></div>
-        <div class="col-12"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
-                                <div class="col-lg-3 col-6">
+            <div class="col-12" data-card-mode="behind"><hr class="my-2"></div>
+        <div class="col-12" data-card-mode="behind"><h6 class="mb-1 mt-2" style="font-weight:800">الألوان (اختياري)</h6><small class="text-muted d-block mb-3">سيبها فاضية والكارت ياخد ألوان شكله. الألوان بتتطبق كاملة على «كارت بصورتي»، وفي الأشكال الجاهزة بتغيّر لون العنوان بس.</small></div>
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-6-bg_color">لون خلفية الكارت</label>
                     <div class="d-flex" style="gap:8px">
@@ -1715,7 +1961,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-6-text_color">لون العنوان</label>
                     <div class="d-flex" style="gap:8px">
@@ -1725,7 +1971,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-6-accent_color">لون السطر التاني</label>
                     <div class="d-flex" style="gap:8px">
@@ -1735,7 +1981,7 @@
                     </div>
                 </div>
             </div>
-                                <div class="col-lg-3 col-6">
+                                <div class="col-lg-3 col-6" data-card-mode="behind">
                 <div class="form-group">
                     <label for="edit-6-button_color">لون الزرار</label>
                     <div class="d-flex" style="gap:8px">
@@ -1772,7 +2018,38 @@
             </div>
         </div>
     </div>
-    </div>
+        
+    <style>
+        .sx-cardmode { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-bottom: 16px; }
+        .sx-cardmode__opt { display: flex; align-items: flex-start; gap: 10px; margin: 0; padding: 12px 14px; border: 2px solid #d9e2ec; border-radius: 14px; background: #fff; cursor: pointer; }
+        .sx-cardmode__opt:has(input:checked) { border-color: #123a5c; background: #f1f6fb; }
+        .sx-cardmode__opt input { margin-top: 6px; flex: none; width: 18px; height: 18px; }
+        .sx-cardmode__opt b { display: block; font-size: 15.5px; font-weight: 800; color: #123a5c; }
+        .sx-cardmode__opt small { display: block; font-size: 13px; font-weight: 600; line-height: 1.7; color: #5c6f82; }
+        @media (max-width: 600px) { .sx-cardmode { grid-template-columns: minmax(0, 1fr); } }
+    </style>
+    <script>
+        (function () {
+            function apply(form) {
+                var radio = form.querySelector('[data-card-mode-radio]:checked');
+                if (!radio) { return; }
+                form.querySelectorAll('[data-card-mode]').forEach(function (part) {
+                    var on = part.getAttribute('data-card-mode') === radio.value;
+                    part.style.display = on ? '' : 'none';
+                    // the same picture box exists in both ways (the design / the photo behind the text): only the one on screen is sent
+                    part.querySelectorAll('input[type=file], input[type=checkbox][name^="remove_"]').forEach(function (input) { input.disabled = !on; });
+                });
+            }
+            function start() {
+                document.querySelectorAll('[data-card-form]').forEach(function (form) {
+                    apply(form);
+                    form.addEventListener('change', function (event) { if (event.target.matches('[data-card-mode-radio]')) { apply(form); } });
+                });
+            }
+            if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', start); } else { start(); }
+        })();
+    </script>
+</div>
 <!-- /Main Wrapper -->
     <!-- jQuery -->
 <script src="a/assets/js/jquery-3.6.0.min.js"></script>

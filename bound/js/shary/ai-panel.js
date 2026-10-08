@@ -831,7 +831,15 @@
         function subjectOf(item) {
             if (!item) return null;
             var name = item.title || item.name || '';
-            return name ? { name: name, type: item.type === 'project' ? 'project' : 'unit', url: item.url || '' } : null;
+            return name ? { name: name, type: item.type === 'project' ? 'project' : 'unit', url: item.url || '', sales: item.sales || '' } : null;
+        }
+        // "الميتنج مع مين؟": اسم المطور اللي السيلز بتاعه ممكن يحضر — من الكارت (وحدة بيع مطور / مشروع) أو من الصفحة اللي العميل فاتحها. فاضي = مستشار شاري بس
+        function salesOf(state) {
+            if (!contact.dev_meeting) return '';
+            if (state.subject) return state.subject.sales || '';
+            if (state.picked || !context) return '';
+            if (context.type === 'developer') return context.name || '';
+            return (context.type === 'project' || context.type === 'unit') ? (context.developer || '') : '';
         }
         // مواعيد اليوم: كل المواعيد مفتوحة (من غير قفل أي ميعاد) — القفل بس لو السيرفر رجّع available: false من contact.slots
         function slotsOf() {
@@ -931,6 +939,13 @@
                 });
                 if (!state.picked) return;
             }
+            // 1-ب) مع مين؟ (بيظهر بس لو الموضوع ليه مطور — الاختيار الجاهز: مستشار شاري)
+            var sales = salesOf(state);
+            if (sales && B.with) {
+                bookStep(B.with, B.with_hint);
+                bookOptions([{ value: 'shary', label: B.with_shary || '' }, { value: 'developer', label: String(B.with_dev || '').replace(':name', sales) }],
+                    function (item) { return (state.with || 'shary') === item.value; }, function (item) { state.with = item.value; });
+            } else state.with = '';
             // 2) نوع الميتنج (زيارة الموقع بس لو فيه وحدة أو مشروع)
             bookStep(B.type);
             var names = B.types || {};
@@ -981,16 +996,18 @@
             var data = {
                 meeting_type: state.type, meeting_date: state.day.value, meeting_time: state.time.value, name: name, phone: digits, country_code: saved.code,
                 subject: state.subject ? state.subject.name : '', subject_type: state.subject ? state.subject.type : 'general', subject_url: state.subject ? state.subject.url : '',
+                meeting_with: state.with === 'developer' && salesOf(state) ? 'developer' : 'shary',
                 interest: interestText(), message: lastText, source: 'shary-ai', form: 'ai-meeting', answers: plainAnswers(), context: context, session: session
             };
             var where = pageInfo(); data.page_url = where.page_url; data.page_title = where.page_title;
             var finished = false;
-            function done(ok, message) {
+            // result = رد السيرفر: { zoom_url, meeting_with, developer, whatsapp_sent } (اختياري)
+            function done(ok, message, result) {
                 if (finished) return;
                 finished = true;
                 if (!book || book.state !== state) return;
                 if (ok === false) { go.disabled = false; go.textContent = B.confirm || ''; return fail(message || B.err_send); }
-                booked(data, state, message);
+                booked(data, state, message, result && typeof result === 'object' ? result : null, salesOf(state));
             }
             var proceed = panel.dispatchEvent(new CustomEvent('shary:ai-meeting', { bubbles: true, cancelable: true, detail: { data: data, done: done } }));
             if (!proceed) return;
@@ -1004,7 +1021,7 @@
             }).then(function (response) {
                 if (!response.ok) throw new Error('failed');
                 return response.json().catch(function () { return {}; });
-            }).then(function (result) { done(true, result && result.message); })
+            }).then(function (result) { done(true, result && result.message, result); })
               .catch(function () { done(false); });
         }
         // رسالة الواتساب بعد الحجز: الاسم + الموبايل + نوع الاجتماع + الميعاد + اللي العميل مهتم بيه (مش الميعاد بس)
@@ -1018,29 +1035,48 @@
                 line(B.row_when, when),
                 line(B.row_about, data.subject || B.general),
                 data.subject_url,
+                line(B.row_with, data.with_label),
+                line(B.zoom_link, data.zoom_url),
                 line(B.row_interest, data.interest && data.interest !== data.subject ? data.interest : ''),
                 line(B.row_asked, data.message)
             ].filter(Boolean).join('\n');
         }
         // كارت التأكيد مكان كارت الحجز + رسالة تأكيد
-        function booked(data, state, message) {
+        function booked(data, state, message, result, sales) {
             var kind = (B.types || {})[data.meeting_type] || '';
             var when = state.day.weekday + ' ' + state.day.date;
+            // اللي السيرفر أكّده: مع مين + لينك الزووم (لو اتعمل) + الواتساب اتبعت ولا لأ
+            var withDev = (result ? result.meeting_with : data.meeting_with) === 'developer';
+            var devName = (result && result.developer) || sales || '';
+            var zoom = result && /^https:\/\//.test(String(result.zoom_url || '')) ? String(result.zoom_url) : '';
+            var sent = !!(result && result.whatsapp_sent);
+            data.with_label = withDev && devName ? String(B.with_dev || '').replace(':name', devName) : '';
+            data.zoom_url = zoom;
             var box = make('div', 'sai__booked');
             var head = make('div', 'sai__booked-head');
             var mark = make('span'); mark.innerHTML = ICONS.check;
             head.appendChild(mark); head.appendChild(make('b', '', B.done_title || ''));
             box.appendChild(head);
             var rows = make('dl');
-            [[B.row_type, kind], [B.row_when, when + ' — ' + state.time.label], [B.row_about, data.subject || B.general], [B.row_who, data.name]].forEach(function (pair) {
+            [[B.row_type, kind], [B.row_when, when + ' — ' + state.time.label], [B.row_about, data.subject || B.general], [B.row_with, data.with_label], [B.row_who, data.name]].forEach(function (pair) {
+                if (!pair[1]) return;
                 var line = make('div');
                 line.appendChild(make('dt', '', pair[0] || ''));
                 line.appendChild(make('dd', '', pair[1] || ''));
                 rows.appendChild(line);
             });
             box.appendChild(rows);
-            var note = (B.notes || {})[data.meeting_type];
+            var note = zoom ? (sent ? B.note_zoom_sent : B.note_zoom) : (sent ? B.note_sent : (B.notes || {})[data.meeting_type]);
             if (note) box.appendChild(make('p', 'sai__booked-note', note));
+            // لينك الزووم: يتفتح أو يتنسخ من الكارت نفسه
+            if (zoom) {
+                var links = make('div', 'sai__ways');
+                links.appendChild(action('sai__way--meet', B.zoom_open || '', ICONS.calendar, zoom));
+                var copy = action('sai__way--edit', B.zoom_copy || '', ICONS.copy, '');
+                copy.setAttribute('data-ai-copy', zoom); copy.setAttribute('data-done', B.zoom_copied || '');
+                links.appendChild(copy);
+                box.appendChild(links);
+            }
             var ways = make('div', 'sai__ways');
             var wa = action('sai__way--wa', B.whatsapp || T.whatsapp, '', waLink(bookingText(data, kind, when + ' — ' + state.time.label)));
             wa.insertAdjacentHTML('afterbegin', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>');
@@ -1051,7 +1087,8 @@
             box.appendChild(ways);
             if (book.box.parentNode) book.box.parentNode.replaceChild(box, book.box);
             book = null;
-            bubble(message || String(B.done || '').replace(':name', data.name).replace(':type', kind).replace(':day', when).replace(':time', state.time.label), false);
+            bubble((message || String(B.done || '').replace(':name', data.name).replace(':type', kind).replace(':day', when).replace(':time', state.time.label))
+                + (withDev && devName && B.done_dev ? ' ' + String(B.done_dev).replace(':name', devName) : ''), false);
             toBottom();
             save();
         }
@@ -1387,6 +1424,16 @@
                 var subject = null;
                 try { subject = JSON.parse(meet.getAttribute('data-ai-meet') || 'null'); } catch (error) { subject = null; }
                 startMeeting(subject);
+                return;
+            }
+            // "انسخ اللينك" (لينك الزووم في كارت التأكيد)
+            var copyLink = event.target.closest('[data-ai-copy]');
+            if (copyLink) {
+                var linkText = copyLink.getAttribute('data-ai-copy') || '';
+                var label = copyLink.querySelector('span');
+                var shown = function () { if (label && copyLink.getAttribute('data-done')) { var old = label.textContent; label.textContent = copyLink.getAttribute('data-done'); window.setTimeout(function () { label.textContent = old; }, 1800); } };
+                if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(linkText).then(shown).catch(function () {});
+                else { var area = document.createElement('textarea'); area.value = linkText; area.setAttribute('readonly', ''); area.style.position = 'fixed'; area.style.opacity = '0'; document.body.appendChild(area); area.select(); try { document.execCommand('copy'); shown(); } catch (error) { /* النسخ مقفول */ } document.body.removeChild(area); }
                 return;
             }
             var again = event.target.closest('[data-ai-rebook]');
