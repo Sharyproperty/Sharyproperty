@@ -288,3 +288,25 @@ html[dir="ltr"] .ag-switch input:checked + i::after { transform: translateX(20px
 .ag .ag-key__steps summary { cursor: pointer; font-weight: 800; color: #1D5FD1; }
 .ag .ag-key__steps ol { margin: 6px 0 0; padding-inline-start: 20px; display: grid; gap: 4px; }
 .ag .ag-keylinks a { white-space: nowrap; }
+/* «اربط»: paste the key under its card (partials/key-form) — the keys screen and «خطة الصدارة» */
+.ag .ag-keyform { display: flex; flex-direction: column; gap: 10px; padding: 12px 14px; border: 1px dashed #C9D2DE; border-radius: 12px; background: #fff; }
+.ag .ag-keyform__fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; }
+.ag .ag-keyform--compact .ag-keyform__fields, .ag .ag-keyform__fields:has(> .ag-keyform__f:only-child) { grid-template-columns: 1fr; }
+@media (max-width: 700px) { .ag .ag-keyform__fields { grid-template-columns: 1fr; } }
+.ag .ag-keyform__f { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.ag .ag-keyform__f label { font-size: 13.5px; font-weight: 800; color: #123A5C; display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; }
+.ag .ag-keyform__f label em { font-style: normal; font-size: 12px; font-weight: 800; color: #12805C; background: #EDF8F2; border-radius: 999px; padding: 1px 8px; }
+.ag .ag-keyform__f label em.bad { color: #A1261F; background: #FDF0EF; }
+.ag .ag-keyform__f small { font-size: 12.5px; color: #465672; font-weight: 700; }
+.ag .ag-keyform__f input[type=file] { padding: 7px 10px; }
+.ag .ag-keyform > .ag-btn { align-self: flex-start; min-width: 120px; }
+.ag .ag-keyform--compact > .ag-btn { align-self: stretch; }
+.ag .ag-key__state { display: flex; flex-direction: column; gap: 3px; padding-inline: 4px; font-size: 12.5px; font-weight: 700; color: #465672; }
+.ag .ag-key__state:empty { display: none; }
+.ag .ag-key__state .ok { color: #12805C; }
+.ag .ag-key__state .bad { color: #A1261F; }
+.ag .ag-key__change > summary, .ag .ag-key--legacy > summary { cursor: pointer; font-weight: 800; color: #1D5FD1; padding: 4px; }
+.ag .ag-key__change[open] > summary { margin-bottom: 8px; }
+.ag .ag-key--legacy { padding: 8px 12px; border: 1px solid #DCE2EA; border-radius: 12px; background: #F7F9FB; }
+.ag .ag-key--legacy[open] { display: flex; flex-direction: column; gap: 8px; }
+.ag .ag-key__btns { gap: 8px; }

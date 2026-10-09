@@ -92,6 +92,7 @@
                                                             <li><a href="admin-shary-agent-seo.html" class="" ><span>SEO &amp; articles</span></a></li>
                                                             <li><a href="admin-shary-agent-log.html" class="" ><span>Log &amp; undo</span></a></li>
                                                             <li><a href="admin-shary-agent-settings.html" class="" ><span>Access &amp; connections</span></a></li>
+                                                            <li><a href="admin-shary-agent-keys.html" class="" ><span>Keys &amp; connections</span></a></li>
                                                     </ul>
                     </div>
                                                 <h6 class="sx-nav__title">Daily work</h6>                                                <div class="sx-grp " data-sx-grp="requests">
@@ -431,62 +432,138 @@
     </section>
 
             <section class="ag-card pl-keys">
-            <div class="ag-card__head"><h2>عشان الخطة تشتغل بكامل قوتها</h2><span class="sm mute">دوس على أي كارت يفتحلك الصفحة اللي بتعمل منها المفتاح — وبعدها ابعته للمطوّر يحطه في إعدادات السيرفر (مش في الشات). من غيرها الخطة شغالة بداتا شاري بس.</span></div>
+            <div class="ag-card__head"><h2>عشان الخطة تشتغل بكامل قوتها</h2><span class="sm mute">دوس على الكارت يفتحلك الصفحة اللي بتعمل منها المفتاح ← انسخه والصقه تحت الكارت ← «اربط». بنجرّبه مع الشركة ويشتغل على طول من غير المطوّر. من غيرها الخطة شغالة بداتا شاري بس.</span></div>
             <div class="ag-card__body ag-keys">
-<div class="ag-key ">
+<div class="ag-key "  id="card-gemini" >
             <a class="ag-key__card" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">
             <i aria-hidden="true">!</i>
             <span class="ag-key__t"><b>مفتاح الذكاء الاصطناعي (OpenAI أو Gemini)</b><span>مش مربوط — بيفتح: كتابة المقالات وتكملة الصفحات وإجابات الذكاء الاصطناعي</span>
                 <em class="ag-key__go">اعمل مفتاح Gemini <span aria-hidden="true">↗</span></em></span>
         </a>
-                    <div class="ag-key__more">
-                                    <span>أو: <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer"><bdi>OpenAI ↗</bdi></a> ·  <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener noreferrer"><bdi>Claude ↗</bdi></a> </span>
-                                <span>دوس «Create API key» وانسخه. أي واحد من التلاتة كفاية.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">GEMINI_API_KEY</code> <code dir="ltr">OPENAI_API_KEY</code> <code dir="ltr">ANTHROPIC_API_KEY</code> </span>
+                            <form method="post" action="#preview/admin/shary/agent/keys/gemini" class="ag-keyform ag-keyform--compact" id="kf-gemini-c"
+       autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
+    <input type="hidden" name="_token" value="preview" autocomplete="off">    <input type="hidden" name="back" value="admin-shary-agent-plan.html#card-gemini">    <div class="ag-keyform__fields">
+                                <div class="ag-keyform__f">
+                <label for="kf-gemini-c-gemini_api_key">المفتاح (API key)
+                                    </label>
+                                    <input class="ag-input" id="kf-gemini-c-gemini_api_key" name="keys[GEMINI_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="password"
+                            autocomplete="new-password" placeholder="AIza…"
+                                                      >
+                                            </div>
             </div>
-            </div>
-<div class="ag-key ">
+    <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
+</form>
+                        <div class="ag-key__more">
+                            <span>أو: <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer"><bdi>OpenAI ↗</bdi></a> ·  <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener noreferrer"><bdi>Claude ↗</bdi></a>                      — <a href="admin-shary-agent-keys.html#group-ai">اربطه من «المفاتيح والربط»</a></span>
+                        <span>دوس «Create API key» وانسخه والصقه هنا.</span>                    </div>
+    </div>
+<div class="ag-key "  id="card-google" >
             <a class="ag-key__card" href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener noreferrer">
             <i aria-hidden="true">!</i>
             <span class="ag-key__t"><b>Google Search Console + Analytics</b><span>مش مربوط — بيفتح: الكلمات اللي الناس بتلاقينا بيها، ترتيبنا الحقيقي، والزيارات</span>
                 <em class="ag-key__go">اعمل حساب الخدمة (Service Account) <span aria-hidden="true">↗</span></em></span>
         </a>
-                    <div class="ag-key__more">
-                                <span>ملف المفتاح (JSON) بيتسلّم للمطوّر بس — هو بيحطه على السيرفر.</span>                                    <details class="ag-key__steps"><summary>الخطوات (5)</summary>
-                        <ol><li><a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener noreferrer">اعمل Service Account ومن تبويب Keys نزّل مفتاح JSON ↗</a></li><li><a href="https://console.cloud.google.com/apis/library/searchconsole.googleapis.com" target="_blank" rel="noopener noreferrer">فعّل Search Console API ↗</a></li><li><a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com" target="_blank" rel="noopener noreferrer">فعّل Google Analytics Data API ↗</a></li><li><a href="https://search.google.com/search-console/users" target="_blank" rel="noopener noreferrer">في سيرش كونسول: الإعدادات ← المستخدمين والصلاحيات ← ضيف إيميل الـ Service Account ↗</a></li><li><a href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">في أناليتكس: Admin ← Property access management ← ضيفه Viewer، وابعت رقم الـ Property للمطوّر ↗</a></li></ol>
-                    </details>
-                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">SHARY_GOOGLE_CREDENTIALS</code> <code dir="ltr">SHARY_GSC_SITE</code> <code dir="ltr">SHARY_GA_PROPERTY</code> </span>
+                            <form method="post" action="#preview/admin/shary/agent/keys/google" class="ag-keyform ag-keyform--compact" id="kf-google-c"
+       enctype="multipart/form-data"  autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
+    <input type="hidden" name="_token" value="preview" autocomplete="off">    <input type="hidden" name="back" value="admin-shary-agent-plan.html#card-google">    <div class="ag-keyform__fields">
+                                <div class="ag-keyform__f">
+                <label for="kf-google-c-shary_google_json">ملف حساب الخدمة (JSON)
+                                    </label>
+                                    <input class="ag-input" id="kf-google-c-shary_google_json" type="file" name="google_json" accept=".json,application/json">
+                                            </div>
+                                <div class="ag-keyform__f">
+                <label for="kf-google-c-shary_gsc_site">الموقع في سيرش كونسول
+                                    </label>
+                                    <input class="ag-input" id="kf-google-c-shary_gsc_site" name="keys[SHARY_GSC_SITE]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="text"
+                            autocomplete="off" value="" placeholder="sc-domain:shary.eg"                            >
+                                            </div>
+                                <div class="ag-keyform__f">
+                <label for="kf-google-c-shary_ga_property">رقم الـ Property في أناليتكس
+                                    </label>
+                                    <input class="ag-input" id="kf-google-c-shary_ga_property" name="keys[SHARY_GA_PROPERTY]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="text"
+                            autocomplete="off" value="" placeholder="123456789"                            >
+                                            </div>
             </div>
-            </div>
-<div class="ag-key ">
+    <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
+</form>
+                        <div class="ag-key__more">
+                        <span>نزّل ملف المفتاح (JSON) وارفعه هنا — وبعدها ضيف إيميل حساب الخدمة في سيرش كونسول وأناليتكس.</span>                            <details class="ag-key__steps"><summary>الخطوات (5)</summary>
+                    <ol><li><a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener noreferrer">اعمل Service Account ومن تبويب Keys نزّل مفتاح JSON ↗</a></li><li><a href="https://console.cloud.google.com/apis/library/searchconsole.googleapis.com" target="_blank" rel="noopener noreferrer">فعّل Search Console API ↗</a></li><li><a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com" target="_blank" rel="noopener noreferrer">فعّل Google Analytics Data API ↗</a></li><li><a href="https://search.google.com/search-console/users" target="_blank" rel="noopener noreferrer">في سيرش كونسول: الإعدادات ← المستخدمين والصلاحيات ← ضيف إيميل الـ Service Account ↗</a></li><li><a href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">في أناليتكس: Admin ← Property access management ← ضيفه Viewer، وانسخ رقم الـ Property ↗</a></li></ol>
+                </details>
+                    </div>
+    </div>
+<div class="ag-key "  id="card-ahrefs" >
             <a class="ag-key__card" href="https://app.ahrefs.com/account/api-keys" target="_blank" rel="noopener noreferrer">
             <i aria-hidden="true">!</i>
             <span class="ag-key__t"><b>Ahrefs</b><span>مش مربوط — بيفتح: عدد البحث لكل كلمة وصعوبتها، كلمات المنافسين، والباك لينكس — ومنها توقعات الزيارات</span>
                 <em class="ag-key__go">اعمل مفتاح Ahrefs <span aria-hidden="true">↗</span></em></span>
         </a>
-                    <div class="ag-key__more">
-                                <span>الصفحة بتظهر لصاحب الحساب أو الأدمن بس، والـ API محتاج اشتراك فيه وحدات API.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">AHREFS_API_KEY</code> </span>
+                            <form method="post" action="#preview/admin/shary/agent/keys/ahrefs" class="ag-keyform ag-keyform--compact" id="kf-ahrefs-c"
+       autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
+    <input type="hidden" name="_token" value="preview" autocomplete="off">    <input type="hidden" name="back" value="admin-shary-agent-plan.html#card-ahrefs">    <div class="ag-keyform__fields">
+                                <div class="ag-keyform__f">
+                <label for="kf-ahrefs-c-ahrefs_api_key">المفتاح (API key)
+                                    </label>
+                                    <input class="ag-input" id="kf-ahrefs-c-ahrefs_api_key" name="keys[AHREFS_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="password"
+                            autocomplete="new-password" placeholder="الصق المفتاح هنا"
+                                                      >
+                                            </div>
             </div>
-            </div>
-<div class="ag-key ">
+    <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
+</form>
+                        <div class="ag-key__more">
+                        <span>الصفحة بتظهر لصاحب الحساب أو الأدمن بس، والـ API محتاج اشتراك فيه وحدات API.</span>                    </div>
+    </div>
+<div class="ag-key "  id="card-serper" >
             <a class="ag-key__card" href="https://serper.dev/" target="_blank" rel="noopener noreferrer">
             <i aria-hidden="true">!</i>
             <span class="ag-key__t"><b>مفتاح بحث جوجل</b><span>مش مربوط — بيفتح: ترتيبنا ومين المنافس الأول في كل كلمة، وقراءة صفحات المنافسين</span>
                 <em class="ag-key__go">اعمل مفتاح Serper <span aria-hidden="true">↗</span></em></span>
         </a>
-                    <div class="ag-key__more">
-                                <span>سجّل (Sign up) وخد المفتاح من تبويب «API Key» — فيه 2,500 بحث ببلاش. مفتاح جوجل الرسمي (Custom Search) اتقفل للحسابات الجديدة وهيقف 1 يناير 2027.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">SERPER_API_KEY</code> </span>
+                            <form method="post" action="#preview/admin/shary/agent/keys/serper" class="ag-keyform ag-keyform--compact" id="kf-serper-c"
+       autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
+    <input type="hidden" name="_token" value="preview" autocomplete="off">    <input type="hidden" name="back" value="admin-shary-agent-plan.html#card-serper">    <div class="ag-keyform__fields">
+                                <div class="ag-keyform__f">
+                <label for="kf-serper-c-serper_api_key">المفتاح (API key)
+                                    </label>
+                                    <input class="ag-input" id="kf-serper-c-serper_api_key" name="keys[SERPER_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="password"
+                            autocomplete="new-password" placeholder="الصق المفتاح هنا"
+                                                      >
+                                            </div>
             </div>
-            </div>
-<div class="ag-key ">
+    <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
+</form>
+                        <div class="ag-key__more">
+                        <span>سجّل (Sign up) وخد المفتاح من تبويب «API Key» — فيه 2,500 بحث ببلاش. مفتاح جوجل الرسمي (Custom Search) اتقفل للحسابات الجديدة وهيقف 1 يناير 2027.</span>                    </div>
+    </div>
+<div class="ag-key "  id="card-serpapi" >
             <a class="ag-key__card" href="https://serpapi.com/manage-api-key" target="_blank" rel="noopener noreferrer">
             <i aria-hidden="true">!</i>
             <span class="ag-key__t"><b>SerpAPI (ملخصات جوجل بالذكاء الاصطناعي)</b><span>مش مربوط — بيفتح: هل جوجل بيطلّع ملخص AI للكلمة، وشاري مذكور فيه كمصدر ولا المنافس — وترتيبنا في نفس الطلب</span>
                 <em class="ag-key__go">اعمل مفتاح SerpAPI <span aria-hidden="true">↗</span></em></span>
         </a>
-                    <div class="ag-key__more">
-                                <span>سجّل دخول (أو اعمل حساب) والمفتاح بيظهر في نفس الصفحة.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">SERPAPI_KEY</code> </span>
+                            <form method="post" action="#preview/admin/shary/agent/keys/serpapi" class="ag-keyform ag-keyform--compact" id="kf-serpapi-c"
+       autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
+    <input type="hidden" name="_token" value="preview" autocomplete="off">    <input type="hidden" name="back" value="admin-shary-agent-plan.html#card-serpapi">    <div class="ag-keyform__fields">
+                                <div class="ag-keyform__f">
+                <label for="kf-serpapi-c-serpapi_key">المفتاح (API key)
+                                    </label>
+                                    <input class="ag-input" id="kf-serpapi-c-serpapi_key" name="keys[SERPAPI_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="password"
+                            autocomplete="new-password" placeholder="الصق المفتاح هنا"
+                                                      >
+                                            </div>
             </div>
-            </div>
+    <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
+</form>
+                        <div class="ag-key__more">
+                        <span>سجّل دخول (أو اعمل حساب) والمفتاح بيظهر في نفس الصفحة.</span>                    </div>
+    </div>
             </div>
         </section>
     
