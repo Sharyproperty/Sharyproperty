@@ -267,3 +267,24 @@ html[dir="ltr"] .ag-switch input:checked + i::after { transform: translateX(20px
 .ag .ag-rate { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .ag .ag-rate .is-on { background: #123A5C; border-color: #123A5C; color: #fff; }
 @media (max-width: 700px) { .ag .ag-share .ag-row > .ag-btn { flex: 1 1 calc(50% - 8px); justify-content: center; } }
+/* the keys the agent needs: each card opens the page where its key is made (partials/key-card + KeyLinks) */
+.ag .ag-keys { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+@media (max-width: 760px) { .ag .ag-keys { grid-template-columns: 1fr; } }
+.ag .ag-key { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.ag .ag-key__card { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 12px; background: #FFF6E8; border: 1px solid #F1D9AE; color: inherit; text-decoration: none; }
+.ag a.ag-key__card { cursor: pointer; transition: box-shadow .15s, border-color .15s; }
+.ag a.ag-key__card:hover, .ag a.ag-key__card:focus-visible { border-color: #C98A1B; box-shadow: 0 4px 14px rgba(18, 58, 92, .12); color: inherit; }
+.ag .ag-key.is-on .ag-key__card { background: #EDF8F2; border-color: #BFE3CF; }
+.ag .ag-key__card > i { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-weight: 800; background: #C98A1B; color: #fff; }
+.ag .ag-key.is-on .ag-key__card > i { background: #12805C; }
+.ag .ag-key__t { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.ag .ag-key__t b { color: #123A5C; font-weight: 800; overflow-wrap: anywhere; }
+.ag .ag-key__t > span { font-size: 13px; color: #465672; font-weight: 700; }
+.ag .ag-key__go { align-self: flex-start; margin-top: 4px; padding: 5px 12px; border-radius: 999px; background: #1D5FD1; color: #fff; font-style: normal; font-weight: 800; font-size: 13px; }
+.ag .ag-key.is-on .ag-key__go { background: #12805C; }
+.ag .ag-key__more { display: flex; flex-direction: column; gap: 4px; padding-inline: 4px; font-size: 12.5px; font-weight: 700; color: #465672; }
+.ag .ag-key__more a { font-weight: 800; }
+.ag .ag-key__env code { font-size: 12px; background: #EEF3F8; color: #10263F; padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+.ag .ag-key__steps summary { cursor: pointer; font-weight: 800; color: #1D5FD1; }
+.ag .ag-key__steps ol { margin: 6px 0 0; padding-inline-start: 20px; display: grid; gap: 4px; }
+.ag .ag-keylinks a { white-space: nowrap; }

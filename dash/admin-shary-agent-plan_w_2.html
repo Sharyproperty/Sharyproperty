@@ -431,14 +431,63 @@
     </section>
 
             <section class="ag-card pl-keys">
-            <div class="ag-card__head"><h2>عشان الخطة تشتغل بكامل قوتها</h2><span class="sm mute">المطوّر بيحط المفاتيح في إعدادات السيرفر — ومن غيرها الخطة شغالة بداتا شاري بس</span></div>
-            <div class="ag-card__body pl-keylist">
-                                    <div class="pl-key "><i aria-hidden="true">!</i><div><b>مفتاح الذكاء الاصطناعي (OpenAI أو Gemini)</b><span>مش مربوط — بيفتح: كتابة المقالات وتكملة الصفحات وإجابات الذكاء الاصطناعي</span></div></div>
-                                    <div class="pl-key "><i aria-hidden="true">!</i><div><b>Google Search Console + Analytics</b><span>مش مربوط — بيفتح: الكلمات اللي الناس بتلاقينا بيها، ترتيبنا الحقيقي، والزيارات</span></div></div>
-                                    <div class="pl-key "><i aria-hidden="true">!</i><div><b>Ahrefs</b><span>مش مربوط — بيفتح: عدد البحث لكل كلمة وصعوبتها، كلمات المنافسين، والباك لينكس — ومنها توقعات الزيارات</span></div></div>
-                                    <div class="pl-key "><i aria-hidden="true">!</i><div><b>مفتاح بحث جوجل</b><span>مش مربوط — بيفتح: ترتيبنا ومين المنافس الأول في كل كلمة، وقراءة صفحات المنافسين</span></div></div>
-                                    <div class="pl-key "><i aria-hidden="true">!</i><div><b>SerpAPI (ملخصات جوجل بالذكاء الاصطناعي)</b><span>مش مربوط — بيفتح: هل جوجل بيطلّع ملخص AI للكلمة، وشاري مذكور فيه كمصدر ولا المنافس — وترتيبنا في نفس الطلب</span></div></div>
-                            </div>
+            <div class="ag-card__head"><h2>عشان الخطة تشتغل بكامل قوتها</h2><span class="sm mute">دوس على أي كارت يفتحلك الصفحة اللي بتعمل منها المفتاح — وبعدها ابعته للمطوّر يحطه في إعدادات السيرفر (مش في الشات). من غيرها الخطة شغالة بداتا شاري بس.</span></div>
+            <div class="ag-card__body ag-keys">
+<div class="ag-key ">
+            <a class="ag-key__card" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">
+            <i aria-hidden="true">!</i>
+            <span class="ag-key__t"><b>مفتاح الذكاء الاصطناعي (OpenAI أو Gemini)</b><span>مش مربوط — بيفتح: كتابة المقالات وتكملة الصفحات وإجابات الذكاء الاصطناعي</span>
+                <em class="ag-key__go">اعمل مفتاح Gemini <span aria-hidden="true">↗</span></em></span>
+        </a>
+                    <div class="ag-key__more">
+                                    <span>أو: <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer"><bdi>OpenAI ↗</bdi></a> ·  <a href="https://platform.claude.com/settings/keys" target="_blank" rel="noopener noreferrer"><bdi>Claude ↗</bdi></a> </span>
+                                <span>دوس «Create API key» وانسخه. أي واحد من التلاتة كفاية.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">GEMINI_API_KEY</code> <code dir="ltr">OPENAI_API_KEY</code> <code dir="ltr">ANTHROPIC_API_KEY</code> </span>
+            </div>
+            </div>
+<div class="ag-key ">
+            <a class="ag-key__card" href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener noreferrer">
+            <i aria-hidden="true">!</i>
+            <span class="ag-key__t"><b>Google Search Console + Analytics</b><span>مش مربوط — بيفتح: الكلمات اللي الناس بتلاقينا بيها، ترتيبنا الحقيقي، والزيارات</span>
+                <em class="ag-key__go">اعمل حساب الخدمة (Service Account) <span aria-hidden="true">↗</span></em></span>
+        </a>
+                    <div class="ag-key__more">
+                                <span>ملف المفتاح (JSON) بيتسلّم للمطوّر بس — هو بيحطه على السيرفر.</span>                                    <details class="ag-key__steps"><summary>الخطوات (5)</summary>
+                        <ol><li><a href="https://console.cloud.google.com/iam-admin/serviceaccounts" target="_blank" rel="noopener noreferrer">اعمل Service Account ومن تبويب Keys نزّل مفتاح JSON ↗</a></li><li><a href="https://console.cloud.google.com/apis/library/searchconsole.googleapis.com" target="_blank" rel="noopener noreferrer">فعّل Search Console API ↗</a></li><li><a href="https://console.cloud.google.com/apis/library/analyticsdata.googleapis.com" target="_blank" rel="noopener noreferrer">فعّل Google Analytics Data API ↗</a></li><li><a href="https://search.google.com/search-console/users" target="_blank" rel="noopener noreferrer">في سيرش كونسول: الإعدادات ← المستخدمين والصلاحيات ← ضيف إيميل الـ Service Account ↗</a></li><li><a href="https://analytics.google.com/" target="_blank" rel="noopener noreferrer">في أناليتكس: Admin ← Property access management ← ضيفه Viewer، وابعت رقم الـ Property للمطوّر ↗</a></li></ol>
+                    </details>
+                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">SHARY_GOOGLE_CREDENTIALS</code> <code dir="ltr">SHARY_GSC_SITE</code> <code dir="ltr">SHARY_GA_PROPERTY</code> </span>
+            </div>
+            </div>
+<div class="ag-key ">
+            <a class="ag-key__card" href="https://app.ahrefs.com/account/api-keys" target="_blank" rel="noopener noreferrer">
+            <i aria-hidden="true">!</i>
+            <span class="ag-key__t"><b>Ahrefs</b><span>مش مربوط — بيفتح: عدد البحث لكل كلمة وصعوبتها، كلمات المنافسين، والباك لينكس — ومنها توقعات الزيارات</span>
+                <em class="ag-key__go">اعمل مفتاح Ahrefs <span aria-hidden="true">↗</span></em></span>
+        </a>
+                    <div class="ag-key__more">
+                                <span>الصفحة بتظهر لصاحب الحساب أو الأدمن بس، والـ API محتاج اشتراك فيه وحدات API.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">AHREFS_API_KEY</code> </span>
+            </div>
+            </div>
+<div class="ag-key ">
+            <a class="ag-key__card" href="https://serper.dev/" target="_blank" rel="noopener noreferrer">
+            <i aria-hidden="true">!</i>
+            <span class="ag-key__t"><b>مفتاح بحث جوجل</b><span>مش مربوط — بيفتح: ترتيبنا ومين المنافس الأول في كل كلمة، وقراءة صفحات المنافسين</span>
+                <em class="ag-key__go">اعمل مفتاح Serper <span aria-hidden="true">↗</span></em></span>
+        </a>
+                    <div class="ag-key__more">
+                                <span>سجّل (Sign up) وخد المفتاح من تبويب «API Key» — فيه 2,500 بحث ببلاش. مفتاح جوجل الرسمي (Custom Search) اتقفل للحسابات الجديدة وهيقف 1 يناير 2027.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">SERPER_API_KEY</code> </span>
+            </div>
+            </div>
+<div class="ag-key ">
+            <a class="ag-key__card" href="https://serpapi.com/manage-api-key" target="_blank" rel="noopener noreferrer">
+            <i aria-hidden="true">!</i>
+            <span class="ag-key__t"><b>SerpAPI (ملخصات جوجل بالذكاء الاصطناعي)</b><span>مش مربوط — بيفتح: هل جوجل بيطلّع ملخص AI للكلمة، وشاري مذكور فيه كمصدر ولا المنافس — وترتيبنا في نفس الطلب</span>
+                <em class="ag-key__go">اعمل مفتاح SerpAPI <span aria-hidden="true">↗</span></em></span>
+        </a>
+                    <div class="ag-key__more">
+                                <span>سجّل دخول (أو اعمل حساب) والمفتاح بيظهر في نفس الصفحة.</span>                                <span class="ag-key__env">ابعته للمطوّر يحطه في: <code dir="ltr">SERPAPI_KEY</code> </span>
+            </div>
+            </div>
+            </div>
         </section>
     
     <div class="ag-tiles">
