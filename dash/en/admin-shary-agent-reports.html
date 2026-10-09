@@ -73,11 +73,11 @@
                         <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
-                            <b class="sx-tag">13</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">18</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-agent">
                                                             <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
-                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">13</b></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">18</b></a></li>
                                                             <li><a href="admin-shary-agent-plan.html" class="" ><span>Ranking plan (SEO + GEO)</span></a></li>
                                                             <li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
                                                             <li><a href="admin-shary-agent-new-page.html" class="" ><span>New page</span></a></li>
@@ -421,13 +421,11 @@
     <form method="post" action="#preview/admin/shary/agent/reports/delivery" class="ag-grid" style="margin-top:14px;gap:14px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-field"><label class="ag-label" for="d-email">الإيميل اللي التقارير تتبعت عليه</label>
             <input type="email" id="d-email" name="email" class="ag-input" dir="ltr" value="" placeholder="name@example.com">
             <span class="sm mute">سيبه فاضي = الإيميل المكتوب على السيرفر.</span></div>
-        <div class="ag-field"><label class="ag-label" for="d-wa">رقم واتساب الفريق (بكود الدولة)</label>
-            <input type="text" id="d-wa" name="whatsapp" class="ag-input" dir="ltr" inputmode="tel" value="" placeholder="201001234567">
-            <span class="sm mute">زرار "ابعته واتساب" هيفتح على الرقم ده.</span></div>
+        <div class="ag-field"><span class="ag-label">الواتساب</span>
+            <span class="sm">لسه مش متظبط — التقارير وشغل الإيجنت يوصلوا على رقمك لما تربطه.</span>
+            <a class="ag-btn ag-btn--sm" href="admin-shary-agent-settings.html#whatsapp" style="align-self:flex-start">ظبط الواتساب</a></div>
         <div class="ag-field" style="grid-column:1/-1">
             <label class="ag-check"><input type="checkbox" name="auto_email" value="1" checked> ابعت التقرير اليومي على الإيميل أوتوماتيك كل يوم (الساعة 18:00)</label>
-            <label class="ag-check"><input type="checkbox" name="auto_whatsapp" value="1"  disabled> ابعته على الواتساب أوتوماتيك كل يوم
-                <span class="sm mute">— محتاج مفاتيح واتساب الرسمي والرسالة المعتمدة على السيرفر (المبرمج بيحطها في .env)</span></label>
         </div>
         <div style="grid-column:1/-1"><button class="ag-btn ag-btn--primary">احفظ</button></div>
     </form>

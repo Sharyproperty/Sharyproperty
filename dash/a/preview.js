@@ -69,6 +69,14 @@
         });
         return any ? shown : -1;
     }
+/* sx:units-ma3ak */
+    doc.addEventListener('submit', function (event) {
+        var form = event.target, pick = form && form.querySelector ? form.querySelector('select[name="action"]') : null;
+        if (!pick || pick.value !== 'ma3ak') { return; }
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        window.location.href = 'admin-shary-ma3ak-opportunities-pick.html';
+    }, true);
     doc.addEventListener('submit', function (event) {
         var form = event.target;
         if (!form || form.tagName !== 'FORM') { return; }
@@ -139,6 +147,12 @@
             var options = typeof first === 'string' ? jq.extend({ url: first }, second || {}) : (first || {});
             var method = String(options.type || options.method || 'GET').toUpperCase();
             var url = String(options.url || '');
+            // lists the old screens fill from the server (units of a project, a developer's details): nothing in the preview copy
+            if (method === 'GET' && /(^|\/)(filter-data|getMainInfo)\b/.test(url)) {
+                var quiet = jq.Deferred();
+                setTimeout(function () { quiet.resolve([], 'success', { status: 200 }); }, 10);
+                return quiet.promise({ abort: function () {} });
+            }
             if (method !== 'GET' || SERVER.test(url) || /#preview/.test(url)) {
                 toast(NOTE_SAVE);
                 var answer = { status: 1, type: 'success', title: 'معاينة', message: NOTE_SAVE, preview: true };
