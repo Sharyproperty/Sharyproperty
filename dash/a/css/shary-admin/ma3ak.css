@@ -174,3 +174,15 @@ body.sx .ma3ak-place-add .btn { margin-bottom: 4px; }
     body.sx .page-wrapper table.table:not(.sx-stack):has(> tbody > tr:only-child > td[colspan]) { width: 100% !important; min-width: 0 !important; }
     body.sx .page-wrapper table.table:not(.sx-stack) > tbody > tr:only-child > td[colspan] { white-space: normal !important; padding-inline: 4px !important; }
 }
+
+/* «اختار من الوحدات»: the unit's picture in its row, the add bar stays at the bottom of the screen while the list is scrolled */
+.ma3ak-pick-thumb { width: 56px; height: 42px; object-fit: cover; border-radius: 8px; border: 1px solid #dfe6ee; float: inline-start; margin-inline-end: 8px; }
+.ma3ak-pick-add { position: sticky; bottom: 0; z-index: 20; border: 2px solid #1D5FD1 !important; box-shadow: 0 -6px 18px rgba(16, 38, 63, .12); }
+.ma3ak-pick-add .card-body { padding: 12px 16px; }
+.ma3ak-pick-checks .ma3ak-check, .ma3ak-pick-add .ma3ak-check { margin: 0; }
+@media (max-width: 576px) {
+    .ma3ak-pick-add .card-body { padding: 8px 12px; }
+    .ma3ak-pick-add .d-flex { gap: 4px 12px !important; }
+    .ma3ak-pick-add .mb-2 { margin-bottom: 2px !important; }
+    .ma3ak-pick-add .btn { padding-block: 6px; }
+}

@@ -5,6 +5,7 @@
  *   3 parts of a form shown for one choice only: <div data-ma3ak-when="field_name=value1,value2">
  *   4 rows added / removed in a form: data-ma3ak-repeater · data-ma3ak-rows · data-ma3ak-row · <template> with __i__ · data-ma3ak-add · data-ma3ak-remove
  *   5 copy a text: data-ma3ak-copy="…"      6 a chosen picture shows at once: <input type="file" data-ma3ak-preview="#img-id">
+ *   7 tick rows and add them («اختار من الوحدات»): <form data-ma3ak-pick> · row boxes data-ma3ak-pick-row (form="…") · data-ma3ak-pick-all · data-ma3ak-pick-count
  * Loaded once by resources/views/shary_admin/ma3ak/partials/head.blade.php (texts: window.SharyMa3ak).
  */
 (function () {
@@ -149,4 +150,30 @@
         var image = doc.querySelector(input.getAttribute('data-ma3ak-preview'));
         if (image && /^image\//.test(input.files[0].type)) { image.src = URL.createObjectURL(input.files[0]); image.hidden = false; }
     });
+
+    // ---- 7 tick units and add them: nothing is sent without a ticked row and a goal
+    var pick = doc.querySelector('form[data-ma3ak-pick]');
+    if (pick) {
+        var pickRows = function () { return Array.prototype.slice.call(doc.querySelectorAll('[data-ma3ak-pick-row]')); };
+        var pickAll = doc.querySelector('[data-ma3ak-pick-all]');
+        var pickCount = pick.querySelector('[data-ma3ak-pick-count]');
+        var pickRefresh = function () {
+            var list = pickRows();
+            var on = list.filter(function (box) { return box.checked; }).length;
+            if (pickCount) { pickCount.textContent = String(on); }
+            if (pickAll) { pickAll.checked = list.length > 0 && on === list.length; pickAll.indeterminate = on > 0 && on < list.length; }
+        };
+        if (pickAll) {
+            pickAll.addEventListener('change', function () { pickRows().forEach(function (box) { box.checked = pickAll.checked; }); pickRefresh(); });
+        }
+        doc.addEventListener('change', function (event) {
+            if (event.target && event.target.matches && event.target.matches('[data-ma3ak-pick-row]')) { pickRefresh(); }
+        });
+        pick.addEventListener('submit', function (event) {
+            var problem = !pickRows().some(function (box) { return box.checked; }) ? pick.getAttribute('data-ma3ak-none')
+                : (!pick.querySelector('input[name="goals[]"]:checked') ? pick.getAttribute('data-ma3ak-no-goal') : null);
+            if (problem) { event.preventDefault(); event.stopImmediatePropagation(); window.alert(problem); }
+        }, true);
+        pickRefresh();
+    }
 })();
