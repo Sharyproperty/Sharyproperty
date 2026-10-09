@@ -310,3 +310,29 @@ html[dir="ltr"] .ag-switch input:checked + i::after { transform: translateX(20px
 .ag .ag-key--legacy { padding: 8px 12px; border: 1px solid #DCE2EA; border-radius: 12px; background: #F7F9FB; }
 .ag .ag-key--legacy[open] { display: flex; flex-direction: column; gap: 8px; }
 .ag .ag-key__btns { gap: 8px; }
+
+/* ---- «رسايل العملاء»: how a message looks on each channel (partials/message-preview) */
+.ag-reach { font-size: 14.5px; font-weight: 700; }
+.ag-reach b { color: #123A5C; font-weight: 800; }
+.ag-pv { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.ag-pv__item { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.ag-pv__item[hidden] { display: none; }
+.ag-pv__label { font-size: 13px; font-weight: 800; color: #465672; }
+.ag-pv__push { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: 16px; background: #F4F6FA; border: 1px solid #E1E6EE; box-shadow: 0 1px 2px rgba(16, 38, 63, .06); }
+.ag-pv__push > i { flex: 0 0 34px; height: 34px; border-radius: 9px; background: #123A5C; color: #E8A838; font-style: normal; font-weight: 800; display: grid; place-items: center; }
+.ag-pv__push > div { min-width: 0; }
+.ag-pv__push b { display: block; font-size: 14px; font-weight: 800; color: #10263F; overflow-wrap: anywhere; }
+.ag-pv__push span { display: block; font-size: 13.5px; font-weight: 700; color: #33445F; white-space: pre-line; overflow-wrap: anywhere; }
+.ag-pv__img { width: 100%; max-height: 160px; object-fit: cover; border-radius: 12px; }
+.ag-pv__sms { align-self: flex-start; max-width: 100%; padding: 10px 14px; border-radius: 18px 18px 4px 18px; background: #E9ECF1; color: #10263F; font-size: 14px; font-weight: 700; white-space: pre-line; overflow-wrap: anywhere; }
+.ag-pv__wa-bg { padding: 12px; border-radius: 12px; background: #EFE7DE; }
+.ag-pv__wa { padding: 10px 12px; border-radius: 10px; background: #fff; box-shadow: 0 1px 1px rgba(0, 0, 0, .08); font-size: 14px; font-weight: 700; color: #10263F; white-space: pre-line; overflow-wrap: anywhere; }
+.ag-pv__mail { border: 1px solid #DCE2EA; border-radius: 12px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+.ag-pv__mail header { padding: 10px 14px; background: #123A5C; color: #fff; font-weight: 800; }
+.ag-pv__mail > div { padding: 12px 14px 6px; font-size: 14px; font-weight: 700; color: #33445F; white-space: pre-line; overflow-wrap: anywhere; }
+.ag-pv__mail > div b { color: #10263F; }
+.ag-pv__btn { align-self: flex-start; margin: 4px 14px 10px; padding: 8px 16px; border-radius: 8px; background: #E8A838; color: #10263F; font-weight: 800; font-size: 14px; }
+.ag-pv__mail small { padding: 0 14px 12px; font-size: 12px; color: #6B7A90; }
+/* a box hidden by its screen's script stays hidden whatever display its class gives it */
+.ag [hidden] { display: none !important; }
+.ag-pv.is-example .ag-pv__push, .ag-pv.is-example .ag-pv__sms, .ag-pv.is-example .ag-pv__wa, .ag-pv.is-example .ag-pv__mail { opacity: .55; }

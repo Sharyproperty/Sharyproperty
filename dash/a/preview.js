@@ -128,6 +128,12 @@
                 var hits = all.filter(function (item) { return !want || fold((item.name || '') + ' ' + (item.sub || '')).indexOf(want) >= 0; }).slice(0, 25);
                 return Promise.resolve(new Response(JSON.stringify({ items: hits }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
             }
+            /* sx:messages-count */
+            if (/admin\/shary\/agent\/messages\/count/.test(url) && method === 'GET') {
+                var segment = decodeURIComponent((url.split('segment=')[1] || 'all').split('&')[0]);
+                var reach = (window.SharyMessagesCount || {})[segment] || { ok: false, error: 'العدد بيتحسب على السيرفر.' };
+                return Promise.resolve(new Response(JSON.stringify(reach), { status: 200, headers: { 'Content-Type': 'application/json' } }));
+            }
             if (method !== 'GET' || /#preview/.test(url)) {
                 toast(NOTE_SAVE);
                 return Promise.resolve(new Response(JSON.stringify({ status: 0, preview: true, message: NOTE_SAVE }), { status: 200, headers: { 'Content-Type': 'application/json' } }));

@@ -73,11 +73,11 @@
                         <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>الإيجنت</span>
-                            <b class="sx-tag">18</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">19</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-agent">
                                                             <li><a href="admin-shary-agent.html" class="" ><span>النهاردة</span></a></li>
-                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">18</b></a></li>
+                                                            <li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">19</b></a></li>
                                                             <li><a href="admin-shary-agent-plan.html" class="" ><span>خطة الصدارة (سيو + GEO)</span></a></li>
                                                             <li><a href="admin-shary-agent-commands.html" class="" ><span>الأوامر</span></a></li>
                                                             <li><a href="admin-shary-agent-new-page.html" class="" ><span>صفحة جديدة</span></a></li>
@@ -425,11 +425,11 @@
                                 <em class="ag-key__go">اعمل مفتاح Gemini <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/gemini" class="ag-keyform " id="kf-gemini"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-gemini-gemini_api_key">المفتاح (API key)
                                     </label>
                                     <input class="ag-input" id="kf-gemini-gemini_api_key" name="keys[GEMINI_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -440,6 +440,25 @@
             </div>
     <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
 </form>
+<script>
+    // a «choice» box (the SMS provider) shows the boxes that provider needs only
+    (function () {
+        function sync(select) {
+            var form = select.form; if (!form) { return; }
+            form.querySelectorAll('[data-ag-for]').forEach(function (box) {
+                var wanted = (box.getAttribute('data-ag-for') || '').split(' ');
+                box.hidden = select.value !== '' && wanted.indexOf(select.value) === -1;
+            });
+        }
+        function init() {
+            document.querySelectorAll('select[data-ag-key-choice]').forEach(function (select) {
+                sync(select);
+                select.addEventListener('change', function () { sync(select); });
+            });
+        }
+        document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
+    })();
+</script>
                                                                                                                 <div class="ag-key__more">
                             <span>دوس «Create API key» وانسخه والصقه هنا.</span>                                                                                </div>
                                                         </div>
@@ -450,11 +469,11 @@
                                 <em class="ag-key__go">اعمل مفتاح OpenAI <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/openai" class="ag-keyform " id="kf-openai"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-openai-openai_api_key">المفتاح (API key)
                                     </label>
                                     <input class="ag-input" id="kf-openai-openai_api_key" name="keys[OPENAI_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -475,11 +494,11 @@
                                 <em class="ag-key__go">اعمل مفتاح Claude <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/anthropic" class="ag-keyform " id="kf-anthropic"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-anthropic-anthropic_api_key">المفتاح (API key)
                                     </label>
                                     <input class="ag-input" id="kf-anthropic-anthropic_api_key" name="keys[ANTHROPIC_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -505,11 +524,11 @@
                                 <em class="ag-key__go">اعمل مفتاح Serper <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/serper" class="ag-keyform " id="kf-serper"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-serper-serper_api_key">المفتاح (API key)
                                     </label>
                                     <input class="ag-input" id="kf-serper-serper_api_key" name="keys[SERPER_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -530,11 +549,11 @@
                                 <em class="ag-key__go">اعمل مفتاح SerpAPI <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/serpapi" class="ag-keyform " id="kf-serpapi"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-serpapi-serpapi_key">المفتاح (API key)
                                     </label>
                                     <input class="ag-input" id="kf-serpapi-serpapi_key" name="keys[SERPAPI_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -555,11 +574,11 @@
                                 <em class="ag-key__go">اعمل مفتاح Ahrefs <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/ahrefs" class="ag-keyform " id="kf-ahrefs"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-ahrefs-ahrefs_api_key">المفتاح (API key)
                                     </label>
                                     <input class="ag-input" id="kf-ahrefs-ahrefs_api_key" name="keys[AHREFS_API_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -580,11 +599,11 @@
                                 <em class="ag-key__go">افتح محرك البحث بتاعك <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/google_search" class="ag-keyform " id="kf-google_search"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-google_search-google_search_key">المفتاح (API key)
                                     </label>
                                     <input class="ag-input" id="kf-google_search-google_search_key" name="keys[GOOGLE_SEARCH_KEY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -592,7 +611,7 @@
                             autocomplete="new-password" placeholder="AIza…"
                                                       >
                                             </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-google_search-google_search_cx">رقم محرك البحث (Search engine ID)
                                     </label>
                                     <input class="ag-input" id="kf-google_search-google_search_cx" name="keys[GOOGLE_SEARCH_CX]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -618,23 +637,23 @@
                                 <em class="ag-key__go">اعمل حساب الخدمة (Service Account) <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/google" class="ag-keyform " id="kf-google"
        enctype="multipart/form-data"  autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-google-shary_google_json">ملف حساب الخدمة (JSON)
                                     </label>
                                     <input class="ag-input" id="kf-google-shary_google_json" type="file" name="google_json" accept=".json,application/json">
                                 <small>الملف اللي نزل من Google Cloud ← Keys ← Add key ← JSON.</small>            </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-google-shary_gsc_site">الموقع في سيرش كونسول
                                     </label>
                                     <input class="ag-input" id="kf-google-shary_gsc_site" name="keys[SHARY_GSC_SITE]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="text"
                             autocomplete="off" value="" placeholder="sc-domain:shary.eg"                            >
                                 <small>زي ما هو مكتوب في سيرش كونسول: sc-domain:shary.eg أو https://shary.eg/</small>            </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-google-shary_ga_property">رقم الـ Property في أناليتكس
                                     </label>
                                     <input class="ag-input" id="kf-google-shary_ga_property" name="keys[SHARY_GA_PROPERTY]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -662,25 +681,25 @@
                                 <em class="ag-key__go">افتح إعدادات الإيميل <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
+                                                                                                                    </div>
                                                                         <form method="post" action="#preview/admin/shary/agent/keys/imap" class="ag-keyform " id="kf-imap"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-imap-shary_agent_imap_host">سيرفر القراءة (IMAP)
                                     </label>
                                     <input class="ag-input" id="kf-imap-shary_agent_imap_host" name="keys[SHARY_AGENT_IMAP_HOST]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="text"
                             autocomplete="off" value="" placeholder="{imap.hostinger.com:993/imap/ssl}INBOX"                            >
                                 <small>لإيميل Hostinger اكتب: {imap.hostinger.com:993/imap/ssl}INBOX</small>            </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-imap-shary_agent_imap_user">الإيميل
                                     </label>
                                     <input class="ag-input" id="kf-imap-shary_agent_imap_user" name="keys[SHARY_AGENT_IMAP_USER]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="email"
                             autocomplete="off" value="" placeholder="info@shary.eg"                            >
                                             </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-imap-shary_agent_imap_password">باسورد الإيميل
                                     </label>
                                     <input class="ag-input" id="kf-imap-shary_agent_imap_password" name="keys[SHARY_AGENT_IMAP_PASSWORD]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -694,100 +713,116 @@
                                                                                                                 <div class="ag-key__more">
                             <span>Emails ← Manage ← Connect Apps &amp; Devices — القراءة (IMAP): imap.hostinger.com بورت 993 (SSL).</span>                                                                                </div>
                                                         </div>
-                                                                                <div class="ag-key " id="key-smtp">
+                                                                                <div class="ag-key is-on" id="key-smtp">
                                                             <a class="ag-key__card" href="https://hpanel.hostinger.com/emails/" target="_blank" rel="noopener noreferrer">
-                            <i aria-hidden="true">!</i>
-                            <span class="ag-key__t"><b>إرسال الإيميلات (SMTP)</b><span>مش مربوط — بيفتح: التقارير والإشعارات وإيميلات الموقع بتطلع من الإيميل ده</span>
-                                <em class="ag-key__go">افتح إعدادات الإيميل <span aria-hidden="true">↗</span></em></span>
+                            <i aria-hidden="true">✓</i>
+                            <span class="ag-key__t"><b>إرسال الإيميلات (SMTP)</b><span>مربوط من هنا — بيفتح: التقارير والإشعارات وإيميلات الموقع بتطلع من الإيميل ده</span>
+                                <em class="ag-key__go">افتح Hostinger <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                                            </div>
-                                                                        <form method="post" action="#preview/admin/shary/agent/keys/smtp" class="ag-keyform " id="kf-smtp"
+                        <span>ربطه Demo Admin — النهاردة 12:49 ص</span>                                                                                                    <span class="ok">آخر تجربة النهاردة 12:49 ص: اتجرّب ✓ (بيانات تجربة)</span>
+                                            </div>
+                                                                        <details class="ag-key__change"><summary>غيّر المفتاح</summary>
+                                <form method="post" action="#preview/admin/shary/agent/keys/smtp" class="ag-keyform " id="kf-smtp"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-smtp-mail_host">سيرفر الإرسال (SMTP)
                                     </label>
                                     <input class="ag-input" id="kf-smtp-mail_host" name="keys[MAIL_HOST]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="text"
-                            autocomplete="off" value="" placeholder="mailpit"                            >
+                            autocomplete="off" value="smtp.hostinger.com" placeholder="smtp.hostinger.com"                            >
                                             </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-smtp-mail_port">البورت
                                     </label>
                                     <input class="ag-input" id="kf-smtp-mail_port" name="keys[MAIL_PORT]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="number"
-                            autocomplete="off" value="" placeholder="1025"                             min="1" max="65535" >
+                            autocomplete="off" value="465" placeholder="465"                             min="1" max="65535" >
                                 <small>465 (SSL) أو 587 (TLS).</small>            </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-smtp-mail_username">الإيميل
                                     </label>
                                     <input class="ag-input" id="kf-smtp-mail_username" name="keys[MAIL_USERNAME]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="email"
-                            autocomplete="off" value="" placeholder="info@shary.eg"                            >
+                            autocomplete="off" value="info@shary.eg" placeholder="info@shary.eg"                            >
                                             </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-smtp-mail_password">باسورد الإيميل
+                    <em>محفوظ — آخره <bdi dir="ltr">9876</bdi></em>
                                     </label>
                                     <input class="ag-input" id="kf-smtp-mail_password" name="keys[MAIL_PASSWORD]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="password"
-                            autocomplete="new-password" placeholder="الصق المفتاح هنا"
+                            autocomplete="new-password" placeholder="سيبه فاضي عشان يفضل زي ما هو"
                                                       >
                                             </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-smtp-mail_from_address">الإيميل اللي الرسايل بتطلع منه
                                     </label>
                                     <input class="ag-input" id="kf-smtp-mail_from_address" name="keys[MAIL_FROM_ADDRESS]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="email"
-                            autocomplete="off" value="" placeholder="hello@example.com"                            >
+                            autocomplete="off" value="info@shary.eg" placeholder="info@shary.eg"                            >
                                 <small>عادة نفس الإيميل اللي فوق.</small>            </div>
             </div>
     <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
 </form>
-                                                                                                                <div class="ag-key__more">
-                            <span>Emails ← Manage ← Connect Apps &amp; Devices — الإرسال (SMTP): smtp.hostinger.com بورت 465 (SSL)، أو 587 (TLS).</span>                                                                                </div>
-                                                        </div>
+                            </details>
+                                                                            <div class="ag-row ag-key__btns">
+                                                                    <form method="post" action="#preview/admin/shary/agent/keys/smtp/check" data-ag-slow="بيجرّب…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm">اختبر الربط</button></form>
+                                                                                                    <form method="post" action="#preview/admin/shary/agent/keys/smtp/remove" data-ag-confirm="هتشيل مفتاح إرسال الإيميلات (SMTP) من الداشبورد؟ الخدمة هتقف لحد ما تربطها تاني (أو هترجع للمفتاح اللي في إعدادات السيرفر لو موجود)."><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm ag-btn--danger">شيل المفتاح</button></form>
+                                                            </div>
+                                                                                                    </div>
                                     </div>
     </section>
             <section class="ag-card" id="group-messages">
-        <div class="ag-card__head"><h2>واتساب وزووم</h2><span class="sm mute">رسايل الإيجنت والتقارير لرقم الفريق، ورسايل وتذكير ميتنج Shary AI ولينك الزووم.</span></div>
+        <div class="ag-card__head"><h2>واتساب وزووم</h2><span class="sm mute">رسايل الإيجنت والتقارير لرقم الفريق، رسايل الواتساب للعملاء، ورسايل وتذكير ميتنج Shary AI ولينك الزووم.</span></div>
         <div class="ag-card__body ag-keys">
-                                                                <div class="ag-key " id="key-whatsapp">
+                                                                <div class="ag-key is-on" id="key-whatsapp">
                                                             <a class="ag-key__card" href="https://developers.facebook.com/apps" target="_blank" rel="noopener noreferrer">
-                            <i aria-hidden="true">!</i>
-                            <span class="ag-key__t"><b>واتساب (WhatsApp Cloud API)</b><span>مش مربوط — بيفتح: رسايل الإيجنت والتقارير لرقم الفريق، ورسايل وتذكير الميتنج</span>
-                                <em class="ag-key__go">افتح تطبيق واتساب في Meta <span aria-hidden="true">↗</span></em></span>
+                            <i aria-hidden="true">✓</i>
+                            <span class="ag-key__t"><b>واتساب (WhatsApp Cloud API)</b><span>مربوط من هنا — بيفتح: رسايل الإيجنت والتقارير لرقم الفريق، رسايل العملاء، ورسايل وتذكير الميتنج</span>
+                                <em class="ag-key__go">افتح Meta for Developers <span aria-hidden="true">↗</span></em></span>
                         </a>
                                         <div class="ag-key__state">
-                                                                            
+                        <span>ربطه Demo Admin — النهاردة 12:49 ص</span>                                                                            
                             <span>اكتب رقمك عشان رسايل الإيجنت توصلك — <a class="b8" href="admin-shary-agent-settings.html#whatsapp">الصلاحيات والربط ← الواتساب</a></span>
-                                                                    </div>
-                                                                        <form method="post" action="#preview/admin/shary/agent/keys/whatsapp" class="ag-keyform " id="kf-whatsapp"
+                                                                            <span class="ok">آخر تجربة النهاردة 12:49 ص: اتجرّب ✓ (بيانات تجربة)</span>
+                                            </div>
+                                                                        <details class="ag-key__change"><summary>غيّر المفتاح</summary>
+                                <form method="post" action="#preview/admin/shary/agent/keys/whatsapp" class="ag-keyform " id="kf-whatsapp"
        autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
     <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-whatsapp-whatsapp_token">التوكن الدايم (Access token)
+                    <em>محفوظ — آخره <bdi dir="ltr">1234</bdi></em>
                                     </label>
                                     <input class="ag-input" id="kf-whatsapp-whatsapp_token" name="keys[WHATSAPP_TOKEN]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="password"
-                            autocomplete="new-password" placeholder="EAA…"
+                            autocomplete="new-password" placeholder="سيبه فاضي عشان يفضل زي ما هو"
                                                       >
                                             </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-whatsapp-whatsapp_phone_id">Phone number ID
                                     </label>
                                     <input class="ag-input" id="kf-whatsapp-whatsapp_phone_id" name="keys[WHATSAPP_PHONE_ID]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="text"
-                            autocomplete="off" value="" placeholder=""                            >
+                            autocomplete="off" value="109876543210" placeholder="109876543210"                            >
                                 <small>رقم طويل من WhatsApp ← API Setup (مش رقم التليفون).</small>            </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
                 <label for="kf-whatsapp-whatsapp_report_template">اسم رسالة الإيجنت المعتمدة
                                     </label>
                                     <input class="ag-input" id="kf-whatsapp-whatsapp_report_template" name="keys[WHATSAPP_REPORT_TEMPLATE]" dir="ltr" spellcheck="false" autocapitalize="off"
                            type="text"
-                            autocomplete="off" value="" placeholder="shary_agent_update"                            >
+                            autocomplete="off" value="shary_agent_update" placeholder="shary_agent_update"                            >
                                 <small>رسالة معتمدة في WhatsApp Manager فيها 3 متغيرات: {{1}} العنوان · {{2}} الملخص · {{3}} اللينك.</small>            </div>
-                                <div class="ag-keyform__f">
+                                <div class="ag-keyform__f" >
+                <label for="kf-whatsapp-whatsapp_customer_template">اسم رسالة العملاء المعتمدة (اختياري)
+                                    </label>
+                                    <input class="ag-input" id="kf-whatsapp-whatsapp_customer_template" name="keys[WHATSAPP_CUSTOMER_TEMPLATE]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="text"
+                            autocomplete="off" value="shary_customer_message" placeholder="shary_customer_message"                            >
+                                <small>رسالة Marketing معتمدة فيها 3 متغيرات: {{1}} اسم العميل · {{2}} الرسالة · {{3}} اللينك — نصها جاهز في «رسايل العملاء». من غيرها مفيش واتساب للعملاء.</small>            </div>
+                                <div class="ag-keyform__f" >
                 <label for="kf-whatsapp-whatsapp_meeting_reminder_template">اسم رسالة تذكير الميتنج المعتمدة (اختياري)
                                     </label>
                                     <input class="ag-input" id="kf-whatsapp-whatsapp_meeting_reminder_template" name="keys[WHATSAPP_MEETING_REMINDER_TEMPLATE]" dir="ltr" spellcheck="false" autocapitalize="off"
@@ -797,12 +832,107 @@
             </div>
     <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
 </form>
-                                                                                                                <div class="ag-key__more">
-                            <span>الرقم التعريفي (Phone number ID) من WhatsApp ← API Setup، والتوكن الدائم من System users، والرسايل المعتمدة من WhatsApp Manager.</span>                                                            <details class="ag-key__steps"><summary>الخطوات (3)</summary>
-                                    <ol><li><a href="https://developers.facebook.com/apps" target="_blank" rel="noopener noreferrer">اعمل App (Business) وضيف له WhatsApp — وانسخ Phone number ID من API Setup ↗</a></li><li><a href="https://business.facebook.com/latest/settings" target="_blank" rel="noopener noreferrer">توكن دايم: Business settings ← System users ← Admin ← Generate token (whatsapp_business_messaging + whatsapp_business_management) ← Never ↗</a></li><li><a href="https://business.facebook.com/" target="_blank" rel="noopener noreferrer">اعمل الرسالة المعتمدة shary_agent_update (Utility · Arabic) في WhatsApp Manager ← Message templates — نصها جاهز في الصلاحيات والربط ← الواتساب ↗</a></li></ol>
-                                </details>
-                                                                                </div>
-                                                        </div>
+                            </details>
+                                                                            <div class="ag-row ag-key__btns">
+                                                                    <form method="post" action="#preview/admin/shary/agent/keys/whatsapp/check" data-ag-slow="بيجرّب…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm">اختبر الربط</button></form>
+                                                                                                    <form method="post" action="#preview/admin/shary/agent/keys/whatsapp/remove" data-ag-confirm="هتشيل مفتاح واتساب (WhatsApp Cloud API) من الداشبورد؟ الخدمة هتقف لحد ما تربطها تاني (أو هترجع للمفتاح اللي في إعدادات السيرفر لو موجود)."><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm ag-btn--danger">شيل المفتاح</button></form>
+                                                            </div>
+                                                                                                    </div>
+                                    </div>
+    </section>
+            <section class="ag-card" id="group-customers">
+        <div class="ag-card__head"><h2>رسايل العملاء</h2><span class="sm mute">إشعارات التطبيق والـ SMS للعملاء (والواتساب والإيميل من الكروت اللي فوق). الإيجنت بيجهّز الرسالة وانت اللي بتبعتها من «رسايل العملاء».</span></div>
+        <div class="ag-card__body ag-keys">
+                                                                <div class="ag-key is-on" id="key-firebase">
+                                                            <a class="ag-key__card" href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">
+                            <i aria-hidden="true">✓</i>
+                            <span class="ag-key__t"><b>إشعارات التطبيق (Firebase)</b><span>مربوط من هنا — بيفتح: إشعار يوصل على موبايلات العملاء اللي عليها تطبيق شاري</span>
+                                <em class="ag-key__go">افتح Firebase <span aria-hidden="true">↗</span></em></span>
+                        </a>
+                                        <div class="ag-key__state">
+                        <span>ربطه Demo Admin — النهاردة 12:49 ص</span>                                                    <span>شغال في <a class="b8" href="admin-shary-agent-messages.html">«رسايل العملاء»</a> — الإيجنت بيجهّز الرسالة وانت بتبعتها.</span>
+                                                                                                    <span class="ok">آخر تجربة النهاردة 12:49 ص: اتجرّب ✓ (بيانات تجربة)</span>
+                                            </div>
+                                                                        <details class="ag-key__change"><summary>غيّر المفتاح</summary>
+                                <form method="post" action="#preview/admin/shary/agent/keys/firebase" class="ag-keyform " id="kf-firebase"
+       enctype="multipart/form-data"  autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
+    <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
+                                <div class="ag-keyform__f" >
+                <label for="kf-firebase-shary_firebase_json">ملف حساب الخدمة بتاع Firebase (JSON)
+                    <em>محفوظ — آخره <bdi dir="ltr">shary-app-demo</bdi></em>
+                                    </label>
+                                    <input class="ag-input" id="kf-firebase-shary_firebase_json" type="file" name="key_file" accept=".json,application/json">
+                                <small>من Firebase ← ⚙ Project settings ← Service accounts ← Generate new private key — لنفس مشروع تطبيق شاري.</small>            </div>
+            </div>
+    <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
+</form>
+                            </details>
+                                                                            <div class="ag-row ag-key__btns">
+                                                                    <form method="post" action="#preview/admin/shary/agent/keys/firebase/check" data-ag-slow="بيجرّب…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm">اختبر الربط</button></form>
+                                                                                                    <form method="post" action="#preview/admin/shary/agent/keys/firebase/remove" data-ag-confirm="هتشيل مفتاح إشعارات التطبيق (Firebase) من الداشبورد؟ الخدمة هتقف لحد ما تربطها تاني (أو هترجع للمفتاح اللي في إعدادات السيرفر لو موجود)."><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm ag-btn--danger">شيل المفتاح</button></form>
+                                                            </div>
+                                                                                                    </div>
+                                                                                <div class="ag-key is-on" id="key-sms">
+                                                            <a class="ag-key__card" href="https://smsmisr.com/" target="_blank" rel="noopener noreferrer">
+                            <i aria-hidden="true">✓</i>
+                            <span class="ag-key__t"><b>رسايل SMS</b><span>مربوط من هنا — بيفتح: SMS للعملاء: الفرص الجديدة والعروض والتذكير</span>
+                                <em class="ag-key__go">افتح SMS Misr <span aria-hidden="true">↗</span></em></span>
+                        </a>
+                                        <div class="ag-key__state">
+                        <span>ربطه Demo Admin — النهاردة 12:49 ص</span>                                                    <span>شغال في <a class="b8" href="admin-shary-agent-messages.html">«رسايل العملاء»</a> — الإيجنت بيجهّز الرسالة وانت بتبعتها.</span>
+                                                                                                    <span class="ok">آخر تجربة النهاردة 12:49 ص: SMS Misr قبل الحساب واسم الراسل ✓ (تجربة من غير إرسال)</span>
+                                            </div>
+                                                                        <details class="ag-key__change"><summary>غيّر المفتاح</summary>
+                                <form method="post" action="#preview/admin/shary/agent/keys/sms" class="ag-keyform " id="kf-sms"
+       autocomplete="off" data-ag-slow="بيجرّب المفتاح مع الشركة…">
+    <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-keyform__fields">
+                                <div class="ag-keyform__f" >
+                <label for="kf-sms-sms_provider">شركة الـ SMS
+                                    </label>
+                                                        <select class="ag-input" id="kf-sms-sms_provider" name="keys[SMS_PROVIDER]" data-ag-key-choice="kf-sms">
+                        <option value="">— اختار —</option>
+                        <option value="smsmisr" selected>SMS Misr</option><option value="twilio" >Twilio</option><option value="http" >شركة تانية (لينك إرسال)</option>                    </select>
+                                            </div>
+                                <div class="ag-keyform__f"  data-ag-for="smsmisr twilio" >
+                <label for="kf-sms-sms_username">اسم المستخدم (Username — أو Account SID في Twilio)
+                                    </label>
+                                    <input class="ag-input" id="kf-sms-sms_username" name="keys[SMS_USERNAME]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="text"
+                            autocomplete="off" value="shary-demo" placeholder="shary-demo"                            >
+                                            </div>
+                                <div class="ag-keyform__f"  data-ag-for="smsmisr twilio" >
+                <label for="kf-sms-sms_password">الباسورد (Password — أو Auth token في Twilio)
+                    <em>محفوظ — آخره <bdi dir="ltr">0000</bdi></em>
+                                    </label>
+                                    <input class="ag-input" id="kf-sms-sms_password" name="keys[SMS_PASSWORD]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="password"
+                            autocomplete="new-password" placeholder="سيبه فاضي عشان يفضل زي ما هو"
+                                                      >
+                                            </div>
+                                <div class="ag-keyform__f"  data-ag-for="smsmisr twilio" >
+                <label for="kf-sms-sms_sender">اسم الراسل (Sender token في SMS Misr — أو الرقم في Twilio)
+                                    </label>
+                                    <input class="ag-input" id="kf-sms-sms_sender" name="keys[SMS_SENDER]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="text"
+                            autocomplete="off" value="demo-sender-token" placeholder="demo-sender-token"                            >
+                                <small>الاسم اللي بيظهر للعميل لازم يكون متعمد من الشركة.</small>            </div>
+                                <div class="ag-keyform__f"  data-ag-for="http" >
+                <label for="kf-sms-sms_url">لينك الإرسال (لأي شركة تانية بس)
+                                    </label>
+                                    <input class="ag-input" id="kf-sms-sms_url" name="keys[SMS_URL]" dir="ltr" spellcheck="false" autocapitalize="off"
+                           type="password"
+                            autocomplete="new-password" placeholder="https://…/send?to={phone}&amp;text={message}"
+                                                      >
+                                <small>اللينك اللي الشركة بتديهولك للإرسال، وحط مكان الرقم {phone} ومكان الرسالة {message}.</small>            </div>
+            </div>
+    <button type="submit" class="ag-btn ag-btn--primary">اربط</button>
+</form>
+                            </details>
+                                                                            <div class="ag-row ag-key__btns">
+                                                                    <form method="post" action="#preview/admin/shary/agent/keys/sms/check" data-ag-slow="بيجرّب…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm">اختبر الربط</button></form>
+                                                                                                    <form method="post" action="#preview/admin/shary/agent/keys/sms/remove" data-ag-confirm="هتشيل مفتاح رسايل SMS من الداشبورد؟ الخدمة هتقف لحد ما تربطها تاني (أو هترجع للمفتاح اللي في إعدادات السيرفر لو موجود)."><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm ag-btn--danger">شيل المفتاح</button></form>
+                                                            </div>
+                                                                                                    </div>
                                     </div>
     </section>
 
