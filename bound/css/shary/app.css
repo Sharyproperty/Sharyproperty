@@ -24992,3 +24992,28 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 /* المشروع ليه اسم مكتوب على الماستر بلان من لوحة التحكم: علامة الاسم بتختفي لما الكتابة تظهر (من غير تكرار) */
 .mp-labels-on .smap__marker.has-plan.has-name:not(.is-on) { opacity: 0; pointer-events: none; }
 .mp-labels-on .smap__marker.has-plan.has-name.is-on { opacity: 0; }
+
+/* مستويات الزوم: المشروع والمراحل (13.5) ← العماير (15) ← الوحدات (16.5) */
+.mp-labels-on:not(.mp-buildings-on) .mp-label--building { display: none; }
+.mp-labels-on:not(.mp-units-on) .mp-label--unit { display: none; }
+.mp-label.has-units, .mp-label.has-unit { pointer-events: auto; cursor: pointer; border: 0; display: none; align-items: center; gap: 6px; }
+.mp-buildings-on .mp-label--building.has-units { display: inline-flex; }
+.mp-units-on .mp-label--unit.has-unit { display: inline-flex; }
+.mp-label.has-units { font-size: 12.5px; padding: 4px 6px 4px 12px; box-shadow: 0 4px 12px -4px rgba(13, 32, 51, .6); }
+.mp-label.has-units:hover { background: #157a6e; }
+.mp-label__count { min-width: 20px; height: 20px; border-radius: 999px; background: #fff; color: #157a6e; font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px; }
+.smap__marker--unit.has-code span { direction: ltr; unicode-bidi: isolate; letter-spacing: .2px; }
+
+/* لوحات الفلاتر والاختيارات: من غير أي ظل أو تغميق ورا اللوحة (لا على الصفحة ولا حوالين اللوحة) — حد رفيع بس عشان تبان */
+[data-filter-sheet] > .area-sheet,
+[data-filter-sheet] > .meeting-panel,
+[data-filter-sheet] > .absolute.inset-0 + *,
+[data-index-advanced] > .area-sheet,
+[data-index-advanced] > .meeting-panel,
+[data-index-advanced] > .absolute.inset-0 + *,
+[data-index-picker] > .meeting-panel,
+[data-index-picker] > .absolute.inset-0 + * {
+    box-shadow: none !important;
+    border: 1px solid #c6d6ea !important;
+}
+[data-filter-sheet] > .area-sheet:not(.inset-0) { border-bottom-width: 0 !important; }

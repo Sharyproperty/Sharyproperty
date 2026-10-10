@@ -482,17 +482,32 @@
             if (window.SharyLogoFit) window.SharyLogoFit.scan(unitBody);
             root.dispatchEvent(new CustomEvent('shary:map-unit', { bubbles: true, detail: { id: unit.id } }));
         }
+        // وحدات العمارة: صفوف صغيرة تحت اسم العمارة (العمارة نفسها في النص فوقهم)
+        function aroundBuilding(at, count) {
+            var out = [], cols = Math.min(4, Math.max(1, Math.ceil(Math.sqrt(count)))), dx = 0.00042 / Math.max(0.3, Math.cos(at[1] * Math.PI / 180)), dy = 0.00024;
+            for (var i = 0; i < count; i++) {
+                var c = i % cols, r = Math.floor(i / cols);
+                out.push([at[0] + (c - (cols - 1) / 2) * dx, at[1] - dy * (r + 1)]);
+            }
+            return out;
+        }
+        function hasBuildings(list) { return (list || []).some(function (unit) { return unit.building_at; }); }
         function drawUnits(p, list) {
             clearUnits();
             unitsFor = p.id;
-            var loose = list.filter(function (unit) { return !unit.placed || unit.lat == null; });
+            var loose = list.filter(function (unit) { return !unit.building_at && (!unit.placed || unit.lat == null); });
             var spots = spread(p, loose.length), next = 0;
+            // الوحدات اللي ليها عمارة: حوالين العمارة بتاعتها
+            var groups = {};
+            list.forEach(function (unit) { if (unit.building_at) { var k = unit.building_at.join(','); (groups[k] = groups[k] || []).push(unit); } });
+            var near = {};
+            Object.keys(groups).forEach(function (k) { var at = groups[k][0].building_at.map(Number); aroundBuilding(at, groups[k].length).forEach(function (spot, i) { near[groups[k][i].id] = spot; }); });
             list.forEach(function (unit) {
-                var at = unit.placed && unit.lat != null ? [Number(unit.lng), Number(unit.lat)] : spots[next++];
+                var at = near[unit.id] || (unit.placed && unit.lat != null ? [Number(unit.lng), Number(unit.lat)] : spots[next++]);
                 if (!at || !isFinite(at[0]) || !isFinite(at[1])) return;
                 var pin = document.createElement('button');
                 pin.type = 'button';
-                pin.className = 'smap__marker smap__marker--unit';
+                pin.className = 'smap__marker smap__marker--unit' + (unit.code ? ' has-code' : '');
                 pin.title = unit.title || unit.label || '';
                 pin.setAttribute('aria-label', unit.title || unit.label || '');
                 var label = document.createElement('span');
@@ -506,8 +521,10 @@
             if (!gl || !unitsUrl) return;
             var item = state.current;
             if (!item || item.parentNode.hidden) { if (unitsFor !== null) clearUnits(); return; }
-            var p = info(item), close = gl.getZoom() >= UNITS_ZOOM;
+            var p = info(item);
             var list = unitCache[p.id];
+            // المشروع فيه عماير عليها وحدات: المشروع ← العماير (زوم 15) ← الوحدات (زوم 16.5) — وإلا الوحدات من زوم 15
+            var close = gl.getZoom() >= (hasBuildings(list) ? UNITS_ZOOM + 1.5 : UNITS_ZOOM);
             if (list === undefined) {
                 unitCache[p.id] = null;   // بيتحمّل
                 // اللينك: shary/map/units?project={id} — أو قالب فيه {id} (ملفات ثابتة: .../units/{id}.json)
@@ -527,7 +544,9 @@
                     toggleAreas(false);
                     // الكارت بيغطي نص الشاشة تحت على الموبايل: علامة الوحدة بتقف في الجزء الظاهر فوقه
                     var wideScreen = window.matchMedia('(min-width: 1024px)').matches;
-                    gl.flyTo({ center: entry.at, zoom: Math.max(17, gl.getZoom()), duration: 900, essential: true, offset: wideScreen ? [0, 0] : [0, -Math.round(window.innerHeight * 0.24)] });
+                    // الوحدة في عمارة: الخريطة بتدخل على العمارة نفسها (العمارة ووحداتها ظاهرين) وكارت الوحدة مفتوح
+                    var b = entry.unit.building_at, focus = b ? [Number(b[0]), Number(b[1]) - 0.0005] : entry.at;
+                    gl.flyTo({ center: focus, zoom: Math.max(b ? 17.4 : 17, gl.getZoom()), duration: 900, essential: true, offset: wideScreen ? [0, 0] : [0, -Math.round(window.innerHeight * 0.24)] });
                     openUnit(entry.unit, entry.pin);
                 }
                 return;
@@ -540,6 +559,21 @@
             }
             if (unitsFor !== p.id) drawUnits(p, list);
         }
+        // الضغط على عمارة فيها وحدات (الكتابة على الماستر بلان): الخريطة بتقرّب عليها والوحدات بتظهر حواليها
+        root.addEventListener('shary:mp-building', function (event) {
+            var d = event.detail || {}, item = items.filter(function (it) { return String(info(it).id) === String(d.project); })[0];
+            if (!gl || !item) return;
+            if (state.current !== item) select(item, true);
+            var wideScreen = window.matchMedia('(min-width: 1024px)').matches;
+            gl.flyTo({ center: [d.lng, d.lat - 0.0005], zoom: Math.max(17.4, gl.getZoom()), duration: 900, essential: true, offset: wideScreen ? [0, 0] : [0, -Math.round(window.innerHeight * 0.12)] });
+        });
+        // الضغط على كتابة وحدة مربوطة بوحدة: كارت الوحدة
+        root.addEventListener('shary:mp-unit', function (event) {
+            var d = event.detail || {}, item = items.filter(function (it) { return String(info(it).id) === String(d.project); })[0];
+            if (!gl || !item) return;
+            wantedUnit = String(d.unit || '');
+            if (state.current !== item) select(item, true); else showUnits();
+        });
         if (unitBox) {
             unitBox.addEventListener('click', function (event) { if (event.target.closest('[data-smap-unit-close]')) closeUnit(); });
             document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !unitBox.hidden) closeUnit(); });

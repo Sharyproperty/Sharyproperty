@@ -303,17 +303,36 @@
             });
             var lib = window.maplibregl || window.mapboxgl;
             if (!lib || !lib.Marker) return;
-            entry.labels = labels.filter(function (label) { return label && label.text && isFinite(label.lng) && isFinite(label.lat); }).map(function (label) {
-                var el = document.createElement('div');
-                el.className = 'mp-label mp-label--' + (label.kind || 'phase');
-                el.textContent = label.text;
+            // العماير: لو الفريق ربط وحدات بعماير ، اللي بتظهر هي العماير اللي فيها وحدات متاحة بس (بعددها) — والضغط عليها بيقرّب ويظهر وحداتها
+            var inventory = labels.some(function (label) { return label.kind === 'building' && Array.isArray(label.units) && label.units.length; });
+            entry.labels = labels.filter(function (label) {
+                if (!label || !label.text || !isFinite(label.lng) || !isFinite(label.lat)) return false;
+                return !(inventory && label.kind === 'building' && !(Array.isArray(label.units) && label.units.length));
+            }).map(function (label) {
+                var count = label.kind === 'building' && Array.isArray(label.units) ? label.units.length : 0;
+                var el = document.createElement(count || label.unit_id ? 'button' : 'div');
+                el.className = 'mp-label mp-label--' + (label.kind || 'phase') + (count ? ' has-units' : '') + (label.unit_id ? ' has-unit' : '');
+                var name = document.createElement('span'); name.textContent = label.text; el.appendChild(name);
+                if (count) {
+                    el.type = 'button';
+                    var badge = document.createElement('b'); badge.className = 'mp-label__count'; badge.textContent = count; el.appendChild(badge);
+                    el.setAttribute('aria-label', label.text + ' — ' + count);
+                    el.addEventListener('click', function (event) { event.stopPropagation(); el.dispatchEvent(new CustomEvent('shary:mp-building', { bubbles: true, detail: { project: id, lng: Number(label.lng), lat: Number(label.lat), units: label.units } })); });
+                } else if (label.unit_id) {
+                    el.type = 'button';
+                    el.addEventListener('click', function (event) { event.stopPropagation(); el.dispatchEvent(new CustomEvent('shary:mp-unit', { bubbles: true, detail: { project: id, unit: label.unit_id } })); });
+                }
                 return new lib.Marker({ element: el, anchor: 'center' }).setLngLat([Number(label.lng), Number(label.lat)]).addTo(map);
             });
         }
         // الكتابة بتظهر من زوم labelZoom (قبلها الماستر بلانز صغيرة والكتابة هتزحم الشاشة)
         function labelsByZoom() {
             var box = map.getContainer && map.getContainer();
-            if (box) box.classList.toggle('mp-labels-on', map.getZoom() >= MP.labelZoom);
+            if (!box) return;
+            var z = map.getZoom();
+            box.classList.toggle('mp-labels-on', z >= MP.labelZoom);   // اسم المشروع والمراحل
+            box.classList.toggle('mp-buildings-on', z >= 15);           // العماير
+            box.classList.toggle('mp-units-on', z >= 16.5);             // الوحدات
         }
 
         // ---------- الطبقات ----------
