@@ -50,9 +50,9 @@
         };
         var layers = [{ id: 'ground', type: 'background', paint: { 'background-color': type === 'h' ? '#0d2238' : '#dfe9f3' } }, { id: 'base', type: 'raster', source: 'base' }];
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
-        // حوالين الكرة: الفضا بالنجوم (خلفية .smap__map) — الكرة عليها هالة زرقا خفيفة زي الغلاف الجوي ، والسما نفسها شفافة عشان النجوم تبان
+        // حوالين الكرة: الفضا بالنجوم (canvas ورا الخريطة) — الكرة نفسها بألوانها الطبيعية (صور القمر الصناعي من غير أي تلوين) ، وهالة زرقا رفيعة على حافتها بس
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
-            sky: { 'sky-color': 'rgba(0, 0, 0, 0)', 'horizon-color': 'rgba(120, 180, 255, 0.55)', 'fog-color': 'rgba(186, 210, 235, 0.9)', 'sky-horizon-blend': 0.5, 'horizon-fog-blend': 0.6, 'fog-ground-blend': 0.5, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0] } };
+            sky: { 'sky-color': 'rgba(0, 0, 0, 0)', 'horizon-color': 'rgba(150, 195, 255, 0.5)', 'fog-color': 'rgba(150, 195, 255, 0)', 'sky-horizon-blend': 0.35, 'horizon-fog-blend': 0, 'fog-ground-blend': 1, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.55, 5, 0.55, 7, 0] } };
     }
 
     // ---------- البيانات من الـ API الحي (data-api): بيرسم الكروت والمناطق والفلاتر وبعدها الخريطة بتشتغل عادي ----------
@@ -170,9 +170,57 @@
         });
     }
 
+    // الفضا ورا الكرة الأرضية: أسود ، وفيه نجوم كتير مبيضة بأحجام وإضاءات مختلفة + سحابة نور خفيفة (درب التبانة) — مترسومة مرة واحدة (canvas)
+    function drawSpace(box) {
+        if (!box || box.querySelector('.smap__stars')) return;
+        var canvas = document.createElement('canvas');
+        canvas.className = 'smap__stars';
+        canvas.setAttribute('aria-hidden', 'true');
+        box.insertBefore(canvas, box.firstChild);
+        var seed = 11;
+        function rand() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+        function paint() {
+            var ratio = Math.min(2, window.devicePixelRatio || 1), w = box.clientWidth, h = box.clientHeight;
+            if (!w || !h) return;
+            canvas.width = Math.round(w * ratio); canvas.height = Math.round(h * ratio);
+            var ctx = canvas.getContext('2d');
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+            seed = 11;
+            ctx.fillStyle = '#000'; ctx.fillRect(0, 0, w, h);
+            // سحابة نور خفيفة مايلة (درب التبانة) + لمعة زرقا هادية
+            var band = ctx.createLinearGradient(0, h * 0.15, w, h * 0.85);
+            band.addColorStop(0, 'rgba(255,255,255,0)'); band.addColorStop(0.42, 'rgba(170,190,230,0.05)'); band.addColorStop(0.5, 'rgba(210,220,245,0.09)'); band.addColorStop(0.58, 'rgba(170,190,230,0.05)'); band.addColorStop(1, 'rgba(255,255,255,0)');
+            ctx.fillStyle = band; ctx.fillRect(0, 0, w, h);
+            var glow = ctx.createRadialGradient(w * 0.5, h * 0.5, 0, w * 0.5, h * 0.5, Math.max(w, h) * 0.7);
+            glow.addColorStop(0, 'rgba(40,70,140,0.18)'); glow.addColorStop(1, 'rgba(0,0,0,0)');
+            ctx.fillStyle = glow; ctx.fillRect(0, 0, w, h);
+            // النجوم: كتير صغيرة باهتة ، وشوية متوسطة ، وقليل كبار بيلمعوا
+            var count = Math.round(w * h / 650);
+            for (var i = 0; i < count; i++) {
+                var x = rand() * w, y = rand() * h, k = rand(), r, a;
+                if (k > 0.985) { r = 1.3 + rand() * 0.9; a = 0.95; }
+                else if (k > 0.9) { r = 0.8 + rand() * 0.5; a = 0.75 + rand() * 0.25; }
+                else { r = 0.35 + rand() * 0.45; a = 0.3 + rand() * 0.5; }
+                var tint = rand();
+                var color = tint > 0.85 ? '220,232,255' : tint > 0.75 ? '255,245,228' : '255,255,255';
+                if (r > 1.2) {
+                    var halo = ctx.createRadialGradient(x, y, 0, x, y, r * 4);
+                    halo.addColorStop(0, 'rgba(' + color + ',0.5)'); halo.addColorStop(1, 'rgba(' + color + ',0)');
+                    ctx.fillStyle = halo; ctx.beginPath(); ctx.arc(x, y, r * 4, 0, Math.PI * 2); ctx.fill();
+                }
+                ctx.fillStyle = 'rgba(' + color + ',' + a + ')';
+                ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        paint();
+        var timer = null;
+        window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(paint, 200); });
+    }
+
     function setup(root) {
         var frame = root.querySelector('[data-smap-frame]');
         var glBox = root.querySelector('[data-smap-gl]');
+        drawSpace(glBox && glBox.parentNode);
         var items = Array.prototype.slice.call(root.querySelectorAll('[data-smap-item]'));
         var search = root.querySelector('[data-smap-search]');
         var empty = root.querySelector('[data-smap-empty]');
@@ -318,7 +366,7 @@
                 showCredit(); gl.on('styledata', showCredit);
                 // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
                 // Mapbox: نفس الغلاف الجوي بتاع الخريطة القديمة — والفضا بالنجوم ورا الكرة
-                if (token) gl.on('style.load', function () { try { gl.setFog({ color: 'rgb(186, 210, 235)', 'high-color': 'rgb(36, 92, 223)', 'horizon-blend': 0.02, 'space-color': 'rgb(5, 9, 20)', 'star-intensity': 0.6 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: 'rgb(186, 210, 235)', 'high-color': 'rgb(36, 92, 223)', 'horizon-blend': 0.02, 'space-color': 'rgb(0, 0, 0)', 'star-intensity': 0.6 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
