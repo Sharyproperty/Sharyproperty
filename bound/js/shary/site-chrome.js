@@ -1110,3 +1110,31 @@ window.SharyZoom = function () {
         else if (form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }))) form.submit();
     });
 })();
+
+/**
+ * سطر واحد من غير نقط [data-fit-line] (اسم المشروع – المطور على كروت المشاريع الجديدة):
+ * لو الكلام أطول من عرض الكارت الخط بيصغر خطوة خطوة لحد ما يدخل في سطر واحد (أقل حاجة 10px) — بيتعاد مع تغيير مقاس الشاشة وتحميل الخط.
+ */
+(function () {
+    function fitOne(el) {
+        el.style.fontSize = '';
+        var size = parseFloat(window.getComputedStyle(el).fontSize) || 16;
+        var guard = 0;
+        while (el.scrollWidth > el.clientWidth + 1 && size > 10 && guard++ < 40) {
+            size -= 0.5;
+            el.style.fontSize = size + 'px';
+        }
+    }
+    function fitAll() { Array.prototype.forEach.call(document.querySelectorAll('[data-fit-line]'), fitOne); }
+    var timer;
+    function later() { window.clearTimeout(timer); timer = window.setTimeout(fitAll, 120); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fitAll); else fitAll();
+    window.addEventListener('load', fitAll);
+    window.addEventListener('resize', later);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+    window.SharyFitLines = fitAll;
+    // كروت بتتحمّل بعدين (وأنت نازل / صفحة جديدة) أو كانت مخفية وظهرت
+    if (window.MutationObserver) new MutationObserver(function (list) {
+        for (var i = 0; i < list.length; i++) { if (list[i].addedNodes.length || list[i].type === 'attributes') { later(); return; } }
+    }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'class'] });
+})();

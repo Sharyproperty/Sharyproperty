@@ -24956,3 +24956,18 @@ img.abroad-dev__logo {
 .prop-bar__mini-text b {
   line-height: 1.3;
 }
+
+/* ---- صفحة "المشاريع الجديدة" (عرض الكل): نفس كتابة كروت "أحدث المشاريع" في الرئيسية —
+       "اسم المشروع – المطور" سطر واحد على الصورة (الخط بيصغر لوحده لو طويل — من غير نقط) وتحته المكان ، مبدوءة من ناحية البداية ، وظل ناعم ورا الكلام بس */
+.shot-card--launch .shot-card__text.new-project-caption { inset-inline: 10px; bottom: 10px; padding: 0; text-align: start; text-shadow: none; }
+.shot-card--launch .shot-card__text.new-project-caption::before { display: none; }
+.shot-card--launch .new-project-caption__inner { position: relative; isolation: isolate; display: inline-block; max-width: 100%; padding: 6px 10px; }
+.shot-card--launch .new-project-caption__inner::before { content: ""; position: absolute; inset: 2px 0 4px; z-index: -1; border-radius: 999px; background-color: rgba(4, 31, 56, .44); filter: blur(14px); opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+.shot-card--launch:hover .new-project-caption__inner::before, .shot-card--launch:focus-within .new-project-caption__inner::before { opacity: 1; }
+@media (hover: none), (max-width: 1023px) { .shot-card--launch .new-project-caption__inner::before { opacity: .85; } }
+.shot-card--launch .new-project-caption__name { margin: 0; font-size: 17px; line-height: 1.4; font-weight: 800; color: #fff; white-space: nowrap; max-width: 100%; text-shadow: 0 1px 2px rgba(4, 31, 56, .85), 0 0 12px rgba(4, 31, 56, .6); }
+.shot-card--launch .new-project-caption__name span { font-weight: 700; color: rgba(255, 255, 255, .92); }
+.shot-card--launch .new-project-caption__name a { color: inherit; }
+.shot-card--launch .new-project-caption__place { margin: 4px 0 0; display: flex; align-items: center; gap: 6px; font-size: 13.5px; line-height: 1.5; font-weight: 700; color: rgba(255, 255, 255, .95); text-shadow: 0 1px 2px rgba(4, 31, 56, .85), 0 0 12px rgba(4, 31, 56, .6); }
+.shot-card--launch .new-project-caption__place svg { flex: 0 0 auto; }
+@media (max-width: 640px) { .shot-card--launch .new-project-caption__name { font-size: 15px; } .shot-card--launch .new-project-caption__place { font-size: 12.5px; } }
