@@ -110,9 +110,12 @@
     function attach(map, options) {
         options = options || {};
         var MP = {
-            minZoom: options.minZoom || 10,
+            minZoom: options.minZoom || 9,         // من زوم المنطقة (مش مصر كلها)
             hdZoom: options.hdZoom || 15.5,
-            maxActive: options.maxActive || (wide() ? 24 : 10),
+            // كل الماستر بلانز اللي في الكادر بتظهر مع بعض (زي ناوي) — الحد ده للأمان بس
+            maxActive: options.maxActive || (wide() ? 80 : 40),
+            // وهي كتير مع بعض (بعيد شوية): كل صورة بنسخة أخف — والصورة الكاملة بترجع لوحدها مع التقريب (zoom >= hdZoom - 1)
+            overviewCap: options.overviewCap || (wide() ? 2048 : 1024),
             viewBuffer: options.viewBuffer || 0.5,
             unplaced: options.unplaced || 'bbox',
             rendered: {},          // id -> { token, sourceId, layerId, coords, hd, tiles, saved }
@@ -142,8 +145,8 @@
             return maxTexture;
         }
         // صورة أكبر من اللي كارت الشاشة يستحمله: بتتصغّر لأقصى مقاس مسموح (بدل ما تفشل)
-        function fitTexture(img) {
-            var cap = textureCap(), w = img.naturalWidth, h = img.naturalHeight;
+        function fitTexture(img, limit) {
+            var cap = Math.min(textureCap(), limit || Infinity), w = img.naturalWidth, h = img.naturalHeight;
             if (Math.max(w, h) <= cap) return img.src;
             try {
                 var scale = cap / Math.max(w, h), canvas = document.createElement('canvas');
@@ -273,7 +276,11 @@
                     var place = coordsFor(project, img);
                     if (!place) { MP.failed[id] = 2; remove(id); return; }      // لسه ما اتضبطش ومفيش حدود: ما يتعرضش
                     drop(x);
-                    map.addSource(x.sourceId, { type: 'image', url: fitTexture(img), coordinates: place.coords });
+                    var close = map.getZoom() >= MP.hdZoom - 1 || String(id) === String(activeId());
+                    var cap = close ? 0 : MP.overviewCap;
+                    map.addSource(x.sourceId, { type: 'image', url: fitTexture(img, cap), coordinates: place.coords });
+                    MP.rendered[id].light = !!cap && Math.max(img.naturalWidth, img.naturalHeight) > cap;
+                    MP.rendered[id].url = img.src;
                     // بتتضاف مخفية (شفافة) وبتظهر مرة واحدة لما الصورة تجهز على الخريطة — من غير ما تتشاف وهي بتترسم
                     var paint = paintFor(project), target = paint['raster-opacity'];
                     paint['raster-opacity'] = 0;
@@ -297,6 +304,20 @@
         }
         // الجودة مع الزوم: نسخة HD
         function upgrade() {
+            // النسخة الخفيفة ← الصورة الكاملة لما العميل يقرّب
+            if (map.getZoom() >= MP.hdZoom - 1) {
+                Object.keys(MP.rendered).forEach(function (id) {
+                    var entry = MP.rendered[id], project = byId(id);
+                    if (!entry || !entry.light || !entry.coords || !project || !inView(project)) return;
+                    entry.light = false;
+                    var token = entry.token;
+                    loadImage(entry.url, function (img) {
+                        var now = MP.rendered[id];
+                        if (!img || !now || now.token !== token) return;
+                        try { var source = map.getSource(entry.sourceId); if (source && source.updateImage) source.updateImage({ url: fitTexture(img), coordinates: entry.coords }); } catch (error) { /* اتشالت */ }
+                    });
+                });
+            }
             if (map.getZoom() < MP.hdZoom) return;
             Object.keys(MP.rendered).forEach(function (id) {
                 var entry = MP.rendered[id], project = byId(id);

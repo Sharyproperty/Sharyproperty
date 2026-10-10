@@ -24971,3 +24971,9 @@ img.abroad-dev__logo {
 .shot-card--launch .new-project-caption__place { margin: 4px 0 0; display: flex; align-items: center; gap: 6px; font-size: 13.5px; line-height: 1.5; font-weight: 700; color: rgba(255, 255, 255, .95); text-shadow: 0 1px 2px rgba(4, 31, 56, .85), 0 0 12px rgba(4, 31, 56, .6); }
 .shot-card--launch .new-project-caption__place svg { flex: 0 0 auto; }
 @media (max-width: 640px) { .shot-card--launch .new-project-caption__name { font-size: 15px; } .shot-card--launch .new-project-caption__place { font-size: 12.5px; } }
+
+/* المشروع اللي الماستر بلان بتاعته ظاهرة: العلامة بتبقى اسم صغير شفاف فوق المخطط (من غير السهم) — الماستر بلان هي اللي باينة مش النقط ،
+   ولما العميل يقرّب أكتر (is-close) العلامة بتختفي خالص */
+.smap:not(.is-globe) .smap__marker.has-plan { background-color: rgba(30, 65, 102, .74); border-color: rgba(255, 255, 255, .85); padding: 2px 8px 3px; font-size: 10.5px; box-shadow: 0 4px 10px -4px rgba(13, 32, 51, .6); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
+.smap:not(.is-globe) .smap__marker.has-plan::after { display: none; }
+.smap:not(.is-globe) .smap__marker.has-plan.is-on { background-color: rgba(31, 154, 139, .9); }

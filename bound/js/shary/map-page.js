@@ -221,7 +221,16 @@
         }
         // العلامات اللي ماستر بلان مشروعها معروضة: بتختفي لما العميل يقرّب (عشان ما تغطيش المخطط)
         function markPlans(ids) {
-            items.forEach(function (item) { if (item.__pin) item.__pin.classList.toggle('has-plan', ids.indexOf(String(info(item).id)) > -1); });
+            items.forEach(function (item) {
+                if (!item.__pin) return;
+                var p = info(item), on = ids.indexOf(String(p.id)) > -1;
+                item.__pin.classList.toggle('has-plan', on);
+                // اسم المشروع بيتحط في نص الماستر بلان نفسها (مش على نقطة المشروع اللي ممكن تكون بره المخطط)
+                if (item.__marker) {
+                    var box = on ? planBox(p) : null;
+                    item.__marker.setLngLat(box ? [(box[0] + box[2]) / 2, (box[1] + box[3]) / 2] : [p.lng, p.lat]);
+                }
+            });
         }
 
         function plain(text) {
@@ -263,7 +272,13 @@
 
         function bounds(list) {
             var box = new glLib.LngLatBounds();
-            list.forEach(function (item) { var p = info(item); box.extend([p.lng, p.lat]); });
+            list.forEach(function (item) {
+                var p = info(item);
+                box.extend([p.lng, p.lat]);
+                // الماستر بلان كلها جوه الكادر (مش نقطة المشروع بس)
+                var plan = planBox(p);
+                if (plan) { box.extend([plan[0], plan[1]]); box.extend([plan[2], plan[3]]); }
+            });
             return box;
         }
 
