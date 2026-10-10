@@ -1,0 +1,232 @@
+/*
+ * «شاري معاك» — the few things the section needs on top of the dashboard shell (shell.css draws everything else:
+ * cards, tables, forms, buttons, badges, tabs, modals). Same tokens (--sx-*), scoped to body.sx.
+ * Loaded once by resources/views/shary_admin/ma3ak/partials/head.blade.php.
+ */
+
+/* a button inside a small form, beside others (table actions, side cards) */
+body.sx .ma3ak-inline { display: inline-block; margin: 0; }
+body.sx .ma3ak-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+/* a row of five figures (an investment, a property) fits in one line on a wide screen */
+body.sx .sx-grid.ma3ak-tiles { grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); }
+
+/* buttons inside table cells keep their words on one line; long names get room */
+body.sx .page-wrapper table.table td .btn-sm { white-space: nowrap; }
+body.sx .page-wrapper table.table td.ma3ak-wide { min-width: 150px; }
+body.sx .page-wrapper table.table td.ma3ak-name { min-width: 120px; }
+/* the tables inside the cards of one record (schedule, receipts, wallet movements) sit in a narrower column: less side padding keeps their last column in view */
+body.sx .page-wrapper .row > [class*="col-lg-"] .card .card-body > .table-responsive > table.table:not(.ma3ak-kv) > thead > tr > th,
+body.sx .page-wrapper .row > [class*="col-lg-"] .card .card-body > .table-responsive > table.table:not(.ma3ak-kv) > tbody > tr > td,
+body.sx .page-wrapper .row > [class*="col-xl-"] .card .card-body > .table-responsive > table.table:not(.ma3ak-kv) > thead > tr > th,
+body.sx .page-wrapper .row > [class*="col-xl-"] .card .card-body > .table-responsive > table.table:not(.ma3ak-kv) > tbody > tr > td { padding-left: 9px; padding-right: 9px; }
+
+/* status tabs above a list (nav-pills of the shell) — keep the number readable on the dark tab */
+body.sx .ma3ak-pills { margin-bottom: 14px; }
+body.sx .ma3ak-pills .nav-link .badge { min-width: 26px; }
+
+/* a second, quieter line under a value in a table cell (the property under the investment number …) */
+body.sx .ma3ak-sub { display: block; margin-top: 2px; font-size: 12.5px; font-weight: 700; color: var(--sx-muted); line-height: 1.6; }
+body.sx .ma3ak-num { font-variant-numeric: tabular-nums; unicode-bidi: isolate; overflow-wrap: anywhere; min-width: 0; }   /* a long account number / IBAN wraps instead of leaving its card */
+body.sx .ma3ak-nowrap, body.sx .page-wrapper table.table td.ma3ak-nowrap { white-space: nowrap; }
+
+/* "label — value" tables of a record (side cards) */
+body.sx .page-wrapper table.ma3ak-kv > tbody > tr > th { width: 38%; white-space: normal; color: var(--sx-muted); font-size: 13px; font-weight: 800; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--sx-line); }
+body.sx .page-wrapper table.ma3ak-kv > tbody > tr > td { padding: 9px 12px; white-space: normal; word-break: break-word; }
+/* a label / value table is two columns: it fits the phone instead of scrolling sideways like a list does */
+body.sx .page-wrapper table.table.ma3ak-kv { min-width: 0; }
+body.sx .page-wrapper table.ma3ak-kv > tbody > tr:last-child > th { border-bottom: 0; }
+
+/* the one big figure of a decision (the amount that will be credited, the payout …) */
+body.sx .ma3ak-figure { font-size: 28px; font-weight: 800; color: var(--sx-navy); line-height: 1.35; font-variant-numeric: tabular-nums; }
+body.sx .ma3ak-figure small { font-size: 15px; font-weight: 800; color: var(--sx-muted); }
+body.sx .ma3ak-label { display: block; font-size: 13px; font-weight: 800; color: var(--sx-muted); margin-bottom: 2px; }
+
+/* how much of an investment is paid / of a property is sold: a thin bar under the figure */
+body.sx .ma3ak-progress { display: block; height: 6px; margin-top: 6px; border-radius: 999px; background: var(--sx-line); overflow: hidden; }
+body.sx .ma3ak-progress > span { display: block; height: 100%; border-radius: 999px; background: var(--sx-teal); }
+
+/* a short list of steps with their state (what the investor sees in the app …) */
+body.sx .ma3ak-steps { list-style: none; margin: 0; padding: 0; }
+body.sx .ma3ak-steps li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--sx-line); font-weight: 700; }
+body.sx .ma3ak-steps li:last-child { border-bottom: 0; }
+
+/* a picture of a private file (receipt, identity document) */
+body.sx .ma3ak-file { display: block; max-width: 100%; height: auto; margin: 0 auto; border: 1px solid var(--sx-line); border-radius: 14px; background: var(--sx-mist); }
+body.sx .ma3ak-file-box { display: grid; place-items: center; min-height: 220px; padding: 16px; border: 1.5px dashed #b9cbe2; border-radius: 14px; background: var(--sx-mist); text-align: center; color: var(--sx-muted); font-weight: 700; }
+
+/* what a decision does, written before the button */
+body.sx .ma3ak-effect { margin: 0 0 12px; padding: 10px 14px; border-radius: 12px; background: var(--sx-mist); color: var(--sx-ink); font-size: 13.5px; font-weight: 700; line-height: 1.8; }
+body.sx .ma3ak-split { border-top: 1px solid var(--sx-line); margin-top: 16px; padding-top: 16px; }
+
+/* the overview: the "before going live" list */
+body.sx .ma3ak-setup { list-style: none; margin: 0; padding: 0; }
+body.sx .ma3ak-setup li { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 0; border-bottom: 1px solid var(--sx-line); font-weight: 700; color: #6b4100; }
+body.sx .ma3ak-setup li:last-child { border-bottom: 0; }
+body.sx .ma3ak-setup li span { flex: 1 1 280px; min-width: 0; }
+body.sx .sx-tile .n.is-zero { color: var(--sx-muted); }
+
+/* a tick box with its words (partials/field type checkbox) */
+body.sx .page-wrapper label.ma3ak-check { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-weight: 800; cursor: pointer; line-height: 1.6; }
+body.sx .ma3ak-check input { flex: none; width: 19px; height: 19px; margin: 0; accent-color: var(--sx-navy); }
+
+/* a smaller title inside a long card, and the quick jumps to the cards of a long form */
+body.sx .ma3ak-subtitle { margin: 18px 0 10px; padding-top: 14px; border-top: 1px dashed var(--sx-line); font-size: 15px; font-weight: 800; color: var(--sx-navy); }
+body.sx .card-body > .ma3ak-subtitle:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+body.sx .ma3ak-jump { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+body.sx .ma3ak-anchor { scroll-margin-top: 84px; }
+body.sx .ma3ak-savebar { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 16px; padding: 12px 16px; border: 1px solid var(--sx-line); border-radius: 16px; background: rgba(255, 255, 255, .96); box-shadow: 0 -8px 24px -20px rgba(18, 58, 92, .5); }
+
+/* the follow-up of a request in its row: status + internal note + save (meetings, priority list, services) */
+body.sx .ma3ak-follow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; width: 250px; max-width: 100%; margin: 0; }
+body.sx .ma3ak-follow > select, body.sx .ma3ak-follow > .sx-choice, body.sx .ma3ak-follow > .ma3ak-follow__locked { grid-column: 1 / -1; }  /* the shell wraps a select in .sx-choice */
+body.sx .page-wrapper .ma3ak-follow .form-control { min-height: 38px; height: 38px; padding: 4px 10px; font-size: 13.5px; }
+body.sx .ma3ak-follow .btn { white-space: nowrap; }
+/* a group of rows of one property (priority list) */
+body.sx .ma3ak-group-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+body.sx .ma3ak-group-head .ma3ak-sub { display: inline; margin: 0; }
+body.sx .ma3ak-place { font-size: 17px; font-weight: 800; color: var(--sx-navy); }
+
+/* a row of a repeater (plan lines, package blocks …): data-ma3ak-row */
+body.sx .ma3ak-rowbox { position: relative; margin: 0 0 10px; padding: 12px 14px 2px; border: 1px solid var(--sx-line); border-radius: 14px; background: #fbfcfe; }
+body.sx .ma3ak-rowbox .form-group { margin-bottom: 10px; }
+body.sx .ma3ak-rowbox__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 6px; font-size: 13px; font-weight: 800; color: var(--sx-muted); }
+/* rows numbered in the order they are on the page (the number the validation messages use): .ma3ak-numbered around the repeater */
+body.sx .ma3ak-numbered [data-ma3ak-rows] { counter-reset: ma3ak-row; }
+body.sx .ma3ak-numbered [data-ma3ak-row] { counter-increment: ma3ak-row; }
+body.sx .ma3ak-numbered .ma3ak-rowbox__n::after { content: " " counter(ma3ak-row); }
+
+/* small pictures in forms and lists (property gallery, partner logo …) */
+body.sx .ma3ak-thumbs { display: flex; flex-wrap: wrap; gap: 10px; }
+body.sx .ma3ak-thumb { position: relative; width: 132px; }
+body.sx .ma3ak-thumb > img, body.sx .ma3ak-thumb > a > img { display: block; width: 132px; height: 96px; object-fit: cover; border-radius: 12px; border: 1px solid var(--sx-line); background: var(--sx-mist); }
+body.sx .ma3ak-thumb .ma3ak-inline { position: absolute; top: 6px; inset-inline-end: 6px; }
+body.sx .ma3ak-thumb .sx-act { width: 32px; min-width: 32px; height: 32px; min-height: 32px; background: rgba(255, 255, 255, .92) !important; }
+body.sx .ma3ak-thumb .sx-act img { width: 15px; height: 15px; }
+body.sx .ma3ak-preview { display: block; max-width: 220px; max-height: 160px; margin-top: 8px; border-radius: 12px; border: 1px solid var(--sx-line); object-fit: cover; }
+body.sx .ma3ak-preview[hidden] { display: none; }
+/* logos are fitted, not cropped (partner logo in its form and in the list) */
+body.sx .ma3ak-preview--logo { max-width: 140px; max-height: 140px; object-fit: contain; background: #fff; padding: 6px; }
+body.sx .page-wrapper table.table td img.ma3ak-logo { object-fit: contain; background: #fff; border: 1px solid var(--sx-line); padding: 3px; }
+/* "remove this picture" under a gallery picture that is saved with its form (packages) */
+body.sx .page-wrapper label.ma3ak-thumb__remove { margin-top: 6px; font-size: 13px; }
+
+/* settings: the two ways of buying as two big choices, and lists of tick boxes with a line of explanation */
+body.sx .ma3ak-modes { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+body.sx .ma3ak-modes > input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+body.sx .page-wrapper label.ma3ak-mode { display: flex; flex-direction: column; gap: 4px; margin: 0; padding: 14px 16px; border: 2px solid var(--sx-line); border-radius: 16px; background: #fff; cursor: pointer; }
+body.sx .ma3ak-mode__title { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 800; color: var(--sx-navy); }
+body.sx .ma3ak-mode__title::before { content: ""; flex: 0 0 18px; height: 18px; border: 2px solid #c5cfdc; border-radius: 50%; background: #fff; }
+body.sx .ma3ak-mode__text { padding-inline-start: 28px; font-size: 13.5px; font-weight: 700; color: var(--sx-muted); line-height: 1.7; }
+body.sx .ma3ak-modes > input:checked + .ma3ak-mode { border-color: var(--sx-navy); background: var(--sx-mist); }
+body.sx .ma3ak-modes > input:checked + .ma3ak-mode .ma3ak-mode__title::before { border-color: var(--sx-navy); background: radial-gradient(circle, var(--sx-navy) 0 4px, #fff 5px); }
+body.sx .ma3ak-modes > input:focus-visible + .ma3ak-mode { outline: 2px solid #bbd0f7; outline-offset: 2px; }
+body.sx .ma3ak-options { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+body.sx .page-wrapper label.ma3ak-option { align-items: flex-start; }
+body.sx .ma3ak-option input { margin-top: 4px; }
+body.sx .ma3ak-option__text { font-weight: 700; color: var(--sx-muted); }
+body.sx .ma3ak-option .badge, body.sx .ma3ak-option .badges { margin-inline-start: 6px; }
+body.sx .ma3ak-option input:disabled + span { opacity: .8; }
+
+/* the details of a line of the activity log */
+body.sx .ma3ak-detail { font-size: 13px; line-height: 1.75; word-break: break-word; }
+
+/* countries → cities → areas: a city opens to show its areas; every place is one line edited in place */
+body.sx .ma3ak-cities { margin-top: 12px; }
+body.sx .ma3ak-city { border-top: 1px solid var(--sx-line); }
+body.sx .ma3ak-city:last-child { border-bottom: 1px solid var(--sx-line); }
+body.sx .ma3ak-city > summary { padding: 12px 6px; cursor: pointer; color: var(--sx-navy); line-height: 1.9; }
+body.sx .ma3ak-city > summary > * { margin-inline-end: 6px; }
+body.sx .ma3ak-city > summary:hover, body.sx .ma3ak-city[open] > summary { background: var(--sx-mist); }
+body.sx .ma3ak-city__panel { padding: 6px 6px 16px; }
+body.sx .ma3ak-place-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 10px; padding: 8px 0; border-bottom: 1px dashed var(--sx-line); }
+body.sx .ma3ak-place-edit { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 10px; flex: 1 1 520px; min-width: 0; margin: 0; }
+body.sx .ma3ak-place-edit .form-group, body.sx .ma3ak-place-add .form-group { flex: 1 1 180px; min-width: 0; margin: 0; }
+body.sx .ma3ak-place-edit .ma3ak-place-sort { flex: 0 0 96px; }
+body.sx .ma3ak-place-shown { display: flex; align-items: center; min-height: 44px; }
+body.sx .ma3ak-place-row .btn, body.sx .ma3ak-place-row .sx-act { margin-bottom: 4px; }
+body.sx .ma3ak-place-add { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 10px; margin: 12px 0 0; }
+body.sx .ma3ak-place-add .btn { margin-bottom: 4px; }
+@media (min-width: 700px) {
+    /* a list of areas: the labels once, on its first line */
+    body.sx .ma3ak-place-list .ma3ak-place-row + .ma3ak-place-row .form-group > label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
+@media (max-width: 699.98px) {
+    body.sx .ma3ak-modes { grid-template-columns: 1fr; }
+    body.sx .ma3ak-place-edit .form-group, body.sx .ma3ak-place-add .form-group { flex-basis: 100%; }
+    body.sx .ma3ak-place-edit .ma3ak-place-sort { flex: 0 1 96px; }
+    /* the names take the whole width; the delete icon sits at the end of the line of "order · shown · save" */
+    body.sx .ma3ak-place-row { position: relative; }
+    body.sx .ma3ak-place-row > .ma3ak-place-edit { flex: 1 1 100%; }
+    body.sx .ma3ak-place-row > .ma3ak-inline { position: absolute; bottom: 8px; inset-inline-end: 0; }
+    body.sx .ma3ak-figure { font-size: 24px; }
+    /* an image beside its inputs: the picture goes above them on a phone */
+    body.sx .ma3ak-upload { flex-wrap: wrap; }
+    body.sx .ma3ak-upload > .flex-grow-1 { flex-basis: 100%; }
+    body.sx .page-wrapper table.ma3ak-kv > tbody > tr > th { width: 44%; }
+}
+
+/* a phone, an empty list: the shell turns tables into cards only when they have rows, so the column names of an empty list
+   would scroll sideways above the "nothing here" line — the line is enough */
+@media (max-width: 699.98px) {
+    body.sx .page-wrapper table.table:not(.sx-stack):has(> tbody > tr:only-child > td[colspan]) > thead { display: none; }
+    body.sx .page-wrapper table.table:not(.sx-stack):has(> tbody > tr:only-child > td[colspan]) { width: 100% !important; min-width: 0 !important; }
+    body.sx .page-wrapper table.table:not(.sx-stack) > tbody > tr:only-child > td[colspan] { white-space: normal !important; padding-inline: 4px !important; }
+}
+
+/* «اختار من الوحدات»: the unit's picture in its row, the add bar stays at the bottom of the screen while the list is scrolled */
+.ma3ak-pick-thumb { width: 56px; height: 42px; object-fit: cover; border-radius: 8px; border: 1px solid #dfe6ee; float: inline-start; margin-inline-end: 8px; }
+.ma3ak-pick-add { position: sticky; bottom: 0; z-index: 20; border: 2px solid #1D5FD1 !important; box-shadow: 0 -6px 18px rgba(16, 38, 63, .12); }
+.ma3ak-pick-add .card-body { padding: 12px 16px; }
+.ma3ak-pick-checks .ma3ak-check, .ma3ak-pick-add .ma3ak-check { margin: 0; }
+@media (max-width: 576px) {
+    .ma3ak-pick-add .card-body { padding: 8px 12px; }
+    .ma3ak-pick-add .d-flex { gap: 4px 12px !important; }
+    .ma3ak-pick-add .mb-2 { margin-bottom: 2px !important; }
+    .ma3ak-pick-add .btn { padding-block: 6px; }
+}
+
+/* «الوحدات حسب الهدف» (the opportunities screen): what the daily ranking does, its numbers and its two buttons */
+body.sx .ma3ak-auto { border-inline-start: 4px solid var(--sx-navy); }
+body.sx .ma3ak-auto__row { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px; }
+body.sx .ma3ak-auto__text { flex: 1 1 520px; min-width: 0; }
+body.sx .ma3ak-auto__title { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 6px; font-size: 16px; font-weight: 800; color: var(--sx-navy); }
+body.sx .ma3ak-auto__lead { margin: 0 0 6px; font-size: 13.5px; font-weight: 600; line-height: 1.8; color: var(--sx-text, #333); }
+body.sx .ma3ak-auto__facts { margin: 8px 0 0; font-size: 14px; line-height: 1.8; }
+body.sx .ma3ak-auto__buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 575px) {
+    body.sx .ma3ak-auto__buttons, body.sx .ma3ak-auto__buttons .ma3ak-inline, body.sx .ma3ak-auto__buttons .btn { width: 100%; }
+}
+/* a long note inside a choice («Needs a payment gateway connected by the developer») wraps instead of pushing the page sideways */
+body.sx .ma3ak-check .badges, body.sx .ma3ak-check .badge { white-space: normal; text-align: start; line-height: 1.5; }
+body.sx .ma3ak-auto__buttons .btn-link.ma3ak-auto__optin { padding-inline: 4px; font-weight: 800; color: var(--sx-navy); text-decoration: underline; }
+/* «الأنسب للهدف» in «اختار من الوحدات»: the fit and its reasons under the unit's name */
+body.sx .ma3ak-fit .badge { margin-inline-end: 4px; }
+
+/* ---------------------------------------------------------------- «تأثير شاري» (resources/views/shary_admin/impact) */
+body.sx .impact-thumb { width: 64px; height: 46px; object-fit: cover; border-radius: 10px; border: 1px solid var(--sx-line); }
+body.sx .impact-initial { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #e8f6f4; color: #1b9c8d; font-weight: 800; font-size: 17px; }
+body.sx .impact-parts td { vertical-align: middle; }
+body.sx .impact-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+body.sx .impact-tile { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 10px; border: 1px solid var(--sx-line); border-radius: 16px; text-align: center; }
+body.sx .impact-tile b { font-size: 20px; font-weight: 800; color: #1b9c8d; }
+body.sx .impact-tile span { font-size: 13px; font-weight: 700; color: #1b9c8d; }
+@media (max-width: 767px) { body.sx .impact-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+body.sx .impact-stat-row { margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed var(--sx-line); }
+body.sx .impact-stat-row:last-child { border-bottom: 0; }
+body.sx .impact-stat-n { display: block; margin-bottom: 6px; font-size: 13.5px; color: var(--sx-navy); }
+body.sx .impact-card { max-width: 220px; border: 1px solid var(--sx-line); border-radius: 14px; overflow: hidden; box-shadow: 0 6px 18px -14px rgba(18, 58, 92, .5); background: #fff; }
+body.sx .impact-card img { display: block; width: 100%; height: 130px; object-fit: cover; }
+body.sx .impact-card__empty { display: grid; place-items: center; height: 130px; background: var(--sx-mist); color: var(--sx-muted); font-weight: 700; font-size: 13px; }
+body.sx .impact-card__body { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; }
+body.sx .impact-card__body b { font-size: 14px; font-weight: 800; color: var(--sx-navy); line-height: 1.5; }
+body.sx .impact-card__body span { font-size: 12px; font-weight: 700; color: var(--sx-muted); }
+body.sx .impact-card__body i { align-self: flex-start; font-style: normal; font-size: 11.5px; font-weight: 800; color: #fff; background: var(--sx-navy); border-radius: 6px; padding: 2px 8px; }
+body.sx .impact-card__body i.is-done { background: #3fc9be; }
+body.sx .impact-log { list-style: none; margin: 0 0 10px; padding: 0; }
+body.sx .impact-log li { padding: 8px 0; border-bottom: 1px solid var(--sx-line); font-size: 13.5px; }
+body.sx .impact-links { margin: 0 0 10px; padding-inline-start: 18px; font-weight: 700; }
+body.sx .impact-bar { display: inline-block; width: 120px; max-width: 100%; height: 8px; border-radius: 999px; background: var(--sx-line); overflow: hidden; vertical-align: middle; }
+body.sx .impact-bar > span { display: block; height: 100%; background: #3fc9be; }
+body.sx .impact-chip { margin: 2px; white-space: normal; }

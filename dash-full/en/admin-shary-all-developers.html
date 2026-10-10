@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+  
+    <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Shary">
+<meta name="keywords" content="Shary">
+<meta name="author" content="">
+<meta name="robots" content="noindex, nofollow">
+<meta name="csrf-token" content="preview">
+
+<title>Shary</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="../a/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+
+
+    <link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
+
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- animation CSS -->
+<link rel="stylesheet" href="../a/assets/css/animate.css">
+
+<!-- Datetimepicker CSS -->
+<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
+
+<!-- Dragula CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
+
+
+
+
+
+
+<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
+
+<!-- Main CSS -->
+    <link rel="stylesheet" href="../a/assets/css/style.css">
+<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
+
+<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
+<style type="text/css">
+    body, h1, h2, h3, h4, h5, h6, * {
+        font-family: 'Tajawal', serif;
+        font-weight: bold;
+    }
+</style>
+    
+    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
+     <script>
+    (function () {
+        try {
+            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
+                document.documentElement.classList.add('sx-embed');
+                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
+                var params = new URLSearchParams(location.search);
+                document.addEventListener('DOMContentLoaded', function () {
+                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
+                    if (keep) {
+                        document.documentElement.classList.add('sx-focus');
+                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
+                            [].forEach.call(node.parentElement.children, function (sib) {
+                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
+                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
+                                sib.style.display = 'none';
+                            });
+                        }
+                    }
+                    var drop = params.get('hide') && document.getElementById(params.get('hide'));
+                    if (drop) drop.style.display = 'none';
+                });
+                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
+                if (open) {
+                    var tries = 0, timer = setInterval(function () {
+                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
+                        var modal = document.getElementById(open);
+                        if ((button && window.bootstrap && modal) || ++tries > 40) {
+                            clearInterval(timer);
+                            if (button && modal) {
+                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
+                            }
+                        }
+                    }, 150);
+                }
+            }
+        } catch (e) {}
+    })();
+</script>
+<style>
+    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
+    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
+    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
+    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
+    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
+    html.sx-embed body { background: #fff !important; }
+    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
+    html.sx-embed body { overflow-x: hidden; }
+    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
+    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
+    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
+    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+       </head>
+  <body class="sx" dir="ltr">
+ <div id="global-loader" >
+    <div class="whirly-loader"> </div>
+</div>  <!-- Main Wrapper -->
+<div class="main-wrapper">
+      <a class="sx-skip" href="#sx-main">Skip to the content</a>
+<header class="sx-top" data-sx-top>
+    <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+    <a class="sx-top__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
+            <div class="sx-find" role="search" data-sx-find>
+            <label class="sx-sr" for="sx-q">Search the dashboard</label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            <input type="search" id="sx-q" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Search a project, unit, developer, area or screen…" role="combobox" aria-expanded="false" aria-controls="sx-q-out" aria-autocomplete="list">
+            <button type="button" class="sx-find__x" data-sx-find-close aria-label="Clear the search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+            <div class="sx-find__out" id="sx-q-out" role="listbox" aria-label="Search the dashboard" hidden></div>
+        </div>
+        <div class="sx-top__end">
+                    <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="Search the dashboard"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+</button>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 4"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>4</b></a>
+                <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
+</a>
+        <a class="sx-lang" href="../admin-shary-all-developers.html" data-sx-lang="1" lang="ar">عربي</a>
+        <details class="sx-user" data-sx-user>
+            <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
+</summary>
+            <div class="sx-user__menu">
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
+            </div>
+        </details>
+    </div>
+</header>
+<aside class="sx-side" id="sx-side" data-sx-side>
+    <div class="sx-side__head">
+        <a class="sx-side__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
+        <button type="button" class="sx-ico sx-side__close" data-sx-menu-close aria-label="Close the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+    </div>
+    <nav class="sx-nav" aria-label="Shary dashboard">
+                                                                    <div class="sx-grp " data-sx-grp="home">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-home">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+                            <span>Home</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-home">
+                                                            
+                                                                                                <li><a href="index.html" class="" ><span>Home</span></a></li>
+                                                            
+                                                                                                <li><a href="index.html" class="" ><span>Old home (the old dashboard figures)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <a class="sx-one " href="admin-shary-how-to.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
+                        <span>How to use the dashboard</span>
+                                            </a>
+                                                                <a class="sx-one " href="admin-shary-guide.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
+                        <span>Where do I edit what?</span>
+                                            </a>
+                                                                <div class="sx-grp " data-sx-grp="agent">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
+                            <span>Agent</span>
+                            <b class="sx-tag">13</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-agent">
+                                                            
+                                                                                                <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">13</b></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-projects.html" class="" ><span>Projects</span><b class="sx-tag">2</b></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-units.html" class="" ><span>Units</span><b class="sx-tag">4</b></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-design.html" class="" ><span>Pictures &amp; design</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-website.html" class="" ><span>Website pages</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-seo.html" class="" ><span>SEO &amp; articles</span><b class="sx-tag">4</b></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-messages.html" class="" ><span>Customer messages</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-marketing.html" class="" ><span>Marketing</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-requests.html" class="" ><span>Customer requests</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-ma3ak.html" class="" ><span>Shary Ma3ak</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-places.html" class="" ><span>Developers &amp; areas</span><b class="sx-tag">1</b></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-s-market.html" class="" ><span>Market &amp; reports</span><b class="sx-tag">2</b></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-tools.html" class="" ><span>Tools</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-keys.html" class="" ><span>Keys &amp; connections</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-log.html" class="" ><span>Log &amp; undo</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-agent-settings.html" class="" ><span>Access &amp; connections</span></a></li>
+                                                            
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                        </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Daily work</h6>                                                <div class="sx-grp " data-sx-grp="requests">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
+                            <span>Requests &amp; messages</span>
+                            <b class="sx-tag">52</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-requests">
+                                                            
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">52</b></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-owner-requests_type_rent.html" class="" ><span>Rent-out requests</span></a></li>
+                                                            
+                                                                                                <li><a href="request-sell-property.html" class="" ><span>Sell requests (old list)</span></a></li>
+                                                            
+                                                                                                <li><a href="request-rent-property.html" class="" ><span>Rent-out requests (old list)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-leads_form_meeting.html" class="" ><span>Meeting requests</span></a></li>
+                                                            
+                                                                                                <li><a href="request-meetings.html" class="" ><span>Zoom meeting requests</span></a></li>
+                                                            
+                                                                                                <li><a href="ContactUs.html" class="" ><span>Contact messages</span></a></li>
+                                                            
+                                                                                                <li><a href="exclusive-resale-admin_tab_requests.html" class="" ><span>Offers on resale opportunities</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-follows.html" class="" ><span>Project follows</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-lead-sources.html" class="" ><span>Where leads come from</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="units">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-units">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+                            <span>Units</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-units">
+                                                            
+                                                                                                <li><a href="admin-shary-all-units.html" class="" ><span>⭐ Everything about a unit (one page)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-units.html" class="" ><span>All units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-units-create.html" class="" ><span>Add a unit</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-units-sheet.html" class="" ><span>Upload a units sheet</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-units_type_developer_sale.html" class="" ><span>Developer units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-units_type_resale.html" class="" ><span>Resale units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-units_type_rent.html" class="" ><span>Rental units</span></a></li>
+                                                            
+                                                                                                <li><a href="exclusive-resale-admin.html" class="" ><span>Exclusive resale opportunities</span></a></li>
+                                                            
+                                                                                                <li><a href="limited-offer-units.html" class="" ><span>Limited-time offers</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-units.html" class="" ><span>Unit page data</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-type-photos.html" class="" ><span>Type photo library</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-tracking-units.html" class="" ><span>Tracking units (customer unit)</span></a></li>
+                                                            
+                                                                                                <li><a href="unit-tracking-admin.html" class="" ><span>Unit tracking in the app</span></a></li>
+                                                            
+                                                                                                <li><a href="units-list.html" class="" ><span>Units (old screen)</span></a></li>
+                                                            
+                                                                                                <li><a href="units-0.html" class="" ><span>Manage properties</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="projects">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-projects">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+                            <span>Projects</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-projects">
+                                                            
+                                                                                                <li><a href="admin-shary-all-projects.html" class="" ><span>⭐ Everything about a project (one page)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-compounds.html" class="" ><span>All projects</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-projects.html" class="" ><span>Project data for the website</span></a></li>
+                                                            
+                                                                                                <li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
+                                                            
+                                                                                                <li><a href="compounds-boundaries.html" class="" ><span>Project boundaries on the map</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-masterplans.html" class="" ><span>Master plans: cut-out &amp; placement</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="developers">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-developers">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+                            <span>Developers</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-developers">
+                                                            
+                                                                                                <li><a href="admin-shary-all-developers.html" class="is-on"  aria-current="page" ><span>⭐ Everything about a developer (one page)</span></a></li>
+                                                            
+                                                                                                <li><a href="services-developers.html" class="" ><span>All developers (add &amp; edit)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-developers.html" class="" ><span>Developer page data</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-developers-page.html" class="" ><span>Top developers &amp; the “view all” page</span></a></li>
+                                                            
+                                                                                                <li><a href="top-developer.html" class="" ><span>Top developers (app)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="areas">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-areas">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                            <span>Areas</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-areas">
+                                                            
+                                                                                                <li><a href="admin-shary-all-areas.html" class="" ><span>⭐ Everything about an area (one page)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-area-tree.html" class="" ><span>All areas &amp; sub-areas</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-map-areas.html" class="" ><span>Map areas</span></a></li>
+                                                            
+                                                                                                <li><a href="cities.html" class="" ><span>Areas (add &amp; edit)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-areas.html" class="" ><span>Area page data</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-area-places.html" class="" ><span>Famous places</span></a></li>
+                                                            
+                                                                                                <li><a href="countries.html" class="" ><span>Countries</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-countries.html" class="" ><span>Country page data</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="index">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-index">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+                            <span>Shary Index</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-index">
+                                                            
+                                                                                                <li><a href="admin-shary-all-index.html" class="" ><span>⭐ The whole Shary Index (one page)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-index.html" class="" ><span>Area numbers</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-index-monthly.html" class="" ><span>Monthly prices</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-index-page.html" class="" ><span>Index page content</span></a></li>
+                                                            
+                                                                                                <li><a href="shary-index-admin.html" class="" ><span>Index (old screen)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Content &amp; website</h6>                                                <div class="sx-grp " data-sx-grp="homepage">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-homepage">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 13h5v4H7zM15 13h2M15 16h2"/></svg>
+                            <span>Website home page</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-homepage">
+                                                            
+                                                                                                <li><a href="admin-shary-home-sections.html" class="" ><span>Home page sections (choose)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-home-sections_tab_slider.html" class="" ><span>Home slider (choose a project)</span></a></li>
+                                                            
+                                                                                                <li><a href="sliders.html" class="" ><span>Slider (old screen)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-home-cards.html" class="" ><span>Home cards (the five)</span></a></li>
+                                                            
+                                                                                                <li><a href="investment-cards.html" class="" ><span>What makes us different</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-new-launches.html" class="" ><span>New launches (app pictures — old screen)</span></a></li>
+                                                            
+                                                                                                <li><a href="top-unit.html" class="" ><span>Top units (old screen)</span></a></li>
+                                                            
+                                                                                                <li><a href="top-compound.html" class="" ><span>Top projects (old screen)</span></a></li>
+                                                            
+                                                                                                <li><a href="top-area.html" class="" ><span>Top areas (old screen)</span></a></li>
+                                                            
+                                                                                                <li><a href="popular-areas.html" class="" ><span>Popular areas</span></a></li>
+                                                            
+                                                                                                <li><a href="ads-images.html" class="" ><span>Ads</span></a></li>
+                                                            
+                                                                                                <li><a href="footer-links.html" class="" ><span>Top searches (footer)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="content">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-content">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+                            <span>Articles &amp; content</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-content">
+                                                            
+                                                                                                <li><a href="admin-shary-extras-blogs.html" class="" ><span>Article data</span></a></li>
+                                                            
+                                                                                                <li><a href="news.html" class="" ><span>News</span></a></li>
+                                                            
+                                                                                                <li><a href="trendyList.html" class="" ><span>Trendy</span></a></li>
+                                                            
+                                                                                                <li><a href="storyList.html" class="" ><span>Stories</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-trend-videos.html" class="" ><span>Trend videos</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-news-posts.html" class="" ><span>Trend news data</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-internal-links.html" class="" ><span>Internal links</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="pages">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-pages">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11"/></svg>
+                            <span>Website pages</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-pages">
+                                                            
+                                                                                                <li><a href="admin-shary-site-content.html" class="" ><span>Page texts &amp; photos</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-sell-rent.html" class="" ><span>Sell / rent your property (home)</span></a></li>
+                                                            
+                                                                                                <li><a href="settings-about.html" class="" ><span>About us (text)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-about-page.html" class="" ><span>About us (photo)</span></a></li>
+                                                            
+                                                                                                <li><a href="executive-management.html" class="" ><span>Team</span></a></li>
+                                                            
+                                                                                                <li><a href="categories-executive-management.html" class="" ><span>Team groups</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-team.html" class="" ><span>Team page data</span></a></li>
+                                                            
+                                                                                                <li><a href="jobs.html" class="" ><span>Jobs</span></a></li>
+                                                            
+                                                                                                <li><a href="settings-terms.html" class="" ><span>Terms &amp; conditions</span></a></li>
+                                                            
+                                                                                                <li><a href="settings-privacy.html" class="" ><span>Privacy policy</span></a></li>
+                                                            
+                                                                                                <li><a href="settings-help_center.html" class="" ><span>Help center</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-listing-pages.html" class="" ><span>Listing pages (sale / rent / opportunities)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-extras-property-types.html" class="" ><span>Property types</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="contact">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-contact">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
+                            <span>Contact &amp; action buttons</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-contact">
+                                                            
+                                                                                                <li><a href="admin-shary-contact.html" class="" ><span>Numbers &amp; channels</span></a></li>
+                                                            
+                                                                                                <li><a href="Communications.html" class="" ><span>Social media</span></a></li>
+                                                            
+                                                                                                <li><a href="contact_us_information.html" class="" ><span>Contact-us details</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <a class="sx-one " href="admin-shary-ai.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
+                        <span>Shary AI</span>
+                                            </a>
+                                                                <div class="sx-grp " data-sx-grp="seo">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-seo">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+                            <span>SEO &amp; redirects</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-seo">
+                                                            
+                                                                                                <li><a href="admin-redirections.html" class="" ><span>Redirects</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-refresh.html" class="" ><span>Refresh the website</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">The app</h6>                                                <div class="sx-grp " data-sx-grp="app">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-app">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg>
+                            <span>App services</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-app">
+                                                            
+                                                                                                <li><a href="reservations.html" class="" ><span>Book with the developer</span></a></li>
+                                                            
+                                                                                                <li><a href="reservations-bank-accounts.html" class="" ><span>Bank accounts</span></a></li>
+                                                            
+                                                                                                <li><a href="legal-assistant-admin.html" class="" ><span>Legal assistant</span></a></li>
+                                                            
+                                                                                                <li><a href="sharyCard-setting.html" class="" ><span>Shary Card</span></a></li>
+                                                            
+                                                                                                <li><a href="settings-shary_card.html" class="" ><span>Shary Card terms</span></a></li>
+                                                            
+                                                                                                <li><a href="notifications.html" class="" ><span>Notifications</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="impact">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-impact">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 20.5s-7.5-4.6-9.2-9.3A4.9 4.9 0 0 1 12 7.6a4.9 4.9 0 0 1 9.2 3.6C19.5 15.9 12 20.5 12 20.5z"/></svg>
+                            <span>Shary Impact</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-impact">
+                                                            
+                                                                                                <li><a href="admin-shary-impact.html" class="" ><span>The Impact page</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-impact-activities.html" class="" ><span>Events</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-impact-organizations.html" class="" ><span>Associations</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-impact-developers.html" class="" ><span>Supporting developers</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-impact-choices.html" class="" ><span>Customers&#039; choices</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Shary Ma3ak</h6>                                                <a class="sx-one " href="admin-shary-ma3ak.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M11 3.1A9 9 0 1 0 20.9 13H11z"/><path d="M14 2.6A8.5 8.5 0 0 1 21.4 10H14z"/></svg>
+                        <span>Overview</span>
+                                            </a>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goals">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goals">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>Units by goal</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goals">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>Buy to sale</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>Buy to rent</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>Ready now</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities.html" class="" ><span>All opportunities</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
+                            <span>Share Investment</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_shares">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>Share properties</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>Add a share property</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_money">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_money">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M17 7V5a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V6"/><path d="M16 14h.01"/></svg>
+                            <span>Money &amp; wallets</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_money">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-receipts.html" class="" ><span>Transfer receipts</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-withdrawals.html" class="" ><span>Withdrawal requests</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-transactions.html" class="" ><span>Wallet transactions</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_investors">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_investors">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 10.5-5.1"/><path d="m14.5 19.5 3-3 2 2 3-3.5"/></svg>
+                            <span>Investors</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_investors">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-investors.html" class="" ><span>All investors</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-investors_identity_pending.html" class="" ><span>Identity review</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-investments.html" class="" ><span>Investments</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-investments-create.html" class="" ><span>Record a deal (new investment)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-referrals.html" class="" ><span>Referrals &amp; rewards</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_requests">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_requests">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
+                            <span>Customer requests</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_requests">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-meetings.html" class="" ><span>Meeting requests</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-priority.html" class="" ><span>Priority list</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-services.html" class="" ><span>Service requests</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-owned-units.html" class="" ><span>Customers’ units</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_finishing">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_finishing">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="3.5" width="14" height="5" rx="1.5"/><path d="M17 6h3v5h-8v2.5"/><rect x="10.5" y="13.5" width="3" height="7.5" rx="1"/></svg>
+                            <span>Finishing &amp; furnishing</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_finishing">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-finishing-requests.html" class="" ><span>Finishing tracking</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-furnishing-codes.html" class="" ><span>Furnishing codes</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-finishing-packages.html" class="" ><span>Finishing packages</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-furnishing-packages.html" class="" ><span>Furnishing packages</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-partners.html" class="" ><span>Partners</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_settings">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_settings">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+                            <span>Shary Ma3ak settings</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_settings">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-settings.html" class="" ><span>Settings (transfers, buying, referrals)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-locations.html" class="" ><span>Countries &amp; cities (address step)</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-audit.html" class="" ><span>Activity log</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Administration</h6>                                                <div class="sx-grp " data-sx-grp="users">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-users">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>
+                            <span>Users &amp; permissions</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-users">
+                                                            
+                                                                                                <li><a href="users-client.html" class="" ><span>Clients</span></a></li>
+                                                            
+                                                                                                <li><a href="users-agent.html" class="" ><span>Agents</span></a></li>
+                                                            
+                                                                                                <li><a href="supervisor.html" class="" ><span>Supervisors &amp; permissions</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-social-login.html" class="" ><span>Google / Facebook / Apple sign-in</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="options">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-options">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+                            <span>Settings &amp; options</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-options">
+                                                            
+                                                                                                <li><a href="generalDetails-property.html" class="" ><span>Unit types</span></a></li>
+                                                            
+                                                                                                <li><a href="generalDetails-main_category.html" class="" ><span>Main categories</span></a></li>
+                                                            
+                                                                                                <li><a href="generalDetails-types_finishing.html" class="" ><span>Finishing types</span></a></li>
+                                                            
+                                                                                                <li><a href="generalDetails-featured.html" class="" ><span>Features</span></a></li>
+                                                            
+                                                                                                <li><a href="services-services_list.html" class="" ><span>Unit facilities</span></a></li>
+                                                    </ul>
+                    </div>
+                                        </nav>
+</aside>
+<div class="sx-shade" data-sx-shade hidden></div>
+
+ <style>
+            .shary-ed { position: fixed; inset: 0; z-index: 20000; display: flex; align-items: flex-start; justify-content: center; background: rgba(10, 20, 35, .6); padding: 5vh 16px; overflow: auto; }
+            .shary-ed__box { width: min(620px, 100%); border-radius: 10px; background: #fff; box-shadow: 0 20px 60px rgba(0, 0, 0, .3); }
+            .shary-ed--wide .shary-ed__box { width: min(1180px, 100%); }
+            .shary-ed__head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e9ecef; font-size: 16px; }
+            .shary-ed__x { border: 0; background: none; font-size: 26px; line-height: 1; color: #6c757d; cursor: pointer; }
+            .shary-ed__body { padding: 14px 16px 16px; }
+            .shary-ed__kinds, .shary-ed__checks { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 12px; }
+            .shary-ed__kinds label, .shary-ed__checks label { margin: 0; cursor: pointer; font-weight: normal; }
+            .shary-ed__label { display: block; margin: 8px 0 4px; font-weight: 600; }
+            .shary-ed__hint { color: #6c757d; margin: 4px 0 10px; }
+            .shary-ed__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+            .shary-ed__bar select { max-width: 180px; }
+            .shary-ed__bar input { flex: 1 1 220px; }
+            .shary-ed__results { max-height: 46vh; overflow: auto; border: 1px solid #e9ecef; border-radius: 8px; margin-top: 8px; }
+            .shary-ed__results .shary-ed__hint { padding: 12px; margin: 0; }
+            .shary-ed__row { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; border-bottom: 1px solid #f1f3f5; background: #fff; padding: 9px 12px; text-align: start; cursor: pointer; }
+            .shary-ed__row:hover { background: #f4f8fc; }
+            .shary-ed__row small { margin-inline-start: auto; color: #8a97a6; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+            .shary-ed__tag { flex: 0 0 auto; border-radius: 999px; background: #e8f0fb; color: #123a5c; font-size: 12px; padding: 2px 9px; }
+            .shary-ed__name { font-weight: 600; }
+            .shary-ed__foot { margin-top: 14px; }
+            .shary-ed__frame { background: #e9edf2; border-radius: 8px; padding: 10px; text-align: center; }
+            .shary-ed__frame iframe { width: 100%; height: 70vh; border: 0; border-radius: 6px; background: #fff; transition: width .2s; }
+            /* the Shary buttons show their names (they have no icon): writing row, symbols, call-to-action / link / preview */
+            [class*="cke_button__shary"] .cke_button_icon { display: none !important; }
+            [class*="cke_button__shary"] .cke_button_label { display: inline !important; padding: 0 7px; font-weight: 700; color: #0d3b66; font-size: 13px; line-height: 26px; }
+            a[class*="cke_button__shary"] { background: #e8f0fb !important; border-radius: 6px; margin: 2px !important; min-height: 28px; }
+            a[class*="cke_button__sharysym"] { background: #fff !important; border: 1px solid #cfdbe8 !important; min-width: 30px; text-align: center; }
+            a[class*="cke_button__sharysym"] .cke_button_label { font-size: 15px; padding: 0 4px; }
+            a.cke_button__sharycta, a.cke_button__sharylink, a.cke_button__sharypreview { background: #123a5c !important; }
+            .cke_button__sharycta .cke_button_label, .cke_button__sharylink .cke_button_label, .cke_button__sharypreview .cke_button_label { color: #fff !important; }
+            a[class*="cke_button__shary"].cke_button_on { box-shadow: inset 0 0 0 2px #1f63c6; }
+            /* the blocks of the website's articles (cards, link button, external link, note, places) */
+            a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal, a.cke_button__sharynote, a.cke_button__sharyplaces { background: #e3f3ef !important; }
+            .cke_button__sharycards .cke_button_label, .cke_button__sharybutton .cke_button_label, .cke_button__sharyexternal .cke_button_label, .cke_button__sharynote .cke_button_label, .cke_button__sharyplaces .cke_button_label { color: #0f5d52 !important; }
+        </style>
+        <script>
+            window.SharyEditorConfig = {
+                token: "HktKZqOt8AyOxuEo87g0JbtnQi9V1jOby63qdB9h",
+                lang: "en",
+                linksUrl: "\/admin\/shary\/content-editor\/links",
+                previewUrl: "\/admin\/shary\/content-editor\/preview",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=HktKZqOt8AyOxuEo87g0JbtnQi9V1jOby63qdB9h",
+                contentCss: "../a/css/shary-admin/editor-content.css",
+                localEditor: true,
+                localBase: "../a/vendor/shary-editor/",
+                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
+                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
+        </script>
+        <script src="../a/js/shary-admin/editor.js"></script>
+        
+             
+    <template data-sx-crumb><div class="sx-crumb">Developers ‹ ⭐ Everything about a developer (one page)</div></template>
+
+                <style>
+    .shub, .shub b, .shub h4, .shub h5, .shub label, .shub a, .shub small, .shub td, .shub th, .shub span { font-weight: 700; }
+    .shub-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    body.sx .shub-filters .shub-filters__q { flex: 1 1 260px; max-width: 420px; width: auto; }
+    body.sx .shub-filters .form-select { flex: 0 1 200px; max-width: 220px; width: auto; }
+    body.sx .shub-filters .sx-choice { flex: 0 1 240px; width: 240px; max-width: 240px; min-width: 0; }
+    body.sx .shub-filters .select2-container { flex: 0 1 220px; width: 220px !important; max-width: 220px; }
+    .shub-show { display: flex; flex-wrap: wrap; gap: 6px; }
+    .shub-show a { border: 1.5px solid #dfe6ee; border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 800; color: #1e3a5f; text-decoration: none; background: #fff; }
+    .shub-show a.is-on { background: #1e3a5f; border-color: #1e3a5f; color: #fff; }
+    .shub-row__acts { display: flex; flex-direction: column; gap: 6px; }
+    .shub-row__acts .btn { white-space: nowrap; font-weight: 800; }
+    .shub-search { display: flex; gap: 8px; max-width: 560px; }
+    .shub-list { display: grid; gap: 10px; }
+    .shub-row { display: grid; grid-template-columns: minmax(0, 1fr) 140px auto; gap: 14px; align-items: center; border: 1px solid #e3e8f0; border-radius: 14px; padding: 12px 16px; background: #fff; }
+    .shub-row__name { font-size: 16px; font-weight: 800; color: #1e3a5f; text-decoration: none; display: block; }
+    .shub-row__miss { color: #a35c00; font-size: 13px; display: block; margin-top: 4px; }
+    .shub-row__ok { color: #12804a; font-size: 13px; display: block; margin-top: 4px; }
+    .shub-meter { height: 10px; border-radius: 999px; background: #eef2f7; overflow: hidden; }
+    .shub-meter > i { display: block; height: 100%; border-radius: 999px; background: #2c6386; }
+    .shub-meter.is-low > i { background: #d9822b; }
+    .shub-meter.is-full > i { background: #1f9d5c; }
+    .shub-pct { font-size: 13px; display: block; margin-bottom: 4px; color: #1e3a5f; }
+    .shub-pill { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 11px; font-size: 12px; background: #eef2f7; color: #1e3a5f; }
+    .shub-pill.is-off { background: #fdecec; color: #c0392b; }
+
+    .shub-head { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .shub-head h4 { margin: 0; font-size: 22px; font-weight: 800; color: #1e3a5f; }
+    .shub-head small { color: #6b7a90; display: block; margin-top: 2px; }
+    .shub-layout { display: grid; grid-template-columns: 290px minmax(0, 1fr); gap: 16px; align-items: start; }
+    .shub-layout > *, .shub-aside > * { min-width: 0; }
+    .shub-aside { position: sticky; top: calc(var(--sx-top, 64px) + 12px); display: grid; gap: 12px; max-height: calc(100vh - var(--sx-top, 64px) - 24px); overflow-y: auto; overscroll-behavior: contain; padding-bottom: 4px; }
+    .shub-box { border: 1px solid #e3e8f0; border-radius: 14px; background: #fff; padding: 14px; }
+    .shub-box h5 { font-size: 15px; font-weight: 800; margin: 0 0 10px; color: #1e3a5f; }
+    .shub-tabs { display: grid; gap: 6px; }
+    .shub-tabs button { display: flex; align-items: center; gap: 10px; width: 100%; text-align: start; border: 1px solid #e3e8f0; background: #f8fafc; border-radius: 10px; padding: 10px 12px; font: inherit; font-weight: 700; font-size: 14px; color: #1e3a5f; cursor: pointer; }
+    .shub-tabs button b { flex: 0 0 24px; height: 24px; border-radius: 50%; background: #e3e8f0; display: grid; place-items: center; font-size: 12px; }
+    .shub-tabs button.is-on { background: #1e3a5f; border-color: #1e3a5f; color: #fff; }
+    .shub-tabs button.is-on b { background: #fff; color: #1e3a5f; }
+    .shub-tabs button em { white-space: nowrap; flex: 0 0 auto; margin-inline-start: auto; font-style: normal; font-size: 11px; background: #fff4e0; color: #a35c00; border-radius: 999px; padding: 2px 8px; }
+    .shub-tabs button.is-on em { background: #fff; }
+    .shub-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+    .shub-checks li { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+    .shub-checks li i { flex: 0 0 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 12px; color: #fff; background: #1f9d5c; }
+    .shub-checks li.is-miss i { background: #d9822b; }
+    .shub-checks li.is-miss button { border: 0; background: none; padding: 0; font: inherit; font-weight: 700; color: #a35c00; text-decoration: underline; cursor: pointer; text-align: start; }
+    .shub-frame { border: 1px solid #e3e8f0; border-radius: 14px; background: #fff; overflow: hidden; }
+    .shub-frame__bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid #e3e8f0; background: #f8fafc; }
+    .shub-frame__bar b { font-size: 15px; color: #1e3a5f; }
+    .shub-frame__bar a { font-size: 13px; }
+    .shub-frame iframe { display: block; width: 100%; height: calc(100vh - 170px); min-height: 560px; border: 0; background: #fff; }
+    .shub-frame iframe[hidden] { display: none; }
+    .shub-secs { display: grid; gap: 16px; min-width: 0; }
+    .shub-sec { border: 1.5px solid #dfe6ee; border-radius: 16px; background: #fff; overflow: hidden; scroll-margin-top: 90px; }
+    .shub-sec__head { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #f7fafd; border-bottom: 1.5px solid #e6ecf3; }
+    .shub-sec__n { flex: 0 0 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #1e3a5f; color: #fff; font-weight: 800; }
+    .shub-sec__t { flex: 1 1 auto; min-width: 0; }
+    .shub-sec__t h5 { margin: 0; font-size: 16.5px; font-weight: 800; color: #123a5c; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+    .shub-sec__t h5 em { font-style: normal; font-size: 12px; background: #fff4e0; color: #a35c00; border-radius: 999px; padding: 2px 10px; }
+    .shub-sec__t small { display: block; color: #5b7189; font-weight: 700; font-size: 13px; margin-top: 2px; line-height: 1.7; }
+    .shub-sec__acts { display: flex; gap: 6px; flex: 0 0 auto; }
+    .shub-sec__acts .btn { font-weight: 800; }
+    .shub-sec__body { position: relative; }
+    .shub-sec iframe { display: block; width: 100%; height: 420px; border: 0; background: #fff; }
+    .shub-sec.is-folded .shub-sec__body { display: none; }
+    .shub-sec.is-folded .shub-sec__head { border-bottom: 0; }
+    .shub-loading { position: absolute; inset: 0 0 auto; padding: 40px; text-align: center; color: #6b7a90; }
+    @media (max-width: 991px) {
+        .shub-layout { grid-template-columns: minmax(0, 1fr); }
+        .shub-aside { position: static; max-height: none; overflow: visible; }
+        .shub-tabs { display: flex; overflow-x: auto; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+        .shub-tabs button { flex: 0 0 auto; width: auto; max-width: 260px; }
+        .shub-checks-box { order: 2; }
+        .shub-row { grid-template-columns: minmax(0, 1fr); }
+        .shub-row__acts { flex-direction: row; flex-wrap: wrap; }
+        body.sx .shub-filters .form-select, body.sx .shub-filters .shub-filters__q, body.sx .shub-filters .select2-container, body.sx .shub-filters .sx-choice { flex: 1 1 100%; max-width: none; width: 100% !important; }
+        .shub-frame iframe { height: 78vh; min-height: 480px; }
+        .shub-sec__head { flex-wrap: wrap; }
+        .shub-sec__acts { width: 100%; }
+        .shub-aside .shub-checks-box { order: 0; }
+        .shub-checks li:not(.is-miss) { display: none; }
+    }
+</style>
+        <div class="page-wrapper shub">
+        <div class="content">
+            <div class="shub-head">
+                <div>
+                    <h4>كل بيانات المطور في صفحة واحدة</h4>
+                    <small>اختار مطور ← هتلاقي كل حاجة تخصّه في صفحة واحدة: البيانات ، الصور ، الوحدات ، صفحة الموقع… و"إيه الناقص" بزرار يوديك مكانه.</small>
+                </div>
+                <a class="btn btn-primary" style="font-weight:800" href="services-developers.html">+ إضافة مطور جديد</a>            </div>
+
+                        <form method="get" class="shub-filters mb-2" role="search">
+                <input class="form-control shub-filters__q" type="search" name="q" value="" placeholder="اكتب اسم مطور… (عربي أو إنجليزي)" aria-label="بحث">
+                                                                                <button class="btn btn-primary" style="font-weight:800">بحث</button>
+                            </form>
+            <nav class="shub-show mb-3" aria-label="فلتر الظهور">
+                                    <a href="admin-shary-all-developers_.html" class="is-on">الكل</a>
+                                    <a href="admin-shary-all-developers_show_on.html" class="">ظاهر على الموقع</a>
+                                    <a href="admin-shary-all-developers_show_off.html" class="">مخفي</a>
+                                    <a href="admin-shary-all-developers_show_home.html" class="">على الرئيسية</a>
+                            </nav>
+
+            <p class="mb-2"><small class="text-muted">17 المطورين — الزراير بتتحفظ على طول (الأخضر = ظاهر). النسبة = قد إيه بياناته كاملة.</small></p>
+
+            <div class="shub-list">
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html">درة للتطوير</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/17/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+    <style>
+        .shub-flags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .shub-flag { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid #dfe6ee; background: #fff; color: #5b7189; border-radius: 12px; padding: 6px 10px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; line-height: 1.4; }
+        .shub-sw { position: relative; flex: 0 0 34px; width: 34px; height: 20px; border-radius: 999px; background: #c9d3de; transition: background .15s; }
+        .shub-sw::after { content: ""; position: absolute; top: 2px; inset-inline-start: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: inset-inline-start .15s; }
+        .shub-flag.is-on { border-color: #9fd9b9; color: #11845b; background: #f3fbf6; }
+        .shub-flag.is-on .shub-sw { background: #1f9d5c; }
+        .shub-flag.is-on .shub-sw::after { inset-inline-start: 16px; }
+        .shub-flag.is-site:not(.is-on) { background: #fdf3f2; border-color: #f3b8b2; color: #c0392b; }
+        .shub-flag[disabled] { opacity: .55; cursor: wait; }
+        .shub-flag:focus-visible { outline: 3px solid #2c6386; outline-offset: 2px; }
+        .shub-toast { position: fixed; inset-inline-start: 50%; bottom: 22px; transform: translateX(-50%); z-index: 3000; background: #123a5c; color: #fff; border-radius: 12px; padding: 10px 18px; font-weight: 800; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+        [dir="rtl"] .shub-toast { transform: translateX(50%); }
+        .shub-toast.is-bad { background: #c0392b; }
+    </style>
+    <script>
+        (function () {
+            var token = (document.querySelector('meta[name=csrf-token]') || {}).content || "HktKZqOt8AyOxuEo87g0JbtnQi9V1jOby63qdB9h";
+            function toast(text, bad) {
+                var el = document.createElement('div');
+                el.className = 'shub-toast' + (bad ? ' is-bad' : ''); el.setAttribute('role', 'status'); el.textContent = text;
+                document.body.appendChild(el); setTimeout(function () { el.remove(); }, 2200);
+            }
+            function paint(box, flags) {
+                flags.forEach(function (f) {
+                    var b = box.querySelector('[data-flag="' + f.key + '"]'); if (!b) return;
+                    b.classList.toggle('is-on', !!f.on); b.setAttribute('aria-pressed', f.on ? 'true' : 'false');
+                });
+            }
+            document.addEventListener('click', function (e) {
+                var b = e.target.closest('[data-flags] [data-flag]'); if (!b) return;
+                var box = b.closest('[data-flags]');
+                var on = !b.classList.contains('is-on');
+                if (b.getAttribute('data-flag') === 'site' && !on && !confirm('هيختفي من الموقع والتطبيق. متأكد؟')) return;
+                b.disabled = true;
+                var body = new FormData(); body.append('flag', b.getAttribute('data-flag')); body.append('on', on ? '1' : '0');
+                fetch(box.getAttribute('data-url'), { method: 'POST', body: body, credentials: 'same-origin', headers: { 'X-CSRF-TOKEN': token, 'Accept': 'application/json' } })
+                    .then(function (r) { if (!r.ok) throw r; return r.json(); })
+                    .then(function (d) {
+                        paint(box, d.flags || []); toast((on ? '✓ اتضاف: ' : 'اتشال: ') + b.querySelector('span').textContent);
+                        // صفحة "كل البيانات": الشاشة المفتوحة جوه تتحدث بنفس الحالة
+                        document.querySelectorAll('[data-sec] iframe[src]').forEach(function (frame) {
+                            try { if (frame.contentDocument.querySelector('[data-home-box]')) frame.contentWindow.location.reload(); } catch (err) {}
+                        });
+                    })
+                    .catch(function () { toast('ماتحفظش — جرّب تاني', true); })
+                    .then(function () { b.disabled = false; });
+            });
+        })();
+    </script>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">المراسم</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/16/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">إنرشيا</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/15/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">حسن علام العقارية</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/14/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">مجموعة طلعت مصطفى</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/13/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">مدينة مصر</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/12/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">لافيستا للتطوير العقاري</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/11/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">هايد بارك للتطوير العقاري</a>
+                                                                                        <span class="shub-row__miss">ناقص: اللوجو · نبذة عربي · نبذة إنجليزي · مشاريع منشورة … (+2)</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/10/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:developers" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">0% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 0%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">إيجين ليفينج</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة عربي · نبذة إنجليزي · رقم سيلز المطور (الميتنج) · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/9/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">33% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 33%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">جلف هورايزون العقارية</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة عربي · نبذة إنجليزي · رقم سيلز المطور (الميتنج) · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/8/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">33% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 33%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">مصر إيطاليا العقارية</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة عربي · نبذة إنجليزي · رقم سيلز المطور (الميتنج) · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/7/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">33% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 33%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">تطوير مصر</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة عربي · نبذة إنجليزي · رقم سيلز المطور (الميتنج) · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/6/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="footer" aria-pressed="true" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">33% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 33%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">أورا ديفلوبرز</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة عربي · نبذة إنجليزي · رقم سيلز المطور (الميتنج) · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/5/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">33% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 33%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">ماونتن فيو</a>
+                                                                                        <span class="shub-row__miss">ناقص: رقم سيلز المطور (الميتنج) · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/4/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="footer" aria-pressed="true" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">67% كامل</span>
+                            <div class="shub-meter "><i style="width: 67%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">سوديك</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة عربي · نبذة إنجليزي · رقم سيلز المطور (الميتنج) · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/3/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="footer" aria-pressed="true" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">33% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 33%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">بالم هيلز للتعمير</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة عربي · نبذة إنجليزي · أسئلة شائعة</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/2/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="footer" aria-pressed="true" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">50% كامل</span>
+                            <div class="shub-meter is-low"><i style="width: 50%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                                                        <div class="shub-row">
+                        <div>
+                            <a class="shub-row__name" href="admin-shary-all-developers-17.html" data-sx-sample="1">إعمار مصر</a>
+                                                                                        <span class="shub-row__miss">ناقص: نبذة إنجليزي</span>
+                                                        <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/developers/1/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="home:developers" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المطورين</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag is-on " data-flag="footer" aria-pressed="true" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+                        </div>
+                        <div>
+                            <span class="shub-pct">83% كامل</span>
+                            <div class="shub-meter "><i style="width: 83%"></i></div>
+                        </div>
+                        <div class="shub-row__acts">
+                            <a class="btn btn-primary" style="font-weight:800" href="admin-shary-all-developers-17.html" data-sx-sample="1">افتح كل بياناته</a>
+                            <a class="btn btn-outline-secondary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">على الموقع ↗</a>                                                    </div>
+                    </div>
+                            </div>
+            <div class="mt-3"></div>
+        </div>
+    </div>
+</div>
+<!-- /Main Wrapper -->
+    <!-- jQuery -->
+<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
+
+<!-- Bootstrap Core JS -->
+<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- Feather Icon JS -->
+<script src="../a/assets/js/feather.min.js"></script>
+
+<!-- Slimscroll JS -->
+<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
+
+<!-- Datatable JS -->
+<script src="../a/assets/js/jquery.dataTables.min.js"></script>
+<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
+<script src="../a/assets/js/moment.min.js"></script>
+<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Chart JS -->
+<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
+
+<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+
+
+
+<!-- Owl JS -->
+<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+<!-- Fileupload JS -->
+<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
+<!-- Sweetalert 2 -->
+<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<!-- Custom JS -->
+<script src="../a/assets/js/script.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.confirm-text', function(e) {
+
+            var parentElement = $(this).parent().parent();
+        var deleteUrl = $(this);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won&#039;t be able to revert this!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel", // Translate "Cancel" here
+            confirmButtonClass: "btn btn-primary",
+            cancelButtonClass: "btn btn-danger ml-1",
+            buttonsStyling: !1,
+        }).then(function (t) {
+
+            if (t.value) {
+                parentElement.hide();
+                deleted = deleteUrl.data("delete-url");
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: deleted,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
+                    },
+                    success: function (result) {
+                        // Hide the parent element (delete the row)
+                        parentElement.hide();
+                        // Display a success message
+                        Swal.fire({
+                            type: "success",
+                            title: "Deleted!",
+                            text: "Deleted successfully",
+                            confirmButtonClass: "btn btn-success",
+                        });
+                        // // Redirect to another URL
+                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
+                    },
+                    // User confirmed, hide the parent element (delete the row)
+                })
+            }
+        });
+    })
+    });
+</script>
+    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
+     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+<script src="../a/js/shary-admin/shell.js" defer></script>
+       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+</html>

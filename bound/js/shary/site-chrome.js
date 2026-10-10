@@ -911,6 +911,7 @@ window.SharyZoom = function () {
     // الهامش بالبيكسل من مقاس الدايرة نفسها: المستطيل اللي جواه اللوجو بنفس نسبة اللوجو (عرض ÷ ارتفاع) وأكبر حاجة تدخل في الدايرة —
     // اللوجو العريض (كلمة) بياخد عرض الدايرة تقريبًا بدل ما يتحط في مربع صغير ، والمربع بياخد 65% من القطر. ولا حرف بيتقص.
     function size(img) {
+        if (img.__cover) return;
         var width = img.offsetWidth || parseFloat(window.getComputedStyle(img).width) || 0;
         if (!width) return;
         var ratio = img.__ratio || 1;
@@ -1020,7 +1021,16 @@ window.SharyZoom = function () {
             });
             var main = Object.keys(groups).map(function (key) { return groups[key]; }).sort(function (x, y) { return y.length - x.length; })[0];
             // أقل من 40% من المحيط بلون واحد = الخلفية صورة / تدرّج: الدايرة بمتوسط لون الأطراف كلها
-            var pool = main.length >= solid.length * 0.4 ? main : solid;
+            // لوجو خلفيته صورة / تدرّج (مش لون واحد): بيتقص دايرة ومالي الدايرة كلها — من غير مربع جوه الدايرة
+            if (main.length < solid.length * 0.4) {
+                img.style.objectFit = 'cover';
+                img.style.padding = '0';
+                img.style.borderRadius = '50%';
+                img.style.backgroundImage = 'none';
+                img.__cover = true;
+                return;
+            }
+            var pool = main;
             var best = [0, 1, 2].map(function (channel) { return Math.round(pool.reduce(function (sum, pixel) { return sum + pixel[channel]; }, 0) / pool.length); });
             paint(img, 'rgb(' + best[0] + ',' + best[1] + ',' + best[2] + ')');
         } catch (error) { /* صورة من دومين تاني من غير CORS: اللوجو كامل على دايرة بيضا */ }
