@@ -24977,3 +24977,18 @@ img.abroad-dev__logo {
 .smap:not(.is-globe) .smap__marker.has-plan { background-color: rgba(30, 65, 102, .74); border-color: rgba(255, 255, 255, .85); padding: 2px 8px 3px; font-size: 10.5px; box-shadow: 0 4px 10px -4px rgba(13, 32, 51, .6); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .smap:not(.is-globe) .smap__marker.has-plan::after { display: none; }
 .smap:not(.is-globe) .smap__marker.has-plan.is-on { background-color: rgba(31, 154, 139, .9); }
+
+/* الكتابة فوق الماستر بلان على الخريطة التفاعلية (js/shary/masterplans.js — من لوحة التحكم): بتظهر مع التقريب بس (.mp-labels-on) */
+.mp-label { display: none; pointer-events: none; white-space: nowrap; font-family: inherit; font-weight: 800; line-height: 1.3; border-radius: 999px; padding: 3px 10px; font-size: 12px; color: #123a5c; background: rgba(255, 255, 255, .92); box-shadow: 0 2px 8px -2px rgba(13, 32, 51, .45); }
+.mp-labels-on .mp-label { display: block; }
+.mp-label--project { font-size: 14px; padding: 4px 12px; color: #fff; background: rgba(18, 58, 92, .9); }
+.mp-label--phase { font-size: 12.5px; }
+.mp-label--building { font-size: 11px; padding: 2px 8px; color: #fff; background: rgba(31, 154, 139, .92); }
+.mp-label--unit { font-size: 10.5px; padding: 2px 7px; color: #123a5c; background: #ffe7a3; }
+
+/* مستطيل الخريطة: صورة القمر الصناعي للمكان (بدل خرائط جوجل) — مالية المستطيل ، والضغط بيفتح خريطة شاري التفاعلية */
+img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !important; pointer-events: none; }
+
+/* المشروع ليه اسم مكتوب على الماستر بلان من لوحة التحكم: علامة الاسم بتختفي لما الكتابة تظهر (من غير تكرار) */
+.mp-labels-on .smap__marker.has-plan.has-name:not(.is-on) { opacity: 0; pointer-events: none; }
+.mp-labels-on .smap__marker.has-plan.has-name.is-on { opacity: 0; }

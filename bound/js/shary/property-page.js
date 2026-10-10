@@ -328,6 +328,26 @@
             var ok = modal.querySelector('.soon-pop__ok');
             if (ok) ok.focus();
         }
+        // مخطط المشروع / مخطط الوحدة مرفوع بس الصورة نفسها مش موجودة (لينك مكسور): نفس بوب أب "قريبًا" + طلبه على واتساب — بدل عارض فاضي
+        function planBroken(tile) {
+            var kind = tile.getAttribute('data-lightbox-open');
+            var imgs = Array.prototype.slice.call(document.querySelectorAll('img[data-lightbox-item="' + kind + '"]'));
+            return !imgs.length || imgs.every(function (img) { return img.__broken === true; });
+        }
+        Array.prototype.forEach.call(document.querySelectorAll('[data-plan-tile]'), function (tile) {
+            var kind = tile.getAttribute('data-lightbox-open');
+            Array.prototype.forEach.call(document.querySelectorAll('img[data-lightbox-item="' + kind + '"]'), function (img) {
+                var probe = new Image();
+                probe.onload = function () { img.__broken = probe.naturalWidth === 0; };
+                probe.onerror = function () { img.__broken = true; };
+                probe.src = img.currentSrc || img.getAttribute('src') || '';
+                if (!probe.src) img.__broken = true;
+            });
+        });
+        document.addEventListener('click', function (event) {
+            var tile = event.target.closest ? event.target.closest('[data-plan-tile]') : null;
+            if (tile && planBroken(tile)) { event.preventDefault(); event.stopPropagation(); open(tile); }
+        }, true);
         document.addEventListener('click', function (event) {
             var button = event.target.closest ? event.target.closest('[data-soon-open]') : null;
             if (button) { event.preventDefault(); open(button); return; }

@@ -112,6 +112,7 @@
         var MP = {
             minZoom: options.minZoom || 9,         // من زوم المنطقة (مش مصر كلها)
             hdZoom: options.hdZoom || 15.5,
+            labelZoom: options.labelZoom || 13.5,
             // كل الماستر بلانز اللي في الكادر بتظهر مع بعض (زي ناوي) — الحد ده للأمان بس
             maxActive: options.maxActive || (wide() ? 80 : 40),
             // وهي كتير مع بعض (بعيد شوية): كل صورة بنسخة أخف — والصورة الكاملة بترجع لوحدها مع التقريب (zoom >= hdZoom - 1)
@@ -145,15 +146,45 @@
             return maxTexture;
         }
         // صورة أكبر من اللي كارت الشاشة يستحمله: بتتصغّر لأقصى مقاس مسموح (بدل ما تفشل)
-        function fitTexture(img, limit) {
+        // المرحلة "الظاهرة": الصورة بتتلوّن في المتصفح — باقي الماستر بلان بيغمق (على رسمها المفرّغ بالظبط) والمرحلة نفسها بتفضل بألوانها
+        function activeRings(project) {
+            var ann = deepJson(project && project.masterplan_annotations);
+            return ann && Array.isArray(ann.phases) ? ann.phases.filter(function (phase) { return phase && phase.active && Array.isArray(phase.ring) && phase.ring.length >= 3; }).map(function (phase) { return phase.ring; }) : [];
+        }
+        function toPixel(quad, point, w, h) {
+            // عكس التحويل من أركان الصورة (TL, TR, BR, BL) لمكان النقطة جوه الصورة
+            var u = 0.5, v = 0.5;
+            for (var i = 0; i < 12; i++) {
+                var fx = (1 - u) * (1 - v) * quad[0][0] + u * (1 - v) * quad[1][0] + u * v * quad[2][0] + (1 - u) * v * quad[3][0] - point[0];
+                var fy = (1 - u) * (1 - v) * quad[0][1] + u * (1 - v) * quad[1][1] + u * v * quad[2][1] + (1 - u) * v * quad[3][1] - point[1];
+                var au = (1 - v) * (quad[1][0] - quad[0][0]) + v * (quad[2][0] - quad[3][0]), av = (1 - u) * (quad[3][0] - quad[0][0]) + u * (quad[2][0] - quad[1][0]);
+                var bu = (1 - v) * (quad[1][1] - quad[0][1]) + v * (quad[2][1] - quad[3][1]), bv = (1 - u) * (quad[3][1] - quad[0][1]) + u * (quad[2][1] - quad[1][1]);
+                var det = au * bv - av * bu;
+                if (!det) break;
+                u -= (fx * bv - fy * av) / det; v -= (fy * au - fx * bu) / det;
+            }
+            return [u * w, v * h];
+        }
+        function fitTexture(img, limit, project, coords) {
             var cap = Math.min(textureCap(), limit || Infinity), w = img.naturalWidth, h = img.naturalHeight;
-            if (Math.max(w, h) <= cap) return img.src;
+            var rings = coords ? activeRings(project) : [];
+            if (Math.max(w, h) <= cap && !rings.length) return img.src;
             try {
-                var scale = cap / Math.max(w, h), canvas = document.createElement('canvas');
+                var scale = Math.min(1, cap / Math.max(w, h)), canvas = document.createElement('canvas');
                 canvas.width = Math.round(w * scale); canvas.height = Math.round(h * scale);
                 var ctx = canvas.getContext('2d');
                 ctx.imageSmoothingQuality = 'high';
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                if (rings.length) {
+                    ctx.save();
+                    ctx.beginPath(); ctx.rect(0, 0, canvas.width, canvas.height);
+                    rings.forEach(function (ring) { ring.forEach(function (point, i) { var px = toPixel(coords, [Number(point[0]), Number(point[1])], canvas.width, canvas.height); if (i) ctx.lineTo(px[0], px[1]); else ctx.moveTo(px[0], px[1]); }); ctx.closePath(); });
+                    ctx.clip('evenodd');
+                    ctx.globalCompositeOperation = 'source-atop';            // بيغمّق الرسم بس — الأجزاء المفرّغة تفضل شفافة
+                    ctx.fillStyle = 'rgba(11, 31, 51, 0.58)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.restore();
+                }
                 return canvas.toDataURL('image/png');
             } catch (error) { return img.src; }
         }
@@ -180,6 +211,7 @@
                 var corners = parseCorners(item.masterplan_corners || item.corners);
                 if (corners && (!project.__mpOwn || item.override)) { project.masterplan_corners = corners; project.masterplan_placement = null; }
                 if (item.masterplan) project.masterplan = item.masterplan;
+                if (item.masterplan_annotations) project.masterplan_annotations = item.masterplan_annotations;
                 if (item.masterplan_hd) project.masterplan_hd = item.masterplan_hd;
                 if (item.version && !project.masterplan_version) project.masterplan_version = item.version;
                 if (MP.rendered[project.id]) remove(project.id);
@@ -232,6 +264,58 @@
             return box[2] >= b.getWest() - padLng && box[0] <= b.getEast() + padLng && box[3] >= b.getSouth() - padLat && box[1] <= b.getNorth() + padLat;
         }
 
+        // ---------- الكتابة والمراحل فوق الماستر بلان (masterplan_annotations من لوحة التحكم) ----------
+        // المراحل: مساحة ملوّنة بحدود + اسمها ، والمرحلة "الظاهرة" (active) واضحة وباقي الماستر بلان متظلّل.
+        // الكتابة (اسم المشروع / المرحلة / العمارة / الوحدة): بتظهر مع التقريب (zoom >= labelZoom) فوق الماستر بلان في مكانها.
+        function annIds(id) { return { source: 'mp-ann-src-' + id, mask: 'mp-ann-mask-' + id, fill: 'mp-ann-fill-' + id, line: 'mp-ann-line-' + id }; }
+        function dropAnnotations(id) {
+            var a = annIds(id), entry = MP.rendered[id];
+            try { [a.line, a.fill, a.mask].forEach(function (layer) { if (map.getLayer(layer)) map.removeLayer(layer); }); if (map.getSource(a.source)) map.removeSource(a.source); } catch (error) { /* الخريطة بتغيّر شكلها */ }
+            if (entry && entry.labels) { entry.labels.forEach(function (marker) { marker.remove(); }); entry.labels = []; }
+        }
+        function ringClosed(ring) { var r = ring.slice(); var a = r[0], b = r[r.length - 1]; if (a[0] !== b[0] || a[1] !== b[1]) r.push(a); return r; }
+        function centroid(ring) { var x = 0, y = 0; ring.forEach(function (p) { x += p[0]; y += p[1]; }); return [x / ring.length, y / ring.length]; }
+        function drawAnnotations(project) {
+            var id = project.id, entry = MP.rendered[id], ann = deepJson(project.masterplan_annotations);
+            if (!entry || !ann || typeof ann !== 'object') return;
+            dropAnnotations(id);
+            var a = annIds(id), features = [], phases = Array.isArray(ann.phases) ? ann.phases : [];
+            var active = phases.filter(function (phase) { return phase.active && Array.isArray(phase.ring) && phase.ring.length >= 3; });
+            // الظل نفسه بيتعمل في صورة الماستر بلان (fitTexture) — هنا الحدود والألوان بس
+            phases.forEach(function (phase) {
+                if (!Array.isArray(phase.ring) || phase.ring.length < 3) return;
+                features.push({ type: 'Feature', properties: { kind: 'phase', color: phase.color || '#1f9a8b', active: phase.active ? 1 : 0 }, geometry: { type: 'Polygon', coordinates: [ringClosed(phase.ring)] } });
+            });
+            try {
+                if (features.length) {
+                    map.addSource(a.source, { type: 'geojson', data: { type: 'FeatureCollection', features: features } });
+                    map.addLayer({ id: a.fill, type: 'fill', source: a.source, filter: ['==', ['get', 'kind'], 'phase'], paint: { 'fill-color': ['get', 'color'], 'fill-opacity': ['case', ['==', ['get', 'active'], 1], 0, 0.22] } });
+                    map.addLayer({ id: a.line, type: 'line', source: a.source, filter: ['==', ['get', 'kind'], 'phase'], paint: { 'line-color': ['get', 'color'], 'line-width': ['case', ['==', ['get', 'active'], 1], 3, 2] } });
+                }
+            } catch (error) { /* الخريطة بتغيّر شكلها: بترجع مع الرسم الجاي */ }
+            // الكتابة: اللي اتحطت بإيد الفريق + اسم كل مرحلة في نصها (لو مالهاش كتابة)
+            var labels = (Array.isArray(ann.labels) ? ann.labels : []).slice();
+            phases.forEach(function (phase) {
+                if (!phase.name || !Array.isArray(phase.ring) || phase.ring.length < 3) return;
+                if (labels.some(function (label) { return label.text === phase.name; })) return;
+                var c = centroid(phase.ring);
+                labels.push({ text: phase.name, kind: 'phase', lng: c[0], lat: c[1] });
+            });
+            var lib = window.maplibregl || window.mapboxgl;
+            if (!lib || !lib.Marker) return;
+            entry.labels = labels.filter(function (label) { return label && label.text && isFinite(label.lng) && isFinite(label.lat); }).map(function (label) {
+                var el = document.createElement('div');
+                el.className = 'mp-label mp-label--' + (label.kind || 'phase');
+                el.textContent = label.text;
+                return new lib.Marker({ element: el, anchor: 'center' }).setLngLat([Number(label.lng), Number(label.lat)]).addTo(map);
+            });
+        }
+        // الكتابة بتظهر من زوم labelZoom (قبلها الماستر بلانز صغيرة والكتابة هتزحم الشاشة)
+        function labelsByZoom() {
+            var box = map.getContainer && map.getContainer();
+            if (box) box.classList.toggle('mp-labels-on', map.getZoom() >= MP.labelZoom);
+        }
+
         // ---------- الطبقات ----------
         function drop(x) {
             try {
@@ -239,7 +323,7 @@
                 if (map.getSource(x.sourceId)) map.removeSource(x.sourceId);
             } catch (error) { /* الخريطة بتغيّر شكلها */ }
         }
-        function remove(id) { drop(ids(id)); delete MP.rendered[id]; changed(); }
+        function remove(id) { dropAnnotations(id); drop(ids(id)); delete MP.rendered[id]; changed(); }
         function paintFor(project) {
             var opacity = Number(project.masterplan_opacity);
             return { 'raster-opacity': isFinite(opacity) && opacity > 0 && opacity <= 1 ? opacity : 1, 'raster-fade-duration': 0, 'raster-resampling': 'linear' };
@@ -278,7 +362,7 @@
                     drop(x);
                     var close = map.getZoom() >= MP.hdZoom - 1 || String(id) === String(activeId());
                     var cap = close ? 0 : MP.overviewCap;
-                    map.addSource(x.sourceId, { type: 'image', url: fitTexture(img, cap), coordinates: place.coords });
+                    map.addSource(x.sourceId, { type: 'image', url: fitTexture(img, cap, project, place.coords), coordinates: place.coords });
                     MP.rendered[id].light = !!cap && Math.max(img.naturalWidth, img.naturalHeight) > cap;
                     MP.rendered[id].url = img.src;
                     // بتتضاف مخفية (شفافة) وبتظهر مرة واحدة لما الصورة تجهز على الخريطة — من غير ما تتشاف وهي بتترسم
@@ -293,6 +377,7 @@
                         if (revealed || !alive()) return;
                         revealed = true;
                         try { map.setPaintProperty(x.layerId, 'raster-opacity', target); } catch (error) { /* اتشالت */ }
+                        drawAnnotations(project);
                     };
                     map.once('idle', reveal);
                     setTimeout(reveal, 1500);
@@ -314,7 +399,7 @@
                     loadImage(entry.url, function (img) {
                         var now = MP.rendered[id];
                         if (!img || !now || now.token !== token) return;
-                        try { var source = map.getSource(entry.sourceId); if (source && source.updateImage) source.updateImage({ url: fitTexture(img), coordinates: entry.coords }); } catch (error) { /* اتشالت */ }
+                        try { var source = map.getSource(entry.sourceId); if (source && source.updateImage) source.updateImage({ url: fitTexture(img, 0, project, entry.coords), coordinates: entry.coords }); } catch (error) { /* اتشالت */ }
                     });
                 });
             }
@@ -327,7 +412,7 @@
                 loadImage(withVersion(absolute(project.masterplan_hd), project), function (img) {
                     var now = MP.rendered[id];
                     if (!img || !now || now.token !== token) return;
-                    try { var source = map.getSource(entry.sourceId); if (source && source.updateImage) source.updateImage({ url: fitTexture(img), coordinates: entry.coords }); } catch (error) { /* اتشالت */ }
+                    try { var source = map.getSource(entry.sourceId); if (source && source.updateImage) source.updateImage({ url: fitTexture(img, 0, project, entry.coords), coordinates: entry.coords }); } catch (error) { /* اتشالت */ }
                 });
             });
         }
@@ -358,8 +443,19 @@
             }
             var keep = {};
             wanted.forEach(function (project) { keep[project.id] = true; });
-            Object.keys(MP.rendered).forEach(function (id) { if (!keep[id]) remove(id); });
+            // ثبات: الماستر بلان اللي اترسمت بتفضل مكانها وإنت بتحرّك الخريطة (من غير ما تختفي وترجع) —
+            // بتتشال بس لو المشروع اتشال من الفلتر ، أو العدد عدّى الحد (الأبعد الأول)
+            var visibleIds = {};
+            projects().forEach(function (project) { visibleIds[project.id] = true; });
+            Object.keys(MP.rendered).forEach(function (id) { if (!visibleIds[id]) remove(id); });
+            var extra = Object.keys(MP.rendered).filter(function (id) { return !keep[id]; });
+            var room = MP.maxActive - wanted.length;
+            if (extra.length > room) {
+                var dist = function (id) { var b = boundsOf(byId(id) || {}) || [0, 0, 0, 0]; return Math.hypot((b[0] + b[2]) / 2 - center.lng, (b[1] + b[3]) / 2 - center.lat); };
+                extra.sort(function (a, b) { return dist(b) - dist(a); }).slice(0, extra.length - Math.max(0, room)).forEach(remove);
+            }
             wanted.forEach(render);
+            labelsByZoom();
             upgrade();
         }
 
@@ -372,8 +468,9 @@
         var firstPoll = setInterval(function () { if (dead || Object.keys(MP.rendered).length) { clearInterval(firstPoll); return; } refresh(); }, 400);
         setTimeout(function () { clearInterval(firstPoll); }, 60000);
         map.on('zoomend', upgrade);
+        map.on('zoom', labelsByZoom);
         // أي تغيير لشكل الخريطة بيمسح كل الطبقات: نرجّع الماستر بلان كلها في مكانها
-        map.on('style.load', function () { MP.rendered = {}; setTimeout(refresh, 80); });
+        map.on('style.load', function () { Object.keys(MP.rendered).forEach(function (id) { var e = MP.rendered[id]; if (e && e.labels) e.labels.forEach(function (m) { m.remove(); }); }); MP.rendered = {}; setTimeout(refresh, 80); });
         map.on('styledata', function () { clearTimeout(styleTimer); styleTimer = setTimeout(refresh, 250); });
         loadPlacements();
         refresh();

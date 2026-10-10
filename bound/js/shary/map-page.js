@@ -77,7 +77,7 @@
             location: p.address || cityName, area_label: cityName, group: 'c' + p.city_id, group_label: cityName,
             price: value ? Math.round(value).toLocaleString('en-US') : '', price_value: value, types: types.slice(0, 3).join(' · '), type_keys: types,
             delivery: deliveryOf(p.delivery_in), image: p.image || '', url: url, price_list_pdf: p.price_list_pdf || '', lat: lat, lng: lng,
-            masterplan: p.masterplan || '', masterplan_corners: p.masterplan_corners || null, masterplan_placement: p.masterplan_placement || null,
+            masterplan: p.masterplan || '', masterplan_corners: p.masterplan_corners || null, masterplan_placement: p.masterplan_placement || null, masterplan_annotations: p.masterplan_annotations || null,
             masterplan_hd: p.masterplan_hd || '', masterplan_tiles: p.masterplan_tiles || '', masterplan_tiles_meta: p.masterplan_tiles_meta || null,
             masterplan_version: p.masterplan_version || p.masterplan_updated_at || '', masterplan_opacity: p.masterplan_opacity,
             boundary: p.boundary_coords || p.boundary || p.coordinates || null
@@ -112,8 +112,6 @@
             if (part('no-price')) part('no-price').hidden = !!p.price;
             if (part('url')) { if (p.url) part('url').href = p.url; else part('url').hidden = true; }
             if (part('pdf')) { if (p.price_list_pdf && !p.url) { part('pdf').href = p.price_list_pdf; part('pdf').hidden = false; } else part('pdf').hidden = true; }
-            if (part('directions')) part('directions').href = 'https://www.google.com/maps/dir/?api=1&destination=' + p.lat + ',' + p.lng;
-            if (part('earth')) part('earth').href = 'https://earth.google.com/web/search/' + p.lat + ',' + p.lng;
             box.appendChild(row);
         });
         // "اختر المنطقة": المدن اللي ليها مشاريع (الأكتر مشاريع الأول) — قبل زرار "الكل"
@@ -225,6 +223,9 @@
                 if (!item.__pin) return;
                 var p = info(item), on = ids.indexOf(String(p.id)) > -1;
                 item.__pin.classList.toggle('has-plan', on);
+                // الفريق كاتب اسم المشروع بنفسه على الماستر بلان: علامة الاسم بتختفي مع التقريب (من غير تكرار)
+                var ann = p.masterplan_annotations; if (typeof ann === 'string') { try { ann = JSON.parse(ann); } catch (error) { ann = null; } }
+                item.__pin.classList.toggle('has-name', on && !!(ann && Array.isArray(ann.labels) && ann.labels.some(function (label) { return label && label.kind === 'project'; })));
                 // اسم المشروع بيتحط في نص الماستر بلان نفسها (مش على نقطة المشروع اللي ممكن تكون بره المخطط)
                 if (item.__marker) {
                     var box = on ? planBox(p) : null;
@@ -371,6 +372,7 @@
                 if (plans) plans.refresh();
                 // جاي من صفحة المشروع / الوحدة: على الماستر بلان على طول (من غير لفة الكرة الأرضية) — وإلا حركة الدخول العادية
                 goTo(p, state.asked ? 0 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
+                revealRow(state.current);                  // كارت المشروع ظاهر في القايمة من الأول
                 return;
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
@@ -397,24 +399,28 @@
             var q = info(item);
             frame.hidden = false;
             leaveGlobe();
-            var url = 'https://www.google.com/maps?q=' + q.lat + ',' + q.lng + '&t=' + state.type + '&z=' + state.zoom + '&hl=' + lang + '&output=embed';
+            // صورة القمر الصناعي للمكان (نفس خلفية الخريطة — مش خرائط جوجل)
+            var z = Math.max(3, Math.min(18, Number(state.zoom) || 14)), per = 360 / (256 * Math.pow(2, z)), hw = 1200 * per / 2, hh = 800 * per * Math.cos(q.lat * Math.PI / 180) / 2;
+            var url = ESRI + 'World_Imagery/MapServer/export?bbox=' + [q.lng - hw, q.lat - hh, q.lng + hw, q.lat + hh].map(function (n) { return n.toFixed(6); }).join(',') + '&bboxSR=4326&imageSR=3857&size=1200,800&format=jpg&f=image';
             if (frame.getAttribute('src') !== url) frame.setAttribute('src', url);
             frame.setAttribute('title', (root.getAttribute('data-frame-title') || '').replace(':name', q.name || ''));
         }
 
+        // الكارت المختار يبان في القايمة (بالعرض على الموبايل / بالطول على الديسك توب) من غير ما الصفحة تتحرك
+        function revealRow(item, behavior) {
+            var list = item && item.closest('[data-smap-list]');
+            var row = item && item.parentNode;
+            if (!list || !row) return;
+            if (list.scrollWidth > list.clientWidth + 4) list.scrollTo({ left: row.offsetLeft - (list.clientWidth - row.offsetWidth) / 2, behavior: behavior || 'auto' });
+            else if (list.scrollHeight > list.clientHeight + 4) list.scrollTo({ top: row.offsetTop - list.offsetTop - 8, behavior: behavior || 'auto' });
+        }
         function select(item, reveal) {
             state.current = item || null;
             items.forEach(function (other) { other.setAttribute('aria-current', other === item ? 'true' : 'false'); });
             if (!item) { paint(false); return; }
             if (state.intro || !gl) leaveGlobe();
             paint();
-            if (reveal) {
-                // الكارت المختار يبان في القايمة (بالعرض على الموبايل / بالطول على الديسك توب) من غير ما الصفحة تتحرك
-                var list = item.closest('[data-smap-list]');
-                var row = item.parentNode;
-                if (list && list.scrollWidth > list.clientWidth + 4) list.scrollTo({ left: row.offsetLeft - (list.clientWidth - row.offsetWidth) / 2, behavior: 'smooth' });
-                else if (list && list.scrollHeight > list.clientHeight + 4) list.scrollTo({ top: row.offsetTop - list.offsetTop - 8, behavior: 'smooth' });
-            }
+            if (reveal) revealRow(item, 'smooth');
             root.dispatchEvent(new CustomEvent('shary:map-select', { bubbles: true, detail: info(item) }));
             // مشروع تاني: علامات وحدات المشروع القديم بتتشال ، ووحدات الجديد بتتحمل (وبتظهر أول ما الخريطة تقرّب عليه)
             if (unitsFor !== null && unitsFor !== info(item).id) clearUnits();
