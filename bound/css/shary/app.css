@@ -25048,3 +25048,23 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 /* أسامي الكروت: من غير قص ولا نقط "…" أبدًا — الخط بيصغر لحد ما الاسم يدخل (js/shary/site-chrome.js) ولو لسه طويل بينزل سطر تاني */
 [data-fit-line], .shary-card__name, .prop-shot__name a, .shot-card__name, .abroad-dev b, .content-card__body b, .ad-card__title { text-overflow: clip !important; }
 [data-fit-line].fit-wrap, .shary-card__name.fit-wrap, .prop-shot__name a.fit-wrap, .shot-card__name.fit-wrap, .abroad-dev b.fit-wrap, .content-card__body b.fit-wrap, .ad-card__title.fit-wrap { white-space: normal !important; overflow: visible !important; -webkit-line-clamp: unset !important; display: block; }
+
+/* ---- شيت "شوف شاري في..." (موبايل) زي Zillow: بيطلع من تحت — صف التطبيق (حمل / افتح التطبيق) وصف المتصفح (كمّل) */
+.app-pop.app-sheet { align-items: flex-end; padding: 0; }
+.app-sheet__panel { position: relative; width: 100%; background: #fff; border-radius: 26px 26px 0 0; padding: 10px 22px calc(22px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px rgba(10, 26, 42, .18); transform: translateY(105%); transition: transform .38s cubic-bezier(.2, .8, .2, 1); }
+.app-pop.is-open .app-sheet__panel { transform: translateY(0); }
+.app-sheet__grip { display: block; width: 44px; height: 5px; margin: 0 auto 14px; border-radius: 99px; background: #d6dde5; }
+.app-sheet__title { margin: 0 0 6px; padding-bottom: 14px; border-bottom: 1px solid #e4eaef; text-align: center; font-size: 20px; font-weight: 800; color: #1E4266; }
+.app-sheet__row { display: flex; align-items: center; gap: 14px; padding: 14px 0; }
+.app-sheet__logo { flex: none; width: 50px; height: 50px; border-radius: 14px; background: #fff; border: 1px solid #e4eaef; display: flex; align-items: center; justify-content: center; }
+.app-sheet__logo--browser { background: #eef3f8; border-color: #eef3f8; color: #1E4266; }
+.app-sheet__name { flex: 1; min-width: 0; font-size: 17px; font-weight: 800; color: #1E4266; }
+.app-sheet__btn { flex: none; min-width: 132px; display: inline-flex; align-items: center; justify-content: center; padding: 11px 18px; border-radius: 999px; font-size: 15px; font-weight: 800; color: #1E4266; background: #fff; border: 1.5px solid #c9d5e2; text-decoration: none; cursor: pointer; font-family: inherit; transition: background-color .15s ease, transform .15s ease; }
+.app-sheet__btn:active { transform: scale(.96); background: #eef3f8; }
+.app-sheet__btn--main { background: #1E4266; border-color: #1E4266; color: #fff; }
+.app-sheet__btn--main:hover, .app-sheet__btn--main:active { background: #163352; color: #fff; }
+.app-sheet__btn--main[data-state="open"] { background: #4CBFB2; border-color: #4CBFB2; }
+
+/* شيت التطبيق: كلام الزراير ("حمل التطبيق" / "افتح التطبيق" / "كمّل") بولد وأوضح */
+.app-sheet__btn, .app-sheet__btn [data-app-label] { font-weight: 800 !important; font-size: 16px; letter-spacing: 0; }
+.app-sheet__name { font-weight: 800; }

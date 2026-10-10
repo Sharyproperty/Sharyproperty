@@ -793,6 +793,7 @@ window.SharyZoom = function () {
     var pop = document.querySelector('[data-app-popup]');
     if (!pop) return;
     var KEY = 'shary-app-popup';
+    var AFTER_PRIVACY = 4000;   // الوقت (مللي ثانية) بين موافقة الخصوصية وظهور شيت التطبيق
     var DAYS = 0;   // 0 = مرة في كل زيارة (sessionStorage) ، أو عدد الأيام بين كل ظهور (localStorage)
 
     function store() { return DAYS > 0 ? window.localStorage : window.sessionStorage; }
@@ -837,6 +838,15 @@ window.SharyZoom = function () {
         if (cta) cta.click();
     });
 
+    // شيت "شوف شاري في...": اسم المتصفح اللي العميل فاتح منه
+    var browserName = pop.querySelector('[data-browser-name]');
+    if (browserName) {
+        var bua = navigator.userAgent || '';
+        var bn = /SamsungBrowser/i.test(bua) ? 'Samsung Internet' : /EdgA|EdgiOS|Edg\//i.test(bua) ? 'Edge' : /Firefox|FxiOS/i.test(bua) ? 'Firefox' : /OPR|Opera/i.test(bua) ? 'Opera'
+            : /CriOS|Chrome/i.test(bua) ? 'Chrome' : /Safari/i.test(bua) ? 'Safari' : '';
+        if (bn) browserName.textContent = bn;
+    }
+
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
     if (!mobile || seen() || got() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
     // صورة التليفون بتتحمّل من أول ما الصفحة تفتح (مش lazy — جوه بوب أب مخفي ما كانتش بتتحمّل غير لما يظهر ، فالكارت كان بيظهر الأول والصورة بعده)
@@ -858,9 +868,15 @@ window.SharyZoom = function () {
     // العميل فاتح Shary AI: البوب أب ما يقطعش المحادثة — بيستنى لحد ما يقفلها
     function show() {
         var button = pop.querySelector('[data-app-button]');
-        if (button && button.getAttribute('data-state') === 'open') return;   // التطبيق متسطّب
+        if (button && button.getAttribute('data-state') === 'open' && !pop.hasAttribute('data-app-sheet')) return;   // التطبيق متسطّب (الشيت بيظهر بـ "افتح التطبيق")
         var ai = document.querySelector('[data-ai-panel]');
         if (ai && Array.prototype.some.call(document.querySelectorAll('[data-ai-panel]'), function (panel) { return !panel.classList.contains('hidden'); })) { window.setTimeout(show, 4000); return; }
+        // تنبيه الخصوصية ظاهر (أول زيارة): الشيت بيستنى لحد ما العميل يضغط "موافق" ، وبعدها بـ AFTER_PRIVACY يطلع — مش الاتنين مع بعض
+        var privacy = document.querySelector('[data-privacy-note]');
+        if (privacy && !privacy.classList.contains('hidden')) {
+            privacy.addEventListener('shary:privacy-accept', function () { window.setTimeout(show, AFTER_PRIVACY); }, { once: true });
+            return;
+        }
         if (seen() || got()) return;
         ready(function () { if (!seen() && !got()) open(); });
     }
