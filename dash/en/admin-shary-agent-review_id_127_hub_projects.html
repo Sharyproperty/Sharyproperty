@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="preview">
+    <meta name="robots" content="noindex, nofollow">
+    <title>صندوق المراجعة — لوحة تحكم شاري</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
+</head>
+<body class="ag sx" dir="rtl">
+
+<a class="sx-skip" href="#sx-main">Skip to the content</a>
+<header class="sx-top" data-sx-top>
+    <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+</button>
+    <a class="sx-top__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
+            <div class="sx-find" role="search" data-sx-find>
+            <label class="sx-sr" for="sx-q">Search the dashboard</label>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+            <input type="search" id="sx-q" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Search a project, unit, developer, area or screen…" role="combobox" aria-expanded="false" aria-controls="sx-q-out" aria-autocomplete="list">
+            <button type="button" class="sx-find__x" data-sx-find-close aria-label="Clear the search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+            <div class="sx-find__out" id="sx-q-out" role="listbox" aria-label="Search the dashboard" hidden></div>
+        </div>
+        <div class="sx-top__end">
+                    <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="Search the dashboard"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+</button>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 4"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>4</b></a>
+                <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
+</a>
+        <a class="sx-lang" href="../admin-shary-agent-review_id_127_hub_projects.html" data-sx-lang="1" lang="ar">عربي</a>
+        <details class="sx-user" data-sx-user>
+            <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
+</summary>
+            <div class="sx-user__menu">
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
+            </div>
+        </details>
+    </div>
+</header>
+<aside class="sx-side" id="sx-side" data-sx-side>
+    <div class="sx-side__head">
+        <a class="sx-side__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
+        <button type="button" class="sx-ico sx-side__close" data-sx-menu-close aria-label="Close the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+</button>
+    </div>
+    <nav class="sx-nav" aria-label="Shary dashboard">
+                                                                    <div class="sx-grp " data-sx-grp="home">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-home">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+                            <span>Home</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-home">
+                                                            <li><a href="index.html" class="" ><span>Home</span></a></li>
+                                                            <li><a href="index.html" class="" ><span>Old home (the old dashboard figures)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <a class="sx-one " href="admin-shary-how-to.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
+                        <span>How to use the dashboard</span>
+                                            </a>
+                                                                <a class="sx-one " href="admin-shary-guide.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
+                        <span>Where do I edit what?</span>
+                                            </a>
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
+                            <span>Agent</span>
+                            <b class="sx-tag">27</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-agent">
+                    <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
+                    <li><a href="admin-shary-agent-review.html" class="is-on" aria-current="page" ><span>Review box</span><b class="sx-tag">27</b></a></li>
+                    <li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
+                    <li><a href="admin-shary-agent-s-projects.html" class="" ><span>Projects</span><b class="sx-tag">5</b></a></li>
+                    <li><a href="admin-shary-agent-s-units.html" class="" ><span>Units</span><b class="sx-tag">3</b></a></li>
+                    <li><a href="admin-shary-agent-s-design.html" class="" ><span>Pictures &amp; design</span></a></li>
+                    <li><a href="admin-shary-agent-s-website.html" class="" ><span>Website pages</span></a></li>
+                    <li><a href="admin-shary-agent-s-seo.html" class="" ><span>SEO &amp; articles</span><b class="sx-tag">6</b></a></li>
+                    <li><a href="admin-shary-agent-s-messages.html" class="" ><span>Customer messages</span><b class="sx-tag">2</b></a></li>
+                    <li><a href="admin-shary-agent-s-marketing.html" class="" ><span>Marketing</span><b class="sx-tag">2</b></a></li>
+                    <li><a href="admin-shary-agent-s-requests.html" class="" ><span>Customer requests</span><b class="sx-tag">1</b></a></li>
+                    <li><a href="admin-shary-agent-s-ma3ak.html" class="" ><span>Shary Ma3ak</span><b class="sx-tag">5</b></a></li>
+                    <li><a href="admin-shary-agent-s-places.html" class="" ><span>Developers &amp; areas</span><b class="sx-tag">1</b></a></li>
+                    <li><a href="admin-shary-agent-s-market.html" class="" ><span>Market &amp; reports</span><b class="sx-tag">2</b></a></li>
+                    <li><a href="admin-shary-agent-tools.html" class="" ><span>Tools</span></a></li>
+                    <li><a href="admin-shary-agent-keys.html" class="" ><span>Keys &amp; connections</span></a></li>
+                    <li><a href="admin-shary-agent-log.html" class="" ><span>Log &amp; undo</span></a></li>
+                    <li><a href="admin-shary-agent-settings.html" class="" ><span>Access &amp; connections</span></a></li>
+                </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Daily work</h6>                                                <div class="sx-grp " data-sx-grp="requests">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
+                            <span>Requests &amp; messages</span>
+                            <b class="sx-tag">51</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-requests">
+                                                            <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">51</b></a></li>
+                                                            <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
+                                                            <li><a href="admin-shary-owner-requests_type_rent.html" class="" ><span>Rent-out requests</span></a></li>
+                                                            <li><a href="request-sell-property.html" class="" ><span>Sell requests (old list)</span></a></li>
+                                                            <li><a href="request-rent-property.html" class="" ><span>Rent-out requests (old list)</span></a></li>
+                                                            <li><a href="admin-shary-leads_form_meeting.html" class="" ><span>Meeting requests</span></a></li>
+                                                            <li><a href="request-meetings.html" class="" ><span>Zoom meeting requests</span></a></li>
+                                                            <li><a href="ContactUs.html" class="" ><span>Contact messages</span></a></li>
+                                                            <li><a href="exclusive-resale-admin_tab_requests.html" class="" ><span>Offers on resale opportunities</span></a></li>
+                                                            <li><a href="admin-shary-follows.html" class="" ><span>Project follows</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="units">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-units">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+                            <span>Units</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-units">
+                                                            <li><a href="admin-shary-units.html" class="" ><span>All units</span></a></li>
+                                                            <li><a href="admin-shary-units-create.html" class="" ><span>Add a unit</span></a></li>
+                                                            <li><a href="admin-shary-units-sheet.html" class="" ><span>Upload a units sheet</span></a></li>
+                                                            <li><a href="admin-shary-units_type_developer_sale.html" class="" ><span>Developer units</span></a></li>
+                                                            <li><a href="admin-shary-units_type_resale.html" class="" ><span>Resale units</span></a></li>
+                                                            <li><a href="admin-shary-units_type_rent.html" class="" ><span>Rental units</span></a></li>
+                                                            <li><a href="exclusive-resale-admin.html" class="" ><span>Exclusive resale opportunities</span></a></li>
+                                                            <li><a href="limited-offer-units.html" class="" ><span>Limited-time offers</span></a></li>
+                                                            <li><a href="admin-shary-extras-units.html" class="" ><span>Unit page data</span></a></li>
+                                                            <li><a href="admin-shary-type-photos.html" class="" ><span>Type photo library</span></a></li>
+                                                            <li><a href="admin-shary-tracking-units.html" class="" ><span>Tracking units (customer unit)</span></a></li>
+                                                            <li><a href="unit-tracking-admin.html" class="" ><span>Unit tracking in the app</span></a></li>
+                                                            <li><a href="units-list.html" class="" ><span>Units (old screen)</span></a></li>
+                                                            <li><a href="units-0.html" class="" ><span>Manage properties</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="projects">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-projects">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+                            <span>Projects</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-projects">
+                                                            <li><a href="admin-compounds.html" class="" ><span>All projects</span></a></li>
+                                                            <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
+                                                            <li><a href="admin-shary-projects.html" class="" ><span>Project data for the website</span></a></li>
+                                                            <li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
+                                                            <li><a href="compounds-boundaries.html" class="" ><span>Project boundaries on the map</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="developers">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-developers">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+                            <span>Developers</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-developers">
+                                                            <li><a href="services-developers.html" class="" ><span>All developers (add &amp; edit)</span></a></li>
+                                                            <li><a href="admin-shary-extras-developers.html" class="" ><span>Developer page data</span></a></li>
+                                                            <li><a href="admin-shary-developers-page.html" class="" ><span>Top developers &amp; the “view all” page</span></a></li>
+                                                            <li><a href="top-developer.html" class="" ><span>Top developers (app)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="areas">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-areas">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                            <span>Areas</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-areas">
+                                                            <li><a href="admin-shary-area-tree.html" class="" ><span>All areas &amp; sub-areas</span></a></li>
+                                                            <li><a href="cities.html" class="" ><span>Areas (add &amp; edit)</span></a></li>
+                                                            <li><a href="admin-shary-extras-areas.html" class="" ><span>Area page data</span></a></li>
+                                                            <li><a href="admin-shary-area-places.html" class="" ><span>Famous places</span></a></li>
+                                                            <li><a href="countries.html" class="" ><span>Countries</span></a></li>
+                                                            <li><a href="admin-shary-extras-countries.html" class="" ><span>Country page data</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="index">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-index">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/></svg>
+                            <span>Shary Index</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-index">
+                                                            <li><a href="admin-shary-index.html" class="" ><span>Area numbers</span></a></li>
+                                                            <li><a href="admin-shary-index-monthly.html" class="" ><span>Monthly prices</span></a></li>
+                                                            <li><a href="admin-shary-extras-index-page.html" class="" ><span>Index page content</span></a></li>
+                                                            <li><a href="shary-index-admin.html" class="" ><span>Index (old screen)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">Content &amp; website</h6>                                                <div class="sx-grp " data-sx-grp="homepage">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-homepage">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 13h5v4H7zM15 13h2M15 16h2"/></svg>
+                            <span>Website home page</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-homepage">
+                                                            <li><a href="admin-shary-home-sections.html" class="" ><span>Home page sections (choose)</span></a></li>
+                                                            <li><a href="admin-shary-home-sections_tab_slider.html" class="" ><span>Home slider (choose a project)</span></a></li>
+                                                            <li><a href="sliders.html" class="" ><span>Slider (old screen)</span></a></li>
+                                                            <li><a href="admin-shary-home-cards.html" class="" ><span>Home cards (the five)</span></a></li>
+                                                            <li><a href="investment-cards.html" class="" ><span>What makes us different</span></a></li>
+                                                            <li><a href="admin-new-launches.html" class="" ><span>New launches (app pictures — old screen)</span></a></li>
+                                                            <li><a href="top-unit.html" class="" ><span>Top units (old screen)</span></a></li>
+                                                            <li><a href="top-compound.html" class="" ><span>Top projects (old screen)</span></a></li>
+                                                            <li><a href="top-area.html" class="" ><span>Top areas (old screen)</span></a></li>
+                                                            <li><a href="popular-areas.html" class="" ><span>Popular areas</span></a></li>
+                                                            <li><a href="ads-images.html" class="" ><span>Ads</span></a></li>
+                                                            <li><a href="footer-links.html" class="" ><span>Top searches (footer)</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="content">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-content">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
+                            <span>Articles &amp; content</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-content">
+                                                            <li><a href="admin-shary-extras-blogs.html" class="" ><span>Article data</span></a></li>
+                                                            <li><a href="news.html" class="" ><span>News</span></a></li>
+                                                            <li><a href="trendyList.html" class="" ><span>Trendy</span></a></li>
+                                                            <li><a href="storyList.html" class="" ><span>Stories</span></a></li>
+                                                            <li><a href="admin-shary-extras-trend-videos.html" class="" ><span>Trend videos</span></a></li>
+                                                            <li><a href="admin-shary-extras-news-posts.html" class="" ><span>Trend news data</span></a></li>
+                                                            <li><a href="admin-shary-internal-links.html" class="" ><span>Internal links</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="pages">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-pages">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11"/></svg>
+                            <span>Website pages</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-pages">
+                                                            <li><a href="admin-shary-site-content.html" class="" ><span>Page texts &amp; photos</span></a></li>
+                                                            <li><a href="settings-about.html" class="" ><span>About us (text)</span></a></li>
+                                                            <li><a href="admin-shary-extras-about-page.html" class="" ><span>About us (photo)</span></a></li>
+                                                            <li><a href="executive-management.html" class="" ><span>Team</span></a></li>
+                                                            <li><a href="categories-executive-management.html" class="" ><span>Team groups</span></a></li>
+                                                            <li><a href="admin-shary-extras-team.html" class="" ><span>Team page data</span></a></li>
+                                                            <li><a href="jobs.html" class="" ><span>Jobs</span></a></li>
+                                                            <li><a href="settings-terms.html" class="" ><span>Terms &amp; conditions</span></a></li>
+                                                            <li><a href="settings-privacy.html" class="" ><span>Privacy policy</span></a></li>
+                                                            <li><a href="settings-help_center.html" class="" ><span>Help center</span></a></li>
+                                                            <li><a href="admin-shary-extras-listing-pages.html" class="" ><span>Listing pages (sale / rent / opportunities)</span></a></li>
+                                                            <li><a href="admin-shary-extras-property-types.html" class="" ><span>Property types</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="contact">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-contact">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
+                            <span>Contact &amp; action buttons</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-contact">
+                                                            <li><a href="admin-shary-contact.html" class="" ><span>Numbers &amp; channels</span></a></li>
+                                                            <li><a href="Communications.html" class="" ><span>Social media</span></a></li>
+                                                            <li><a href="contact_us_information.html" class="" ><span>Contact-us details</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <a class="sx-one " href="admin-shary-ai.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
+                        <span>Shary AI</span>
+                                            </a>
+                                                                <div class="sx-grp " data-sx-grp="seo">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-seo">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+                            <span>SEO &amp; redirects</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-seo">
+                                                            <li><a href="admin-redirections.html" class="" ><span>Redirects</span></a></li>
+                                                            <li><a href="admin-shary-refresh.html" class="" ><span>Refresh the website</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <h6 class="sx-nav__title">The app</h6>                                                <div class="sx-grp " data-sx-grp="app">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-app">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg>
+                            <span>App services</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-app">
+                                                            <li><a href="reservations.html" class="" ><span>Book with the developer</span></a></li>
+                                                            <li><a href="reservations-bank-accounts.html" class="" ><span>Bank accounts</span></a></li>
+                                                            <li><a href="legal-assistant-admin.html" class="" ><span>Legal assistant</span></a></li>
+                                                            <li><a href="sharyCard-setting.html" class="" ><span>Shary Card</span></a></li>
+                                                            <li><a href="settings-shary_card.html" class="" ><span>Shary Card terms</span></a></li>
+                                                            <li><a href="notifications.html" class="" ><span>Notifications</span></a></li>
+                                                    </ul>
+                    </div>
+                                                <!--sx:ma3ak-nav--><h6 class="sx-nav__title">Shary Ma3ak</h6>                                                <a class="sx-one " href="admin-shary-ma3ak.html"  >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M11 3.1A9 9 0 1 0 20.9 13H11z"/><path d="M14 2.6A8.5 8.5 0 0 1 21.4 10H14z"/></svg>
+                        <span>Overview</span>
+                        <b class="sx-tag">20</b>                    </a>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_money">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_money">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M17 7V5a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V6"/><path d="M16 14h.01"/></svg>
+                            <span>Money &amp; wallets</span>
+                            <b class="sx-tag">5</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_money">
+                                                            <li><a href="admin-shary-ma3ak-receipts.html" class="" ><span>Transfer receipts</span><b class="sx-tag">3</b></a></li>
+                                                            <li><a href="admin-shary-ma3ak-withdrawals.html" class="" ><span>Withdrawal requests</span><b class="sx-tag">2</b></a></li>
+                                                            <li><a href="admin-shary-ma3ak-transactions.html" class="" ><span>Wallet transactions</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_investors">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_investors">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 10.5-5.1"/><path d="m14.5 19.5 3-3 2 2 3-3.5"/></svg>
+                            <span>Investors</span>
+                            <b class="sx-tag">4</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_investors">
+                                                            <li><a href="admin-shary-ma3ak-investors.html" class="" ><span>All investors</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-investors_identity_pending.html" class="" ><span>Identity review</span><b class="sx-tag">1</b></a></li>
+                                                            <li><a href="admin-shary-ma3ak-investments.html" class="" ><span>Investments</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-investments-create.html" class="" ><span>Record a deal (new investment)</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-referrals.html" class="" ><span>Referrals &amp; rewards</span><b class="sx-tag">3</b></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_catalog">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_catalog">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
+                            <span>Properties &amp; opportunities</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_catalog">
+                                                            <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>Share properties</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>Add a share property</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-opportunities.html" class="" ><span>Whole-unit opportunities</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-opportunities-create.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_requests">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_requests">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
+                            <span>Customer requests</span>
+                            <b class="sx-tag">9</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_requests">
+                                                            <li><a href="admin-shary-ma3ak-meetings.html" class="" ><span>Meeting requests</span><b class="sx-tag">2</b></a></li>
+                                                            <li><a href="admin-shary-ma3ak-priority.html" class="" ><span>Priority list</span><b class="sx-tag">4</b></a></li>
+                                                            <li><a href="admin-shary-ma3ak-services.html" class="" ><span>Service requests</span><b class="sx-tag">3</b></a></li>
+                                                            <li><a href="admin-shary-ma3ak-owned-units.html" class="" ><span>Customers’ units</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_finishing">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_finishing">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="3.5" width="14" height="5" rx="1.5"/><path d="M17 6h3v5h-8v2.5"/><rect x="10.5" y="13.5" width="3" height="7.5" rx="1"/></svg>
+                            <span>Finishing &amp; furnishing</span>
+                            <b class="sx-tag">2</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_finishing">
+                                                            <li><a href="admin-shary-ma3ak-finishing-requests.html" class="" ><span>Finishing tracking</span><b class="sx-tag">2</b></a></li>
+                                                            <li><a href="admin-shary-ma3ak-furnishing-codes.html" class="" ><span>Furnishing codes</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-finishing-packages.html" class="" ><span>Finishing packages</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-furnishing-packages.html" class="" ><span>Furnishing packages</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-partners.html" class="" ><span>Partners</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_settings">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_settings">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+                            <span>Shary Ma3ak settings</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_settings">
+                                                            <li><a href="admin-shary-ma3ak-settings.html" class="" ><span>Settings (transfers, buying, referrals)</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-locations.html" class="" ><span>Countries &amp; cities (address step)</span></a></li>
+                                                            <li><a href="admin-shary-ma3ak-audit.html" class="" ><span>Activity log</span></a></li>
+                                                    </ul>
+                    </div><!--/sx:ma3ak-nav--><h6 class="sx-nav__title">Administration</h6>                                                <div class="sx-grp " data-sx-grp="users">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-users">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>
+                            <span>Users &amp; permissions</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-users">
+                                                            <li><a href="users-client.html" class="" ><span>Clients</span></a></li>
+                                                            <li><a href="users-agent.html" class="" ><span>Agents</span></a></li>
+                                                            <li><a href="supervisor.html" class="" ><span>Supervisors &amp; permissions</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="options">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-options">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
+                            <span>Settings &amp; options</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-options">
+                                                            <li><a href="generalDetails-property.html" class="" ><span>Unit types</span></a></li>
+                                                            <li><a href="generalDetails-main_category.html" class="" ><span>Main categories</span></a></li>
+                                                            <li><a href="generalDetails-types_finishing.html" class="" ><span>Finishing types</span></a></li>
+                                                            <li><a href="generalDetails-featured.html" class="" ><span>Features</span></a></li>
+                                                            <li><a href="services-services_list.html" class="" ><span>Unit facilities</span></a></li>
+                                                    </ul>
+                    </div>
+                                        </nav>
+</aside>
+<div class="sx-shade" data-sx-shade hidden></div>
+
+
+    <template data-sx-crumb><div class="sx-crumb">Agent ‹ Review box</div></template>
+
+<div class="sx-page">
+    <main class="ag-main" id="sx-main"><!-- sx:studio -->
+                                <div class="ag-head"><div class="ag-col">
+    <h1>صندوق المراجعة</h1>
+    <p>أي حاجة الإيجنت جهّزها بتستنى هنا. مفيش حاجة بتظهر في الموقع غير لما تدوس نشر.</p>
+</div></div>
+
+<div class="ag-row">
+            <a class="ag-tab " href="admin-shary-agent-review.html">الكل<span class="num">27</span></a>
+            <a class="ag-tab is-on" href="admin-shary-agent-review_hub_projects.html">المشاريع<span class="num">5</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_units.html">الوحدات<span class="num">3</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_seo.html">السيو والمقالات<span class="num">6</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_messages.html">رسايل العملاء<span class="num">2</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_marketing.html">التسويق<span class="num">2</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_requests.html">طلبات العملاء<span class="num">1</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_ma3ak.html">شاري معاك<span class="num">5</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_places.html">المطورين والمناطق<span class="num">1</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_hub_market.html">السوق والتقارير<span class="num">2</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_show_hold.html">منتظر<span class="num">0</span></a>
+            <a class="ag-tab " href="admin-shary-agent-review_show_done.html">اللي اتقرر فيه</a>
+        </div>
+    <div class="ag-note sm">بتشوف اللي يخص «المشاريع» بس · <a class="b8" href="admin-shary-agent-s-projects.html">صفحة القسم</a> · <a class="b8" href="admin-shary-agent-review.html">شوف كل الأقسام</a></div>
+
+<div class="ag-split ag-review--detail">
+    <div class="ag-list">
+                    <a class="ag-item is-on" href="admin-shary-agent-review_id_127_hub_projects.html"  aria-current="true" >
+                <span class="ag-row ag-row--between">
+                    <span class="ag-pill"><span class="ag-dot ag-dot--blue"></span>تعديل · مقالات ومحتوى</span>
+                    <span class="xs mute nowrap">النهاردة 6:10 ص</span>
+                </span>
+                <span class="ag-item__t">الماستر بلان على الخريطة: 6 مشاريع (ماونتن فيو آي سيتي، ميفيدا، إل بوسكو …)</span>
+                <span class="sm" style="color:#33445F">الإيجنت فرّغ الماستر بلان، وحدد حدود المشروع على الخريطة، وحط الماستر بلان عليها. في كل صو...</span>                <span class="xs mute">من: OpenStreetMap (© OpenStreetMap contributors) + خرائط جوجل لل...</span>
+            </a>
+                    <a class="ag-item " href="admin-shary-agent-review_id_118_hub_projects.html" >
+                <span class="ag-row ag-row--between">
+                    <span class="ag-pill"><span class="ag-dot "></span>تعديل · تصميمات</span>
+                    <span class="xs mute nowrap">النهاردة 2:52 ص</span>
+                </span>
+                <span class="ag-item__t">تصميم «مكاتب إدارية في آي سيتي» ← صورة جديدة في معرض مشروع</span>
+                <span class="sm" style="color:#33445F">التصميم ستوري / ريلز (نسخة 1). الصورة القديمة فاضلة على السيرفر، والتراجع من السجل بيرجّعه...</span>                <span class="xs mute">من: التصميمات ← #24</span>
+            </a>
+                    <a class="ag-item " href="admin-shary-agent-review_id_116_hub_projects.html" >
+                <span class="ag-row ag-row--between">
+                    <span class="ag-pill"><span class="ag-dot "></span>تعديل · صور الموقع</span>
+                    <span class="xs mute nowrap">النهاردة 2:52 ص</span>
+                </span>
+                <span class="ag-item__t">صورة كارت جديدة لـ ماونتن فيو آي سيتي</span>
+                <span class="sm" style="color:#33445F">اخترت لكل واحد أحلى صورة من صوره تبقى الصورة الرئيسية (الكارت): الصورة اللي بتبيّن العقار...</span>                <span class="xs mute">من: فحص ملفات الصور على السيرفر</span>
+            </a>
+                    <a class="ag-item " href="admin-shary-agent-review_id_115_hub_projects.html" >
+                <span class="ag-row ag-row--between">
+                    <span class="ag-pill"><span class="ag-dot "></span>تعديل · صور الموقع</span>
+                    <span class="xs mute nowrap">النهاردة 2:52 ص</span>
+                </span>
+                <span class="ag-item__t">خفّف صور هاسيندا باي: صورة واحدة — 1.9 ميجا ← 198 كيلو</span>
+                <span class="sm" style="color:#33445F">نفس الصور بنفس الشكل، بس أخف 90% — الصفحة بتفتح أسرع على الموبايل وجوجل بيحب كده. الصورة ا...</span>                <span class="xs mute">من: فحص ملفات الصور على السيرفر</span>
+            </a>
+                    <a class="ag-item " href="admin-shary-agent-review_id_15.html" data-sx-sample="1" >
+                <span class="ag-row ag-row--between">
+                    <span class="ag-pill"><span class="ag-dot ag-dot--blue"></span>صفحة جديدة · مقالات ومحتوى</span>
+                    <span class="xs mute nowrap">النهاردة 12:52 ص</span>
+                </span>
+                <span class="ag-item__t">صفحة مشروع جديد: ذا كريست — ومعاها خطط السداد والصور</span>
+                <span class="sm" style="color:#33445F">المشروع وخطتين سداد وصورتين في اقتراح واحد: لما تنشر، الخطط والصور بتتربط بالمشروع الجديد...</span>                <span class="xs mute">من: الموقع الرسمي للمطور + البروشور اللي رفعته</span>
+            </a>
+                    </div>
+
+    <section class="ag-card ag-detail">
+        <a class="ag-back sm b8" href="admin-shary-agent-review_hub_projects.html">→ رجوع لكل المقترحات</a>
+        <div class="ag-card__head">
+    <h2 style="font-size:19px">الماستر بلان على الخريطة: 6 مشاريع (ماونتن فيو آي سيتي، ميفيدا، إل بوسكو …)</h2>
+    <span class="ag-pill ag-pill--lg ag-pill--warn">اتنشر جزء منه</span>
+</div>
+<div class="ag-meta">
+    <div><span>جه منين</span><span>OpenStreetMap (© OpenStreetMap contributors) + خرائط جوجل للمكان + الماستر بلان المرفوعة على الموقع</span></div>
+    <div><span>هيتنشر فين</span><span>الخريطة التفاعلية</span>
+        <a class="sm b8" href="/"  target="_blank" rel="noopener" >افتح الصفحة في الموقع</a></div>
+    <div><span>اتجهّز إمتى</span><span>النهاردة 6:10 ص</span></div>
+    <div><span>قرّر فيه</span><span>Nabil Suleiman · النهاردة 6:40 ص</span></div></div>
+    <div class="ag-card__body" style="padding-block:12px"><p>الإيجنت فرّغ الماستر بلان، وحدد حدود المشروع على الخريطة، وحط الماستر بلان عليها. في كل صورة: الخط الأخضر = حدود المشروع، والماستر بلان فوقها بنفس اتجاهها وحجمها. «انشر» = تظهر على الخريطة التفاعلية في الموقع. «عدّل» = تلفّها / تكبّرها / تحرّكها بالمتر.</p></div>
+<div class="ag-row" style="padding:16px 20px;border-top:1px solid #E6EAF0">
+    <span class="ag-pill ag-pill--lg ag-pill--ok"><span class="num">2</span> جاهزة للنشر</span>    <span class="ag-pill ag-pill--lg ag-pill--warn"><span class="num">2</span> محتاجة نظرة</span>    <span class="ag-pill ag-pill--lg ag-pill--ok"><span class="num">2</span> اتنشرت</span>            </div>
+
+
+
+
+    
+    <div class="ag-card__body ag-mp-grid">
+                                    <div class="ag-mp-cell ">
+                    <div class="ag-row ag-row--between" style="gap:6px"><a class="b8 sm" href="admin-shary-agent-masterplans-1.html">ماونتن فيو آي سيتي</a>
+                        <span class="ag-pill ag-pill--ok">تطابق 99%</span></div>
+                    <figure class="ag-mp">
+        <svg viewBox="-806.4 -1335.06 2441.48 2264.61" role="img" aria-label="الماستر بلان فوق حدود المشروع" preserveAspectRatio="xMidYMid meet" style="direction:ltr">
+            <rect x="-806.4" y="-1335.06" width="2441.48" height="2264.61" fill="#F3F6F9"/>
+                            <image href="../a/maps/plan-1.png" x="0" y="0" width="1108" height="830" preserveAspectRatio="none" transform="matrix(1.359042 -0.720693 0.721584 1.360632 -638.019442 -368.156457)" opacity="0.92"/>
+                        <polygon points="54.18,628.04 1266.7,36.01 1147.13,-585.05 536.59,-874.85 -211.47,-564.89 -234.58,-485.89 -256.79,-407.37 -277.25,-329.78 -295.09,-253.59 -309.58,-179.17 -320,-106.93 -325.8,-37.14 -326.49,29.94 -321.73,94.11 -311.31,155.28 -295.17,213.41 -273.36,268.52 -246.1,320.74 -213.74,370.23 -176.75,417.28 -135.7,462.16 -91.3,505.26 -44.28,546.97 4.51,587.74" fill="none" stroke="#12A150" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+            
+            <g transform="translate(1464.18 -1115.33)">
+                <path d="M0 -122.07 L63.48 73.24 L0 39.06 L-63.48 73.24 Z" fill="#123A5C"/>
+                <text x="0" y="-158.7" text-anchor="middle" font-size="102.54" font-weight="800" fill="#123A5C">N</text>
+            </g>
+            
+            <g transform="translate(-708.74 807.47)">
+                <rect x="0" y="0" width="500" height="34.18" fill="#123A5C"/>
+                <text x="0" y="-39.06" font-size="87.89" font-weight="800" fill="#123A5C">500 م</text>
+            </g>
+        </svg>
+        <figcaption class="xs mute"><i style="background:#12A150"></i> حدود المشروع · الماستر بلان فوقها بنفس اتجاهها وحجمها · الشمال لفوق</figcaption>
+    </figure>
+                </div>
+                                                <div class="ag-mp-cell ">
+                    <div class="ag-row ag-row--between" style="gap:6px"><a class="b8 sm" href="admin-shary-agent-masterplans-2.html">ميفيدا</a>
+                        <span class="ag-pill ag-pill--ok">تطابق 99%</span></div>
+                    <figure class="ag-mp">
+        <svg viewBox="-1186.84 -1030.12 2278.74 1978.86" role="img" aria-label="الماستر بلان فوق حدود المشروع" preserveAspectRatio="xMidYMid meet" style="direction:ltr">
+            <rect x="-1186.84" y="-1030.12" width="2278.74" height="1978.86" fill="#F3F6F9"/>
+                            <image href="../a/maps/plan-2.png" x="0" y="0" width="1042" height="789" preserveAspectRatio="none" transform="matrix(1.58452 0.396889 -0.397161 1.58553 -716.325349 -872.970575)" opacity="0.92"/>
+                        <polygon points="-702.93,-842.57 898.08,-443.41 686.51,405.12 310.51,685.48 -1002.31,358.17" fill="none" stroke="#12A150" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+            
+            <g transform="translate(932.39 -825.04)">
+                <path d="M0 -113.94 L59.25 68.36 L0 36.46 L-59.25 68.36 Z" fill="#123A5C"/>
+                <text x="0" y="-148.12" text-anchor="middle" font-size="95.71" font-weight="800" fill="#123A5C">N</text>
+            </g>
+            
+            <g transform="translate(-1095.69 834.8)">
+                <rect x="0" y="0" width="500" height="31.9" fill="#123A5C"/>
+                <text x="0" y="-36.46" font-size="82.03" font-weight="800" fill="#123A5C">500 م</text>
+            </g>
+        </svg>
+        <figcaption class="xs mute"><i style="background:#12A150"></i> حدود المشروع · الماستر بلان فوقها بنفس اتجاهها وحجمها · الشمال لفوق</figcaption>
+    </figure>
+                </div>
+                                                <div class="ag-mp-cell ">
+                    <div class="ag-row ag-row--between" style="gap:6px"><a class="b8 sm" href="admin-shary-agent-masterplans-3.html">إل بوسكو</a>
+                        <span class="ag-pill ag-pill--ok">تطابق 99%</span></div>
+                    <figure class="ag-mp">
+        <svg viewBox="-811.8 -764.24 1626.67 1403.33" role="img" aria-label="الماستر بلان فوق حدود المشروع" preserveAspectRatio="xMidYMid meet" style="direction:ltr">
+            <rect x="-811.8" y="-764.24" width="1626.67" height="1403.33" fill="#F3F6F9"/>
+                            <image href="../a/maps/plan-3.png" x="0" y="0" width="1030" height="819" preserveAspectRatio="none" transform="matrix(1.225236 -0.171509 0.171309 1.223817 -699.616878 -475.398976)" opacity="0.92"/>
+                        <polygon points="-544.53,504.69 673.98,282.95 -135.57,-537.35" fill="none" stroke="#12A150" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+            
+            <g transform="translate(701 -617.84)">
+                <path d="M0 -81.33 L42.29 48.8 L0 26.03 L-42.29 48.8 Z" fill="#123A5C"/>
+                <text x="0" y="-105.73" text-anchor="middle" font-size="68.32" font-weight="800" fill="#123A5C">N</text>
+            </g>
+            
+            <g transform="translate(-746.73 557.76)">
+                <rect x="0" y="0" width="250" height="22.77" fill="#123A5C"/>
+                <text x="0" y="-26.03" font-size="58.56" font-weight="800" fill="#123A5C">250 م</text>
+            </g>
+        </svg>
+        <figcaption class="xs mute"><i style="background:#12A150"></i> حدود المشروع · الماستر بلان فوقها بنفس اتجاهها وحجمها · الشمال لفوق</figcaption>
+    </figure>
+                </div>
+                                                <div class="ag-mp-cell ">
+                    <div class="ag-row ag-row--between" style="gap:6px"><a class="b8 sm" href="admin-shary-agent-masterplans-4.html">فيليت</a>
+                        <span class="ag-pill ag-pill--ok">تطابق 100%</span></div>
+                    <figure class="ag-mp">
+        <svg viewBox="-808.1 -799.09 1619.25 1596.72" role="img" aria-label="الماستر بلان فوق حدود المشروع" preserveAspectRatio="xMidYMid meet" style="direction:ltr">
+            <rect x="-808.1" y="-799.09" width="1619.25" height="1596.72" fill="#F3F6F9"/>
+                            <image href="../a/maps/plan-4.png" x="0" y="0" width="981" height="819" preserveAspectRatio="none" transform="matrix(0.83878 -0.699923 0.699723 0.838518 -696.4294 -0.797705)" opacity="0.92"/>
+                        <polygon points="395.97,-332.28 418.49,-302.37 437.82,-270.17 453.84,-235.91 466.4,-199.85 475.39,-162.26 480.78,-123.43 482.5,-83.68 480.56,-43.29 474.95,-2.57 465.74,38.18 452.97,78.63 436.75,118.48 417.21,157.45 394.5,195.19 368.78,231.47 340.26,265.98 309.14,298.46 275.68,328.68 240.11,356.39 202.71,381.39 163.78,403.48 123.59,422.52 82.46,438.32 40.7,450.81 -1.36,459.85 -43.41,465.41 -85.14,467.4 -126.22,465.86 -166.34,460.75 -205.19,452.16 -242.48,440.11 -277.93,424.72 -311.27,406.1 -342.23,384.38 -370.59,359.74 -396.13,332.36 -418.66,302.45 -438,270.25 -454.02,235.98 -466.57,199.92 -475.56,162.33 -480.95,123.52 -482.67,83.77 -480.73,43.37 -475.12,2.65 -465.9,-38.1 -453.14,-78.55 -436.92,-118.4 -417.39,-157.36 -394.67,-195.11 -368.95,-231.38 -340.42,-265.9 -309.31,-298.38 -275.84,-328.59 -240.28,-356.3 -202.89,-381.31 -163.94,-403.41 -123.75,-422.44 -82.63,-438.25 -40.87,-450.73 1.19,-459.77 43.25,-465.32 84.97,-467.32 126.05,-465.77 166.17,-460.67 205.02,-452.07 242.32,-440.03 277.77,-424.64 311.1,-406.02 342.06,-384.29 370.42,-359.65" fill="none" stroke="#12A150" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+            
+            <g transform="translate(697.8 -653.36)">
+                <path d="M0 -80.96 L42.1 48.58 L0 25.91 L-42.1 48.58 Z" fill="#123A5C"/>
+                <text x="0" y="-105.25" text-anchor="middle" font-size="68.01" font-weight="800" fill="#123A5C">N</text>
+            </g>
+            
+            <g transform="translate(-743.33 716.66)">
+                <rect x="0" y="0" width="250" height="22.67" fill="#123A5C"/>
+                <text x="0" y="-25.91" font-size="58.29" font-weight="800" fill="#123A5C">250 م</text>
+            </g>
+        </svg>
+        <figcaption class="xs mute"><i style="background:#12A150"></i> حدود المشروع · الماستر بلان فوقها بنفس اتجاهها وحجمها · الشمال لفوق</figcaption>
+    </figure>
+                </div>
+                                                <div class="ag-mp-cell ">
+                    <div class="ag-row ag-row--between" style="gap:6px"><a class="b8 sm" href="admin-shary-agent-masterplans-5.html">أو ويست</a>
+                        <span class="ag-pill ag-pill--warn">تطابق 66%</span></div>
+                    <figure class="ag-mp">
+        <svg viewBox="-908.79 -836.68 1815.35 1524.87" role="img" aria-label="الماستر بلان فوق حدود المشروع" preserveAspectRatio="xMidYMid meet" style="direction:ltr">
+            <rect x="-908.79" y="-836.68" width="1815.35" height="1524.87" fill="#F3F6F9"/>
+                            <image href="../a/maps/plan-5.png" x="0" y="0" width="1051" height="811" preserveAspectRatio="none" transform="matrix(1.113805 0.267394 -0.267234 1.113084 -389.24897 -620.762326)" opacity="0.92"/>
+                        <polygon points="-783.59,438.52 616.42,388.52 -183.59,-711.48" fill="none" stroke="#12A150" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+            
+            <g transform="translate(779.48 -673.3)">
+                <path d="M0 -90.77 L47.2 54.46 L0 29.05 L-47.2 54.46 Z" fill="#123A5C"/>
+                <text x="0" y="-118" text-anchor="middle" font-size="76.24" font-weight="800" fill="#123A5C">N</text>
+            </g>
+            
+            <g transform="translate(-836.18 597.42)">
+                <rect x="0" y="0" width="250" height="25.41" fill="#123A5C"/>
+                <text x="0" y="-29.05" font-size="65.35" font-weight="800" fill="#123A5C">250 م</text>
+            </g>
+        </svg>
+        <figcaption class="xs mute"><i style="background:#12A150"></i> حدود المشروع · الماستر بلان فوقها بنفس اتجاهها وحجمها · الشمال لفوق</figcaption>
+    </figure>
+                </div>
+                                                <div class="ag-mp-cell ">
+                    <div class="ag-row ag-row--between" style="gap:6px"><a class="b8 sm" href="admin-shary-agent-masterplans-6.html">هاسيندا باي</a>
+                        <span class="ag-pill ag-pill--warn">تقريبي</span></div>
+                    <figure class="ag-mp">
+        <svg viewBox="-1594.01 -693.18 2954.54 1681.06" role="img" aria-label="الماستر بلان فوق حدود المشروع" preserveAspectRatio="xMidYMid meet" style="direction:ltr">
+            <rect x="-1594.01" y="-693.18" width="2954.54" height="1681.06" fill="#F3F6F9"/>
+                            <image href="../a/maps/plan-6.png" x="0" y="0" width="1160" height="579" preserveAspectRatio="none" transform="matrix(2.195702 0 0 2.199552 -1390.244384 -489.415381)" opacity="0.92"/>
+                        <polygon points="-1348.61,742.48 1115.14,742.48 1115.14,-183.27 581.24,-340.02 507.77,-354.71 -31.02,-452.67 -124.09,-447.77 -1348.61,-295.94" fill="none" stroke="#12A150" stroke-width="2.5" vector-effect="non-scaling-stroke" stroke-linejoin="round"/>
+            
+            <g transform="translate(1153.71 -427.27)">
+                <path d="M0 -147.73 L76.82 88.64 L0 47.27 L-76.82 88.64 Z" fill="#123A5C"/>
+                <text x="0" y="-192.04" text-anchor="middle" font-size="124.09" font-weight="800" fill="#123A5C">N</text>
+            </g>
+            
+            <g transform="translate(-1475.82 840.16)">
+                <rect x="0" y="0" width="500" height="41.36" fill="#123A5C"/>
+                <text x="0" y="-47.27" font-size="106.36" font-weight="800" fill="#123A5C">500 م</text>
+            </g>
+        </svg>
+        <figcaption class="xs mute"><i style="background:#12A150"></i> حدود المشروع · الماستر بلان فوقها بنفس اتجاهها وحجمها · الشمال لفوق</figcaption>
+    </figure>
+                </div>
+                        </div>
+
+<div class="ag-scroll" style="border-top:1px solid #E6EAF0">
+<table class="ag-stack">
+    <thead><tr><th>إيه اللي هيتضاف</th><th>الخانة</th><th>القيمة</th><th>ملاحظة الإيجنت</th></tr></thead>
+    <tbody>
+                                <tr class="is-done">
+                                    <td class="b8 full" rowspan="7" style="min-width:150px">
+                        الماستر بلان على الخريطة: ماونتن فيو آي سيتي
+                                                                                                <br><span class="ag-pill ag-pill--ok">على الخريطة</span>                                                                                                                                            </td>
+                                <td class="nowrap full fld">المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">ماونتن فيو آي سيتي (#1)</span></td>
+                                                                        <td rowspan="7" class="full mute" style="min-width:130px;">مطابق</td>
+                            </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">الماستر بلان</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">اتفرّغت دلوقتي: الخلفية والعنوان والـ legend اتشالوا</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">مكان المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">إحداثيات المشروع على الموقع · 30.02620, 31.43920</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">الحدود</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">OpenStreetMap: Mountain View iCity (way/9001)
+خماسي بضلع منحني (كيرف) · 1,651 × 1,189 م · مايل 64° عن الشمال ناحية الشرق · 1,625,129 م² (387 فدان)</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">التطابق</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">99% · الماستر بلان اتلفّت 28° عكس عقارب الساعة · المتر = 0.65 بكسل</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">هيتكتب في الموقع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">مكان الماستر بلان على الخريطة (masterplan_corners) · النسخة المفرّغة (masterplan_overlay) · حدود المشروع (compounds.boundary — كانت مش مرسومة)</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">النتيجة</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="b8">اتحط على الخريطة ✓ (تطابق 99%)</span></td>
+                                                                </tr>
+                                        <tr class="is-done">
+                                    <td class="b8 full" rowspan="7" style="min-width:150px">
+                        الماستر بلان على الخريطة: ميفيدا
+                                                                                                <br><span class="ag-pill ag-pill--ok">على الخريطة</span>                                                                                                                                            </td>
+                                <td class="nowrap full fld">المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">ميفيدا (#2)</span></td>
+                                                                        <td rowspan="7" class="full mute" style="min-width:130px;">مطابق</td>
+                            </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">الماستر بلان</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">اتفرّغت دلوقتي: الخلفية والعنوان والـ legend اتشالوا</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">مكان المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">إحداثيات المشروع على الموقع · 30.01280, 31.51390</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">الحدود</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">OpenStreetMap: ميفيدا (way/9002)
+مستطيل · 1,650 × 1,238 م · مايل 76° عن الشمال ناحية الغرب · 1,987,972 م² (473 فدان)</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">التطابق</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">99% · الماستر بلان اتلفّت 14° مع عقارب الساعة · المتر = 0.61 بكسل</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">هيتكتب في الموقع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">مكان الماستر بلان على الخريطة (masterplan_corners) · النسخة المفرّغة (masterplan_overlay) · حدود المشروع (compounds.boundary — كانت مش مرسومة)</span></td>
+                                                                </tr>
+                    <tr class="is-done">
+                                <td class="nowrap full fld">النتيجة</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="b8">اتحط على الخريطة ✓ (تطابق 99%)</span></td>
+                                                                </tr>
+                                        <tr class="">
+                                    <td class="b8 full" rowspan="6" style="min-width:150px">
+                        الماستر بلان على الخريطة: إل بوسكو
+                                                                                                                                                                                                                                                    <div class="ag-row no-print" style="margin-top:6px;gap:6px;text-decoration:none">
+                                                                <form method="post" action="#preview/admin/shary/agent/review/127/skip/2"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="skip" value="1"><button class="ag-btn ag-btn--sm" style="min-height:30px;padding:0 10px">استبعد</button></form>
+                            </div>
+                                            </td>
+                                <td class="nowrap full fld">المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">إل بوسكو (#3)</span></td>
+                                                                        <td rowspan="6" class="full mute" style="min-width:130px;">مطابق</td>
+                            </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">الماستر بلان</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">اتفرّغت دلوقتي: الخلفية والعنوان والـ legend اتشالوا</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">مكان المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">إحداثيات المشروع على الموقع · 30.00710, 31.70460</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">الحدود</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">الحدود المرسومة على الموقع
+مثلث · 1,153 × 1,023 م · 589,524 م² (140 فدان)</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">التطابق</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">99% · الماستر بلان اتلفّت 8° عكس عقارب الساعة · المتر = 0.81 بكسل</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">هيتكتب في الموقع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">مكان الماستر بلان على الخريطة (masterplan_corners) · النسخة المفرّغة (masterplan_overlay)</span></td>
+                                                                </tr>
+                                        <tr class="">
+                                    <td class="b8 full" rowspan="6" style="min-width:150px">
+                        الماستر بلان على الخريطة: فيليت
+                                                                                                                                                                                                                                                    <div class="ag-row no-print" style="margin-top:6px;gap:6px;text-decoration:none">
+                                                                <form method="post" action="#preview/admin/shary/agent/review/127/skip/3"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="skip" value="1"><button class="ag-btn ag-btn--sm" style="min-height:30px;padding:0 10px">استبعد</button></form>
+                            </div>
+                                            </td>
+                                <td class="nowrap full fld">المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">فيليت (#4)</span></td>
+                                                                        <td rowspan="6" class="full mute" style="min-width:130px;">مطابق</td>
+                            </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">الماستر بلان</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">اتفرّغت دلوقتي: الخلفية والعنوان والـ legend اتشالوا</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">مكان المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">جوجل (Google Places — القاهرة الجديدة، محافظة القاهرة) · 30.04050, 31.51860</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">الحدود</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">OpenStreetMap: Villette (way/9004)
+بيضاوي · 1,033 × 857 م · 695,902 م² (166 فدان)</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">التطابق</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">100% · الماستر بلان اتلفّت 40° عكس عقارب الساعة · المتر = 0.92 بكسل</span></td>
+                                                                </tr>
+                    <tr class="">
+                                <td class="nowrap full fld">هيتكتب في الموقع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">مكان الماستر بلان على الخريطة (masterplan_corners) · النسخة المفرّغة (masterplan_overlay) · إحداثيات المشروع (كانت فاضية) · حدود المشروع (compounds.boundary — كانت مش مرسومة)</span></td>
+                                                                </tr>
+                                        <tr class="is-flag">
+                                    <td class="b8 full" rowspan="6" style="min-width:150px">
+                        الماستر بلان على الخريطة: أو ويست
+                                                                                                                                                                                                                                                    <div class="ag-row no-print" style="margin-top:6px;gap:6px;text-decoration:none">
+                                <form method="post" action="#preview/admin/shary/agent/review/127/skip/4"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="confirm" value="1"><button class="ag-btn ag-btn--sm ag-btn--warn" style="min-height:30px;padding:0 10px">شفتها — انشرها</button></form>                                <form method="post" action="#preview/admin/shary/agent/review/127/skip/4"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="skip" value="1"><button class="ag-btn ag-btn--sm" style="min-height:30px;padding:0 10px">استبعد</button></form>
+                            </div>
+                                            </td>
+                                <td class="nowrap full fld">المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">أو ويست (#5)</span></td>
+                                                                        <td rowspan="6" class="full b8" style="min-width:130px;color:#7A4A00">التطابق 66% أقل من 75% — بص على الصورة قبل ما تنشر</td>
+                            </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">الماستر بلان</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">اتفرّغت دلوقتي: الخلفية والعنوان والـ legend اتشالوا</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">مكان المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">إحداثيات المشروع على الموقع · 29.96520, 30.91980</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">الحدود</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">OpenStreetMap: O West (way/9005)
+مثلث · 1,401 × 1,128 م · ضلعه الطويل شرق–غرب · 790,002 م² (188 فدان)</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">التطابق</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">66% · الماستر بلان اتلفّت 14° مع عقارب الساعة · المتر = 0.87 بكسل</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">هيتكتب في الموقع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">مكان الماستر بلان على الخريطة (masterplan_corners) · النسخة المفرّغة (masterplan_overlay) · حدود المشروع (compounds.boundary — كانت مش مرسومة)</span></td>
+                                                                </tr>
+                                        <tr class="is-flag">
+                                    <td class="b8 full" rowspan="6" style="min-width:150px">
+                        الماستر بلان على الخريطة: هاسيندا باي
+                                                                                                                                                                                                                                                    <div class="ag-row no-print" style="margin-top:6px;gap:6px;text-decoration:none">
+                                <form method="post" action="#preview/admin/shary/agent/review/127/skip/5"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="confirm" value="1"><button class="ag-btn ag-btn--sm ag-btn--warn" style="min-height:30px;padding:0 10px">شفتها — انشرها</button></form>                                <form method="post" action="#preview/admin/shary/agent/review/127/skip/5"><input type="hidden" name="_token" value="preview" autocomplete="off"><input type="hidden" name="skip" value="1"><button class="ag-btn ag-btn--sm" style="min-height:30px;padding:0 10px">استبعد</button></form>
+                            </div>
+                                            </td>
+                                <td class="nowrap full fld">المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">هاسيندا باي (#6)</span></td>
+                                                                        <td rowspan="6" class="full b8" style="min-width:130px;color:#7A4A00">مكان وحجم تقريبي (مفيش حدود مرسومة للمشروع) — بص على الصورة قبل ما تنشر</td>
+                            </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">الماستر بلان</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">اتفرّغت دلوقتي: الخلفية والعنوان والـ legend اتشالوا</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">مكان المشروع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">إحداثيات المشروع على الموقع · 30.97050, 28.73920</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">الحدود</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">تقريبي: شكل الماستر بلان بمساحة المشروع
+مستطيل · 2,464 × 1,195 م · ضلعه الطويل شرق–غرب · 2,709,317 م² (645 فدان)</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">التطابق</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">تقريبي</span></td>
+                                                                </tr>
+                    <tr class="is-flag">
+                                <td class="nowrap full fld">هيتكتب في الموقع</td>
+                                                        <td class="new" data-l="" style="white-space:pre-line;min-width:200px"><span class="">مكان الماستر بلان على الخريطة (masterplan_corners) · النسخة المفرّغة (masterplan_overlay)</span></td>
+                                                                </tr>
+                </tbody>
+</table>
+</div>
+
+    <div class="ag-alert ag-alert--warn" style="margin:16px 20px"><div class="ag-col"><b>2 محتاجة نظرة قبل ما تتحط على الخريطة</b>
+        <span class="sm">التطابق فيها أقل من المطلوب أو مكانها تقريبي: بص على الصورة — لو مظبوطة دوس "شفتها — انشرها"، ولو محتاجة لف أو تحريك بسيط دوس "عدّل" (بالدرجة والمتر)، أو "استبعد".</span></div></div>
+
+    <div class="ag-card__body">
+        <h3 class="ag-h2" style="font-size:15.5px">الإيجنت راجع إيه</h3>
+        <ul class="ag-checks">
+            <li class=""><i aria-hidden="true">✓</i><span>الماستر بلان بتاعتنا المرفوعة على الموقع بس — من غير أي ماستر بلان أو مكان من موقع تاني</span></li><li class=""><i aria-hidden="true">✓</i><span>الحدود: المرسومة على الموقع أولًا، وبعدها OpenStreetMap — واتقارن شكلها بشكل الماستر بلان</span></li><li class=""><i aria-hidden="true">✓</i><span>النسخة الشفافة المعمولة بإيد ما بتتغيّرش، والحدود المرسومة بإيد ما بتتغيّرش</span></li>        </ul>
+    </div>
+
+        
+                                <div class="ag-card__body no-print" id="ag-rate">
+                <h3 class="ag-h2" style="font-size:15.5px">قيّم شغل الإيجنت</h3>
+                <form method="post" action="#preview/admin/shary/agent/review/127/rate" class="ag-rate"><input type="hidden" name="_token" value="preview" autocomplete="off">                    <button name="rating" value="1" class="ag-btn ag-btn--sm " aria-pressed="false">شغل كويس</button>
+                    <button name="rating" value="-1" class="ag-btn ag-btn--sm " aria-pressed="false">محتاج يتحسّن</button>
+                    <label class="sr" for="ag-rate-note">ملاحظة للإيجنت</label>
+                    <input type="text" id="ag-rate-note" name="note" class="ag-input" maxlength="500" style="flex:1 1 260px" value="" placeholder="ملاحظة للإيجنت (اختياري) — مثال: العناوين طويلة، اكتب أرقام أكتر">
+                                    </form>
+                <p class="sm mute" style="margin-top:6px"> ملاحظات "محتاج يتحسّن" الإيجنت بيمشي عليها في الشغل اللي بعده.</p>
+            </div>
+        
+        
+                                    <div class="ag-actions">
+                                        <form method="post" action="#preview/admin/shary/agent/review/127/publish" data-ag-confirm="هتنشر ده على الموقع دلوقتي؟"><input type="hidden" name="_token" value="preview" autocomplete="off">                        <button class="ag-btn ag-btn--blue" >موافق — انشر 2</button></form>
+                                        <a class="ag-btn" href="admin-shary-agent-review-127-edit.html">عدّل</a>
+                    <button type="button" class="ag-btn" data-ag-toggle="ag-better">هات نتيجة أفضل</button>
+                                            <form method="post" action="#preview/admin/shary/agent/review/127/hold"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn">انتظر</button></form>
+                                        <form method="post" action="#preview/admin/shary/agent/review/127/cancel" data-ag-confirm="تلغي الاقتراح ده؟ مفيش حاجة هتتغيّر في الموقع."><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--danger">إلغاء</button></form>
+                </div>
+                <form method="post" action="#preview/admin/shary/agent/review/127/better" id="ag-better" class="ag-card__body hide" data-ag-slow="الإيجنت بيجهّز نسخة أحسن…"><input type="hidden" name="_token" value="preview" autocomplete="off">                    <label class="ag-label" for="ag-feedback">عايز إيه يتغيّر؟</label>
+                    <div class="ag-row">
+                                                    <button type="button" class="ag-chip" data-ag-say="قصّره" data-ag-into="ag-feedback">قصّره</button>
+                                                    <button type="button" class="ag-chip" data-ag-say="زوّد أرقام" data-ag-into="ag-feedback">زوّد أرقام</button>
+                                                    <button type="button" class="ag-chip" data-ag-say="غيّر العنوان" data-ag-into="ag-feedback">غيّر العنوان</button>
+                                                    <button type="button" class="ag-chip" data-ag-say="هات مصادر تانية" data-ag-into="ag-feedback">هات مصادر تانية</button>
+                                                    <button type="button" class="ag-chip" data-ag-say="خلّيه أبسط" data-ag-into="ag-feedback">خلّيه أبسط</button>
+                                                    <button type="button" class="ag-chip" data-ag-say="زوّد عناوين H2" data-ag-into="ag-feedback">زوّد عناوين H2</button>
+                                                    <button type="button" class="ag-chip" data-ag-say="راجع الأسعار تاني" data-ag-into="ag-feedback">راجع الأسعار تاني</button>
+                                            </div>
+                    <textarea id="ag-feedback" name="feedback" class="ag-input" rows="2" maxlength="2000" placeholder="اكتب ملاحظتك — النسخة الحالية هتفضل محفوظة جنب الجديدة"></textarea>
+                    <div class="ag-alert ag-alert--info">"هات نتيجة أفضل" بتشتغل لما الموديل يتربط على السيرفر.</div>                    <div class="ag-row"><button class="ag-btn ag-btn--primary" disabled>ابعت للإيجنت</button></div>
+                </form>
+                                <div class="ag-card__foot sm mute">بعد النشر تقدر ترجع فيه من <a href="admin-shary-agent-log.html">السجل والتراجع</a>.</div>
+                                        </section>
+</div>
+    </main>
+</div>
+<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+<script src="../a/js/shary-admin/shell.js" defer></script>
+<script src="../a/js/shary-admin/agent.js" defer></script>
+<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+</html>

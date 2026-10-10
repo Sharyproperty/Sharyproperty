@@ -116,4 +116,13 @@
         // an order that came from another screen (today / new page) and still waits for its answer
         if (chatForm.getAttribute('data-ag-pending')) { run(chatForm.getAttribute('data-ag-pending')); }
     }
+
+    // the row of the parts on a phone scrolls sideways: the part you are in is brought into view
+    $$('.ag-hubnav').forEach(function (nav) {
+        var on = $('a.is-on', nav);
+        if (on && nav.scrollWidth > nav.clientWidth + 2) {
+            var box = nav.getBoundingClientRect(), item = on.getBoundingClientRect();
+            nav.scrollLeft += (item.left + item.width / 2) - (box.left + box.width / 2);
+        }
+    });
 })();
