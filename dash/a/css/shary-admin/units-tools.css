@@ -259,7 +259,10 @@ textarea.sx-rv-input { min-height: 36px; resize: vertical; line-height: 1.6; }
     .sx-rv-savebar form { flex: 1 1 0; min-width: 0; }
     .sx-rv-savebar form .btn { width: 100%; padding-inline: 10px; white-space: normal; line-height: 1.35; }
     .sx-rv-savebar .sx-unit-draftbtn { flex: 0 0 auto; padding-inline: 12px; }
-    .sx-rv-scroll { max-height: calc(100vh - 170px); }
+    /* the sheet's own box ends above the save bar, and a cell that gets the focus (typing, «قايمة الأخطاء») is never left under the bars */
+    .sx-rv-scroll { max-height: calc(100vh - 240px); scroll-padding: 44px 8px 8px; }
+    html:has(.sx-rv-savebar) { scroll-padding-top: 72px; scroll-padding-bottom: 190px; }
+    html:has(.sx-unit-savebar) { scroll-padding-bottom: 140px; }
     /* a phone keeps only the tick and the row number in view while the cells scroll sideways (the state column scrolls with them) */
     .sx-rv-pick { width: 34px; min-width: 34px; }
     .sx-rv-no { inset-inline-start: 34px; width: 44px; min-width: 44px; box-shadow: inset 1px 0 0 var(--ut-line); }
