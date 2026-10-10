@@ -25044,3 +25044,7 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 .smap__map { background: #000 !important; }
 .smap__stars { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 .smap__map::before { z-index: 0 !important; }
+
+/* أسامي الكروت: من غير قص ولا نقط "…" أبدًا — الخط بيصغر لحد ما الاسم يدخل (js/shary/site-chrome.js) ولو لسه طويل بينزل سطر تاني */
+[data-fit-line], .shary-card__name, .prop-shot__name a, .shot-card__name, .abroad-dev b, .content-card__body b, .ad-card__title { text-overflow: clip !important; }
+[data-fit-line].fit-wrap, .shary-card__name.fit-wrap, .prop-shot__name a.fit-wrap, .shot-card__name.fit-wrap, .abroad-dev b.fit-wrap, .content-card__body b.fit-wrap, .ad-card__title.fit-wrap { white-space: normal !important; overflow: visible !important; -webkit-line-clamp: unset !important; display: block; }

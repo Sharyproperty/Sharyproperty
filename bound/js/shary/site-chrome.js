@@ -1120,12 +1120,19 @@ window.SharyZoom = function () {
         el.style.fontSize = '';
         var size = parseFloat(window.getComputedStyle(el).fontSize) || 16;
         var guard = 0;
+        el.classList.remove('fit-wrap');
+        var base = size;
         while (el.scrollWidth > el.clientWidth + 1 && size > 10 && guard++ < 40) {
             size -= 0.5;
             el.style.fontSize = size + 'px';
         }
+        // حتى بأصغر خط مش داخل: بينزل سطر تاني بدل ما يتقص أو يتحط نقط
+        // (والخط بيرجع مقاس مقروء — مش أصغر حاجة)
+        if (el.scrollWidth > el.clientWidth + 1) { el.classList.add('fit-wrap'); el.style.fontSize = Math.max(12, Math.round(base * 0.85)) + 'px'; }
     }
-    function fitAll() { Array.prototype.forEach.call(document.querySelectorAll('[data-fit-line]'), fitOne); }
+    // أسامي الكروت (وحدات / مشاريع / مطورين / مناطق) — نفس القاعدة: من غير قص ولا نقط
+    var SEL = '[data-fit-line], .shary-card__name, .prop-shot__name a, .shot-card__name, .abroad-dev b, .content-card__body b, .ad-card__title';
+    function fitAll() { Array.prototype.forEach.call(document.querySelectorAll(SEL), fitOne); }
     var timer;
     function later() { window.clearTimeout(timer); timer = window.setTimeout(fitAll, 120); }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fitAll); else fitAll();
