@@ -301,6 +301,11 @@
                 glBox.setAttribute('dir', 'ltr');
                 var options = { container: glBox, style: token ? MAPBOX_STYLES[state.type] : libreStyle(state.type), center: START.center, zoom: START.zoom, minZoom: -1, attributionControl: false };
                 if (token) options.projection = 'globe';
+                // جاي من صفحة مشروع / وحدة: الخريطة بتتفتح على المشروع نفسه من أول لحظة (مش على الكرة الأرضية)
+                if (state.asked && state.focus && state.current) {
+                    var here = info(state.current);
+                    if (isFinite(here.lng) && isFinite(here.lat)) { options.center = [here.lng, here.lat]; options.zoom = 14; leaveGlobe(); }
+                }
                 gl = new lib.Map(options);
                 glLib = lib;
                 // مصدر صور الخريطة: مفيش علامة فوق الخريطة — المصدر مكتوب سطر صغير آخر قايمة "اختر المنطقة" ([data-smap-credit]) وبيتحدّث مع نوع الخريطة
@@ -364,14 +369,16 @@
                 var p = info(state.current);
                 leaveGlobe();
                 if (plans) plans.refresh();
-                goTo(p, INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
+                // جاي من صفحة المشروع / الوحدة: على الماستر بلان على طول (من غير لفة الكرة الأرضية) — وإلا حركة الدخول العادية
+                goTo(p, state.asked ? 0 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
                 return;
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
             if (state.area || state.fit) { leaveGlobe(); fitAll(INTRO); return; }
             // الكرة بتيجي من بعيد وتكبر بالراحة لحد ما تقف فوق مصر — وبعدها قايمة "اختر المنطقة" بتنزل
             gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: INTRO, easing: easeOut, essential: true });
-            window.setTimeout(function () { if (root.classList.contains('is-globe') && !state.area && !state.current) toggleAreas(true); }, INTRO - 1400);
+            // جاي من صفحة مشروع / وحدة (?project=): قايمة "اختر المنطقة" ما بتفتحش لوحدها أبدًا
+            window.setTimeout(function () { if (root.classList.contains('is-globe') && !state.area && !state.current && !state.asked) toggleAreas(true); }, INTRO - 1400);
         }
 
         // الخريطة بتتحدّث لما تبقى ظاهرة بس (ولما المشروع / النوع / التكبير يتغيّر)
@@ -879,6 +886,7 @@
         var asked = new URLSearchParams(window.location.search);
         var askedProject = asked.get('project') || asked.get('compound_id') || '';
         wantedUnit = (asked.get('unit') || '').replace(/[^0-9]/g, '');
+        if (askedProject) state.asked = true;
         if (askedProject && !state.focus) {
             var askedItem = items.filter(function (item) { var p = info(item); return String(p.id) === askedProject || p.slug === askedProject || p.alias === askedProject; })[0];
             if (askedItem) { state.focus = true; state.area = ''; root.setAttribute('data-selected', askedItem.getAttribute('data-slug')); }
