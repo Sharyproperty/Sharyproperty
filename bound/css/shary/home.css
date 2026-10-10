@@ -8701,7 +8701,7 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
 
 /* ---- أحدث المشاريع: الصورة نضيفة من غير طبقة سودا على الكارت
    ديسكتوب: الاسم والمكان على الصورة بظل خفيف بس — الخلفية الغامقة بتظهر لما الماوس ييجي على الكارت ، ورا الكلام بس (مش على الكارت كله).
-   موبايل / تابلت (مفيش ماوس): الاسم والمكان تحت الصورة على أبيض — الصورة كاملة ونضيفة والكلام واضح. */
+   موبايل / تابلت (مفيش ماوس): الاسم والمكان على الصورة برضه ، وظل ناعم ورا الكلمة بس. */
 .new-projects-track .new-project-card .new-project-content { background: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 .new-projects-track .new-project-card::before { display: none; }
 .new-projects-track .new-project-card:hover { filter: none; }
@@ -8712,41 +8712,21 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
   text-shadow: 0 1px 3px rgba(0, 0, 0, .55), 0 0 12px rgba(0, 0, 0, .35);
 }
 .new-projects-track .new-project-caption__inner {
-  display: inline-block; max-width: 100%; padding: 7px 10px; border-radius: 10px;
-  background: rgba(8, 24, 42, 0); transition: background-color .25s ease, backdrop-filter .25s ease;
+  position: relative; isolation: isolate; display: inline-block; max-width: 100%; padding: 6px 10px;
 }
+/* نفس كروت "أفضل الكمبوندات" وصفحة المشاريع: الكلام على الصورة بظل خفيف — ظل ناعم ورا الكلمة بس (مش على الكارت كله) */
+.new-projects-track .new-project-caption__inner::before {
+  content: ""; position: absolute; inset: 2px 0 4px; z-index: -1; border-radius: 999px;
+  background-color: rgba(4, 31, 56, .44); filter: blur(14px); opacity: 0; transition: opacity .25s ease; pointer-events: none;
+}
+.new-projects-track .new-project-caption__name,
+.new-projects-track .new-project-caption__place { text-shadow: 0 1px 2px rgba(4, 31, 56, .85), 0 0 12px rgba(4, 31, 56, .6); }
 @media (hover: hover) and (min-width: 1024px) {
   .new-projects-track .new-project-card { flex-basis: 460px; width: 460px; height: 230px; background-size: cover !important; background-position: center !important; }
-  .new-projects-track .new-project-card:hover .new-project-caption__inner {
-    background: rgba(8, 24, 42, .62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-  }
-  .new-projects-track .new-project-card:hover .new-project-caption__name,
-  .new-projects-track .new-project-card:hover .new-project-caption__place { text-shadow: none; }
+  .new-projects-track .new-project-card:hover .new-project-caption__inner::before { opacity: 1; }
 }
 @media (max-width: 1023px), (hover: none) {
-  .new-projects-track .new-project-card {
-    --cap: 84px;
-    height: auto !important; aspect-ratio: auto; display: block;
-    padding-bottom: var(--cap);
-    background-color: #fff;
-    background-origin: content-box !important; background-clip: content-box !important;
-    background-size: cover !important; background-position: center !important;
-    border: 1px solid #E3E9F0; box-shadow: 0 2px 8px rgba(6, 52, 84, .06);
-    transform: none !important;
-  }
-  .new-projects-track .new-project-card > .new-project-badge,
-  .new-projects-track .new-project-card > .property-actions { z-index: 5; }
-  .new-projects-track .new-project-card .new-project-content { display: block; height: 150px; padding: 0 !important; margin: 0; }
-  .new-projects-track .new-project-caption {
-    position: absolute; inset-inline: 0; bottom: 0; height: var(--cap);
-    display: flex; flex-direction: column; justify-content: flex-start;
-    padding: 11px 12px 0; background: #fff; color: #0B2340;
-  }
-  .new-projects-track .new-project-caption__inner { padding: 0; background: none; }
-  .new-projects-track .new-project-caption__name { color: #0B2340; font-size: 14.5px; font-weight: 800; line-height: 1.35; text-shadow: none; }
-  .new-projects-track .new-project-caption__name span { color: #0B2340; font-weight: 700; }
-  .new-projects-track .new-project-caption__place { color: #1E6FD9; font-size: 12.5px; font-weight: 700; margin-top: 2px; text-shadow: none; }
-}
-@media (min-width: 641px) and (max-width: 1023px) {
-  .new-projects-track .new-project-card .new-project-content { height: 170px; }
+  /* موبايل (مفيش ماوس): الظل الناعم ورا الكلمة ظاهر على طول — والصورة نفسها من غير تغميق */
+  .new-projects-track .new-project-caption { inset-inline: 6px; bottom: 6px; }
+  .new-projects-track .new-project-caption__inner::before { opacity: .85; }
 }
