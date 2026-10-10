@@ -521,7 +521,10 @@
         function matches(item, use) {
             var p = info(item);
             if (state.area && item.getAttribute('data-area') !== state.area) return false;
-            if (use.words && use.words.length) {
+            if (use.words && use.words.length && window.SharyText) {
+                // البحث الذكي (js/shary/smart-text.js)
+                if (!(window.SharyText.score(use.query, [p.name, p.alt, String(p.slug || '').replace(/-/g, ' '), p.developer_name, p.area_label, p.group_label, p.location].join(' | ')) > 0)) return false;
+            } else if (use.words && use.words.length) {
                 if (!item.__hay) item.__hay = plain([p.name, p.alt, p.developer_name, p.area_label, p.group_label, p.location, p.types, String(p.slug || '').replace(/-/g, ' ')].join(' '));
                 if (!use.words.every(function (word) { return item.__hay.indexOf(word) > -1; })) return false;
             }
@@ -537,11 +540,12 @@
 
         function filter(keep) {
             var words = plain(search && search.value).split(' ').filter(Boolean);
+            var query = search ? search.value : '';
             var levels = [
-                { words: words, types: 1, delivery: 1, price: 1 },
-                { words: words, types: 1, delivery: 1 },
-                { words: words, types: 1 },
-                { words: words },
+                { words: words, query: query, types: 1, delivery: 1, price: 1 },
+                { words: words, query: query, types: 1, delivery: 1 },
+                { words: words, query: query, types: 1 },
+                { words: words, query: query },
                 {}
             ];
             var list = [], level = 0;
@@ -653,6 +657,7 @@
         }
         // درجة تطابق كلمات البحث مع نص: 0 = مفيش ، أعلى = أقرب (أول الاسم > أول كلمة > جوه الكلمة > غلطة حرف)
         function rank(text, words) {
+            if (window.SharyText) return window.SharyText.score(words.join(' '), text) * 2.5;   // البحث الذكي (js/shary/smart-text.js)
             var hay = plain(text);
             if (!hay) return 0;
             var parts = hay.split(' ').map(bare), total = 0;

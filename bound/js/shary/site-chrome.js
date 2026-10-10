@@ -413,6 +413,7 @@ window.SharyZoom = function () {
         var page = holder ? null : (link.closest('[data-wa-page]') || scope.querySelector('[data-wa-page]'));
         var source = holder || page;
         var absolute = function (value, web) {
+            if (!value) return '';   // مفيش صورة / لينك: ما يتحطش لينك الصفحة بداله
             try { var full = new URL(value, location.href).href; return (web ? /^https?:/ : /^(?!data:|javascript:|blob:)/).test(full) ? full : ''; } catch (error) { return ''; }
         };
         if (!source) return (en ? 'Hello Shary, I would like to ask about:' : 'مرحبًا شاري، أريد الاستفسار عن:') + '\n' + document.title + '\n' + location.href;
@@ -838,6 +839,22 @@ window.SharyZoom = function () {
 
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
     if (!mobile || seen() || got() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    // صورة التليفون بتتحمّل من أول ما الصفحة تفتح (مش lazy — جوه بوب أب مخفي ما كانتش بتتحمّل غير لما يظهر ، فالكارت كان بيظهر الأول والصورة بعده)
+    // والبوب أب ما بيظهرش غير لما الصورة تبقى جاهزة (أو بعد 3 ثواني زيادة بالكتير) — يظهر مرة واحدة كامل
+    var device = pop.querySelector('.app-pop__device');
+    if (device && device.getAttribute('loading') === 'lazy') device.setAttribute('loading', 'eager');
+    function ready(done) {
+        if (!device || (device.complete && device.naturalWidth > 0)) { done(); return; }
+        var finished = false;
+        var finish = function () {
+            if (finished) return;
+            if (device.complete && device.naturalWidth === 0 && device.getAttribute('data-fallbacks')) return;   // بتجرّب النسخة الاحتياطية — نستنى
+            finished = true; done();
+        };
+        device.addEventListener('load', function () { (device.decode ? device.decode().catch(function () {}) : Promise.resolve()).then(finish); });
+        device.addEventListener('error', function () { window.setTimeout(finish, 60); });
+        window.setTimeout(function () { finished = true; done(); }, 3000);
+    }
     // العميل فاتح Shary AI: البوب أب ما يقطعش المحادثة — بيستنى لحد ما يقفلها
     function show() {
         var button = pop.querySelector('[data-app-button]');
@@ -845,7 +862,7 @@ window.SharyZoom = function () {
         var ai = document.querySelector('[data-ai-panel]');
         if (ai && Array.prototype.some.call(document.querySelectorAll('[data-ai-panel]'), function (panel) { return !panel.classList.contains('hidden'); })) { window.setTimeout(show, 4000); return; }
         if (seen() || got()) return;
-        open();
+        ready(function () { if (!seen() && !got()) open(); });
     }
     window.setTimeout(show, Number(pop.getAttribute('data-delay')) || 1800);
 })();
@@ -876,8 +893,9 @@ window.SharyZoom = function () {
 })();
 
 /**
- * سيستم اللوجوهات — اللوجو كله جوه الدايرة زي صورة واتساب: من غير تكبير ومن غير ما حرف منه يتقص.
- * صورة اللوجو (مربعة أو مستطيلة) بتتحط كاملة جوه مربع مرسوم جوه الدايرة (هامش 16% من قطر الدايرة) ، والدايرة نفسها بتترسم خلفية:
+ * سيستم اللوجوهات — اللوجو كله جوه الدايرة زي صورة واتساب: باين وواضح ومن غير ما حرف منه يتقص ، على أي مقاس شاشة.
+ * 1) المساحة الفاضية اللي جوه صورة اللوجو نفسها بتتقص (trim) — فاللوجو الصغير في نص صورة كبيرة بيكبر.
+ * 2) اللوجو بيتحط كامل جوه أكبر مستطيل بنفس نسبته يدخل في الدايرة (العريض بياخد عرض الدايرة ، المربع 65% من القطر) ، والدايرة نفسها بتترسم خلفية:
  *   - لوجو خلفيته لون واحد ← الدايرة بتاخد نفس اللون (المربع ما بيبانش).
  *   - لوجو شفاف (PNG) ← دايرة بيضا.
  *   - لوجو خلفيته صورة / تدرّج ← الدايرة بتاخد متوسط لون أطراف الصورة.
@@ -887,13 +905,61 @@ window.SharyZoom = function () {
  */
 (function () {
     var SELECTOR = 'img[data-logo-fit], img.rounded-full.object-contain, .dev-logo-link img, .prop-shot__logo img, .dev-icon__logo img, .prop-bar__logo img, .developer-logo img, .req-menu__logo, .prop-bar__mini-logo, .abroad-dev__logo';
-    var INSET = 0.16;   // الهامش من كل ناحية = 16% من قطر الدايرة: المربع اللي جواه اللوجو كله جوه الدايرة
+    var SAFE = 0.92;    // اللوجو جوه أكبر مستطيل بنفس نسبته يدخل في الدايرة × 92% (بعيد عن الإطار)
     var watcher = window.ResizeObserver ? new ResizeObserver(function (entries) { entries.forEach(function (entry) { size(entry.target); }); }) : null;
 
-    // الهامش بالبيكسل من مقاس الدايرة نفسها (النسبة المئوية في CSS بتتحسب من عرض العنصر الأب مش من الصورة)
+    // الهامش بالبيكسل من مقاس الدايرة نفسها: المستطيل اللي جواه اللوجو بنفس نسبة اللوجو (عرض ÷ ارتفاع) وأكبر حاجة تدخل في الدايرة —
+    // اللوجو العريض (كلمة) بياخد عرض الدايرة تقريبًا بدل ما يتحط في مربع صغير ، والمربع بياخد 65% من القطر. ولا حرف بيتقص.
     function size(img) {
         var width = img.offsetWidth || parseFloat(window.getComputedStyle(img).width) || 0;
-        if (width) img.style.padding = (Math.round(width * INSET * 10) / 10) + 'px';
+        if (!width) return;
+        var ratio = img.__ratio || 1;
+        var diagonal = Math.sqrt(1 + ratio * ratio);
+        var boxW = width * ratio / diagonal * SAFE, boxH = width / diagonal * SAFE;
+        img.style.padding = (Math.round((width - boxH) / 2 * 10) / 10) + 'px ' + (Math.round((width - boxW) / 2 * 10) / 10) + 'px';
+    }
+
+    // اللوجو اللي جوه صورته مساحة فاضية كبيرة (لوجو صغير في نص صورة بيضا / شفافة) بيتقص للوجو نفسه + هامش صغير — فيبان أكبر وواضح.
+    // بيشتغل لما الصورة من نفس الدومين (أو عليها CORS) — غير كده بتتساب زي ما هي.
+    function trim(img) {
+        try {
+            var scale = Math.min(1, 400 / Math.max(img.naturalWidth, img.naturalHeight));
+            var w = Math.max(1, Math.round(img.naturalWidth * scale)), h = Math.max(1, Math.round(img.naturalHeight * scale));
+            var canvas = document.createElement('canvas');
+            canvas.width = w; canvas.height = h;
+            var context = canvas.getContext('2d');
+            context.drawImage(img, 0, 0, w, h);
+            var data = context.getImageData(0, 0, w, h).data;
+            var corner = function (x, y) { var at = (y * w + x) * 4; return [data[at], data[at + 1], data[at + 2], data[at + 3]]; };
+            var corners = [corner(0, 0), corner(w - 1, 0), corner(0, h - 1), corner(w - 1, h - 1)];
+            var clear = corners.filter(function (c) { return c[3] < 24; }).length >= 3;
+            var bg = corners[0];
+            var minX = w, minY = h, maxX = -1, maxY = -1;
+            for (var y = 0; y < h; y++) {
+                for (var x = 0; x < w; x++) {
+                    var at = (y * w + x) * 4;
+                    var ink = clear ? data[at + 3] > 24
+                        : data[at + 3] > 24 && (Math.abs(data[at] - bg[0]) + Math.abs(data[at + 1] - bg[1]) + Math.abs(data[at + 2] - bg[2])) > 60;
+                    if (ink) { if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; if (y > maxY) maxY = y; }
+                }
+            }
+            if (maxX < 0) return false;
+            var cw = maxX - minX + 1, ch = maxY - minY + 1;
+            if (cw * ch > w * h * 0.8) return false;                // اللوجو مالي الصورة أصلًا
+            var pad = Math.round(Math.max(cw, ch) * 0.06);
+            var sx = Math.max(0, minX - pad), sy = Math.max(0, minY - pad);
+            var sw = Math.min(w - sx, cw + pad * 2), sh = Math.min(h - sy, ch + pad * 2);
+            var out = document.createElement('canvas');
+            var up = Math.min(4, 320 / Math.max(sw, sh)) || 1;      // نسخة واضحة (لحد 320 بيكسل)
+            out.width = Math.round(sw * up); out.height = Math.round(sh * up);
+            var outContext = out.getContext('2d');
+            if (!clear) { outContext.fillStyle = 'rgb(' + bg[0] + ',' + bg[1] + ',' + bg[2] + ')'; outContext.fillRect(0, 0, out.width, out.height); }
+            outContext.imageSmoothingQuality = 'high';
+            outContext.drawImage(img, sx / scale, sy / scale, sw / scale, sh / scale, 0, 0, out.width, out.height);
+            img.__trimmed = true;
+            img.src = out.toDataURL('image/png');
+            return true;
+        } catch (error) { return false; }   // صورة من دومين تاني من غير CORS
     }
 
     // الدايرة مرسومة خلفية للصورة (ومعاها الإطار لو الصورة كان عليها إطار) — فالصورة نفسها من غير حواف مدوّرة وما بيتقصش منها حاجة
@@ -914,6 +980,9 @@ window.SharyZoom = function () {
     function fit(img) {
         if (!img.naturalWidth || img.__logoFit === img.currentSrc) return;
         var style = window.getComputedStyle(img);
+        if (style.objectFit === 'cover' && !img.hasAttribute('data-logo-fit') && !img.__logoFit) return;
+        if (!img.__trimmed && trim(img)) return;   // الصورة اتقصّت: الـ load الجاي بيكمّل
+        img.__ratio = img.naturalWidth / img.naturalHeight || 1;
         if (!img.__logoFit) {
             // صورة بتملى الدايرة بقصد (object-fit: cover — صورة منطقة أو مشروع): مش لوجو
             if (style.objectFit === 'cover' && !img.hasAttribute('data-logo-fit')) return;

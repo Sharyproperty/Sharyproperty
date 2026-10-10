@@ -162,7 +162,15 @@
         function suggest() {
             var words = plain(input.value).split(' ').filter(Boolean);
             if (!words.length) { hide(); return; }
-            var found = options().filter(function (item) { return words.every(function (word) { return item.text.indexOf(word) > -1; }); });
+            var smart = window.SharyText, found;
+            if (smart) {
+                // البحث الذكي (js/shary/smart-text.js): الهمزات ، العامية ، "شركة" ، من أول حرفين ، غلطة حرف — بالأقرب
+                found = options().map(function (item) { item.score = smart.score(input.value, item.name + ' | ' + item.box.value); return item; })
+                    .filter(function (item) { return item.score > 0; })
+                    .sort(function (a, b) { return b.score - a.score; });
+            } else {
+                found = options().filter(function (item) { return words.every(function (word) { return item.text.indexOf(word) > -1; }); });
+            }
             // لحد 4 من كل نوع، و8 في المجموع
             var count = {};
             found = found.filter(function (item) { count[item.kind] = (count[item.kind] || 0) + 1; return count[item.kind] <= 4; }).slice(0, 8);

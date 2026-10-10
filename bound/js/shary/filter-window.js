@@ -19,18 +19,22 @@
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
     }
 
-    // سكربت الفلتر: مرة واحدة بس في الصفحة
-    ready(function () {
+    // سكربت الفلتر: مرة واحدة بس في الصفحة — بيتحمّل على طول (مش بعد ما الصفحة تخلص) عشان النافذة تفتح من أول ضغطة
+    var filterReady = true, waiting = false;
+    (function () {
         var loaded = Array.prototype.some.call(document.scripts, function (script) { return /\/js\/shary\/area-page\.js/.test(script.src || ''); });
         var config = window.SharyFilterWindow || {};
         if (!loaded && config.areaPage) {
+            filterReady = false;
             var script = document.createElement('script');
             script.src = config.areaPage;
+            script.onload = script.onerror = function () { filterReady = true; if (waiting) { waiting = false; ready(open); } };
             document.body.appendChild(script);
         }
-    });
+    })();
 
     function open() {
+        if (!filterReady) { waiting = true; return; }   // الضغطة اتسجّلت: النافذة بتفتح أول ما السكربت يجهز
         // الرئيسية: تبويب البحث (بيع / إيجار) وحالة العقار (من المطور / إعادة بيع) بيتعلّموا في الفلتر
         var tab = document.querySelector('.home-search-tab.is-active, .home-search-tab.active');
         var status = document.querySelector('.property-status.active');
@@ -58,7 +62,11 @@
     }, true);
 
     // "بحث متقدم" في الرئيسية (الزرار بينده الدالة دي)
-    ready(function () { window.toggleHeroAdvancedSearch = open; });
+    ready(function () {
+        window.toggleHeroAdvancedSearch = open;
+        window.SharyFilterWindowReady = true;
+        if (window.SharyFilterWanted) { window.SharyFilterWanted = false; open(); }   // العميل ضغط قبل ما السكربت يشتغل
+    });
 
     box.addEventListener('shary:filter', function (event) {
         event.preventDefault();

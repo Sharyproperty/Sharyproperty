@@ -36,6 +36,8 @@
             // القسم اللي مالوش أرقام شهرية (أقل من شهرين): الرسم بيختفي
             series = Array.isArray(series) ? series : [];
             if (trend) trend.hidden = series.length < 2;
+            var trendEmpty = card.querySelector('[data-area-trend-empty]');
+            if (trendEmpty) trendEmpty.hidden = series.length >= 2;      // من غير أرقام شهرية: كارت الرسم بيفضل ظاهر وفيه "—"
             if (series.length < 2) { values = []; return; }
             values = series;
             var min = Math.min.apply(null, series);
@@ -72,8 +74,8 @@
             (type.bars || []).forEach(function (value, i) {
                 var bar = card.querySelector('[data-bar="' + i + '"]');
                 var label = card.querySelector('[data-bar-value="' + i + '"]');
-                if (bar) bar.style.width = value + '%';
-                if (label) label.textContent = value;
+                if (bar) bar.style.width = (value == null ? 0 : value) + '%';
+                if (label) label.textContent = value == null ? '—' : value;      // لسه ما اتكتبش في لوحة التحكم
             });
             draw(type.series);
         }

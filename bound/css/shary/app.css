@@ -24937,3 +24937,22 @@ img.abroad-dev__logo {
     padding-inline-start: 0.75rem;
   }
 }
+
+/* الأسماء كاملة من غير نقط (…): "المطور - المشروع" في صفحة المشروع ، اسم الوحدة ، المكان ، الشريط الثابت ، أسماء المراحل والفرص —
+   لو الاسم طويل بينزل سطر تاني بنفس الخط (من غير تصغير ولا تكبير) */
+.prop-bar .prop-bar__head h1,
+.prop-bar .prop-bar__head > p > span,
+.prop-bar--project .prop-bar__head > p > span,
+.prop-bar__mini-text b,
+.prop-bar__mini-text small,
+.prop-shot__name a,
+.opp-sticky__head b,
+.opp-sticky__head small span {
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.prop-bar__mini-text b {
+  line-height: 1.3;
+}

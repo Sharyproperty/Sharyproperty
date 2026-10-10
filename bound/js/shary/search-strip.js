@@ -82,9 +82,18 @@
                     .catch(function () { if (ticket === asked) draw([]); });
                 return;
             }
-            var found = items.filter(function (item) { return words.every(function (word) { return item.__hay.indexOf(word) > -1; }); });
-            // اللي اسمه بيبدأ بالكلمة الأول
-            found.sort(function (a, b) { return (plain(b.title).indexOf(words[0]) === 0) - (plain(a.title).indexOf(words[0]) === 0); });
+            var smart = window.SharyText, found;
+            if (smart) {
+                // البحث الذكي (js/shary/smart-text.js): بالأقرب
+                found = items.map(function (item) { return { item: item, score: smart.score(q, [item.title, item.sub, item.keys].join(' | ')) }; })
+                    .filter(function (row) { return row.score > 0; })
+                    .sort(function (a, b) { return b.score - a.score; })
+                    .map(function (row) { return row.item; });
+            } else {
+                found = items.filter(function (item) { return words.every(function (word) { return item.__hay.indexOf(word) > -1; }); });
+                // اللي اسمه بيبدأ بالكلمة الأول
+                found.sort(function (a, b) { return (plain(b.title).indexOf(words[0]) === 0) - (plain(a.title).indexOf(words[0]) === 0); });
+            }
             draw(found.slice(0, 8));
         }
         function mark(index) { active = index; shown.forEach(function (row, i) { row.node.classList.toggle('is-active', i === index); }); }
