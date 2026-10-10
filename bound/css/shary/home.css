@@ -8772,3 +8772,49 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
   .own-unit-card__text { margin-bottom: 0; }
   .own-unit-card__actions { flex: none; }
 }
+
+/* ---- "عندك وحدة؟" كارت مستطيل بسيط: الزرارين جنب بعض دايمًا (بيع تركواز ، أجّر أصفر اللوجو) */
+.own-unit-card { padding: 14px 16px; gap: 12px; border-radius: 18px; }
+.own-unit-card__icon { width: 46px; height: 46px; border-radius: 14px; }
+.own-unit-card__icon svg { width: 22px; height: 22px; }
+.own-unit-card__body { flex: 1; }
+.own-unit-card__title { font-size: 17px; }
+.own-unit-card__text { margin: 0 0 10px; font-size: 12px; line-height: 1.5; }
+.own-unit-card__actions { flex-wrap: nowrap; gap: 8px; }
+.own-unit-card__btn { flex: 1 1 0; min-width: 0; padding: 8px 6px; font-size: 13.5px; border: 0; border-radius: 12px; transition: filter .2s ease, transform .2s ease; }
+.own-unit-card__btn--main, .own-unit-card__btn--main:hover { background: #4CBFB2; color: #fff; }
+.own-unit-card__btn--rent, .own-unit-card__btn--rent:hover { background: #FCB424; color: #1E4266; }
+.own-unit-card__btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+@media (min-width: 1024px) {
+  .own-unit-card { padding: 22px 32px; }
+  .own-unit-card__icon { width: 64px; height: 64px; border-radius: 18px; }
+  .own-unit-card__icon svg { width: 30px; height: 30px; }
+  .own-unit-card__title { font-size: 24px; }
+  .own-unit-card__text { margin: 2px 0 0; font-size: 15px; }
+  .own-unit-card__actions { flex: 0 0 380px; }
+  .own-unit-card__btn { padding: 11px 10px; font-size: 16px; }
+}
+
+/* ---- "عندك وحدة؟": نفس شكل الريفرنس (زراير بيضاوية جنب بعض) — بيع تركواز ، أجّر أصفر اللوجو ، ولما يضغط اللون بيتغير */
+.own-unit-card { padding: 16px 18px; gap: 14px; border-radius: 22px; }
+.own-unit-card__icon { width: 54px; height: 54px; border-radius: 16px; }
+.own-unit-card__icon svg { width: 26px; height: 26px; }
+.own-unit-card__btn { border-radius: 999px; padding: 8px 8px; -webkit-tap-highlight-color: transparent; transition: background-color .15s ease, color .15s ease, transform .15s ease; }
+.own-unit-card__btn:hover { filter: none; transform: none; }
+.own-unit-card__btn--main { background: #4CBFB2; color: #fff; }
+.own-unit-card__btn--main:hover { background: #3faea2; color: #fff; }
+.own-unit-card__btn--main:active { background: #2e8f84; color: #fff; transform: scale(.96); }
+.own-unit-card__btn--rent { background: #FCB424; color: #1E4266; }
+.own-unit-card__btn--rent:hover { background: #f0a512; color: #1E4266; }
+.own-unit-card__btn--rent:active { background: #d98f00; color: #fff; transform: scale(.96); }
+@media (min-width: 1024px) { .own-unit-card { padding: 22px 32px; } .own-unit-card__btn { padding: 11px 10px; } }
+
+/* ---- زراير "عندك وحدة؟" متحركة عشان تشد للضغط: لمعة بتعدي عليهم + نبضة خفيفة (بالتناوب) — وبتقف لو الجهاز طالب حركة أقل */
+.own-unit-card__btn { position: relative; overflow: hidden; isolation: isolate; animation: ownUnitPulse 2.6s ease-in-out infinite; }
+.own-unit-card__btn--rent { animation-delay: 1.3s; }
+.own-unit-card__btn::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; z-index: -1; background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, .55) 50%, transparent 100%); transform: skewX(-20deg); animation: ownUnitShine 2.6s ease-in-out infinite; pointer-events: none; }
+.own-unit-card__btn--rent::after { animation-delay: 1.3s; }
+.own-unit-card__btn:active { animation: none; }
+@keyframes ownUnitShine { 0% { left: -60%; } 45%, 100% { left: 130%; } }
+@keyframes ownUnitPulse { 0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } 20% { transform: scale(1.04); box-shadow: 0 0 0 4px rgba(255, 255, 255, .18); } 40% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); } }
+@media (prefers-reduced-motion: reduce) { .own-unit-card__btn, .own-unit-card__btn::after { animation: none; } }
