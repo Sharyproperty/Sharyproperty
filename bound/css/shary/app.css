@@ -25017,3 +25017,57 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
     border: 1px solid #c6d6ea !important;
 }
 [data-filter-sheet] > .area-sheet:not(.inset-0) { border-bottom-width: 0 !important; }
+
+/* ورا الكرة الأرضية: الفضا بالنجوم (زي الخريطة القديمة) — بدل السما الفاتحة. النجوم طبقتين: ثابتة + طبقة بتلمع بهدوء */
+.smap__map {
+    background-color: #03060f;
+    background-image: radial-gradient(1.1px 1.1px at 165px 77px, rgba(255, 244, 225, 0.48), transparent 70%),
+        radial-gradient(1.3px 1.3px at 48px 187px, rgba(255, 255, 255, 0.95), transparent 70%),
+        radial-gradient(1.1px 1.1px at 19px 44px, rgba(255, 255, 255, 0.49), transparent 70%),
+        radial-gradient(1.5px 1.5px at 217px 30px, rgba(255, 255, 255, 0.52), transparent 70%),
+        radial-gradient(0.8px 0.8px at 31px 203px, rgba(255, 244, 225, 0.57), transparent 70%),
+        radial-gradient(1.1px 1.1px at 68px 148px, rgba(255, 244, 225, 0.75), transparent 70%),
+        radial-gradient(0.9px 0.9px at 157px 92px, rgba(255, 255, 255, 0.76), transparent 70%),
+        radial-gradient(1.2px 1.2px at 190px 49px, rgba(255, 255, 255, 0.48), transparent 70%),
+        radial-gradient(1.3px 1.3px at 105px 254px, rgba(210, 228, 255, 0.69), transparent 70%),
+        radial-gradient(1.1px 1.1px at 238px 232px, rgba(255, 255, 255, 0.59), transparent 70%),
+        radial-gradient(1.3px 1.3px at 124px 41px, rgba(210, 228, 255, 0.74), transparent 70%),
+        radial-gradient(1.3px 1.3px at 229px 147px, rgba(255, 244, 225, 0.49), transparent 70%),
+        radial-gradient(1.4px 1.4px at 214px 84px, rgba(210, 228, 255, 0.53), transparent 70%),
+        radial-gradient(1.6px 1.6px at 215px 20px, rgba(255, 244, 225, 0.49), transparent 70%),
+        radial-gradient(1.4px 1.4px at 160px 174px, rgba(255, 244, 225, 0.78), transparent 70%),
+        radial-gradient(1.5px 1.5px at 233px 35px, rgba(210, 228, 255, 0.97), transparent 70%),
+        radial-gradient(1.4px 1.4px at 33px 31px, rgba(255, 244, 225, 0.62), transparent 70%),
+        radial-gradient(1.4px 1.4px at 228px 145px, rgba(210, 228, 255, 0.94), transparent 70%),
+        radial-gradient(1.1px 1.1px at 11px 236px, rgba(210, 228, 255, 0.79), transparent 70%),
+        radial-gradient(1.4px 1.4px at 30px 111px, rgba(255, 255, 255, 0.52), transparent 70%),
+        radial-gradient(1.5px 1.5px at 203px 200px, rgba(255, 255, 255, 0.72), transparent 70%),
+        radial-gradient(1.2px 1.2px at 229px 205px, rgba(210, 228, 255, 0.94), transparent 70%),
+        radial-gradient(1.6px 1.6px at 142px 212px, rgba(210, 228, 255, 0.83), transparent 70%),
+        radial-gradient(0.9px 0.9px at 118px 77px, rgba(255, 244, 225, 0.53), transparent 70%),
+        radial-gradient(1.2px 1.2px at 119px 6px, rgba(210, 228, 255, 0.77), transparent 70%),
+        radial-gradient(0.9px 0.9px at 144px 2px, rgba(255, 244, 225, 0.74), transparent 70%),
+        radial-gradient(ellipse 80% 70% at 50% 50%, #0c1a36 0%, #070f22 45%, #03060f 100%);
+    background-size: 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 260px 260px, 100% 100%;
+}
+.smap__map::before {
+    inset: 0 !important;
+    filter: none !important;
+    background-image: radial-gradient(2.2px 2.2px at 289px 163px, rgba(255, 244, 225, 0.91), transparent 70%),
+        radial-gradient(1.9px 1.9px at 316px 335px, rgba(255, 244, 225, 0.72), transparent 70%),
+        radial-gradient(1.6px 1.6px at 408px 286px, rgba(255, 255, 255, 0.82), transparent 70%),
+        radial-gradient(1.6px 1.6px at 246px 324px, rgba(255, 255, 255, 0.76), transparent 70%),
+        radial-gradient(1.3px 1.3px at 225px 83px, rgba(255, 255, 255, 0.88), transparent 70%),
+        radial-gradient(1.4px 1.4px at 0px 290px, rgba(210, 228, 255, 0.73), transparent 70%),
+        radial-gradient(1.3px 1.3px at 314px 13px, rgba(210, 228, 255, 0.76), transparent 70%),
+        radial-gradient(1.5px 1.5px at 76px 324px, rgba(210, 228, 255, 0.8), transparent 70%),
+        radial-gradient(1.3px 1.3px at 242px 62px, rgba(210, 228, 255, 0.85), transparent 70%),
+        radial-gradient(1.5px 1.5px at 245px 247px, rgba(255, 244, 225, 0.74), transparent 70%),
+        radial-gradient(1.5px 1.5px at 175px 379px, rgba(255, 255, 255, 0.95), transparent 70%),
+        radial-gradient(1.4px 1.4px at 264px 11px, rgba(210, 228, 255, 0.99), transparent 70%) !important;
+    background-size: 410px 410px !important;
+    animation: smap-twinkle 4.5s ease-in-out infinite alternate;
+}
+@keyframes smap-twinkle { from { opacity: .3; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .smap__map::before { animation: none; opacity: .8; } }
+.smap.is-roadmap .smap__map { background-color: #03060f; }

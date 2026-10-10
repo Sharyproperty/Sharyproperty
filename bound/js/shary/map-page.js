@@ -50,9 +50,9 @@
         };
         var layers = [{ id: 'ground', type: 'background', paint: { 'background-color': type === 'h' ? '#0d2238' : '#dfe9f3' } }, { id: 'base', type: 'raster', source: 'base' }];
         if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
-        // السما حوالين الكرة: سحابي فاتح (مش أسود ولا كحلي) — نفس خلفية .smap__map
+        // حوالين الكرة: الفضا بالنجوم (خلفية .smap__map) — الكرة عليها هالة زرقا خفيفة زي الغلاف الجوي ، والسما نفسها شفافة عشان النجوم تبان
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
-            sky: { 'sky-color': '#8cc8ff', 'horizon-color': '#ffffff', 'fog-color': '#ffffff', 'sky-horizon-blend': 0.7, 'horizon-fog-blend': 0.7, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.85, 5, 0.85, 7, 0] } };
+            sky: { 'sky-color': 'rgba(0, 0, 0, 0)', 'horizon-color': 'rgba(120, 180, 255, 0.55)', 'fog-color': 'rgba(186, 210, 235, 0.9)', 'sky-horizon-blend': 0.5, 'horizon-fog-blend': 0.6, 'fog-ground-blend': 0.5, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 1, 5, 1, 7, 0] } };
     }
 
     // ---------- البيانات من الـ API الحي (data-api): بيرسم الكروت والمناطق والفلاتر وبعدها الخريطة بتشتغل عادي ----------
@@ -317,7 +317,8 @@
                 };
                 showCredit(); gl.on('styledata', showCredit);
                 // Mapbox: السما ورا الكرة سحابي فاتح بدل الأسود
-                if (token) gl.on('style.load', function () { try { gl.setFog({ color: '#ffffff', 'high-color': '#8cc8ff', 'space-color': '#b5dcff', 'horizon-blend': 0.08, 'star-intensity': 0 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
+                // Mapbox: نفس الغلاف الجوي بتاع الخريطة القديمة — والفضا بالنجوم ورا الكرة
+                if (token) gl.on('style.load', function () { try { gl.setFog({ color: 'rgb(186, 210, 235)', 'high-color': 'rgb(36, 92, 223)', 'horizon-blend': 0.02, 'space-color': 'rgb(5, 9, 20)', 'star-intensity': 0.6 }); } catch (e) { /* نسخة أقدم من غير الغلاف الجوي */ } });
                 items.forEach(function (item) {
                     var p = info(item);
                     var pin = document.createElement('button');
