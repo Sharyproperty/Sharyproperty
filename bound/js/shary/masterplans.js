@@ -27,6 +27,12 @@
  * المشروع اللي لسه ما اتضبطش (من غير أركان محفوظة): unplaced = 'bbox' بيتحط معدول جوه حدود المشروع (تقريبي لحد ما يتضبط بالأداة) ،
  *   'hide' ما بيتعرضش خالص لحد ما يتضبط.
  *
+ * التحميل (من غير ما تظهر في مكان غلط وبعدين تتحرك):
+ *   - مفيش ماستر بلان بتترسم قبل ما الخريطة وصورها (Tiles) تخلص تحميل خالص (أول حدث idle) ، ولا والخريطة بتتحرك (الحركة الأولى من الكرة للمشروع) ،
+ *     ولا قبل ما ملف الأماكن يوصل — فالمكان المحفوظ (الأركان = الدوران والحجم والاتجاه) بيتطبق مرة واحدة بس.
+ *   - ولا بتترسم وهي صغيرة قوي (تحت زوم minZoom) حتى للمشروع المختار — مكانها جغرافي (lng/lat) مش بيكسل ، فأي زوم / تحريك بعد كده ما بيغيّرش مكانها.
+ *   - أول ما تترسم بتفضل مخفية لحد ما الصورة نفسها تجهز على الخريطة وبعدين بتظهر مرة واحدة في مكانها.
+ *
  * الاستخدام:  var mp = SharyMasterplans.attach(map, { projects: function () { return [...]; }, activeId: function () { return id; }, placementsUrl: '...' });
  *            mp.refresh()  ·  mp.reload(id, { masterplan_corners: [...] })  ·  mp.bounds(id)  ·  mp.has(id)  ·  mp.setHidden(id, true)
  */
@@ -115,6 +121,14 @@
             placements: {}
         };
         var maxTexture = 0, retryTimer = null, retries = 0, styleTimer = null, dead = false;
+        // الخريطة خلّصت تحميل (أول idle) + ملف الأماكن وصل (أو مفيش ملف) — قبلهم مفيش رسم
+        var mapReady = false, placementsDone = !options.placementsUrl;
+        function canDraw() {
+            if (!mapReady) { try { mapReady = map.loaded(); } catch (error) { mapReady = true; } }
+            if (!mapReady || !placementsDone) return false;
+            // والخريطة واقفة وصورها (Tiles) اللي في الشاشة خلصت تحميل — لو لسه: الرسم بييجي مع الـ idle الجاي
+            try { return !map.isMoving() && (typeof map.areTilesLoaded !== 'function' || map.areTilesLoaded()); } catch (error) { return true; }
+        }
         function projects() { return (typeof options.projects === 'function' ? options.projects() : options.projects) || []; }
         function activeId() { return typeof options.activeId === 'function' ? options.activeId() : null; }
         function byId(id) { return projects().filter(function (p) { return String(p.id) === String(id); })[0] || null; }
@@ -171,15 +185,17 @@
         }
         function loadPlacements() {
             var url = options.placementsUrl;
-            if (!url || !window.fetch) return;
+            if (!url || !window.fetch) { placementsDone = true; return; }
             fetch(url, { cache: 'no-cache' })
                 .then(function (response) { return response.ok ? response.json() : null; })
                 .then(function (data) {
                     if (!data || typeof data !== 'object') return;
                     MP.placements = data.projects && typeof data.projects === 'object' ? data.projects : data;
-                    refresh();
                 })
-                .catch(function () { /* الملف مش موجود: الخريطة شغالة ببيانات المشاريع بس */ });
+                .catch(function () { /* الملف مش موجود: الخريطة شغالة ببيانات المشاريع بس */ })
+                .then(function () { placementsDone = true; refresh(); });
+            // الملف اتأخر: ما نستناش للأبد
+            setTimeout(function () { if (!placementsDone) { placementsDone = true; refresh(); } }, 5000);
         }
 
         // ---------- مكان الصورة ----------
@@ -258,10 +274,21 @@
                     if (!place) { MP.failed[id] = 2; remove(id); return; }      // لسه ما اتضبطش ومفيش حدود: ما يتعرضش
                     drop(x);
                     map.addSource(x.sourceId, { type: 'image', url: fitTexture(img), coordinates: place.coords });
-                    map.addLayer({ id: x.layerId, type: 'raster', source: x.sourceId, paint: paintFor(project) });
+                    // بتتضاف مخفية (شفافة) وبتظهر مرة واحدة لما الصورة تجهز على الخريطة — من غير ما تتشاف وهي بتترسم
+                    var paint = paintFor(project), target = paint['raster-opacity'];
+                    paint['raster-opacity'] = 0;
+                    map.addLayer({ id: x.layerId, type: 'raster', source: x.sourceId, paint: paint });
                     MP.rendered[id].coords = place.coords; MP.rendered[id].saved = place.saved;
                     delete MP.failed[id];
                     show(id); changed(); upgrade();
+                    var revealed = false;
+                    var reveal = function () {
+                        if (revealed || !alive()) return;
+                        revealed = true;
+                        try { map.setPaintProperty(x.layerId, 'raster-opacity', target); } catch (error) { /* اتشالت */ }
+                    };
+                    map.once('idle', reveal);
+                    setTimeout(reveal, 1500);
                 } catch (error) {
                     // الخريطة لسه بتحمّل شكلها: مش فشل — هتترسم في المحاولة الجاية
                     if (/style/i.test(String(error && error.message))) { delete MP.rendered[id]; schedule(); } else fail(error);
@@ -294,13 +321,15 @@
             if (dead) return;
             if (!styleReady()) { schedule(); return; }
             retries = 0;
+            if (!canDraw()) return;          // الخريطة لسه بتحمّل / بتتحرك: الرسم بييجي مع أول idle
             applyPlacements();
             // طبقة اتمسحت من بره (تغيير شكل الخريطة): تتسجل إنها مش معروضة عشان ترجع
             Object.keys(MP.rendered).forEach(function (id) { var entry = MP.rendered[id]; if ((entry.coords || entry.tiles) && !map.getSource(entry.sourceId)) delete MP.rendered[id]; });
             var zoom = map.getZoom(), center = map.getCenter(), active = activeId();
             var wanted = projects().filter(function (project) {
                 if (!usableImage(project.masterplan) && !project.masterplan_tiles) return false;
-                return String(project.id) === String(active) || (zoom >= MP.minZoom && inView(project));
+                // تحت minZoom مفيش رسم حتى للمشروع المختار (ما تظهرش متجمعة في نقطة) — والخريطة بتقرّب عليه أصلًا
+                return zoom >= MP.minZoom && (String(project.id) === String(active) || inView(project));
             });
             if (wanted.length > MP.maxActive) {
                 var far = function (project) { var b = boundsOf(project) || [0, 0, 0, 0]; return Math.hypot((b[0] + b[2]) / 2 - center.lng, (b[1] + b[3]) / 2 - center.lat); };
@@ -314,6 +343,13 @@
         }
 
         map.on('moveend', refresh);
+        // أول idle = الخريطة وصورها خلصت تحميل: من هنا الرسم مسموح
+        map.on('idle', refresh);
+        // بعض الأجهزة ما بتطلّعش idle (الخريطة بترسم على طول): كل ما الخريطة تقف وصورها تخلص بنحاول — ومرة كل 400ms لحد أول رسم
+        var settleTimer = null;
+        map.on('data', function () { clearTimeout(settleTimer); settleTimer = setTimeout(refresh, 200); });
+        var firstPoll = setInterval(function () { if (dead || Object.keys(MP.rendered).length) { clearInterval(firstPoll); return; } refresh(); }, 400);
+        setTimeout(function () { clearInterval(firstPoll); }, 60000);
         map.on('zoomend', upgrade);
         // أي تغيير لشكل الخريطة بيمسح كل الطبقات: نرجّع الماستر بلان كلها في مكانها
         map.on('style.load', function () { MP.rendered = {}; setTimeout(refresh, 80); });
@@ -322,6 +358,7 @@
         refresh();
 
         MP.refresh = refresh;
+        MP.status = function () { return { mapReady: mapReady, placementsDone: placementsDone, canDraw: canDraw(), projects: projects().length }; };
         MP.map = map;
         MP.savedCorners = savedCorners;
         MP.has = function (id) { var entry = MP.rendered[id]; return !!(entry && (entry.coords || entry.tiles)); };
