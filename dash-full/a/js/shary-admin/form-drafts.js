@@ -20,6 +20,9 @@
         if (form.hasAttribute('data-no-draft') || form.hasAttribute('data-unit-form') || form.id === 'sx-sheet') return false;
         var action = (form.getAttribute('action') || '').toLowerCase();
         if (/delete|destroy|logout|signin|login|drafts\/|search|filter|toggle|bulk|status|import|upload/.test(action)) return false;
+        // مفاتيح الربط وكلمات السر وأوامر الإيجنت (سطر بيتبعت على طول) — مش نصوص بتتكتب
+        if (/\/keys\/|social-login|agent\/commands|\/better$|agent\/(.*\/)?settings|smtp|password|token|secret/.test(action)) return false;
+        if (form.querySelector('input[type="password"]')) return false;
         var texts = form.querySelectorAll('textarea, input[type="text"], input:not([type])');
         var big = form.querySelectorAll('textarea').length;
         return big > 0 || texts.length >= 2;
@@ -118,7 +121,7 @@
         }
     } catch (error) { /* التخزين مقفول */ }
 
-    var forms = Array.prototype.filter.call(document.querySelectorAll('.page-wrapper form, .content form, main form'), eligible);
+    var forms = Array.prototype.filter.call(document.querySelectorAll('form'), eligible);
     var params = new URLSearchParams(window.location.search);
     forms.forEach(function (form, index) {
         var key = window.location.pathname.replace(/^\/+/, '') + '#' + index;
