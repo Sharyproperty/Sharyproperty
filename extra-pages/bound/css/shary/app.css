@@ -25229,3 +25229,56 @@ section:has(> [data-empty-part]), section:has(> div > [data-empty-part]:only-chi
 @media (max-width:767px){.afp-actions .afp-btn{flex:1 1 100%}.afp-actions .afp-store{flex:1 1 calc(50% - 5px);justify-content:center}}
 
 .afp-shot{display:block;margin:0 auto;max-width:100%;max-height:460px;border-radius:24px;box-shadow:0 24px 50px -24px rgba(30,66,102,.5)}
+
+/* صفحات خدمات التطبيق — تطوير: لوجو شاري مكان الكلمة ، أزرار المتاجر الحقيقية ، المزايا الصغيرة ، الشريط الفاتح */
+.afp-logo{display:inline-block;height:.78em;width:auto;vertical-align:-.04em;margin:0 .08em}
+.afp-stores{display:flex;flex-wrap:wrap;gap:10px}
+.afp-store{display:inline-flex;align-items:center;gap:10px;height:52px;min-width:154px;padding:0 14px 0 12px;border-radius:12px;border:1.5px solid #1E4266;background:#fff;color:#1E4266;text-decoration:none;transition:transform .2s ease,box-shadow .2s ease}
+.afp-store:hover{transform:translateY(-2px);box-shadow:0 10px 20px -12px rgba(14,34,56,.5);color:#1E4266}
+.afp-store svg{width:24px;height:24px;flex:none}
+.afp-store small{display:block;font-size:9.5px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;line-height:1}
+.afp-store b{display:block;font-size:18px;font-weight:700;line-height:1.15}
+.afp-store--dark{background:#fff;border-color:#fff;color:#1E4266}
+.afp-btn{gap:8px}
+.afp-perks{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 18px}
+.afp-perks li{display:flex;align-items:center;gap:6px;font-size:14.5px;font-weight:800;color:#1E4266}
+.afp-perks svg{color:#4CBFB2}
+.afp-site{margin-top:14px;font-size:15px;font-weight:700;color:#5B6B7C}
+.afp-site a{font-weight:900;color:#1F7F72;text-decoration:underline;text-underline-offset:4px}
+.afp-hint{display:none}
+.afp-art__logo{display:block;height:22px;width:auto;margin-bottom:18px;opacity:.95}
+.afp-art b .afp-logo{height:.8em}
+.afp-band{margin-top:44px;background:#F4F7FB;padding:34px 0}
+.afp-band .afp-steps li{background:#fff;border:1px solid #E4E9EF}
+@media (min-width:1024px){
+  .afp-steps{position:relative}
+  .afp-band .afp-steps li{position:relative}
+}
+.afp-faq details{transition:border-color .2s}
+.afp-faq details[open]{border-color:#4CBFB2}
+.afp-faq summary{list-style:none;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.afp-faq summary::-webkit-details-marker{display:none}
+.afp-faq summary::after{content:"+";flex:none;display:flex;width:28px;height:28px;border-radius:50%;background:#EAF7F5;color:#1F7F72;align-items:center;justify-content:center;font-size:20px;font-weight:900}
+.afp-faq details[open] summary::after{content:"–"}
+.afp-cta{background:linear-gradient(120deg,#1E4266 0%,#1F5A6E 100%)}
+.afp-cta__copy{display:flex;gap:16px;align-items:center}
+.afp-cta__mark{flex:none;width:54px;height:54px;background:#fff;border-radius:16px;padding:8px}
+.afp-cta .afp-actions{margin-top:14px}
+.afp-cta .afp-store{border-color:#fff}
+.afp-other{position:relative;padding-inline-end:44px}
+.afp-other i{position:absolute;inset-inline-end:16px;top:50%;transform:translateY(-50%);font-style:normal;font-size:20px;font-weight:900;color:#4CBFB2}
+@media (max-width:767px){
+  .afp-actions .afp-btn{flex:1 1 100%}
+  .afp-stores{width:100%}
+  .afp-stores .afp-store{flex:1 1 calc(50% - 5px);min-width:0;justify-content:center;padding:0 10px}
+  .afp-store b{font-size:16px}
+  .afp-cta__copy{align-items:flex-start}
+  .afp-cta__mark{width:46px;height:46px}
+}
+
+.afp-body{max-width:900px}
+.afp-gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:1024px){.afp-gallery{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+.afp-gallery img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px}
+.afp-videos{display:grid;gap:14px}
+@media (min-width:1024px){.afp-videos{grid-template-columns:repeat(2,minmax(0,1fr))}}
