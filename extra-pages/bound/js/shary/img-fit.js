@@ -1,7 +1,7 @@
 /*
  * الصور في الكروت والسلايدر: من غير تزويم ومن غير قص — أوتوماتيك على كل الصور (القديمة والجديدة) من غير ما حد يعمل حاجة.
- * الفكرة: لكل صورة بتملا بوكس (object-fit: cover أو background-size: cover) بنقارن مقاس الصورة بمقاس البوكس:
- *   - لو قريبين (الفرق ≤ 14% — والسلايدر ≤ 30%): الصورة تفضل مالية البوكس زي ما هي (القص مش بيبان).
+ * الفكرة: لكل صورة بتملا بوكس (object-fit: cover / fill أو background-size: cover) بنقارن مقاس الصورة بمقاس البوكس:
+ *   - لو قريبين (الفرق ≤ 20% — والسلايدر ≤ 30%): الصورة تفضل مالية البوكس زي ما هي (القص مش بيبان).
  *   - لو بعاد: الصورة بتظهر كاملة (contain) — والفراغ اللي حواليها بيتملي بنفس الصورة مغبّشة ، فالبوكس يفضل مليان وشكله احترافي.
  * مستثنى: اللوجوهات والأيقونات (أصغر من 110 بكسل / مدورة / svg) ، وأي عنصر عليه data-fit="off".
  * بيشتغل لما الصورة تحمّل (حتى الصور اللي بتحمّل وانت نازل) ، ولما الشاشة يتغير مقاسها ، وعلى الكروت اللي بتتضاف بعدين (سلايدر / فلاتر).
@@ -11,7 +11,7 @@
   if (window.__sharyImgFit) return;
   window.__sharyImgFit = true;
 
-  var LIMIT = 0.14;        // أقصى قص مقبول قبل ما نعرض الصورة كاملة
+  var LIMIT = 0.20;        // أقصى قص مقبول قبل ما نعرض الصورة كاملة (صورة 16:9 في بوكس 3:2 بتفضل مالية البوكس طبيعي)
   var LIMIT_HERO = 0.30;   // السلايدر (عريض) بيستحمل قص أكتر قبل ما يتحول
   var MIN_SIZE = 110;
 
@@ -33,6 +33,19 @@
     return 1 - Math.min(a, b) / Math.max(a, b);
   }
 
+  // الخلفية المغبّشة = نسخة صغيرة جدًا من نفس الصورة (64 بكسل) متكبّرة — شكلها مغبّش لوحده ومن غير فلتر blur التقيل على الموبايل
+  function tiny(url) {
+    var m = /\/responsive-image\/\d+\/(.+?)(\?.*)?$/.exec(url);
+    if (m) return url.replace(/\/responsive-image\/\d+\//, '/responsive-image/64/');
+    try {
+      var u = new URL(url, location.href);
+      if (u.origin === location.origin && /\.(jpe?g|png|webp)$/i.test(u.pathname) && /^\/(images|uploads|storage|assets)\//.test(u.pathname)) {
+        return location.origin + '/responsive-image/64' + u.pathname + '?v=9';
+      }
+    } catch (e) {}
+    return url;
+  }
+
   function backdrop(parent, url, before) {
     var bg = parent.querySelector(':scope > .sx-fit-bg');
     if (!bg) {
@@ -41,7 +54,20 @@
       bg.setAttribute('aria-hidden', 'true');
       parent.insertBefore(bg, before || parent.firstChild);
     }
-    bg.style.backgroundImage = 'url("' + url.replace(/"/g, '%22') + '")';
+    var small = tiny(url);
+    var paint = function (src, full) {
+      bg.classList.toggle('sx-fit-bg--full', full); // مفيش نسخة صغيرة: نفس الصورة بتغبيش خفيف
+      bg.style.backgroundImage = 'url("' + src.replace(/"/g, '%22') + '")';
+    };
+    if (small === url) {
+      paint(url, true);
+    } else if (bg.getAttribute('data-src') !== small) {
+      bg.setAttribute('data-src', small);
+      paint(small, false);
+      var probe = new Image();
+      probe.onerror = function () { paint(url, true); }; // النسخة الصغيرة مش موجودة (زي المعاينة الثابتة): الصورة نفسها
+      probe.src = small;
+    }
     if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
     parent.classList.add('sx-fit-host');
     return bg;
@@ -61,11 +87,13 @@
     var w = img.clientWidth, h = img.clientHeight;
     if (w < MIN_SIZE || h < MIN_SIZE) return;
     var fit = img.dataset.sxFit ? 'cover' : getComputedStyle(img).objectFit;
-    if (fit !== 'cover') return;
+    // cover = بيقص (يبان متزوّم) ، fill = بيمطّ الصورة (تبان مش طبيعية) — الاتنين بيتظبطوا
+    if (fit !== 'cover' && fit !== 'fill') return;
     var c = crop(w, h, img.naturalWidth, img.naturalHeight);
+    if (fit === 'fill' && c <= 0.04) return; // المط صغير مش باين
     var parent = img.parentElement;
     if (parent && parent.tagName === 'PICTURE') parent = parent.parentElement;
-    if (c > (isHero(img) ? LIMIT_HERO : LIMIT)) {
+    if (c > (fit === 'fill' ? 0.04 : (isHero(img) ? LIMIT_HERO : LIMIT))) {
       img.dataset.sxFit = '1';
       img.classList.add('sx-fit-contain');
       if (getComputedStyle(img).position === 'static') img.style.position = 'relative';
@@ -127,7 +155,13 @@
   window.addEventListener('load', function () { run(); });
   if ('MutationObserver' in window) {
     new MutationObserver(function (list) {
-      for (var i = 0; i < list.length; i++) { if (list[i].addedNodes.length) { later(); return; } }
-    }).observe(document.documentElement, { childList: true, subtree: true });
+      for (var i = 0; i < list.length; i++) {
+        for (var j = 0; j < list[i].addedNodes.length; j++) {
+          var n = list[i].addedNodes[j];
+          if (n.nodeType !== 1 || (n.classList && (n.classList.contains('sx-fit-bg') || n.classList.contains('sx-fit-pic')))) continue;
+          if (n.tagName === 'IMG' || (n.querySelector && n.querySelector('img,[style*="background-image"]'))) { later(); return; }
+        }
+      }
+    }).observe(document.body || document.documentElement, { childList: true, subtree: true });
   }
 })();
