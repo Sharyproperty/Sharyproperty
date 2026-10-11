@@ -801,11 +801,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "oB6YtpFbThUh0k6Q2v8PFIWzCQycRf4kSbpvjd7q",
+                token: "KarZQx0VQ9GROcAP2tMEvyyYU8uQxxcwXHlCcR96",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=oB6YtpFbThUh0k6Q2v8PFIWzCQycRf4kSbpvjd7q",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=KarZQx0VQ9GROcAP2tMEvyyYU8uQxxcwXHlCcR96",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -949,7 +949,7 @@
                         <a class="nav-link " href="admin-shary-projects-315_tab_phases.html">5. المراحل</a>
                     </li>
                                     <li class="nav-item">
-                        <a class="nav-link active" href="admin-shary-projects-315_tab_plans.html">6. أسماء خطط السداد</a>
+                        <a class="nav-link active" href="admin-shary-projects-315_tab_plans.html">6. خطط السداد (الاسم والخصم والعرض)</a>
                     </li>
                                     <li class="nav-item">
                         <a class="nav-link " href="admin-shary-projects-315_tab_cta.html">7. نص زرار التواصل</a>
@@ -958,22 +958,44 @@
 
             <form method="post" action="#preview/admin/shary/projects/315/plans">
         <input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="card">
-            <div class="card-header"><h5 class="card-title">أسماء خطط السداد</h5></div>
+            <div class="card-header"><h5 class="card-title">خطط السداد (الاسم والخصم والعرض)</h5></div>
             <div class="card-body">
-                <p class="shary-help">اسم كل خطة سداد زي ما يظهر في صفحة المشروع وصفحات وحداته. الخطط نفسها (المقدم والسنين) بتتضاف من فورم المشروع الأصلي. الخانة الفاضية = الاسم الجاهز المكتوب جواها بالرمادي.</p>
-                                    <div class="row align-items-end ">
+                <p class="shary-help">اسم كل خطة سداد زي ما يظهر في صفحة المشروع وصفحات وحداته. الخطط نفسها (المقدم والسنين) بتتضاف من فورم المشروع الأصلي. الخانة الفاضية = الاسم الجاهز المكتوب جواها بالرمادي. ولكل خطة تقدر تحط خصم % وتحدد هي عرض ولا خطة عادية.</p>
+                                    <div class="row align-items-start pb-2 mb-3 border-bottom ">
                         <div class="col-lg-4 col-12"><div class="form-group">
                             <label>الخطة</label>
                             <input type="text" class="form-control" value="مقدم 5% — 6 سنين" readonly>
                         </div></div>
                         <div class="col-lg-4 col-sm-6 col-12"><div class="form-group">
                             <label>اسم الخطة (عربي)</label>
-                            <input type="text" class="form-control" name="plans[772][name_ar]" value="" maxlength="120" dir="rtl" placeholder="الخطة الأساسية">
+                            <input type="text" class="form-control" name="plans[772][name_ar]" value="" maxlength="120" dir="rtl" placeholder="عرض خاص">
                         </div></div>
                         <div class="col-lg-4 col-sm-6 col-12"><div class="form-group">
                             <label>اسم الخطة (إنجليزي)</label>
                             <input type="text" class="form-control" name="plans[772][name_en]" value="" maxlength="120" dir="ltr">
                         </div></div>
+                        
+                        <div class="col-lg-4 col-sm-6 col-12"><div class="form-group">
+                            <label>خصم الخطة</label>
+                            <div class="shary-percent"><input type="number" class="form-control" name="plans[772][discount]" value="15" min="0" max="100" step="any" dir="ltr" placeholder="0"><span>%</span></div>
+                            <small class="shary-help">اكتب نسبة الخصم لو الخطة دي عليها خصم (مثال: 15). فاضي = من غير خصم.</small>
+                        </div></div>
+                        <div class="col-lg-4 col-sm-6 col-12"><div class="form-group">
+                            <label>عرض ولا لا؟</label>
+                            <select class="form-control" name="plans[772][offer]" data-sx-pick="off">
+                                <option value="0" >خطة عادية</option>
+                                <option value="1" selected>عرض (تظهر عليها شارة «عرض»)</option>
+                            </select>
+                        </div></div>
+                                                    <div class="col-lg-4 d-none d-lg-block"></div>
+                            <div class="col-lg-4 col-sm-6 col-12"><div class="form-group">
+                                <label>ملاحظة العرض (عربي)</label>
+                                <input type="text" class="form-control" name="plans[772][note_ar]" value="" maxlength="160" dir="rtl" placeholder="ساري حتى نهاية الشهر">
+                            </div></div>
+                            <div class="col-lg-4 col-sm-6 col-12"><div class="form-group">
+                                <label>ملاحظة العرض (إنجليزي)</label>
+                                <input type="text" class="form-control" name="plans[772][note_en]" value="" maxlength="160" dir="ltr">
+                            </div></div>
                                             </div>
                             </div>
         </div>
@@ -1099,7 +1121,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"oB6YtpFbThUh0k6Q2v8PFIWzCQycRf4kSbpvjd7q","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"KarZQx0VQ9GROcAP2tMEvyyYU8uQxxcwXHlCcR96","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
                     <script>
             (function () {

@@ -803,11 +803,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "agXhSK14CRk1s1aMgUkImK6G4qAzliKQ2A6AFXsC",
+                token: "RAROPF1LjMIV9n6s4IMQjaW8C96Ex6RZS7s3fTBC",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=agXhSK14CRk1s1aMgUkImK6G4qAzliKQ2A6AFXsC",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=RAROPF1LjMIV9n6s4IMQjaW8C96Ex6RZS7s3fTBC",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -851,7 +851,7 @@
             
             <form method="post" action="#preview/admin/shary/units" enctype="multipart/form-data" data-unit-form
                    data-autosave="/admin/shary/units/drafts/autosave"                   data-errors='[]' data-labels='{"idle":"Changes are saved automatically as a draft","saving":"Saving\u2026","saved":"Saved as a draft :time","failed":"Saving failed \u2014 we will try again by ourselves","offline":"Saving failed: no internet \u2014 we will save as soon as it is back","done":"This unit was already saved","files":"Saving\u2026 (uploading the photos to the draft)","draft_saved":"Saved as a draft :time \u2014 find it in \u00abDrafts\u00bb","file_kept":"kept in the draft","file_drop":"remove from the draft","rejected":"These files were not kept in the draft:","leave":"Some changes are not saved yet \u2014 leaving now may lose them.","wait_files":"One moment\u2026 finishing the photo uploads first","open_unit":"open the unit","closed":"folded \u2014 click to open","errors":":count fields to check"}'>
-                <input type="hidden" name="_token" value="preview" autocomplete="off">                                    <input type="hidden" name="_draft" value="47df7287-d3a1-453f-bd35-331a2279657b" data-draft-token>
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                                    <input type="hidden" name="_draft" value="d7723645-6217-41de-853c-929d493153da" data-draft-token>
                                 
                 
                 <nav class="sx-unit-nav" data-unit-nav aria-label="Sections of the unit page">
@@ -1335,6 +1335,20 @@
                                                                                     </select>
                                     </div></div>
                                 </div>
+                                <div class="row" data-unit-show="developer_sale">
+                                    <div class="col-lg-3 col-6"><div class="form-group">
+                                        <label>Plan discount</label>
+                                        <div class="shary-percent"><input type="number" class="form-control" name="plan_discount" value="" min="0" max="100" step="any" dir="ltr" placeholder="0"><span>%</span></div>
+                                        <small class="shary-help">Discount % on this plan (e.g. 15) — installments use the price after discount.</small>
+                                    </div></div>
+                                    <div class="col-lg-3 col-6"><div class="form-group">
+                                        <label>Offer?</label>
+                                        <select class="form-control" name="plan_offer" data-sx-pick="off">
+                                            <option value="0" selected>Regular plan</option>
+                                            <option value="1" >Offer (shown in offers)</option>
+                                        </select>
+                                    </div></div>
+                                </div>
                                 
                                 <div data-unit-show="developer_sale">
                                     <div class="shary-plan-extras" data-plan-extras
@@ -1404,6 +1418,17 @@
         <div class="col-lg-2 col-6"><div class="form-group">
             <label>Maintenance fees</label>
             <input type="text" class="form-control" name="more_plans[__IDX__][maintenance_fees]" value="" maxlength="60" dir="ltr">
+        </div></div>
+        <div class="col-lg-3 col-6"><div class="form-group">
+            <label>Plan discount</label>
+            <div class="shary-percent"><input type="number" class="form-control" name="more_plans[__IDX__][discount]" value="" min="0" max="100" step="any" dir="ltr" placeholder="0"><span>%</span></div>
+        </div></div>
+        <div class="col-lg-3 col-6"><div class="form-group">
+            <label>Offer?</label>
+            <select class="form-control" name="more_plans[__IDX__][offer]" data-sx-pick="off">
+                <option value="0" selected>Regular plan</option>
+                <option value="1" >Offer (shown in offers)</option>
+            </select>
         </div></div>
     </div>
 </div>
@@ -1983,7 +2008,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"agXhSK14CRk1s1aMgUkImK6G4qAzliKQ2A6AFXsC","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"RAROPF1LjMIV9n6s4IMQjaW8C96Ex6RZS7s3fTBC","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
                         <script src="../a/vendor/shary-editor/ckeditor.js"></script>
             <script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
