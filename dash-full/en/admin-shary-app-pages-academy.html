@@ -784,11 +784,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
+                token: "lbfDJZX84r12qs2DrBRB8eupAKvXq8BF8Dj70cA3",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lbfDJZX84r12qs2DrBRB8eupAKvXq8BF8Dj70cA3",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -847,13 +847,48 @@
                             <input type="hidden" name="status" value="0">
                             <label class="d-flex gap-2 align-items-center fw-bold"><input type="checkbox" name="status" value="1" checked> Published on the website</label>
                             <input type="hidden" name="show_home" value="0">
-                            <label class="d-flex gap-2 align-items-center fw-bold mt-1"><input type="checkbox" name="show_home" value="1" checked> Shows in «Explore with Shary» on the home page</label>
+                            <label class="d-flex gap-2 align-items-center fw-bold mt-1"><input type="checkbox" name="show_home" value="1" checked> Shows on the home page and in the app («What sets us apart» card)</label>
                         </div></div>
                         <div class="col-lg-4 col-12"><div class="form-group">
                             <label>Page link</label>
                             <input type="text" class="form-control" value="/ar/v2/academy" readonly dir="ltr">
                             <small class="shary-help">This is one of the original services: you can only hide it (untick «Published»).</small>                        </div></div>
                     </div></div>
+                </div>
+
+                
+                <div class="card apg-cardbox">
+                    <div class="card-header"><h5 class="card-title">Service card & app link</h5></div>
+                    <div class="card-body">
+                        <p class="shary-help mb-3">This is the same service card in «What sets us apart» on the home page and in the app. Put the service link your app developer gives you here — on the website the card opens this page first, and the page's «Open in the app» button goes to this link.</p>
+                        <div class="row align-items-end">
+                            <div class="col-lg-4 col-12"><div class="form-group">
+                                <label>Card</label>
+                                <select class="form-control" name="card_id" data-sx-pick="off">
+                                    <option value="0">+ New card named after the service</option>
+                                                                            <option value="5" >شاري معاك — Shary Ma3ak</option>
+                                                                            <option value="6" >وحدات المطور — Developer Units</option>
+                                                                            <option value="7" >إعادة البيع — Resale</option>
+                                                                            <option value="8" >وحدات للإيجار — Rent Units</option>
+                                                                            <option value="9" >فرص إعادة البيع — Resale Opportunities</option>
+                                                                            <option value="10" >عروض حصرية — Exclusive Offers</option>
+                                                                            <option value="11" >متابعة الأقساط — Installment Tracking</option>
+                                                                            <option value="12" selected>أكاديمية شاري — Shary Academy</option>
+                                                                    </select>
+                            </div></div>
+                            <div class="col-lg-5 col-12"><div class="form-group">
+                                <label>Service link in the app (from the developer)</label>
+                                <input type="text" class="form-control" name="app_link" value="shary://academy" maxlength="500" dir="ltr" placeholder="shary://academy">
+                                <small class="shary-help">e.g. shary://academy or a smart link https://… — the same field as in «Our services».</small>
+                            </div></div>
+                            <div class="col-lg-3 col-12"><div class="form-group">
+                                <label>Card icon</label>
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="../a/images/investment_cards/demo-shary-ma3ak.svg" alt="" width="44" height="44" style="object-fit:contain;border-radius:10px;background:#f3f6fa">                                    <input type="file" class="form-control" name="card_image" accept="image/*">
+                                </div>
+                            </div></div>
+                        </div>
+                    </div>
                 </div>
 
                 
@@ -935,49 +970,6 @@
                         <small class="shary-help d-block mb-2">Photos shown on the page (e.g. app screenshots). Tick a photo to remove it.</small>
                                                 <label class="fw-bold">Add photos</label>
                         <input type="file" class="form-control" name="gallery_new[]" accept="image/jpeg,image/png,image/webp" multiple>
-                    </div>
-                </div>
-
-                
-                <div class="card">
-                    <div class="card-header"><h5 class="card-title">Service videos (links)</h5></div>
-                    <div class="card-body">
-                        <div class="shary-repeater" data-shary-repeater="videos" data-next="0" data-max="12">
-    <div data-shary-rows>
-            </div>
-    <template data-shary-template>
-        <div class="row shary-repeater-row mb-3" data-shary-row>
-    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
-        <strong class="text-muted"># <span data-shary-number></span></strong>
-        <span>
-            <button type="button" class="btn btn-sm btn-light" data-shary-up title="Move up">&uarr;</button>
-            <button type="button" class="btn btn-sm btn-light" data-shary-down title="Move down">&darr;</button>
-            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>Remove</button>
-        </span>
-    </div>
-                                                    <div class="col-lg-12 col-sm-12 col-12">
-                    <div class="form-group">
-                        <label>Video link</label>
-                        <input type="text" class="form-control" name="videos[__i__][url]" value="" maxlength="500" dir="ltr"
-               placeholder="https://">
-                            </div>
-                </div>
-                                                                        <div class="col-lg-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Video title (English)</label>
-                        <input type="text" class="form-control" name="videos[__i__][title_en]" value="" maxlength="140" dir=ltr>
-                    </div>
-                </div>
-                                                            <div class="col-lg-6 col-sm-6 col-12">
-                    <div class="form-group">
-                        <label>Video title (Arabic)</label>
-                        <input type="text" class="form-control" name="videos[__i__][title_ar]" value="" maxlength="140" dir=rtl>
-                    </div>
-                </div>
-                        </div>
-    </template>
-    <button type="button" class="btn btn-primary mb-3" data-shary-add>Add video</button>
-</div>
                     </div>
                 </div>
 
@@ -1686,7 +1678,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lbfDJZX84r12qs2DrBRB8eupAKvXq8BF8Dj70cA3","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
                         <script src="../a/vendor/shary-editor/ckeditor.js"></script>
             <script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
