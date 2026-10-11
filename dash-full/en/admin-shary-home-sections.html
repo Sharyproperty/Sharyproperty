@@ -426,6 +426,8 @@
                                                             
                                                                                                 <li><a href="admin-shary-home-sections_tab_slider.html" class="" ><span>Home slider (choose a project)</span></a></li>
                                                             
+                                                                                                <li><a href="admin-shary-home-sections_tab_explore.html" class="" ><span>Projects worth exploring</span></a></li>
+                                                            
                                                                                                 <li><a href="sliders.html" class="" ><span>Slider (old screen)</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-home-cards.html" class="" ><span>Home cards (the five)</span></a></li>
@@ -790,11 +792,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "LLo9PrM1illLzbPpt4KgEHDzJboMxKlip3m0wxjp",
+                token: "w0SMVfoS41nH47qzLInIvJ6NDFhFD47gjcbWtmUj",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=LLo9PrM1illLzbPpt4KgEHDzJboMxKlip3m0wxjp",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=w0SMVfoS41nH47qzLInIvJ6NDFhFD47gjcbWtmUj",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -919,6 +921,12 @@
                         <a class="nav-link " id="hs-tab-top_projects" data-bs-toggle="tab" href="#hs-top_projects" role="tab"
                            aria-controls="hs-top_projects" aria-selected="false" data-hs-tab="top_projects">
                             Top projects <span class="sx-hs-count">22</span>
+                        </a>
+                    </li>
+                                                        <li class="nav-item" role="presentation">
+                        <a class="nav-link " id="hs-tab-explore" data-bs-toggle="tab" href="#hs-explore" role="tab"
+                           aria-controls="hs-explore" aria-selected="false" data-hs-tab="explore">
+                            Projects worth exploring <span class="sx-hs-count">5</span>
                         </a>
                     </li>
                                                         <li class="nav-item" role="presentation">
@@ -4192,6 +4200,140 @@
 </div>
 
     <div class="sx-hs-also">The same choice is also on each record's own page, and in: <a href="admin-compounds.html">Projects list (home page switch)</a></div>
+                                            </div>
+                                    <div class="tab-pane fade " id="hs-explore" role="tabpanel" aria-labelledby="hs-tab-explore">
+                                                    <style>
+    .hex-add { border: 1.5px dashed #4CBFB2; border-radius: 16px; padding: 18px; background: #f6fbfa; margin-bottom: 18px; }
+    .hex-add h5 { font-weight: 800; color: #1E4266; }
+    .hex-list { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+    .hex-card { border: 1px solid #e3e8f0; border-radius: 16px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+    .hex-card__pic { aspect-ratio: 16 / 9; background: linear-gradient(135deg, #EAF7F5, #D5EEEB); }
+    .hex-card__pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .hex-card__body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+    .hex-card__body b { font-size: 18px; font-weight: 900; color: #1E4266; }
+    .hex-card__body small { font-weight: 800; color: #1F7F72; }
+    .hex-tag { font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 10px; background: #eef3f8; color: #6b7a8c; }
+    .hex-tag.is-on { background: #e6f6f4; color: #1F7F72; }
+    .hex-tag.is-home { background: #fff4dc; color: #a26b00; }
+    .hex-checks { display: flex; flex-wrap: wrap; gap: 8px; }
+    .hex-checks label { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid #e3e8f0; border-radius: 999px; padding: 6px 12px; font-weight: 800; color: #1E4266; cursor: pointer; }
+    .hex-mode { display: grid; gap: 10px; grid-template-columns: 1fr; }
+    @media (min-width: 768px) { .hex-mode { grid-template-columns: 1fr 1fr; } }
+    .hex-mode label { border: 1.5px solid #e3e8f0; border-radius: 14px; padding: 12px 14px; cursor: pointer; display: block; }
+    .hex-mode label b { display: block; color: #1E4266; font-weight: 900; }
+    .hex-mode label small { color: #6b7a8c; font-weight: 700; }
+    .hex-mode input:checked + span { color: #1F7F72; }
+    .hex-pick { display: flex; align-items: center; gap: 10px; border: 1px solid #e9eef4; border-radius: 12px; padding: 8px 10px; margin-bottom: 8px; }
+    .hex-pick img { width: 56px; height: 40px; object-fit: cover; border-radius: 8px; }
+    .hex-pick b { flex: 1; color: #1E4266; }
+    .hex-results { border: 1px solid #e3e8f0; border-radius: 12px; max-height: 300px; overflow: auto; display: none; margin-top: 6px; }
+    .hex-results.is-on { display: block; }
+    .hex-results button { display: flex; width: 100%; gap: 10px; align-items: center; border: 0; background: #fff; padding: 8px 10px; text-align: start; border-bottom: 1px solid #f0f3f7; }
+    .hex-results button:hover { background: #f6fbfa; }
+    .hex-results img { width: 48px; height: 34px; object-fit: cover; border-radius: 6px; }
+    .hex-filter { border: 1.5px solid #e3e8f0; border-radius: 12px; padding: 8px; }
+    .hex-filter__list { max-height: 210px; overflow: auto; margin-top: 6px; display: flex; flex-direction: column; gap: 2px; }
+    .hex-filter__list label { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; font-weight: 700; color: #1E4266; cursor: pointer; }
+    .hex-filter__list label.is-on { background: #e6f6f4; color: #1F7F72; }
+    .hex-filter__list label[hidden] { display: none; }
+    .hex-chosen { display: inline-block; min-width: 20px; border-radius: 999px; background: #1E4266; color: #fff; font-size: 11px; text-align: center; }
+    .hex-chosen:empty { display: none; }
+    .hex-kinds { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .hex-kinds button { border: 1.5px solid #e3e8f0; background: #fff; border-radius: 999px; padding: 4px 12px; font-weight: 800; color: #1E4266; font-size: 13px; }
+    .hex-kinds button.is-on { background: #1E4266; border-color: #1E4266; color: #fff; }
+    .hex-kind { flex: none; font-size: 11px; font-weight: 900; border-radius: 999px; padding: 2px 8px; background: #eef3f8; color: #5b6b7c; }
+    .hex-kind--project { background: #e6f6f4; color: #1F7F72; }
+    .hex-kind--unit { background: #fff4dc; color: #8a5a00; }
+    .hex-kind--developer { background: #eaf2fb; color: #1d4265; }
+</style>
+<p class="shary-help fw-bold mb-3">These sections appear on the «Projects worth exploring» page (opened from «View all» on home) — those marked «home scroll» also show on the home page. Each section opens its own page.</p>
+<p class="mb-3"><a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm fw-bold">Open «Projects worth exploring»</a></p>
+            <form method="post" action="#preview/admin/shary/home-explore" class="hex-add" data-no-draft>
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <h5>+ Add a new card</h5>
+                <div class="row g-2 align-items-end">
+                    <div class="col-lg-4 col-12"><label class="form-label">Card name (Arabic)</label><input class="form-control" name="title_ar" maxlength="120" required placeholder="مشاريع إدارية"></div>
+                    <div class="col-lg-4 col-12"><label class="form-label">Card name (English)</label><input class="form-control" name="title_en" maxlength="120" dir="ltr" placeholder="Administrative projects"></div>
+                    <div class="col-lg-4 col-12"><button class="btn btn-primary fw-bold w-100">Add card</button></div>
+                </div>
+            </form>
+
+            <div class="hex-list">
+                                                        <div class="hex-card">
+                        <div class="hex-card__pic"><img src="../a/images/compounds/1b232588a666d-badya.webp" alt=""></div>
+                        <div class="hex-card__body">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="hex-tag is-on">Published on the explore page</span>
+                                <span class="hex-tag is-home">In the home scroll</span>                                <span class="hex-tag">Automatic by type</span>
+                            </div>
+                            <b>مشاريع سكنية</b>
+                            <small>42 projects</small>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="admin-shary-home-explore-1.html" class="btn btn-primary btn-sm fw-bold">Edit page</a>
+                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-light btn-sm fw-bold">Open on the site</a>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="hex-card">
+                        <div class="hex-card__pic"><img src="../a/images/compounds/b0ccaae4991b7-fouka-bay.webp" alt=""></div>
+                        <div class="hex-card__body">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="hex-tag is-on">Published on the explore page</span>
+                                <span class="hex-tag is-home">In the home scroll</span>                                <span class="hex-tag">Automatic by type</span>
+                            </div>
+                            <b>فيلات</b>
+                            <small>48 projects</small>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="admin-shary-home-explore-1.html" data-sx-sample="1" class="btn btn-primary btn-sm fw-bold">Edit page</a>
+                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-light btn-sm fw-bold">Open on the site</a>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="hex-card">
+                        <div class="hex-card__pic"><img src="../a/images/compounds/e6723c07cdde0-il-monte-galala.webp" alt=""></div>
+                        <div class="hex-card__body">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="hex-tag is-on">Published on the explore page</span>
+                                <span class="hex-tag is-home">In the home scroll</span>                                <span class="hex-tag">Automatic by type</span>
+                            </div>
+                            <b>مشاريع الساحل</b>
+                            <small>23 projects</small>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="admin-shary-home-explore-1.html" data-sx-sample="1" class="btn btn-primary btn-sm fw-bold">Edit page</a>
+                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-light btn-sm fw-bold">Open on the site</a>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="hex-card">
+                        <div class="hex-card__pic"><img src="../a/images/compounds/1b232588a666d-badya.webp" alt=""></div>
+                        <div class="hex-card__body">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="hex-tag is-on">Published on the explore page</span>
+                                                                <span class="hex-tag">Automatic by type</span>
+                            </div>
+                            <b>مشاريع إدارية</b>
+                            <small>4 projects</small>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="admin-shary-home-explore-1.html" data-sx-sample="1" class="btn btn-primary btn-sm fw-bold">Edit page</a>
+                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-light btn-sm fw-bold">Open on the site</a>
+                            </div>
+                        </div>
+                    </div>
+                                                        <div class="hex-card">
+                        <div class="hex-card__pic"><img src="../a/images/compounds/61ca9d47f2ce0-villette.webp" alt=""></div>
+                        <div class="hex-card__body">
+                            <div class="d-flex gap-2 flex-wrap">
+                                <span class="hex-tag is-on">Published on the explore page</span>
+                                                                <span class="hex-tag">Automatic by type</span>
+                            </div>
+                            <b>مشاريع التجمع</b>
+                            <small>5 projects</small>
+                            <div class="d-flex gap-2 mt-2">
+                                <a href="admin-shary-home-explore-1.html" data-sx-sample="1" class="btn btn-primary btn-sm fw-bold">Edit page</a>
+                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-light btn-sm fw-bold">Open on the site</a>
+                            </div>
+                        </div>
+                    </div>
+                            </div>
                                             </div>
                                     <div class="tab-pane fade " id="hs-areas" role="tabpanel" aria-labelledby="hs-tab-areas">
                                                     <div class="card">
@@ -7856,7 +7998,7 @@
         var zoom = box.querySelector('[data-crop-zoom]');
         var error = box.querySelector('[data-crop-error]');
         var crop = null;
-        var token = "LLo9PrM1illLzbPpt4KgEHDzJboMxKlip3m0wxjp";
+        var token = "w0SMVfoS41nH47qzLInIvJ6NDFhFD47gjcbWtmUj";
         var labels = {"desktop":"Adjust the desktop photo","mobile":"Adjust the phone photo","small":"This photo is small — :width px wide or more is recommended to stay sharp.","failed":"The photo was not uploaded — try again.","saving":"Saving…","save":"Save photo"};
         function clamp() {
             var sw = stage.clientWidth, sh = stage.clientHeight;
@@ -8048,7 +8190,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"LLo9PrM1illLzbPpt4KgEHDzJboMxKlip3m0wxjp","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"w0SMVfoS41nH47qzLInIvJ6NDFhFD47gjcbWtmUj","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>
