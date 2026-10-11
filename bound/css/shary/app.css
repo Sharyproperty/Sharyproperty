@@ -25068,3 +25068,26 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 /* شيت التطبيق: كلام الزراير ("حمل التطبيق" / "افتح التطبيق" / "كمّل") بولد وأوضح */
 .app-sheet__btn, .app-sheet__btn [data-app-label] { font-weight: 800 !important; font-size: 16px; letter-spacing: 0; }
 .app-sheet__name { font-weight: 800; }
+
+/* ---- رسايل النجاح (طلب ميتنج ، فورم اتبعت ، تم النسخ …): بوب أب أخضر من فوق زي الموقع الحالي — بأيقونة ✓ ، وبتنزل من فوق بنعومة.
+   رسايل الخطأ (data-type="error") أحمر بنفس الشكل */
+.shary-toast {
+  top: calc(14px + env(safe-area-inset-top, 0px)); bottom: auto; left: 50%;
+  z-index: 200 !important;
+  width: max-content; max-width: min(520px, calc(calc(100vw / var(--z, 1)) - 24px));
+  display: flex; align-items: center; gap: 12px;
+  transform: translate(-50%, -24px);
+  border-radius: 18px; background-color: #22c55e;
+  padding: 14px 18px 14px 20px;
+  font-size: 15.5px; font-weight: 800; line-height: 1.5; color: #fff;
+  box-shadow: 0 14px 34px -12px rgba(16, 101, 52, .55);
+  transition: opacity .25s ease, transform .35s cubic-bezier(.2, .8, .2, 1);
+}
+.shary-toast::before {
+  content: ""; flex: none; width: 28px; height: 28px; border-radius: 50%;
+  background: rgba(255, 255, 255, .22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 12.5 4 4 8-9'/%3E%3C/svg%3E") center / 16px no-repeat;
+}
+.shary-toast.is-shown { transform: translate(-50%, 0); }
+.shary-toast[data-type="error"] { background-color: #e5484d; box-shadow: 0 14px 34px -12px rgba(160, 30, 40, .5); }
+.shary-toast[data-type="error"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M12 7v6M12 17h.01'/%3E%3C/svg%3E"); }
+@media (min-width: 1024px) { .shary-toast { top: 24px; font-size: 16px; } }
