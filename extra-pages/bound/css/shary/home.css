@@ -8822,3 +8822,18 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
 /* ---- New Launches: من غير النقط اللي تحت (الأسهم كفاية) ، والكارت أوطى شوية */
 #newProjectsPagination { display: none !important; }
 .new-projects-track .new-project-card { aspect-ratio: 16 / 9; }
+
+/* ---- New Launches: الأسهم برّه الكارت على الجنبين (مش فوق الصورة) — سهم واحد في الاتجاه اللي فيه مشاريع (في الأول سهم "التالي" بس) ،
+   والكارت مش متضلّم: ظل خفيف ورا الكلام بس */
+.np-arrow { display: none !important; }
+.np-stage .horizontal-carousel-wrapper { padding-inline: 34px; }
+.np-stage .horizontal-carousel-btn { width: 28px; height: 28px; background: #fff; color: #1E4266; border: 1px solid #d9e2ec; box-shadow: 0 2px 6px rgba(18, 58, 92, .12); }
+.np-stage .horizontal-carousel-btn:hover { background: #eef3f8; }
+.np-stage .horizontal-carousel-btn svg { width: 16px; height: 16px; stroke-width: 2.6; }
+.np-stage .horizontal-carousel-btn.prev { inset-inline-start: 0; inset-inline-end: auto; }
+.np-stage .horizontal-carousel-btn.next { inset-inline-end: 0; inset-inline-start: auto; }
+@media (min-width: 1024px) { .np-stage .horizontal-carousel-wrapper { padding-inline: 46px; } .np-stage .horizontal-carousel-btn { width: 38px; height: 38px; } }
+.new-projects-track .new-project-card, .new-projects-track .new-project-card.active, .new-projects-track .new-project-card:hover { filter: none !important; }
+.new-projects-track .new-project-caption__inner::before { background-color: rgba(4, 31, 56, .22) !important; filter: blur(10px) !important; opacity: 1 !important; inset: 6px 4px 8px !important; }
+.new-projects-track .new-project-caption__name, .new-projects-track .new-project-caption__place { text-shadow: 0 1px 3px rgba(0, 0, 0, .5) !important; }
+.own-unit-card { cursor: pointer; }
