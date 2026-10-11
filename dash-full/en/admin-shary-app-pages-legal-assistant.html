@@ -784,11 +784,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "lbfDJZX84r12qs2DrBRB8eupAKvXq8BF8Dj70cA3",
+                token: "ZHksYPzLtN2Dk2K9s8LvX9AH5rYKarDDYUvdAPUk",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lbfDJZX84r12qs2DrBRB8eupAKvXq8BF8Dj70cA3",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=ZHksYPzLtN2Dk2K9s8LvX9AH5rYKarDDYUvdAPUk",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -831,23 +831,23 @@
                                                                     <option value="chart" >Chart</option>
                                                                     <option value="book" >Book</option>
                                                                     <option value="play" >Video</option>
-                                                                    <option value="scale" >Scale</option>
+                                                                    <option value="scale" selected>Scale</option>
                                                                     <option value="file" >Paper / contract</option>
                                                                     <option value="chat" >Message</option>
                                                                     <option value="calendar" >Calendar</option>
                                                                     <option value="card" >Card / payment</option>
-                                                                    <option value="shield" selected>Shield</option>
+                                                                    <option value="shield" >Shield</option>
                                                             </select>
                         </div></div>
                         <div class="col-lg-2 col-6"><div class="form-group">
                             <label>Order (smaller first)</label>
-                            <input type="number" class="form-control" name="sort" min="0" value="2" dir="ltr">
+                            <input type="number" class="form-control" name="sort" min="0" value="3" dir="ltr">
                         </div></div>
                         <div class="col-lg-3 col-12"><div class="form-group">
                             <input type="hidden" name="status" value="0">
                             <label class="d-flex gap-2 align-items-center fw-bold"><input type="checkbox" name="status" value="1" checked> Published on the website</label>
                             <input type="hidden" name="show_home" value="0">
-                            <label class="d-flex gap-2 align-items-center fw-bold mt-1"><input type="checkbox" name="show_home" value="1" > Shows on the home page and in the app («What sets us apart» card)</label>
+                            <label class="d-flex gap-2 align-items-center fw-bold mt-1"><input type="checkbox" name="show_home" value="1" checked> Shows on the home page and in the app («What sets us apart» card)</label>
                         </div></div>
                         <div class="col-lg-4 col-12"><div class="form-group">
                             <label>Page link</label>
@@ -888,6 +888,22 @@
                                 </div>
                             </div></div>
                         </div>
+                        
+                        <div class="row align-items-end mt-2">
+                            <div class="col-lg-6 col-12"><div class="form-group">
+                                <label>Video link (YouTube)</label>
+                                <input type="text" class="form-control" name="video_url" value="https://www.youtube.com/" maxlength="500" dir="ltr" placeholder="https://www.youtube.com/watch?v=…">
+                                <small class="shary-help">Adds a «Watch the video» button that opens the video on YouTube in a new tab. Leave empty for none.</small>
+                            </div></div>
+                                                            <div class="col-lg-3 col-12"><div class="form-group">
+                                    <label>Button text (Arabic)</label>
+                                    <input type="text" class="form-control" name="video_label[ar]" value="" maxlength="80" dir="rtl" placeholder="شوف الفيديو على يوتيوب">
+                                </div></div>
+                                                            <div class="col-lg-3 col-12"><div class="form-group">
+                                    <label>Button text (English)</label>
+                                    <input type="text" class="form-control" name="video_label[en]" value="" maxlength="80" dir="ltr" placeholder="Watch on YouTube">
+                                </div></div>
+                                                    </div>
                     </div>
                 </div>
 
@@ -1678,7 +1694,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lbfDJZX84r12qs2DrBRB8eupAKvXq8BF8Dj70cA3","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"ZHksYPzLtN2Dk2K9s8LvX9AH5rYKarDDYUvdAPUk","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
                         <script src="../a/vendor/shary-editor/ckeditor.js"></script>
             <script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
