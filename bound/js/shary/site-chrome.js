@@ -848,7 +848,8 @@ window.SharyZoom = function () {
     }
 
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
-    if (!mobile || seen() || got() || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    // شيت التطبيق بيظهر كل مرة الموقع يتفتح (حتى لو ضغط "حمل التطبيق" قبل كده ، وحتى لو التطبيق متحمل ← "افتح التطبيق") — مرة في الزيارة بس عشان ما يتكررش في كل صفحة
+    if (!mobile || seen() || (got() && !pop.hasAttribute('data-app-sheet')) || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
     // صورة التليفون بتتحمّل من أول ما الصفحة تفتح (مش lazy — جوه بوب أب مخفي ما كانتش بتتحمّل غير لما يظهر ، فالكارت كان بيظهر الأول والصورة بعده)
     // والبوب أب ما بيظهرش غير لما الصورة تبقى جاهزة (أو بعد 3 ثواني زيادة بالكتير) — يظهر مرة واحدة كامل
     var device = pop.querySelector('.app-pop__device');
@@ -877,8 +878,9 @@ window.SharyZoom = function () {
             privacy.addEventListener('shary:privacy-accept', function () { window.setTimeout(show, AFTER_PRIVACY); }, { once: true });
             return;
         }
-        if (seen() || got()) return;
-        ready(function () { if (!seen() && !got()) open(); });
+        var sheet = pop.hasAttribute('data-app-sheet');
+        if (seen() || (got() && !sheet)) return;
+        ready(function () { if (!seen() && (sheet || !got())) open(); });
     }
     window.setTimeout(show, Number(pop.getAttribute('data-delay')) || 1800);
 })();
