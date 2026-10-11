@@ -25091,3 +25091,21 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 .shary-toast[data-type="error"] { background-color: #e5484d; box-shadow: 0 14px 34px -12px rgba(160, 30, 40, .5); }
 .shary-toast[data-type="error"]::before { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M12 7v6M12 17h.01'/%3E%3C/svg%3E"); }
 @media (min-width: 1024px) { .shary-toast { top: 24px; font-size: 16px; } }
+
+/* ---- صفحتي «بيع عقارك» و«أجّر عقارك»: نفس لون زرارهم في كارت الهوم — بيع تركواز اللوجو ، أجّر أصفر اللوجو
+   (الزرار المختار في التبديل ، دواير الخطوات ، زرار «التالي / إرسال» ، أيقونة البانر وكلمة «الآن») */
+[data-request-page="sell"] { --req-accent: #4CBFB2; --req-accent-dark: #3aa89b; --req-on: #ffffff; }
+[data-request-page="rent"] { --req-accent: #FCB424; --req-accent-dark: #e9a312; --req-on: #1E4266; }
+[data-request-page] .req-switch[aria-current="page"] { background-color: var(--req-accent); color: var(--req-on); box-shadow: 0 6px 14px -8px var(--req-accent); }
+[data-request-page] .req-steps li[data-state="current"] .req-steps__dot { border-color: var(--req-accent); background-color: var(--req-accent); color: var(--req-on); }
+[data-request-page] .req-steps li[data-state="done"] .req-steps__dot { border-color: var(--req-accent); background-color: var(--req-accent); color: var(--req-on); }
+[data-request-page] .req-steps li[data-state="done"]:not(:last-child)::after { background-color: var(--req-accent); }
+[data-request-page] .req-button:not(.req-button--ghost) { border-color: var(--req-accent); background-color: var(--req-accent); color: var(--req-on); }
+[data-request-page] .req-button:not(.req-button--ghost):hover { background-color: var(--req-accent-dark); border-color: var(--req-accent-dark); }
+[data-request-page] .req-button--ghost { border-color: var(--req-accent); color: #1E4266; }
+[data-request-page] .req-banner__icon { color: var(--req-accent-dark); }
+[data-request-page="rent"] .req-banner h1 span { color: #e9a312 !important; }
+
+/* ---- جزء مالوش بيانات في لوحة التحكم (partials/dash-box — data-empty-part): القسم كله بيختفي بعنوانه — من غير شرطة "—" */
+[data-empty-part] { display: none !important; }
+section:has(> [data-empty-part]), section:has(> div > [data-empty-part]:only-child) { display: none !important; }
