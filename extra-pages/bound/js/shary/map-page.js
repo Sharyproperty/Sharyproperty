@@ -262,8 +262,14 @@
             var box = planBox(p);
             if (box) {
                 var wideScreen = window.matchMedia('(min-width: 1024px)').matches;
-                gl.fitBounds([[box[0], box[1]], [box[2], box[3]]], { padding: wideScreen ? 90 : { top: 60, right: 26, bottom: 240, left: 26 }, maxZoom: 17.5, duration: duration, essential: true });
-            } else gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(16, Math.min(18, state.zoom)), duration: duration, essential: true });   // قريب كفاية عشان علامات وحدات المشروع تبان متفرّقة
+                // لوحة الوحدات مفتوحة: المشروع بيقف في الجزء الظاهر فوقها (موبايل) أو جنبها (ديسك توب)
+                var sheetOpen = root.classList.contains('has-ps'), h = window.innerHeight;
+                var pad = wideScreen ? (sheetOpen ? { top: 90, bottom: 90, left: 480, right: 90 } : 90) : { top: 60, right: 26, bottom: sheetOpen ? Math.round(h * 0.56) + 20 : 240, left: 26 };
+                gl.fitBounds([[box[0], box[1]], [box[2], box[3]]], { padding: pad, maxZoom: 17.5, duration: duration, essential: true });
+            } else {
+                var openNow = root.classList.contains('has-ps') && !window.matchMedia('(min-width: 1024px)').matches;
+                gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(16, Math.min(18, state.zoom)), offset: openNow ? [0, -Math.round(window.innerHeight * 0.26)] : [0, 0], duration: duration, essential: true });
+            }   // قريب كفاية عشان علامات وحدات المشروع تبان متفرّقة
         }
         // العلامات اللي ماستر بلان مشروعها معروضة: بتختفي لما العميل يقرّب (عشان ما تغطيش المخطط)
         function markPlans(ids) {
@@ -440,9 +446,10 @@
                 leaveGlobe();
                 if (plans) plans.refresh();
                 // جاي من صفحة المشروع / الوحدة: على الماستر بلان على طول (من غير لفة الكرة الأرضية) — وإلا حركة الدخول العادية
+                root.classList.add('is-project');          // جاي من صفحة المشروع: من غير فلاتر ولا «اختر المنطقة» — المشروع ووحداته على طول
+                openSheet(state.current);                  // لوحة وحدات المشروع من تحت على طول
                 goTo(p, state.asked ? 0 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
                 revealRow(state.current);                  // كارت المشروع ظاهر في القايمة من الأول
-                openSheet(state.current);                  // لوحة وحدات المشروع من تحت على طول
                 outline(p);
                 return;
             }
@@ -718,7 +725,7 @@
             psRender();
             unitsOf(p, function () { if (psState.id === p.id) psRender(); });
         }
-        function closeSheet() { if (!ps) return; ps.hidden = true; root.classList.remove('has-ps'); }
+        function closeSheet() { if (!ps) return; ps.hidden = true; root.classList.remove('has-ps'); root.classList.remove('is-project'); if (root.__declutter) root.__declutter(); }
         if (ps) {
             ps.addEventListener('click', function (event) {
                 var tab = event.target.closest('[data-smap-ps-tab]');
