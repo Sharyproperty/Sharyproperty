@@ -784,11 +784,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH",
+                token: "so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -820,6 +820,44 @@
             <form method="post" action="#preview/admin/shary/app-pages/shary-ma3ak" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="preview" autocomplete="off">                
                 <div class="card">
+                    <div class="card-header"><h5 class="card-title">Service settings</h5></div>
+                    <div class="card-body"><div class="row align-items-end">
+                        <div class="col-lg-3 col-6"><div class="form-group">
+                            <label>Service icon (home card and page)</label>
+                            <select class="form-control" name="icon" data-sx-pick="off">
+                                                                    <option value="home" selected>Home</option>
+                                                                    <option value="tools" >Finishing</option>
+                                                                    <option value="key" >Key</option>
+                                                                    <option value="chart" >Chart</option>
+                                                                    <option value="book" >Book</option>
+                                                                    <option value="play" >Video</option>
+                                                                    <option value="scale" >Scale</option>
+                                                                    <option value="file" >Paper / contract</option>
+                                                                    <option value="chat" >Message</option>
+                                                                    <option value="calendar" >Calendar</option>
+                                                                    <option value="card" >Card / payment</option>
+                                                                    <option value="shield" >Shield</option>
+                                                            </select>
+                        </div></div>
+                        <div class="col-lg-2 col-6"><div class="form-group">
+                            <label>Order (smaller first)</label>
+                            <input type="number" class="form-control" name="sort" min="0" value="0" dir="ltr">
+                        </div></div>
+                        <div class="col-lg-3 col-12"><div class="form-group">
+                            <input type="hidden" name="status" value="0">
+                            <label class="d-flex gap-2 align-items-center fw-bold"><input type="checkbox" name="status" value="1" checked> Published on the website</label>
+                            <input type="hidden" name="show_home" value="0">
+                            <label class="d-flex gap-2 align-items-center fw-bold mt-1"><input type="checkbox" name="show_home" value="1" checked> Shows in «Explore with Shary» on the home page</label>
+                        </div></div>
+                        <div class="col-lg-4 col-12"><div class="form-group">
+                            <label>Page link</label>
+                            <input type="text" class="form-control" value="/ar/v2/shary-ma3ak" readonly dir="ltr">
+                            <small class="shary-help">This is one of the original services: you can only hide it (untick «Published»).</small>                        </div></div>
+                    </div></div>
+                </div>
+
+                
+                <div class="card">
                     <div class="card-header"><h5 class="card-title">Intro (top of the page)</h5></div>
                     <div class="card-body">
                         <div class="row">
@@ -833,35 +871,35 @@
                                                                             </div></div>
                                                                                                                                 <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Small label above the name (Arabic)</label>
-                                                                                    <input type="text" class="form-control" name="text[badge][ar]" value="بعد الشراء" maxlength="60" dir="rtl">
+                                                                                    <input type="text" class="form-control" name="text[badge][ar]" value="من أول الاختيار لحد ما وحدتك تكسب" maxlength="60" dir="rtl">
                                                                             </div></div>
                                                                     <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Small label above the name (English)</label>
-                                                                                    <input type="text" class="form-control" name="text[badge][en]" value="After purchase" maxlength="60" dir="ltr">
+                                                                                    <input type="text" class="form-control" name="text[badge][en]" value="From choosing to earning" maxlength="60" dir="ltr">
                                                                             </div></div>
                                                                                                                                 <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Intro (Arabic)</label>
-                                                                                    <textarea class="form-control" name="text[intro][ar]" rows="3" maxlength="600" dir="rtl">اشتريت وحدتك؟ شاري معاك بيكمّل معاك بعد الشراء: تابع أقساطك ومواعيدها، شطّب وافرش وحدتك مع شركاء موثوقين، وأجّرها أو بيعها لما تحب.</textarea>
+                                                                                    <textarea class="form-control" name="text[intro][ar]" rows="3" maxlength="600" dir="rtl">قولنا ميزانيتك وبتدوّر على إيه، وشاري معاك يرشّحلك وحدات في حدود إمكانياتك واتجاهك. وبعد ما تشتري بنكمّل معاك الرحلة: تستثمر، تعيد البيع، تأجّر، أو تشطّب وتفرش وحدتك.</textarea>
                                                                             </div></div>
                                                                     <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Intro (English)</label>
-                                                                                    <textarea class="form-control" name="text[intro][en]" rows="3" maxlength="600" dir="ltr">Bought your unit? Shary Ma3ak stays with you: track your installments, finish and furnish with trusted partners, and rent or resell whenever you like.</textarea>
+                                                                                    <textarea class="form-control" name="text[intro][en]" rows="3" maxlength="600" dir="ltr">Tell us your budget and what you’re after, and Shary Ma3ak suggests units within your means and direction. After you buy, we continue the journey: invest, resell, rent, or finish and furnish your unit.</textarea>
                                                                             </div></div>
                                                                                                                                 <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Google title (Arabic)</label>
-                                                                                    <input type="text" class="form-control" name="text[meta_title][ar]" value="شاري معاك: وحدتك معانا بعد الشراء | شاري" maxlength="120" dir="rtl">
+                                                                                    <input type="text" class="form-control" name="text[meta_title][ar]" value="شاري معاك: وحدات على قد ميزانيتك ورحلة كاملة بعد الشراء | شاري" maxlength="120" dir="rtl">
                                                                             </div></div>
                                                                     <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Google title (English)</label>
-                                                                                    <input type="text" class="form-control" name="text[meta_title][en]" value="Shary Ma3ak: your unit after purchase | Shary" maxlength="120" dir="ltr">
+                                                                                    <input type="text" class="form-control" name="text[meta_title][en]" value="Shary Ma3ak: units within your budget and a full journey after purchase | Shary" maxlength="120" dir="ltr">
                                                                             </div></div>
                                                                                                                                 <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Google description (Arabic)</label>
-                                                                                    <textarea class="form-control" name="text[meta_description][ar]" rows="3" maxlength="300" dir="rtl">شاري معاك بيتابع وحدتك بعد الشراء: أقساطك ومواعيدها، باقات التشطيب والفرش، تأجير وحدتك أو إعادة بيعها، وفرص استثمار — كله من تطبيق شاري.</textarea>
+                                                                                    <textarea class="form-control" name="text[meta_description][ar]" rows="3" maxlength="300" dir="rtl">شاري معاك بيرشّحلك وحدات في حدود ميزانيتك واتجاهك، وبيكمّل معاك بعد الشراء: الاستثمار، إعادة البيع، التأجير، التشطيب والفرش — كله من تطبيق شاري.</textarea>
                                                                             </div></div>
                                                                     <div class="col-lg-6 col-12"><div class="form-group">
                                         <label>Google description (English)</label>
-                                                                                    <textarea class="form-control" name="text[meta_description][en]" rows="3" maxlength="300" dir="ltr">Shary Ma3ak follows your unit after purchase: installments and due dates, finishing and furnishing packages, renting or reselling your unit, and investment opportunities — in the Shary app.</textarea>
+                                                                                    <textarea class="form-control" name="text[meta_description][en]" rows="3" maxlength="300" dir="ltr">Shary Ma3ak suggests units within your budget and goals, then stays with you after purchase: investment, resale, renting, finishing and furnishing — in the Shary app.</textarea>
                                                                             </div></div>
                                                                                         <div class="col-12"><div class="form-group">
                                 <label>Service image (optional)</label>
@@ -869,6 +907,77 @@
                                 <small class="shary-help">An uploaded image (e.g. an app screenshot) shows next to the intro instead of the colored card. JPG / PNG / WEBP.</small>
                             </div></div>
                         </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title">Free writing (optional) — photos and video links anywhere</h5></div>
+                    <div class="card-body">
+                        <small class="shary-help d-block mb-2">Write freely: the image button uploads a photo where you are, and the «Video» button adds a YouTube / TikTok / Facebook link. Shown under the features.</small>
+                        <div class="row">
+                                                            <div class="col-12"><div class="form-group">
+                                    <label>Text (Arabic)</label>
+                                    <textarea class="form-control shary-editor" name="body[ar]" rows="8" data-height="260" dir="rtl"></textarea>
+                                </div></div>
+                                                            <div class="col-12"><div class="form-group">
+                                    <label>Text (English)</label>
+                                    <textarea class="form-control shary-editor" name="body[en]" rows="8" data-height="260" dir="ltr"></textarea>
+                                </div></div>
+                                                    </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title">Service photos</h5></div>
+                    <div class="card-body">
+                        <small class="shary-help d-block mb-2">Photos shown on the page (e.g. app screenshots). Tick a photo to remove it.</small>
+                                                <label class="fw-bold">Add photos</label>
+                        <input type="file" class="form-control" name="gallery_new[]" accept="image/jpeg,image/png,image/webp" multiple>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title">Service videos (links)</h5></div>
+                    <div class="card-body">
+                        <div class="shary-repeater" data-shary-repeater="videos" data-next="0" data-max="12">
+    <div data-shary-rows>
+            </div>
+    <template data-shary-template>
+        <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number></span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="Move up">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="Move down">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>Remove</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-12 col-sm-12 col-12">
+                    <div class="form-group">
+                        <label>Video link</label>
+                        <input type="text" class="form-control" name="videos[__i__][url]" value="" maxlength="500" dir="ltr"
+               placeholder="https://">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Video title (English)</label>
+                        <input type="text" class="form-control" name="videos[__i__][title_en]" value="" maxlength="140" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Video title (Arabic)</label>
+                        <input type="text" class="form-control" name="videos[__i__][title_ar]" value="" maxlength="140" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+    </template>
+    <button type="button" class="btn btn-primary mb-3" data-shary-add>Add video</button>
+</div>
                     </div>
                 </div>
 
@@ -891,7 +1000,7 @@
                         <label>Icon</label>
                         <select class="form-control " name="features[0][icon]">
                             <option value="">— None —</option>
-                                        <option value="home" >Home</option>
+                                        <option value="home" selected>Home</option>
                             <option value="tools" >Finishing</option>
                             <option value="key" >Key</option>
                             <option value="chart" >Chart</option>
@@ -900,7 +1009,7 @@
                             <option value="scale" >Scale</option>
                             <option value="file" >Paper / contract</option>
                             <option value="chat" >Message</option>
-                            <option value="calendar" selected>Calendar</option>
+                            <option value="calendar" >Calendar</option>
                             <option value="card" >Card / payment</option>
                             <option value="shield" >Shield</option>
                                 </select>
@@ -909,25 +1018,25 @@
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Feature (English)</label>
-                        <input type="text" class="form-control" name="features[0][title_en]" value="Installment tracking" maxlength="120" dir=ltr>
+                        <input type="text" class="form-control" name="features[0][title_en]" value="Units within your budget" maxlength="120" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Feature (Arabic)</label>
-                        <input type="text" class="form-control" name="features[0][title_ar]" value="متابعة الأقساط" maxlength="120" dir=rtl>
+                        <input type="text" class="form-control" name="features[0][title_ar]" value="وحدات على قد ميزانيتك" maxlength="120" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (English)</label>
-                        <input type="text" class="form-control" name="features[0][text_en]" value="All your installments and due dates in one place, with a reminder before each one." maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="features[0][text_en]" value="Suggestions that fit your means, area and unit type." maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (Arabic)</label>
-                        <input type="text" class="form-control" name="features[0][text_ar]" value="كل أقساطك ومواعيدها في مكان واحد، وتنبيه قبل كل قسط." maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="features[0][text_ar]" value="نرشّحلك وحدات في حدود إمكانياتك والمنطقة والنوع اللي بتدوّر عليه." maxlength="300" dir=rtl>
                     </div>
                 </div>
                         </div>
@@ -946,9 +1055,9 @@
                         <select class="form-control " name="features[1][icon]">
                             <option value="">— None —</option>
                                         <option value="home" >Home</option>
-                            <option value="tools" selected>Finishing</option>
+                            <option value="tools" >Finishing</option>
                             <option value="key" >Key</option>
-                            <option value="chart" >Chart</option>
+                            <option value="chart" selected>Chart</option>
                             <option value="book" >Book</option>
                             <option value="play" >Video</option>
                             <option value="scale" >Scale</option>
@@ -963,25 +1072,25 @@
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Feature (English)</label>
-                        <input type="text" class="form-control" name="features[1][title_en]" value="Finishing &amp; furnishing" maxlength="120" dir=ltr>
+                        <input type="text" class="form-control" name="features[1][title_en]" value="Investment &amp; resale" maxlength="120" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Feature (Arabic)</label>
-                        <input type="text" class="form-control" name="features[1][title_ar]" value="التشطيب والفرش" maxlength="120" dir=rtl>
+                        <input type="text" class="form-control" name="features[1][title_ar]" value="استثمار وإعادة بيع" maxlength="120" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (English)</label>
-                        <input type="text" class="form-control" name="features[1][text_en]" value="Clear-priced packages from Shary partners." maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="features[1][text_en]" value="We follow your unit’s value and help you resell at the right time." maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (Arabic)</label>
-                        <input type="text" class="form-control" name="features[1][text_ar]" value="باقات تشطيب وفرش من شركاء شاري بأسعار واضحة، وتختار اللي يناسبك." maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="features[1][text_ar]" value="نتابع قيمة وحدتك، ولما يجي الوقت المناسب نساعدك تعيد بيعها." maxlength="300" dir=rtl>
                     </div>
                 </div>
                         </div>
@@ -1023,19 +1132,19 @@
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Feature (Arabic)</label>
-                        <input type="text" class="form-control" name="features[2][title_ar]" value="أجّر وحدتك" maxlength="120" dir=rtl>
+                        <input type="text" class="form-control" name="features[2][title_ar]" value="تأجير وحدتك" maxlength="120" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (English)</label>
-                        <input type="text" class="form-control" name="features[2][text_en]" value="List it for rent and reach the right tenants." maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="features[2][text_en]" value="Now or after handover, we connect your unit with the right tenants." maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (Arabic)</label>
-                        <input type="text" class="form-control" name="features[2][text_ar]" value="اعرض وحدتك للإيجار ونوصّلها للمستأجرين المناسبين." maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="features[2][text_ar]" value="دلوقتي أو بعد الاستلام، بنوصّل وحدتك للمستأجرين المناسبين." maxlength="300" dir=rtl>
                     </div>
                 </div>
                         </div>
@@ -1054,9 +1163,9 @@
                         <select class="form-control " name="features[3][icon]">
                             <option value="">— None —</option>
                                         <option value="home" >Home</option>
-                            <option value="tools" >Finishing</option>
+                            <option value="tools" selected>Finishing</option>
                             <option value="key" >Key</option>
-                            <option value="chart" selected>Chart</option>
+                            <option value="chart" >Chart</option>
                             <option value="book" >Book</option>
                             <option value="play" >Video</option>
                             <option value="scale" >Scale</option>
@@ -1071,25 +1180,25 @@
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Feature (English)</label>
-                        <input type="text" class="form-control" name="features[3][title_en]" value="Resale &amp; investment" maxlength="120" dir=ltr>
+                        <input type="text" class="form-control" name="features[3][title_en]" value="Finishing &amp; furnishing" maxlength="120" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Feature (Arabic)</label>
-                        <input type="text" class="form-control" name="features[3][title_ar]" value="إعادة البيع والاستثمار" maxlength="120" dir=rtl>
+                        <input type="text" class="form-control" name="features[3][title_ar]" value="التشطيب والفرش" maxlength="120" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (English)</label>
-                        <input type="text" class="form-control" name="features[3][text_en]" value="Know your unit’s value today, resell it, or invest in selected opportunities." maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="features[3][text_en]" value="Clear-priced packages from Shary partners." maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (Arabic)</label>
-                        <input type="text" class="form-control" name="features[3][text_ar]" value="اعرف قيمة وحدتك النهارده واعرضها لإعادة البيع، أو استثمر في فرص مختارة." maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="features[3][text_ar]" value="باقات تشطيب وفرش من شركاء شاري بأسعار واضحة." maxlength="300" dir=rtl>
                     </div>
                 </div>
                         </div>
@@ -1171,25 +1280,25 @@
                                                     <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Step (English)</label>
-                        <input type="text" class="form-control" name="steps[0][title_en]" value="Download the app" maxlength="120" dir=ltr>
+                        <input type="text" class="form-control" name="steps[0][title_en]" value="Tell us what you want" maxlength="120" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Step (Arabic)</label>
-                        <input type="text" class="form-control" name="steps[0][title_ar]" value="حمّل التطبيق" maxlength="120" dir=rtl>
+                        <input type="text" class="form-control" name="steps[0][title_ar]" value="قولنا إنت عايز إيه" maxlength="120" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (English)</label>
-                        <input type="text" class="form-control" name="steps[0][text_en]" value="Get the Shary app and sign up with your mobile number." maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="steps[0][text_en]" value="Budget, area and goal: living or investing." maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (Arabic)</label>
-                        <input type="text" class="form-control" name="steps[0][text_ar]" value="نزّل تطبيق شاري وسجّل برقم موبايلك." maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="steps[0][text_ar]" value="الميزانية والمنطقة وهدفك: سكن ولا استثمار." maxlength="300" dir=rtl>
                     </div>
                 </div>
                         </div>
@@ -1205,25 +1314,25 @@
                                                     <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Step (English)</label>
-                        <input type="text" class="form-control" name="steps[1][title_en]" value="Add your unit" maxlength="120" dir=ltr>
+                        <input type="text" class="form-control" name="steps[1][title_en]" value="Shary Ma3ak suggests" maxlength="120" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Step (Arabic)</label>
-                        <input type="text" class="form-control" name="steps[1][title_ar]" value="ضيف وحدتك" maxlength="120" dir=rtl>
+                        <input type="text" class="form-control" name="steps[1][title_ar]" value="شاري معاك يرشّحلك" maxlength="120" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (English)</label>
-                        <input type="text" class="form-control" name="steps[1][text_en]" value="Add your unit and its installments in Shary Ma3ak." maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="steps[1][text_en]" value="Units that fit your means and direction — you choose." maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (Arabic)</label>
-                        <input type="text" class="form-control" name="steps[1][text_ar]" value="من «شاري معاك» ضيف وحدتك وبيانات أقساطها." maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="steps[1][text_ar]" value="وحدات مناسبة لإمكانياتك واتجاهك، وتختار براحتك." maxlength="300" dir=rtl>
                     </div>
                 </div>
                         </div>
@@ -1239,25 +1348,25 @@
                                                     <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Step (English)</label>
-                        <input type="text" class="form-control" name="steps[2][title_en]" value="We’re with you" maxlength="120" dir=ltr>
+                        <input type="text" class="form-control" name="steps[2][title_en]" value="We stay with you" maxlength="120" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Step (Arabic)</label>
-                        <input type="text" class="form-control" name="steps[2][title_ar]" value="شاري معاك" maxlength="120" dir=rtl>
+                        <input type="text" class="form-control" name="steps[2][title_ar]" value="نكمّل معاك بعد الشراء" maxlength="120" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (English)</label>
-                        <input type="text" class="form-control" name="steps[2][text_en]" value="Track installments and request finishing, renting or resale from one place." maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="steps[2][text_en]" value="Invest, resell, rent, or finish and furnish — all in the app." maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Explanation (Arabic)</label>
-                        <input type="text" class="form-control" name="steps[2][text_ar]" value="تابع الأقساط واطلب التشطيب أو التأجير أو إعادة البيع من نفس المكان." maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="steps[2][text_ar]" value="استثمار أو إعادة بيع أو تأجير أو تشطيب وفرش، كله من التطبيق." maxlength="300" dir=rtl>
                     </div>
                 </div>
                         </div>
@@ -1305,7 +1414,7 @@
                                     <div class="card">
                         <div class="card-header"><h5 class="card-title">FAQs</h5></div>
                         <div class="card-body">
-                            <div class="shary-repeater" data-shary-repeater="faq" data-next="2" data-max="20">
+                            <div class="shary-repeater" data-shary-repeater="faq" data-next="3" data-max="20">
     <div data-shary-rows>
                     <div class="row shary-repeater-row mb-3" data-shary-row>
     <div class="col-12 d-flex justify-content-between align-items-center mb-2">
@@ -1319,25 +1428,25 @@
                                                     <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Question (English)</label>
-                        <input type="text" class="form-control" name="faq[0][q_en]" value="Do I need to have bought through Shary?" maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="faq[0][q_en]" value="How are units suggested?" maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Question (Arabic)</label>
-                        <input type="text" class="form-control" name="faq[0][q_ar]" value="لازم أكون اشتريت من خلال شاري؟" maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="faq[0][q_ar]" value="بيرشّحلي وحدات إزاي؟" maxlength="300" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Answer (English)</label>
-                        <textarea class="form-control" name="faq[0][a_en]" rows="3" maxlength="1200" dir=ltr>No, any owner can add and follow a unit in Shary Ma3ak.</textarea>
+                        <textarea class="form-control" name="faq[0][a_en]" rows="3" maxlength="1200" dir=ltr>By your budget, area, unit type and goal, from developer and resale units on Shary.</textarea>
                             </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Answer (Arabic)</label>
-                        <textarea class="form-control" name="faq[0][a_ar]" rows="3" maxlength="1200" dir=rtl>لأ، أي حد عنده وحدة يقدر يضيفها ويتابعها من «شاري معاك».</textarea>
+                        <textarea class="form-control" name="faq[0][a_ar]" rows="3" maxlength="1200" dir=rtl>على حسب ميزانيتك والمنطقة ونوع الوحدة وهدفك من الشراء، من وحدات المطورين وإعادة البيع على شاري.</textarea>
                             </div>
                 </div>
                         </div>
@@ -1353,25 +1462,59 @@
                                                     <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Question (English)</label>
-                        <input type="text" class="form-control" name="faq[1][q_en]" value="Is it paid?" maxlength="300" dir=ltr>
+                        <input type="text" class="form-control" name="faq[1][q_en]" value="Do I need to have bought through Shary?" maxlength="300" dir=ltr>
                     </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Question (Arabic)</label>
-                        <input type="text" class="form-control" name="faq[1][q_ar]" value="الخدمة بفلوس؟" maxlength="300" dir=rtl>
+                        <input type="text" class="form-control" name="faq[1][q_ar]" value="لازم أكون اشتريت من خلال شاري علشان يكمّل معايا؟" maxlength="300" dir=rtl>
                     </div>
                 </div>
                                                                         <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Answer (English)</label>
-                        <textarea class="form-control" name="faq[1][a_en]" rows="3" maxlength="1200" dir=ltr>Following your unit and installments is free. Finishing, furnishing and renting are priced per package or service.</textarea>
+                        <textarea class="form-control" name="faq[1][a_en]" rows="3" maxlength="1200" dir=ltr>No, if you own a unit you can add it and we continue with you: renting, resale, finishing or furnishing.</textarea>
                             </div>
                 </div>
                                                             <div class="col-lg-6 col-sm-6 col-12">
                     <div class="form-group">
                         <label>Answer (Arabic)</label>
-                        <textarea class="form-control" name="faq[1][a_ar]" rows="3" maxlength="1200" dir=rtl>متابعة الوحدة والأقساط ببلاش. التشطيب والفرش والتأجير بيتحسبوا حسب الباقة أو الخدمة اللي تختارها.</textarea>
+                        <textarea class="form-control" name="faq[1][a_ar]" rows="3" maxlength="1200" dir=rtl>لأ، لو عندك وحدة تقدر تضيفها ونكمّل معاك: تأجير أو إعادة بيع أو تشطيب وفرش.</textarea>
+                            </div>
+                </div>
+                        </div>
+                    <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number>3</span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="Move up">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="Move down">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>Remove</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Question (English)</label>
+                        <input type="text" class="form-control" name="faq[2][q_en]" value="Is it paid?" maxlength="300" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Question (Arabic)</label>
+                        <input type="text" class="form-control" name="faq[2][q_ar]" value="الخدمة بفلوس؟" maxlength="300" dir=rtl>
+                    </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Answer (English)</label>
+                        <textarea class="form-control" name="faq[2][a_en]" rows="3" maxlength="1200" dir=ltr>Suggestions and follow-up are free. Finishing, furnishing and renting are priced per package or service.</textarea>
+                            </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Answer (Arabic)</label>
+                        <textarea class="form-control" name="faq[2][a_ar]" rows="3" maxlength="1200" dir=rtl>الترشيحات والمتابعة ببلاش. التشطيب والفرش والتأجير بيتحسبوا حسب الباقة أو الخدمة اللي تختارها.</textarea>
                             </div>
                 </div>
                         </div>
@@ -1462,7 +1605,7 @@
 
                 <button type="submit" class="btn btn-submit me-2">Save</button>
             </form>
-        </div>
+                    </div>
     </div>
     </div>
 <!-- /Main Wrapper -->
@@ -1577,9 +1720,11 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-                    <script>
+                        <script src="../a/vendor/shary-editor/ckeditor.js"></script>
+            <script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
+                <script>
             (function () {
                 var LANG = "en";
                 var counter = 0;

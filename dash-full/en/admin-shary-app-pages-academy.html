@@ -784,11 +784,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH",
+                token: "so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -819,6 +819,44 @@
             
             <form method="post" action="#preview/admin/shary/app-pages/academy" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="preview" autocomplete="off">                
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title">Service settings</h5></div>
+                    <div class="card-body"><div class="row align-items-end">
+                        <div class="col-lg-3 col-6"><div class="form-group">
+                            <label>Service icon (home card and page)</label>
+                            <select class="form-control" name="icon" data-sx-pick="off">
+                                                                    <option value="home" >Home</option>
+                                                                    <option value="tools" >Finishing</option>
+                                                                    <option value="key" >Key</option>
+                                                                    <option value="chart" >Chart</option>
+                                                                    <option value="book" >Book</option>
+                                                                    <option value="play" selected>Video</option>
+                                                                    <option value="scale" >Scale</option>
+                                                                    <option value="file" >Paper / contract</option>
+                                                                    <option value="chat" >Message</option>
+                                                                    <option value="calendar" >Calendar</option>
+                                                                    <option value="card" >Card / payment</option>
+                                                                    <option value="shield" >Shield</option>
+                                                            </select>
+                        </div></div>
+                        <div class="col-lg-2 col-6"><div class="form-group">
+                            <label>Order (smaller first)</label>
+                            <input type="number" class="form-control" name="sort" min="0" value="1" dir="ltr">
+                        </div></div>
+                        <div class="col-lg-3 col-12"><div class="form-group">
+                            <input type="hidden" name="status" value="0">
+                            <label class="d-flex gap-2 align-items-center fw-bold"><input type="checkbox" name="status" value="1" checked> Published on the website</label>
+                            <input type="hidden" name="show_home" value="0">
+                            <label class="d-flex gap-2 align-items-center fw-bold mt-1"><input type="checkbox" name="show_home" value="1" checked> Shows in «Explore with Shary» on the home page</label>
+                        </div></div>
+                        <div class="col-lg-4 col-12"><div class="form-group">
+                            <label>Page link</label>
+                            <input type="text" class="form-control" value="/ar/v2/academy" readonly dir="ltr">
+                            <small class="shary-help">This is one of the original services: you can only hide it (untick «Published»).</small>                        </div></div>
+                    </div></div>
+                </div>
+
+                
                 <div class="card">
                     <div class="card-header"><h5 class="card-title">Intro (top of the page)</h5></div>
                     <div class="card-body">
@@ -869,6 +907,77 @@
                                 <small class="shary-help">An uploaded image (e.g. an app screenshot) shows next to the intro instead of the colored card. JPG / PNG / WEBP.</small>
                             </div></div>
                         </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title">Free writing (optional) — photos and video links anywhere</h5></div>
+                    <div class="card-body">
+                        <small class="shary-help d-block mb-2">Write freely: the image button uploads a photo where you are, and the «Video» button adds a YouTube / TikTok / Facebook link. Shown under the features.</small>
+                        <div class="row">
+                                                            <div class="col-12"><div class="form-group">
+                                    <label>Text (Arabic)</label>
+                                    <textarea class="form-control shary-editor" name="body[ar]" rows="8" data-height="260" dir="rtl"></textarea>
+                                </div></div>
+                                                            <div class="col-12"><div class="form-group">
+                                    <label>Text (English)</label>
+                                    <textarea class="form-control shary-editor" name="body[en]" rows="8" data-height="260" dir="ltr"></textarea>
+                                </div></div>
+                                                    </div>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title">Service photos</h5></div>
+                    <div class="card-body">
+                        <small class="shary-help d-block mb-2">Photos shown on the page (e.g. app screenshots). Tick a photo to remove it.</small>
+                                                <label class="fw-bold">Add photos</label>
+                        <input type="file" class="form-control" name="gallery_new[]" accept="image/jpeg,image/png,image/webp" multiple>
+                    </div>
+                </div>
+
+                
+                <div class="card">
+                    <div class="card-header"><h5 class="card-title">Service videos (links)</h5></div>
+                    <div class="card-body">
+                        <div class="shary-repeater" data-shary-repeater="videos" data-next="0" data-max="12">
+    <div data-shary-rows>
+            </div>
+    <template data-shary-template>
+        <div class="row shary-repeater-row mb-3" data-shary-row>
+    <div class="col-12 d-flex justify-content-between align-items-center mb-2">
+        <strong class="text-muted"># <span data-shary-number></span></strong>
+        <span>
+            <button type="button" class="btn btn-sm btn-light" data-shary-up title="Move up">&uarr;</button>
+            <button type="button" class="btn btn-sm btn-light" data-shary-down title="Move down">&darr;</button>
+            <button type="button" class="btn btn-sm btn-danger" data-shary-remove>Remove</button>
+        </span>
+    </div>
+                                                    <div class="col-lg-12 col-sm-12 col-12">
+                    <div class="form-group">
+                        <label>Video link</label>
+                        <input type="text" class="form-control" name="videos[__i__][url]" value="" maxlength="500" dir="ltr"
+               placeholder="https://">
+                            </div>
+                </div>
+                                                                        <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Video title (English)</label>
+                        <input type="text" class="form-control" name="videos[__i__][title_en]" value="" maxlength="140" dir=ltr>
+                    </div>
+                </div>
+                                                            <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                        <label>Video title (Arabic)</label>
+                        <input type="text" class="form-control" name="videos[__i__][title_ar]" value="" maxlength="140" dir=rtl>
+                    </div>
+                </div>
+                        </div>
+    </template>
+    <button type="button" class="btn btn-primary mb-3" data-shary-add>Add video</button>
+</div>
                     </div>
                 </div>
 
@@ -1462,7 +1571,7 @@
 
                 <button type="submit" class="btn btn-submit me-2">Save</button>
             </form>
-        </div>
+                    </div>
     </div>
     </div>
 <!-- /Main Wrapper -->
@@ -1577,9 +1686,11 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-                    <script>
+                        <script src="../a/vendor/shary-editor/ckeditor.js"></script>
+            <script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
+                <script>
             (function () {
                 var LANG = "en";
                 var counter = 0;

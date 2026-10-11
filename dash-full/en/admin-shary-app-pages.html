@@ -779,11 +779,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH",
+                token: "so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -802,9 +802,13 @@
         .apg-item b { font-size: 18px; font-weight: 800; color: #1E4266; }
         .apg-item small { font-weight: 700; color: #1F7F72; }
         .apg-item p { font-size: 14px; font-weight: 600; color: #5b6b7c; margin: 4px 0 8px; }
-        .apg-item .apg-tag { align-self: flex-start; font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 10px; background: #eef3f8; color: #1E4266; }
-        .apg-item .apg-tag.is-on { background: #e6f6f4; color: #1F7F72; }
+        .apg-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .apg-tag { font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 10px; background: #eef3f8; color: #6b7a8c; }
+        .apg-tag.is-on { background: #e6f6f4; color: #1F7F72; }
+        .apg-tag.is-home { background: #fff4dc; color: #a26b00; }
         .apg-item .d-flex { margin-top: auto; }
+        .apg-add { border: 1.5px dashed #4CBFB2; border-radius: 16px; padding: 18px; background: #f6fbfa; margin-bottom: 18px; }
+        .apg-add h5 { font-weight: 800; color: #1E4266; }
     </style>
     <div class="page-wrapper">
         <div class="content">
@@ -814,19 +818,35 @@
                     <h6>Each app service has a website page that introduces it and ends with «Download the app». Write its intro, features, steps and FAQs here.</h6>
                 </div>
             </div>
+            
+            
+            <form method="post" action="#preview/admin/shary/app-pages" class="apg-add" data-no-draft>
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <h5>+ Add a new service</h5>
+                <p class="shary-help mb-2">Write the service name, then finish its page (texts, photos, videos). It stays hidden until you tick «Published».</p>
+                <div class="row g-2 align-items-end">
+                    <div class="col-lg-4 col-12"><label class="form-label">Service name (Arabic)</label><input class="form-control" name="title_ar" maxlength="120" required dir="rtl"></div>
+                    <div class="col-lg-4 col-12"><label class="form-label">Service name (English — makes the link)</label><input class="form-control" name="title_en" maxlength="120" dir="ltr"></div>
+                    <div class="col-lg-4 col-12"><button type="submit" class="btn btn-primary fw-bold w-100">Add service</button></div>
+                </div>
+            </form>
+
             <div class="apg-list">
                                     <div class="apg-item">
-                        <span class="apg-tag ">Default text</span>
+                        <div class="apg-tags">
+                            <span class="apg-tag is-on">Published</span>
+                            <span class="apg-tag is-home">On the home page</span>                        </div>
                         <b>شاري معاك</b>
-                        <small>بعد الشراء</small>
-                        <p>اشتريت وحدتك؟ شاري معاك بيكمّل معاك بعد الشراء: تابع أقساطك ومواعيدها، شطّب وافرش وحدتك مع شركاء موثوقين، وأجّرها أو بيعها لما تحب.</p>
+                        <small>من أول الاختيار لحد ما وحدتك تكسب</small>
+                        <p>قولنا ميزانيتك وبتدوّر على إيه، وشاري معاك يرشّحلك وحدات في حدود إمكانياتك واتجاهك. وبعد ما تشتري بنكمّل معاك الرحلة: تستثمر، تعيد البيع، تأ...</p>
                         <div class="d-flex gap-2">
                             <a href="admin-shary-app-pages-shary-ma3ak.html" class="btn btn-primary btn-sm fw-bold">Edit page</a>
                             <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-light btn-sm fw-bold">Open on the website</a>
                         </div>
                     </div>
                                     <div class="apg-item">
-                        <span class="apg-tag ">Default text</span>
+                        <div class="apg-tags">
+                            <span class="apg-tag is-on">Published</span>
+                            <span class="apg-tag is-home">On the home page</span>                        </div>
                         <b>أكاديمية شاري</b>
                         <small>اتعلم قبل ما تشتري</small>
                         <p>قبل ما تاخد أكبر قرار مالي في حياتك، اتعلم أساسياته. أكاديمية شاري بتشرحلك العقارات خطوة بخطوة بلغة بسيطة.</p>
@@ -836,7 +856,9 @@
                         </div>
                     </div>
                                     <div class="apg-item">
-                        <span class="apg-tag ">Default text</span>
+                        <div class="apg-tags">
+                            <span class="apg-tag is-on">Published</span>
+                            <span class="apg-tag is-home">On the home page</span>                        </div>
                         <b>المساعد القانوني</b>
                         <small>اشتري وانت مطمّن</small>
                         <p>قبل ما توقّع، اعرف حقوقك. المساعد القانوني بيشرحلك العقد وبنوده، وبيدّيك نصايح قبل الشراء، ولو عندك سؤال بتبعته لمستشار قانوني.</p>
@@ -846,7 +868,9 @@
                         </div>
                     </div>
                                     <div class="apg-item">
-                        <span class="apg-tag ">Default text</span>
+                        <div class="apg-tags">
+                            <span class="apg-tag is-on">Published</span>
+                            <span class="apg-tag is-home">On the home page</span>                        </div>
                         <b>احجز مع المطور</b>
                         <small>احجز وحدتك أونلاين</small>
                         <p>لقيت الوحدة اللي عايزها؟ احجزها مع المطور من تطبيق شاري: ادفع مبلغ الحجز بتحويل بنكي، ارفع الإيصال، وتابع حجزك لحد التعاقد.</p>
@@ -971,7 +995,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"iHN84NKggWyceTiwKhPZcI992YWM9xA7kw5jCjaH","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"so4aibk0UcamJwCsrjAzGf1LulGb9hCs7sACPihx","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>
