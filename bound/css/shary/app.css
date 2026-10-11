@@ -25109,3 +25109,13 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 /* ---- جزء مالوش بيانات في لوحة التحكم (partials/dash-box — data-empty-part): القسم كله بيختفي بعنوانه — من غير شرطة "—" */
 [data-empty-part] { display: none !important; }
 section:has(> [data-empty-part]), section:has(> div > [data-empty-part]:only-child) { display: none !important; }
+
+/* ---- صفحة المشروع: «سعر المطور» باين أكتر — العنوان كحلي بولد والرقم أكبر بلون تركواز اللوجو */
+.prop-prices > div:first-child dt { font-size: 13.5px; font-weight: 800; color: #1E4266; }
+.prop-prices > div:first-child dd b { font-size: 22px; font-weight: 800; color: #1E4266; }
+@media (max-width: 1023px) { .prop-prices > div:first-child { background: linear-gradient(180deg, rgba(76, 191, 178, .12), rgba(76, 191, 178, 0)); border-start-start-radius: 16px; border-end-start-radius: 16px; } }
+.prop-prices > div:first-child dd span { font-weight: 800; color: #3aa89b; }
+@media (min-width: 1024px) {
+  .prop-prices > div:first-child dt { font-size: 15px; }
+  .prop-prices > div:first-child dd b { font-size: 28px; }
+}
