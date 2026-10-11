@@ -25130,3 +25130,41 @@ section:has(> [data-empty-part]), section:has(> div > [data-empty-part]:only-chi
 .prop-plan__discount{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;background:#fff1e6;color:#c2410c;font-size:12.5px;font-weight:800;line-height:1.6;white-space:nowrap}
 .prop-plan__offer{display:inline-flex;align-items:center;padding:2px 10px;border-radius:999px;background:#FCB424;color:#1E4266;font-size:12px;font-weight:800;line-height:1.6;white-space:nowrap}
 .offer-card .prop-plan__discount{margin-top:4px;align-self:flex-start}
+
+/* تركواز اللوجو: شارة «مشروع جديد» و«جاهز للاستلام» على الكروت */
+.bg-\[\#4CBFB2\]{background-color:#4CBFB2}
+
+/* كارت الوحدة: المكان على الصورة بالأبيض من غير خلفية (ظل خفيف بس علشان يتقري على أي صورة) */
+.unit-card__place{text-shadow:0 1px 3px rgba(0,0,0,.75),0 0 10px rgba(0,0,0,.35)}
+.unit-card__place svg{filter:drop-shadow(0 1px 2px rgba(0,0,0,.7))}
+
+.pt-2\.5{padding-top:.625rem}
+
+/* كارت الوحدة: مقاسات الخط مريحة للعين زي الكروت القديمة (القسط فوق السعر بولد وواضح ، الغرف / الحمامات / المساحة ، العملة) */
+.area-card .unit-card__inst{font-size:14px;font-weight:800;color:#333A40;line-height:1.5}
+.area-card .unit-card__price{font-size:22px;font-weight:800}
+.area-card .unit-card__price > span:nth-child(2){font-size:14px;font-weight:700;color:#333A40}
+.area-card .unit-card__price > span:nth-child(3){font-size:13px;font-weight:700}
+.area-card .unit-specs{font-size:13px;font-weight:600;color:#3F474D}
+.area-card .unit-specs b{font-size:16px}
+@media (min-width:1024px){
+  .area-card .unit-card__inst{font-size:15px}
+  .area-card .unit-card__price{font-size:24px}
+  .area-card .unit-card__price > span:nth-child(2){font-size:15px}
+  .area-card .unit-card__price > span:nth-child(3){font-size:14px}
+  .area-card .unit-specs{font-size:14px}
+  .area-card .unit-specs b{font-size:17px}
+}
+/* الغرف / الحمامات / المساحة: ما يتقصّوش أبدًا — لو المكان ضيق بينزلوا سطر */
+.area-card .unit-specs{flex-wrap:wrap;overflow:visible;white-space:nowrap;row-gap:4px;font-size:12.5px}
+.area-card .unit-specs b{font-size:15px}
+.shary-home-root .area-card .unit-card__inst,body .area-card small.unit-card__inst{font-size:14px;font-weight:800;color:#333A40}
+@media (min-width:1024px){.shary-home-root .area-card .unit-card__inst,body .area-card small.unit-card__inst{font-size:15px}.area-card .unit-specs{font-size:14px}.area-card .unit-specs b{font-size:17px}}
+
+/* الغرف / الحمامات / المساحة في سطر واحد (كلام مختصر: غرف / حمام) */
+.area-card .unit-specs{flex-wrap:nowrap;overflow:visible;font-size:13px}
+.area-card .unit-specs b{font-size:16px}
+@media (min-width:1024px){.area-card .unit-specs{font-size:14px}.area-card .unit-specs b{font-size:17px}}
+
+/* كارت الوحدة: لوجو المطور على الطرف التاني (شمال بالعربي) بمقاس 64 */
+.unit-card__head > :first-child{order:2;flex:0 0 auto}
