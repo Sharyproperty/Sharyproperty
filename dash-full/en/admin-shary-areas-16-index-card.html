@@ -796,11 +796,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "vqtOGEi8vXPStsRCjWiq9vE8mt0mA5FoD9zKJ1ve",
+                token: "cV0UUUNwuLgr0tnExkSYUZkj4dLkJUrjdNqhGcpI",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=vqtOGEi8vXPStsRCjWiq9vE8mt0mA5FoD9zKJ1ve",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=cV0UUUNwuLgr0tnExkSYUZkj4dLkJUrjdNqhGcpI",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -915,10 +915,33 @@
                     </div>
                     <p class="aix-note">The area on the map — in Google Maps right-click the place and copy the two numbers. Empty = the map searches the area name.</p>
                     <div class="d-flex flex-wrap gap-3 mt-2 aix-colors">
-                                                    <label class="d-flex align-items-center gap-2 fw-bold"><input type="color" name="heat_high" value="#d9604f"> High price</label>
-                                                    <label class="d-flex align-items-center gap-2 fw-bold"><input type="color" name="heat_yield" value="#3fb386"> Highest rental yield</label>
-                                                    <label class="d-flex align-items-center gap-2 fw-bold"><input type="color" name="heat_chance" value="#6baee6"> Investment chances</label>
+                                                    <div class="d-flex align-items-center gap-2 flex-wrap" style="border:1px solid #E3E8F0;border-radius:12px;padding:8px 10px">
+                                <input type="color" name="heat_high" value="#d9604f" aria-label="High price">
+                                <input class="form-control form-control-sm" style="width:150px" name="heat_label[high_ar]" maxlength="40" value="" placeholder="سعر مرتفع" aria-label="High price عربي">
+                                <input class="form-control form-control-sm" style="width:150px" dir="ltr" name="heat_label[high_en]" maxlength="40" value="" placeholder="High price" aria-label="High price English">
+                            </div>
+                                                    <div class="d-flex align-items-center gap-2 flex-wrap" style="border:1px solid #E3E8F0;border-radius:12px;padding:8px 10px">
+                                <input type="color" name="heat_yield" value="#3fb386" aria-label="Highest rental yield">
+                                <input class="form-control form-control-sm" style="width:150px" name="heat_label[yield_ar]" maxlength="40" value="" placeholder="أعلى عائد إيجاري" aria-label="Highest rental yield عربي">
+                                <input class="form-control form-control-sm" style="width:150px" dir="ltr" name="heat_label[yield_en]" maxlength="40" value="" placeholder="Highest rental yield" aria-label="Highest rental yield English">
+                            </div>
+                                                    <div class="d-flex align-items-center gap-2 flex-wrap" style="border:1px solid #E3E8F0;border-radius:12px;padding:8px 10px">
+                                <input type="color" name="heat_chance" value="#6baee6" aria-label="Investment chances">
+                                <input class="form-control form-control-sm" style="width:150px" name="heat_label[chance_ar]" maxlength="40" value="" placeholder="فرص استثمارية" aria-label="Investment chances عربي">
+                                <input class="form-control form-control-sm" style="width:150px" dir="ltr" name="heat_label[chance_en]" maxlength="40" value="" placeholder="Investment opportunities" aria-label="Investment chances English">
+                            </div>
                                             </div>
+                    <p class="aix-note mt-1">الألوان التلاتة وأساميهم تحت الخريطة الحرارية للمنطقة دي (عربي / إنجليزي) — الاسم الفاضي = الاسم العام.</p>
+                    
+                    <div class="mt-3" style="background:#F4FBFA;border:1.5px solid #CDEDE9;border-radius:14px;padding:12px 14px">
+                        <b style="color:#1E4266">أرقام بتتحسب لوحدها (مش بتتكتب):</b>
+                        <div class="d-flex flex-wrap gap-3 mt-2 fw-bold" style="color:#1E4266">
+                            <span>المشاريع المنشورة: <b style="color:#1F7F72">19</b></span>
+                            <span>الوحدات المنشورة: <b style="color:#1F7F72">48</b></span>
+                            <span>المناطق اللي تحتها: <b style="color:#1F7F72">7</b></span>
+                        </div>
+                        <small class="d-block mt-1 fw-bold" style="color:#5B6B7F">من المشاريع والوحدات اللي متسجلة على المنطقة دي (والمناطق اللي تحتها). سعر المتر والطلب والنمو والرسم البياني: من الأرقام الشهرية تحت، ولو فاضية من أسعار الوحدات نفسها.</small>
+                    </div>
                 </div></div>
 
                 <div class="card"><div class="card-body">
@@ -1240,7 +1263,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"vqtOGEi8vXPStsRCjWiq9vE8mt0mA5FoD9zKJ1ve","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"cV0UUUNwuLgr0tnExkSYUZkj4dLkJUrjdNqhGcpI","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>
