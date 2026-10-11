@@ -238,7 +238,7 @@
         var state = {
             type: 'h', zoom: 16, current: null, live: false, intro: false,
             area: root.getAttribute('data-area') || '', focus: root.getAttribute('data-focus') === '1', fit: root.getAttribute('data-fit') === '1',
-            types: [], delivery: [], price: ''
+            types: [], delivery: [], price: '', sale: []
         };
         var gl = null, glLib = null, libState = '';   // المكتبة: '' لسه ، loading ، ready ، failed
         var noteTimer = null, meMarker = null;
@@ -385,6 +385,26 @@
                 });
                 // الضغط على أي مكان فاضي في الخريطة بيقفل قايمة المناطق وكارت الوحدة
                 gl.on('click', function () { toggleAreas(false); closeUnit(); });
+                // أسماء المشاريع ما تركبش على بعض: اللي بيخبّي اسم تاني بيختفي لحد ما العميل يقرّب (المختار دايمًا ظاهر)
+                var declutterTimer = null;
+                var declutter = function () {
+                    var placed = [];
+                    var order = items.filter(function (item) { return item.__pin && !item.parentNode.hidden; });
+                    order.sort(function (a, b) { return (b === state.current) - (a === state.current) || ((b.__pin.classList.contains('has-plan') ? 1 : 0) - (a.__pin.classList.contains('has-plan') ? 1 : 0)); });
+                    order.forEach(function (item) {
+                        var pin = item.__pin;
+                        pin.classList.remove('is-crowded');
+                        var r = pin.getBoundingClientRect();
+                        if (!r.width) return;
+                        var pad = 4, hit = item !== state.current && placed.some(function (o) { return r.left < o.right + pad && r.right > o.left - pad && r.top < o.bottom + pad && r.bottom > o.top - pad; });
+                        if (hit) pin.classList.add('is-crowded'); else placed.push(r);
+                    });
+                };
+                var declutterSoon = function () { clearTimeout(declutterTimer); declutterTimer = setTimeout(declutter, 60); };
+                gl.on('moveend', declutterSoon);
+                gl.on('zoomend', declutterSoon);
+                root.addEventListener('shary:map-select', declutterSoon);
+                root.__declutter = declutterSoon;
                 // وحدات المشروع المختار: بتظهر / تختفي مع التقريب والتحريك
                 gl.on('moveend', showUnits);
                 // الماستر بلان فوق القمر الصناعي — كل مشروع في مكانه المحفوظ (المشاريع الظاهرة بعد الفلتر بس)
@@ -422,6 +442,8 @@
                 // جاي من صفحة المشروع / الوحدة: على الماستر بلان على طول (من غير لفة الكرة الأرضية) — وإلا حركة الدخول العادية
                 goTo(p, state.asked ? 0 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
                 revealRow(state.current);                  // كارت المشروع ظاهر في القايمة من الأول
+                openSheet(state.current);                  // لوحة وحدات المشروع من تحت على طول
+                outline(p);
                 return;
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
@@ -466,7 +488,7 @@
         function select(item, reveal) {
             state.current = item || null;
             items.forEach(function (other) { other.setAttribute('aria-current', other === item ? 'true' : 'false'); });
-            if (!item) { paint(false); return; }
+            if (!item) { paint(false); closeSheet(); outline({}); return; }
             if (state.intro || !gl) leaveGlobe();
             paint();
             if (reveal) revealRow(item, 'smooth');
@@ -474,6 +496,8 @@
             // مشروع تاني: علامات وحدات المشروع القديم بتتشال ، ووحدات الجديد بتتحمل (وبتظهر أول ما الخريطة تقرّب عليه)
             if (unitsFor !== null && unitsFor !== info(item).id) clearUnits();
             showUnits();
+            if (reveal || state.focus) openSheet(item);   // اختيار العميل (أو لينك على مشروع بعينه) — مش المشروع الافتراضي وقت الفتح
+            outline(info(item));
         }
 
         // ---- وحدات المشروع على الخريطة: لما العميل يقرّب على المشروع المختار بتظهر علامة لكل وحدة (shary/map/units?project=) ،
@@ -628,6 +652,113 @@
             document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !unitBox.hidden) closeUnit(); });
         }
 
+        // ---- لوحة المشروع المختار ([data-smap-ps]): وحدات المشروع تحت بعض بتابات (الكل / من المطور / إعادة بيع / شاري معاك) وترتيب + اتصال وواتساب
+        var ps = root.querySelector('[data-smap-ps]');
+        var psText = {};
+        try { psText = JSON.parse((ps && ps.getAttribute('data-t')) || '{}') || {}; } catch (e) { psText = {}; }
+        var psState = { tab: '', sort: '', id: null };
+        function esc(text) { return String(text == null ? '' : text).replace(/[&<>"']/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]; }); }
+        function unitsOf(p, done) {
+            if (!unitsUrl) { done([]); return; }
+            var list = unitCache[p.id];
+            if (Array.isArray(list)) { done(list); return; }
+            fetch(unitsUrl.indexOf('{id}') > -1 ? unitsUrl.replace('{id}', encodeURIComponent(p.id)) : unitsUrl + (unitsUrl.indexOf('?') === -1 ? '?' : '&') + 'project=' + encodeURIComponent(p.id), { headers: { 'Accept': 'application/json' } })
+                .then(function (response) { return response.ok ? response.json() : { units: [] }; })
+                .then(function (data) { unitCache[p.id] = (data && data.units) || []; done(unitCache[p.id]); }, function () { done([]); });
+        }
+        function psRow(u) {
+            var when = u.delivery === 'ready' || u.delivery === '0' ? (psText.ready || '') : (u.delivery ? (psText.delivery || '') + ' ' + u.delivery : '');
+            var specs = [u.beds ? '<span><b>' + esc(u.beds) + '</b> ' + esc(psText.beds) + '</span>' : '', u.baths ? '<span><b>' + esc(u.baths) + '</b> ' + esc(psText.baths) + '</span>' : '', u.area ? '<span><b>' + esc(u.area) + '</b> ' + esc(psText.sqm) + '</span>' : ''].filter(Boolean).join('<i></i>');
+            var wa = ps.getAttribute('data-whatsapp') || '', phone = ps.getAttribute('data-phone') || '';
+            var waText = String(psText.wa_text || '').replace(':name', (u.title || '') + (u.url ? ' ' + u.url : ''));
+            return '<article class="smap__ps-unit">'
+                + '<a class="smap__ps-pic" href="' + esc(u.url) + '">' + (u.image ? '<img src="' + esc(u.image) + '" alt="' + esc(u.type) + '" loading="lazy" onerror="this.remove()">' : '') + '</a>'
+                + '<div class="smap__ps-info"><a href="' + esc(u.url) + '"><b>' + esc(u.type || u.label) + '</b>' + (when ? '<small>' + esc(when) + '</small>' : '') + '</a>'
+                + (specs ? '<p class="smap__ps-specs">' + specs + '</p>' : '')
+                + '<div class="smap__ps-row"><strong dir="ltr">' + (u.price ? esc(u.price) + ' <small>' + esc(u.currency) + '</small>' : '') + '</strong>'
+                + (phone ? '<a class="smap__ps-btn smap__ps-btn--call" href="tel:' + esc(phone) + '" aria-label="' + esc(psText.call) + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z"/></svg></a>' : '')
+                + (wa ? '<a class="smap__ps-btn smap__ps-btn--wa" target="_blank" rel="noopener" href="https://wa.me/' + esc(wa) + '?text=' + encodeURIComponent(waText) + '" aria-label="' + esc(psText.whatsapp) + '"><svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-1.6-.1a14 14 0 0 1-1.5-.6 11.6 11.6 0 0 1-4.4-3.9 5 5 0 0 1-1-2.7 2.9 2.9 0 0 1 .9-2.2.9.9 0 0 1 .7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.1.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6a8.4 8.4 0 0 0 1.6 2 7.6 7.6 0 0 0 2.3 1.4c.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3a2.2 2.2 0 0 1-.1 1.2Z"/></svg></a>' : '')
+                + '</div></div></article>';
+        }
+        function psRender() {
+            if (!ps) return;
+            var list = unitCache[psState.id];
+            var box = ps.querySelector('[data-smap-ps-list]');
+            if (!Array.isArray(list)) { box.innerHTML = '<p class="smap__ps-note">' + esc(psText.loading) + '</p>'; return; }
+            var count = { '': list.length, developer: 0, resale: 0, ma3ak: 0 };
+            list.forEach(function (u) { if (u.sale === 'developer') count.developer++; if (u.sale === 'resale') count.resale++; if (u.ma3ak) count.ma3ak++; });
+            ps.querySelectorAll('[data-smap-ps-tab]').forEach(function (tab) {
+                var key = tab.getAttribute('data-smap-ps-tab');
+                tab.setAttribute('aria-selected', key === psState.tab ? 'true' : 'false');
+                tab.hidden = key !== '' && !count[key];
+                var small = tab.querySelector('small'); if (small) small.textContent = '(' + count[key] + ')';
+            });
+            var shown = list.filter(function (u) { return psState.tab === '' || (psState.tab === 'ma3ak' ? u.ma3ak : u.sale === psState.tab); });
+            if (psState.sort === 'low' || psState.sort === 'high') shown = shown.slice().sort(function (a, b) { var x = a.price_value || 0, y = b.price_value || 0; if (!x) return 1; if (!y) return -1; return psState.sort === 'low' ? x - y : y - x; });
+            if (psState.sort === 'big') shown = shown.slice().sort(function (a, b) { return (parseFloat(b.area) || 0) - (parseFloat(a.area) || 0); });
+            ps.querySelector('[data-smap-ps-count]').textContent = '(' + shown.length + ')';
+            box.innerHTML = shown.length ? shown.map(psRow).join('') : '<p class="smap__ps-note">' + esc(psText.empty) + '</p>';
+            box.scrollTop = 0;
+        }
+        function openSheet(item) {
+            if (!ps) return;
+            var p = info(item);
+            psState = { tab: '', sort: '', id: p.id };
+            var sortBox = ps.querySelector('[data-smap-ps-sort]'); if (sortBox) sortBox.value = '';
+            ps.querySelector('[data-smap-ps-name]').textContent = p.name || '';
+            ps.querySelector('[data-smap-ps-meta]').textContent = [p.developer_name, p.area_label].filter(Boolean).join(' · ');
+            var url = ps.querySelector('[data-smap-ps-url]'); url.href = p.url || '#'; url.hidden = !p.url;
+            var logo = ps.querySelector('[data-smap-ps-logo]'), short = ps.querySelector('[data-smap-ps-short]');
+            if (p.developer_logo) { logo.hidden = false; logo.removeAttribute('data-logo-done'); logo.src = p.developer_logo; logo.alt = p.developer_name || ''; short.textContent = ''; }
+            else { logo.hidden = true; short.textContent = (p.developer_name || p.name || '').slice(0, 2); }
+            var wa = ps.querySelector('[data-smap-ps-wa]');
+            if (wa && ps.getAttribute('data-whatsapp')) wa.href = 'https://wa.me/' + ps.getAttribute('data-whatsapp') + '?text=' + encodeURIComponent(String(psText.wa_text || '').replace(':name', (p.name || '') + (p.url ? ' ' + p.url : '')));
+            ps.hidden = false; ps.classList.remove('is-full');
+            root.classList.add('has-ps');
+            psRender();
+            unitsOf(p, function () { if (psState.id === p.id) psRender(); });
+        }
+        function closeSheet() { if (!ps) return; ps.hidden = true; root.classList.remove('has-ps'); }
+        if (ps) {
+            ps.addEventListener('click', function (event) {
+                var tab = event.target.closest('[data-smap-ps-tab]');
+                if (tab) { psState.tab = tab.getAttribute('data-smap-ps-tab'); psRender(); return; }
+                if (event.target.closest('[data-smap-ps-close]')) { closeSheet(); return; }
+                if (event.target.closest('[data-smap-ps-grip]')) ps.classList.toggle('is-full');
+            });
+            var sortSelect = ps.querySelector('[data-smap-ps-sort]');
+            if (sortSelect) sortSelect.addEventListener('change', function () { psState.sort = sortSelect.value; psRender(); });
+            // السحب: لفوق = تكبير ، لتحت = تصغير ثم قفل
+            var startY = null;
+            var grip = ps.querySelector('[data-smap-ps-grip]'), head = ps.querySelector('.smap__ps-head');
+            [grip, head].forEach(function (zone) {
+                if (!zone) return;
+                zone.addEventListener('touchstart', function (event) { startY = event.touches[0].clientY; }, { passive: true });
+                zone.addEventListener('touchend', function (event) {
+                    if (startY === null) return;
+                    var dy = event.changedTouches[0].clientY - startY; startY = null;
+                    if (dy < -40) ps.classList.add('is-full');
+                    else if (dy > 40) { if (ps.classList.contains('is-full')) ps.classList.remove('is-full'); else closeSheet(); }
+                }, { passive: true });
+            });
+            document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !ps.hidden) closeSheet(); });
+        }
+
+        // ---- حدود المشروع المختار (compounds.bounds): خط أصفر حوالين المشروع على الخريطة
+        function outline(p) {
+            if (!gl || !gl.getStyle) return;
+            var ring = Array.isArray(p.outline) && p.outline.length > 2 ? p.outline.map(function (pt) { return [Number(pt[0]), Number(pt[1])]; }) : null;
+            var data = { type: 'FeatureCollection', features: ring ? [{ type: 'Feature', properties: {}, geometry: { type: 'LineString', coordinates: ring.concat([ring[0]]) } }] : [] };
+            try {
+                if (gl.getSource('smap-outline')) gl.getSource('smap-outline').setData(data);
+                else {
+                    gl.addSource('smap-outline', { type: 'geojson', data: data });
+                    gl.addLayer({ id: 'smap-outline-glow', type: 'line', source: 'smap-outline', paint: { 'line-color': '#FCB424', 'line-width': 9, 'line-opacity': 0.25, 'line-blur': 3 } });
+                    gl.addLayer({ id: 'smap-outline', type: 'line', source: 'smap-outline', paint: { 'line-color': '#FCB424', 'line-width': 3 } });
+                }
+            } catch (e) { /* الستايل لسه بيتحمّل */ if (gl.once) gl.once('idle', function () { outline(p); }); }
+        }
+
         // ---- الفلترة: المنطقة + البحث + أنواع الوحدات + التسليم + السعر. لو مفيش مطابق بالظبط: بنفك الشروط واحد واحد لحد ما يبقى فيه نتيجة
         function matches(item, use) {
             var p = info(item);
@@ -639,6 +770,7 @@
                 if (!item.__hay) item.__hay = plain([p.name, p.alt, p.developer_name, p.area_label, p.group_label, p.location, p.types, String(p.slug || '').replace(/-/g, ' ')].join(' '));
                 if (!use.words.every(function (word) { return item.__hay.indexOf(word) > -1; })) return false;
             }
+            if (use.sale && state.sale.length && !(p.sales || []).some(function (key) { return state.sale.indexOf(key) > -1; })) return false;
             if (use.types && state.types.length && !(p.type_keys || []).some(function (key) { return state.types.indexOf(key) > -1; })) return false;
             if (use.delivery && state.delivery.length && state.delivery.indexOf(String(p.delivery)) === -1) return false;
             if (use.price && state.price !== '') {
@@ -653,7 +785,8 @@
             var words = plain(search && search.value).split(' ').filter(Boolean);
             var query = search ? search.value : '';
             var levels = [
-                { words: words, query: query, types: 1, delivery: 1, price: 1 },
+                { words: words, query: query, types: 1, delivery: 1, price: 1, sale: 1 },
+                { words: words, query: query, types: 1, delivery: 1, sale: 1 },
                 { words: words, query: query, types: 1, delivery: 1 },
                 { words: words, query: query, types: 1 },
                 { words: words, query: query },
@@ -675,13 +808,14 @@
             Array.prototype.forEach.call(counts, function (count) { count.textContent = list.length; });
             if (listLink) listLink.setAttribute('href', (root.getAttribute('data-search-url') || '#') + (state.area ? '?area[]=' + state.area : ''));
             // شارات عدد الاختيارات على زراير الفلاتر
-            [['types', state.types.length], ['delivery', state.delivery.length], ['price', state.price !== '' ? 1 : 0]].forEach(function (pair) {
+            [['types', state.types.length], ['delivery', state.delivery.length], ['price', state.price !== '' ? 1 : 0], ['sale', state.sale.length]].forEach(function (pair) {
                 var badge = root.querySelector('[data-smap-fcount="' + pair[0] + '"]');
                 if (badge) { badge.textContent = pair[1]; badge.hidden = !pair[1]; badge.parentNode.classList.toggle('is-set', !!pair[1]); }
             });
             var ready = root.querySelector('[data-smap-ready]');
             if (ready) ready.setAttribute('aria-pressed', state.delivery.length === 1 && state.delivery[0] === '0' ? 'true' : 'false');
             if (plans) plans.refresh();
+            if (root.__declutter) root.__declutter();
             if (keep) return;
             if (state.current && list.indexOf(state.current) === -1) select(null);
             leaveGlobe();
@@ -784,7 +918,7 @@
             return total / words.length;
         }
         function closeSuggest() { if (suggestBox) suggestBox.hidden = true; suggestRows = []; if (search) search.setAttribute('aria-expanded', 'false'); }
-        function resetFilters() { state.types = []; state.delivery = []; state.price = ''; paintChips(); }
+        function resetFilters() { state.types = []; state.delivery = []; state.price = ''; state.sale = []; paintChips(); }
         function suggest() {
             if (!search) return;
             var words = plain(search.value).split(' ').filter(Boolean);
@@ -909,7 +1043,7 @@
             });
         });
         var clear = root.querySelector('[data-smap-fclear]');
-        if (clear) clear.addEventListener('click', function () { state.types = []; state.delivery = []; state.price = ''; paintChips(); filter(); });
+        if (clear) clear.addEventListener('click', function () { state.types = []; state.delivery = []; state.price = ''; state.sale = []; paintChips(); filter(); });
         // "مسح" جنب عنوان كل قسم: بيفضّي القسم ده بس
         root.querySelectorAll('[data-smap-fclear-one]').forEach(function (button) {
             button.addEventListener('click', function () {
@@ -1004,7 +1138,7 @@
             select: function (slug) {
                 var item = bySlug(slug);
                 if (!item) return false;
-                if (item.parentNode.hidden) { if (search) search.value = ''; setArea(''); state.types = []; state.delivery = []; state.price = ''; paintChips(); filter(true); }
+                if (item.parentNode.hidden) { if (search) search.value = ''; setArea(''); state.types = []; state.delivery = []; state.price = ''; state.sale = []; paintChips(); filter(true); }
                 toggleAreas(false);
                 state.focus = true;
                 select(item, true);

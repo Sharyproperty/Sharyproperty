@@ -456,6 +456,38 @@
                 // تحت minZoom مفيش رسم حتى للمشروع المختار (ما تظهرش متجمعة في نقطة) — والخريطة بتقرّب عليه أصلًا
                 return zoom >= MP.minZoom && (String(project.id) === String(active) || inView(project));
             });
+            // ماستر بلان مكانها غلط (متسجلة بأركان غريبة) أو داخلة في ماستر بلان تانية: ما بتترسمش — عشان الخريطة ما يبقاش فيها صور فوق بعض.
+            //   المقاس: أصغر من 60 متر أو أكبر من 12 كم = أركان غلط.  التداخل: لو أكتر من 35% من الأصغر جوه واحدة اتقبلت قبلها
+            //   (الأولوية: المشروع المختار ، وبعده اللي اتضبط بإيد الفريق ، وبعده الأقرب لنص الشاشة).
+            var rectOf = function (project) {
+                var corners = savedCorners(project);
+                if (!corners) return null;
+                var m = boxOf(corners.map(toMerc)), k = Math.cos(((m[1] + m[3]) / 2 / R));   // تقريب: متر ميركاتور ← متر حقيقي
+                return { box: m, w: (m[2] - m[0]) * k, h: (m[3] - m[1]) * k };
+            };
+            var accepted = [], clash = {};
+            wanted.slice().sort(function (a, b) {
+                var aa = String(a.id) === String(active), bb = String(b.id) === String(active);
+                if (aa !== bb) return aa ? -1 : 1;
+                var ma = !!(a.__mpOwn || savedCorners(a)), mb = !!(b.__mpOwn || savedCorners(b));
+                if (ma !== mb) return ma ? -1 : 1;
+                return 0;
+            }).forEach(function (project) {
+                var r = rectOf(project);
+                if (!r) { accepted.push({ id: project.id, r: null }); return; }
+                if (String(project.id) !== String(active) && (r.w < 60 || r.h < 60 || r.w > 12000 || r.h > 12000)) { clash[project.id] = 'size'; return; }
+                var areaOf = function (b) { return Math.max(0, b[2] - b[0]) * Math.max(0, b[3] - b[1]); };
+                var hit = accepted.some(function (other) {
+                    if (!other.r) return false;
+                    var o = other.r.box, b = r.box, inter = [Math.max(o[0], b[0]), Math.max(o[1], b[1]), Math.min(o[2], b[2]), Math.min(o[3], b[3])];
+                    return areaOf(inter) > 0.35 * Math.min(areaOf(o), areaOf(b));
+                });
+                if (hit && String(project.id) !== String(active)) { clash[project.id] = 'overlap'; return; }
+                accepted.push({ id: project.id, r: r });
+            });
+            MP.clash = clash;
+            wanted = wanted.filter(function (project) { return !clash[project.id]; });
+            Object.keys(clash).forEach(function (id) { if (MP.rendered[id]) remove(id); });
             if (wanted.length > MP.maxActive) {
                 var far = function (project) { var b = boundsOf(project) || [0, 0, 0, 0]; return Math.hypot((b[0] + b[2]) / 2 - center.lng, (b[1] + b[3]) / 2 - center.lat); };
                 wanted = wanted.sort(function (a, b) { return (String(b.id) === String(active)) - (String(a.id) === String(active)) || far(a) - far(b); }).slice(0, MP.maxActive);

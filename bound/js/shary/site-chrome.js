@@ -923,7 +923,7 @@ window.SharyZoom = function () {
  */
 (function () {
     var SELECTOR = 'img[data-logo-fit], img.rounded-full.object-contain, .dev-logo-link img, .prop-shot__logo img, .dev-icon__logo img, .prop-bar__logo img, .developer-logo img, .req-menu__logo, .prop-bar__mini-logo, .abroad-dev__logo';
-    var SAFE = 0.92;    // اللوجو جوه أكبر مستطيل بنفس نسبته يدخل في الدايرة × 92% (بعيد عن الإطار)
+    var SAFE = 0.94;    // اللوجو جوه أكبر مستطيل بنفس نسبته يدخل في الدايرة × 94% — الكلمة بتكبر لحد قرب الإطار ومفيش حرف بيتقص
     var watcher = window.ResizeObserver ? new ResizeObserver(function (entries) { entries.forEach(function (entry) { size(entry.target); }); }) : null;
 
     // الهامش بالبيكسل من مقاس الدايرة نفسها: المستطيل اللي جواه اللوجو بنفس نسبة اللوجو (عرض ÷ ارتفاع) وأكبر حاجة تدخل في الدايرة —
@@ -935,7 +935,9 @@ window.SharyZoom = function () {
         var ratio = img.__ratio || 1;
         var diagonal = Math.sqrt(1 + ratio * ratio);
         var boxW = width * ratio / diagonal * SAFE, boxH = width / diagonal * SAFE;
-        img.style.padding = (Math.round((width - boxH) / 2 * 10) / 10) + 'px ' + (Math.round((width - boxW) / 2 * 10) / 10) + 'px';
+        // الإطار (حتى لو شفاف) بياكل من المساحة — بنطرحه عشان الكلمة تاخد المستطيل كله فعلًا
+        var border = parseFloat(window.getComputedStyle(img).borderTopWidth) || 0;
+        img.style.padding = Math.max(0, Math.round(((width - boxH) / 2 - border) * 10) / 10) + 'px ' + Math.max(0, Math.round(((width - boxW) / 2 - border) * 10) / 10) + 'px';
     }
 
     // اللوجو اللي جوه صورته مساحة فاضية كبيرة (لوجو صغير في نص صورة بيضا / شفافة) بيتقص للوجو نفسه + هامش صغير — فيبان أكبر وواضح.
@@ -965,7 +967,7 @@ window.SharyZoom = function () {
             if (maxX < 0) return false;
             var cw = maxX - minX + 1, ch = maxY - minY + 1;
             if (cw * ch > w * h * 0.8) return false;                // اللوجو مالي الصورة أصلًا
-            var pad = Math.round(Math.max(cw, ch) * 0.06);
+            var pad = Math.round(Math.max(cw, ch) * 0.03);
             var sx = Math.max(0, minX - pad), sy = Math.max(0, minY - pad);
             var sw = Math.min(w - sx, cw + pad * 2), sh = Math.min(h - sy, ch + pad * 2);
             var out = document.createElement('canvas');

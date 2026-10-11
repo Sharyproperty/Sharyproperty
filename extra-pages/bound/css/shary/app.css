@@ -25390,3 +25390,104 @@ img.sx-fit-contain{object-fit:contain!important}
 .explore-hub__go{color:#2C6386;font-size:16px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 /* لوجو المطور دايرة: الشادو حوالين الدايرة مش مربع (الصورة نفسها مربعة والدايرة جواها) */
 .dev-logo-link>img,.dev-logo-link>span,.dev-icon__logo{border-radius:50%!important}
+
+/* لوجو المطور: الظل والإطار الأبيض على اللينك اللي حوالين اللوجو (دايرة) — الصورة نفسها من غير حواف مدوّرة،
+   عشان الحواف المدوّرة على الصورة كانت بتقص أطراف الكلمة (EMAAR MISR) ، ومن غير ظل عليها عشان مايطلعش مربع ورا الدايرة */
+.dev-logo-link{display:inline-flex;flex:none;border-radius:9999px;box-shadow:0 0 0 4px #fff,0 0 0 5px #E6EDF4,0 10px 22px -6px rgba(18,58,92,.38),0 0 22px 8px rgba(255,255,255,.95);transition:transform .2s,box-shadow .2s}
+a.dev-logo-link:hover{box-shadow:0 0 0 4px #fff,0 0 0 5px #DCE6EF,0 16px 30px -8px rgba(18,58,92,.48),0 0 26px 10px #fff}
+.dev-logo-link>img{border-radius:0!important;box-shadow:none!important}
+.dev-logo-link>span{box-shadow:none!important}
+a.dev-logo-link:hover>img,a.dev-logo-link:hover>span{box-shadow:none!important}
+
+/* ===== لوجو المطور — الشكل النهائي: دايرة واحدة بس حوالين اللوجو + ظل خفيف كأنها طالعة فوق الكارت.
+   الدايرة التانية (تركواز) بتظهر بس لو المطور له ستوري — في كل مكان (الكروت ، شريط المشروع / الوحدة ، الهوم ، صفحة المطور).
+   اللوجو نفسه بيتظبط لوحده جوه الدايرة (js/shary/site-chrome.js): من غير قص ومن غير تزويم ، الكلمة بتكبر على قد الدايرة. ===== */
+.dev-logo-link{display:inline-flex;flex:none;border-radius:9999px;box-shadow:0 6px 14px -5px rgba(18,58,92,.30),0 1px 3px rgba(18,58,92,.10)!important;transition:transform .2s,box-shadow .2s}
+a.dev-logo-link:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px rgba(18,58,92,.12)!important}
+.dev-logo-link>img,.dev-logo-link>span,a.dev-logo-link:hover>img,a.dev-logo-link:hover>span{box-shadow:none!important}
+.dev-logo-link>img{border-radius:0!important}
+.dev-icon__logo{box-shadow:0 6px 14px -5px rgba(18,58,92,.30),0 1px 3px rgba(18,58,92,.10)!important}
+.dev-icon__logo:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px rgba(18,58,92,.12)!important}
+.prop-bar__logo{border-radius:9999px;width:-moz-fit-content;width:fit-content;box-shadow:0 6px 14px -5px rgba(18,58,92,.30),0 1px 3px rgba(18,58,92,.10)}
+.prop-bar__logo>img{border-radius:0!important}
+/* الستوري: دايرة تركواز (فيه فاصل أبيض صغير بينها وبين اللوجو) */
+.dev-logo-link.has-story,.prop-bar__logo.has-story{box-shadow:0 0 0 2px #fff,0 0 0 4.5px #17a398,0 8px 16px -6px rgba(18,58,92,.32)!important;cursor:pointer}
+
+/* فلتر صفحة كارت «مشاريع تستحق الاستكشاف» */
+.xfilter{display:flex;flex-direction:column;gap:12px;border:1.5px solid #E3E8F0;border-radius:18px;padding:14px;background:#fff;box-shadow:0 10px 26px -22px rgba(18,58,92,.5)}
+.xfilter__tabs{display:flex;gap:8px}
+.xfilter__tabs label{flex:1 1 0;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:12px;border:1.5px solid #E3E8F0;font-weight:800;color:#1E4266;cursor:pointer;font-size:15px}
+.xfilter__tabs label.is-on{background:#1E4266;border-color:#1E4266;color:#fff}
+.xfilter__tabs input{position:absolute;opacity:0;pointer-events:none}
+.xfilter__row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (min-width:1024px){.xfilter{padding:18px 20px}.xfilter__tabs{max-width:420px}.xfilter__row{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.xfilter__field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.xfilter__field span{font-size:13px;font-weight:800;color:#5B6B7F}
+.xfilter__field select{width:100%;height:46px;border-radius:12px;border:1.5px solid #E3E8F0;background:#F7F9FC;padding:0 12px;font-weight:700;color:#1E4266;font-size:14.5px}
+.xfilter__field select:focus{outline:2px solid #4CBFB2;outline-offset:1px}
+.xfilter__go{height:46px;border-radius:12px;background:#1E4266;color:#fff;font-weight:800;align-self:end}
+.xfilter__meta{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14.5px;color:#1E4266}
+.xfilter__meta a{color:#1F7F72;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+[data-xlist][hidden],[data-xlist]>[hidden],[data-xsort][hidden],[data-xempty][hidden],[data-xclear][hidden]{display:none!important}
+
+/* ===== الخريطة التفاعلية زي الخرايط العقارية المعروفة: عدد الكمبوندات جنب المنطقة + لوحة المشروع المختار بوحداته ===== */
+.smap__top{flex-direction:row;flex-wrap:wrap;align-items:center}
+.smap__top>.smap__areas{flex-basis:100%}
+.smap__countpill{pointer-events:auto;display:inline-flex;height:42px;align-items:center;gap:5px;border-radius:999px;background:rgba(232,240,251,.94);padding-inline:15px;font-size:14.5px;font-weight:800;color:#1F7F72;box-shadow:0 6px 16px -8px rgba(18,58,92,.45)}
+.smap__countpill b{font-weight:900}
+.smap__fchip{background-color:#e8f0fb;color:#1E4266;font-weight:800;border-radius:14px}
+
+.smap__ps{position:absolute;inset-inline:0;bottom:0;z-index:1010;display:flex;flex-direction:column;height:56%;max-height:calc(100% - 70px);background:#fff;border-radius:22px 22px 0 0;box-shadow:0 -14px 34px -14px rgba(18,58,92,.45);transition:height .28s ease}
+.smap__ps[hidden]{display:none}
+.smap__ps.is-full{height:calc(100% - 70px)}
+.smap__ps-grip{display:flex;justify-content:center;padding:10px 0 4px;width:100%;cursor:grab;touch-action:none}
+.smap__ps-grip i{width:46px;height:5px;border-radius:9px;background:#D5DCE5}
+.smap__ps-head{display:flex;align-items:center;gap:12px;padding:4px 18px 10px;touch-action:none}
+.smap__ps-head>div{flex:1}
+.smap__ps-head h2{font-size:20px;font-weight:900;color:#1E4266;line-height:1.35;margin:0}
+.smap__ps-head p{font-size:13.5px;font-weight:700;color:#5B6B7F;margin:2px 0 0}
+.smap__ps-logo{flex:none;width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#fff;border:1px solid #E3E8F0;box-shadow:0 6px 14px -5px rgba(18,58,92,.30),0 1px 3px rgba(18,58,92,.10);font-weight:900;color:#1E4266;overflow:hidden}
+.smap__ps-logo img{width:100%;height:100%;object-fit:contain}
+.smap__ps-close{flex:none;width:36px;height:36px;border-radius:50%;background:#F1F4F8;color:#1E4266;display:flex;align-items:center;justify-content:center}
+.smap__ps-bar{display:flex;align-items:center;gap:10px;padding:0 18px 8px}
+.smap__ps-bar>b{flex:1;font-size:17px;font-weight:900;color:#1E4266}
+.smap__ps-bar>b span{font-size:14px;color:#5B6B7F;font-weight:800}
+.smap__ps-sort{display:inline-flex;align-items:center;gap:4px;color:#1F5E9C;font-weight:800}
+.smap__ps-sort select{border:0;background:transparent;font-weight:800;color:#1F5E9C;font-size:14.5px;max-width:150px}
+.smap__ps-page{font-size:14px;font-weight:800;color:#1F7F72;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.smap__ps-page[hidden]{display:none}
+.smap__ps-tabs{display:flex;gap:4px;padding:0 12px;border-bottom:1.5px solid #E3E8F0;overflow-x:auto;scrollbar-width:none}
+.smap__ps-tabs button{flex:1 0 auto;padding:10px 12px;font-size:14.5px;font-weight:800;color:#7A8899;border-bottom:3px solid transparent;margin-bottom:-1.5px;white-space:nowrap}
+.smap__ps-tabs button[aria-selected=true]{color:#1E4266;border-color:#1E4266}
+.smap__ps-tabs button[hidden]{display:none}
+.smap__ps-tabs small{font-size:12px;font-weight:800;opacity:.8}
+.smap__ps-list{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;overscroll-behavior:contain}
+.smap__ps-note{padding:24px 10px;text-align:center;font-weight:800;color:#5B6B7F}
+.smap__ps-unit{display:flex;gap:12px;border:1.5px solid #E3E8F0;border-radius:16px;padding:8px;background:#fff}
+.smap__ps-pic{flex:none;width:118px;align-self:stretch;min-height:118px;border-radius:12px;overflow:hidden;background:linear-gradient(135deg,#EAF2FB,#DCE7F3)}
+.smap__ps-pic img{width:100%;height:100%;object-fit:cover}
+.smap__ps-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px;padding:2px 2px 2px 0}
+.smap__ps-info>a{display:flex;flex-direction:column;gap:1px;text-decoration:none}
+.smap__ps-info>a b{font-size:17px;font-weight:900;color:#1E4266}
+.smap__ps-info>a small{font-size:13px;font-weight:700;color:#5B6B7F}
+.smap__ps-specs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#3C5068;margin:0}
+.smap__ps-specs b{font-weight:900;color:#1E4266}
+.smap__ps-specs i{width:1px;height:14px;background:#D5DCE5}
+.smap__ps-row{display:flex;align-items:center;gap:8px;margin-top:auto}
+.smap__ps-row strong{flex:1;font-size:17px;font-weight:900;color:#1E4266;text-align:start}
+.smap__ps-row strong small{font-size:12px;font-weight:800;color:#5B6B7F}
+.smap__ps-btn{flex:none;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff}
+.smap__ps-btn--call{background:#1E4266}
+.smap__ps-btn--wa{background:#25D366}
+.smap__ps-foot{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid #E3E8F0}
+.smap__ps-foot a{height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:16px;font-weight:900;text-decoration:none}
+.smap__ps-call{background:#E8EEF5;color:#1E4266}
+.smap__ps-wa{background:#25D366;color:#fff}
+.smap.has-ps .smap__panel,.smap.has-ps .smap__list-btn{visibility:hidden}
+@media (min-width:1024px){
+  .smap__ps{inset-inline:auto 16px;bottom:16px;top:auto;width:430px;height:calc(100% - 140px);border-radius:22px}
+  .smap__ps.is-full{height:calc(100% - 140px)}
+  .smap.has-ps .smap__panel{visibility:visible}
+}
+.smap__marker.is-crowded{opacity:0;pointer-events:none;transition:opacity .15s}.smap__marker{transition:opacity .15s}
+.smap__marker.is-crowded{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
