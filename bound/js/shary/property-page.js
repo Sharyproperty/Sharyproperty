@@ -456,36 +456,97 @@
         }, 4500);
     });
 
-    // ---------- متابعة المشروع [data-follow-toggle]: "متابعة" ⇄ "متابَع". بتتحفظ على جهاز العميل (localStorage: shary:follows).
-    // حدث shary:follow ({ id, following }) على الزرار: اسمعوه عشان تحفظوا المتابعة على حساب العميل، أو امنعوه (preventDefault) لو محتاجين تسجيل دخول الأول.
+    // ---------- متابعة المشروع [data-follow-toggle]: "متابعة" ⇄ "متابَع". بتتحفظ على جهاز العميل (localStorage: shary:follows) وعلى السيرفر (shary_follows).
+    // حدث shary:follow ({ id, following }) على الزرار: اسمعوه عشان تحفظوا المتابعة على حساب العميل، أو امنعوه (preventDefault).
+    // الزائر اللي مش مسجّل (body[data-visitor="g"]) أول ما يدوس «متابعة»: فورم [data-follow-modal] — يسجّل (جوجل / أبل / فيسبوك / حساب جديد)
+    // وبعد ما يرجع الصفحة (?follow=1) المتابعة بتتعمل لوحدها ، أو يكتب رقم واتساب ← المتابعة بالرقم (localStorage: shary:follow-phone عشان مايتسألش تاني).
+    var isGuest = (document.body.getAttribute('data-visitor') || 'g') === 'g';
+    function followPhone() { try { return window.localStorage.getItem('shary:follow-phone') || ''; } catch (e) { return ''; } }
     document.querySelectorAll('[data-follow-toggle]').forEach(function (button) {
         var label = button.querySelector('[data-label]');
+        var modal = button.parentElement.querySelector('[data-follow-modal]') || document.querySelector('[data-follow-modal]');
         function saved() { try { return JSON.parse(window.localStorage.getItem('shary:follows') || '[]'); } catch (e) { return []; } }
         function paint(on) {
             button.setAttribute('aria-pressed', on ? 'true' : 'false');
             if (label) label.textContent = button.getAttribute(on ? 'data-on' : 'data-off');
         }
         paint(saved().indexOf(button.getAttribute('data-follow-id')) > -1);
-        button.addEventListener('click', function () {
+        function send(on, contact) {
+            var url = button.getAttribute('data-follow-url');
+            if (!url || !window.fetch) return Promise.resolve({ ok: true });
+            var meta = document.querySelector('meta[name="csrf-token"]');
+            var body = { id: button.getAttribute('data-follow-id'), following: on };
+            if (contact) { body.phone = contact.phone; if (contact.name) body.name = contact.name; }
+            return window.fetch(url, {
+                method: 'POST', credentials: 'same-origin',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': meta ? meta.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                body: JSON.stringify(body)
+            }).then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); }).catch(function () { return { ok: true, offline: true }; });
+        }
+        function mark(on) {
             var id = button.getAttribute('data-follow-id');
-            var on = button.getAttribute('aria-pressed') !== 'true';
-            var event = new CustomEvent('shary:follow', { bubbles: true, cancelable: true, detail: { id: id, following: on } });
-            if (!button.dispatchEvent(event)) return;
             var list = saved().filter(function (item) { return item !== id; });
             if (on) list.push(id);
             try { window.localStorage.setItem('shary:follows', JSON.stringify(list)); } catch (e) {}
             paint(on);
-            // المتابعة بتتسجل على السيرفر (shary_follows) عشان تظهر في لوحة التحكم — data-follow-url
-            var url = button.getAttribute('data-follow-url');
-            if (url && window.fetch) {
-                var meta = document.querySelector('meta[name="csrf-token"]');
-                window.fetch(url, {
-                    method: 'POST', credentials: 'same-origin',
-                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': meta ? meta.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
-                    body: JSON.stringify({ id: id, following: on })
-                }).catch(function () {});
-            }
+        }
+        function follow(on, contact) {
+            var event = new CustomEvent('shary:follow', { bubbles: true, cancelable: true, detail: { id: button.getAttribute('data-follow-id'), following: on } });
+            if (!button.dispatchEvent(event)) return Promise.resolve({ ok: false });
+            mark(on);
+            return send(on, contact);
+        }
+
+        // ---- الفورم (للزائر)
+        function step(name) { modal.querySelectorAll('[data-follow-step]').forEach(function (el) { el.hidden = el.getAttribute('data-follow-step') !== name; }); }
+        function openModal() {
+            if (!modal) return false;
+            // لينكات التسجيل بترجّع لنفس الصفحة وتكمّل المتابعة لوحدها (?follow=1)
+            var back = new URL(window.location.href); back.searchParams.set('follow', '1'); back.hash = '';
+            modal.querySelectorAll('[data-follow-auth]').forEach(function (a) { a.href = a.getAttribute('data-follow-auth') + (a.getAttribute('data-follow-auth').indexOf('?') > -1 ? '&' : '?') + 'next=' + encodeURIComponent(back.toString()); });
+            step('ask');
+            modal.hidden = false;
+            document.documentElement.classList.add('fmodal-open');
+            var input = modal.querySelector('input[name="phone"]'); if (input && window.innerWidth > 768) setTimeout(function () { input.focus(); }, 60);
+            return true;
+        }
+        function closeModal() { if (modal) { modal.hidden = true; document.documentElement.classList.remove('fmodal-open'); } }
+        if (modal) {
+            modal.querySelectorAll('[data-follow-close]').forEach(function (el) { el.addEventListener('click', closeModal); });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+            var form = modal.querySelector('[data-follow-wa]');
+            if (form) form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var phone = (form.elements.phone.value || '').trim(), name = (form.elements.name.value || '').trim();
+                var err = modal.querySelector('[data-follow-err]');
+                var digits = phone.replace(/[^\d+٠-٩]/g, '');
+                if (digits.replace(/\D/g, '').length < 10 && !/[٠-٩]{10,}/.test(digits)) { if (err) err.hidden = false; return; }
+                if (err) err.hidden = true;
+                var submit = form.querySelector('[type="submit"]'); if (submit) submit.disabled = true;
+                follow(true, { phone: phone, name: name }).then(function (res) {
+                    if (submit) submit.disabled = false;
+                    if (res && res.ok === false && res.error === 'phone') { mark(false); if (err) err.hidden = false; return; }
+                    try { window.localStorage.setItem('shary:follow-phone', phone); } catch (x) {}
+                    step('done');
+                });
+            });
+        }
+
+        button.addEventListener('click', function () {
+            var on = button.getAttribute('aria-pressed') !== 'true';
+            if (on && isGuest && modal && !followPhone()) { openModal(); return; }
+            follow(on, on && isGuest && followPhone() ? { phone: followPhone() } : null);
         });
+
+        // رجع من التسجيل (?follow=1) وهو مسجّل: المتابعة بتتعمل لوحدها
+        try {
+            var here = new URL(window.location.href);
+            if (here.searchParams.get('follow') === '1') {
+                here.searchParams.delete('follow');
+                window.history.replaceState(null, '', here.toString());
+                if (!isGuest && button.getAttribute('aria-pressed') !== 'true') follow(true, null);
+            }
+        } catch (e) {}
     });
 
     // ---------- زرار "الخريطة" على الديسك توب [data-map-open]: بيفتح خريطة المشروع على الشاشة كلها (نفس زرار التكبير في js/shary/area-page.js) ----------

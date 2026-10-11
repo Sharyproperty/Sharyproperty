@@ -25328,3 +25328,49 @@ a.dev-logo-link:hover>img,a.dev-logo-link:hover>span,.dev-icon__logo:hover{box-s
 /* كارت لوجو المطور (الوحدة وأي مكان): شادو أبيض حواليه وراه + ضل ناعم تحته — يبان مجسم ، وبيزيد مع الحركة على الماوس */
 .dev-logo-link>img,.dev-logo-link>span,.dev-icon__logo{box-shadow:0 0 0 4px #fff,0 0 20px 8px rgba(255,255,255,.95),0 12px 26px -10px rgba(18,58,92,.5);transition:transform .2s,box-shadow .2s}
 a.dev-logo-link:hover>img,a.dev-logo-link:hover>span,.dev-icon__logo:hover{box-shadow:0 0 0 4px #fff,0 0 26px 10px #fff,0 18px 32px -12px rgba(18,58,92,.6)}
+.dev-logo-link>img,.dev-logo-link>span,.dev-icon__logo{box-shadow:0 0 0 4px #fff,0 0 0 5px #E6EDF4,0 10px 22px -6px rgba(18,58,92,.38),0 0 22px 8px rgba(255,255,255,.95)}
+a.dev-logo-link:hover>img,a.dev-logo-link:hover>span,.dev-icon__logo:hover{box-shadow:0 0 0 4px #fff,0 0 0 5px #DCE6EF,0 16px 30px -8px rgba(18,58,92,.48),0 0 26px 10px #fff}
+.unit-card__head{overflow:visible}
+/* الصور من غير تزويم ولا قص (js/shary/img-fit.js): الصورة كاملة + نفس الصورة مغبّشة بتملا الفراغ */
+.sx-fit-host{overflow:hidden}
+.sx-fit-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(24px) saturate(1.15) brightness(.97);transform:scale(1.18);pointer-events:none}
+img.sx-fit-contain{object-fit:contain!important}
+.sx-fit-pic{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+/* فورم «متابعة المشروع» للزائر (property/partials/follow-modal) */
+.fmodal{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:16px}
+.fmodal[hidden]{display:none}
+.fmodal-open,.fmodal-open body{overflow:hidden}
+.fmodal__backdrop{position:absolute;inset:0;background:rgba(18,40,64,.6)}
+.fmodal__box{position:relative;width:100%;max-width:440px;max-height:calc(100vh - 32px);overflow:auto;background:#fff;border-radius:24px;padding:26px 22px 22px;box-shadow:0 30px 70px -20px rgba(18,40,64,.55);text-align:center}
+.fmodal__x{position:absolute;top:12px;inset-inline-end:12px;width:36px;height:36px;border:0;border-radius:50%;background:#F1F5F9;color:#1E4266;font-size:22px;line-height:1;cursor:pointer}
+.fmodal__icon{display:inline-flex;width:58px;height:58px;border-radius:18px;background:#4CBFB2;color:#fff;align-items:center;justify-content:center;box-shadow:0 10px 22px -12px rgba(76,191,178,.9)}
+.fmodal__icon--ok{background:#FCB424;color:#1E4266}
+.fmodal__title{margin:14px 0 0;font-size:21px;line-height:1.45;font-weight:900;color:#1E4266}
+.fmodal__text{margin:6px 0 0;font-size:15px;line-height:1.75;font-weight:700;color:#4B5B6B}
+.fmodal__social{display:grid;gap:10px;margin-top:18px}
+.fmodal__btn{display:flex;align-items:center;justify-content:center;gap:10px;height:50px;border-radius:14px;border:1.5px solid #D9E2EC;background:#fff;color:#1E4266;font-size:15.5px;font-weight:800;text-decoration:none;transition:border-color .2s,background .2s}
+.fmodal__btn:hover{border-color:#4CBFB2;background:#F6FBFA}
+.fmodal__btn svg{width:22px;height:22px;flex:none}
+.fmodal__btn--apple{background:#111;color:#fff;border-color:#111}
+.fmodal__btn--apple:hover{background:#000;border-color:#000}
+.fmodal__btn--signup{background:#1E4266;border-color:#1E4266;color:#fff}
+.fmodal__btn--signup:hover{background:#163552;border-color:#163552}
+.fmodal__have{margin:2px 0 0;font-size:14px;font-weight:700;color:#5B6B7C}
+.fmodal__have a{font-weight:900;color:#1F7F72}
+.fmodal__or{display:flex;align-items:center;gap:12px;margin:18px 0 14px;font-size:13.5px;font-weight:800;color:#8A97A6}
+.fmodal__or::before,.fmodal__or::after{content:'';flex:1;height:1.5px;background:#E6ECF2}
+.fmodal__wa{display:grid;gap:10px;text-align:start}
+.fmodal__label{font-size:15px;font-weight:900;color:#1E4266}
+.fmodal__phone{display:flex;align-items:center;gap:8px;height:52px;border:1.5px solid #CFE9E5;border-radius:14px;padding:0 12px;background:#F6FBFA}
+.fmodal__phone:focus-within{border-color:#25D366;background:#fff}
+.fmodal__wa-ic{display:flex;width:26px;height:26px;color:#25D366;flex:none}
+.fmodal__wa-ic svg{width:26px;height:26px}
+.fmodal__phone input{flex:1;min-width:0;height:100%;border:0;background:transparent;font-size:17px;font-weight:800;color:#1E4266;outline:none}
+.fmodal__name{height:48px;border:1.5px solid #E2E8F0;border-radius:14px;padding:0 14px;font-size:15px;font-weight:700;color:#1E4266;outline:none}
+.fmodal__name:focus{border-color:#4CBFB2}
+.fmodal__err{margin:0;font-size:13.5px;font-weight:800;color:#D93636}
+.fmodal__send{height:52px;border:0;border-radius:14px;background:#25D366;color:#fff;font-size:16.5px;font-weight:900;cursor:pointer;box-shadow:0 12px 24px -14px rgba(37,211,102,.9)}
+.fmodal__send:disabled{opacity:.6}
+.fmodal__note{font-size:12.5px;line-height:1.6;font-weight:700;color:#8A97A6}
+.fmodal__done .fmodal__send{width:100%;margin-top:18px;background:#1E4266;box-shadow:none}
+@media(max-width:560px){.fmodal{align-items:flex-end;padding:0}.fmodal__box{max-width:none;border-radius:24px 24px 0 0;max-height:92vh;padding-bottom:calc(22px + env(safe-area-inset-bottom))}}
