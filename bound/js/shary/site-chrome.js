@@ -942,7 +942,20 @@ window.SharyZoom = function () {
 
     // اللوجو اللي جوه صورته مساحة فاضية كبيرة (لوجو صغير في نص صورة بيضا / شفافة) بيتقص للوجو نفسه + هامش صغير — فيبان أكبر وواضح.
     // بيشتغل لما الصورة من نفس الدومين (أو عليها CORS) — غير كده بتتساب زي ما هي.
+    var TRIMMED = {};   // src ← نسخة اللوجو المقصوصة (أو false) — نفس اللوجو على كروت كتير بيتحسب مرة واحدة بس
     function trim(img) {
+        var key = img.currentSrc || img.src;
+        if (key && TRIMMED[key] !== undefined) {
+            if (!TRIMMED[key]) return false;
+            img.__trimmed = true;
+            img.src = TRIMMED[key];
+            return true;
+        }
+        var done = trimNow(img);
+        if (key) TRIMMED[key] = done ? img.src : false;
+        return done;
+    }
+    function trimNow(img) {
         try {
             var scale = Math.min(1, 400 / Math.max(img.naturalWidth, img.naturalHeight));
             var w = Math.max(1, Math.round(img.naturalWidth * scale)), h = Math.max(1, Math.round(img.naturalHeight * scale));
@@ -1146,34 +1159,52 @@ window.SharyZoom = function () {
  * لو الكلام أطول من عرض الكارت الخط بيصغر خطوة خطوة لحد ما يدخل في سطر واحد (أقل حاجة 10px) — بيتعاد مع تغيير مقاس الشاشة وتحميل الخط.
  */
 (function () {
-    function fitOne(el) {
-        el.style.fontSize = '';
-        var size = parseFloat(window.getComputedStyle(el).fontSize) || 16;
-        var guard = 0;
-        el.classList.remove('fit-wrap');
-        var base = size;
-        while (el.scrollWidth > el.clientWidth + 1 && size > 10 && guard++ < 40) {
-            size -= 0.5;
-            el.style.fontSize = size + 'px';
-        }
-        // حتى بأصغر خط مش داخل: بينزل سطر تاني بدل ما يتقص أو يتحط نقط
-        // (والخط بيرجع مقاس مقروء — مش أصغر حاجة)
-        if (el.scrollWidth > el.clientWidth + 1) { el.classList.add('fit-wrap'); el.style.fontSize = Math.max(12, Math.round(base * 0.85)) + 'px'; }
-    }
-    // أسامي الكروت (وحدات / مشاريع / مطورين / مناطق) — نفس القاعدة: من غير قص ولا نقط
     var SEL = '[data-fit-line], .shary-card__name, .prop-shot__name a, .shot-card__name, .abroad-dev b, .content-card__body b, .ad-card__title';
-    function fitAll() { Array.prototype.forEach.call(document.querySelectorAll(SEL), fitOne); }
+    // قراية الكل الأول ثم كتابة مرة واحدة (من غير لفة كتابة / قراية لكل عنصر) — والعناصر المخفية ما بتتلمسش
+    function fitAll(scope) {
+        var all = Array.prototype.slice.call((scope && scope.querySelectorAll ? scope : document).querySelectorAll(SEL));
+        var reset = all.filter(function (el) { return el.__fit; });
+        reset.forEach(function (el) { el.style.fontSize = ''; el.classList.remove('fit-wrap'); el.__fit = false; });
+        var jobs = [];
+        all.forEach(function (el) {
+            var cw = el.clientWidth;
+            if (!cw) return;                                   // مخفي
+            var sw = el.scrollWidth;
+            if (sw <= cw + 1) return;                          // داخل في سطر
+            jobs.push([el, cw, sw, parseFloat(window.getComputedStyle(el).fontSize) || 16]);
+        });
+        jobs.forEach(function (job) {
+            var size = Math.max(10, Math.floor(job[3] * job[1] / job[2] * 2) / 2 - 0.5);
+            job[0].style.fontSize = size + 'px';
+            job[0].__fit = true;
+            job[0].__base = job[3];
+        });
+        // حتى بأصغر خط مش داخل: سطر تاني بخط مقروء بدل القص أو النقط
+        jobs.forEach(function (job) {
+            if (job[0].scrollWidth > job[0].clientWidth + 1 || parseFloat(job[0].style.fontSize) <= 10) {
+                job[0].classList.add('fit-wrap');
+                job[0].style.fontSize = Math.max(12, Math.round(job[3] * 0.85)) + 'px';
+            }
+        });
+    }
     var timer;
-    function later() { window.clearTimeout(timer); timer = window.setTimeout(fitAll, 120); }
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fitAll); else fitAll();
-    window.addEventListener('load', fitAll);
-    window.addEventListener('resize', later);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+    function later() { window.clearTimeout(timer); timer = window.setTimeout(function () { fitAll(); }, 150); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { fitAll(); }); else fitAll();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { later(); });
+    var lastWidth = window.innerWidth;
+    window.addEventListener('resize', function () { if (window.innerWidth !== lastWidth) { lastWidth = window.innerWidth; later(); } });   // سكرول الموبايل بيغيّر الارتفاع بس
     window.SharyFitLines = fitAll;
-    // كروت بتتحمّل بعدين (وأنت نازل / صفحة جديدة) أو كانت مخفية وظهرت
+    // كروت جديدة اتضافت (صفحة جديدة / كارت ظهر) — مش كل تغيير class (السلايدر والشريط بيغيّروا classes كل شوية)
     if (window.MutationObserver) new MutationObserver(function (list) {
-        for (var i = 0; i < list.length; i++) { if (list[i].addedNodes.length || list[i].type === 'attributes') { later(); return; } }
-    }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'class'] });
+        for (var i = 0; i < list.length; i++) {
+            var m = list[i];
+            if (m.type === 'attributes') { if (m.target.nodeType === 1 && !m.target.hidden && (m.target.matches(SEL) || m.target.querySelector(SEL))) { later(); return; } continue; }
+            for (var j = 0; j < m.addedNodes.length; j++) {
+                var n = m.addedNodes[j];
+                if (n.nodeType === 1 && (n.matches(SEL) || n.querySelector(SEL))) { later(); return; }
+            }
+        }
+    }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden'] });
 })();
 
 

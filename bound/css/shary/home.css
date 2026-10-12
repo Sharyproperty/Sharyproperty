@@ -8885,3 +8885,63 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
 
 /* عناوين أقسام الهوم كلها (ما يميزنا · أحدث المشاريع · أفضل المطورين · مشاريع تستحق الاستكشاف · أفضل المناطق · وحدات مقترحة · شاري معاك): كحلي شاري بولد */
 .shary-home-root .headline-2,.shary-home-root .sh-title{color:#1E4266!important;font-weight:800!important}
+
+
+/* ===== سلايدر الرئيسية الجديد: جملة شاري الثابتة + كارت «مشاريع مميزة» على الشمال (من غير أسهم ومن غير عدّاد) ===== */
+.shary-home-root .hero-counter { display: none !important; }
+.shary-home-root .hero-image-placeholder::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(to left, rgba(12, 34, 58, .62) 0%, rgba(12, 34, 58, .30) 38%, rgba(12, 34, 58, 0) 62%), linear-gradient(to top, rgba(12, 34, 58, .35), rgba(12, 34, 58, 0) 40%); }
+[dir="ltr"] .shary-home-root .hero-image-placeholder::after, .shary-home-root[dir="ltr"] .hero-image-placeholder::after { background: linear-gradient(to right, rgba(12, 34, 58, .62) 0%, rgba(12, 34, 58, .30) 38%, rgba(12, 34, 58, 0) 62%), linear-gradient(to top, rgba(12, 34, 58, .35), rgba(12, 34, 58, 0) 40%); }
+.shary-home-root .hero-brand { text-align: start !important; pointer-events: none; }
+.shary-home-root .hero-brand .hero-dots { pointer-events: auto; }
+.shary-home-root .hero-brand__title { font-family: 'Cairo', 'Almarai', Tahoma, sans-serif !important; color: #fff !important; font-weight: 800 !important; letter-spacing: 0; text-shadow: 0 2px 18px rgba(0, 0, 0, .25); margin: 0 !important; }
+.shary-home-root .hero-brand__sub { font-family: 'Cairo', 'Almarai', Tahoma, sans-serif !important; color: rgba(255, 255, 255, .94) !important; font-weight: 700 !important; text-shadow: 0 1px 10px rgba(0, 0, 0, .25); }
+.shary-home-root .hero-featured { font-family: 'Cairo', 'Almarai', Tahoma, sans-serif; position: absolute; z-index: 20; display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-decoration: none; color: #fff;
+  background: rgba(16, 38, 62, .72); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, .16); border-radius: 16px;
+  box-shadow: 0 12px 30px -12px rgba(0, 0, 0, .45); transition: transform .2s ease, background .2s ease; }
+.shary-home-root .hero-featured:hover { transform: translateY(-2px); background: rgba(16, 38, 62, .84); }
+.shary-home-root .hero-featured__label { color: #FCB424; font-size: 12px; font-weight: 800; line-height: 1.3; }
+.shary-home-root .hero-featured__name { color: #fff; font-size: 17px; font-weight: 900; line-height: 1.35; max-width: 210px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: opacity .22s ease; }
+.shary-home-root .hero-featured.is-swap .hero-featured__name { opacity: 0; }
+.shary-home-root .hero-featured__btn { display: inline-flex; align-items: center; border: 1.5px solid rgba(255, 255, 255, .85); border-radius: 999px; padding: 3px 14px; font-size: 13px; font-weight: 800; color: #fff; }
+
+/* ديسك توب: الجملة على اليمين في نص الصورة تقريبًا ، والكارت تحت على الشمال خالص */
+@media (min-width: 1024px) {
+  /* أطول زي الريفرنس: الصورة واخدة مساحة أكبر فوق خانة البحث */
+  .shary-home-root .hero-bg, .shary-home-root .hero-bg.hero-section, .shary-home-root .hero-section, .shary-home-root .hero-content { height: clamp(470px, calc(41vw / var(--z, 1)), 660px) !important; min-height: 0 !important; }
+  .shary-home-root .hero-project-info.hero-brand { left: auto !important; right: max(5.5%, calc((100% - 1200px) / 2)) !important; transform: translateY(-50%) !important; width: min(640px, 50%) !important; top: calc((100% - var(--hero-over, 111px)) / 2) !important; bottom: auto !important; }
+  [dir="ltr"] .shary-home-root .hero-project-info.hero-brand { right: auto !important; left: max(5.5%, calc((100% - 1200px) / 2)) !important; }
+  .shary-home-root .hero-brand__title { font-size: clamp(30px, 2.7vw, 44px) !important; line-height: 1.25 !important; }
+  .shary-home-root .hero-brand__sub { font-size: clamp(15px, 1.25vw, 20px) !important; line-height: 1.75 !important; margin-top: 12px !important; max-width: 16.5em; }
+  .shary-home-root .hero-featured { left: 3%; bottom: calc(var(--hero-over, 111px) + 26px); padding: 14px 16px 14px; min-width: 150px; }
+  [dir="ltr"] .shary-home-root .hero-featured { left: auto; right: 3%; align-items: flex-end; }
+}
+/* موبايل وتابلت: الجملة تحت على اليمين ، وتحتها شريط «مشاريع مميزة» صغير (سطر واحد) ، والنقط تحت خالص */
+@media (max-width: 1023.98px) {
+  .shary-home-root .hero-brand__title { font-size: clamp(20px, 5.6vw, 26px) !important; line-height: 1.3 !important; }
+  .shary-home-root .hero-brand__sub { font-size: clamp(11.5px, 3.1vw, 14px) !important; line-height: 1.6 !important; margin-top: 4px !important; max-width: 100%; }
+  .shary-home-root .hero-project-info.hero-brand { width: calc(100% - 32px) !important; top: auto !important; bottom: calc(var(--hero-over, 100px) + 52px) !important; }
+  .shary-home-root .hero-featured { flex-direction: row; align-items: center; gap: 6px; right: 16px; left: auto; top: auto; bottom: calc(var(--hero-over, 100px) + 18px);
+    padding: 5px 6px 5px 10px; border-radius: 999px; max-width: calc(100% - 32px); }
+  [dir="ltr"] .shary-home-root .hero-featured { right: auto; left: 16px; padding: 5px 10px 5px 6px; }
+  .shary-home-root .hero-featured__label { font-size: 11px; white-space: nowrap; }
+  .shary-home-root .hero-featured__name { font-size: 12.5px; max-width: 46vw; }
+  .shary-home-root .hero-featured__btn { font-size: 11px; padding: 2px 9px; white-space: nowrap; }
+  .shary-home-root .hero-dots--free { bottom: calc(var(--hero-over, 100px) + 6px); }
+}
+}
+.shary-home-root .hero-dots--free { position: absolute; left: 0; right: 0; z-index: 20; display: flex; justify-content: center; margin: 0 !important; pointer-events: auto; }
+.shary-home-root .hero-dots--free { bottom: calc(var(--hero-over, 104px) + 12px); }
+
+/* السرعة: الأقسام اللي تحت (برّه الشاشة) المتصفح ما يرسمهاش ولا يحسبها غير لما توصل لها — الشكل زي ما هو */
+.shary-home-root .new-projects-section,
+.shary-home-root .home-explore,
+.shary-home-root .areas-section,
+.shary-home-root .areas-container,
+.shary-home-root .recommended-section,
+.shary-home-root .sh-hero,
+.shary-home-root .contact-section,
+body:has(.shary-home-root) .site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 700px;
+}

@@ -15,11 +15,14 @@
   var LIMIT_HERO = 0.30;   // السلايدر (عريض) بيستحمل قص أكتر قبل ما يتحول
   var MIN_SIZE = 110;
 
-  function skip(el) {
-    if (!el || el.closest('[data-fit="off"]')) return true;
-    if (el.closest('.dev-logo-link, .dev-icon__logo, [data-logo-fit], [data-developer-logo], header, footer, .article-content')) return true;
-    var cs = getComputedStyle(el);
-    if (parseFloat(cs.borderTopLeftRadius) >= el.clientWidth / 2 - 1 && el.clientWidth < 220) return true; // دايرة (لوجو / صورة شخص)
+  // الاستثناءات الرخيصة الأول (من غير getComputedStyle) — الحساب التقيل بيحصل بس للصور اللي لسه محتاجة
+  var SKIP_SEL = '[data-fit="off"], .dev-logo-link, .dev-icon__logo, [data-logo-fit], [data-developer-logo], header, footer, .article-content';
+  function skip(el, w) {
+    if (!el || el.closest(SKIP_SEL)) return true;
+    if (w < 220) {
+      var r = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
+      if (r >= w / 2 - 1) return true; // دايرة (لوجو / صورة شخص)
+    }
     return false;
   }
 
@@ -46,7 +49,7 @@
     return url;
   }
 
-  function backdrop(parent, url, before) {
+  function backdrop(parent, url, before, isStatic) {
     var bg = parent.querySelector(':scope > .sx-fit-bg');
     if (!bg) {
       bg = document.createElement('span');
@@ -68,7 +71,7 @@
       probe.onerror = function () { paint(url, true); }; // النسخة الصغيرة مش موجودة (زي المعاينة الثابتة): الصورة نفسها
       probe.src = small;
     }
-    if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+    if (isStatic === undefined ? getComputedStyle(parent).position === 'static' : isStatic) parent.style.position = 'relative';
     parent.classList.add('sx-fit-host');
     return bg;
   }
@@ -79,37 +82,55 @@
     if (parent) parent.classList.remove('sx-fit-host');
   }
 
-  /* <img> بـ object-fit: cover */
-  function fitImg(img) {
-    if (!img.complete || !img.naturalWidth || skip(img)) return;
+  /* <img> بـ object-fit: cover — قراية بس (من غير أي تعديل) عشان الصفحة ما تتحسبش من الأول مع كل صورة */
+  function measureImg(img) {
+    if (!img.complete || !img.naturalWidth) return null;
     var src = img.currentSrc || img.src || '';
-    if (!src || /\.svg(\?|$)/i.test(src)) return;
+    if (!src || /\.svg(\?|$)/i.test(src)) return null;
     var w = img.clientWidth, h = img.clientHeight;
-    if (w < MIN_SIZE || h < MIN_SIZE) return;
+    if (w < MIN_SIZE || h < MIN_SIZE) return null; // مخفية أو صغيرة (لوجو / أيقونة)
+    var key = src + '|' + w + 'x' + h;
+    if (img.__sxKey === key) return null; // نفس الصورة ونفس المقاس: اتظبطت قبل كده
+    if (skip(img, w)) { img.__sxKey = key; return null; }
     var fit = img.dataset.sxFit ? 'cover' : getComputedStyle(img).objectFit;
     // cover = بيقص (يبان متزوّم) ، fill = بيمطّ الصورة (تبان مش طبيعية) — الاتنين بيتظبطوا
-    if (fit !== 'cover' && fit !== 'fill') return;
+    if (fit !== 'cover' && fit !== 'fill') { img.__sxKey = key; return null; }
     var c = crop(w, h, img.naturalWidth, img.naturalHeight);
-    if (fit === 'fill' && c <= 0.04) return; // المط صغير مش باين
+    img.__sxKey = key;
+    if (fit === 'fill' && c <= 0.04) return null; // المط صغير مش باين
     var parent = img.parentElement;
     if (parent && parent.tagName === 'PICTURE') parent = parent.parentElement;
-    if (c > (fit === 'fill' ? 0.04 : (isHero(img) ? LIMIT_HERO : LIMIT))) {
+    var on = c > (fit === 'fill' ? 0.04 : (isHero(img) ? LIMIT_HERO : LIMIT));
+    if (!on && !img.dataset.sxFit) return null;
+    return {
+      img: img, src: src, parent: parent, on: on,
+      imgStatic: on && getComputedStyle(img).position === 'static',
+      parentStatic: on && parent && getComputedStyle(parent).position === 'static'
+    };
+  }
+
+  function applyImg(m) {
+    var img = m.img;
+    if (m.on) {
       img.dataset.sxFit = '1';
       img.classList.add('sx-fit-contain');
-      if (getComputedStyle(img).position === 'static') img.style.position = 'relative';
+      if (m.imgStatic) img.style.position = 'relative';
       var anchor = img.parentElement.tagName === 'PICTURE' ? img.parentElement : img;
-      backdrop(parent, src, anchor);
-    } else if (img.dataset.sxFit) {
+      backdrop(m.parent, m.src, anchor, m.parentStatic);
+    } else {
       img.classList.remove('sx-fit-contain');
       delete img.dataset.sxFit;
-      clearBackdrop(parent);
+      clearBackdrop(m.parent);
     }
   }
+
 
   /* كروت بخلفية صورة (background-size: cover) زي كروت المشاريع في الرئيسية */
   var bgCache = {};
   function fitBg(el) {
-    if (el.dataset.sxBgDone || skip(el)) return;
+    if (el.dataset.sxBgDone) return;
+    var bw = el.clientWidth;
+    if (bw < MIN_SIZE || el.clientHeight < MIN_SIZE || skip(el, bw)) return;
     var cs = getComputedStyle(el);
     if (cs.backgroundSize !== 'cover') return;
     var m = /url\(["']?([^"')]+)["']?\)/.exec(cs.backgroundImage || '');
@@ -136,15 +157,33 @@
   }
 
   function run(root) {
+    // كل القراية الأول وبعدين كل التعديلات مرة واحدة
+    var todo = [];
     (root || document).querySelectorAll('img').forEach(function (img) {
-      if (img.classList.contains('sx-fit-pic')) return;
-      if (img.complete) fitImg(img);
+      if (img.classList.contains('sx-fit-pic') || !img.complete) return;
+      var m = measureImg(img);
+      if (m) todo.push(m);
     });
+    todo.forEach(applyImg);
     (root || document).querySelectorAll('[style*="background-image"]').forEach(fitBg);
   }
 
+  // الصور اللي بتحمّل ورا بعض بتتجمع وتتظبط مرة واحدة في الفريم الجاي (بدل حساب الصفحة مع كل صورة)
+  var pending = [], raf = 0;
+  function flush() {
+    raf = 0;
+    var list = pending; pending = [];
+    var todo = [];
+    list.forEach(function (img) { var m = measureImg(img); if (m) todo.push(m); });
+    todo.forEach(applyImg);
+  }
+  function queue(img) {
+    pending.push(img);
+    if (!raf) raf = (window.requestAnimationFrame || setTimeout)(flush);
+  }
+
   document.addEventListener('load', function (e) {
-    if (e.target && e.target.tagName === 'IMG' && !e.target.classList.contains('sx-fit-pic')) fitImg(e.target);
+    if (e.target && e.target.tagName === 'IMG' && !e.target.classList.contains('sx-fit-pic')) queue(e.target);
   }, true);
 
   var timer;
