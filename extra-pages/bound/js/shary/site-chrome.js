@@ -1195,3 +1195,18 @@ window.SharyZoom = function () {
         window.location.href = open;
     }, true);
 })();
+
+/* مستطيل «حمّل التطبيق» (الفوتر ، المنيو ، صفحة الدخول): الضغط على الكلام أو اللوجو أو أي حتة فيه = افتح التطبيق لو متحمّل ، وإلا المتجر (/app).
+   زراير المتاجر نفسها لينكات (الأيكون والكلمة الاتنين بيفتحوا المتجر) — والضغط عليها بيمشي زي ما هو */
+(function () {
+    document.addEventListener('click', function (event) {
+        var target = event.target;
+        if (!target || !target.closest) return;
+        var zone = target.closest('[data-app-zone]');
+        if (!zone || target.closest('a, button, input, select, textarea')) return;
+        var url = zone.getAttribute('data-app-zone');
+        if (url) { window.location.href = url; return; }
+        var store = zone.querySelector('a[href]:not([href="#"])');      // نسخة المعاينة (من غير سيرفر): زرار المتجر نفسه
+        if (store) store.click();
+    });
+})();
