@@ -1202,6 +1202,12 @@ window.SharyZoom = function () {
     document.addEventListener('click', function (event) {
         var target = event.target;
         if (!target || !target.closest) return;
+        var row = target.closest('[data-app-row]');
+        if (row && !target.closest('a, button')) {
+            var main = row.querySelector('[data-app-button]');      // نفس زرار «حمّل / افتح التطبيق» (بيعرف لو متحمّل)
+            if (main) main.click();
+            return;
+        }
         var zone = target.closest('[data-app-zone]');
         if (!zone || target.closest('a, button, input, select, textarea')) return;
         var url = zone.getAttribute('data-app-zone');
