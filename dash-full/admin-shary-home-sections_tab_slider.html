@@ -798,11 +798,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "0Hfmqi7PMthLmQci4Q4k92H1Tady07vXLYMKLw51",
+                token: "BUKLOyQi3pzPq9OuQx31n8CLgDkWNgmyjvKKEqPo",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0Hfmqi7PMthLmQci4Q4k92H1Tady07vXLYMKLw51",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=BUKLOyQi3pzPq9OuQx31n8CLgDkWNgmyjvKKEqPo",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -955,6 +955,40 @@
 
 <div class="alert alert-warning fw-bold" dir="rtl">📐 مقاسات صور السلايدر: ديسك توب 2880 × 1180 — موبايل 1170 × 965 (بكسل). ارفع الديزاين بنفس المقاس عشان يظهر كامل من غير قص ولا زوم.</div>
 
+<div class="card" id="hero-static">
+    <div class="card-header"><h5 class="mb-0 fw-bold">صورة ثابتة بدل السلايدر</h5></div>
+    <div class="card-body">
+        <div class="sx-hs-note mb-3">لو شغّلتها: الرئيسية بتعرض الصورة دي لوحدها (من غير تقليب ولا نقط) ، والجملة وكارت «مشاريع مميزة» وخانة البحث زي ما هم. لو قفلتها يرجع السلايدر العادي.</div>
+        <form method="post" action="#preview/admin/shary/hero/static" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="preview" autocomplete="off">            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="hero-static-on" name="on" value="1" checked>
+                <label class="form-check-label fw-bold" for="hero-static-on">اعرض الصورة الثابتة بدل السلايدر</label>
+            </div>
+            <div class="row">
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-static-desktop">صورة الديسك توب (2880 × 1180)</label>
+                                                    <div class="mb-2 d-flex align-items-center gap-2">
+                                <img src="a/images/sliders/hero-static-desktop-1791831529.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
+                                <span class="text-muted small">الحالية</span>
+                                <button type="submit" name="remove" value="desktop" class="btn btn-sm btn-outline-danger" formnovalidate>شيل</button>
+                            </div>
+                                                <input type="file" class="form-control" id="hero-static-desktop" name="desktop" accept="image/jpeg,image/png,image/webp">
+                                            </div>
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-static-mobile">صورة الموبايل (1170 × 965)</label>
+                                                    <div class="mb-2 d-flex align-items-center gap-2">
+                                <img src="a/images/sliders/hero-static-mobile-1791831529.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
+                                <span class="text-muted small">الحالية</span>
+                                <button type="submit" name="remove" value="mobile" class="btn btn-sm btn-outline-danger" formnovalidate>شيل</button>
+                            </div>
+                                                <input type="file" class="form-control" id="hero-static-mobile" name="mobile" accept="image/jpeg,image/png,image/webp">
+                        <div class="form-text">لو مفيش صورة موبايل: صورة الديسك توب بتتقص على الموبايل.</div>                    </div>
+                            </div>
+            <button type="submit" class="btn btn-submit">احفظ</button>
+        </form>
+    </div>
+</div>
+
 <div class="card" id="hero-brand">
     <div class="card-header"><h5 class="mb-0 fw-bold">جملة السلايدر (ثابتة على كل الشرايح)</h5></div>
     <div class="card-body">
@@ -977,13 +1011,13 @@
                         <label class="form-label fw-bold" for="hero-sub_ar">السطر اللي تحته (عربي)</label>
                         <input type="text" class="form-control" id="hero-sub_ar" name="sub_ar" value=""
                             maxlength="220" dir="rtl"
-                            placeholder="اشتري، بيع، أجّر، شطّب وافرش وحدتك — وخليك متابعها بعد الشراء مع شاري.">
+                            placeholder="اشتري، بيع، أجّر، شطّب، افرش مع شاري.">
                     </div>
                                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold" for="hero-sub_en">السطر اللي تحته (إنجليزي)</label>
                         <input type="text" class="form-control" id="hero-sub_en" name="sub_en" value=""
                             maxlength="220" dir="ltr"
-                            placeholder="Buy, sell, rent, finish and furnish your unit — and keep following it after purchase with Shary.">
+                            placeholder="Buy, sell, rent, finish and furnish with Shary.">
                     </div>
                             </div>
             <button type="submit" class="btn btn-submit">حفظ الجملة</button>
@@ -8412,7 +8446,7 @@
         var zoom = box.querySelector('[data-crop-zoom]');
         var error = box.querySelector('[data-crop-error]');
         var crop = null;
-        var token = "0Hfmqi7PMthLmQci4Q4k92H1Tady07vXLYMKLw51";
+        var token = "BUKLOyQi3pzPq9OuQx31n8CLgDkWNgmyjvKKEqPo";
         var labels = {"desktop":"ظبط صورة الديسك توب","mobile":"ظبط صورة الموبايل","small":"الصورة دي صغيرة — يفضّل عرض :width px أو أكتر عشان تبقى واضحة.","failed":"الصورة ما اترفعتش — جرّب تاني.","saving":"جاري الحفظ…","save":"حفظ الصورة"};
         function clamp() {
             var sw = stage.clientWidth, sh = stage.clientHeight;
@@ -8604,7 +8638,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0Hfmqi7PMthLmQci4Q4k92H1Tady07vXLYMKLw51","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"BUKLOyQi3pzPq9OuQx31n8CLgDkWNgmyjvKKEqPo","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
       <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>

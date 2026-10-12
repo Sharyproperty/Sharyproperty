@@ -799,11 +799,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf",
+                token: "RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -956,6 +956,40 @@
 
 <div class="alert alert-warning fw-bold" dir="rtl">📐 Slider image sizes: desktop 2880 × 1180 — mobile 1170 × 965 (pixels). Upload the design at this size so it shows whole, with no crop or zoom.</div>
 
+<div class="card" id="hero-static">
+    <div class="card-header"><h5 class="mb-0 fw-bold">Fixed photo instead of the slider</h5></div>
+    <div class="card-body">
+        <div class="sx-hs-note mb-3">When on, the home page shows this one photo (no sliding, no dots); the headline, the «Featured projects» card and the search stay as they are. Turn it off to bring the slider back.</div>
+        <form method="post" action="#preview/admin/shary/hero/static" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="preview" autocomplete="off">            <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="hero-static-on" name="on" value="1" checked>
+                <label class="form-check-label fw-bold" for="hero-static-on">Show the fixed photo instead of the slider</label>
+            </div>
+            <div class="row">
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-static-desktop">Desktop photo (2880 × 1180)</label>
+                                                    <div class="mb-2 d-flex align-items-center gap-2">
+                                <img src="../a/images/sliders/hero-static-desktop-1791831529.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
+                                <span class="text-muted small">Current</span>
+                                <button type="submit" name="remove" value="desktop" class="btn btn-sm btn-outline-danger" formnovalidate>Remove</button>
+                            </div>
+                                                <input type="file" class="form-control" id="hero-static-desktop" name="desktop" accept="image/jpeg,image/png,image/webp">
+                                            </div>
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-static-mobile">Mobile photo (1170 × 965)</label>
+                                                    <div class="mb-2 d-flex align-items-center gap-2">
+                                <img src="../a/images/sliders/hero-static-mobile-1791831529.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
+                                <span class="text-muted small">Current</span>
+                                <button type="submit" name="remove" value="mobile" class="btn btn-sm btn-outline-danger" formnovalidate>Remove</button>
+                            </div>
+                                                <input type="file" class="form-control" id="hero-static-mobile" name="mobile" accept="image/jpeg,image/png,image/webp">
+                        <div class="form-text">Without a mobile photo, the desktop photo is cropped on phones.</div>                    </div>
+                            </div>
+            <button type="submit" class="btn btn-submit">Save</button>
+        </form>
+    </div>
+</div>
+
 <div class="card" id="hero-brand">
     <div class="card-header"><h5 class="mb-0 fw-bold">Slider headline (fixed on all slides)</h5></div>
     <div class="card-body">
@@ -978,13 +1012,13 @@
                         <label class="form-label fw-bold" for="hero-sub_ar">Line below (Arabic)</label>
                         <input type="text" class="form-control" id="hero-sub_ar" name="sub_ar" value=""
                             maxlength="220" dir="rtl"
-                            placeholder="اشتري، بيع، أجّر، شطّب وافرش وحدتك — وخليك متابعها بعد الشراء مع شاري.">
+                            placeholder="اشتري، بيع، أجّر، شطّب، افرش مع شاري.">
                     </div>
                                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold" for="hero-sub_en">Line below (English)</label>
                         <input type="text" class="form-control" id="hero-sub_en" name="sub_en" value=""
                             maxlength="220" dir="ltr"
-                            placeholder="Buy, sell, rent, finish and furnish your unit — and keep following it after purchase with Shary.">
+                            placeholder="Buy, sell, rent, finish and furnish with Shary.">
                     </div>
                             </div>
             <button type="submit" class="btn btn-submit">Save headline</button>
@@ -8413,7 +8447,7 @@
         var zoom = box.querySelector('[data-crop-zoom]');
         var error = box.querySelector('[data-crop-error]');
         var crop = null;
-        var token = "QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf";
+        var token = "RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX";
         var labels = {"desktop":"Adjust the desktop photo","mobile":"Adjust the phone photo","small":"This photo is small — :width px wide or more is recommended to stay sharp.","failed":"The photo was not uploaded — try again.","saving":"Saving…","save":"Save photo"};
         function clamp() {
             var sw = stage.clientWidth, sh = stage.clientHeight;
@@ -8605,7 +8639,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>
