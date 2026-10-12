@@ -25517,3 +25517,10 @@ a.dev-logo-link:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px r
 html:not(.sx-ready) .quick-ai::after, html:not(.sx-ready) .fab-beat, html:not(.sx-ready) .fab-call, html:not(.sx-ready) .fab-ring,
 html:not(.sx-ready) .market-ticker-badge::after, html:not(.sx-ready) .market-ticker-badge-inner, html:not(.sx-ready) .market-ticker-dot,
 html:not(.sx-ready) .own-unit-card__btn, html:not(.sx-ready) .own-unit-card__btn::after { animation-play-state: paused !important; }
+
+/* عارض المخططات: اسم المخطط ودوره + «افتح ملف PDF» تحت المخطط */
+.rent-viewer__caption { position: absolute; left: 0; right: 0; bottom: 28px; z-index: 10; display: none; justify-content: center; padding: 0 16px; pointer-events: none; }
+.rent-viewer__caption.flex { display: flex; }
+.rent-viewer__caption > div { pointer-events: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; max-width: 100%; background: #fff; color: #123a5c; border-radius: 999px; padding: 8px 16px; font-size: 15px; font-weight: 800; box-shadow: 0 10px 24px -10px rgba(15, 34, 51, .35); }
+.rent-viewer__caption [data-lightbox-pdf] { background: #123a5c; color: #fff; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 800; text-decoration: none; }
+.rent-viewer__caption [data-lightbox-pdf].hidden { display: none; }

@@ -20,6 +20,7 @@
         var at = 0;
         var opener = null;
         var frame = box.querySelector('[data-lightbox-frame]') || view;
+        var caption = box.querySelector('[data-lightbox-caption]');
         var zoom = { scale: 1, x: 0, y: 0 };   // تكبير الصورة المفتوحة ومكانها
 
         function applyZoom(smooth) {
@@ -46,6 +47,15 @@
             view.src = source.currentSrc || source.getAttribute('src');
             view.alt = source.getAttribute('alt') || '';
             counter.textContent = (at + 1) + ' / ' + items.length;
+            // مخططات الوحدة: الاسم والدور تحت المخطط ، و«افتح ملف PDF» لو المخطط ملف PDF
+            if (caption) {
+                var text = source.getAttribute('data-caption') || '', pdf = source.getAttribute('data-pdf') || '';
+                caption.querySelector('[data-lightbox-caption-text]').textContent = text;
+                var pdfLink = caption.querySelector('[data-lightbox-pdf]');
+                if (pdfLink) { pdfLink.href = pdf || '#'; pdfLink.classList.toggle('hidden', !pdf); }
+                caption.classList.toggle('hidden', !text && !pdf);
+                caption.classList.toggle('flex', !!(text || pdf));
+            }
             Array.prototype.forEach.call(thumbs.children, function (thumb, i) { thumb.setAttribute('aria-current', i === at ? 'true' : 'false'); });
             var current = thumbs.children[at];
             if (current && current.scrollIntoView) current.scrollIntoView({ block: 'nearest', inline: 'center' });
@@ -71,7 +81,8 @@
                 });
             }
             thumbs.classList.toggle('hidden', !thumbs.children.length);
-            counter.classList.toggle('hidden', group === 'floor');
+            counter.classList.toggle('hidden', group === 'floor' && items.length < 2);   // أكتر من مخطط: العدّاد بيظهر
+            if (caption && group === 'gallery') { caption.classList.add('hidden'); caption.classList.remove('flex'); }
             arrows.forEach(function (button) { button.classList.toggle('lg:flex', items.length > 1); });
             show(index || 0);
             box.classList.remove('hidden');
