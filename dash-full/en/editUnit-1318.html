@@ -1,3 +1,147 @@
+<script src="../a/assets/js/jquery-3.2.1.min.js"></script>
+<script src="../a/vendor/shary-editor/ckeditor.js"></script>
+<script>CKEDITOR.config.versionCheck = false;</script>
+<script>
+
+
+
+    $(document).ready(function () {
+
+        CKEDITOR.replace('desc_en');
+        CKEDITOR.replace('desc_ar');
+
+
+        $('.select2').select2();
+
+        function toggleRentRelations() {
+            let isRent = $('#sale_type').val() === 'rent';
+
+            $('#developer_id, #compound_id')
+                .prop('required', !isRent)
+                .prop('disabled', false);
+        }
+
+        $('#sale_type').on('change', toggleRentRelations);
+
+        function toggleLimitedOfferFields() {
+            $('.limited-offer-fields').toggleClass('d-none', $('#limited_offer').val() !== '1');
+        }
+
+        $('#limited_offer').on('change', toggleLimitedOfferFields);
+        toggleLimitedOfferFields();
+
+        let unitCompoundId = "291";
+        let unitDeveloperId = "6";
+
+        $.ajax({
+            url: "/filter-data", // Define your route
+            type: "GET",
+            success: function(data) {
+                // Clear previous options
+                $('#developer_id').empty().append('<option value="">Select Developer</option>');
+                $('#compound_id').empty().append('<option value="">Select Compound</option>');
+
+                // Populate developers select options
+                $.each(data.developers, function(index, developer) {
+                    let selected = (developer.id == unitDeveloperId) ? 'selected' : ''; // Check if it matches
+                    $('#developer_id').append('<option value="'+developer.id+'" '+selected+'>'+developer.name+'</option>');
+                });
+
+                // Populate compounds select options
+                $.each(data.compounds, function(index, compound) {
+                    let selected = (compound.id == unitCompoundId) ? 'selected' : ''; // Check if it matches
+                    $('#compound_id').append('<option value="'+compound.id+'" '+selected+'>'+compound.name+'</option>');
+                });
+
+                // Trigger change event to update Select2 (if used)
+                $('#compound_id').trigger('change');
+                $('#developer_id').trigger('change');
+                toggleRentRelations();
+            }
+        });
+
+
+
+        $('#add_product').click(function (event) {
+            $('#edit-course-button').prop('disabled', true);
+            event.preventDefault();
+            $('#add_product_form').submit();
+        });
+
+        $('#update_product').click(function (event) {
+            event.preventDefault();
+            $('#update_unit_form').submit();
+        });
+
+        $('#accept_request_top').click(function (event) {
+            event.preventDefault();
+            $('#update_unit_form').submit();
+        });
+
+        // Handle form submission with AJAX
+        $('#update_unit_form').on('submit', function (e) {
+            e.preventDefault();
+
+            var formData = new FormData(this);
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    // Assuming response contains the updated product data
+
+                    swalNormal(response);
+                    $(".overlay").toggleClass('d-none');
+                    if (response.route) {
+                        window.location.replace(response.route);
+                    }
+                    // Optionally show a success message
+                    // alert('Product updated successfully!');
+                },
+                error: function (xhr, status, error) {
+                    // Handle any errors
+                    if (xhr.responseJSON && xhr.responseJSON.errors) {
+                        sweetAlertErrorResponse(xhr);
+                        return;
+                    }
+                    alert('Error updating product: ' + error);
+                }
+            });
+        });
+
+        function swalNormal(data) {
+            Swal.fire({
+                title: data.title,
+                text: data.message,
+                type: data.type,
+                confirmButtonText: "Ok"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
+        }
+
+        function sweetAlertErrorResponse(data) {
+            var span = document.createElement("span");
+            span.innerHTML = "";
+            $.each(data.responseJSON.errors, function (index, value) {
+                span.innerHTML += value + "<br>";
+            });
+            Swal.fire({
+                html: span,
+                type: "error",
+                confirmButtonText: "Ok",
+            });
+        }
+
+    });
+
+
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,7 +270,7 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 <b>6</b></a>
 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-<a class="sx-lang" href="../units-0.html" data-sx-lang="1" lang="ar">عربي</a>
+<a class="sx-lang" href="../editUnit-1318.html" data-sx-lang="1" lang="ar">عربي</a>
 <details class="sx-user" data-sx-user>
 <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
@@ -221,22 +365,12 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-units">
-<li><a href="admin-shary-all-units.html" class="" ><span>⭐ Everything about a unit (one page)</span></a></li>
-<li><a href="admin-shary-units.html" class="" ><span>All units</span></a></li>
+<li><a href="admin-shary-units.html" class="is-on" ><span>All units</span></a></li>
 <li><a href="admin-shary-units-create.html" class="" ><span>Add a unit</span></a></li>
-<li><a href="admin-shary-units-sheet.html" class="" ><span>Upload a units sheet</span></a></li>
+<li><a href="admin-shary-units-sheet.html" class="" ><span>Import &amp; export units</span></a></li>
 <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">6</b></a></li>
-<li><a href="admin-shary-units_type_developer_sale.html" class="" ><span>Developer units</span></a></li>
-<li><a href="admin-shary-units_type_resale.html" class="" ><span>Resale units</span></a></li>
-<li><a href="admin-shary-units_type_rent.html" class="" ><span>Rental units</span></a></li>
-<li><a href="exclusive-resale-admin.html" class="" ><span>Exclusive resale opportunities</span></a></li>
-<li><a href="limited-offer-units.html" class="" ><span>Limited-time offers</span></a></li>
-<li><a href="admin-shary-extras-units.html" class="" ><span>Unit page data</span></a></li>
-<li><a href="admin-shary-type-photos.html" class="" ><span>Type photo library</span></a></li>
-<li><a href="admin-shary-tracking-units.html" class="" ><span>Tracking units (customer unit)</span></a></li>
-<li><a href="unit-tracking-admin.html" class="" ><span>Unit tracking in the app</span></a></li>
-<li><a href="units-list.html" class="" ><span>Units (old screen)</span></a></li>
-<li><a href="units-0.html" class="is-on"  aria-current="page" ><span>Manage properties</span></a></li>
+<li><a href="admin-shary-units-photo-sets.html" class="" ><span>Unit photos by project</span></a></li>
+<li><a href="admin-shary-units-offers.html" class="" ><span>Offers &amp; opportunities</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="projects">
@@ -378,12 +512,12 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
 <span>Shary AI</span>
-<b class="sx-tag">2</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+<b class="sx-tag">3</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ai">
 <li><a href="admin-shary-ai.html" class="" ><span>Settings &amp; testing</span></a></li>
 <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">2</b></a></li>
-<li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span></a></li>
+<li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">1</b></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="seo">
@@ -405,6 +539,7 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 </button>
 <ul id="sx-grp-app">
 <li><a href="admin-shary-app-pages.html" class="" ><span>Service pages on the website</span></a></li>
+<li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
 <li><a href="reservations.html" class="" ><span>Book with the developer</span></a></li>
 <li><a href="reservations-bank-accounts.html" class="" ><span>Bank accounts</span></a></li>
 <li><a href="legal-assistant-admin.html" class="" ><span>Legal assistant</span></a></li>
@@ -590,11 +725,11 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
 </style>
 <script>
             window.SharyEditorConfig = {
-                token: "RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX",
+                token: "3tLGOrtBTjeVwUlTJg0jOwl857Bw7J6ofV8T5fyj",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=3tLGOrtBTjeVwUlTJg0jOwl857Bw7J6ofV8T5fyj",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -602,312 +737,756 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
                 labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
         </script>
 <script src="../a/js/shary-admin/editor.js"></script>
-<template data-sx-crumb><div class="sx-crumb">Units ‹ Manage properties</div></template>
+<script src="../a/vendor/shary-editor/ckeditor.js"></script>
+<script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
+<template data-sx-crumb><div class="sx-crumb">All units ‹ Units (old screen)</div></template>
+<style>
+.d-none {
+display: none !important;
+}
+</style>
+<script>
+        var marker = null;
+        var placeSearch, autocomplete;
+
+        function initMap() {
+            autocomplete =
+                new google.maps.places.Autocomplete((document.getElementById('autocomplete')),
+                    {types: ['geocode']});
+            var map = new google.maps.Map(document.getElementById('shoplocation'), {
+                zoom: 10,
+                center: {
+                    lat: 30.142,
+                    lng: 31.618
+                }
+            });
+            var MaekerPos = new google.maps.LatLng(0, 0);
+            marker = new google.maps.Marker({
+                position: MaekerPos,
+                map: map
+            });
+            autocomplete.addListener('place_changed', function () {
+                placeMarkerAndPanTo(autocomplete.getPlace().geometry.location, map);
+                document.getElementById("lat").value = autocomplete.getPlace().geometry.location.lat();
+                document.getElementById("lng").value = autocomplete.getPlace().geometry.location.lng();
+            });
+            map.addListener('click', function (e) {
+                placeMarkerAndPanTo(e.latLng, map);
+                document.getElementById("lat").value = e.latLng.lat();
+                document.getElementById("lng").value = e.latLng.lng();
+            });
+        }
+
+        function placeMarkerAndPanTo(latLng, map) {
+            map.setZoom(9);
+            marker.setPosition(latLng);
+            map.panTo(latLng);
+        }
+    </script>
+<script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=PREVIEW&libraries=places&callback=initMap">
+    </script>
+<style>
+.d-none {
+display: none !important;
+}
+</style>
 <div class="page-wrapper">
 <div class="content">
 <div class="page-header">
 <div class="page-title">
-<h4>Units List ( 2 )</h4>
-</div>
-<div class="page-btn">
-<a href="admin-shary-tracking-units.html" class="btn btn-added"><img src="../a/assets/img/icons/plus.svg" alt="img"
-class="me-1" loading="lazy" decoding="async">Add New Unit </a>
+<h4>Project Edit </h4>
+<h6>Update your Project TH23 </h6>
 </div>
 </div>
-<!-- /product list -->
+<!-- /add -->
 <div class="card">
 <div class="card-body">
-<div class="table-top">
-<div class="search-set">
-<div class="search-path">
-<a class="btn btn-filter" id="filter_search">
-<img src="../a/assets/img/icons/filter.svg" alt="img" loading="lazy" decoding="async">
-<span><img src="../a/assets/img/icons/closes.svg" alt="img" loading="lazy" decoding="async"></span>
-</a>
+<div class="spinner-border text-warning ajax-overlay d-none" role="status">
+<span class="sr-only">Loading...</span>
 </div>
-<div class="search-input">
-<a class="btn btn-searchset"><img
-src="../a/assets/img/icons/search-white.svg" alt="img" loading="lazy" decoding="async"></a>
-</div>
-</div>
-<div class="wordset">
-<ul>
-<li>
-<a data-bs-toggle="tooltip" data-bs-placement="top" onclick="exportToExcel()" title="excel"><img
-src="../a/assets/img/icons/excel.svg" alt="img" loading="lazy" decoding="async"></a>
-</li>
-</ul>
+<form method="post" id="update_unit_form" action="#preview/update-unit/1318"
+enctype="multipart/form-data"  class="was-validated needs-validation">
+<input type="hidden" name="_token" value="preview" autocomplete="off">                        <input type="hidden" name="_method" value="post">
+<h5 class="card-title">Main Information</h5>
+<div class="row">
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Name With English</label>
+<input type="text" name="name_en" value="Townhouse, Scenes Phase one" required>
 </div>
 </div>
-<!-- /Filter -->
-<button class="btn btn-danger" id="delete-selected">حذف الوحدات المختاره</button>
-<br>
-<br>
-<!-- /Filter -->
-<div class="table-responsive">
-<table class="table  datanew">
-<thead>
-<tr>
-<th>
-<label class="checkboxs">
-<input type="checkbox" id="select-all-units">
-<span class="checkmarks"></span>
-</label>
-</th>
-<th>#</th>
-<th>Image </th>
-<th>User Name </th>
-<th>Name With Arabic </th>
-<th>Name With English </th>
-<th>Size </th>
-<th>Delivery status </th>
-<th>Payment status </th>
-<th>Project Name </th>
-<th>Property Type </th>
-<th>Finishing Type </th>
-<th>Contracted price </th>
-<th>Total years </th>
-<th>Contract date </th>
-<th>Status </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<label class="checkboxs">
-<input type="checkbox" class="unit-checkbox" value="2">
-<span class="checkmarks"></span>
-</label>
-</td>
-<td>1</td>
-<td class="productimgname">
-<a href="javascript:void(0);" class="product-img">
-<img src="../a/images/compounds/5925e4b41b42d-mivida.webp" alt="project"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
-</a>
-</td>
-<td>Demo Customer</td>
-<td>شقة العميل تجربة</td>
-<td>شقة العميل تجربة</td>
-<td>150</td>
-<td>not_delivered</td>
-<td>installments</td>
-<td>Mivida</td>
-<td></td>
-<td></td>
-<td>5200000</td>
-<td>7</td>
-<td>2025-03-01</td>
-<td>
-<div class="status-toggle d-flex justify-content-between align-items-center">
-<input type="checkbox"
-id="product_2"
-class="check"
-checked
-onchange="change_status_unit(2,1)">
-<label for="product_2" class="checktoggle">checkbox</label>
-</div>
-</td>
-</tr>
-<tr>
-<td>
-<label class="checkboxs">
-<input type="checkbox" class="unit-checkbox" value="1">
-<span class="checkmarks"></span>
-</label>
-</td>
-<td>2</td>
-<td class="productimgname">
-<a href="javascript:void(0);" class="product-img">
-<img src="../a/images/compounds/5925e4b41b42d-mivida.webp" alt="project"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
-</a>
-</td>
-<td>Demo Customer</td>
-<td>شقتي في ميفيدا</td>
-<td>My apartment in Mivida</td>
-<td>165</td>
-<td>delivered</td>
-<td>installments</td>
-<td>Mivida</td>
-<td>Apartment</td>
-<td>Fully Finished</td>
-<td>6500000</td>
-<td>7</td>
-<td>2022-03-01</td>
-<td>
-<div class="status-toggle d-flex justify-content-between align-items-center">
-<input type="checkbox"
-id="product_1"
-class="check"
-checked
-onchange="change_status_unit(1,1)">
-<label for="product_1" class="checktoggle">checkbox</label>
-</div>
-</td>
-</tr>
-</tbody>
-</table>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Name With Arabic</label>
+<input type="text" name="name_ar" value="تاون هاوس، سينز المرحلة الأولى" required>
 </div>
 </div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="slug_en">Slug URL (English)</label>
+<input class="form-control" type="text" name="slug_en" id="slug_en" value="townhouse-scenes-7582" placeholder="unit-url">
 </div>
-<!-- /product list -->
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="slug_ar">Slug URL (Arabic)</label>
+<input class="form-control" type="text" name="slug_ar" id="slug_ar" value="تاون-هاوس-سينز-7582" placeholder="رابط-الوحدة">
 </div>
 </div>
-<script src="../a/assets/js/jquery-3.2.1.min.js"></script>
-<script src="../a/assets/js/xlsx.full.min.js"></script>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Reference no.</label>
+<input class="form-control" type="text" value="TH23" name="reference_no">
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="developer_id">Developers</label>
+<select class="form-control js-example-basic-single select2" name="developer_id" id="developer_id" required>
+<option>Select </option>
+</select>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="compound_id">Compounds</label>
+<select class="form-control js-example-basic-single select2" name="compound_id" id="compound_id" required>
+<option>Select </option>
+</select>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Apartment area</label>
+<input type="text" class="form-control" name="apartment_area" value="200" required>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Area to (m²) — optional</label>
+<input type="number" class="form-control" name="max_apartment_area" value="" min="0" step="any" placeholder="0">
+<small class="text-muted">For a unit with an area range: enter the largest area here, or leave it empty for a single area.</small>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Land size </label>
+<input class="form-control" type="text" name="land_size" value="260" placeholder="0">
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Price </label>
+<input class="form-control" type="text" name="price" value="23086000" placeholder="0.0" required>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Max price </label>
+<input class="form-control" type="text" name="max_price" value="" placeholder="0">
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>EOI</label>
+<input class="form-control" type="text" name="eoi" value="" placeholder="0">
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="area_id">City </label>
+<select class="select" name="area_id" id="area_id" required>
+<option value="">Choose City </option>
+<option value="101" >Madinaty</option>
+<option value="102" >Al Rehab</option>
+<option value="103" >El Shorouk</option>
+<option value="104" >Katameya</option>
+<option value="105" >Sidi Heneish</option>
+<option value="106" >Al Dabaa</option>
+<option value="107" >Sidi Abdel Rahman</option>
+<option value="108" >Al Alamein</option>
+<option value="109" >Ghazala Bay</option>
+<option value="110" >Alam Al Roum</option>
+<option value="30" >Hidden Area</option>
+<option value="16" >North Coast</option>
+<option value="14" >Ain Sokhna</option>
+<option value="13" >Ras El Hekma</option>
+<option value="10" >Sheikh Zayed City</option>
+<option value="9" >6 October City</option>
+<option value="6" >Fifth Settlement</option>
+<option value="5" >New Capital</option>
+<option value="4"  selected >Mostakbal City</option>
+<option value="2" >New Cairo</option>
+</select>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="category_id">Sale type</label>
+<select class="select" name="sale_type" id="sale_type" required>
+<option value="">Select </option>
+<option value="developer_sale"  selected >Developer Sale</option>
+<option value="resale" >Resale</option>
+<option value="rent" >Rent</option>
+</select>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="front">Property Type </label>
+<select class="select" name="property_id" id="property_id" required>
+<option value="19" >Apartment</option>
+<option value="20" >Villa</option>
+<option value="21"  selected >Townhouse</option>
+<option value="22" >Twin House</option>
+<option value="23" >Duplex</option>
+<option value="24" >Penthouse</option>
+<option value="25" >Studio</option>
+<option value="30" >Chalet</option>
+<option value="31" >Office</option>
+<option value="32" >Shop</option>
+<option value="33" >Clinic</option>
+<option value="34" >Warehouse</option>
+<option value="60" >Apartment</option>
+<option value="61" >Apartment</option>
+<option value="62" >Villa</option>
+<option value="63" >Chalet</option>
+<option value="64" >Chalet</option>
+<option value="68" >Hotel Apartment</option>
+</select>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="purpose">Finishing Type </label>
+<select class="select" name="finishing_type_id" id="finishing_type_id" required>
+<option value="7" >Fully Finished</option>
+<option value="8" >Semi Finished</option>
+<option value="9"  selected >Core &amp; Shell</option>
+<option value="10" >Furnished</option>
+</select>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="purpose">Featured type </label>
+<select class="select" name="featured_type" id="featured_type" required>
+<option value="12" >Lake View</option>
+<option value="13" >Garden View</option>
+<option value="14" >Sea View</option>
+<option value="15" >Corner Unit</option>
+<option value="69" >Prime location</option>
+</select>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="property_status">Delivery date </label>
+<select class="select" name="delivery_in" id="delivery_in" required>
+<option value="1"  selected  >Ready For Delivery </option>
+<option value="2025" >2025 </option>
+<option value="2026" >2026 </option>
+<option value="2027" >2027 </option>
+<option value="2028" >2028 </option>
+<option value="2029" >2029 </option>
+<option value="2030" >2030 </option>
+<option value="2031" >2031 </option>
+<option value="2032" >2032 </option>
+<option value="2033" >2033 </option>
+<option value="2034" >2034 </option>
+<option value="2035" >2035 </option>
+<option value="2036" >2036 </option>
+<option value="2037" >2037 </option>
+<option value="2038" >2038 </option>
+<option value="2039" >2039 </option>
+<option value="2040" >2040 </option>
+</select>
+</div>
+</div>
+</div>
+<h5 class="card-title">Additional Information</h5>
+<div class="row">
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Bedrooms </label>
+<input type="number" class="form-control" name="Bedrooms"
+value="3" required>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Number of Bathrooms </label>
+<input type="number" class="form-control" name="Bathrooms"
+value="3" required>
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label>Garages </label>
+<input type="number" class="form-control" name="garages" value="2">
+</div>
+</div>
+<div class="col-lg-4 col-sm-6 col-12">
+<div class="form-group">
+<label for="property_status">Recommended </label>
+<select class="select" name="recommend" id="recommend" required>
+<option value="yes" >Yes </option>
+<option value="no"  selected  >No </option>
+</select>
+</div>
+</div>
+</div>
+<hr>
+<h5 class="card-title">Unit Address</h5>
+<div class="row">
+<div class="form-group">
+<div id="shoplocation" style="width:100%;height:350px"></div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>Unit Address </label>
+<input type="text" class="form-control" name="address"
+value="Mivida, New Cairo"
+id="autocomplete"
+placeholder="Search for a Place">
+</div>
+</div>
+<div class="col-md-6 mb-3" style="display: none">
+<label for="validationCustom04">Latitude</label>
+<input type="text"  class="form-control" name="lat"
+value="30.142"
+id="lat" placeholder="ادخل موقع الوحدة">
+</div>
+<div class="col-md-6 mb-3" style="display: none">
+<label for="validationCustom04">longitude</label>
+<input type="text"  class="form-control" name="lng"
+value="31.618"
+id="lng" placeholder="ادخل موقع الوحدة">
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>Explanatory Video Link </label>
+<input type="url" class="form-control" name="video"
+value="">
+</div>
+</div>
+</div>
+<hr>
+<h5 class="card-title">Contact Information</h5>
+<div class="row">
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>Phone Number </label>
+<input type="tel" class="form-control" name="phone"
+value="">
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>WhatsApp Number </label>
+<input type="tel" class="form-control" name="whatsapp"
+value="">
+</div>
+</div>
+</div>
+<hr>
+<h5 class="card-title">Payment plans</h5>
+<div class="row">
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>Down payment </label>
+<input type="text" class="form-control" name="down_payment" value="2308600">
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>Maintenance Fees </label>
+<input type="text" class="form-control" name="maintenance_fees" value="2600000">
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>المبلغ / Amount</label>
+<input type="text" class="form-control" name="monthly_amount" value="649300">
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>نوع المبلغ / Amount Type</label>
+<select class="form-control" name="payment_frequency">
+<option value="monthly" >شهري / Monthly</option>
+<option value="quarterly" selected>ربع سنوي / Quarterly</option>
+<option value="semi_annual" >نصف سنوي / Semi Annual</option>
+<option value="annual" >سنوي / Annual</option>
+<option value="cash" >كاش / Cash</option>
+</select>
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>Installment years </label>
+<input type="number" class="form-control" name="installment_years" value="8">
+</div>
+</div>
+</div>
+<div id="payment-plans-container">
+</div>
+<button type="button" onclick="addPaymentPlanRow()" class="btn btn-secondary btn-sm mb-3">
+<i class="fa fa-plus"></i> Add Payment Plan / إضافة خطة سداد
+</button>
+<div class="shary-plan-extras" data-plan-extras
+data-labels="{&quot;plan&quot;:&quot;Plan&quot;,&quot;main&quot;:&quot;main&quot;,&quot;down&quot;:&quot;Down payment&quot;,&quot;add&quot;:&quot;Add down payment&quot;,&quot;remove&quot;:&quot;Remove&quot;,&quot;months&quot;:&quot;Months between payments&quot;,&quot;out_downs&quot;:&quot;Down payments total (auto)&quot;,&quot;out_total&quot;:&quot;Instalments total (auto)&quot;,&quot;out_delivery&quot;:&quot;Delivery payment (auto)&quot;,&quot;pays&quot;:&quot;On the site: you pay :amount every :months months (:count payments)&quot;,&quot;cash&quot;:&quot;Cash plan: no down payments or instalments.&quot;}">
+<h6 class="shary-plan-extras__title">Payment plan details: extra down payments + months between payments</h6>
+<small class="shary-plan-extras__help">&quot;Down payment 1&quot; is the down payment field of the plan itself. Add down payment 2, 3 (or more) per plan here, and enter the number of months between payments (e.g. 3 or 6). The instalments total and the delivery payment are calculated automatically from the plan data and are not typed.</small>
+<div data-plan-extras-list></div>
+<input type="hidden" name="shary_plan_extras" value="" data-plan-extras-value>
+</div>
+<style>
+.shary-plan-extras { margin: 6px 0 18px; border: 1px solid #cfe0f5; border-radius: 12px; background: #f6faff; padding: 14px 16px; }
+.shary-plan-extras__title { margin: 0 0 2px; font-size: 15px; font-weight: 700; color: #123a5c; }
+.shary-plan-extras__help { display: block; margin-bottom: 10px; color: #5b6b7c; line-height: 1.8; }
+.shary-plan-line { border-top: 1px dashed #cfe0f5; padding: 12px 0 10px; }
+.shary-plan-line:first-child { border-top: 0; padding-top: 4px; }
+.shary-plan-line__title { display: block; margin-bottom: 8px; font-size: 13.5px; color: #1e4166; }
+.shary-plan-line__grid { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-end; }
+.shary-plan-line__cell { display: flex; flex-direction: column; gap: 4px; width: 190px; max-width: 100%; margin: 0; font-size: 12.5px; font-weight: 600; color: #3f4f60; }
+.shary-plan-line__cell--add { width: auto; }
+.shary-plan-line__input { display: flex; gap: 6px; }
+.shary-plan-line__input .form-control { min-width: 0; }
+.shary-plan-line__auto { display: flex; flex-wrap: wrap; gap: 8px 12px; margin-top: 10px; }
+.shary-plan-line__auto > span { display: flex; flex-direction: column; min-width: 170px; border-radius: 10px; background: #fff; border: 1px solid #e1eaf5; padding: 6px 12px; }
+.shary-plan-line__auto small { color: #5b6b7c; font-size: 11.5px; }
+.shary-plan-line__auto b { font-size: 14px; color: #123a5c; text-align: start; }
+.shary-plan-line__every { display: block; margin-top: 6px; color: #17734f; font-weight: 600; }
+.shary-plan-line__cashnote { display: none; margin-top: 6px; color: #8a6d1a; }
+.shary-plan-line.is-cash .shary-plan-line__grid, .shary-plan-line.is-cash .shary-plan-line__auto, .shary-plan-line.is-cash .shary-plan-line__every { display: none; }
+.shary-plan-line.is-cash .shary-plan-line__cashnote { display: block; }
+</style>
+<script src="../a/js/shary-admin/plan-extras.js" defer></script>
+<template id="payment-plan-row-tpl">
+<div class="payment-plan-row border rounded p-2 mb-2 row align-items-end">
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="form-group">
+<label>Down payment </label>
+<input type="text" class="form-control" name="payment_plans[__IDX__][down_payment]" value="">
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="form-group">
+<label>المبلغ / Amount</label>
+<input type="number" class="form-control" name="payment_plans[__IDX__][monthly_amount]" value="">
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="form-group">
+<label>نوع المبلغ / Amount Type</label>
+<select class="form-control" name="payment_plans[__IDX__][payment_frequency]">
+<option value="monthly">شهري / Monthly</option>
+<option value="quarterly" selected>ربع سنوي / Quarterly</option>
+<option value="semi_annual">نصف سنوي / Semi Annual</option>
+<option value="annual">سنوي / Annual</option>
+<option value="cash">كاش / Cash</option>
+</select>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="form-group">
+<label>Installment years </label>
+<input type="number" class="form-control" name="payment_plans[__IDX__][installment_years]" value="">
+</div>
+</div>
+<div class="col-lg-2 col-sm-6 col-12">
+<div class="form-group">
+<label>Maintenance Fees </label>
+<input type="text" class="form-control" name="payment_plans[__IDX__][maintenance_fees]" value="">
+</div>
+</div>
+<div class="col-lg-1 col-sm-6 col-12">
+<button type="button" onclick="removePaymentPlanRow(this)" class="btn btn-danger btn-sm w-100">حذف</button>
+</div>
+</div>
+</template>
 <script>
-
-        function exportToExcel() {
-            const table = document.querySelector('.datanew');
-            const ws = XLSX.utils.table_to_sheet(table);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
-            XLSX.writeFile(wb, 'units.xlsx');
-        }
-
-        $(document).ready(function () {
-            var selectAllItemsUnit = "#select-all-units";
-            var checkboxItemUnits = ":checkbox";
-            $(selectAllItemsUnit).click(function () {
-                // alert(selectAllItemsUnit);
-                if (this.checked) {
-                    $(checkboxItemUnits).each(function () {
-                        this.checked = true;
-                    });
-                } else {
-                    $(checkboxItemUnits).each(function () {
-                        this.checked = false;
-                    });
-                }
-            });
-
-            const selectAllCheckbox = document.getElementById('select-all-units');
-            const unitCheckboxes = document.querySelectorAll('.unit-checkbox');
-            const deleteButton = document.getElementById('delete-selected');
-
-            // Select All Checkboxes
-            selectAllCheckbox.addEventListener('change', function () {
-                unitCheckboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            // Delete Selected Rows
-            deleteButton.addEventListener('click', function () {
-                const selectedIds = Array.from(unitCheckboxes)
-                    .filter(checkbox => checkbox.checked)
-                    .map(checkbox => checkbox.value);
-
-                if (selectedIds.length === 0) {
-                    alert('الرجاء تحديد صف واحد على الأقل لحذفه.');
-                    return;
-                }
-
-                if (confirm('هل أنت متأكد أنك تريد حذف الصفوف المحددة؟')) {
-                    fetch('/delete-units', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': 'RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX'
-                        },
-                        body: JSON.stringify({ unit_ids: selectedIds })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                // Remove deleted rows from the table
-                                selectedIds.forEach(id => {
-                                    document.querySelector(`input[value="${id}"]`).closest('tr').remove();
+                        var paymentPlanIdx = 0;
+                        function addPaymentPlanRow() {
+                            var tpl = document.getElementById('payment-plan-row-tpl').innerHTML.replace(/__IDX__/g, paymentPlanIdx++);
+                            document.getElementById('payment-plans-container').insertAdjacentHTML('beforeend', tpl);
+                        }
+                        function removePaymentPlanRow(btn) {
+                            btn.closest('.payment-plan-row').remove();
+                            document.querySelectorAll('#payment-plans-container .payment-plan-row').forEach(function (row, index) {
+                                row.querySelectorAll('[name^="payment_plans"]').forEach(function (input) {
+                                    input.name = input.name.replace(/payment_plans\[\d+]/, 'payment_plans[' + index + ']');
                                 });
-                                alert('تم حذف الصفوف المحددة بنجاح.');
-                            } else {
-                                alert('حدث خطأ أثناء حذف الصفوف.');
-                            }
-                        });
-                }
-            });
-
-
-
-            $('#add_product').click(function (event) {
-                event.preventDefault();
-                $('#add_unit_form').submit();
-            });
-
-            $(document).on('submit', '#add_unit_form', function (event) {
-                event.preventDefault();
-                var formData = new FormData(this);
-                // var content = $('#description').summernote('code');
-                // formData.append('description', content);
-                formData.append('_method', 'POST');
-                $.ajax({
-                    url: "/create-excel-unit",
-                    method: "POST",
-                    processData: false, // important
-                    contentType: false, // important
-                    data: formData,
-                    dataType: 'JSON',
-                    beforeSend: function () {
-                        $(".overlay").toggleClass('d-none');
-                    },
-                    success: function (data) {
-                        swalNormal(data);
-                        $(".overlay").toggleClass('d-none');
-                        window.location.replace(data.route);
-                    },
-                    error: function (data) {
-                        sweetAlertErrorResponse(data);
-                    }
-                })
-            });
-        });
-
-
-        function change_status_unit(id, value) {
-            alert(value);
-            if (value == 0) {
-                value = 1;
-            } else {
-                value = 0;
-            }
-
-            $.ajax({
-                url: '/admin/update-status-unit/' + id + '/' + value,
-                type: 'get',
-                dataType: 'json',
-                success: function (data) {
-                    swalNormal(data);
-                    // window.location.replace(data.route);
-                }
-            });
-        }
-
-        function swalNormal(data) {
-            Swal.fire({
-                title: data.title,
-                text: data.message,
-                type: data.type,
-                confirmButtonText: "Ok"
-            }).then((result) => {
-                // if (result.isConfirmed) {
-                //     location.reload();
-                // }
-            });
-        }
-
-        function sweetAlertErrorResponse(data) {
-            var span = document.createElement("span");
-            span.innerHTML = "";
-            $.each(data.errors, function (index, value) {
-                span.innerHTML += value + "<br>";
-            });
-            Swal.fire({
-                html: span,
-                type: "error",
-                confirmButtonText: "Ok",
-            });
-        }
-
-    </script>
+                            });
+                            paymentPlanIdx = document.querySelectorAll('#payment-plans-container .payment-plan-row').length;
+                        }
+                        </script>
+<hr>
+<h5 class="card-title">Limited Offer</h5>
+<div class="row">
+<div class="col-lg-3 col-sm-6 col-12">
+<div class="form-group">
+<label>Limited Offer</label>
+<select class="select" name="limited_offer" id="limited_offer">
+<option value="0" selected>No</option>
+<option value="1" >Yes</option>
+</select>
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields d-none">
+<div class="form-group">
+<label>Discount Percentage %</label>
+<input type="number" class="form-control" name="limited_offer_cash_discount" value="0" min="0" step="0.01">
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields d-none">
+<div class="form-group">
+<label>Watching Now</label>
+<input type="number" class="form-control" name="limited_offer_watching_now" value="13" min="0">
+</div>
+</div>
+<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields d-none">
+<div class="form-group">
+<label>Offer End Date</label>
+<input type="datetime-local" class="form-control" name="limited_offer_end_at" value="">
+</div>
+</div>
+</div>
+<hr>
+<h5 class="card-title">Amenities and features</h5>
+<div class="row">
+<div class="col-lg-12 col-sm-12 col-12" id="form_variation_type">
+<div class="form-group">
+<div style="display: inline-flex; gap: 20px; align-items: center; flex-wrap: wrap;">
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="12" id="12" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/9fc5780db3e12international-school.svg.svg" alt="International School" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+International School
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="11" id="11" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/b74bff6211351private-beach.svg.svg" alt="Private Beach" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Private Beach
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="10" id="10" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/ea63d451ca77dlagoons.svg.svg" alt="Lagoons" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Lagoons
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="9" id="9" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/e48167bc27592underground-parking.svg.svg" alt="Underground Parking" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Underground Parking
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="8" id="8" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/af8daa7d95783mosque.svg.svg" alt="Mosque" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Mosque
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="7" id="7" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/6609784a35a2fjogging-track.svg.svg" alt="Jogging Track" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Jogging Track
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="6" id="6" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/1a9dba569ae36commercial-area.svg.svg" alt="Commercial Area" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Commercial Area
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="5" id="5" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/d582886cec84ekids-area.svg.svg" alt="Kids Area" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Kids Area
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="4" id="4" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/566aca348d55c247-security.svg.svg" alt="24/7 Security" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+24/7 Security
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="3" id="3" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/125ab8e1cad00clubhouse.svg.svg" alt="Clubhouse" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Clubhouse
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="2" id="2" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/fd3d4efe9bddegym.svg.svg" alt="Gym" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Gym
+</label>
+<label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
+<input type="checkbox" name="features[]" value="1" id="1" style="width: 24px; height: 24px;"
+>
+<img src="../a/images/services/8a6496ffe392aswimming-pool.svg.svg" alt="Swimming Pool" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Swimming Pool
+</label>
+</div>
+</div>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label> Image </label>
+<div class="custom-file-container" data-upload-id="mySecondImage">
+<label>Upload (Single File) <a href="javascript:void(0)"
+class="custom-file-container__image-clear"
+title="Clear json">x</a></label>
+<label class="custom-file-container__custom-file">
+<input type="file"
+class="custom-file-container__custom-file__custom-file-input"
+name="image" accept="images/*">
+<input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+<span
+class="custom-file-container__custom-file__custom-file-control"></span>
+</label>
+<div class="custom-file-container__image-preview"></div>
+<img src="../a/images/compounds/units/dbad13977057dvilla-1002.jpg.jpg" alt="img" style="width: 300px;height: 150px"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
+</div>
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label> Master Plan </label>
+<div class="custom-file-container" data-upload-id="myFirstImage">
+<label>Upload (Single File) <a href="javascript:void(0)"
+class="custom-file-container__image-clear"
+title="Clear PDF">x</a></label>
+<label class="custom-file-container__custom-file">
+<input type="file"
+class="custom-file-container__custom-file__custom-file-input"
+name="master_plan" accept="image/*,.pdf,application/pdf">
+<input type="hidden" name="MAX_FILE_SIZE" value="10485760"/>
+<span
+class="custom-file-container__custom-file__custom-file-control"></span>
+</label>
+<div class="custom-file-container__image-preview"></div>
+<img src="../a/images/logo/logo.png" alt="img" style="width: 300px;height: 150px"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
+</div>
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label>VR link</label>
+<input type="url" class="form-control" name="image_vr"
+value=""
+placeholder="https://example.com/vr-link">
+</div>
+</div>
+</div>
+<hr>
+<h5 class="card-title">مخططات الطوابق (Floor Plans)</h5>
+<div id="existing-fps" class="mb-3">
+</div>
+<div id="fp-container"></div>
+<button type="button" onclick="addFpRow()" class="btn btn-secondary btn-sm mb-3">
+<i class="fa fa-plus"></i> إضافة مخطط جديد
+</button>
+<template id="fp-row-tpl">
+<div class="fp-row border rounded p-2 mb-2 row align-items-center">
+<div class="col-md-4">
+<input type="text" name="floor_plans[__IDX__][name_ar]" placeholder="الاسم بالعربي" class="form-control mb-1">
+<input type="text" name="floor_plans[__IDX__][name_en]" placeholder="Name in English" class="form-control">
+</div>
+<div class="col-md-6">
+<label class="d-block mb-1" style="font-size:12px;color:#888;">صورة المخطط</label>
+<input type="file" name="floor_plans[__IDX__][image]" class="form-control" accept="image/*">
+</div>
+<div class="col-md-2 text-center">
+<button type="button" onclick="this.closest('.fp-row').remove()" class="btn btn-danger btn-sm">حذف</button>
+</div>
+</div>
+</template>
+<script>
+                        var fpIdx = 0;
+                        var deleteFpUrlTemplate = "\/admin\/floor-plan\/__ID__\/delete";
+                        function addFpRow() {
+                            var tpl = document.getElementById('fp-row-tpl').innerHTML.replace(/__IDX__/g, fpIdx++);
+                            document.getElementById('fp-container').insertAdjacentHTML('beforeend', tpl);
+                        }
+                        function deleteFp(id, btn) {
+                            if (!confirm('حذف هذا المخطط؟')) return;
+                            fetch(deleteFpUrlTemplate.replace('__ID__', id), {
+                                method: 'POST',
+                                headers: { 'X-CSRF-TOKEN': '3tLGOrtBTjeVwUlTJg0jOwl857Bw7J6ofV8T5fyj', 'Accept': 'application/json' }
+                            }).then(r => r.json()).then(data => {
+                                if (data.status == 1) btn.closest('.fp-existing').remove();
+                                else alert('فشل الحذف');
+                            });
+                        }
+                        </script>
+<h5 class="card-title">Unit Description</h5>
+<div class="row">
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label for="desc_en">Description with English </label>
+<textarea class="form-control ckeditor_seo" name="desc_en" id="desc_en" required></textarea>
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label for="desc_ar">Description with Arabic</label>
+<textarea class="form-control ckeditor_seo" name="desc_ar" id="desc_ar" required></textarea>
+</div>
+</div>
+</div>
+<h5 class="card-title">SEO</h5>
+<div class="row">
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label for="meta_title_en">Meta Title En </label>
+<textarea class="form-control" name="meta_title_en" id="meta_title_en"
+                                    ></textarea>
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label for="meta_title_ar">Meta Title Ar</label>
+<textarea class="form-control" name="meta_title_ar" id="meta_title_ar"
+                                    ></textarea>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label for="meta_desc_en">Meta desc En </label>
+<textarea class="form-control" name="meta_desc_en" id="meta_desc_en"
+                                    ></textarea>
+</div>
+</div>
+<div class="col-lg-6 col-sm-6 col-12">
+<div class="form-group">
+<label for="meta_desc_ar">Meta desc Ar</label>
+<textarea class="form-control" name="meta_desc_ar" id="meta_desc_ar" ></textarea>
+</div>
+</div>
+</div>
+<br>
+<input type="hidden" value="en" name="lang" id="lang">
+<div class="col-lg-12">
+<button type="submit" class="btn btn-submit me-2">Update</button>
+<a href="units-315.html" data-sx-sample="1" class="btn btn-cancel">Cancel </a>
+</div>
+</form>
+</div>
+</div>
+<!-- /add -->
+</div>
+</div>
 </div>
 <!-- /Main Wrapper -->
 <!-- jQuery -->
@@ -1004,7 +1583,7 @@ onchange="change_status_unit(1,1)">
 .sx-draftnote__open { background: #1E4266; color: #fff; }
 .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
 </style>
-<script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+<script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"3tLGOrtBTjeVwUlTJg0jOwl857Bw7J6ofV8T5fyj","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
 <script src="../a/js/shary-admin/form-drafts.js" defer></script>
 <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

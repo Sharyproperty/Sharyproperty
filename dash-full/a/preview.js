@@ -120,6 +120,25 @@
                 var hits = all.filter(function (item) { return !want || fold((item.name || '') + ' ' + (item.sub || '')).indexOf(want) >= 0; }).slice(0, 25);
                 return Promise.resolve(new Response(JSON.stringify({ items: hits }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
             }
+            // «صور الوحدات حسب المشروع»: وحدات المشروع ، صور معرضه ، ومعاينة الوحدات اللي هتاخد الصور (نفس قواعد UnitPhotoSets::matches)
+            var ps = /units-photo-sets\/(units|project-photos|preview)\?(.*)$/.exec(url);
+            if (ps && method === 'GET') {
+                var qs = new URLSearchParams(ps[2]), P = (D.psets || {}).projects || {}, TY = (D.psets || {}).types || {};
+                var proj = P[qs.get('compound_id')] || { units: [], photos: [] }, body;
+                if (ps[1] === 'units') { body = { units: proj.units.map(function (u) { return { id: u.id, name: u.name, reference: u.reference, sale_type: u.sale_type, property_id: u.property_id }; }) }; }
+                else if (ps[1] === 'project-photos') { body = { photos: proj.photos }; }
+                else {
+                    var mode = qs.get('mode') === 'units' ? 'units' : 'all', sale = qs.get('sale_type') || 'developer_sale', pid = +qs.get('property_id') || 0, model = (qs.get('model') || '').trim().toLowerCase();
+                    var ids = qs.getAll('unit_ids[]').map(Number), want = pid ? (TY[pid] || pid) : 0;
+                    body = { units: proj.units.filter(function (u) {
+                        if (mode === 'units') { return ids.indexOf(u.id) > -1; }
+                        if (u.sale_type !== sale) { return false; }
+                        if (want && u.type !== want) { return false; }
+                        return !model || u.find.indexOf(model) > -1;
+                    }).map(function (u) { return { id: u.id, name: u.name, reference: u.reference, sale_type: u.sale_type, own: u.own, optout: u.optout, uses: !u.own && !u.optout }; }) };
+                }
+                return Promise.resolve(new Response(JSON.stringify(body), { status: 200, headers: { 'Content-Type': 'application/json' } }));
+            }
             if (method !== 'GET' || /#preview/.test(url)) {
                 toast(NOTE_SAVE);
                 return Promise.resolve(new Response(JSON.stringify({ status: 0, preview: true, message: NOTE_SAVE }), { status: 200, headers: { 'Content-Type': 'application/json' } }));

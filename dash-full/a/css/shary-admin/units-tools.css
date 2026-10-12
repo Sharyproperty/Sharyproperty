@@ -33,6 +33,16 @@
 .sx-unit-nav__tools button:hover { background: var(--ut-soft); }
 
 /* ------------------------------------------------------------------ the unit form: the sections */
+/* desktop: every section name fits — the list wraps rather than hiding the last items behind the tools */
+@media (min-width: 992px) {
+    .sx-unit-nav__list { flex-wrap: wrap; overflow: visible; }
+    .sx-unit-nav__list { gap: 2px; }
+    .sx-unit-nav__link { padding: 6px 8px; gap: 5px; font-size: 13.5px; }
+    .sx-unit-nav__tools button { padding: 4px 7px; font-size: 13px; }
+}
+.sx-unit-sec__where { margin: -4px 4px 12px; padding: 8px 12px; border-radius: 10px; background: #f3f7fc; border: 1px dashed #c9d8ea; color: #3c5574; font-size: 13px; font-weight: 700; line-height: 1.8; }
+.sx-unit-sec__where b { color: #123a5c; font-weight: 800; }
+.sx-unit-sec.is-closed .sx-unit-sec__where { display: none; }
 .sx-unit-sec { margin: 0 0 22px; scroll-margin-top: calc(var(--sx-unit-top, var(--sx-top, 64px)) + var(--sx-unit-nav, 56px) + 14px); }
 .sx-unit-sec__head { margin: 0 0 10px; font-size: inherit; }
 .sx-unit-sec__toggle {

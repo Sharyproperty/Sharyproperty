@@ -122,7 +122,27 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
 <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-       </head>
+             <style>
+            .shary-tabs { border-bottom: 1px solid #dee2e6; display: flex; flex-wrap: wrap; gap: 4px; padding: 0; list-style: none; }
+            .shary-tabs .nav-link { display: block; padding: 9px 16px; border: 1px solid transparent; border-radius: 6px 6px 0 0; color: #495057; text-decoration: none; margin-bottom: -1px; cursor: pointer; background: none; }
+            .shary-tabs .nav-link:hover { background: #f4f6f8; }
+            .shary-tabs .nav-link.active { background: #fff; border-color: #dee2e6 #dee2e6 #fff; color: #0d1b3e; font-weight: 600; }
+            .shary-tabs .nav-link .badge { font-weight: normal; }
+            .shary-checkered { background-color: #fff; background-image: linear-gradient(45deg, #d9dde2 25%, transparent 25%), linear-gradient(-45deg, #d9dde2 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #d9dde2 75%), linear-gradient(-45deg, transparent 75%, #d9dde2 75%); background-size: 20px 20px; background-position: 0 0, 0 10px, 10px -10px, -10px 0; }
+            .shary-preview { border: 1px solid #e9ecef; border-radius: 8px; padding: 8px; text-align: center; min-height: 120px; display: flex; align-items: center; justify-content: center; }
+            .shary-preview img { max-width: 100%; max-height: 280px; height: auto; }
+            .shary-help { display: block; color: #6c757d; font-weight: normal; margin-bottom: 10px; line-height: 1.6; }
+            .shary-switch-row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #eef0f2; }
+            .shary-switch-row:last-child { border-bottom: 0; }
+            .shary-switch-row input[type=checkbox] { width: 20px; height: 20px; margin-top: 2px; flex: 0 0 auto; }
+            .shary-switch-row label { margin: 0; cursor: pointer; }
+            .shary-where th, .shary-where td { white-space: normal !important; vertical-align: top; }
+            .shary-grid input.form-control, .shary-grid select.form-control { min-width: 92px; padding: 4px 8px; height: 34px; }
+            .shary-auto { background: #f6f8fa; border: 1px dashed #ced4da; border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; }
+            .shary-auto dt { font-weight: normal; color: #6c757d; }
+            .shary-auto dd { font-weight: 600; margin-bottom: 6px; }
+        </style>
+      </head>
   <body class="sx" dir="ltr">
  <div id="global-loader" >
     <div class="whirly-loader"> </div>
@@ -148,7 +168,7 @@
 <b>6</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-        <a class="sx-lang" href="../admin-shary-page-links-unit-1353.html" data-sx-lang="1" lang="ar">عربي</a>
+        <a class="sx-lang" href="../admin-shary-units_badge_1.html" data-sx-lang="1" lang="ar">عربي</a>
         <details class="sx-user" data-sx-user>
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
@@ -290,46 +310,35 @@
                                                                                                 <li><a href="admin-shary-lead-sources.html" class="" ><span>Where leads come from</span></a></li>
                                                     </ul>
                     </div>
-                                                                <div class="sx-grp " data-sx-grp="units">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-units">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="units">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-units">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
                             <span>Units</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-units">
                                                             
-                                                                                                <li><a href="admin-shary-all-units.html" class="" ><span>⭐ Everything about a unit (one page)</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-units.html" class="" ><span>All units</span></a></li>
+                                                                                                <li><a href="admin-shary-units.html" class="is-on"  aria-current="page" ><span>All units</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units-create.html" class="" ><span>Add a unit</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units-sheet.html" class="" ><span>Upload a units sheet</span></a></li>
+                                                                                                <li><a href="admin-shary-units-sheet.html" class="" ><span>Import &amp; export units</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">6</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units_type_developer_sale.html" class="" ><span>Developer units</span></a></li>
+                                                                                                <li><a href="admin-shary-units-photo-sets.html" class="" ><span>Unit photos by project</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units_type_resale.html" class="" ><span>Resale units</span></a></li>
+                                                                                                <li><a href="admin-shary-units-offers.html" class="" ><span>Offers &amp; opportunities</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units_type_rent.html" class="" ><span>Rental units</span></a></li>
-                                                            
-                                                                                                <li><a href="exclusive-resale-admin.html" class="" ><span>Exclusive resale opportunities</span></a></li>
-                                                            
-                                                                                                <li><a href="limited-offer-units.html" class="" ><span>Limited-time offers</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-extras-units.html" class="" ><span>Unit page data</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-type-photos.html" class="" ><span>Type photo library</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-tracking-units.html" class="" ><span>Tracking units (customer unit)</span></a></li>
-                                                            
-                                                                                                <li><a href="unit-tracking-admin.html" class="" ><span>Unit tracking in the app</span></a></li>
-                                                            
-                                                                                                <li><a href="units-list.html" class="" ><span>Units (old screen)</span></a></li>
-                                                            
-                                                                                                <li><a href="units-0.html" class="" ><span>Manage properties</span></a></li>
-                                                    </ul>
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                
+                                                        </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="projects">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-projects">
@@ -533,7 +542,7 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">2</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">3</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
@@ -541,7 +550,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">2</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">1</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -567,6 +576,11 @@
                                                             
                                                                                                 <li><a href="admin-shary-app-pages.html" class="" ><span>Service pages on the website</span></a></li>
                                                             
+                                                                                                <li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
+                                                            
+                                                                
+                                                                
+                                                                
                                                                                                 <li><a href="reservations.html" class="" ><span>Book with the developer</span></a></li>
                                                             
                                                                                                 <li><a href="reservations-bank-accounts.html" class="" ><span>Bank accounts</span></a></li>
@@ -799,11 +813,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX",
+                token: "3tLGOrtBTjeVwUlTJg0jOwl857Bw7J6ofV8T5fyj",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=3tLGOrtBTjeVwUlTJg0jOwl857Bw7J6ofV8T5fyj",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -813,279 +827,488 @@
         <script src="../a/js/shary-admin/editor.js"></script>
         
              
-
-    <div class="sx-pre">
-        <div class="sx-crumb">Units ‹ Apartment 120 m² for sale in Creek Harbour Residences</div>
-        <nav class="sx-tabs" aria-label="Apartment 120 m² for sale in Creek Harbour Residences">
-                            <a href="admin-shary-units-1353.html" class="" >Basic data</a>
-                            <a href="gallery-44-2.html" data-sx-sample="1" class="" >Photos</a>
-                            <a href="admin-shary-extras-units-1353.html" class="" >Page data<em>new</em></a>
-                            <a href="admin-shary-page-links-unit-1353.html" class="is-on"  aria-current="page" >Page links<em>new</em></a>
-                        <a class="sx-tabs__site" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">Open the page on the website <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
-</a>        </nav>
-        
-                            <div class="sx-pre__home"><style>
-        .sx-hp { border: 1.5px solid #dfe6ee; border-radius: 14px; background: #fff; padding: 14px 16px; margin-bottom: 16px; }
-        .sx-hp__head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-        .sx-hp__head strong { font-size: 15.5px; font-weight: 800; color: #123a5c; }
-        .sx-hp__help { color: #5b7189; font-size: 13px; font-weight: 700; margin-bottom: 8px; }
-        .sx-hp__rows { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 8px; }
-        .sx-hp__row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; border: 1px solid #eef2f6; border-radius: 12px; background: #fbfcfe; }
-        .sx-hp__row form { margin: 0; }
-        .sx-hp__name { font-weight: 800; color: #123a5c; font-size: 13.5px; line-height: 1.5; }
-        .sx-hp__state { display: block; font-size: 12px; font-weight: 800; }
-        .sx-hp__state.is-on { color: #11845b; }
-        .sx-hp__state.is-off { color: #8a97a6; }
-        .sx-hp .btn { min-height: 36px; border-radius: 10px; font-weight: 800; font-size: 13px; padding: 5px 12px; white-space: nowrap; }
-    </style>
-    <div class="sx-hp" data-home-box="unit">
-        <div class="sx-hp__head">
-            <strong>On the home page</strong>
-            <a class="btn btn-light" href="admin-shary-home-sections_tab_recommended.html">Order the home sections ↗</a>
+    <template data-sx-crumb><div class="sx-crumb">Units ‹ All units</div></template>
+    <template data-sx-hint>
+        <div class="sx-hint">
+            <b>This screen controls:</b>
+            <span>صفحات البحث والقوائم (بيع / إيجار / مشاريع) — كروت الوحدات والمشاريع</span><span>صفحات البحث والقوائم (بيع / إيجار / مشاريع) — شارة &quot;عرض&quot; وعروض الوحدة</span><span>صفحة الوحدة (بيع / إعادة بيع / إيجار) — كل بيانات الوحدة والسعر والمساحة من–إلى</span><span>صفحة الوحدة (بيع / إعادة بيع / إيجار) — خطة السداد وتفاصيلها والأقساط الإضافية</span>            <span>and 4 more</span>            <a href="admin-shary-guide.html">All places</a>
         </div>
-        <div class="sx-hp__help">Choose the section → it shows first there on the home page. Order all sections from «Home page sections».</div>
-        <div class="sx-hp__rows">
-                                        <div class="sx-hp__row">
-                    <span><span class="sx-hp__name">Recommended units</span>
-                        <span class="sx-hp__state is-on">✓ Shown</span></span>
-                    <form method="post" action="#preview/admin/shary/home-sections/toggle">
-                        <input type="hidden" name="_token" value="preview" autocomplete="off">                        <input type="hidden" name="section" value="recommended">
-                        <input type="hidden" name="id" value="1353">
-                        <input type="hidden" name="on" value="0">
-                        <input type="hidden" name="back" value="/admin/shary/page-links/unit/1353">
-                        <button type="submit" class="btn btn-light">Remove</button>
-                    </form>
-                </div>
-                                    <div class="sx-hp__row">
-                <span><span class="sx-hp__name">On the website</span>
-                    <span class="sx-hp__state is-on">✓ Shown on the website</span></span>
-                <form method="post" action="#preview/admin/shary/home-sections/toggle">
-                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <input type="hidden" name="section" value="site">
-                    <input type="hidden" name="kind" value="unit">
-                    <input type="hidden" name="id" value="1353">
-                    <input type="hidden" name="on" value="0">
-                    <input type="hidden" name="back" value="/admin/shary/page-links/unit/1353">
-                    <button type="submit" class="btn btn-light">Hide it</button>
-                </form>
-            </div>
-                    </div>
-    </div>
-</div>
+    </template>
+
                 
-            </div>
-                
-        <div class="page-wrapper cardhead">
+        <div class="page-wrapper">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>Page links — Apartment 120 m² for sale in Creek Harbour Residences</h4>
-                    <h6>Every block the page fills from the data by itself. For each one: shown or hidden, a title you write, items you choose to show first, and items you remove. What you do not choose keeps filling itself.</h6>
+                    <h4>Units (add and edit)</h4>
+                    <h6>All units in one place: developer sale, resale and rent — and standalone units without a project or developer. Offers, payment plans and the "Offer" badge are managed here.</h6>
                 </div>
-                                    <div class="page-btn"><a class="btn btn-added" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">View on site</a></div>
-                            </div>
+                <div class="page-btn">
+                                            <a class="btn btn-added me-1 mb-1" href="admin-shary-units-create_type_developer_sale.html">+ Developer unit</a>
+                                            <a class="btn btn-added me-1 mb-1" href="admin-shary-units-create_type_resale.html">+ Resale unit</a>
+                                            <a class="btn btn-added me-1 mb-1" href="admin-shary-units-create_type_rent.html">+ Rent unit</a>
+                                    </div>
+            </div>
 
             
-            <form method="post" action="#preview/admin/shary/page-links/unit/1353" class="sx-pl">
-                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                        <div class="card sx-pl__block" data-pl-block="project_units">
-                        <div class="card-header">
-                            <h5 class="card-title mb-1">Other units in the project</h5>
-                            <small class="text-muted">Similar units of the same project (same type first).</small>
-                        </div>
-                        <div class="card-body">
-                                                            <label class="sx-pl__shown">
-                                    <input type="checkbox" name="blocks[project_units][shown]" value="1" checked>
-                                    <b>Shown on the page</b>
-                                </label>
-                                                        <div class="row g-2 mt-1">
-                                <div class="col-md-6">
-                                    <label>Title (Arabic)</label>
-                                    <input type="text" class="form-control" name="blocks[project_units][title_ar]" value="" dir="rtl" maxlength="255" placeholder="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Title (English)</label>
-                                    <input type="text" class="form-control" name="blocks[project_units][title_en]" value="" dir="ltr" maxlength="255" placeholder="More units in Pearl Residences">
-                                </div>
-                            </div>
-                            <small class="text-muted d-block mt-1">Empty = the title the website shows now (written faintly inside the box).</small>
+            <ul class="nav nav-tabs shary-tabs mb-3">
+    <li class="nav-item"><a class="nav-link active" href="admin-shary-units.html">All <span class="badge bg-secondary">239</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="admin-shary-units_type_developer_sale.html">Developer sale <span class="badge bg-secondary">183</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="admin-shary-units_type_resale.html">Resale <span class="badge bg-secondary">34</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="admin-shary-units_type_rent.html">Rent <span class="badge bg-secondary">22</span></a></li>
+        <li class="nav-item"><a class="nav-link " href="admin-shary-units_standalone_1.html">Standalone units <span class="badge bg-secondary">8</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="admin-shary-units-drafts.html">Drafts <span class="badge bg-warning text-dark">6</span></a></li>
+    </ul>
 
-                                                            
-                                <h6 class="sx-pl__sub">Your choice (shown first, in this order)</h6>
-                                <ol class="sx-pl__pins" data-pl-pins>
-                                                                    </ol>
-                                <div class="sx-pl__search" data-pl-search="unit" data-pl-field="blocks[project_units]">
-                                    <input type="text" class="form-control" data-pl-q placeholder="Search a unit (name or number) to add…">
-                                    <div class="sx-pl__results" data-pl-results></div>
-                                </div>
-                                                        
-                            <h6 class="sx-pl__sub">What shows now from the data (tick what should not show)</h6>
-                                                            <ul class="sx-pl__auto">
-                                                                                                                                                                <li>
-                                                                                                    <label><input type="checkbox" name="blocks[project_units][excluded][]" value="1352" > Hide</label>
-                                                                                                <span>Apartment 78 m² in Creek Harbour Residences #1352</span>
-                                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="sx-pl__open">Open</a>                                            </li>
-                                                                                                            </ul>
-                                                    </div>
-                    </div>
-                                                        <div class="card sx-pl__block" data-pl-block="more">
-                        <div class="card-header">
-                            <h5 class="card-title mb-1">More properties in the project</h5>
-                            <small class="text-muted">A link for each unit type in the unit’s project + all units.</small>
+            <div class="card">
+                <div class="card-body">
+                    <form method="GET" class="row g-2 mb-3 align-items-end">
+                                                                        <div class="col-lg-4 col-md-6 col-12">
+                            <label>Search</label>
+                            <input type="text" class="form-control" name="q" value="" placeholder="Unit name or reference">
                         </div>
-                        <div class="card-body">
-                                                            <label class="sx-pl__shown">
-                                    <input type="checkbox" name="blocks[more][shown]" value="1" checked>
-                                    <b>Shown on the page</b>
-                                </label>
-                                                        <div class="row g-2 mt-1">
-                                <div class="col-md-6">
-                                    <label>Title (Arabic)</label>
-                                    <input type="text" class="form-control" name="blocks[more][title_ar]" value="" dir="rtl" maxlength="255" placeholder="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Title (English)</label>
-                                    <input type="text" class="form-control" name="blocks[more][title_en]" value="" dir="ltr" maxlength="255" placeholder="More properties in Pearl Residences">
-                                </div>
-                            </div>
-                            <small class="text-muted d-block mt-1">Empty = the title the website shows now (written faintly inside the box).</small>
-
-                                                            
-                                <h6 class="sx-pl__sub">Links you write (shown first)</h6>
-                                <div data-pl-links>
-                                                                    </div>
-                                <button type="button" class="btn btn-sm btn-primary" data-pl-add-link>+ Link</button>
-                                <template data-pl-link-template><div class="sx-pl__link" data-pl-link>
-    <div class="row g-2">
-        <div class="col-md-4">
-            <label>Words (Arabic)</label>
-            <input type="text" class="form-control" name="blocks[more][links][__i__][label_ar]" value="" dir="rtl" maxlength="200">
-        </div>
-        <div class="col-md-4">
-            <label>Words (English)</label>
-            <input type="text" class="form-control" name="blocks[more][links][__i__][label_en]" value="" dir="ltr" maxlength="200">
-        </div>
-        <div class="col-md-4">
-            <label>Link</label>
-            <input type="text" class="form-control" name="blocks[more][links][__i__][url]" value="" dir="ltr" maxlength="500" placeholder="/ar/… · https://…">
-        </div>
-    </div>
-    <button type="button" class="btn btn-sm btn-outline-danger mt-2" data-pl-drop-link>Remove</button>
-</div>
-</template>
-                                                        
-                            <h6 class="sx-pl__sub">The links that show now from the data (tick what should not show)</h6>
-                                                            <p class="text-muted mb-0">The data shows nothing here now — you can choose by hand above.</p>
-                                                    </div>
-                    </div>
-                                                        <div class="card sx-pl__block" data-pl-block="opportunities">
-                        <div class="card-header">
-                            <h5 class="card-title mb-1">Strongest resale opportunities</h5>
-                            <small class="text-muted">Shown on the opportunity page only: other opportunities at the bottom.</small>
+                        <div class="col-lg-3 col-md-6 col-12">
+                            <label>Project</label>
+                            <select class="select form-control" name="compound_id">
+                                <option value="">All</option>
+                                                                    <option value="7" >Aliva</option>
+                                                                    <option value="309" >Antalya Coast</option>
+                                                                    <option value="22" >Athens Riviera Residences</option>
+                                                                    <option value="204" >Avelin</option>
+                                                                    <option value="243" >Azha</option>
+                                                                    <option value="10" >Badya</option>
+                                                                    <option value="9" >Belle Vie</option>
+                                                                    <option value="229" >Beyond Blue</option>
+                                                                    <option value="6" >Bloomfields</option>
+                                                                    <option value="206" >Blue Tree</option>
+                                                                    <option value="240" >Bo Islands</option>
+                                                                    <option value="308" >Bosphorus View</option>
+                                                                    <option value="230" >Caesar</option>
+                                                                    <option value="219" >Cairo Gate</option>
+                                                                    <option value="310" >Canary Quarter</option>
+                                                                    <option value="208" >Celia</option>
+                                                                    <option value="225" >City of Odyssia</option>
+                                                                    <option value="303" >Creek Gardens</option>
+                                                                    <option value="20" >Creek Harbour Residences</option>
+                                                                    <option value="23" >Crete Sea Villas</option>
+                                                                    <option value="232" >D-Bay</option>
+                                                                    <option value="90" >Demo Empty Project</option>
+                                                                    <option value="203" >Eastvale</option>
+                                                                    <option value="214" >El Patio 5 East</option>
+                                                                    <option value="213" >El Patio Casa</option>
+                                                                    <option value="212" >El Patio Prime</option>
+                                                                    <option value="218" >El Patio Sola</option>
+                                                                    <option value="209" >Etaje</option>
+                                                                    <option value="13" >Fouka Bay</option>
+                                                                    <option value="241" >Four</option>
+                                                                    <option value="205" >Garnet</option>
+                                                                    <option value="239" >Ghazala Bay</option>
+                                                                    <option value="227" >Grand Valleys</option>
+                                                                    <option value="12" >Hacienda Bay</option>
+                                                                    <option value="19" >Hidden Heights</option>
+                                                                    <option value="16" >IL Bosco</option>
+                                                                    <option value="15" >IL Monte Galala</option>
+                                                                    <option value="307" >Jeddah Waterfront</option>
+                                                                    <option value="14" >June</option>
+                                                                    <option value="221" >Karmell</option>
+                                                                    <option value="217" >Katameya Creeks</option>
+                                                                    <option value="224" >Kings Way</option>
+                                                                    <option value="238" >LVLS</option>
+                                                                    <option value="228" >La Vista Bay</option>
+                                                                    <option value="231" >La Vista Bay East</option>
+                                                                    <option value="314" >Lusail Marina</option>
+                                                                    <option value="311" >Manchester Central</option>
+                                                                    <option value="11" >Marassi</option>
+                                                                    <option value="18" >Marassi Marina</option>
+                                                                    <option value="302" >Marina Gate</option>
+                                                                    <option value="301" >Marina Heights</option>
+                                                                    <option value="237" >Mazarine</option>
+                                                                    <option value="226" >Midtown Sky</option>
+                                                                    <option value="1" >Mivida</option>
+                                                                    <option value="17" >Mivida Parks</option>
+                                                                    <option value="222" >Mountain View Hyde Park</option>
+                                                                    <option value="235" >Mountain View North Coast</option>
+                                                                    <option value="242" >Mountain View Sokhna</option>
+                                                                    <option value="5" >Mountain View iCity</option>
+                                                                    <option value="312" >Muscat Bay</option>
+                                                                    <option value="313" >Muscat Hills</option>
+                                                                    <option value="236" >North Edge</option>
+                                                                    <option value="223" >O West</option>
+                                                                    <option value="2" >Palm Hills New Cairo</option>
+                                                                    <option value="315" >Pearl Residences</option>
+                                                                    <option value="207" >Privado</option>
+                                                                    <option value="305" >Riyadh Boulevard</option>
+                                                                    <option value="306" >Riyadh Gardens</option>
+                                                                    <option value="21" >Saadiyat Lagoons</option>
+                                                                    <option value="304" >Saadiyat Villas</option>
+                                                                    <option value="201" >Scenes</option>
+                                                                    <option value="291" >Scenes - Phase one</option>
+                                                                    <option value="293" >Scenes - Phase three</option>
+                                                                    <option value="292" >Scenes - Phase two</option>
+                                                                    <option value="215" >Springs</option>
+                                                                    <option value="234" >Stella Heights</option>
+                                                                    <option value="211" >Swan Lake Residences</option>
+                                                                    <option value="233" >Telal</option>
+                                                                    <option value="244" >Telal Sokhna</option>
+                                                                    <option value="210" >The Brooks</option>
+                                                                    <option value="202" >The Butterfly</option>
+                                                                    <option value="220" >The Estates</option>
+                                                                    <option value="216" >The Pulse</option>
+                                                                    <option value="4" >Villette</option>
+                                                                    <option value="3" >ZED East</option>
+                                                                    <option value="8" >ZED West</option>
+                                                            </select>
                         </div>
-                        <div class="card-body">
-                                                            <label class="sx-pl__shown">
-                                    <input type="checkbox" name="blocks[opportunities][shown]" value="1" checked>
-                                    <b>Shown on the page</b>
-                                </label>
-                                                        <div class="row g-2 mt-1">
-                                <div class="col-md-6">
-                                    <label>Title (Arabic)</label>
-                                    <input type="text" class="form-control" name="blocks[opportunities][title_ar]" value="" dir="rtl" maxlength="255" placeholder="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Title (English)</label>
-                                    <input type="text" class="form-control" name="blocks[opportunities][title_en]" value="" dir="ltr" maxlength="255" placeholder="Top resale opportunities">
-                                </div>
-                            </div>
-                            <small class="text-muted d-block mt-1">Empty = the title the website shows now (written faintly inside the box).</small>
-
-                                                            
-                                <h6 class="sx-pl__sub">Your choice (shown first, in this order)</h6>
-                                <ol class="sx-pl__pins" data-pl-pins>
-                                                                    </ol>
-                                <div class="sx-pl__search" data-pl-search="unit" data-pl-field="blocks[opportunities]">
-                                    <input type="text" class="form-control" data-pl-q placeholder="Search a unit (name or number) to add…">
-                                    <div class="sx-pl__results" data-pl-results></div>
-                                </div>
-                                                        
-                            <h6 class="sx-pl__sub">What shows now from the data (tick what should not show)</h6>
-                                                            <ul class="sx-pl__auto">
-                                                                                                                                                                <li>
-                                                                                                    <label><input type="checkbox" name="blocks[opportunities][excluded][]" value="12" > Hide</label>
-                                                                                                <span>Villa 410 m² resale in Villette #12</span>
-                                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="sx-pl__open">Open</a>                                            </li>
-                                                                                                                                                                                                        <li>
-                                                                                                    <label><input type="checkbox" name="blocks[opportunities][excluded][]" value="27" > Hide</label>
-                                                                                                <span>Villa 420 m² resale in Belle Vie #27</span>
-                                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="sx-pl__open">Open</a>                                            </li>
-                                                                                                                                                                                                        <li>
-                                                                                                    <label><input type="checkbox" name="blocks[opportunities][excluded][]" value="34" > Hide</label>
-                                                                                                <span>Chalet 160 m² resale in Marassi #34</span>
-                                                <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="sx-pl__open">Open</a>                                            </li>
-                                                                                                            </ul>
-                                                    </div>
-                    </div>
-                                                        <div class="card sx-pl__block" data-pl-block="latest">
-                        <div class="card-header">
-                            <h5 class="card-title mb-1">Latest listings</h5>
-                            <small class="text-muted">Unit cards from other projects at the bottom (rent unit: latest units).</small>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <label>Status</label>
+                            <select class="form-control" name="status">
+                                <option value="">All</option>
+                                <option value="1" >Active</option>
+                                <option value="0" >Inactive</option>
+                            </select>
                         </div>
-                        <div class="card-body">
-                                                            <label class="sx-pl__shown">
-                                    <input type="checkbox" name="blocks[latest][shown]" value="1" checked>
-                                    <b>Shown on the page</b>
-                                </label>
-                                                        <div class="row g-2 mt-1">
-                                <div class="col-md-6">
-                                    <label>Title (Arabic)</label>
-                                    <input type="text" class="form-control" name="blocks[latest][title_ar]" value="وحدات ممكن تعجبك" dir="rtl" maxlength="255" placeholder="">
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Title (English)</label>
-                                    <input type="text" class="form-control" name="blocks[latest][title_en]" value="" dir="ltr" maxlength="255" placeholder="Latest offers">
-                                </div>
+                                                    <div class="col-lg-2 col-md-4 col-6">
+                                <label>Verified / Shary Ma3ak</label>
+                                <select class="form-control" name="ma3ak">
+                                    <option value="">All</option>
+                                    <option value="1" >Verified units</option>
+                                </select>
                             </div>
-                            <small class="text-muted d-block mt-1">Empty = the title the website shows now (written faintly inside the box).</small>
+                                                                            <div class="col-lg-2 col-md-4 col-6">
+                                <label>"Offer" badge</label>
+                                <select class="form-control" name="badge">
+                                    <option value="">All</option>
+                                    <option value="1" selected>With the badge</option>
+                                </select>
+                            </div>
+                                                <div class="col-auto"><button type="submit" class="btn btn-primary">Search</button></div>
+                    </form>
 
-                                                            
-                                <h6 class="sx-pl__sub">Your choice (shown first, in this order)</h6>
-                                <ol class="sx-pl__pins" data-pl-pins>
-                                                                    </ol>
-                                <div class="sx-pl__search" data-pl-search="unit" data-pl-field="blocks[latest]">
-                                    <input type="text" class="form-control" data-pl-q placeholder="Search a unit (name or number) to add…">
-                                    <div class="sx-pl__results" data-pl-results></div>
-                                </div>
-                                                        
-                            <h6 class="sx-pl__sub">What shows now from the data (tick what should not show)</h6>
-                                                            <p class="text-muted mb-0">The data shows nothing here now — you can choose by hand above.</p>
-                                                    </div>
+                    
+                    <form method="post" action="#preview/admin/shary/units-bulk" id="units-bulk" class="d-flex flex-wrap align-items-end gap-2 mb-3" data-units-bulk>
+                        <input type="hidden" name="_token" value="preview" autocomplete="off">                        <div>
+                            <label class="fw-bold" for="units-bulk-action">Do with the ticked</label>
+                            <select class="form-control" id="units-bulk-action" name="action" required data-sx-pick="off" style="min-width:220px">
+                                <option value="">Choose…</option>
+                                                                    <option value="show">Show on the website</option>
+                                                                    <option value="hide">Hide from the website</option>
+                                                                    <option value="recommend">Show in «Recommended for you» on the home page</option>
+                                                                    <option value="unrecommend">Remove from «Recommended for you»</option>
+                                                                    <option value="delete">Delete the ticked units</option>
+                                                                                                    
+                                    <optgroup label="Shary Ma3ak">
+                                        <option value="ma3ak">Add to the «Shary Ma3ak» opportunities (goal on the next step)</option>
+                                    </optgroup>
+                                                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary fw-bold">Apply (<span data-bulk-count>0</span>)</button>
+                        <small class="text-muted fw-bold">Tick units with the box at the start of each row (or tick all from the top).</small>
+                    </form>
+
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th style="width:36px"><input type="checkbox" data-bulk-all aria-label="Tick all" title="Tick all"></th>
+                                    <th>#</th>
+                                    <th>Unit</th>
+                                    <th>Unit type</th>
+                                    <th>Project</th>
+                                    <th>Price</th>
+                                    <th>Offers</th>                                    <th>"Offer" badge</th>                                    <th>Verified / Shary Ma3ak</th>                                    <th>Home page</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                                                                                                            <tr>
+                                        <td><input type="checkbox" name="ids[]" value="1353" form="units-bulk" data-bulk-row aria-label="#1353"></td>
+                                        <td>1353</td>
+                                        <td>
+                                                                                            <img src="../a/images/compounds/units/8728d098e96a6apartment-1053.jpg.jpg" alt="" loading="lazy" style="width:56px;height:42px;object-fit:cover;border-radius:8px;border:1px solid #dfe6ee;float:inline-start;margin-inline-end:8px">
+                                                                                        <a href="admin-shary-units-1353.html"><strong>Apartment 120 m² for sale in Creek Harbour Residences</strong></a>
+                                            <small class="text-muted d-block">A66  · The Pearl </small>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1353/type">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <select name="sale_type" class="form-control form-control-sm" style="min-width: 130px;" onchange="this.form.submit()" title="Change the unit type">
+                                                                                                            <option value="developer_sale" selected>Developer sale</option>
+                                                                                                            <option value="resale" >Resale</option>
+                                                                                                            <option value="rent" >Rent</option>
+                                                                                                    </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                                                                            Pearl Residences
+                                                <small class="text-muted d-block">Gulf Horizon Properties</small>                                                                                    </td>
+                                        <td dir="ltr">2,565,000</td>
+                                                                                    <td> — </td>
+                                                                                                                            <td>
+                                                <form method="post" action="#preview/admin/shary/units/1353/toggle/show_offer_badge">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: the word shows on the unit card only when switched on here — it is not tied to offers or payment plans.">Offer ✓</button>
+                                                </form>
+                                            </td>
+                                                                                                                                                                        <td>
+                                                <form method="post" action="#preview/admin/shary/units/1353/toggle/shary_ma3ak">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: when on, the "Verified" mark shows on the unit card and the unit is listed under the "Shary Ma3ak" tab of its project page.">Verified ✓</button>
+                                                </form>
+                                            </td>
+                                                                                <td>
+                                            <div class="d-flex flex-column gap-1">
+                                                <form method="post" action="#preview/admin/shary/units/1353/toggle/recommend">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="«Recommended for you» on the website home page — shows first when you choose it" style="white-space:nowrap">Recommended ✓</button>
+                                                </form>
+                                                <form method="post" action="#preview/admin/shary/units/1353/toggle/show_in_home">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="The same as the "Show in home" switch of the old units list" style="white-space:nowrap">On home ✓</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1353/toggle/status">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <button type="submit" class="btn btn-sm p-0 border-0 bg-transparent"><span class="badges bg-lightgreen">Active</span>
+</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="admin-shary-units-1353.html">Edit</a>
+                                                                                            <a class="btn btn-sm btn-light" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">View on site</a>
+                                                                                    </td>
+                                    </tr>
+                                                                                                                                            <tr>
+                                        <td><input type="checkbox" name="ids[]" value="1323" form="units-bulk" data-bulk-row aria-label="#1323"></td>
+                                        <td>1323</td>
+                                        <td>
+                                                                                            <img src="../a/images/compounds/units/dbad13977057dvilla-1002.jpg.jpg" alt="" loading="lazy" style="width:56px;height:42px;object-fit:cover;border-radius:8px;border:1px solid #dfe6ee;float:inline-start;margin-inline-end:8px">
+                                                                                        <a href="admin-shary-units-1353.html" data-sx-sample="1"><strong>Twin house, Scenes Phase three</strong></a>
+                                            <small class="text-muted d-block">TW18  · Mostakbal City </small>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1323/type">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <select name="sale_type" class="form-control form-control-sm" style="min-width: 130px;" onchange="this.form.submit()" title="Change the unit type">
+                                                                                                            <option value="developer_sale" selected>Developer sale</option>
+                                                                                                            <option value="resale" >Resale</option>
+                                                                                                            <option value="rent" >Rent</option>
+                                                                                                    </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                                                                            Scenes - Phase three
+                                                <small class="text-muted d-block">Tatweer Misr</small>                                                                                    </td>
+                                        <td dir="ltr">37,434,000</td>
+                                                                                    <td> — </td>
+                                                                                                                            <td>
+                                                <form method="post" action="#preview/admin/shary/units/1323/toggle/show_offer_badge">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: the word shows on the unit card only when switched on here — it is not tied to offers or payment plans.">Offer ✓</button>
+                                                </form>
+                                            </td>
+                                                                                                                                                                        <td>
+                                                <form method="post" action="#preview/admin/shary/units/1323/toggle/shary_ma3ak">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: when on, the "Verified" mark shows on the unit card and the unit is listed under the "Shary Ma3ak" tab of its project page.">Verified ✓</button>
+                                                </form>
+                                            </td>
+                                                                                <td>
+                                            <div class="d-flex flex-column gap-1">
+                                                <form method="post" action="#preview/admin/shary/units/1323/toggle/recommend">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="«Recommended for you» on the website home page — shows first when you choose it" style="white-space:nowrap">Recommended ✓</button>
+                                                </form>
+                                                <form method="post" action="#preview/admin/shary/units/1323/toggle/show_in_home">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="The same as the "Show in home" switch of the old units list" style="white-space:nowrap">On home ✓</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1323/toggle/status">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <button type="submit" class="btn btn-sm p-0 border-0 bg-transparent"><span class="badges bg-lightgreen">Active</span>
+</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="admin-shary-units-1353.html" data-sx-sample="1">Edit</a>
+                                                                                            <a class="btn btn-sm btn-light" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">View on site</a>
+                                                                                    </td>
+                                    </tr>
+                                                                                                                                            <tr>
+                                        <td><input type="checkbox" name="ids[]" value="1307" form="units-bulk" data-bulk-row aria-label="#1307"></td>
+                                        <td>1307</td>
+                                        <td>
+                                                                                            <img src="../a/images/compounds/units/dbad13977057dvilla-1002.jpg.jpg" alt="" loading="lazy" style="width:56px;height:42px;object-fit:cover;border-radius:8px;border:1px solid #dfe6ee;float:inline-start;margin-inline-end:8px">
+                                                                                        <a href="admin-shary-units-1353.html" data-sx-sample="1"><strong>Twin house, Scenes</strong></a>
+                                            <small class="text-muted d-block">TW15  · Mostakbal City </small>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1307/type">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <select name="sale_type" class="form-control form-control-sm" style="min-width: 130px;" onchange="this.form.submit()" title="Change the unit type">
+                                                                                                            <option value="developer_sale" selected>Developer sale</option>
+                                                                                                            <option value="resale" >Resale</option>
+                                                                                                            <option value="rent" >Rent</option>
+                                                                                                    </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                                                                            Scenes
+                                                <small class="text-muted d-block">Tatweer Misr</small>                                                                                    </td>
+                                        <td dir="ltr">65,510,000</td>
+                                                                                    <td> — </td>
+                                                                                                                            <td>
+                                                <form method="post" action="#preview/admin/shary/units/1307/toggle/show_offer_badge">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: the word shows on the unit card only when switched on here — it is not tied to offers or payment plans.">Offer ✓</button>
+                                                </form>
+                                            </td>
+                                                                                                                                                                        <td>
+                                                <form method="post" action="#preview/admin/shary/units/1307/toggle/shary_ma3ak">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: when on, the "Verified" mark shows on the unit card and the unit is listed under the "Shary Ma3ak" tab of its project page.">Verified ✓</button>
+                                                </form>
+                                            </td>
+                                                                                <td>
+                                            <div class="d-flex flex-column gap-1">
+                                                <form method="post" action="#preview/admin/shary/units/1307/toggle/recommend">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="«Recommended for you» on the website home page — shows first when you choose it" style="white-space:nowrap">Recommended ✓</button>
+                                                </form>
+                                                <form method="post" action="#preview/admin/shary/units/1307/toggle/show_in_home">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-light" title="The same as the "Show in home" switch of the old units list" style="white-space:nowrap">Not on home</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1307/toggle/status">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <button type="submit" class="btn btn-sm p-0 border-0 bg-transparent"><span class="badges bg-lightgreen">Active</span>
+</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="admin-shary-units-1353.html" data-sx-sample="1">Edit</a>
+                                                                                            <a class="btn btn-sm btn-light" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">View on site</a>
+                                                                                    </td>
+                                    </tr>
+                                                                                                                                            <tr>
+                                        <td><input type="checkbox" name="ids[]" value="1224" form="units-bulk" data-bulk-row aria-label="#1224"></td>
+                                        <td>1224</td>
+                                        <td>
+                                                                                            <img src="../a/images/compounds/units/54bf6cb0b45baapartment-1019.jpg.jpg" alt="" loading="lazy" style="width:56px;height:42px;object-fit:cover;border-radius:8px;border:1px solid #dfe6ee;float:inline-start;margin-inline-end:8px">
+                                                                                        <a href="admin-shary-units-1353.html" data-sx-sample="1"><strong>Apartment 150 m² for sale in Springs</strong></a>
+                                            <small class="text-muted d-block">A46  · El Shorouk </small>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1224/type">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <select name="sale_type" class="form-control form-control-sm" style="min-width: 130px;" onchange="this.form.submit()" title="Change the unit type">
+                                                                                                            <option value="developer_sale" selected>Developer sale</option>
+                                                                                                            <option value="resale" >Resale</option>
+                                                                                                            <option value="rent" >Rent</option>
+                                                                                                    </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                                                                            Springs
+                                                <small class="text-muted d-block">Tatweer Misr</small>                                                                                    </td>
+                                        <td dir="ltr">7,055,000</td>
+                                                                                    <td> — </td>
+                                                                                                                            <td>
+                                                <form method="post" action="#preview/admin/shary/units/1224/toggle/show_offer_badge">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: the word shows on the unit card only when switched on here — it is not tied to offers or payment plans.">Offer ✓</button>
+                                                </form>
+                                            </td>
+                                                                                                                                                                        <td>
+                                                <form method="post" action="#preview/admin/shary/units/1224/toggle/shary_ma3ak">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: when on, the "Verified" mark shows on the unit card and the unit is listed under the "Shary Ma3ak" tab of its project page.">Verified ✓</button>
+                                                </form>
+                                            </td>
+                                                                                <td>
+                                            <div class="d-flex flex-column gap-1">
+                                                <form method="post" action="#preview/admin/shary/units/1224/toggle/recommend">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="«Recommended for you» on the website home page — shows first when you choose it" style="white-space:nowrap">Recommended ✓</button>
+                                                </form>
+                                                <form method="post" action="#preview/admin/shary/units/1224/toggle/show_in_home">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="The same as the "Show in home" switch of the old units list" style="white-space:nowrap">On home ✓</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/1224/toggle/status">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <button type="submit" class="btn btn-sm p-0 border-0 bg-transparent"><span class="badges bg-lightred">Inactive</span>
+</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="admin-shary-units-1353.html" data-sx-sample="1">Edit</a>
+                                                                                    </td>
+                                    </tr>
+                                                                                                                                            <tr>
+                                        <td><input type="checkbox" name="ids[]" value="910" form="units-bulk" data-bulk-row aria-label="#910"></td>
+                                        <td>910</td>
+                                        <td>
+                                                                                        <a href="admin-shary-units-1353.html" data-sx-sample="1"><strong>Standalone test apartment</strong></a>
+                                            <small class="text-muted d-block">A104  · Mostakbal City </small>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/910/type">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <select name="sale_type" class="form-control form-control-sm" style="min-width: 130px;" onchange="this.form.submit()" title="Change the unit type">
+                                                                                                            <option value="developer_sale" >Developer sale</option>
+                                                                                                            <option value="resale" selected>Resale</option>
+                                                                                                            <option value="rent" >Rent</option>
+                                                                                                    </select>
+                                            </form>
+                                        </td>
+                                        <td>
+                                                                                            <span class="badges bg-lightyellow">Standalone</span>
+                                                                                                                                    </td>
+                                        <td dir="ltr">4,500,000</td>
+                                                                                    <td><span class="badge bg-info">3</span></td>
+                                                                                                                            <td>
+                                                <form method="post" action="#preview/admin/shary/units/910/toggle/show_offer_badge">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-success" title="Manual: the word shows on the unit card only when switched on here — it is not tied to offers or payment plans.">Offer ✓</button>
+                                                </form>
+                                            </td>
+                                                                                                                                                                        <td>
+                                                <form method="post" action="#preview/admin/shary/units/910/toggle/shary_ma3ak">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-light" title="Manual: when on, the "Verified" mark shows on the unit card and the unit is listed under the "Shary Ma3ak" tab of its project page.">Off</button>
+                                                </form>
+                                            </td>
+                                                                                <td>
+                                            <div class="d-flex flex-column gap-1">
+                                                <form method="post" action="#preview/admin/shary/units/910/toggle/recommend">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-light" title="«Recommended for you» on the website home page — shows first when you choose it" style="white-space:nowrap">Not recommended</button>
+                                                </form>
+                                                <form method="post" action="#preview/admin/shary/units/910/toggle/show_in_home">
+                                                    <input type="hidden" name="_token" value="preview" autocomplete="off">                                                    <button type="submit" class="btn btn-sm btn-light" title="The same as the "Show in home" switch of the old units list" style="white-space:nowrap">Not on home</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <form method="post" action="#preview/admin/shary/units/910/toggle/status">
+                                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                                <button type="submit" class="btn btn-sm p-0 border-0 bg-transparent"><span class="badges bg-lightgreen">Active</span>
+</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" href="admin-shary-units-1353.html" data-sx-sample="1">Edit</a>
+                                                                                            <a class="btn btn-sm btn-light" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">View on site</a>
+                                                                                    </td>
+                                    </tr>
+                                                            </tbody>
+                        </table>
                     </div>
-                                <div style="position: sticky; bottom: 0; z-index: 20; background: #fff; border-top: 1px solid #e3e7ec; padding: 12px 0;">
-                    <button type="submit" class="btn btn-submit me-2">Save</button>
-                    <small class="text-muted">Saving shows on the website right away.</small>
+                    
+                    <script>
+                        (function () {
+                            var form = document.querySelector('[data-units-bulk]');
+                            if (!form) { return; }
+                            var all = document.querySelector('[data-bulk-all]');
+                            var rows = function () { return Array.prototype.slice.call(document.querySelectorAll('[data-bulk-row]')); };
+                            var count = form.querySelector('[data-bulk-count]');
+                            function update() { count.textContent = rows().filter(function (box) { return box.checked; }).length; }
+                            if (all) { all.addEventListener('change', function () { rows().forEach(function (box) { box.checked = all.checked; }); update(); }); }
+                            rows().forEach(function (box) { box.addEventListener('change', update); });
+                            form.addEventListener('submit', function (event) {
+                                var chosen = rows().filter(function (box) { return box.checked; }).length;
+                                if (!chosen) { event.preventDefault(); window.alert("Tick at least one unit first."); return; }
+                                if (form.querySelector('[name=action]').value === 'delete' && !window.confirm("Delete :count units \u2014 are you sure?".replace(':count', chosen))) { event.preventDefault(); }
+                            });
+                        })();
+                    </script>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <style>
-        .sx-pl__shown { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 6px; cursor: pointer; }
-        .sx-pl__shown input { width: 18px; height: 18px; }
-        .sx-pl__sub { margin: 16px 0 8px; font-weight: 800; color: #123a5c; }
-        .sx-pl__pins { padding-inline-start: 20px; margin: 0 0 8px; }
-        .sx-pl__pins li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 6px 0; border-bottom: 1px solid #eef2f6; }
-        .sx-pl__pins li span { flex: 1 1 200px; font-weight: 700; }
-        .sx-pl__search { position: relative; max-width: 560px; }
-        .sx-pl__results { border: 1px solid #e3e9f0; border-radius: 8px; margin-top: 6px; max-height: 260px; overflow: auto; }
-        .sx-pl__results:empty { display: none; }
-        .sx-pl__results button { display: block; width: 100%; text-align: start; border: 0; border-bottom: 1px solid #f1f4f7; background: #fff; padding: 8px 12px; font-weight: 700; }
-        .sx-pl__results button:hover { background: #f4f8fc; }
-        .sx-pl__auto { list-style: none; padding: 0; margin: 0; }
-        .sx-pl__auto li { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #eef2f6; }
-        .sx-pl__auto li label { margin: 0; white-space: nowrap; color: #b42318; font-weight: 700; cursor: pointer; }
-        .sx-pl__auto li span { flex: 1 1 220px; font-weight: 700; overflow-wrap: anywhere; }
-        .sx-pl__open { font-size: 13px; }
-        .sx-pl__note { margin: 0 0 6px; padding: 8px 12px; border-radius: 8px; background: #f3f7fb; color: #123a5c; font-weight: 700; font-size: 13.5px; }
-        .sx-pl__link { border: 1px solid #dfe7ef; border-radius: 10px; padding: 10px; margin-bottom: 8px; background: #fbfcfe; }
-    </style>
     </div>
 <!-- /Main Wrapper -->
     <!-- jQuery -->
@@ -1199,66 +1422,66 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"RozKq60ehM0NJSWSmmjCqVpDXe8BZPaay23cDXGX","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"3tLGOrtBTjeVwUlTJg0jOwl857Bw7J6ofV8T5fyj","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
             <script>
             (function () {
-                var url = "\/admin\/shary\/content-editor\/links";
-                var L = {"remove":"Remove","up":"Up","down":"Down","none":"No results."};
-                function escapeHtml(value) { return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-                // search → pick → added to "chosen by hand"
-                document.querySelectorAll('[data-pl-search]').forEach(function (box) {
-                    var input = box.querySelector('[data-pl-q]');
-                    var results = box.querySelector('[data-pl-results]');
-                    var pins = box.parentNode.querySelector('[data-pl-pins]');
-                    var timer = null, counter = 0;
-                    input.addEventListener('input', function () {
-                        clearTimeout(timer);
-                        timer = setTimeout(function () {
-                            var mine = ++counter;
-                            if (input.value.trim().length < 1) { results.innerHTML = ''; return; }
-                            fetch(url + '?type=' + encodeURIComponent(box.getAttribute('data-pl-search')) + '&lang=' + "en" + '&q=' + encodeURIComponent(input.value.trim()), { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' })
-                                .then(function (response) { return response.json(); })
-                                .then(function (json) {
-                                    if (mine !== counter) { return; }
-                                    var items = (json && json.items) || [];
-                                    results.innerHTML = items.length ? '' : '<div class="p-2 text-muted">' + escapeHtml(L.none) + '</div>';
-                                    items.forEach(function (item) {
-                                        if (!item.id) { return; }
-                                        var row = document.createElement('button');
-                                        row.type = 'button';
-                                        row.textContent = item.label;
-                                        row.addEventListener('click', function () {
-                                            if (pins.querySelector('input[value="' + item.id + '"]')) { results.innerHTML = ''; input.value = ''; return; }
-                                            var li = document.createElement('li');
-                                            li.setAttribute('data-pl-pin', '');
-                                            li.innerHTML = '<input type="hidden" name="' + box.getAttribute('data-pl-field') + '[pinned][]" value="' + Number(item.id) + '"><span>' + escapeHtml(item.label) + '</span>' +
-                                                '<button type="button" class="btn btn-sm btn-light" data-pl-up aria-label="' + escapeHtml(L.up) + '">↑</button><button type="button" class="btn btn-sm btn-light" data-pl-down aria-label="' + escapeHtml(L.down) + '">↓</button>' +
-                                                '<button type="button" class="btn btn-sm btn-outline-danger" data-pl-remove>' + escapeHtml(L.remove) + '</button>';
-                                            pins.appendChild(li);
-                                            results.innerHTML = '';
-                                            input.value = '';
-                                        });
-                                        results.appendChild(row);
-                                    });
-                                })
-                                .catch(function () { results.innerHTML = ''; });
-                        }, 220);
-                    });
-                });
-                document.addEventListener('click', function (event) {
-                    var pin = event.target.closest('[data-pl-pin]');
-                    if (pin && event.target.closest('[data-pl-remove]')) { pin.parentNode.removeChild(pin); return; }
-                    if (pin && event.target.closest('[data-pl-up]') && pin.previousElementSibling) { pin.parentNode.insertBefore(pin, pin.previousElementSibling); return; }
-                    if (pin && event.target.closest('[data-pl-down]') && pin.nextElementSibling) { pin.parentNode.insertBefore(pin.nextElementSibling, pin); return; }
-                    var add = event.target.closest('[data-pl-add-link]');
-                    if (add) {
-                        var card = add.closest('[data-pl-block]');
-                        card.querySelector('[data-pl-links]').insertAdjacentHTML('beforeend', card.querySelector('[data-pl-link-template]').innerHTML.replace(/__i__/g, String(Date.now())));
-                        return;
+                var TEXT = {
+                    title: "Are you sure?",
+                    yes: "Yes, delete",
+                    no: "Cancel"                };
+
+                document.addEventListener('submit', function (event) {
+                    var form = event.target;
+                    if (!form.hasAttribute || !form.hasAttribute('data-shary-confirm') || form.getAttribute('data-shary-ok') === '1') { return; }
+                    event.preventDefault();
+                    var message = form.getAttribute('data-shary-confirm');
+                    var go = function () { form.setAttribute('data-shary-ok', '1'); form.submit(); };
+                    if (window.Swal && Swal.fire) {
+                        Swal.fire({
+                            title: TEXT.title, text: message, type: 'warning', showCancelButton: true,
+                            confirmButtonText: TEXT.yes, cancelButtonText: TEXT.no,
+                            confirmButtonClass: 'btn btn-primary', cancelButtonClass: 'btn btn-danger ml-1', buttonsStyling: false
+                        }).then(function (result) { if (result.value) { go(); } });
+                    } else if (window.confirm(message)) {
+                        go();
                     }
-                    var drop = event.target.closest('[data-pl-drop-link]');
-                    if (drop) { var row = drop.closest('[data-pl-link]'); if (row) { row.parentNode.removeChild(row); } }
+                }, true);
+
+                document.addEventListener('click', function (event) {
+                    var button = event.target.closest ? event.target.closest('[data-shary-all]') : null;
+                    if (!button) { return; }
+                    event.preventDefault();
+                    var on = button.getAttribute('data-shary-all') === '1';
+                    var scope = button.closest('form') || document;
+                    scope.querySelectorAll('input[type=checkbox][data-shary-switch]').forEach(function (box) { box.checked = on; });
+                });
+
+                // ---- client-side tabs of one long form (tabbed "extra fields" screens): [data-shary-tabset] > a[data-shary-tab], panes [data-shary-pane]
+                document.querySelectorAll('[data-shary-tabset]').forEach(function (bar) {
+                    var scope = bar.closest('[data-shary-tabbed]') || document;
+                    var memory = scope.querySelector('input[name=_tab]');
+                    function show(key) {
+                        var found = false;
+                        scope.querySelectorAll('[data-shary-pane]').forEach(function (pane) {
+                            var on = pane.getAttribute('data-shary-pane') === key;
+                            pane.style.display = on ? '' : 'none';
+                            found = found || on;
+                        });
+                        if (!found) { return; }
+                        bar.querySelectorAll('[data-shary-tab]').forEach(function (link) { link.classList.toggle('active', link.getAttribute('data-shary-tab') === key); });
+                        if (memory) { memory.value = key; }
+                    }
+                    bar.addEventListener('click', function (event) {
+                        var link = event.target.closest('[data-shary-tab]');
+                        if (!link) { return; }
+                        event.preventDefault();
+                        show(link.getAttribute('data-shary-tab'));
+                        if (window.history && history.replaceState) { history.replaceState(null, '', '#' + link.getAttribute('data-shary-tab')); }
+                    });
+                    var start = (location.hash || '').replace('#', '');
+                    var forced = bar.getAttribute('data-shary-open');
+                    show(forced || (start && bar.querySelector('[data-shary-tab="' + start.replace(/[^a-z0-9_\-]/gi, '') + '"]') ? start : bar.querySelector('[data-shary-tab]').getAttribute('data-shary-tab')));
                 });
             })();
         </script>
