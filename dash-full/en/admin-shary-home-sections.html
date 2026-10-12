@@ -200,6 +200,8 @@
                                                             
                                                                                                 <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
                                                             
+                                                                                                <li><a href="admin-shary-agent-performance.html" class="" ><span>Performance</span></a></li>
+                                                            
                                                                                                 <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">13</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
@@ -797,11 +799,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "xVa6ydp8wP21aZww3ptRiAyslLF3oX6rVLJrMQsA",
+                token: "QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=xVa6ydp8wP21aZww3ptRiAyslLF3oX6rVLJrMQsA",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -865,7 +867,7 @@
     .sx-hs-slide .card-header .sx-hs-slide__title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .sx-hs-photo { position: relative; overflow: hidden; border: 1.5px solid var(--hs-line); border-radius: 10px; background: #eef3f8; display: flex; align-items: center; justify-content: center; color: #8a97a6; font-size: 13px; font-weight: 700; }
     .sx-hs-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .sx-hs-photo--desktop { aspect-ratio: 2880 / 847; }
+    .sx-hs-photo--desktop { aspect-ratio: 2880 / 1180; }
     .sx-hs-photo--mobile { aspect-ratio: 1170 / 965; max-width: 280px; }
     .sx-hs-chip { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 800; color: #5b7189; }
     .sx-hs-chip--auto { color: var(--hs-green); }
@@ -952,6 +954,62 @@
                                     <div class="tab-pane fade show active" id="hs-slider" role="tabpanel" aria-labelledby="hs-tab-slider">
                                                     <div class="alert alert-info fw-bold">Just choose the project — the slide makes itself: the project name and place, the photo made from the project pictures in the exact desktop and phone shapes, and tapping the slide opens the project page.</div>
 
+<div class="alert alert-warning fw-bold" dir="rtl">📐 Slider image sizes: desktop 2880 × 1180 — mobile 1170 × 965 (pixels). Upload the design at this size so it shows whole, with no crop or zoom.</div>
+
+<div class="card" id="hero-brand">
+    <div class="card-header"><h5 class="mb-0 fw-bold">Slider headline (fixed on all slides)</h5></div>
+    <div class="card-body">
+        <div class="sx-hs-note mb-3">Shown on the slider instead of the project name and place. Empty = the default sentence.</div>
+        <form method="post" action="#preview/admin/shary/hero/brand">
+            <input type="hidden" name="_token" value="preview" autocomplete="off">            <div class="row">
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-title_ar">Title (Arabic)</label>
+                        <input type="text" class="form-control" id="hero-title_ar" name="title_ar" value=""
+                            maxlength="120" dir="rtl"
+                            placeholder="عقارك وخدماته، في مكان واحد">
+                    </div>
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-title_en">Title (English)</label>
+                        <input type="text" class="form-control" id="hero-title_en" name="title_en" value=""
+                            maxlength="120" dir="ltr"
+                            placeholder="Your property and its services, in one place">
+                    </div>
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-sub_ar">Line below (Arabic)</label>
+                        <input type="text" class="form-control" id="hero-sub_ar" name="sub_ar" value=""
+                            maxlength="220" dir="rtl"
+                            placeholder="اشتري، بيع، أجّر، شطّب وافرش وحدتك — وخليك متابعها بعد الشراء مع شاري.">
+                    </div>
+                                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold" for="hero-sub_en">Line below (English)</label>
+                        <input type="text" class="form-control" id="hero-sub_en" name="sub_en" value=""
+                            maxlength="220" dir="ltr"
+                            placeholder="Buy, sell, rent, finish and furnish your unit — and keep following it after purchase with Shary.">
+                    </div>
+                            </div>
+            <button type="submit" class="btn btn-submit">Save headline</button>
+        </form>
+    </div>
+</div>
+
+<div class="card" id="hero-featured">
+    <div class="card-header"><h5 class="mb-0 fw-bold">«Featured projects» card (left of the slider)</h5></div>
+    <div class="card-body">
+        <div class="sx-hs-note mb-3">Pick the projects shown in the small card on the left of the slider — they rotate and each opens its page. Nothing picked = the slider projects.</div>
+        <div class="sx-hs-search mb-3" data-hs-search data-url="#preview/admin/shary/home-sections/slider/search" data-kind="project">
+            <input type="search" class="form-control" placeholder="Find a project by name…" autocomplete="off" data-hs-input data-sx-pick="off" aria-label="Find a project by name…">
+            <div class="sx-hs-results" data-hs-results hidden></div>
+            <form method="post" action="#preview/admin/shary/hero/featured" data-hs-form hidden>
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <input type="hidden" name="op" value="add">
+                <input type="hidden" name="id" value="">
+                <button type="submit" hidden>Add</button>
+            </form>
+        </div>
+                    <div class="sx-hs-empty">No projects picked — the card shows the slider projects.</div>
+            </div>
+</div>
+
+
 <div class="card">
     <div class="card-body">
         <label class="form-label fw-bold" for="hs-find-slider">Add a project to the slider</label>
@@ -1006,14 +1064,14 @@
 
             <div class="row">
                                                                             <div class="col-lg-8 col-12 mb-3">
-                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 847</small></label>
+                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 1180</small></label>
                         <div class="sx-hs-photo sx-hs-photo--desktop">
                                                             <img src="../a/images/sliders/21f949fc0ed03hidden.jpg.jpg" alt="" loading="lazy">
                                                     </div>
                                                     <span class="sx-hs-chip sx-hs-chip--auto">Uploaded by hand</span>
                                                                         <div class="d-flex flex-wrap gap-2 mt-2">
                                                         <label class="btn btn-sm btn-light sx-hs-btn mb-0">
-                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="847" data-url="#preview/admin/shary/hero/4/photo">
+                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="1180" data-url="#preview/admin/shary/hero/4/photo">
                             </label>
                                                     </div>
                     </div>
@@ -1100,15 +1158,15 @@
 
             <div class="row">
                                                                             <div class="col-lg-8 col-12 mb-3">
-                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 847</small></label>
+                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 1180</small></label>
                         <div class="sx-hs-photo sx-hs-photo--desktop">
                                                             <img src="../a/images/sliders/6ac75ca9347f1-hero-desktop.jpg" alt="" loading="lazy">
                                                     </div>
                                                     <span class="sx-hs-chip sx-hs-chip--auto">Uploaded by hand</span>
                                                                         <div class="d-flex flex-wrap gap-2 mt-2">
-                                                            <button type="button" class="btn btn-sm btn-primary sx-hs-btn" data-hero-adjust data-src="../a/images/compounds/e61cb2253b97e-bloomfields.webp" data-slot="desktop" data-width="2880" data-height="847" data-url="#preview/admin/shary/hero/3/photo">Adjust the crop</button>
+                                                            <button type="button" class="btn btn-sm btn-primary sx-hs-btn" data-hero-adjust data-src="../a/images/compounds/e61cb2253b97e-bloomfields.webp" data-slot="desktop" data-width="2880" data-height="1180" data-url="#preview/admin/shary/hero/3/photo">Adjust the crop</button>
                                                         <label class="btn btn-sm btn-light sx-hs-btn mb-0">
-                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="847" data-url="#preview/admin/shary/hero/3/photo">
+                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="1180" data-url="#preview/admin/shary/hero/3/photo">
                             </label>
                                                     </div>
                     </div>
@@ -1226,15 +1284,15 @@
 
             <div class="row">
                                                                             <div class="col-lg-8 col-12 mb-3">
-                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 847</small></label>
+                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 1180</small></label>
                         <div class="sx-hs-photo sx-hs-photo--desktop">
                                                             <img src="../a/images/sliders/6ac75ca9347f1-hero-desktop.jpg" alt="" loading="lazy">
                                                     </div>
                                                     <span class="sx-hs-chip sx-hs-chip--auto">Uploaded by hand</span>
                                                                         <div class="d-flex flex-wrap gap-2 mt-2">
-                                                            <button type="button" class="btn btn-sm btn-primary sx-hs-btn" data-hero-adjust data-src="../a/images/compounds/b0ccaae4991b7-fouka-bay.webp" data-slot="desktop" data-width="2880" data-height="847" data-url="#preview/admin/shary/hero/2/photo">Adjust the crop</button>
+                                                            <button type="button" class="btn btn-sm btn-primary sx-hs-btn" data-hero-adjust data-src="../a/images/compounds/b0ccaae4991b7-fouka-bay.webp" data-slot="desktop" data-width="2880" data-height="1180" data-url="#preview/admin/shary/hero/2/photo">Adjust the crop</button>
                                                         <label class="btn btn-sm btn-light sx-hs-btn mb-0">
-                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="847" data-url="#preview/admin/shary/hero/2/photo">
+                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="1180" data-url="#preview/admin/shary/hero/2/photo">
                             </label>
                                                     </div>
                     </div>
@@ -1352,15 +1410,15 @@
 
             <div class="row">
                                                                             <div class="col-lg-8 col-12 mb-3">
-                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 847</small></label>
+                        <label class="d-block fw-bold">Desktop photo <small class="text-muted" dir="ltr">2880 × 1180</small></label>
                         <div class="sx-hs-photo sx-hs-photo--desktop">
                                                             <img src="../a/images/sliders/6ac75ca9347f1-hero-desktop.jpg" alt="" loading="lazy">
                                                     </div>
                                                     <span class="sx-hs-chip sx-hs-chip--auto">Uploaded by hand</span>
                                                                         <div class="d-flex flex-wrap gap-2 mt-2">
-                                                            <button type="button" class="btn btn-sm btn-primary sx-hs-btn" data-hero-adjust data-src="../a/images/compounds/31bcfd65e9582-june.webp" data-slot="desktop" data-width="2880" data-height="847" data-url="#preview/admin/shary/hero/1/photo">Adjust the crop</button>
+                                                            <button type="button" class="btn btn-sm btn-primary sx-hs-btn" data-hero-adjust data-src="../a/images/compounds/31bcfd65e9582-june.webp" data-slot="desktop" data-width="2880" data-height="1180" data-url="#preview/admin/shary/hero/1/photo">Adjust the crop</button>
                                                         <label class="btn btn-sm btn-light sx-hs-btn mb-0">
-                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="847" data-url="#preview/admin/shary/hero/1/photo">
+                                Upload from your device                                <input type="file" accept="image/jpeg,image/png,image/webp" hidden data-hero-file data-slot="desktop" data-width="2880" data-height="1180" data-url="#preview/admin/shary/hero/1/photo">
                             </label>
                                                     </div>
                     </div>
@@ -8355,7 +8413,7 @@
         var zoom = box.querySelector('[data-crop-zoom]');
         var error = box.querySelector('[data-crop-error]');
         var crop = null;
-        var token = "xVa6ydp8wP21aZww3ptRiAyslLF3oX6rVLJrMQsA";
+        var token = "QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf";
         var labels = {"desktop":"Adjust the desktop photo","mobile":"Adjust the phone photo","small":"This photo is small — :width px wide or more is recommended to stay sharp.","failed":"The photo was not uploaded — try again.","saving":"Saving…","save":"Save photo"};
         function clamp() {
             var sw = stage.clientWidth, sh = stage.clientHeight;
@@ -8547,7 +8605,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"xVa6ydp8wP21aZww3ptRiAyslLF3oX6rVLJrMQsA","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"QPdweuOuLK1xJ9JZJm9YGMkieq91s5AmB3FL3jwf","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>
