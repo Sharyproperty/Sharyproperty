@@ -25389,13 +25389,13 @@ img.sx-fit-contain{object-fit:contain!important}
 .explore-hub__go{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:15px;font-weight:800;color:#1F7F72}
 .explore-hub__go{color:#2C6386;font-size:16px;font-weight:600;text-decoration:underline;text-underline-offset:3px}
 /* لوجو المطور دايرة: الشادو حوالين الدايرة مش مربع (الصورة نفسها مربعة والدايرة جواها) */
-.dev-logo-link>img,.dev-logo-link>span,.dev-icon__logo{border-radius:50%!important}
+.dev-logo-link>span,.dev-icon__logo{border-radius:50%!important}
 
 /* لوجو المطور: الظل والإطار الأبيض على اللينك اللي حوالين اللوجو (دايرة) — الصورة نفسها من غير حواف مدوّرة،
    عشان الحواف المدوّرة على الصورة كانت بتقص أطراف الكلمة (EMAAR MISR) ، ومن غير ظل عليها عشان مايطلعش مربع ورا الدايرة */
 .dev-logo-link{display:inline-flex;flex:none;border-radius:9999px;box-shadow:0 0 0 4px #fff,0 0 0 5px #E6EDF4,0 10px 22px -6px rgba(18,58,92,.38),0 0 22px 8px rgba(255,255,255,.95);transition:transform .2s,box-shadow .2s}
 a.dev-logo-link:hover{box-shadow:0 0 0 4px #fff,0 0 0 5px #DCE6EF,0 16px 30px -8px rgba(18,58,92,.48),0 0 26px 10px #fff}
-.dev-logo-link>img{border-radius:0!important;box-shadow:none!important}
+.dev-logo-link>img{box-shadow:none!important}
 .dev-logo-link>span{box-shadow:none!important}
 a.dev-logo-link:hover>img,a.dev-logo-link:hover>span{box-shadow:none!important}
 
@@ -25405,11 +25405,9 @@ a.dev-logo-link:hover>img,a.dev-logo-link:hover>span{box-shadow:none!important}
 .dev-logo-link{display:inline-flex;flex:none;border-radius:9999px;box-shadow:0 6px 14px -5px rgba(18,58,92,.30),0 1px 3px rgba(18,58,92,.10)!important;transition:transform .2s,box-shadow .2s}
 a.dev-logo-link:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px rgba(18,58,92,.12)!important}
 .dev-logo-link>img,.dev-logo-link>span,a.dev-logo-link:hover>img,a.dev-logo-link:hover>span{box-shadow:none!important}
-.dev-logo-link>img{border-radius:0!important}
 .dev-icon__logo{box-shadow:0 6px 14px -5px rgba(18,58,92,.30),0 1px 3px rgba(18,58,92,.10)!important}
 .dev-icon__logo:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px rgba(18,58,92,.12)!important}
 .prop-bar__logo{border-radius:9999px;width:-moz-fit-content;width:fit-content;box-shadow:0 6px 14px -5px rgba(18,58,92,.30),0 1px 3px rgba(18,58,92,.10)}
-.prop-bar__logo>img{border-radius:0!important}
 /* الستوري: دايرة تركواز (فيه فاصل أبيض صغير بينها وبين اللوجو) */
 .dev-logo-link.has-story,.prop-bar__logo.has-story{box-shadow:0 0 0 2px #fff,0 0 0 4.5px #17a398,0 8px 16px -6px rgba(18,58,92,.32)!important;cursor:pointer}
 
@@ -25505,3 +25503,6 @@ a.dev-logo-link:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px r
 /* الخريطة جاية من صفحة مشروع: المشروع ووحداته بس — من غير فلاتر ولا «اختر المنطقة» ولا كروت المشاريع (بترجع لما لوحة الوحدات تتقفل) */
 .smap.is-project .smap__filters,.smap.is-project .smap__top,.smap.is-project .smap__list-btn,.smap.is-project .smap__areas,.smap.is-project .smap__veil{display:none!important}
 @media (max-width:1023px){.smap.is-project .smap__panel{visibility:hidden}}
+
+/* لوجو المطور: الدايرة بتقص أي حاجة برّاها (اللوجو اللي خلفيته تدرّج / صورة بيملا الدايرة — عمره ما يبان مربع) */
+.dev-logo-link,.prop-bar__logo,.dev-icon__logo,.developer-card,.smap__ps-logo{overflow:hidden;border-radius:9999px}

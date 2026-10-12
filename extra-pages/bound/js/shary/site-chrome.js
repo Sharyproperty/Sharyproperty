@@ -1175,3 +1175,23 @@ window.SharyZoom = function () {
         for (var i = 0; i < list.length; i++) { if (list[i].addedNodes.length || list[i].type === 'attributes') { later(); return; } }
     }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['hidden', 'class'] });
 })();
+
+
+/**
+ * أي زرار «حمّل التطبيق» (جوجل بلاي / آب ستور) على الموبايل: بيعدّي على /download — لو التطبيق متسطّب بيفتح على طول ، ولو مش متسطّب بيروح المتجر.
+ * (App\Http\Controllers\Shary\AppDownloadController@go). على الكمبيوتر اللينك زي ما هو.
+ */
+(function () {
+    var mobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent) || (/macintosh/i.test(navigator.userAgent) && 'ontouchend' in document);
+    if (!mobile) return;
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest && event.target.closest('a[href]');
+        if (!link || event.defaultPrevented) return;
+        var href = link.getAttribute('href') || '';
+        if (!/^https?:\/\/(play\.google\.com\/store\/apps|apps\.apple\.com\/)/i.test(href)) return;
+        var open = document.body && document.body.getAttribute('data-app-open');
+        if (!open) return;
+        event.preventDefault();
+        window.location.href = open;
+    }, true);
+})();

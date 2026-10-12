@@ -766,6 +766,60 @@
             } catch (e) { /* الستايل لسه بيتحمّل */ if (gl.once) gl.once('idle', function () { outline(p); }); }
         }
 
+        // ---- السعر: شريط من–إلى بطرفين + خانتين (زي فلتر السعر في الموقع). الحدود = أقل وأعلى سعر في مشاريع المنطقة المختارة (مقياس لوغاريتمي)
+        var rangeBox = root.querySelector('[data-smap-range]');
+        var rangeLimits = [0, 0];
+        function priceLimits() {
+            var lo = Infinity, hi = 0;
+            items.forEach(function (item) {
+                if (state.area && item.getAttribute('data-area') !== state.area) return;
+                var p = info(item), a = Number(p.price_value) || 0, b = Math.max(a, Number(p.price_max_value) || 0);
+                if (a > 0 && a < lo) lo = a;
+                if (b > hi) hi = b;
+            });
+            if (!isFinite(lo) || !hi) return [0, 0];
+            var step = function (v, up) { var unit = v >= 1e6 ? 1e5 : 1e4; return (up ? Math.ceil(v / unit) : Math.floor(v / unit)) * unit; };
+            return [step(lo, false), step(hi, true)];
+        }
+        function toValue(pos) { var a = Math.log(Math.max(1, rangeLimits[0])), b = Math.log(Math.max(2, rangeLimits[1])); var v = Math.exp(a + (b - a) * pos / 1000); var unit = v >= 1e6 ? 5e4 : 5e3; return Math.round(v / unit) * unit; }
+        function toPos(value) { var a = Math.log(Math.max(1, rangeLimits[0])), b = Math.log(Math.max(2, rangeLimits[1])); if (b <= a) return 0; return Math.max(0, Math.min(1000, Math.round((Math.log(Math.max(1, value)) - a) / (b - a) * 1000))); }
+        function money(v) { return Math.round(v).toLocaleString('en-US'); }
+        function paintRange() {
+            if (!rangeBox) return;
+            var low = rangeBox.querySelector('[data-range-low]'), high = rangeBox.querySelector('[data-range-high]'), fill = rangeBox.querySelector('[data-range-fill]');
+            var lt = rangeBox.querySelector('[data-range-low-text]'), ht = rangeBox.querySelector('[data-range-high-text]');
+            var lo = state.price ? state.price[0] : rangeLimits[0], hi = state.price ? state.price[1] : rangeLimits[1];
+            low.value = toPos(lo); high.value = toPos(hi);
+            var rtl = getComputedStyle(rangeBox).direction === 'rtl', a = low.value / 10, b = high.value / 10;
+            fill.style.left = (rtl ? 100 - b : a) + '%'; fill.style.right = (rtl ? a : 100 - b) + '%';
+            if (document.activeElement !== lt) lt.value = money(lo);
+            if (document.activeElement !== ht) ht.value = money(hi);
+        }
+        function resetRange() { rangeLimits = priceLimits(); if (state.price) state.price = [Math.max(rangeLimits[0], state.price[0]), Math.min(rangeLimits[1], state.price[1])]; if (state.price && state.price[0] <= rangeLimits[0] && state.price[1] >= rangeLimits[1]) state.price = ''; paintRange(); }
+        if (rangeBox) {
+            var lowInput = rangeBox.querySelector('[data-range-low]'), highInput = rangeBox.querySelector('[data-range-high]');
+            var rangeTimer = null;
+            var applyRange = function (lo, hi) {
+                lo = Math.max(rangeLimits[0], Math.min(lo, rangeLimits[1])); hi = Math.min(rangeLimits[1], Math.max(hi, rangeLimits[0]));
+                if (lo > hi) { var t = lo; lo = hi; hi = t; }
+                state.price = lo <= rangeLimits[0] && hi >= rangeLimits[1] ? '' : [lo, hi];
+                paintRange();
+                clearTimeout(rangeTimer); rangeTimer = setTimeout(function () { filter(true); }, 180);
+            };
+            lowInput.addEventListener('input', function () { if (+lowInput.value > +highInput.value) lowInput.value = highInput.value; applyRange(toValue(+lowInput.value), state.price ? state.price[1] : rangeLimits[1]); });
+            highInput.addEventListener('input', function () { if (+highInput.value < +lowInput.value) highInput.value = lowInput.value; applyRange(state.price ? state.price[0] : rangeLimits[0], toValue(+highInput.value)); });
+            ['low', 'high'].forEach(function (side) {
+                var box = rangeBox.querySelector('[data-range-' + side + '-text]');
+                box.addEventListener('change', function () {
+                    var v = Number(String(box.value).replace(/[^\d.]/g, '')) || 0;
+                    if (v > 0 && v < 1000) v *= 1e6;   // «5» = 5 مليون
+                    if (side === 'low') applyRange(v || rangeLimits[0], state.price ? state.price[1] : rangeLimits[1]);
+                    else applyRange(state.price ? state.price[0] : rangeLimits[0], v || rangeLimits[1]);
+                });
+            });
+            resetRange();
+        }
+
         // ---- الفلترة: المنطقة + البحث + أنواع الوحدات + التسليم + السعر. لو مفيش مطابق بالظبط: بنفك الشروط واحد واحد لحد ما يبقى فيه نتيجة
         function matches(item, use) {
             var p = info(item);
@@ -780,10 +834,10 @@
             if (use.sale && state.sale.length && !(p.sales || []).some(function (key) { return state.sale.indexOf(key) > -1; })) return false;
             if (use.types && state.types.length && !(p.type_keys || []).some(function (key) { return state.types.indexOf(key) > -1; })) return false;
             if (use.delivery && state.delivery.length && state.delivery.indexOf(String(p.delivery)) === -1) return false;
-            if (use.price && state.price !== '') {
-                var chip = root.querySelector('[data-smap-f="price"][data-value="' + state.price + '"]');
-                var min = chip ? Number(chip.getAttribute('data-min')) : 0, max = chip ? Number(chip.getAttribute('data-max')) : 0;
-                if (p.price_value < min || (max && p.price_value > max)) return false;
+            if (use.price && state.price) {
+                // المشروع بيظهر لو أسعار وحداته (من أقل سعر لأعلى سعر) داخلة في المدى المختار
+                var lo = state.price[0], hi = state.price[1], from = Number(p.price_value) || 0, to = Math.max(from, Number(p.price_max_value) || 0);
+                if (!from || to < lo || from > hi) return false;
             }
             return true;
         }
@@ -815,7 +869,7 @@
             Array.prototype.forEach.call(counts, function (count) { count.textContent = list.length; });
             if (listLink) listLink.setAttribute('href', (root.getAttribute('data-search-url') || '#') + (state.area ? '?area[]=' + state.area : ''));
             // شارات عدد الاختيارات على زراير الفلاتر
-            [['types', state.types.length], ['delivery', state.delivery.length], ['price', state.price !== '' ? 1 : 0], ['sale', state.sale.length]].forEach(function (pair) {
+            [['types', state.types.length], ['delivery', state.delivery.length], ['price', state.price ? 1 : 0], ['sale', state.sale.length]].forEach(function (pair) {
                 var badge = root.querySelector('[data-smap-fcount="' + pair[0] + '"]');
                 if (badge) { badge.textContent = pair[1]; badge.hidden = !pair[1]; badge.parentNode.classList.toggle('is-set', !!pair[1]); }
             });
@@ -876,7 +930,7 @@
             if (areasBox && !areasBox.hidden && !event.target.closest('[data-smap-areas], [data-smap-areas-toggle]')) toggleAreas(false);
         });
         root.querySelectorAll('[data-smap-area]').forEach(function (chip) {
-            chip.addEventListener('click', function () { setArea(chip.getAttribute('data-smap-area')); toggleAreas(false); filter(); });
+            chip.addEventListener('click', function () { setArea(chip.getAttribute('data-smap-area')); toggleAreas(false); if (rangeBox) resetRange(); filter(); });
         });
 
         // زرار الرجوع: الصفحة اللي قبلها (لو جاي من صفحة في الموقع) — وإلا لينك الزرار (الرئيسية)
@@ -1050,12 +1104,12 @@
             });
         });
         var clear = root.querySelector('[data-smap-fclear]');
-        if (clear) clear.addEventListener('click', function () { state.types = []; state.delivery = []; state.price = ''; state.sale = []; paintChips(); filter(); });
+        if (clear) clear.addEventListener('click', function () { state.types = []; state.delivery = []; state.price = ''; state.sale = []; paintChips(); if (rangeBox) paintRange(); filter(); });
         // "مسح" جنب عنوان كل قسم: بيفضّي القسم ده بس
         root.querySelectorAll('[data-smap-fclear-one]').forEach(function (button) {
             button.addEventListener('click', function () {
                 var kind = button.getAttribute('data-smap-fclear-one');
-                if (kind === 'price') state.price = ''; else if (state[kind]) state[kind] = [];
+                if (kind === 'price') { state.price = ''; if (rangeBox) paintRange(); } else if (state[kind]) state[kind] = [];
                 paintChips();
                 filter();
             });
