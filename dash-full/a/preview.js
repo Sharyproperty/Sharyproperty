@@ -139,6 +139,15 @@
                 }
                 return Promise.resolve(new Response(JSON.stringify(body), { status: 200, headers: { 'Content-Type': 'application/json' } }));
             }
+            // «معاينة الكارت والصفحة» في فورم الوحدة: النسخة المحفوظة مع اللينك للشاشة دي
+            if (/units\/preview/.test(url)) {
+                var me = document.querySelector('script[src$="preview.js"]'), base = me ? me.getAttribute('src').replace(/preview\.js.*$/, '') : 'a/';
+                var page = decodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+                return realFetch(base + 'unit-preview/' + (D.lang === 'en' ? 'en-' : '') + page).then(function (r) {
+                    if (r.ok) { return r; }
+                    return new Response('<p style="font-family:Cairo,Tahoma;font-weight:700;padding:24px;direction:rtl">' + NOTE_SAVE + '</p>', { status: 200, headers: { 'Content-Type': 'text/html' } });
+                });
+            }
             if (method !== 'GET' || /#preview/.test(url)) {
                 toast(NOTE_SAVE);
                 return Promise.resolve(new Response(JSON.stringify({ status: 0, preview: true, message: NOTE_SAVE }), { status: 200, headers: { 'Content-Type': 'application/json' } }));
