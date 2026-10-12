@@ -8954,3 +8954,32 @@ body:has(.shary-home-root) .site-footer {
 /* السرعة: النوافذ المقفولة (بحث المناطق / المطورين ، فلتر الموبايل ، ميتنج زووم ، قايمة المناطق) المتصفح ما بيحسبهاش ولا يرسمها لحد ما تتفتح — كانت بتتحسب مع كل فتحة للصفحة */
 #searchBar:not([style*="100dvh"]), #searchDeveloperBar:not([style*="100dvh"]), #filterBar:not([style*="100dvh"]),
 #zoomMeetingStatic.invisible, #location.invisible { content-visibility: hidden; }
+/* صورة ثابتة / شريحة واحدة: مفيش نقط */
+.shary-home-root .hero-dots--free[hidden] { display: none !important; }
+/* السطر اللي تحت العنوان الكبير («اشتري، بيع، أجّر، شطّب، افرش مع شاري.») في سطر واحد على الكمبيوتر */
+@media (min-width: 1024px) { .shary-home-root .hero-brand__sub { max-width: none !important; white-space: nowrap; } }
+
+/* زرار البحث (الدايرة): أبيض من جوه بإطار وأيقونة كحلي */
+.shary-home-root .search-input-icon { background: #fff !important; color: #0a466b !important; box-shadow: inset 0 0 0 2px #0a466b; }
+.shary-home-root .search-input-icon:hover { background: #eaf2f8 !important; }
+
+/* «مشاريع مميزة»: اسم المشروع بيتغيّر بحركة (يطلع لفوق ويدخل اللي بعده من تحت) */
+.shary-home-root .hero-featured__name { transition: opacity .26s ease, transform .26s ease; }
+.shary-home-root .hero-featured.is-swap .hero-featured__name { opacity: 0; transform: translateY(-8px); }
+.shary-home-root .hero-featured.is-enter .hero-featured__name { opacity: 0; transform: translateY(8px); transition: none; }
+
+/* «اكتشف المشروع»: نبضة خفيفة + لمعة بتعدّي (transform بس — خفيفة على الموبايل ، وبتبدأ بعد ما الصفحة تفتح) */
+.shary-home-root .hero-featured__btn { position: relative; overflow: hidden; isolation: isolate; animation: hfPulse 2.8s ease-in-out infinite; }
+.shary-home-root .hero-featured__btn::after { content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, .5) 50%, transparent 100%); transform: translateX(0) skewX(-20deg); animation: hfShine 2.8s ease-in-out infinite; }
+@keyframes hfShine { 0%, 35% { transform: translateX(0) skewX(-20deg); } 75%, 100% { transform: translateX(422%) skewX(-20deg); } }
+@keyframes hfPulse { 0%, 100% { transform: scale(1); } 12% { transform: scale(1.07); } 26% { transform: scale(1); } }
+html:not(.sx-ready) .shary-home-root .hero-featured__btn, html:not(.sx-ready) .shary-home-root .hero-featured__btn::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .shary-home-root .hero-featured__btn, .shary-home-root .hero-featured__btn::after { animation: none; } }
+
+/* كارت «مشاريع مميزة»: زجاجي شفاف بدل الخلفية الكحلي (موبايل وكمبيوتر) */
+.shary-home-root .hero-featured { background: rgba(255, 255, 255, .14) !important; border: 1px solid rgba(255, 255, 255, .38) !important;
+  -webkit-backdrop-filter: blur(10px) saturate(1.2); backdrop-filter: blur(10px) saturate(1.2); box-shadow: 0 10px 28px -14px rgba(0, 0, 0, .35) !important; }
+.shary-home-root .hero-featured:hover { background: rgba(255, 255, 255, .22) !important; }
+.shary-home-root .hero-featured__name, .shary-home-root .hero-featured__btn { text-shadow: 0 1px 8px rgba(0, 0, 0, .35); }
+.shary-home-root .hero-featured__label { text-shadow: 0 1px 6px rgba(0, 0, 0, .3); }
