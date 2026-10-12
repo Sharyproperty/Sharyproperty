@@ -209,7 +209,7 @@
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
-                        <b class="sx-tag">23</b>                    </a>
+                        <b class="sx-tag">99</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -254,6 +254,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-agent-settings.html" class="" ><span>Access &amp; connections</span></a></li>
                                                             
+                                                                
                                                                 
                                                                 
                                                                 
@@ -323,7 +324,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-units-sheet.html" class="" ><span>Upload a units sheet</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">2</b></a></li>
+                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">6</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units_type_developer_sale.html" class="" ><span>Developer units</span></a></li>
                                                             
@@ -816,11 +817,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "4dwIGcC4QdZr0peO21sZQpm0hQQi5puAXUEZjEWn",
+                token: "bNDOm4lqZC2MiZxsmw1p2UP85LV6SqAmcn6lNu8w",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=4dwIGcC4QdZr0peO21sZQpm0hQQi5puAXUEZjEWn",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=bNDOm4lqZC2MiZxsmw1p2UP85LV6SqAmcn6lNu8w",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -1143,7 +1144,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"4dwIGcC4QdZr0peO21sZQpm0hQQi5puAXUEZjEWn","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"bNDOm4lqZC2MiZxsmw1p2UP85LV6SqAmcn6lNu8w","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
             <script>
             (function () {
@@ -1227,7 +1228,7 @@
                         if (!input.files || !input.files[0]) { return; }
                         var box = input.closest('.col-lg-6');
                         var data = new FormData();
-                        data.append('_token', "4dwIGcC4QdZr0peO21sZQpm0hQQi5puAXUEZjEWn");
+                        data.append('_token', "bNDOm4lqZC2MiZxsmw1p2UP85LV6SqAmcn6lNu8w");
                         data.append('image', input.files[0]);
                         fetch("\/admin\/shary\/site-content\/upload", { method: 'POST', body: data, credentials: 'same-origin', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
                             .then(function (response) { return response.json(); })
