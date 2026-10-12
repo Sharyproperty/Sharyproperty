@@ -1069,11 +1069,28 @@ window.SharyZoom = function () {
         } catch (error) { /* صورة من دومين تاني من غير CORS: اللوجو كامل على دايرة بيضا */ }
     }
 
-    function scan(scope) { (scope || document).querySelectorAll(SELECTOR).forEach(function (img) { if (img.complete) fit(img); }); }
+    // اللوجوهات اللي على الشاشة أو قريبة منها بس (IntersectionObserver) — مش كل لوجوهات الصفحة وهي بتفتح
+    var near = new Set();
+    var logoIo = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) { near.delete(entry.target); return; }
+            near.add(entry.target);
+            if (entry.target.complete) fit(entry.target);
+        });
+    }, { rootMargin: '400px 0px' }) : null;
+    function scan(scope) {
+        (scope || document).querySelectorAll(SELECTOR).forEach(function (img) {
+            if (!logoIo) { if (img.complete) fit(img); return; }
+            if (!img.__logoSeen) { img.__logoSeen = 1; logoIo.observe(img); } else if (near.has(img) && img.complete) fit(img);
+        });
+    }
 
     document.addEventListener('load', function (event) {
         var img = event.target;
-        if (img && img.tagName === 'IMG' && img.matches(SELECTOR)) fit(img);
+        if (img && img.tagName === 'IMG' && img.matches(SELECTOR)) {
+            if (!logoIo || near.has(img)) fit(img);
+            else if (!img.__logoSeen) { img.__logoSeen = 1; logoIo.observe(img); }
+        }
     }, true);
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { scan(); }); else scan();
     window.SharyLogoFit = { scan: scan };
@@ -1161,8 +1178,18 @@ window.SharyZoom = function () {
 (function () {
     var SEL = '[data-fit-line], .shary-card__name, .prop-shot__name a, .shot-card__name, .abroad-dev b, .content-card__body b, .ad-card__title';
     // قراية الكل الأول ثم كتابة مرة واحدة (من غير لفة كتابة / قراية لكل عنصر) — والعناصر المخفية ما بتتلمسش
+    // العناوين اللي على الشاشة أو قريبة منها بس بتتظبط (IntersectionObserver) — والباقي لما توصل لها
+    var lineIo = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+        var els = [];
+        entries.forEach(function (entry) { if (entry.isIntersecting) { els.push(entry.target); lineIo.unobserve(entry.target); } });
+        if (els.length) fitList(els);
+    }, { rootMargin: '400px 0px' }) : null;
     function fitAll(scope) {
         var all = Array.prototype.slice.call((scope && scope.querySelectorAll ? scope : document).querySelectorAll(SEL));
+        if (!lineIo) { fitList(all); return; }
+        all.forEach(function (el) { lineIo.unobserve(el); lineIo.observe(el); });
+    }
+    function fitList(all) {
         var reset = all.filter(function (el) { return el.__fit; });
         reset.forEach(function (el) { el.style.fontSize = ''; el.classList.remove('fit-wrap'); el.__fit = false; });
         var jobs = [];
@@ -1246,4 +1273,15 @@ window.SharyZoom = function () {
         var store = zone.querySelector('a[href]:not([href="#"])');      // نسخة المعاينة (من غير سيرفر): زرار المتجر نفسه
         if (store) store.click();
     });
+})();
+
+
+/**
+ * الحركات اللي بتتكرر على طول (لمعة الأزرار ، نبض الأيقونات): بتبدأ بعد ما الصفحة تفتح وتهدى بثانيتين — مش وقت التحميل (html.sx-ready في app.css)
+ */
+(function () {
+    var root = document.documentElement;
+    var go = function () { root.classList.add('sx-ready'); };
+    var later = function () { window.setTimeout(function () { if ('requestIdleCallback' in window) window.requestIdleCallback(go, { timeout: 2000 }); else go(); }, 2000); };
+    if (document.readyState === 'complete') later(); else window.addEventListener('load', later);
 })();

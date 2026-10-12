@@ -25506,3 +25506,14 @@ a.dev-logo-link:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px r
 
 /* لوجو المطور: الدايرة بتقص أي حاجة برّاها (اللوجو اللي خلفيته تدرّج / صورة بيملا الدايرة — عمره ما يبان مربع) */
 .dev-logo-link,.prop-bar__logo,.dev-icon__logo,.developer-card,.smap__ps-logo{overflow:hidden;border-radius:9999px}
+
+/* السرعة (نفس الشكل): لمعة زرار Shary AI بتتحرك بـ transform بدل left — الـ left كان بيخلي المتصفح يعيد حساب الصفحة كل فريم (التليفون يهنج) */
+.quick-ai::after { will-change: auto; }
+@keyframes quick-sheen {
+  0%, 55% { transform: translateX(0) skewX(-18deg); }
+  85%, 100% { transform: translateX(422%) skewX(-18deg); }
+}
+/* الحركات اللي بتتكرر على طول بتبدأ بعد ما الصفحة تفتح وتهدى (html.sx-ready) — مش وقت التحميل */
+html:not(.sx-ready) .quick-ai::after, html:not(.sx-ready) .fab-beat, html:not(.sx-ready) .fab-call, html:not(.sx-ready) .fab-ring,
+html:not(.sx-ready) .market-ticker-badge::after, html:not(.sx-ready) .market-ticker-badge-inner, html:not(.sx-ready) .market-ticker-dot,
+html:not(.sx-ready) .own-unit-card__btn, html:not(.sx-ready) .own-unit-card__btn::after { animation-play-state: paused !important; }

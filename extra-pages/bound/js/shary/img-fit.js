@@ -156,16 +156,40 @@
     probe.src = url;
   }
 
+  // بنظبط بس الصور اللي على الشاشة أو قريبة منها (IntersectionObserver) — بدل ما نقيس كل صور الصفحة (200+) مرة واحدة وهي بتفتح
+  var visible = new Set();
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      var el = entry.target;
+      if (!entry.isIntersecting) { visible.delete(el); return; }
+      visible.add(el);
+      if (el.tagName === 'IMG') { if (el.complete) queue(el); } else fitBg(el);
+    });
+  }, { rootMargin: '300px 0px' }) : null;
+
   function run(root) {
-    // كل القراية الأول وبعدين كل التعديلات مرة واحدة
+    var scope = root || document;
+    if (io) {
+      scope.querySelectorAll('img').forEach(function (img) { if (!img.classList.contains('sx-fit-pic') && !img.__sxSeen) { img.__sxSeen = 1; io.observe(img); } });
+      scope.querySelectorAll('[style*="background-image"]').forEach(function (el) { if (!el.__sxSeen) { el.__sxSeen = 1; io.observe(el); } });
+      return;
+    }
+    // متصفح قديم من غير IntersectionObserver: كل القراية الأول وبعدين كل التعديلات مرة واحدة
     var todo = [];
-    (root || document).querySelectorAll('img').forEach(function (img) {
+    scope.querySelectorAll('img').forEach(function (img) {
       if (img.classList.contains('sx-fit-pic') || !img.complete) return;
       var m = measureImg(img);
       if (m) todo.push(m);
     });
     todo.forEach(applyImg);
-    (root || document).querySelectorAll('[style*="background-image"]').forEach(fitBg);
+    scope.querySelectorAll('[style*="background-image"]').forEach(fitBg);
+  }
+
+  // مقاس الشاشة اتغيّر: الصور اللي على الشاشة بس تتقاس تاني
+  function refresh() {
+    if (!io) { run(); return; }
+    run();
+    visible.forEach(function (el) { if (el.tagName === 'IMG') { if (el.complete) queue(el); } else fitBg(el); });
   }
 
   // الصور اللي بتحمّل ورا بعض بتتجمع وتتظبط مرة واحدة في الفريم الجاي (بدل حساب الصفحة مع كل صورة)
@@ -183,15 +207,17 @@
   }
 
   document.addEventListener('load', function (e) {
-    if (e.target && e.target.tagName === 'IMG' && !e.target.classList.contains('sx-fit-pic')) queue(e.target);
+    var img = e.target;
+    if (img && img.tagName === 'IMG' && !img.classList.contains('sx-fit-pic') && (!io || visible.has(img))) queue(img);
   }, true);
 
   var timer;
-  function later(root) { clearTimeout(timer); timer = setTimeout(function () { run(root); }, 120); }
-  window.addEventListener('resize', function () { later(); });
+  function later() { clearTimeout(timer); timer = setTimeout(refresh, 120); }
+  var lastW = window.innerWidth;
+  window.addEventListener('resize', function () { if (window.innerWidth !== lastW) { lastW = window.innerWidth; later(); } });   // سكرول الموبايل بيغيّر الارتفاع بس
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { run(); });
   else run();
-  window.addEventListener('load', function () { run(); });
+  window.addEventListener('load', function () { run(); });   // صور اتضافت لحد التحميل (الجديدة بس — اللي اتسجّلت قبل كده بتتشاف من الـ observer)
   if ('MutationObserver' in window) {
     new MutationObserver(function (list) {
       for (var i = 0; i < list.length; i++) {

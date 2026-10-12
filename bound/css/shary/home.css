@@ -8929,7 +8929,6 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
   .shary-home-root .hero-featured__btn { font-size: 11px; padding: 2px 9px; white-space: nowrap; }
   .shary-home-root .hero-dots--free { bottom: calc(var(--hero-over, 100px) + 6px); }
 }
-}
 .shary-home-root .hero-dots--free { position: absolute; left: 0; right: 0; z-index: 20; display: flex; justify-content: center; margin: 0 !important; pointer-events: auto; }
 .shary-home-root .hero-dots--free { bottom: calc(var(--hero-over, 104px) + 12px); }
 
@@ -8945,3 +8944,13 @@ body:has(.shary-home-root) .site-footer {
   content-visibility: auto;
   contain-intrinsic-size: auto 700px;
 }
+
+/* مسافة فاضية (10px) كانت بتظهر بين الهيدر وصورة السلايدر: هامش عنصر جوه السلايدر كان بيطلع برّه (margin collapse) — السلايدر بيبدأ تحت الهيدر على طول */
+.shary-home-root .hero-bg { display: flow-root; }
+/* (كان في قوس «}» زيادة قبل قاعدة نقط السلايدر فالقاعدة كانت بتتشال — والنقط بتنزل جوه الصفحة وتعمل المسافة دي) — على الموبايل النقط مخفية زي ما كانت ظاهرة قبل كده (من غير ما تركب على «مشاريع مميزة») */
+@media (max-width: 1023.98px) { .shary-home-root .hero-dots--free { display: none !important; } }
+/* السرعة (نفس الشكل): لمعة أزرار «عندك وحدة؟» بـ transform بدل left */
+@keyframes ownUnitShine { 0% { transform: translateX(0) skewX(-20deg); } 45%, 100% { transform: translateX(422%) skewX(-20deg); } }
+/* السرعة: النوافذ المقفولة (بحث المناطق / المطورين ، فلتر الموبايل ، ميتنج زووم ، قايمة المناطق) المتصفح ما بيحسبهاش ولا يرسمها لحد ما تتفتح — كانت بتتحسب مع كل فتحة للصفحة */
+#searchBar:not([style*="100dvh"]), #searchDeveloperBar:not([style*="100dvh"]), #filterBar:not([style*="100dvh"]),
+#zoomMeetingStatic.invisible, #location.invisible { content-visibility: hidden; }
