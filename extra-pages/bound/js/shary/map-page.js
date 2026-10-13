@@ -716,6 +716,12 @@
             ps.querySelector('[data-smap-ps-meta]').textContent = [p.developer_name, p.area_label].filter(Boolean).join(' · ');
             var url = ps.querySelector('[data-smap-ps-url]'); url.href = p.url || '#'; url.hidden = !p.url;
             var logo = ps.querySelector('[data-smap-ps-logo]'), short = ps.querySelector('[data-smap-ps-short]');
+            // اللوجو بيفتح صفحة المطور (لو ليه صفحة) — من غير لينك: مش كليكابل
+            var dev = ps.querySelector('[data-smap-ps-dev]');
+            if (dev) {
+                if (p.developer_url) { dev.href = p.developer_url; dev.setAttribute('aria-label', p.developer_name || ''); dev.style.cursor = 'pointer'; }
+                else { dev.removeAttribute('href'); dev.removeAttribute('aria-label'); dev.style.cursor = 'default'; }
+            }
             if (p.developer_logo) { logo.hidden = false; logo.removeAttribute('data-logo-done'); logo.src = p.developer_logo; logo.alt = p.developer_name || ''; short.textContent = ''; }
             else { logo.hidden = true; short.textContent = (p.developer_name || p.name || '').slice(0, 2); }
             var wa = ps.querySelector('[data-smap-ps-wa]');
