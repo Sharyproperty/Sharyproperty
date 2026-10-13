@@ -1297,3 +1297,28 @@ window.SharyZoom = function () {
     var later = function () { window.setTimeout(function () { if ('requestIdleCallback' in window) window.requestIdleCallback(go, { timeout: 2000 }); else go(); }, 2000); };
     if (document.readyState === 'complete') later(); else window.addEventListener('load', later);
 })();
+
+
+/**
+ * «حمّل / افتح التطبيق» على الكمبيوتر (موقع كله: صفحات خدمات التطبيق ، الإعلانات ، كروت «ما يميزنا» …):
+ * أي لينك لـ /download أو /app أو لينك التطبيق (shary://) أو زرار data-afp-open ← صفحة تطبيق شاري على Google Play في تاب جديدة
+ * (زي ما بيحصل في الموبايل: بيوديك للتطبيق). الموبايل زي ما هو (المتجر المناسب أو بيفتح التطبيق).
+ */
+(function () {
+    var ua = navigator.userAgent || '';
+    var phone = /Android|iPad|iPhone|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+    if (phone) return;
+    var PLAY = (document.querySelector('[data-android-url]') || { getAttribute: function () { return ''; } }).getAttribute('data-android-url')
+        || 'https://play.google.com/store/apps/details?id=com.sharyproperties.app';
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest ? event.target.closest('a[href], [data-afp-open]') : null;
+        if (!link || link.closest('[data-app-button]')) return;
+        var href = link.getAttribute('href') || '';
+        var app = link.hasAttribute('data-afp-open') || /^shary:\/\//i.test(href) || /^intent:/i.test(href)
+            || /^(?:https?:\/\/[^\/]+)?(?:\/[^?#]*)?\/(?:download|app|download-app)\/?(?:[?#].*)?$/i.test(href);
+        if (!app) return;
+        event.preventDefault();
+        var tab = window.open(PLAY, '_blank');
+        if (tab) { try { tab.opener = null; } catch (error) { /* */ } } else { window.location.href = PLAY; }   // المتصفح منع التاب الجديدة: نفس التاب
+    }, true);
+})();

@@ -356,29 +356,45 @@
                 var item = document.createElement('li');
                 item.className = 'index-budget__item card-stretch';
                 // اسم المنطقة بس وجنبه صورتها (من غير سعر متر ولا مساحة). الصورة من صف المنطقة في لوحة الاختيار
+                // صورة المنطقة: نفس صورة صف المنطقة في لوحة الاختيار (لينكها الـ src حتى لو لسه ما اتحمّلتش) — ولو مش موجود: من داتا الصفحة (option.area.image)
                 var row = page.querySelector('[data-index-picker] input[name="index-area-pick"][value="' + option.area.slug + '"]');
                 var shown = row ? row.closest('label').querySelector('img') : null;
-                if (shown) {
+                var src = (shown ? (shown.getAttribute('src') || shown.currentSrc || shown.getAttribute('data-src')) : '') || option.area.image || '';
+                if (src) {
                     var image = document.createElement('img');
                     image.className = 'index-budget__image';
-                    image.alt = '';
-                    image.loading = 'lazy';
-                    image.setAttribute('data-fallback', shown.getAttribute('data-fallback') || '');
+                    image.alt = option.area.name || '';
+                    image.width = 40; image.height = 40;
+                    image.decoding = 'async';
+                    image.setAttribute('data-fallback', (shown ? shown.getAttribute('data-fallback') : '') || option.area.image_fallback || '');
                     // الصورة البديلة مرة واحدة ، ولو هي كمان مش موجودة الصورة بتتشال (من غير علامة صورة مكسورة)
                     image.onerror = function () { var spare = this.getAttribute('data-fallback'); if (spare && !this.__spare) { this.__spare = true; this.src = spare; } else { this.onerror = null; this.remove(); } };
-                    image.src = shown.currentSrc || shown.getAttribute('src');
-                    item.appendChild(image);
+                    image.src = src;
+                    item.insertBefore(image, item.firstChild);
                 }
                 var name = document.createElement(option.area.url ? 'a' : 'span');
                 if (option.area.url) name.setAttribute('href', option.area.url);
                 name.className = 'index-budget__name' + (option.area.url ? ' card-link' : '');
                 name.textContent = option.area.name;
                 item.appendChild(name);
+                // الكارت كله بيفتح المنطقة (موبايل وديسك توب) — مش الاسم بس
+                if (option.area.url) {
+                    item.setAttribute('data-href', option.area.url);
+                    item.style.cursor = 'pointer';
+                }
                 list.appendChild(item);
             });
             none.classList.toggle('hidden', options.length > 0);
             budget.querySelectorAll('[data-budget-chip]').forEach(function (chip) {
                 chip.setAttribute('aria-pressed', Number(chip.getAttribute('data-budget-chip')) === amount ? 'true' : 'false');
+            });
+        }
+        if (budget) {
+            var budgetList = budget.querySelector('[data-budget-results]');
+            if (budgetList) budgetList.addEventListener('click', function (event) {
+                if (event.target.closest('a')) return;     // اللينك نفسه بيفتح لوحده
+                var card = event.target.closest('[data-href]');
+                if (card) window.location.href = card.getAttribute('data-href');
             });
         }
         if (budgetInput) {
