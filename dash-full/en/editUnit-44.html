@@ -1,5 +1,5 @@
-<script src="a/assets/js/jquery-3.2.1.min.js"></script>
-<script src="a/vendor/shary-editor/ckeditor.js"></script>
+<script src="../a/assets/js/jquery-3.2.1.min.js"></script>
+<script src="../a/vendor/shary-editor/ckeditor.js"></script>
 <script>CKEDITOR.config.versionCheck = false;</script>
 <script>
 
@@ -30,7 +30,7 @@
         $('#limited_offer').on('change', toggleLimitedOfferFields);
         toggleLimitedOfferFields();
 
-        let unitCompoundId = "291";
+        let unitCompoundId = "15";
         let unitDeveloperId = "6";
 
         $.ajax({
@@ -38,8 +38,8 @@
             type: "GET",
             success: function(data) {
                 // Clear previous options
-                $('#developer_id').empty().append('<option value="">اختر المطور</option>');
-                $('#compound_id').empty().append('<option value="">اختر المشروع</option>');
+                $('#developer_id').empty().append('<option value="">Select Developer</option>');
+                $('#compound_id').empty().append('<option value="">Select Compound</option>');
 
                 // Populate developers select options
                 $.each(data.developers, function(index, developer) {
@@ -143,7 +143,7 @@
 
 </script>
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -152,32 +152,32 @@
 <meta name="author" content="">
 <meta name="robots" content="noindex, nofollow">
 <meta name="csrf-token" content="preview">
-<title>شارى</title>
+<title>Shary</title>
 <!-- Favicon -->
-<link rel="shortcut icon" href="a/images/logo.png">
+<link rel="shortcut icon" href="../a/images/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="a/assets_rtl/css/bootstrap.rtl.min.css">
+<link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
 <!-- Fontawesome CSS -->
-<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/all.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
 <!-- animation CSS -->
-<link rel="stylesheet" href="a/assets/css/animate.css">
+<link rel="stylesheet" href="../a/assets/css/animate.css">
 <!-- Datetimepicker CSS -->
-<link rel="stylesheet" href="a/assets/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
 <!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.carousel.min.css">
-<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.theme.default.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
 <!-- Select2 CSS -->
-<link rel="stylesheet" href="a/assets/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
 <!-- Dragula CSS -->
-<link rel="stylesheet" href="a/assets/plugins/dragula/css/dragula.min.css">
-<link rel="stylesheet" href="a/assets/plugins/summernote/summernote-bs4.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
 <!-- Datatable CSS -->
-<link rel="stylesheet" href="a/assets/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
 <!-- Main CSS -->
-<link rel="stylesheet" href="a/assets_rtl/css/style.css">
-<link rel="stylesheet" href="a/assets/css/admin-polish.css">
+<link rel="stylesheet" href="../a/assets/css/style.css">
+<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
 <link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
 <style type="text/css">
 body, h1, h2, h3, h4, h5, h6, * {
@@ -243,270 +243,263 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="a/css/shary-admin/shell.css">
+<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
 </head>
-<body class="sx" dir="rtl">
+<body class="sx" dir="ltr">
 <div id="global-loader" >
 <div class="whirly-loader"> </div>
 </div>  <!-- Main Wrapper -->
 <div class="main-wrapper">
-<a class="sx-skip" href="#sx-main">روح للمحتوى</a>
+<a class="sx-skip" href="#sx-main">Skip to the content</a>
 <header class="sx-top" data-sx-top>
-<button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="افتح القايمة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+<button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
-<a class="sx-top__brand" href="index.html"><i aria-hidden="true"></i><span>لوحة تحكم شاري</span></a>
+<a class="sx-top__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
 <div class="sx-find" role="search" data-sx-find>
-<label class="sx-sr" for="sx-q">بحث في لوحة التحكم</label>
+<label class="sx-sr" for="sx-q">Search the dashboard</label>
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
-<input type="search" id="sx-q" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="ابحث عن مشروع ، وحدة ، مطور ، منطقة أو شاشة…" role="combobox" aria-expanded="false" aria-controls="sx-q-out" aria-autocomplete="list">
-<button type="button" class="sx-find__x" data-sx-find-close aria-label="امسح البحث"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+<input type="search" id="sx-q" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="Search a project, unit, developer, area or screen…" role="combobox" aria-expanded="false" aria-controls="sx-q-out" aria-autocomplete="list">
+<button type="button" class="sx-find__x" data-sx-find-close aria-label="Clear the search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
 </button>
-<div class="sx-find__out" id="sx-q-out" role="listbox" aria-label="بحث في لوحة التحكم" hidden></div>
+<div class="sx-find__out" id="sx-q-out" role="listbox" aria-label="Search the dashboard" hidden></div>
 </div>
 <div class="sx-top__end">
-<button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="بحث في لوحة التحكم"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
+<button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="Search the dashboard"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-<a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 21"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>21</b></a>
-<a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="افتح الموقع" title="افتح الموقع"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
+<a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 27"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>27</b></a>
+<a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-<a class="sx-lang" href="en/editUnit-1318.html" data-sx-lang="1" lang="en">English</a>
+<a class="sx-lang" href="../editUnit-44.html" data-sx-lang="1" lang="ar">عربي</a>
 <details class="sx-user" data-sx-user>
 <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
 <div class="sx-user__menu">
-<a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">حسابي</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">خروج</a>
+<a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
 </div>
 </details>
 </div>
 </header>
 <aside class="sx-side" id="sx-side" data-sx-side>
 <div class="sx-side__head">
-<a class="sx-side__brand" href="index.html"><i aria-hidden="true"></i><span>لوحة تحكم شاري</span></a>
-<button type="button" class="sx-ico sx-side__close" data-sx-menu-close aria-label="اقفل القايمة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
+<a class="sx-side__brand" href="index.html"><i aria-hidden="true"></i><span>Shary dashboard</span></a>
+<button type="button" class="sx-ico sx-side__close" data-sx-menu-close aria-label="Close the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 6l12 12M18 6 6 18"/></svg>
 </button>
 </div>
-<nav class="sx-nav" aria-label="لوحة تحكم شاري">
-<div class="sx-grp " data-sx-grp="home">
-<button type="button" aria-expanded="false" aria-controls="sx-grp-home">
+<nav class="sx-nav" aria-label="Shary dashboard">
+<a class="sx-one " href="index.html" >
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
-<span>الرئيسية</span>
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
-</button>
-<ul id="sx-grp-home">
-<li><a href="index.html" class="" ><span>الرئيسية</span></a></li>
-<li><a href="index.html" class="" ><span>الرئيسية القديمة (أرقام الداشبورد القديمة)</span></a></li>
-</ul>
-</div>
+<span>Home</span>
+</a>
 <a class="sx-one " href="admin-shary-how-to.html" >
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
-<span>إزاي تستخدم الداشبورد</span>
+<span>How to use the dashboard</span>
 </a>
 <a class="sx-one " href="admin-shary-guide.html" >
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
-<span>فين أعدّل إيه؟</span>
+<span>Where do I edit what?</span>
 </a>
 <a class="sx-one " href="admin-shary-drafts.html" >
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
-<span>المسودات</span>
+<span>Drafts</span>
 <b class="sx-tag">98</b>                    </a>
 <div class="sx-grp " data-sx-grp="agent">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
-<span>الإيجنت</span>
+<span>Agent</span>
 <b class="sx-tag">20</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-agent">
-<li><a href="admin-shary-agent.html" class="" ><span>النهاردة</span></a></li>
-<li><a href="admin-shary-agent-performance.html" class="" ><span>لوحة الأداء</span></a></li>
-<li><a href="admin-shary-agent-review.html" class="" ><span>صندوق المراجعة</span><b class="sx-tag">20</b></a></li>
-<li><a href="admin-shary-agent-commands.html" class="" ><span>الأوامر</span></a></li>
-<li><a href="admin-shary-agent-s-projects.html" class="" ><span>المشاريع</span><b class="sx-tag">2</b></a></li>
-<li><a href="admin-shary-agent-s-units.html" class="" ><span>الوحدات</span><b class="sx-tag">6</b></a></li>
-<li><a href="admin-shary-agent-s-design.html" class="" ><span>الصور والتصميم</span></a></li>
-<li><a href="admin-shary-agent-s-website.html" class="" ><span>صفحات الموقع</span></a></li>
-<li><a href="admin-shary-agent-s-seo.html" class="" ><span>السيو والمقالات</span><b class="sx-tag">6</b></a></li>
-<li><a href="admin-shary-agent-s-messages.html" class="" ><span>رسايل العملاء</span></a></li>
-<li><a href="admin-shary-agent-s-marketing.html" class="" ><span>التسويق</span></a></li>
-<li><a href="admin-shary-agent-s-requests.html" class="" ><span>طلبات العملاء</span></a></li>
-<li><a href="admin-shary-agent-s-ma3ak.html" class="" ><span>شاري معاك</span><b class="sx-tag">3</b></a></li>
-<li><a href="admin-shary-agent-s-places.html" class="" ><span>المطورين والمناطق</span><b class="sx-tag">1</b></a></li>
-<li><a href="admin-shary-agent-s-market.html" class="" ><span>السوق والتقارير</span><b class="sx-tag">2</b></a></li>
-<li><a href="admin-shary-agent-tools.html" class="" ><span>الأدوات</span></a></li>
-<li><a href="admin-shary-agent-keys.html" class="" ><span>المفاتيح والربط</span></a></li>
-<li><a href="admin-shary-agent-log.html" class="" ><span>السجل والتراجع</span></a></li>
-<li><a href="admin-shary-agent-settings.html" class="" ><span>الصلاحيات والربط</span></a></li>
+<li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
+<li><a href="admin-shary-agent-performance.html" class="" ><span>Performance</span></a></li>
+<li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">20</b></a></li>
+<li><a href="admin-shary-agent-commands.html" class="" ><span>Commands</span></a></li>
+<li><a href="admin-shary-agent-s-projects.html" class="" ><span>Projects</span><b class="sx-tag">2</b></a></li>
+<li><a href="admin-shary-agent-s-units.html" class="" ><span>Units</span><b class="sx-tag">6</b></a></li>
+<li><a href="admin-shary-agent-s-design.html" class="" ><span>Pictures &amp; design</span></a></li>
+<li><a href="admin-shary-agent-s-website.html" class="" ><span>Website pages</span></a></li>
+<li><a href="admin-shary-agent-s-seo.html" class="" ><span>SEO &amp; articles</span><b class="sx-tag">6</b></a></li>
+<li><a href="admin-shary-agent-s-messages.html" class="" ><span>Customer messages</span></a></li>
+<li><a href="admin-shary-agent-s-marketing.html" class="" ><span>Marketing</span></a></li>
+<li><a href="admin-shary-agent-s-requests.html" class="" ><span>Customer requests</span></a></li>
+<li><a href="admin-shary-agent-s-ma3ak.html" class="" ><span>Shary Ma3ak</span><b class="sx-tag">3</b></a></li>
+<li><a href="admin-shary-agent-s-places.html" class="" ><span>Developers &amp; areas</span><b class="sx-tag">1</b></a></li>
+<li><a href="admin-shary-agent-s-market.html" class="" ><span>Market &amp; reports</span><b class="sx-tag">2</b></a></li>
+<li><a href="admin-shary-agent-tools.html" class="" ><span>Tools</span></a></li>
+<li><a href="admin-shary-agent-keys.html" class="" ><span>Keys &amp; connections</span></a></li>
+<li><a href="admin-shary-agent-log.html" class="" ><span>Log &amp; undo</span></a></li>
+<li><a href="admin-shary-agent-settings.html" class="" ><span>Access &amp; connections</span></a></li>
 </ul>
 </div>
-<h6 class="sx-nav__title">الشغل اليومي</h6>                                                <div class="sx-grp " data-sx-grp="requests">
+<h6 class="sx-nav__title">Daily work</h6>                                                <div class="sx-grp " data-sx-grp="requests">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
-<span>الطلبات والرسائل</span>
+<span>Requests &amp; messages</span>
 <b class="sx-tag">56</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-requests">
-<li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">56</b></a></li>
-<li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>طلبات بيع عقار</span></a></li>
-<li><a href="admin-shary-owner-requests_type_rent.html" class="" ><span>طلبات تأجير عقار</span></a></li>
-<li><a href="request-sell-property.html" class="" ><span>طلبات بيع عقار (القائمة القديمة)</span></a></li>
-<li><a href="request-rent-property.html" class="" ><span>طلبات تأجير عقار (القائمة القديمة)</span></a></li>
-<li><a href="admin-shary-leads_form_meeting.html" class="" ><span>طلبات الميتنج والمقابلة</span></a></li>
-<li><a href="request-meetings.html" class="" ><span>طلبات الاجتماع (زووم)</span></a></li>
-<li><a href="ContactUs.html" class="" ><span>رسائل اتصل بنا</span></a></li>
-<li><a href="exclusive-resale-admin_tab_requests.html" class="" ><span>عروض على فرص إعادة البيع</span></a></li>
-<li><a href="admin-shary-follows.html" class="" ><span>متابعات المشاريع</span></a></li>
-<li><a href="admin-shary-lead-sources.html" class="" ><span>العملاء جم منين؟</span></a></li>
+<li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">56</b></a></li>
+<li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
+<li><a href="admin-shary-owner-requests_type_rent.html" class="" ><span>Rent-out requests</span></a></li>
+<li><a href="request-sell-property.html" class="" ><span>Sell requests (old list)</span></a></li>
+<li><a href="request-rent-property.html" class="" ><span>Rent-out requests (old list)</span></a></li>
+<li><a href="admin-shary-leads_form_meeting.html" class="" ><span>Meeting requests</span></a></li>
+<li><a href="request-meetings.html" class="" ><span>Zoom meeting requests</span></a></li>
+<li><a href="ContactUs.html" class="" ><span>Contact messages</span></a></li>
+<li><a href="exclusive-resale-admin_tab_requests.html" class="" ><span>Offers on resale opportunities</span></a></li>
+<li><a href="admin-shary-follows.html" class="" ><span>Project follows</span></a></li>
+<li><a href="admin-shary-lead-sources.html" class="" ><span>Where leads come from</span></a></li>
 </ul>
 </div>
 <div class="sx-grp is-on is-open" data-sx-grp="units">
 <button type="button" aria-expanded="true" aria-controls="sx-grp-units">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
-<span>الوحدات</span>
+<span>Units</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-units">
-<li><a href="admin-shary-units.html" class="is-on" ><span>كل الوحدات</span></a></li>
-<li><a href="admin-shary-units-create.html" class="" ><span>إضافة وحدة</span></a></li>
-<li><a href="admin-shary-units-sheet.html" class="" ><span>استيراد وتصدير الوحدات</span></a></li>
-<li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">6</b></a></li>
-<li><a href="admin-shary-units-photo-sets.html" class="" ><span>صور الوحدات حسب المشروع</span></a></li>
-<li><a href="admin-shary-units-offers.html" class="" ><span>العروض والفرص</span></a></li>
+<li><a href="admin-shary-units.html" class="is-on" ><span>All units</span></a></li>
+<li><a href="admin-shary-units-create.html" class="" ><span>Add a unit</span></a></li>
+<li><a href="admin-shary-units-sheet.html" class="" ><span>Import &amp; export units</span></a></li>
+<li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">6</b></a></li>
+<li><a href="admin-shary-units-photo-sets.html" class="" ><span>Unit photos by project</span></a></li>
+<li><a href="admin-shary-units-offers.html" class="" ><span>Offers &amp; opportunities</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="projects">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-projects">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
-<span>المشاريع</span>
+<span>Projects</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-projects">
-<li><a href="admin-shary-all-projects.html" class="" ><span>⭐ كل بيانات المشروع (صفحة واحدة)</span></a></li>
-<li><a href="admin-compounds.html" class="" ><span>كل المشاريع</span></a></li>
-<li><a href="admin-compounds-create.html" class="" ><span>إضافة مشروع</span></a></li>
-<li><a href="admin-shary-projects.html" class="" ><span>بيانات المشروع للموقع</span></a></li>
-<li><a href="project-landing-pages.html" class="" ><span>صفحات الهبوط</span></a></li>
-<li><a href="compounds-boundaries.html" class="" ><span>حدود المشاريع على الخريطة</span></a></li>
-<li><a href="admin-shary-masterplans.html" class="" ><span>تفريغ وتركيب الماستر بلانز</span></a></li>
+<li><a href="admin-shary-all-projects.html" class="" ><span>⭐ Everything about a project (one page)</span></a></li>
+<li><a href="admin-compounds.html" class="" ><span>All projects</span></a></li>
+<li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
+<li><a href="admin-shary-projects.html" class="" ><span>Project data for the website</span></a></li>
+<li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
+<li><a href="compounds-boundaries.html" class="" ><span>Project boundaries on the map</span></a></li>
+<li><a href="admin-shary-masterplans.html" class="" ><span>Master plans: cut-out &amp; placement</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="developers">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-developers">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
-<span>المطورين</span>
+<span>Developers</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-developers">
-<li><a href="admin-shary-all-developers.html" class="" ><span>⭐ كل بيانات المطور (صفحة واحدة)</span></a></li>
-<li><a href="services-developers.html" class="" ><span>كل المطورين (إضافة وتعديل)</span></a></li>
-<li><a href="admin-shary-extras-developers.html" class="" ><span>بيانات صفحة المطور</span></a></li>
-<li><a href="admin-shary-developers-page.html" class="" ><span>أفضل المطورين وصفحة «عرض الكل»</span></a></li>
-<li><a href="top-developer.html" class="" ><span>أفضل المطورين (التطبيق)</span></a></li>
+<li><a href="admin-shary-all-developers.html" class="" ><span>⭐ Everything about a developer (one page)</span></a></li>
+<li><a href="services-developers.html" class="" ><span>All developers (add &amp; edit)</span></a></li>
+<li><a href="admin-shary-extras-developers.html" class="" ><span>Developer page data</span></a></li>
+<li><a href="admin-shary-developers-page.html" class="" ><span>Top developers &amp; the “view all” page</span></a></li>
+<li><a href="top-developer.html" class="" ><span>Top developers (app)</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="areas">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-areas">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
-<span>المناطق</span>
+<span>Areas</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-areas">
-<li><a href="admin-shary-all-areas.html" class="" ><span>⭐ كل بيانات المنطقة (صفحة واحدة)</span></a></li>
-<li><a href="admin-shary-area-tree.html" class="" ><span>كل المناطق والمناطق الفرعية</span></a></li>
-<li><a href="admin-shary-map-areas.html" class="" ><span>مناطق الخرايط</span></a></li>
-<li><a href="cities.html" class="" ><span>المناطق (إضافة وتعديل)</span></a></li>
-<li><a href="admin-shary-extras-areas.html" class="" ><span>بيانات صفحة المنطقة</span></a></li>
-<li><a href="admin-shary-area-places.html" class="" ><span>أشهر الأماكن</span></a></li>
-<li><a href="countries.html" class="" ><span>الدول</span></a></li>
-<li><a href="admin-shary-extras-countries.html" class="" ><span>بيانات صفحة الدولة</span></a></li>
+<li><a href="admin-shary-all-areas.html" class="" ><span>⭐ Everything about an area (one page)</span></a></li>
+<li><a href="admin-shary-area-tree.html" class="" ><span>All areas &amp; sub-areas</span></a></li>
+<li><a href="admin-shary-map-areas.html" class="" ><span>Map areas</span></a></li>
+<li><a href="cities.html" class="" ><span>Areas (add &amp; edit)</span></a></li>
+<li><a href="admin-shary-extras-areas.html" class="" ><span>Area page data</span></a></li>
+<li><a href="admin-shary-area-places.html" class="" ><span>Famous places</span></a></li>
+<li><a href="countries.html" class="" ><span>Countries</span></a></li>
+<li><a href="admin-shary-extras-countries.html" class="" ><span>Country page data</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="index">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-index">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V4M4 20h16"/><path d="m7 15 4-4 3 3 5-6"/></svg>
-<span>مؤشر شاري</span>
+<span>Shary Index</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-index">
-<li><a href="admin-shary-all-index.html" class="" ><span>⭐ مؤشر شاري كله (صفحة واحدة)</span></a></li>
-<li><a href="admin-shary-index.html" class="" ><span>أرقام المناطق</span></a></li>
-<li><a href="admin-shary-index-monthly.html" class="" ><span>الأسعار الشهرية</span></a></li>
-<li><a href="admin-shary-extras-index-page.html" class="" ><span>محتوى صفحة المؤشر</span></a></li>
-<li><a href="shary-index-admin.html" class="" ><span>المؤشر (الشاشة القديمة)</span></a></li>
+<li><a href="admin-shary-all-index.html" class="" ><span>⭐ The whole Shary Index (one page)</span></a></li>
+<li><a href="admin-shary-index.html" class="" ><span>Area numbers</span></a></li>
+<li><a href="admin-shary-index-monthly.html" class="" ><span>Monthly prices</span></a></li>
+<li><a href="admin-shary-extras-index-page.html" class="" ><span>Index page content</span></a></li>
+<li><a href="shary-index-admin.html" class="" ><span>Index (old screen)</span></a></li>
 </ul>
 </div>
-<h6 class="sx-nav__title">المحتوى والموقع</h6>                                                <div class="sx-grp " data-sx-grp="homepage">
+<h6 class="sx-nav__title">Content &amp; website</h6>                                                <div class="sx-grp " data-sx-grp="homepage">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-homepage">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 13h5v4H7zM15 13h2M15 16h2"/></svg>
-<span>الصفحة الرئيسية للموقع</span>
+<span>Website home page</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-homepage">
-<li><a href="admin-shary-home-sections.html" class="" ><span>أقسام الصفحة الرئيسية (اختيار)</span></a></li>
-<li><a href="admin-shary-home-sections_tab_slider.html" class="" ><span>سلايدر الرئيسية (اختيار مشروع)</span></a></li>
-<li><a href="admin-shary-home-sections_tab_explore.html" class="" ><span>مشاريع تستحق الاستكشاف</span></a></li>
-<li><a href="sliders.html" class="" ><span>السلايدر (الشاشة القديمة)</span></a></li>
-<li><a href="admin-shary-home-cards.html" class="" ><span>كروت الرئيسية (الخمسة)</span></a></li>
-<li><a href="investment-cards.html" class="" ><span>ما يميزنا</span></a></li>
-<li><a href="admin-new-launches.html" class="" ><span>أحدث الإطلاقات (صور التطبيق — الشاشة القديمة)</span></a></li>
-<li><a href="top-unit.html" class="" ><span>أفضل الوحدات (الشاشة القديمة)</span></a></li>
-<li><a href="top-compound.html" class="" ><span>أفضل المشاريع (الشاشة القديمة)</span></a></li>
-<li><a href="top-area.html" class="" ><span>أفضل المناطق (الشاشة القديمة)</span></a></li>
-<li><a href="popular-areas.html" class="" ><span>المناطق الأكثر طلبًا</span></a></li>
-<li><a href="ads-images.html" class="" ><span>الإعلانات</span></a></li>
-<li><a href="footer-links.html" class="" ><span>الأكثر بحثًا (الفوتر)</span></a></li>
+<li><a href="admin-shary-home-sections.html" class="" ><span>Home page sections (choose)</span></a></li>
+<li><a href="admin-shary-home-sections_tab_slider.html" class="" ><span>Home slider (choose a project)</span></a></li>
+<li><a href="admin-shary-home-sections_tab_explore.html" class="" ><span>Projects worth exploring</span></a></li>
+<li><a href="sliders.html" class="" ><span>Slider (old screen)</span></a></li>
+<li><a href="admin-shary-home-cards.html" class="" ><span>Home cards (the five)</span></a></li>
+<li><a href="investment-cards.html" class="" ><span>What makes us different</span></a></li>
+<li><a href="admin-new-launches.html" class="" ><span>New launches (app pictures — old screen)</span></a></li>
+<li><a href="top-unit.html" class="" ><span>Top units (old screen)</span></a></li>
+<li><a href="top-compound.html" class="" ><span>Top projects (old screen)</span></a></li>
+<li><a href="top-area.html" class="" ><span>Top areas (old screen)</span></a></li>
+<li><a href="popular-areas.html" class="" ><span>Popular areas</span></a></li>
+<li><a href="ads-images.html" class="" ><span>Ads</span></a></li>
+<li><a href="footer-links.html" class="" ><span>Top searches (footer)</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="content">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-content">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h7"/></svg>
-<span>المقالات والمحتوى</span>
+<span>Articles &amp; content</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-content">
-<li><a href="admin-shary-all-blogs.html" class="" ><span>⭐ كل بيانات المقال (صفحة واحدة)</span></a></li>
-<li><a href="admin-shary-content-editor_all_1.html" class="" ><span>اللي بيتحط جوه المقالات لوحده (أزرار التواصل · الإعلانات · الكلام الجاهز)</span></a></li>
-<li><a href="admin-shary-extras-blogs.html" class="" ><span>بيانات المقالات</span></a></li>
-<li><a href="news.html" class="" ><span>الأخبار</span></a></li>
-<li><a href="trendyList.html" class="" ><span>التريند</span></a></li>
-<li><a href="storyList.html" class="" ><span>الستوري</span></a></li>
-<li><a href="admin-shary-extras-trend-videos.html" class="" ><span>فيديوهات التريند</span></a></li>
-<li><a href="admin-shary-extras-news-posts.html" class="" ><span>بيانات أخبار التريند</span></a></li>
-<li><a href="admin-shary-internal-links.html" class="" ><span>الروابط الداخلية</span></a></li>
+<li><a href="admin-shary-all-blogs.html" class="" ><span>⭐ Everything about an article (one page)</span></a></li>
+<li><a href="admin-shary-content-editor_all_1.html" class="" ><span>Added inside articles automatically (contact buttons · ads · ready text)</span></a></li>
+<li><a href="admin-shary-extras-blogs.html" class="" ><span>Article data</span></a></li>
+<li><a href="news.html" class="" ><span>News</span></a></li>
+<li><a href="trendyList.html" class="" ><span>Trendy</span></a></li>
+<li><a href="storyList.html" class="" ><span>Stories</span></a></li>
+<li><a href="admin-shary-extras-trend-videos.html" class="" ><span>Trend videos</span></a></li>
+<li><a href="admin-shary-extras-news-posts.html" class="" ><span>Trend news data</span></a></li>
+<li><a href="admin-shary-internal-links.html" class="" ><span>Internal links</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="pages">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-pages">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 9v11"/></svg>
-<span>صفحات الموقع</span>
+<span>Website pages</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-pages">
-<li><a href="admin-shary-site-content.html" class="" ><span>نصوص وصور الصفحات</span></a></li>
-<li><a href="admin-shary-site-menus.html" class="" ><span>قوايم الموقع (الهيدر والموبايل)</span></a></li>
-<li><a href="admin-shary-sell-rent.html" class="" ><span>بيع عقارك / أجّر عقارك (الرئيسية)</span></a></li>
-<li><a href="settings-about.html" class="" ><span>من نحن (النص)</span></a></li>
-<li><a href="admin-shary-extras-about-page.html" class="" ><span>من نحن (الصورة)</span></a></li>
-<li><a href="executive-management.html" class="" ><span>الفريق</span></a></li>
-<li><a href="categories-executive-management.html" class="" ><span>أقسام الفريق</span></a></li>
-<li><a href="admin-shary-extras-team.html" class="" ><span>بيانات صفحة الفريق</span></a></li>
-<li><a href="jobs.html" class="" ><span>الوظائف</span></a></li>
-<li><a href="settings-terms.html" class="" ><span>الشروط والأحكام</span></a></li>
-<li><a href="settings-privacy.html" class="" ><span>سياسة الخصوصية</span></a></li>
-<li><a href="settings-help_center.html" class="" ><span>مركز المساعدة</span></a></li>
-<li><a href="admin-shary-extras-listing-pages.html" class="" ><span>صفحات القوائم (بيع / إيجار / فرص)</span></a></li>
-<li><a href="admin-shary-extras-property-types.html" class="" ><span>أنواع العقارات</span></a></li>
+<li><a href="admin-shary-site-content.html" class="" ><span>Page texts &amp; photos</span></a></li>
+<li><a href="admin-shary-site-menus.html" class="" ><span>Site menus (header and mobile)</span></a></li>
+<li><a href="admin-shary-sell-rent.html" class="" ><span>Sell / rent your property (home)</span></a></li>
+<li><a href="settings-about.html" class="" ><span>About us (text)</span></a></li>
+<li><a href="admin-shary-extras-about-page.html" class="" ><span>About us (photo)</span></a></li>
+<li><a href="executive-management.html" class="" ><span>Team</span></a></li>
+<li><a href="categories-executive-management.html" class="" ><span>Team groups</span></a></li>
+<li><a href="admin-shary-extras-team.html" class="" ><span>Team page data</span></a></li>
+<li><a href="jobs.html" class="" ><span>Jobs</span></a></li>
+<li><a href="settings-terms.html" class="" ><span>Terms &amp; conditions</span></a></li>
+<li><a href="settings-privacy.html" class="" ><span>Privacy policy</span></a></li>
+<li><a href="settings-help_center.html" class="" ><span>Help center</span></a></li>
+<li><a href="admin-shary-extras-listing-pages.html" class="" ><span>Listing pages (sale / rent / opportunities)</span></a></li>
+<li><a href="admin-shary-extras-property-types.html" class="" ><span>Property types</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="contact">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-contact">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A16 16 0 0 1 4 5a1 1 0 0 1 1-1z"/></svg>
-<span>التواصل وأزرار الإجراء</span>
+<span>Contact &amp; action buttons</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-contact">
-<li><a href="admin-shary-contact.html" class="" ><span>أرقام وقنوات التواصل</span></a></li>
-<li><a href="Communications.html" class="" ><span>السوشيال ميديا</span></a></li>
-<li><a href="contact_us_information.html" class="" ><span>بيانات اتصل بنا</span></a></li>
+<li><a href="admin-shary-contact.html" class="" ><span>Numbers &amp; channels</span></a></li>
+<li><a href="Communications.html" class="" ><span>Social media</span></a></li>
+<li><a href="contact_us_information.html" class="" ><span>Contact-us details</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="ai">
@@ -516,173 +509,173 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 <b class="sx-tag">4</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ai">
-<li><a href="admin-shary-ai.html" class="" ><span>الإعدادات والتجربة</span></a></li>
-<li><a href="admin-shary-ai-conversations.html" class="" ><span>محادثات العملاء</span><b class="sx-tag">3</b></a></li>
-<li><a href="admin-shary-ai-calendar.html" class="" ><span>كاليندر المتابعة</span><b class="sx-tag">1</b></a></li>
+<li><a href="admin-shary-ai.html" class="" ><span>Settings &amp; testing</span></a></li>
+<li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">3</b></a></li>
+<li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">1</b></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="seo">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-seo">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
-<span>السيو والتحويلات</span>
+<span>SEO &amp; redirects</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-seo">
-<li><a href="admin-redirections.html" class="" ><span>التحويلات (Redirects)</span></a></li>
-<li><a href="admin-shary-refresh.html" class="" ><span>تحديث الموقع</span></a></li>
-<li><a href="admin-shary-site-tags.html" class="" ><span>أكواد التتبع والإعلانات</span></a></li>
+<li><a href="admin-redirections.html" class="" ><span>Redirects</span></a></li>
+<li><a href="admin-shary-refresh.html" class="" ><span>Refresh the website</span></a></li>
+<li><a href="admin-shary-site-tags.html" class="" ><span>Tracking and ads tags</span></a></li>
 </ul>
 </div>
-<h6 class="sx-nav__title">التطبيق</h6>                                                <div class="sx-grp " data-sx-grp="app">
+<h6 class="sx-nav__title">The app</h6>                                                <div class="sx-grp " data-sx-grp="app">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-app">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg>
-<span>خدمات التطبيق</span>
+<span>App services</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-app">
-<li><a href="admin-shary-app-pages.html" class="" ><span>صفحات الخدمات على الموقع</span></a></li>
-<li><a href="admin-shary-client-units.html" class="" ><span>وحدات العملاء والتراكنج</span></a></li>
-<li><a href="reservations.html" class="" ><span>حجز مع المطور</span></a></li>
-<li><a href="reservations-bank-accounts.html" class="" ><span>حسابات البنك</span></a></li>
-<li><a href="legal-assistant-admin.html" class="" ><span>المساعد القانوني</span></a></li>
-<li><a href="sharyCard-setting.html" class="" ><span>شاري كارد</span></a></li>
-<li><a href="settings-shary_card.html" class="" ><span>شروط شاري كارد</span></a></li>
-<li><a href="notifications.html" class="" ><span>الإشعارات</span></a></li>
+<li><a href="admin-shary-app-pages.html" class="" ><span>Service pages on the website</span></a></li>
+<li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
+<li><a href="reservations.html" class="" ><span>Book with the developer</span></a></li>
+<li><a href="reservations-bank-accounts.html" class="" ><span>Bank accounts</span></a></li>
+<li><a href="legal-assistant-admin.html" class="" ><span>Legal assistant</span></a></li>
+<li><a href="sharyCard-setting.html" class="" ><span>Shary Card</span></a></li>
+<li><a href="settings-shary_card.html" class="" ><span>Shary Card terms</span></a></li>
+<li><a href="notifications.html" class="" ><span>Notifications</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="impact">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-impact">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 20.5s-7.5-4.6-9.2-9.3A4.9 4.9 0 0 1 12 7.6a4.9 4.9 0 0 1 9.2 3.6C19.5 15.9 12 20.5 12 20.5z"/></svg>
-<span>تأثير شاري</span>
+<span>Shary Impact</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-impact">
-<li><a href="admin-shary-impact.html" class="" ><span>صفحة تأثير شاري</span></a></li>
-<li><a href="admin-shary-impact-activities.html" class="" ><span>الفعاليات</span></a></li>
-<li><a href="admin-shary-impact-organizations.html" class="" ><span>الجمعيات</span></a></li>
-<li><a href="admin-shary-impact-developers.html" class="" ><span>المطورين الداعمين</span></a></li>
-<li><a href="admin-shary-impact-choices.html" class="" ><span>اختيارات العملاء</span></a></li>
+<li><a href="admin-shary-impact.html" class="" ><span>The Impact page</span></a></li>
+<li><a href="admin-shary-impact-activities.html" class="" ><span>Events</span></a></li>
+<li><a href="admin-shary-impact-organizations.html" class="" ><span>Associations</span></a></li>
+<li><a href="admin-shary-impact-developers.html" class="" ><span>Supporting developers</span></a></li>
+<li><a href="admin-shary-impact-choices.html" class="" ><span>Customers&#039; choices</span></a></li>
 </ul>
 </div>
-<h6 class="sx-nav__title">شاري معاك</h6>                                                <a class="sx-one " href="admin-shary-ma3ak.html" >
+<h6 class="sx-nav__title">Shary Ma3ak</h6>                                                <a class="sx-one " href="admin-shary-ma3ak.html" >
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M11 3.1A9 9 0 1 0 20.9 13H11z"/><path d="M14 2.6A8.5 8.5 0 0 1 21.4 10H14z"/></svg>
-<span>نظرة عامة</span>
+<span>Overview</span>
 </a>
 <div class="sx-grp " data-sx-grp="ma3ak_goals">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goals">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
-<span>الوحدات حسب الهدف</span>
+<span>Units by goal</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ma3ak_goals">
-<li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>اشترِ للبيع</span></a></li>
-<li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>اشترِ للتأجير</span></a></li>
-<li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>جاهز الآن</span></a></li>
-<li><a href="admin-shary-ma3ak-opportunities.html" class="" ><span>كل الفرص</span></a></li>
-<li><a href="admin-shary-ma3ak-opportunities-create.html" class="" ><span>إضافة فرصة</span></a></li>
+<li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>Buy to sale</span></a></li>
+<li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>Buy to rent</span></a></li>
+<li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>Ready now</span></a></li>
+<li><a href="admin-shary-ma3ak-opportunities.html" class="" ><span>All opportunities</span></a></li>
+<li><a href="admin-shary-ma3ak-opportunities-create.html" class="" ><span>Add an opportunity</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
-<span>استثمار مشترك (الحصص)</span>
+<span>Share Investment</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ma3ak_goal_shares">
-<li><a href="admin-shary-ma3ak-properties.html" class="" ><span>عقارات الحصص</span></a></li>
-<li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>إضافة عقار حصص</span></a></li>
+<li><a href="admin-shary-ma3ak-properties.html" class="" ><span>Share properties</span></a></li>
+<li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>Add a share property</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="ma3ak_money">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_money">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M17 7V5a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V6"/><path d="M16 14h.01"/></svg>
-<span>الفلوس والمحافظ</span>
+<span>Money &amp; wallets</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ma3ak_money">
-<li><a href="admin-shary-ma3ak-receipts.html" class="" ><span>إيصالات التحويل</span></a></li>
-<li><a href="admin-shary-ma3ak-withdrawals.html" class="" ><span>طلبات السحب</span></a></li>
-<li><a href="admin-shary-ma3ak-transactions.html" class="" ><span>حركات المحافظ</span></a></li>
+<li><a href="admin-shary-ma3ak-receipts.html" class="" ><span>Transfer receipts</span></a></li>
+<li><a href="admin-shary-ma3ak-withdrawals.html" class="" ><span>Withdrawal requests</span></a></li>
+<li><a href="admin-shary-ma3ak-transactions.html" class="" ><span>Wallet transactions</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="ma3ak_investors">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_investors">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 10.5-5.1"/><path d="m14.5 19.5 3-3 2 2 3-3.5"/></svg>
-<span>المستثمرين</span>
+<span>Investors</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ma3ak_investors">
-<li><a href="admin-shary-ma3ak-investors.html" class="" ><span>كل المستثمرين</span></a></li>
-<li><a href="admin-shary-ma3ak-investors_identity_pending.html" class="" ><span>مراجعة الهوية</span></a></li>
-<li><a href="admin-shary-ma3ak-investments.html" class="" ><span>الاستثمارات</span></a></li>
-<li><a href="admin-shary-ma3ak-investments-create.html" class="" ><span>تسجيل صفقة (استثمار جديد)</span></a></li>
-<li><a href="admin-shary-ma3ak-referrals.html" class="" ><span>الدعوات والمكافآت</span></a></li>
+<li><a href="admin-shary-ma3ak-investors.html" class="" ><span>All investors</span></a></li>
+<li><a href="admin-shary-ma3ak-investors_identity_pending.html" class="" ><span>Identity review</span></a></li>
+<li><a href="admin-shary-ma3ak-investments.html" class="" ><span>Investments</span></a></li>
+<li><a href="admin-shary-ma3ak-investments-create.html" class="" ><span>Record a deal (new investment)</span></a></li>
+<li><a href="admin-shary-ma3ak-referrals.html" class="" ><span>Referrals &amp; rewards</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="ma3ak_requests">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_requests">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
-<span>طلبات العملاء</span>
+<span>Customer requests</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ma3ak_requests">
-<li><a href="admin-shary-ma3ak-meetings.html" class="" ><span>طلبات المقابلة</span></a></li>
-<li><a href="admin-shary-ma3ak-priority.html" class="" ><span>قائمة الأولوية</span></a></li>
-<li><a href="admin-shary-ma3ak-services.html" class="" ><span>طلبات الخدمات</span></a></li>
-<li><a href="admin-shary-ma3ak-owned-units.html" class="" ><span>وحدات العملاء</span></a></li>
+<li><a href="admin-shary-ma3ak-meetings.html" class="" ><span>Meeting requests</span></a></li>
+<li><a href="admin-shary-ma3ak-priority.html" class="" ><span>Priority list</span></a></li>
+<li><a href="admin-shary-ma3ak-services.html" class="" ><span>Service requests</span></a></li>
+<li><a href="admin-shary-ma3ak-owned-units.html" class="" ><span>Customers’ units</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="ma3ak_finishing">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_finishing">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="3.5" width="14" height="5" rx="1.5"/><path d="M17 6h3v5h-8v2.5"/><rect x="10.5" y="13.5" width="3" height="7.5" rx="1"/></svg>
-<span>التشطيب والفرش</span>
+<span>Finishing &amp; furnishing</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ma3ak_finishing">
-<li><a href="admin-shary-ma3ak-finishing-requests.html" class="" ><span>متابعة التشطيب</span></a></li>
-<li><a href="admin-shary-ma3ak-furnishing-codes.html" class="" ><span>أكواد الفرش</span></a></li>
-<li><a href="admin-shary-ma3ak-finishing-packages.html" class="" ><span>باقات التشطيب</span></a></li>
-<li><a href="admin-shary-ma3ak-furnishing-packages.html" class="" ><span>باقات الفرش</span></a></li>
-<li><a href="admin-shary-ma3ak-partners.html" class="" ><span>الشركاء</span></a></li>
+<li><a href="admin-shary-ma3ak-finishing-requests.html" class="" ><span>Finishing tracking</span></a></li>
+<li><a href="admin-shary-ma3ak-furnishing-codes.html" class="" ><span>Furnishing codes</span></a></li>
+<li><a href="admin-shary-ma3ak-finishing-packages.html" class="" ><span>Finishing packages</span></a></li>
+<li><a href="admin-shary-ma3ak-furnishing-packages.html" class="" ><span>Furnishing packages</span></a></li>
+<li><a href="admin-shary-ma3ak-partners.html" class="" ><span>Partners</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="ma3ak_settings">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_settings">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
-<span>إعدادات شاري معاك</span>
+<span>Shary Ma3ak settings</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-ma3ak_settings">
-<li><a href="admin-shary-ma3ak-settings.html" class="" ><span>الإعدادات (التحويل والشراء والدعوات)</span></a></li>
-<li><a href="admin-shary-ma3ak-locations.html" class="" ><span>الدول والمدن (خطوة العنوان)</span></a></li>
-<li><a href="admin-shary-ma3ak-audit.html" class="" ><span>سجل العمليات</span></a></li>
+<li><a href="admin-shary-ma3ak-settings.html" class="" ><span>Settings (transfers, buying, referrals)</span></a></li>
+<li><a href="admin-shary-ma3ak-locations.html" class="" ><span>Countries &amp; cities (address step)</span></a></li>
+<li><a href="admin-shary-ma3ak-audit.html" class="" ><span>Activity log</span></a></li>
 </ul>
 </div>
-<h6 class="sx-nav__title">الإدارة</h6>                                                <div class="sx-grp " data-sx-grp="users">
+<h6 class="sx-nav__title">Administration</h6>                                                <div class="sx-grp " data-sx-grp="users">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-users">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5a3.5 3.5 0 0 1 0 6.5M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></svg>
-<span>المستخدمين والصلاحيات</span>
+<span>Users &amp; permissions</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-users">
-<li><a href="users-client.html" class="" ><span>العملاء</span></a></li>
-<li><a href="users-agent.html" class="" ><span>الوكلاء</span></a></li>
-<li><a href="supervisor.html" class="" ><span>المشرفين والصلاحيات</span></a></li>
-<li><a href="admin-shary-social-login.html" class="" ><span>الدخول بجوجل وفيسبوك وأبل</span></a></li>
+<li><a href="users-client.html" class="" ><span>Clients</span></a></li>
+<li><a href="users-agent.html" class="" ><span>Agents</span></a></li>
+<li><a href="supervisor.html" class="" ><span>Supervisors &amp; permissions</span></a></li>
+<li><a href="admin-shary-social-login.html" class="" ><span>Google / Facebook / Apple sign-in</span></a></li>
 </ul>
 </div>
 <div class="sx-grp " data-sx-grp="options">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-options">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg>
-<span>الإعدادات والخيارات</span>
+<span>Settings &amp; options</span>
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
 </button>
 <ul id="sx-grp-options">
-<li><a href="generalDetails-property.html" class="" ><span>أنواع الوحدات</span></a></li>
-<li><a href="generalDetails-main_category.html" class="" ><span>الأقسام الرئيسية</span></a></li>
-<li><a href="generalDetails-types_finishing.html" class="" ><span>أنواع التشطيب</span></a></li>
-<li><a href="generalDetails-featured.html" class="" ><span>المميزات</span></a></li>
-<li><a href="services-services_list.html" class="" ><span>مرافق الوحدات</span></a></li>
+<li><a href="generalDetails-property.html" class="" ><span>Unit types</span></a></li>
+<li><a href="generalDetails-main_category.html" class="" ><span>Main categories</span></a></li>
+<li><a href="generalDetails-types_finishing.html" class="" ><span>Finishing types</span></a></li>
+<li><a href="generalDetails-featured.html" class="" ><span>Features</span></a></li>
+<li><a href="services-services_list.html" class="" ><span>Unit facilities</span></a></li>
 </ul>
 </div>
 </nav>
@@ -727,21 +720,21 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
 </style>
 <script>
             window.SharyEditorConfig = {
-                token: "rN6ntxgQz5sguAPLHocWXAxYFBIS8zNGaiaTyopR",
-                lang: "ar",
+                token: "0Z5SOV5OABND1yec758f9m0gfYZKczsKeuhdWNWV",
+                lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=rN6ntxgQz5sguAPLHocWXAxYFBIS8zNGaiaTyopR",
-                contentCss: "a/css/shary-admin/editor-content.css",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0Z5SOV5OABND1yec758f9m0gfYZKczsKeuhdWNWV",
+                contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
-                localBase: "a/vendor/shary-editor/",
-                types: {"project":"\u0645\u0634\u0631\u0648\u0639","unit":"\u0648\u062d\u062f\u0629","area":"\u0645\u0646\u0637\u0642\u0629","developer":"\u0645\u0637\u0648\u0631","blog":"\u0645\u0642\u0627\u0644","search":"\u0635\u0641\u062d\u0629 \u0628\u062d\u062b"},
-                labels: {"cta":"\u0632\u0631 \u062a\u0648\u0627\u0635\u0644","link":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview":"\u0645\u0639\u0627\u064a\u0646\u0629","cta_title":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0648\u0633\u0637 \u0627\u0644\u0645\u062d\u062a\u0648\u0649:","link_title":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview_title":"\u0645\u0639\u0627\u064a\u0646\u0629 \u2014 \u0632\u064a \u0627\u0644\u0645\u0648\u0642\u0639","kind_cta":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644","kind_form":"\u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629","kind_channels":"\u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a","kind_project":"\u0643\u0627\u0631\u062a \u0645\u0634\u0631\u0648\u0639","kind_area":"\u0643\u0627\u0631\u062a \u0645\u0646\u0637\u0642\u0629","cta_buttons":"\u0627\u0644\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0644\u064a \u062a\u0638\u0647\u0631","btn_meeting":"\u0637\u0644\u0628 \u0645\u0642\u0627\u0628\u0644\u0629","btn_call":"\u0627\u062a\u0635\u0627\u0644","btn_whatsapp":"\u0648\u0627\u062a\u0633\u0627\u0628","cta_heading":"\u0627\u0644\u062c\u0645\u0644\u0629 \u0627\u0644\u0644\u064a \u0641\u0648\u0642 \u0627\u0644\u0623\u0632\u0631\u0627\u0631 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","cta_ph_ar":"\u0645\u062b\u0627\u0644: \u0627\u062d\u062c\u0632 \u0648\u062d\u062f\u062a\u0643 \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u062d\u0635\u0644 \u0639\u0644\u0649 \u0623\u062d\u062f\u062b \u0642\u0627\u0626\u0645\u0629 \u0623\u0633\u0639\u0627\u0631","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"\u0628\u064a\u062d\u0637 \u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629 (\u0627\u0644\u0627\u0633\u0645 \u060c \u0627\u0644\u0645\u0648\u0628\u0627\u064a\u0644 \u060c \u0627\u0644\u0645\u0646\u0637\u0642\u0629) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","channels_hint":"\u0628\u064a\u062d\u0637 \u0643\u0627\u0631\u062a \u0022\u0627\u0634\u062a\u0631\u0643 \u0641\u064a \u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a\u0022 (\u0648\u0627\u062a\u0633\u0627\u0628 \/ \u062a\u0644\u064a\u062c\u0631\u0627\u0645 \/ \u064a\u0648\u062a\u064a\u0648\u0628) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","search_ph":"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639 \/ \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \/ \u0627\u0644\u0645\u0637\u0648\u0631 \/ \u0627\u0644\u0645\u0642\u0627\u0644","insert":"\u0625\u0636\u0627\u0641\u0629","cta_note":"\u0628\u064a\u062a\u062d\u0637 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u2014 \u0648\u062a\u0642\u062f\u0631 \u062a\u0645\u0633\u062d\u0647 \u0632\u064a \u0623\u064a \u0633\u0637\u0631.","link_selected":"\u0627\u0644\u0644\u064a\u0646\u0643 \u0647\u064a\u062a\u062d\u0637 \u0639\u0644\u0649:","link_none":"\u0645\u0641\u064a\u0634 \u0643\u0644\u0627\u0645 \u0645\u062a\u0638\u0644\u0644: \u0647\u064a\u062a\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u064a\u0628\u0642\u0649 \u0647\u0648 \u0627\u0644\u0644\u064a\u0646\u0643.","all_types":"\u0643\u0644 \u0627\u0644\u0623\u0646\u0648\u0627\u0639","searching":"\u062c\u0627\u0631\u064a \u0627\u0644\u0628\u062d\u062b\u2026","nothing":"\u0645\u0641\u064a\u0634 \u0646\u062a\u0627\u064a\u062c.","failed":"\u062d\u0635\u0644\u062a \u0645\u0634\u0643\u0644\u0629 \u2014 \u062c\u0631\u0651\u0628 \u062a\u0627\u0646\u064a.","desktop":"\u062f\u064a\u0633\u0643 \u062a\u0648\u0628","mobile":"\u0645\u0648\u0628\u0627\u064a\u0644","preview_note":"\u0627\u0644\u0645\u0639\u0627\u064a\u0646\u0629 \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638 \u2014 \u0627\u062d\u0641\u0638 \u0639\u0634\u0627\u0646 \u064a\u0638\u0647\u0631 \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639.","w_h2":"\u0639\u0646\u0648\u0627\u0646 \u0631\u0626\u064a\u0633\u064a","w_h3":"\u0639\u0646\u0648\u0627\u0646 \u0641\u0631\u0639\u064a","w_p":"\u0646\u0635 \u0639\u0627\u062f\u064a","w_bullets":"\u0646\u0642\u0637","w_numbers":"\u0623\u0631\u0642\u0627\u0645","w_arrows":"\u0646\u0642\u0637 \u0628\u0633\u0647\u0645","w_line":"\u062e\u0637 \u0641\u0627\u0635\u0644","w_space":"\u0645\u0633\u0627\u0641\u0629","symbol":"\u0627\u0643\u062a\u0628","video":"\u0641\u064a\u062f\u064a\u0648","video_title":"\u0641\u064a\u062f\u064a\u0648 \u062c\u0648\u0647 \u0627\u0644\u0645\u0642\u0627\u0644 (\u0644\u064a\u0646\u0643)","video_hint":"\u062d\u0637 \u0644\u064a\u0646\u0643 \u0627\u0644\u0641\u064a\u062f\u064a\u0648 \u0645\u0646 \u064a\u0648\u062a\u064a\u0648\u0628 \u0623\u0648 \u062a\u064a\u0643 \u062a\u0648\u0643 \u0623\u0648 \u0641\u064a\u0633\u0628\u0648\u0643 \u0623\u0648 \u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645 \u0623\u0648 \u0623\u064a \u0645\u0643\u0627\u0646 \u2014 \u0628\u064a\u0638\u0647\u0631 \u0643\u0627\u0631\u062a \u0641\u064a\u062f\u064a\u0648 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u060c \u0648\u0644\u0645\u0627 \u0627\u0644\u0639\u0645\u064a\u0644 \u064a\u062f\u0648\u0633 \u0639\u0644\u064a\u0647 \u0628\u064a\u0641\u062a\u062d \u0627\u0644\u0641\u064a\u062f\u064a\u0648 \u0641\u064a \u0645\u0643\u0627\u0646\u0647 (\u0628\u0631\u0651\u0647 \u0627\u0644\u0645\u0648\u0642\u0639).","video_url":"\u0644\u064a\u0646\u0643 \u0627\u0644\u0641\u064a\u062f\u064a\u0648","video_caption":"\u0639\u0646\u0648\u0627\u0646 \u062a\u062d\u062a \u0627\u0644\u0641\u064a\u062f\u064a\u0648 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","video_bad":"\u0627\u0643\u062a\u0628 \u0627\u0644\u0644\u064a\u0646\u0643 \u0643\u0627\u0645\u0644 \u2014 \u0628\u064a\u0628\u062f\u0623 \u0628\u0640 https:\/\/","b_cards":"\u0643\u0631\u0648\u062a","b_button":"\u0632\u0631\u0627\u0631 \u0644\u064a\u0646\u0643","b_external":"\u0644\u064a\u0646\u0643 \u062e\u0627\u0631\u062c\u064a","b_note":"\u0645\u0644\u0627\u062d\u0638\u0629","b_places":"\u0623\u0645\u0627\u0643\u0646","note_ph":"\u0627\u0643\u062a\u0628 \u0627\u0644\u0645\u0644\u0627\u062d\u0638\u0629 \u0647\u0646\u0627","cards_title":"\u0643\u0627\u0631\u062a \u062c\u0648\u0647 \u0627\u0644\u0643\u0644\u0627\u0645","cards_hint":"\u0627\u062e\u062a\u0627\u0631 \u0627\u0644\u0646\u0648\u0639 \u0648\u0627\u0643\u062a\u0628 \u0627\u0644\u0627\u0633\u0645 \u0648\u062f\u0648\u0633 \u0639\u0644\u064a\u0647. \u0627\u0644\u0643\u0627\u0631\u062a \u0628\u064a\u062a\u062d\u0637 \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631\u060c \u0648\u0628\u064a\u0627\u062e\u062f \u0627\u0644\u0635\u0648\u0631\u0629 \u0648\u0627\u0644\u0633\u0639\u0631 \u0648\u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0644\u0649 \u0637\u0648\u0644 (\u0644\u0648 \u0627\u062a\u063a\u064a\u0631\u062a \u0628\u062a\u062a\u063a\u064a\u0631 \u0644\u0648\u062d\u062f\u0647\u0627).","kind_units":"\u0648\u062d\u062f\u0627\u062a \u0627\u0644\u0645\u0646\u0637\u0642\u0629 (\u0644\u064a\u0646\u0643\u0627\u062a)","kind_article":"\u0627\u0642\u0631\u0623 \u0643\u0645\u0627\u0646 (\u0645\u0642\u0627\u0644)","button_title":"\u0632\u0631\u0627\u0631 \u0644\u064a\u0646\u0643 \u0639\u0631\u064a\u0636","button_hint":"\u0627\u062e\u062a\u0627\u0631 \u0635\u0641\u062d\u0629 \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 (\u0645\u0634\u0631\u0648\u0639\u060c \u0648\u062d\u062f\u0629\u060c \u0645\u0646\u0637\u0642\u0629\u060c \u0645\u0637\u0648\u0631\u060c \u0645\u0642\u0627\u0644\u060c \u0635\u0641\u062d\u0629 \u0628\u062d\u062b) \u0623\u0648 \u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643. \u0628\u064a\u0638\u0647\u0631 \u0632\u0631\u0627\u0631 \u0639\u0631\u064a\u0636 \u062c\u0648\u0647 \u0627\u0644\u0643\u0644\u0627\u0645\u060c \u0632\u064a \u00ab\u062a\u0627\u0628\u0639 \u0645\u062a\u0648\u0633\u0637 \u0633\u0639\u0631 \u0627\u0644\u0645\u062a\u0631 \u0639\u0644\u0649 \u0645\u0624\u0634\u0631 \u0634\u0627\u0631\u064a\u00bb.","button_text":"\u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0644\u064a \u0639\u0644\u0649 \u0627\u0644\u0632\u0631\u0627\u0631","button_url":"\u0623\u0648 \u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643","bad_url":"\u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643 \u0643\u0627\u0645\u0644 (https:\/\/\u2026) \u0623\u0648 \u0644\u064a\u0646\u0643 \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 \u0628\u064a\u0628\u062f\u0623 \u0628\u0640 \/","ext_title":"\u0644\u064a\u0646\u0643 \u0644\u0645\u0648\u0642\u0639 \u062a\u0627\u0646\u064a","ext_hint":"\u062d\u062f\u062f \u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0623\u0648\u0644 \u0648\u0628\u0639\u062f\u064a\u0646 \u062f\u0648\u0633 \u00ab\u0644\u064a\u0646\u0643 \u062e\u0627\u0631\u062c\u064a\u00bb. \u0627\u0644\u0644\u064a\u0646\u0643 \u0628\u064a\u0641\u062a\u062d \u0641\u064a \u062a\u0627\u0628 \u062c\u062f\u064a\u062f.","ext_url":"\u0627\u0644\u0644\u064a\u0646\u0643 (https:\/\/\u2026)","ext_text":"\u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0644\u064a \u0647\u064a\u0628\u0642\u0649 \u0644\u064a\u0646\u0643","places_title":"\u0642\u0627\u064a\u0645\u0629 \u0623\u0645\u0627\u0643\u0646","places_hint":"\u0643\u0644 \u0633\u0637\u0631 \u0645\u0643\u0627\u0646. \u0648\u0644\u0648 \u0639\u0627\u064a\u0632 \u0627\u0644\u0645\u0643\u0627\u0646 \u064a\u0628\u0642\u0649 \u0644\u064a\u0646\u0643 \u0627\u0643\u062a\u0628: \u0627\u0644\u0627\u0633\u0645 | \u0627\u0644\u0644\u064a\u0646\u0643 (\u0632\u064a: \u0643\u0627\u064a\u0631\u0648 \u0641\u064a\u0633\u062a\u064a\u0641\u0627\u0644 | \/ar\/area\/New-Cairo).","places_heading":"\u0627\u0644\u0639\u0646\u0648\u0627\u0646 (\u0632\u064a: \u0623\u064a\u0646 \u062a\u0630\u0647\u0628 \u0641\u064a \u0627\u0644\u0642\u0627\u0647\u0631\u0629 \u0627\u0644\u062c\u062f\u064a\u062f\u0629\u061f)","places_lines":"\u0627\u0644\u0623\u0645\u0627\u0643\u0646","places_caption":"\u0633\u0637\u0631 \u062a\u062d\u062a \u0627\u0644\u0642\u0627\u064a\u0645\u0629 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","places_none":"\u0627\u0643\u062a\u0628 \u0645\u0643\u0627\u0646 \u0648\u0627\u062d\u062f \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644."}            };
+                localBase: "../a/vendor/shary-editor/",
+                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
+                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
         </script>
-<script src="a/js/shary-admin/editor.js"></script>
-<script src="a/vendor/shary-editor/ckeditor.js"></script>
+<script src="../a/js/shary-admin/editor.js"></script>
+<script src="../a/vendor/shary-editor/ckeditor.js"></script>
 <script>if (window.CKEDITOR) { CKEDITOR.config.versionCheck = false; }</script>
-<template data-sx-crumb><div class="sx-crumb">كل الوحدات ‹ الوحدات (الشاشة القديمة)</div></template>
+<template data-sx-crumb><div class="sx-crumb">All units ‹ Units (old screen)</div></template>
 <style>
 .d-none {
 display: none !important;
@@ -758,8 +751,8 @@ display: none !important;
             var map = new google.maps.Map(document.getElementById('shoplocation'), {
                 zoom: 10,
                 center: {
-                    lat: 30.142,
-                    lng: 31.618
+                    lat: 29.4722,
+                    lng: 32.4726
                 }
             });
             var MaekerPos = new google.maps.LatLng(0, 0);
@@ -797,8 +790,8 @@ display: none !important;
 <div class="content">
 <div class="page-header">
 <div class="page-title">
-<h4>تعديل بيانات المشروع </h4>
-<h6>تحديث المشروع TH23 </h6>
+<h4>Project Edit </h4>
+<h6>Update your Project CH09 </h6>
 </div>
 </div>
 <!-- /add -->
@@ -807,85 +800,85 @@ display: none !important;
 <div class="spinner-border text-warning ajax-overlay d-none" role="status">
 <span class="sr-only">Loading...</span>
 </div>
-<form method="post" id="update_unit_form" action="#preview/update-unit/1318"
+<form method="post" id="update_unit_form" action="#preview/update-unit/44"
 enctype="multipart/form-data"  class="was-validated needs-validation">
 <input type="hidden" name="_token" value="preview" autocomplete="off">                        <input type="hidden" name="_method" value="post">
-<h5 class="card-title">المعلومات الرئيسية</h5>
+<h5 class="card-title">Main Information</h5>
 <div class="row">
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>الاسم بالإنجليزية</label>
-<input type="text" name="name_en" value="Townhouse, Scenes Phase one" required>
+<label>Name With English</label>
+<input type="text" name="name_en" value="Chalet 118 m² resale in IL Monte Galala" required>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>الاسم بالعربية</label>
-<input type="text" name="name_ar" value="تاون هاوس، سينز المرحلة الأولى" required>
+<label>Name With Arabic</label>
+<input type="text" name="name_ar" value="شاليه 118 م² إعادة بيع في المونت جلالة" required>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
 <label for="slug_en">Slug URL (English)</label>
-<input class="form-control" type="text" name="slug_en" id="slug_en" value="townhouse-scenes-7582" placeholder="unit-url">
+<input class="form-control" type="text" name="slug_en" id="slug_en" value="chalet-118m-resale-il-monte-galala-1044" placeholder="unit-url">
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
 <label for="slug_ar">Slug URL (Arabic)</label>
-<input class="form-control" type="text" name="slug_ar" id="slug_ar" value="تاون-هاوس-سينز-7582" placeholder="رابط-الوحدة">
+<input class="form-control" type="text" name="slug_ar" id="slug_ar" value="شاليه-118م-إعادة-بيع-المونت-جلالة-1044" placeholder="رابط-الوحدة">
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>رقم المرجع</label>
-<input class="form-control" type="text" value="TH23" name="reference_no">
+<label>Reference no.</label>
+<input class="form-control" type="text" value="CH09" name="reference_no">
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="developer_id">المطوريين</label>
+<label for="developer_id">Developers</label>
 <select class="form-control js-example-basic-single select2" name="developer_id" id="developer_id" required>
-<option>اختر </option>
+<option>Select </option>
 </select>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="compound_id">كمبوندات</label>
+<label for="compound_id">Compounds</label>
 <select class="form-control js-example-basic-single select2" name="compound_id" id="compound_id" required>
-<option>اختر </option>
+<option>Select </option>
 </select>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>مساحة الشقة</label>
-<input type="text" class="form-control" name="apartment_area" value="200" required>
+<label>Apartment area</label>
+<input type="text" class="form-control" name="apartment_area" value="118" required>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>المساحة إلى (م²) — اختياري</label>
+<label>Area to (m²) — optional</label>
 <input type="number" class="form-control" name="max_apartment_area" value="" min="0" step="any" placeholder="0">
-<small class="text-muted">لو الوحدة مساحتها من – إلى: اكتب أكبر مساحة هنا ، وسيبها فاضية لو المساحة رقم واحد.</small>
+<small class="text-muted">For a unit with an area range: enter the largest area here, or leave it empty for a single area.</small>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>مساحة الأرض </label>
-<input class="form-control" type="text" name="land_size" value="260" placeholder="0">
+<label>Land size </label>
+<input class="form-control" type="text" name="land_size" value="" placeholder="0">
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>السعر </label>
-<input class="form-control" type="text" name="price" value="23086000" placeholder="0.0" required>
+<label>Price </label>
+<input class="form-control" type="text" name="price" value="9700000" placeholder="0.0" required>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>أقصى سعر </label>
+<label>Max price </label>
 <input class="form-control" type="text" name="max_price" value="" placeholder="0">
 </div>
 </div>
@@ -897,96 +890,96 @@ enctype="multipart/form-data"  class="was-validated needs-validation">
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="area_id">المنطقة </label>
+<label for="area_id">City </label>
 <select class="select" name="area_id" id="area_id" required>
-<option value="">اختر المنطقة </option>
-<option value="101" >مدينتي</option>
-<option value="102" >الرحاب</option>
-<option value="103" >الشروق</option>
-<option value="104" >القطامية</option>
-<option value="105" >سيدي حنيش</option>
-<option value="106" >الضبعة</option>
-<option value="107" >سيدي عبد الرحمن</option>
-<option value="108" >العلمين</option>
-<option value="109" >غزالة باي</option>
-<option value="110" >علم الروم</option>
-<option value="30" >منطقة مخفية</option>
-<option value="16" >الساحل الشمالي</option>
-<option value="14" >العين السخنة</option>
-<option value="13" >رأس الحكمة</option>
-<option value="10" >مدينة الشيخ زايد</option>
-<option value="9" >مدينة 6 أكتوبر</option>
-<option value="6" >التجمع الخامس</option>
-<option value="5" >العاصمة الإدارية الجديدة</option>
-<option value="4"  selected >مدينة المستقبل</option>
-<option value="2" >القاهرة الجديدة</option>
+<option value="">Choose City </option>
+<option value="101" >Madinaty</option>
+<option value="102" >Al Rehab</option>
+<option value="103" >El Shorouk</option>
+<option value="104" >Katameya</option>
+<option value="105" >Sidi Heneish</option>
+<option value="106" >Al Dabaa</option>
+<option value="107" >Sidi Abdel Rahman</option>
+<option value="108" >Al Alamein</option>
+<option value="109" >Ghazala Bay</option>
+<option value="110" >Alam Al Roum</option>
+<option value="30" >Hidden Area</option>
+<option value="16" >North Coast</option>
+<option value="14"  selected >Ain Sokhna</option>
+<option value="13" >Ras El Hekma</option>
+<option value="10" >Sheikh Zayed City</option>
+<option value="9" >6 October City</option>
+<option value="6" >Fifth Settlement</option>
+<option value="5" >New Capital</option>
+<option value="4" >Mostakbal City</option>
+<option value="2" >New Cairo</option>
 </select>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="category_id">نوع البيع</label>
+<label for="category_id">Sale type</label>
 <select class="select" name="sale_type" id="sale_type" required>
-<option value="">اختر </option>
-<option value="developer_sale"  selected >بيع المطور</option>
-<option value="resale" >إعادة البيع</option>
-<option value="rent" >إيجار</option>
+<option value="">Select </option>
+<option value="developer_sale" >Developer Sale</option>
+<option value="resale"  selected >Resale</option>
+<option value="rent" >Rent</option>
 </select>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="front">نوع العقار </label>
+<label for="front">Property Type </label>
 <select class="select" name="property_id" id="property_id" required>
-<option value="19" >شقة</option>
-<option value="20" >فيلا</option>
-<option value="21"  selected >تاون هاوس</option>
-<option value="22" >توين هاوس</option>
-<option value="23" >دوبلكس</option>
-<option value="24" >بنتهاوس</option>
-<option value="25" >ستوديو</option>
-<option value="30" >شاليه</option>
-<option value="31" >مكتب إداري</option>
-<option value="32" >محل تجاري</option>
-<option value="33" >عيادة</option>
-<option value="34" >مخزن</option>
-<option value="60" >شقة</option>
-<option value="61" >شقة</option>
-<option value="62" >فيلا</option>
-<option value="63" >شاليه</option>
-<option value="64" >شاليه</option>
-<option value="68" >شقة فندقية</option>
+<option value="19" >Apartment</option>
+<option value="20" >Villa</option>
+<option value="21" >Townhouse</option>
+<option value="22" >Twin House</option>
+<option value="23" >Duplex</option>
+<option value="24" >Penthouse</option>
+<option value="25" >Studio</option>
+<option value="30"  selected >Chalet</option>
+<option value="31" >Office</option>
+<option value="32" >Shop</option>
+<option value="33" >Clinic</option>
+<option value="34" >Warehouse</option>
+<option value="60" >Apartment</option>
+<option value="61" >Apartment</option>
+<option value="62" >Villa</option>
+<option value="63" >Chalet</option>
+<option value="64" >Chalet</option>
+<option value="68" >Hotel Apartment</option>
 </select>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="purpose">نوع التشطيب </label>
+<label for="purpose">Finishing Type </label>
 <select class="select" name="finishing_type_id" id="finishing_type_id" required>
-<option value="7" >تشطيب كامل</option>
-<option value="8" >نصف تشطيب</option>
-<option value="9"  selected >بدون تشطيب</option>
-<option value="10" >مفروش</option>
+<option value="7"  selected >Fully Finished</option>
+<option value="8" >Semi Finished</option>
+<option value="9" >Core &amp; Shell</option>
+<option value="10" >Furnished</option>
 </select>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="purpose">نوع التميز </label>
+<label for="purpose">Featured type </label>
 <select class="select" name="featured_type" id="featured_type" required>
-<option value="12" >إطلالة على البحيرة</option>
-<option value="13" >إطلالة على الحديقة</option>
-<option value="14" >إطلالة على البحر</option>
-<option value="15" >وحدة ناصية</option>
-<option value="69" >موقع مميز</option>
+<option value="12"  selected >Lake View</option>
+<option value="13" >Garden View</option>
+<option value="14" >Sea View</option>
+<option value="15" >Corner Unit</option>
+<option value="69" >Prime location</option>
 </select>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="property_status">ميعاد التسليم </label>
+<label for="property_status">Delivery date </label>
 <select class="select" name="delivery_in" id="delivery_in" required>
-<option value="1"  selected  >جاهز التسليم </option>
+<option value="1"  selected  >Ready For Delivery </option>
 <option value="2025" >2025 </option>
 <option value="2026" >2026 </option>
 <option value="2027" >2027 </option>
@@ -1007,110 +1000,110 @@ enctype="multipart/form-data"  class="was-validated needs-validation">
 </div>
 </div>
 </div>
-<h5 class="card-title">معلومات اضافية</h5>
+<h5 class="card-title">Additional Information</h5>
 <div class="row">
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>عدد غرف النوم </label>
+<label>Bedrooms </label>
 <input type="number" class="form-control" name="Bedrooms"
-value="3" required>
+value="2" required>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>عدد الحمامات </label>
+<label>Number of Bathrooms </label>
 <input type="number" class="form-control" name="Bathrooms"
-value="3" required>
+value="2" required>
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label>عدد الجراجات </label>
-<input type="number" class="form-control" name="garages" value="2">
+<label>Garages </label>
+<input type="number" class="form-control" name="garages" value="1">
 </div>
 </div>
 <div class="col-lg-4 col-sm-6 col-12">
 <div class="form-group">
-<label for="property_status">موصى به </label>
+<label for="property_status">Recommended </label>
 <select class="select" name="recommend" id="recommend" required>
-<option value="yes" >نعم </option>
-<option value="no"  selected  >لا </option>
+<option value="yes" >Yes </option>
+<option value="no"  selected  >No </option>
 </select>
 </div>
 </div>
 </div>
 <hr>
-<h5 class="card-title">موقع الوحدة</h5>
+<h5 class="card-title">Unit Address</h5>
 <div class="row">
 <div class="form-group">
 <div id="shoplocation" style="width:100%;height:350px"></div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>موقع الوحدة </label>
+<label>Unit Address </label>
 <input type="text" class="form-control" name="address"
-value="Mivida, New Cairo"
+value="IL Monte Galala, Ain Sokhna"
 id="autocomplete"
-placeholder="بحث عن مكان">
+placeholder="Search for a Place">
 </div>
 </div>
 <div class="col-md-6 mb-3" style="display: none">
 <label for="validationCustom04">Latitude</label>
 <input type="text"  class="form-control" name="lat"
-value="30.142"
+value="29.4722"
 id="lat" placeholder="ادخل موقع الوحدة">
 </div>
 <div class="col-md-6 mb-3" style="display: none">
 <label for="validationCustom04">longitude</label>
 <input type="text"  class="form-control" name="lng"
-value="31.618"
+value="32.4726"
 id="lng" placeholder="ادخل موقع الوحدة">
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>لينك فيديو توضيحى </label>
+<label>Explanatory Video Link </label>
 <input type="url" class="form-control" name="video"
 value="">
 </div>
 </div>
 </div>
 <hr>
-<h5 class="card-title">بيانات للتواصل</h5>
+<h5 class="card-title">Contact Information</h5>
 <div class="row">
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>رقم الهاتف </label>
+<label>Phone Number </label>
 <input type="tel" class="form-control" name="phone"
 value="">
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>رقم واتس اب </label>
+<label>WhatsApp Number </label>
 <input type="tel" class="form-control" name="whatsapp"
 value="">
 </div>
 </div>
 </div>
 <hr>
-<h5 class="card-title">خطط السداد</h5>
+<h5 class="card-title">Payment plans</h5>
 <div class="row">
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>مقدم </label>
-<input type="text" class="form-control" name="down_payment" value="2308600">
+<label>Down payment </label>
+<input type="text" class="form-control" name="down_payment" value="5335000">
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>رسوم الصيانة </label>
-<input type="text" class="form-control" name="maintenance_fees" value="2600000">
+<label>Maintenance Fees </label>
+<input type="text" class="form-control" name="maintenance_fees" value="776000">
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
 <label>المبلغ / Amount</label>
-<input type="text" class="form-control" name="monthly_amount" value="649300">
+<input type="text" class="form-control" name="monthly_amount" value="72750">
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
@@ -1127,8 +1120,8 @@ value="">
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>سنوات التقسيط </label>
-<input type="number" class="form-control" name="installment_years" value="8">
+<label>Installment years </label>
+<input type="number" class="form-control" name="installment_years" value="5">
 </div>
 </div>
 </div>
@@ -1138,9 +1131,9 @@ value="">
 <i class="fa fa-plus"></i> Add Payment Plan / إضافة خطة سداد
 </button>
 <div class="shary-plan-extras" data-plan-extras
-data-labels="{&quot;plan&quot;:&quot;الخطة&quot;,&quot;main&quot;:&quot;الأساسية&quot;,&quot;down&quot;:&quot;مقدم&quot;,&quot;add&quot;:&quot;إضافة مقدم&quot;,&quot;remove&quot;:&quot;حذف المقدم&quot;,&quot;months&quot;:&quot;عدد الشهور بين الدفعات&quot;,&quot;out_downs&quot;:&quot;إجمالي المقدمات (تلقائي)&quot;,&quot;out_total&quot;:&quot;إجمالي الأقساط (تلقائي)&quot;,&quot;out_delivery&quot;:&quot;دفعة الاستلام (تلقائي)&quot;,&quot;pays&quot;:&quot;هيظهر على الموقع: هتدفع :amount كل :months شهور (:count دفعة)&quot;,&quot;cash&quot;:&quot;خطة كاش: مفيش مقدمات ولا أقساط.&quot;}">
-<h6 class="shary-plan-extras__title">تفاصيل خطط السداد: مقدمات إضافية + عدد الشهور بين الدفعات</h6>
-<small class="shary-plan-extras__help">&quot;مقدم 1&quot; هو خانة المقدم بتاعة الخطة نفسها. من هنا تضيف مقدم 2 ومقدم 3 (أو أكتر) لكل خطة ، وتكتب عدد الشهور بين كل دفعة والتانية (مثال: 3 أو 6). إجمالي الأقساط ودفعة الاستلام محسوبين تلقائي من بيانات الخطة — مش بيتكتبوا.</small>
+data-labels="{&quot;plan&quot;:&quot;Plan&quot;,&quot;main&quot;:&quot;main&quot;,&quot;down&quot;:&quot;Down payment&quot;,&quot;add&quot;:&quot;Add down payment&quot;,&quot;remove&quot;:&quot;Remove&quot;,&quot;months&quot;:&quot;Months between payments&quot;,&quot;out_downs&quot;:&quot;Down payments total (auto)&quot;,&quot;out_total&quot;:&quot;Instalments total (auto)&quot;,&quot;out_delivery&quot;:&quot;Delivery payment (auto)&quot;,&quot;pays&quot;:&quot;On the site: you pay :amount every :months months (:count payments)&quot;,&quot;cash&quot;:&quot;Cash plan: no down payments or instalments.&quot;}">
+<h6 class="shary-plan-extras__title">Payment plan details: extra down payments + months between payments</h6>
+<small class="shary-plan-extras__help">&quot;Down payment 1&quot; is the down payment field of the plan itself. Add down payment 2, 3 (or more) per plan here, and enter the number of months between payments (e.g. 3 or 6). The instalments total and the delivery payment are calculated automatically from the plan data and are not typed.</small>
 <div data-plan-extras-list></div>
 <input type="hidden" name="shary_plan_extras" value="" data-plan-extras-value>
 </div>
@@ -1165,12 +1158,12 @@ data-labels="{&quot;plan&quot;:&quot;الخطة&quot;,&quot;main&quot;:&quot;ا�
 .shary-plan-line.is-cash .shary-plan-line__grid, .shary-plan-line.is-cash .shary-plan-line__auto, .shary-plan-line.is-cash .shary-plan-line__every { display: none; }
 .shary-plan-line.is-cash .shary-plan-line__cashnote { display: block; }
 </style>
-<script src="a/js/shary-admin/plan-extras.js" defer></script>
+<script src="../a/js/shary-admin/plan-extras.js" defer></script>
 <template id="payment-plan-row-tpl">
 <div class="payment-plan-row border rounded p-2 mb-2 row align-items-end">
 <div class="col-lg-3 col-sm-6 col-12">
 <div class="form-group">
-<label>مقدم </label>
+<label>Down payment </label>
 <input type="text" class="form-control" name="payment_plans[__IDX__][down_payment]" value="">
 </div>
 </div>
@@ -1194,13 +1187,13 @@ data-labels="{&quot;plan&quot;:&quot;الخطة&quot;,&quot;main&quot;:&quot;ا�
 </div>
 <div class="col-lg-3 col-sm-6 col-12">
 <div class="form-group">
-<label>سنوات التقسيط </label>
+<label>Installment years </label>
 <input type="number" class="form-control" name="payment_plans[__IDX__][installment_years]" value="">
 </div>
 </div>
 <div class="col-lg-2 col-sm-6 col-12">
 <div class="form-group">
-<label>رسوم الصيانة </label>
+<label>Maintenance Fees </label>
 <input type="text" class="form-control" name="payment_plans[__IDX__][maintenance_fees]" value="">
 </div>
 </div>
@@ -1226,38 +1219,38 @@ data-labels="{&quot;plan&quot;:&quot;الخطة&quot;,&quot;main&quot;:&quot;ا�
                         }
                         </script>
 <hr>
-<h5 class="card-title">عرض محدود</h5>
+<h5 class="card-title">Limited Offer</h5>
 <div class="row">
 <div class="col-lg-3 col-sm-6 col-12">
 <div class="form-group">
-<label>عرض محدود</label>
+<label>Limited Offer</label>
 <select class="select" name="limited_offer" id="limited_offer">
-<option value="0" selected>لا</option>
-<option value="1" >نعم</option>
+<option value="0" >No</option>
+<option value="1" selected>Yes</option>
 </select>
 </div>
 </div>
-<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields d-none">
+<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields ">
 <div class="form-group">
-<label>نسبة الخصم %</label>
-<input type="number" class="form-control" name="limited_offer_cash_discount" value="0" min="0" step="0.01">
+<label>Discount Percentage %</label>
+<input type="number" class="form-control" name="limited_offer_cash_discount" value="250000" min="0" step="0.01">
 </div>
 </div>
-<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields d-none">
+<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields ">
 <div class="form-group">
-<label>يشاهدون الآن</label>
-<input type="number" class="form-control" name="limited_offer_watching_now" value="13" min="0">
+<label>Watching Now</label>
+<input type="number" class="form-control" name="limited_offer_watching_now" value="41" min="0">
 </div>
 </div>
-<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields d-none">
+<div class="col-lg-3 col-sm-6 col-12 limited-offer-fields ">
 <div class="form-group">
-<label>تاريخ انتهاء العرض</label>
-<input type="datetime-local" class="form-control" name="limited_offer_end_at" value="">
+<label>Offer End Date</label>
+<input type="datetime-local" class="form-control" name="limited_offer_end_at" value="2026-10-05T13:12">
 </div>
 </div>
 </div>
 <hr>
-<h5 class="card-title">المرافق والميزات</h5>
+<h5 class="card-title">Amenities and features</h5>
 <div class="row">
 <div class="col-lg-12 col-sm-12 col-12" id="form_variation_type">
 <div class="form-group">
@@ -1265,74 +1258,74 @@ data-labels="{&quot;plan&quot;:&quot;الخطة&quot;,&quot;main&quot;:&quot;ا�
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="12" id="12" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/9fc5780db3e12international-school.svg.svg" alt="مدرسة دولية" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-مدرسة دولية
+<img src="../a/images/services/9fc5780db3e12international-school.svg.svg" alt="International School" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+International School
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="11" id="11" style="width: 24px; height: 24px;"
->
-<img src="a/images/services/b74bff6211351private-beach.svg.svg" alt="شاطئ خاص" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-شاطئ خاص
+checked>
+<img src="../a/images/services/b74bff6211351private-beach.svg.svg" alt="Private Beach" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Private Beach
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="10" id="10" style="width: 24px; height: 24px;"
->
-<img src="a/images/services/ea63d451ca77dlagoons.svg.svg" alt="بحيرات صناعية" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-بحيرات صناعية
+checked>
+<img src="../a/images/services/ea63d451ca77dlagoons.svg.svg" alt="Lagoons" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Lagoons
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="9" id="9" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/e48167bc27592underground-parking.svg.svg" alt="جراج تحت الأرض" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-جراج تحت الأرض
+<img src="../a/images/services/e48167bc27592underground-parking.svg.svg" alt="Underground Parking" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Underground Parking
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="8" id="8" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/af8daa7d95783mosque.svg.svg" alt="مسجد" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-مسجد
+<img src="../a/images/services/af8daa7d95783mosque.svg.svg" alt="Mosque" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Mosque
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="7" id="7" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/6609784a35a2fjogging-track.svg.svg" alt="مسار للجري" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-مسار للجري
+<img src="../a/images/services/6609784a35a2fjogging-track.svg.svg" alt="Jogging Track" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Jogging Track
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="6" id="6" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/1a9dba569ae36commercial-area.svg.svg" alt="منطقة تجارية" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-منطقة تجارية
+<img src="../a/images/services/1a9dba569ae36commercial-area.svg.svg" alt="Commercial Area" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Commercial Area
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="5" id="5" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/d582886cec84ekids-area.svg.svg" alt="منطقة ألعاب أطفال" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-منطقة ألعاب أطفال
+<img src="../a/images/services/d582886cec84ekids-area.svg.svg" alt="Kids Area" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Kids Area
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="4" id="4" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/566aca348d55c247-security.svg.svg" alt="أمن وحراسة 24 ساعة" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-أمن وحراسة 24 ساعة
+<img src="../a/images/services/566aca348d55c247-security.svg.svg" alt="24/7 Security" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+24/7 Security
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="3" id="3" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/125ab8e1cad00clubhouse.svg.svg" alt="نادي اجتماعي" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-نادي اجتماعي
+<img src="../a/images/services/125ab8e1cad00clubhouse.svg.svg" alt="Clubhouse" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Clubhouse
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="2" id="2" style="width: 24px; height: 24px;"
 >
-<img src="a/images/services/fd3d4efe9bddegym.svg.svg" alt="صالة رياضية" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-صالة رياضية
+<img src="../a/images/services/fd3d4efe9bddegym.svg.svg" alt="Gym" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Gym
 </label>
 <label style="display: flex; align-items: center; gap: 10px; font-size: larger; font-weight: bold; cursor: pointer;">
 <input type="checkbox" name="features[]" value="1" id="1" style="width: 24px; height: 24px;"
->
-<img src="a/images/services/8a6496ffe392aswimming-pool.svg.svg" alt="حمام سباحة" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
-حمام سباحة
+checked>
+<img src="../a/images/services/8a6496ffe392aswimming-pool.svg.svg" alt="Swimming Pool" style="width: 20px; height: 20px; object-fit: contain;" loading="lazy" decoding="async">
+Swimming Pool
 </label>
 </div>
 </div>
@@ -1342,9 +1335,9 @@ data-labels="{&quot;plan&quot;:&quot;الخطة&quot;,&quot;main&quot;:&quot;ا�
 <div class="row">
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label> صورة </label>
+<label> Image </label>
 <div class="custom-file-container" data-upload-id="mySecondImage">
-<label>تحميل (ملف واحد) <a href="javascript:void(0)"
+<label>Upload (Single File) <a href="javascript:void(0)"
 class="custom-file-container__image-clear"
 title="Clear json">x</a></label>
 <label class="custom-file-container__custom-file">
@@ -1356,15 +1349,15 @@ name="image" accept="images/*">
 class="custom-file-container__custom-file__custom-file-control"></span>
 </label>
 <div class="custom-file-container__image-preview"></div>
-<img src="a/images/compounds/units/dbad13977057dvilla-1002.jpg.jpg" alt="img" style="width: 300px;height: 150px"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
+<img src="../a/images/compounds/units/bb28e728c899cchalet-1044.jpg.jpg" alt="img" style="width: 300px;height: 150px"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
 </div>
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label> مستر بلان </label>
+<label> Master Plan </label>
 <div class="custom-file-container" data-upload-id="myFirstImage">
-<label>تحميل (ملف واحد) <a href="javascript:void(0)"
+<label>Upload (Single File) <a href="javascript:void(0)"
 class="custom-file-container__image-clear"
 title="Clear PDF">x</a></label>
 <label class="custom-file-container__custom-file">
@@ -1376,13 +1369,13 @@ name="master_plan" accept="image/*,.pdf,application/pdf">
 class="custom-file-container__custom-file__custom-file-control"></span>
 </label>
 <div class="custom-file-container__image-preview"></div>
-<img src="a/images/logo/logo.png" alt="img" style="width: 300px;height: 150px"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
+<img src="../a/images/logo/logo.png" alt="img" style="width: 300px;height: 150px"  sizes="auto, (max-width: 768px) 100vw, 50vw" loading="lazy" decoding="async">
 </div>
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label>لينك ال vr</label>
+<label>VR link</label>
 <input type="url" class="form-control" name="image_vr"
 value=""
 placeholder="https://example.com/vr-link">
@@ -1423,65 +1416,65 @@ placeholder="https://example.com/vr-link">
                             if (!confirm('حذف هذا المخطط؟')) return;
                             fetch(deleteFpUrlTemplate.replace('__ID__', id), {
                                 method: 'POST',
-                                headers: { 'X-CSRF-TOKEN': 'rN6ntxgQz5sguAPLHocWXAxYFBIS8zNGaiaTyopR', 'Accept': 'application/json' }
+                                headers: { 'X-CSRF-TOKEN': '0Z5SOV5OABND1yec758f9m0gfYZKczsKeuhdWNWV', 'Accept': 'application/json' }
                             }).then(r => r.json()).then(data => {
                                 if (data.status == 1) btn.closest('.fp-existing').remove();
                                 else alert('فشل الحذف');
                             });
                         }
                         </script>
-<h5 class="card-title">تفاصيل عن الوحدة</h5>
+<h5 class="card-title">Unit Description</h5>
 <div class="row">
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label for="desc_en">الوصف بالإنجليزية </label>
-<textarea class="form-control ckeditor_seo" name="desc_en" id="desc_en" required></textarea>
+<label for="desc_en">Description with English </label>
+<textarea class="form-control ckeditor_seo" name="desc_en" id="desc_en" required>&lt;p&gt;Chalet of 118 m² resale in IL Monte Galala, Ain Sokhna. 2 bedrooms, 2 bathrooms, with a flexible payment plan.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Prime location inside the project&lt;/li&gt;&lt;li&gt;Close to the clubhouse and services&lt;/li&gt;&lt;/ul&gt;</textarea>
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label for="desc_ar">الوصف بالعربية</label>
-<textarea class="form-control ckeditor_seo" name="desc_ar" id="desc_ar" required></textarea>
+<label for="desc_ar">Description with Arabic</label>
+<textarea class="form-control ckeditor_seo" name="desc_ar" id="desc_ar" required>&lt;p&gt;شاليه بمساحة 118 م² إعادة بيع في المونت جلالة، العين السخنة. 2 غرف نوم، 2 حمام، مع خطة سداد مرنة.&lt;/p&gt;&lt;ul&gt;&lt;li&gt;موقع مميز داخل المشروع&lt;/li&gt;&lt;li&gt;بالقرب من النادي والخدمات&lt;/li&gt;&lt;/ul&gt;</textarea>
 </div>
 </div>
 </div>
-<h5 class="card-title">تحسين محركات البحث</h5>
+<h5 class="card-title">SEO</h5>
 <div class="row">
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label for="meta_title_en">عنوان الميتا (إنجليزي) </label>
+<label for="meta_title_en">Meta Title En </label>
 <textarea class="form-control" name="meta_title_en" id="meta_title_en"
-                                    ></textarea>
+                                    >Chalet 118 m² resale in IL Monte Galala | Shary</textarea>
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label for="meta_title_ar">عنوان الميتا (عربي)</label>
+<label for="meta_title_ar">Meta Title Ar</label>
 <textarea class="form-control" name="meta_title_ar" id="meta_title_ar"
-                                    ></textarea>
+                                    >شاليه 118 م² إعادة بيع في المونت جلالة | شاري</textarea>
 </div>
 </div>
 </div>
 <div class="row">
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label for="meta_desc_en">وصف الميتا (إنجليزي) </label>
+<label for="meta_desc_en">Meta desc En </label>
 <textarea class="form-control" name="meta_desc_en" id="meta_desc_en"
-                                    ></textarea>
+                                    >Chalet 118 m² resale in IL Monte Galala. Ref 1044. Price, payment plan, photos and location on Shary.</textarea>
 </div>
 </div>
 <div class="col-lg-6 col-sm-6 col-12">
 <div class="form-group">
-<label for="meta_desc_ar">وصف الميتا (عربي)</label>
-<textarea class="form-control" name="meta_desc_ar" id="meta_desc_ar" ></textarea>
+<label for="meta_desc_ar">Meta desc Ar</label>
+<textarea class="form-control" name="meta_desc_ar" id="meta_desc_ar" >شاليه 118 م² إعادة بيع في المونت جلالة. كود 1044. السعر وخطة السداد والصور والموقع على شاري.</textarea>
 </div>
 </div>
 </div>
 <br>
-<input type="hidden" value="ar" name="lang" id="lang">
+<input type="hidden" value="en" name="lang" id="lang">
 <div class="col-lg-12">
-<button type="submit" class="btn btn-submit me-2">تحديث</button>
-<a href="units-315.html" data-sx-sample="1" class="btn btn-cancel">إلغاء </a>
+<button type="submit" class="btn btn-submit me-2">Update</button>
+<a href="units-315.html" data-sx-sample="1" class="btn btn-cancel">Cancel </a>
 </div>
 </form>
 </div>
@@ -1492,34 +1485,34 @@ placeholder="https://example.com/vr-link">
 </div>
 <!-- /Main Wrapper -->
 <!-- jQuery -->
-<script src="a/assets/js/jquery-3.6.0.min.js"></script>
+<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
 <!-- Bootstrap Core JS -->
-<script src="a/assets/js/bootstrap.bundle.min.js"></script>
+<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
 <!-- Feather Icon JS -->
-<script src="a/assets/js/feather.min.js"></script>
+<script src="../a/assets/js/feather.min.js"></script>
 <!-- Slimscroll JS -->
-<script src="a/assets/js/jquery.slimscroll.min.js"></script>
+<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
 <!-- Datatable JS -->
-<script src="a/assets/js/jquery.dataTables.min.js"></script>
-<script src="a/assets/js/dataTables.bootstrap4.min.js"></script>
+<script src="../a/assets/js/jquery.dataTables.min.js"></script>
+<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
 <!-- Select2 JS -->
-<script src="a/assets/plugins/select2/js/select2.min.js"></script>
+<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
 <!-- Datetimepicker JS -->
-<script src="a/assets/js/moment.min.js"></script>
-<script src="a/assets/js/bootstrap-datetimepicker.min.js"></script>
+<script src="../a/assets/js/moment.min.js"></script>
+<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
 <!-- Chart JS -->
-<script src="a/assets/plugins/apexchart/apexcharts.min.js"></script>
-<script src="a/assets/plugins/apexchart/chart-data.js"></script>
-<script src="a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
+<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
 <!-- Owl JS -->
-<script src="a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
 <!-- Fileupload JS -->
-<script src="a/assets/plugins/fileupload/fileupload.min.js"></script>
+<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
 <!-- Sweetalert 2 -->
-<script src="a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
-<script src="a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
 <!-- Custom JS -->
-<script src="a/assets_rtl/js/script.js"></script>
+<script src="../a/assets/js/script.js"></script>
 <script>
     $(document).ready(function () {
         $(document).on('click', '.confirm-text', function(e) {
@@ -1527,14 +1520,14 @@ placeholder="https://example.com/vr-link">
             var parentElement = $(this).parent().parent();
         var deleteUrl = $(this);
         Swal.fire({
-            title: "هل أنت متأكد؟",
-            text: "سيتم حذف البيانات ولا يمكن استرجاعها مرة اخرى",
+            title: "Are you sure?",
+            text: "You won&#039;t be able to revert this!",
             type: "warning",
             showCancelButton: !0,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "نعم، احذفه!",
-            cancelButtonText: "إلغاء", // Translate "Cancel" here
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel", // Translate "Cancel" here
             confirmButtonClass: "btn btn-primary",
             cancelButtonClass: "btn btn-danger ml-1",
             buttonsStyling: !1,
@@ -1556,8 +1549,8 @@ placeholder="https://example.com/vr-link">
                         // Display a success message
                         Swal.fire({
                             type: "success",
-                            title: "تم الحذف!",
-                            text: "تم الحذف بنجاح",
+                            title: "Deleted!",
+                            text: "Deleted successfully",
                             confirmButtonClass: "btn btn-success",
                         });
                         // // Redirect to another URL
@@ -1571,8 +1564,8 @@ placeholder="https://example.com/vr-link">
     });
 </script>
 <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
-<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة","pick_search":"اكتب للبحث…","pick_none":"مفيش اختيار بالاسم ده","required_field":"الخانة دي مطلوبة","required_save":"فيه خانات مطلوبة فاضية — اتعلّمت بالأحمر. اكتبها وبعدين احفظ."}};</script>
-<script src="a/js/shary-admin/shell.js" defer></script>
+<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+<script src="../a/js/shary-admin/shell.js" defer></script>
 <style>
 .sx-draftbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 14px 0 12px; padding: 10px 12px; border: 1px dashed #c9d8ea; border-radius: 12px; background: #f6f9fd; }
 .sx-draftbar__save { border: 1px solid #1E4266; background: #fff; color: #1E4266; font-weight: 800; font-size: 14px; padding: 7px 16px; border-radius: 999px; cursor: pointer; }
@@ -1585,7 +1578,7 @@ placeholder="https://example.com/vr-link">
 .sx-draftnote__open { background: #1E4266; color: #fff; }
 .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
 </style>
-<script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"rN6ntxgQz5sguAPLHocWXAxYFBIS8zNGaiaTyopR","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
-<script src="a/js/shary-admin/form-drafts.js" defer></script>
-<script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
+<script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0Z5SOV5OABND1yec758f9m0gfYZKczsKeuhdWNWV","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+<script src="../a/js/shary-admin/form-drafts.js" defer></script>
+<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>
