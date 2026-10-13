@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head><script>(function(){var B="1791878388";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1791878388"></script>
+<head><script>(function(){var B="1791892031";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1791892031"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="csrf-token" content="5aI2C2NA4cznOcCZJPun2tfR96gCD6s3xjphWt24">
+<meta name="csrf-token" content="D6GkrIvHBGLT2BWiYLAccGvaWPY4myro3Fb5uM2F">
 <title>مشاريع الساحل | شاري</title>
 <meta name="description" content="22 مشروع في «مشاريع الساحل» — اختار المشروع وشوف أسعاره وخطط السداد واحجز مع المطور مباشرة.">
 <link rel="canonical" href="https://sharyproperty.github.io/Sharyproperty/bound/ar/v2/explore/coastal.html">
@@ -25,8 +25,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="../../../css/shary/app.min.css?v=tmu5z5">
-<script defer src="../../../js/shary/brand-icons.min.js?v=tmu5z6"></script>
+<link rel="stylesheet" href="../../../css/shary/app.min.css?v=tmuf0n">
+<script defer src="../../../js/shary/brand-icons.min.js?v=tmuf0o"></script>
 </head>
 <body class="bg-white pb-[70px] lg:pb-0 font-cairo text-shary-navy antialiased"
 data-saved-toggle="../../v2.html" data-visitor="g"><div style="background:#123a5c;color:#fff;font:600 12.5px/1.9 Cairo,Tahoma,Arial,sans-serif;text-align:center;padding:4px 14px" dir="rtl">نسخة معاينة من كود اللارافيل — البيانات والصور تجريبية. الفورمات والفلاتر و Shary AI بتشتغل على السيرفر بس.</div>
@@ -6975,7 +6975,7 @@ data-compare-link data-base="../compare.html" >
 </template></div>
 </div>
 <p class="text-[17px] font-bold" data-xempty hidden>مفيش مشاريع هنا دلوقتي.</p>
-<nav class="explore-pages" aria-label="pages" data-xpages></nav>
+<div class="explore-more" data-xmore aria-hidden="true"></div>
 </div>
 <script>
         (function () {
@@ -6987,10 +6987,26 @@ data-compare-link data-base="../compare.html" >
                     form.querySelectorAll('select').forEach(function (s) { if (!s.value) s.disabled = true; });
                     form.submit();
                 });
+                var next = document.querySelector('[data-xnext]'), grid = document.querySelector('[data-xgrid]'), busy = false;
+                if (!next || !grid || !('IntersectionObserver' in window)) return;
+                var io = new IntersectionObserver(function (en) {
+                    if (!en[0].isIntersecting || busy) return;
+                    var url = next.getAttribute('data-xnext'); if (!url) return;
+                    busy = true;
+                    fetch(url, { credentials: 'same-origin' }).then(function (r) { return r.text(); }).then(function (html) {
+                        var doc = new DOMParser().parseFromString(html, 'text/html');
+                        var more = doc.querySelector('[data-xgrid]'), nn = doc.querySelector('[data-xnext]');
+                        if (more) [].slice.call(more.children).forEach(function (el) { grid.appendChild(document.importNode(el, true)); });
+                        var u = nn ? nn.getAttribute('data-xnext') || '' : '';
+                        next.setAttribute('data-xnext', u);
+                        if (!u) io.disconnect();
+                    }).catch(function () {}).then(function () { busy = false; });
+                }, { rootMargin: '600px 0px' });
+                io.observe(next);
                 return;
             }
-            // كل الكروت في الصفحة: الفلتر والترتيب والصفحات في المتصفح
-            var PER = 24, page = 1;
+            // كل الكروت في الصفحة: الفلتر والترتيب في المتصفح ، والكروت بتظهر PER ورا PER وأنت نازل (مفيش أرقام صفحات)
+            var PER = 24, page = 1, total = 0;
             // البحث بيفهم الهمزات والتاء المربوطة والألف المقصورة وحروف كبيرة وصغيرة
             function norm(t) { return String(t || '').toLowerCase().replace(/[\u064B-\u0652\u0640]/g, '').replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim(); }
             var lists = { projects: document.querySelector('[data-xlist=projects]'), units: document.querySelector('[data-xlist=units]') };
@@ -7000,7 +7016,6 @@ data-compare-link data-base="../compare.html" >
             if (qInput) qInput.addEventListener('input', function () { page = 1; render(false); });
             var adv = form.querySelector('[data-xadv]'), advBox = form.querySelector('[data-xadv-box]');
             if (adv && advBox) adv.addEventListener('click', function () { advBox.hidden = !advBox.hidden; adv.setAttribute('aria-expanded', advBox.hidden ? 'false' : 'true'); });
-            page = Math.max(1, parseInt(params.get('page') || '1', 10) || 1);
             function state() {
                 var st = { view: (form.querySelector('input[name=view]:checked') || {}).value || 'projects' };
                 ['project', 'developer', 'area', 'type', 'sort'].forEach(function (k) { var s = form.querySelector('select[name=' + k + ']'); st[k] = s ? s.value : ''; });
@@ -7035,9 +7050,9 @@ data-compare-link data-base="../compare.html" >
                     order.forEach(function (el) { list.appendChild(el); });
                     shown = order.filter(function (el) { return shown.indexOf(el) >= 0; });
                 }
-                var pages = Math.max(1, Math.ceil(shown.length / PER)); if (page > pages) page = pages;
+                total = shown.length;
                 items.forEach(function (el) { el.hidden = true; });
-                shown.slice((page - 1) * PER, page * PER).forEach(function (el) {
+                shown.slice(0, page * PER).forEach(function (el) {
                     var tpl = el.querySelector(':scope > template[data-xtpl]');
                     if (tpl) { el.appendChild(tpl.content.cloneNode(true)); tpl.remove(); }     // الكارت بيترسم أول مرة يظهر
                     el.hidden = false;
@@ -7045,16 +7060,18 @@ data-compare-link data-base="../compare.html" >
                 var found = form.querySelector('[data-xfound]'); found.textContent = found.getAttribute('data-tpl').replace('#', shown.length.toLocaleString('en-US'));
                 document.querySelector('[data-xempty]').hidden = shown.length > 0;
                 var clear = form.querySelector('[data-xclear]'); if (clear) clear.hidden = !(st.project || st.developer || st.area || st.type || st.sort || st.q);
-                var nav = document.querySelector('[data-xpages]'); nav.innerHTML = '';
-                if (pages > 1) for (var i = 1; i <= pages; i++) { var a = document.createElement('a'); a.href = '#'; a.textContent = i; a.setAttribute('data-p', i); if (i === page) a.className = 'is-on'; nav.appendChild(a); }
-                var q = new URLSearchParams(); Object.keys(st).forEach(function (k) { if (st[k] && !(k === 'view' && st[k] === 'projects')) q.set(k, st[k]); }); if (page > 1) q.set('page', page);
+                if (push) return;     // كروت زيادة وأنت نازل: من غير ما اللينك أو مكان الصفحة يتغيّر
+                var q = new URLSearchParams(); Object.keys(st).forEach(function (k) { if (st[k] && !(k === 'view' && st[k] === 'projects')) q.set(k, st[k]); });
                 try { history.replaceState(null, '', location.pathname + (q.toString() ? '?' + q : '')); } catch (e) {}
-                if (push) { var top = form.getBoundingClientRect().top + window.scrollY - 90; if (window.scrollY > top) window.scrollTo({ top: top, behavior: 'smooth' }); }
             }
+            var more = document.querySelector('[data-xmore]');
+            function grow() { if (page * PER < total) { page++; render(true); } }
+            if (more && 'IntersectionObserver' in window) {
+                new IntersectionObserver(function (en) { if (en[0].isIntersecting) grow(); }, { rootMargin: '600px 0px' }).observe(more);
+            } else if (more) { window.addEventListener('scroll', function () { if (more.getBoundingClientRect().top < innerHeight + 600) grow(); }, { passive: true }); }
             [].slice.call((lists.units || { children: [] }).children).forEach(function (el, i) { el.setAttribute('data-i', i); });
             form.addEventListener('change', function () { page = 1; render(false); });
             form.addEventListener('submit', function (e) { e.preventDefault(); });
-            document.querySelector('[data-xpages]').addEventListener('click', function (e) { var a = e.target.closest('[data-p]'); if (!a) return; e.preventDefault(); page = +a.getAttribute('data-p'); render(true); });
             var clear = form.querySelector('[data-xclear]');
             if (clear) clear.addEventListener('click', function (e) { e.preventDefault(); form.querySelectorAll('select').forEach(function (s) { s.value = ''; var box = s.closest('[data-select]'); if (box) box.dispatchEvent(new Event('shary:select-refresh')); }); if (qInput) qInput.value = ''; page = 1; render(false); });
             render(false);
@@ -7344,7 +7361,7 @@ data-label-get="حمل التطبيق" data-label-open="افتح التطبيق"
 </button>
 </div>
 <form action="../../v2.html" method="POST" class="mt-4 flex flex-col gap-4" data-meeting-form>
-<input type="hidden" name="_token" value="5aI2C2NA4cznOcCZJPun2tfR96gCD6s3xjphWt24" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+<input type="hidden" name="_token" value="D6GkrIvHBGLT2BWiYLAccGvaWPY4myro3Fb5uM2F" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
 <input type="hidden" name="meeting_date" value="" data-meeting-date>
 <input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
 <div class="grid grid-cols-2 gap-1 rounded-[16px] bg-shary-form p-1.5" role="group" aria-label="طلب اجتماع">
@@ -7544,19 +7561,19 @@ data-label-get="حمل التطبيق" data-label-open="افتح التطبيق"
 </div>
 </div>
 <!-- /meeting-modal -->
-<script src="../../../js/shary/smart-text.min.js?v=tmu5z8"></script>
-<script src="../../../js/shary/site-chrome.min.js?v=tmu5z8"></script>
-<script src="../../../js/shary/img-fit.min.js?v=tmu5z7" defer></script>
-<script src="../../../js/shary/filter-live.min.js?v=tmu5z6"></script>
-<script src="../../../js/shary/phone-country.min.js?v=tmu5z8"></script>
-<script src="../../../js/shary/story-viewer.min.js?v=tmu5z8"></script>
-<script src="../../../js/shary/search-strip.min.js?v=tmu5z8"></script>
-<script src="../../../js/shary/meeting-modal.min.js?v=tmu5z7"></script>
-<script src="../../../js/shary/lead-forms.min.js?v=tmu5z7"></script>
-<script src="../../../js/shary/saved-sync.min.js?v=tmu5z8"></script>
-<script src="../../../js/shary/listing.min.js?v=tmu5z7"></script>
-<script src="../../../js/shary/form-select.min.js?v=tmu5z7"></script>
-<script src="../../../js/shary/ai-panel.min.js?v=tmu5z6"></script>
+<script src="../../../js/shary/smart-text.min.js?v=tmuf0q"></script>
+<script src="../../../js/shary/site-chrome.min.js?v=tmuf0q"></script>
+<script src="../../../js/shary/img-fit.min.js?v=tmuf0o" defer></script>
+<script src="../../../js/shary/filter-live.min.js?v=tmuf0o"></script>
+<script src="../../../js/shary/phone-country.min.js?v=tmuf0p"></script>
+<script src="../../../js/shary/story-viewer.min.js?v=tmuf0q"></script>
+<script src="../../../js/shary/search-strip.min.js?v=tmuf0p"></script>
+<script src="../../../js/shary/meeting-modal.min.js?v=tmuf0p"></script>
+<script src="../../../js/shary/lead-forms.min.js?v=tmuf0p"></script>
+<script src="../../../js/shary/saved-sync.min.js?v=tmuf0p"></script>
+<script src="../../../js/shary/listing.min.js?v=tmuf0p"></script>
+<script src="../../../js/shary/form-select.min.js?v=tmuf0o"></script>
+<script src="../../../js/shary/ai-panel.min.js?v=tmuf0o"></script>
 <script>(function(){try{if(navigator.webdriver||!navigator.sendBeacon)return;var go=function(){var f='';try{var d=new Date().toLocaleDateString('en-CA'),l=localStorage.getItem('sx_v');if(!l)f+='n';if(l!==d){f+='d';localStorage.setItem('sx_v',d);}if(!sessionStorage.getItem('sx_s')){f+='s';sessionStorage.setItem('sx_s','1');}}catch(e){}var n=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0]||{}).name,u=new URL(n||location.href),q=u.searchParams,b=new FormData();b.append('path',u.pathname);b.append('ref',document.referrer||'');b.append('utm',q.get('utm_source')||(q.get('gclid')?'gclid':'')||(q.get('fbclid')?'facebook':''));b.append('v',f);navigator.sendBeacon("\/Sharyproperty\/bound\/shary\/t",b);};if('requestIdleCallback' in window)requestIdleCallback(go,{timeout:4000});else setTimeout(go,2500);}catch(e){}})();</script>
-<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script src="/Sharyproperty/bound/js/snapshot-filters.js?v=1791878388"></script></body>
+<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script src="/Sharyproperty/bound/js/snapshot-filters.js?v=1791892031"></script></body>
 </html>
