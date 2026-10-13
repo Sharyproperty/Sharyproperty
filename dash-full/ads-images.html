@@ -158,7 +158,7 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 <a class="sx-one " href="admin-shary-drafts.html" >
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
 <span>المسودات</span>
-<b class="sx-tag">98</b>                    </a>
+<b class="sx-tag">101</b>                    </a>
 <div class="sx-grp " data-sx-grp="agent">
 <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -217,7 +217,7 @@ html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !impor
 <li><a href="admin-shary-units.html" class="" ><span>كل الوحدات</span></a></li>
 <li><a href="admin-shary-units-create.html" class="" ><span>إضافة وحدة</span></a></li>
 <li><a href="admin-shary-units-sheet.html" class="" ><span>استيراد وتصدير الوحدات</span></a></li>
-<li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">6</b></a></li>
+<li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">9</b></a></li>
 <li><a href="admin-shary-units-photo-sets.html" class="" ><span>صور الوحدات حسب المشروع</span></a></li>
 <li><a href="admin-shary-units-offers.html" class="" ><span>العروض والفرص</span></a></li>
 </ul>
@@ -576,11 +576,11 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
 </style>
 <script>
             window.SharyEditorConfig = {
-                token: "JMXg2xNIVmjgY2tTaiAmNtrIOGO5mi4NXjUvTRwD",
+                token: "oHAiV8LG2huyq7msJkgN252X8anZnMRb7IijPBJ8",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=JMXg2xNIVmjgY2tTaiAmNtrIOGO5mi4NXjUvTRwD",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=oHAiV8LG2huyq7msJkgN252X8anZnMRb7IijPBJ8",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -627,6 +627,29 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
 <option value="app">Application</option>
 </select>
 </div>
+<div class="form-group mt-2" data-ad-places>
+<input type="hidden" name="places_sent" value="1">
+<label class="d-block"><strong>يظهر فين؟</strong></label>
+<small class="text-muted d-block mb-2">اختار مكان أو أكتر. من غير اختيار = زي الأول (كل الصفحات اللي فيها إعلانات). صفحة المشروع والوحدة والمساعد القانوني ومتابعة الأقساط بيظهر فيهم الإعلان بس لو اخترتهم.</small>
+<div class="d-flex flex-wrap gap-2">
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="home" > <span>الصفحة الرئيسية</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="projects" > <span>صفحة المشروع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="units" > <span>صفحة الوحدة</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="search" > <span>البحث والنتايج</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="areas" > <span>صفحات المناطق</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="developers" > <span>صفحة المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="rent" > <span>الإيجار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="blog" > <span>المقالات</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="index" > <span>مؤشر شاري</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="trends" > <span>التريندي والأخبار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="collections" > <span>أحدث وأفضل المشاريع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="legal" > <span>المساعد القانوني</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="tracking" > <span>متابعة الأقساط</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="booking" > <span>احجز مع المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="academy" > <span>الأكاديمية</span></label>
+</div>
+</div>
+<style>.sx-ad-place{display:inline-flex;align-items:center;gap:6px;margin:0;padding:5px 11px;border:1.5px solid #D3E6EE;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px}.sx-ad-place:has(input:checked){background:#E8F0FB;border-color:#1E4266}</style>
 <div class="form-group mt-2">
 <label>Linked To</label>
 <select class="select form-control" name="link_type" required>
@@ -980,8 +1003,8 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
 </select>
 </div>
 <div class="form-group mt-2">
-<label>External Link</label>
-<input type="url" class="form-control" name="external_link" placeholder="https://example.com">
+<label>External Link <small class="text-muted">— لينك كامل https://… أو صفحة من الموقع /ar/… أو شاشة في التطبيق shary://…</small></label>
+<input type="text" dir="ltr" class="form-control" name="external_link" placeholder="https://… أو /ar/… أو shary://…">
 </div>
 <div class="form-group mt-2">
 <label>Status</label>
@@ -1007,6 +1030,7 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
 <th>Image EN</th>
 <th>Image AR</th>
 <th>Platform</th>
+<th>يظهر فين</th>
 <th>Linked To</th>
 <th>Status</th>
 <th>Created</th>
@@ -1027,6 +1051,7 @@ a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal
 </a>
 </td>
 <td>App</td>
+<td style="max-width:200px">زي الأول (كل الصفحات)</td>
 <td>
 None
 </td>
@@ -1075,6 +1100,28 @@ None
 <option value="app" selected>Application</option>
 </select>
 </div>
+<div class="form-group mt-2" data-ad-places>
+<input type="hidden" name="places_sent" value="1">
+<label class="d-block"><strong>يظهر فين؟</strong></label>
+<small class="text-muted d-block mb-2">اختار مكان أو أكتر. من غير اختيار = زي الأول (كل الصفحات اللي فيها إعلانات). صفحة المشروع والوحدة والمساعد القانوني ومتابعة الأقساط بيظهر فيهم الإعلان بس لو اخترتهم.</small>
+<div class="d-flex flex-wrap gap-2">
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="home" > <span>الصفحة الرئيسية</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="projects" > <span>صفحة المشروع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="units" > <span>صفحة الوحدة</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="search" > <span>البحث والنتايج</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="areas" > <span>صفحات المناطق</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="developers" > <span>صفحة المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="rent" > <span>الإيجار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="blog" > <span>المقالات</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="index" > <span>مؤشر شاري</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="trends" > <span>التريندي والأخبار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="collections" > <span>أحدث وأفضل المشاريع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="legal" > <span>المساعد القانوني</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="tracking" > <span>متابعة الأقساط</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="booking" > <span>احجز مع المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="academy" > <span>الأكاديمية</span></label>
+</div>
+</div>
 <div class="form-group mt-2">
 <label>Linked To</label>
 <select class="select form-control" name="link_type" required>
@@ -1428,8 +1475,8 @@ None
 </select>
 </div>
 <div class="form-group mt-2">
-<label>External Link</label>
-<input type="url" class="form-control" name="external_link" value="" placeholder="https://example.com">
+<label>External Link <small class="text-muted">— لينك كامل https://… أو صفحة من الموقع /ar/… أو شاشة في التطبيق shary://…</small></label>
+<input type="text" dir="ltr" class="form-control" name="external_link" value="" placeholder="https://… أو /ar/… أو shary://…">
 </div>
 <div class="form-group mt-2">
 <label>Status</label>
@@ -1460,6 +1507,7 @@ None
 </a>
 </td>
 <td>Web</td>
+<td style="max-width:200px">زي الأول (كل الصفحات)</td>
 <td>
 None
 </td>
@@ -1508,6 +1556,28 @@ None
 <option value="app" >Application</option>
 </select>
 </div>
+<div class="form-group mt-2" data-ad-places>
+<input type="hidden" name="places_sent" value="1">
+<label class="d-block"><strong>يظهر فين؟</strong></label>
+<small class="text-muted d-block mb-2">اختار مكان أو أكتر. من غير اختيار = زي الأول (كل الصفحات اللي فيها إعلانات). صفحة المشروع والوحدة والمساعد القانوني ومتابعة الأقساط بيظهر فيهم الإعلان بس لو اخترتهم.</small>
+<div class="d-flex flex-wrap gap-2">
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="home" > <span>الصفحة الرئيسية</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="projects" > <span>صفحة المشروع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="units" > <span>صفحة الوحدة</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="search" > <span>البحث والنتايج</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="areas" > <span>صفحات المناطق</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="developers" > <span>صفحة المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="rent" > <span>الإيجار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="blog" > <span>المقالات</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="index" > <span>مؤشر شاري</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="trends" > <span>التريندي والأخبار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="collections" > <span>أحدث وأفضل المشاريع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="legal" > <span>المساعد القانوني</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="tracking" > <span>متابعة الأقساط</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="booking" > <span>احجز مع المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="academy" > <span>الأكاديمية</span></label>
+</div>
+</div>
 <div class="form-group mt-2">
 <label>Linked To</label>
 <select class="select form-control" name="link_type" required>
@@ -1861,8 +1931,8 @@ None
 </select>
 </div>
 <div class="form-group mt-2">
-<label>External Link</label>
-<input type="url" class="form-control" name="external_link" value="" placeholder="https://example.com">
+<label>External Link <small class="text-muted">— لينك كامل https://… أو صفحة من الموقع /ar/… أو شاشة في التطبيق shary://…</small></label>
+<input type="text" dir="ltr" class="form-control" name="external_link" value="" placeholder="https://… أو /ar/… أو shary://…">
 </div>
 <div class="form-group mt-2">
 <label>Status</label>
@@ -1893,6 +1963,7 @@ None
 </a>
 </td>
 <td>Both</td>
+<td style="max-width:200px">زي الأول (كل الصفحات)</td>
 <td>
 <a href="https://shary.eg/ar/offers" target="_blank">External Link</a>
 </td>
@@ -1940,6 +2011,28 @@ None
 <option value="web" >Website</option>
 <option value="app" >Application</option>
 </select>
+</div>
+<div class="form-group mt-2" data-ad-places>
+<input type="hidden" name="places_sent" value="1">
+<label class="d-block"><strong>يظهر فين؟</strong></label>
+<small class="text-muted d-block mb-2">اختار مكان أو أكتر. من غير اختيار = زي الأول (كل الصفحات اللي فيها إعلانات). صفحة المشروع والوحدة والمساعد القانوني ومتابعة الأقساط بيظهر فيهم الإعلان بس لو اخترتهم.</small>
+<div class="d-flex flex-wrap gap-2">
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="home" > <span>الصفحة الرئيسية</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="projects" > <span>صفحة المشروع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="units" > <span>صفحة الوحدة</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="search" > <span>البحث والنتايج</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="areas" > <span>صفحات المناطق</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="developers" > <span>صفحة المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="rent" > <span>الإيجار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="blog" > <span>المقالات</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="index" > <span>مؤشر شاري</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="trends" > <span>التريندي والأخبار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="collections" > <span>أحدث وأفضل المشاريع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="legal" > <span>المساعد القانوني</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="tracking" > <span>متابعة الأقساط</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="booking" > <span>احجز مع المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="academy" > <span>الأكاديمية</span></label>
+</div>
 </div>
 <div class="form-group mt-2">
 <label>Linked To</label>
@@ -2294,8 +2387,8 @@ None
 </select>
 </div>
 <div class="form-group mt-2">
-<label>External Link</label>
-<input type="url" class="form-control" name="external_link" value="https://shary.eg/ar/offers" placeholder="https://example.com">
+<label>External Link <small class="text-muted">— لينك كامل https://… أو صفحة من الموقع /ar/… أو شاشة في التطبيق shary://…</small></label>
+<input type="text" dir="ltr" class="form-control" name="external_link" value="https://shary.eg/ar/offers" placeholder="https://… أو /ar/… أو shary://…">
 </div>
 <div class="form-group mt-2">
 <label>Status</label>
@@ -2326,6 +2419,7 @@ None
 </a>
 </td>
 <td>Both</td>
+<td style="max-width:200px">زي الأول (كل الصفحات)</td>
 <td>
 Unit: Apartment 165 m² for sale in Mivida
 </td>
@@ -2373,6 +2467,28 @@ Unit: Apartment 165 m² for sale in Mivida
 <option value="web" >Website</option>
 <option value="app" >Application</option>
 </select>
+</div>
+<div class="form-group mt-2" data-ad-places>
+<input type="hidden" name="places_sent" value="1">
+<label class="d-block"><strong>يظهر فين؟</strong></label>
+<small class="text-muted d-block mb-2">اختار مكان أو أكتر. من غير اختيار = زي الأول (كل الصفحات اللي فيها إعلانات). صفحة المشروع والوحدة والمساعد القانوني ومتابعة الأقساط بيظهر فيهم الإعلان بس لو اخترتهم.</small>
+<div class="d-flex flex-wrap gap-2">
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="home" > <span>الصفحة الرئيسية</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="projects" > <span>صفحة المشروع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="units" > <span>صفحة الوحدة</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="search" > <span>البحث والنتايج</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="areas" > <span>صفحات المناطق</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="developers" > <span>صفحة المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="rent" > <span>الإيجار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="blog" > <span>المقالات</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="index" > <span>مؤشر شاري</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="trends" > <span>التريندي والأخبار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="collections" > <span>أحدث وأفضل المشاريع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="legal" > <span>المساعد القانوني</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="tracking" > <span>متابعة الأقساط</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="booking" > <span>احجز مع المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="academy" > <span>الأكاديمية</span></label>
+</div>
 </div>
 <div class="form-group mt-2">
 <label>Linked To</label>
@@ -2727,8 +2843,8 @@ Unit: Apartment 165 m² for sale in Mivida
 </select>
 </div>
 <div class="form-group mt-2">
-<label>External Link</label>
-<input type="url" class="form-control" name="external_link" value="" placeholder="https://example.com">
+<label>External Link <small class="text-muted">— لينك كامل https://… أو صفحة من الموقع /ar/… أو شاشة في التطبيق shary://…</small></label>
+<input type="text" dir="ltr" class="form-control" name="external_link" value="" placeholder="https://… أو /ar/… أو shary://…">
 </div>
 <div class="form-group mt-2">
 <label>Status</label>
@@ -2759,6 +2875,7 @@ Unit: Apartment 165 m² for sale in Mivida
 </a>
 </td>
 <td>Web</td>
+<td style="max-width:200px">زي الأول (كل الصفحات)</td>
 <td>
 Project: Mivida
 </td>
@@ -2806,6 +2923,28 @@ Project: Mivida
 <option value="web" selected>Website</option>
 <option value="app" >Application</option>
 </select>
+</div>
+<div class="form-group mt-2" data-ad-places>
+<input type="hidden" name="places_sent" value="1">
+<label class="d-block"><strong>يظهر فين؟</strong></label>
+<small class="text-muted d-block mb-2">اختار مكان أو أكتر. من غير اختيار = زي الأول (كل الصفحات اللي فيها إعلانات). صفحة المشروع والوحدة والمساعد القانوني ومتابعة الأقساط بيظهر فيهم الإعلان بس لو اخترتهم.</small>
+<div class="d-flex flex-wrap gap-2">
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="home" > <span>الصفحة الرئيسية</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="projects" > <span>صفحة المشروع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="units" > <span>صفحة الوحدة</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="search" > <span>البحث والنتايج</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="areas" > <span>صفحات المناطق</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="developers" > <span>صفحة المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="rent" > <span>الإيجار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="blog" > <span>المقالات</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="index" > <span>مؤشر شاري</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="trends" > <span>التريندي والأخبار</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="collections" > <span>أحدث وأفضل المشاريع</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="legal" > <span>المساعد القانوني</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="tracking" > <span>متابعة الأقساط</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="booking" > <span>احجز مع المطور</span></label>
+<label class="sx-ad-place"><input type="checkbox" name="places[]" value="academy" > <span>الأكاديمية</span></label>
+</div>
 </div>
 <div class="form-group mt-2">
 <label>Linked To</label>
@@ -3160,8 +3299,8 @@ Project: Mivida
 </select>
 </div>
 <div class="form-group mt-2">
-<label>External Link</label>
-<input type="url" class="form-control" name="external_link" value="" placeholder="https://example.com">
+<label>External Link <small class="text-muted">— لينك كامل https://… أو صفحة من الموقع /ar/… أو شاشة في التطبيق shary://…</small></label>
+<input type="text" dir="ltr" class="form-control" name="external_link" value="" placeholder="https://… أو /ar/… أو shary://…">
 </div>
 <div class="form-group mt-2">
 <label>Status</label>
@@ -3284,7 +3423,7 @@ Project: Mivida
 .sx-draftnote__open { background: #1E4266; color: #fff; }
 .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
 </style>
-<script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"JMXg2xNIVmjgY2tTaiAmNtrIOGO5mi4NXjUvTRwD","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
+<script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"oHAiV8LG2huyq7msJkgN252X8anZnMRb7IijPBJ8","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
 <script src="a/js/shary-admin/form-drafts.js" defer></script>
 <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>
