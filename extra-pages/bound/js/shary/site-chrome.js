@@ -1069,26 +1069,38 @@ window.SharyZoom = function () {
         } catch (error) { /* صورة من دومين تاني من غير CORS: اللوجو كامل على دايرة بيضا */ }
     }
 
+    // كل لوجو في مهمة صغيرة لوحده (مش كلهم مرة واحدة) — الصفحة تفضل بترد على اللمس وهي بتفتح
+    var queue = [], pumping = false;
+    function pump() {
+        var start = performance.now();
+        while (queue.length && performance.now() - start < 12) fit(queue.shift());
+        if (queue.length) setTimeout(pump, 0); else pumping = false;
+    }
+    function fitSoon(img) {
+        if (queue.indexOf(img) === -1) queue.push(img);
+        if (!pumping) { pumping = true; setTimeout(pump, 0); }
+    }
+
     // اللوجوهات اللي على الشاشة أو قريبة منها بس (IntersectionObserver) — مش كل لوجوهات الصفحة وهي بتفتح
     var near = new Set();
     var logoIo = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
             if (!entry.isIntersecting) { near.delete(entry.target); return; }
             near.add(entry.target);
-            if (entry.target.complete) fit(entry.target);
+            if (entry.target.complete) fitSoon(entry.target);
         });
     }, { rootMargin: '400px 0px' }) : null;
     function scan(scope) {
         (scope || document).querySelectorAll(SELECTOR).forEach(function (img) {
-            if (!logoIo) { if (img.complete) fit(img); return; }
-            if (!img.__logoSeen) { img.__logoSeen = 1; logoIo.observe(img); } else if (near.has(img) && img.complete) fit(img);
+            if (!logoIo) { if (img.complete) fitSoon(img); return; }
+            if (!img.__logoSeen) { img.__logoSeen = 1; logoIo.observe(img); } else if (near.has(img) && img.complete) fitSoon(img);
         });
     }
 
     document.addEventListener('load', function (event) {
         var img = event.target;
         if (img && img.tagName === 'IMG' && img.matches(SELECTOR)) {
-            if (!logoIo || near.has(img)) fit(img);
+            if (!logoIo || near.has(img)) fitSoon(img);
             else if (!img.__logoSeen) { img.__logoSeen = 1; logoIo.observe(img); }
         }
     }, true);

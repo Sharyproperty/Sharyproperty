@@ -64,8 +64,16 @@
         if (window.SharyBack) window.SharyBack.closed();
     }
 
+    // أيام المعاد بتتبني بعد ما الصفحة تخلص (أو أول ما الفورم يتفتح) — مش وهي بتفتح
+    function days(modal) {
+        if (modal.__days) return;
+        modal.__days = true;
+        fillDays(modal, modal.querySelector('[data-meeting-date]'));
+    }
+
     function open(modal, opener) {
         lastOpener = opener;
+        days(modal);
         modal.classList.remove('hidden');
         document.documentElement.style.overflow = 'hidden';
         // زرار الرجوع بيقفل الفورم والعميل بيفضل في الصفحة
@@ -80,7 +88,8 @@
         var types = Array.prototype.slice.call(modal.querySelectorAll('[data-meeting-type-option]'));
         var times = Array.prototype.slice.call(modal.querySelectorAll('[data-meeting-time-option]'));
 
-        fillDays(modal, modal.querySelector('[data-meeting-date]'));
+        if (document.readyState === 'complete') setTimeout(function () { days(modal); }, 1500);
+        else window.addEventListener('load', function () { setTimeout(function () { days(modal); }, 1500); }, { once: true });
 
         types.forEach(function (button) {
             button.addEventListener('click', function () {
