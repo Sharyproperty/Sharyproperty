@@ -1143,6 +1143,45 @@
             border: 1px solid #d9d9d9;
             border-radius: 6px;
         }
+    /* Shary: حالة الماستر بلان على الخريطة التفاعلية */
+        .sx-mp-status { margin: 6px 0 8px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; line-height: 1.7; background: #f1f5f9; color: #334155; }
+        .sx-mp-status--ok { background: #e2f3ef; color: #1f6f63; }
+        .sx-mp-status--todo, .sx-mp-status--moved, .sx-mp-status--busy, .sx-mp-status--none { background: #fff4dc; color: #8a5a00; }
+        .sx-mp-status--bad { background: #fde8e8; color: #9b1c1c; }
+        /* Shary: أدوات الماستر بلان + القص */
+        .sx-mp-tools { border: 1.5px solid #dfe6ee; border-radius: 12px; background: #f8fafc; padding: 12px 14px; margin: 4px 0 10px; display: grid; gap: 12px; }
+        .sx-mp-tools__title { margin: 0; font-weight: 800; color: #123a5c; font-size: 14px; }
+        .sx-mp-tools__title small { font-weight: 700; color: #4c6178; font-size: 12.5px; }
+        .sx-mp-tools__group { display: grid; gap: 6px; }
+        .sx-mp-tools__label { font-weight: 800; font-size: 13px; color: #0f2f4c; }
+        .sx-mp-search { display: flex; gap: 6px; }
+        .sx-mp-search .form-control { min-width: 0; font-weight: 700; }
+        .sx-mp-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+        .sx-mp-results { display: grid; gap: 6px; }
+        .sx-mp-result { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 8px 10px; border: 1px solid #dfe6ee; border-radius: 10px; background: #fff; }
+        .sx-mp-result__text { flex: 1 1 220px; min-width: 0; font-size: 13px; font-weight: 700; color: #0f2f4c; line-height: 1.6; }
+        .sx-mp-result__text small { display: block; color: #4c6178; font-weight: 700; }
+        .sx-mp-result .btn { padding: 2px 10px; font-size: 12.5px; }
+        .sx-mp-agent, .sx-mp-credit, .sx-mp-chosen, .sx-mp-hint { margin: 0; font-size: 12.5px; font-weight: 700; color: #4c6178; line-height: 1.7; }
+        .sx-mp-result.is-top { border-color: #1b84ff; box-shadow: 0 0 0 2px rgba(27, 132, 255, .12); }
+        .sx-drop-on { outline: 3px dashed #1b84ff; outline-offset: -3px; }
+        .sx-crop { position: fixed; inset: 0; z-index: 3000; display: flex; align-items: center; justify-content: center; background: rgba(10, 20, 35, .78); padding: 16px; }
+        .sx-crop[hidden] { display: none !important; }
+        .sx-crop__box { width: min(1000px, 100%); max-height: 96vh; overflow: auto; border-radius: 12px; background: #fff; padding: 14px 16px; display: grid; gap: 10px; }
+        .sx-crop__head { display: grid; gap: 4px; }
+        .sx-crop__head strong { font-size: 16px; color: #123a5c; }
+        .sx-crop__head small { font-size: 13px; font-weight: 700; color: #4c6178; line-height: 1.7; }
+        .sx-crop__stage { position: relative; justify-self: center; max-width: 100%; touch-action: none; user-select: none; cursor: crosshair;
+            background: repeating-conic-gradient(#e9eef4 0% 25%, #fff 0% 50%) 50% / 18px 18px; border-radius: 8px; overflow: hidden; }
+        .sx-crop__stage img { display: block; max-width: 100%; max-height: 66vh; pointer-events: none; }
+        .sx-crop__sel { position: absolute; border: 2px solid #1b84ff; box-shadow: 0 0 0 9999px rgba(10, 20, 35, .45); cursor: move; }
+        .sx-crop__sel span { position: absolute; width: 14px; height: 14px; background: #fff; border: 2px solid #1b84ff; border-radius: 50%; }
+        .sx-crop__sel [data-h=nw] { left: -8px; top: -8px; cursor: nwse-resize; }
+        .sx-crop__sel [data-h=ne] { right: -8px; top: -8px; cursor: nesw-resize; }
+        .sx-crop__sel [data-h=se] { right: -8px; bottom: -8px; cursor: nwse-resize; }
+        .sx-crop__sel [data-h=sw] { left: -8px; bottom: -8px; cursor: nesw-resize; }
+        .sx-crop__bar { display: flex; justify-content: flex-end; gap: 8px; }
+    
     </style>
 
     <script>
@@ -1311,6 +1350,15 @@
                 );
                 loadExistingBounds();
             });
+            // Shary: «امسح آخر نقطة»
+            var undoPoint = document.getElementById('sxUndoPoint');
+            if (undoPoint) {
+                undoPoint.addEventListener('click', function () {
+                    if (boundsMarkers.length) {
+                        removeBoundsPoint(boundsMarkers[boundsMarkers.length - 1]);
+                    }
+                });
+            }
 
             loadExistingBounds();
             initMasterplanOverlay(initialLat, initialLng);
@@ -1324,7 +1372,11 @@
         // 4 true corners in masterplan_corners (already the format the public
         // Mapbox-based map consumes, which supports arbitrary/rotated corners).
         
-                var masterplanImageUrl = null;
+                var masterplanImageUrl = "a\/images\/compounds\/master_plan\/creek-harbour-masterplan.jpg";
+        
+                var masterplanPlaced = false;
+        var masterplanMoved = false;
+        var masterplanRatio = null; // ارتفاع الصورة ÷ عرضها
         var masterplanState = null; // {center:{lat,lng}, halfWidth, halfHeight, rotation}
         var masterplanOverlayView = null;
         var masterplanCenterMarker = null;
@@ -1442,10 +1494,89 @@
 
         function afterMasterplanChange() {
             repositionMasterplanHandles();
-            syncMasterplanCornersInput();
+            // Shary: المكان بيتكتب في الفورم بس لو الماستر بلان متحطة قبل كده أو الفريق حرّكها دلوقتي (المربع الافتراضي مش مكان)
+            if (masterplanPlaced || masterplanMoved) {
+                syncMasterplanCornersInput();
+            }
             if (masterplanOverlayView) {
                 masterplanOverlayView.draw();
             }
+        }
+
+        // Shary: الفريق حرّك / كبّر / لف الماستر بلان — المكان ده هو اللي هيتحفظ ويظهر على الخريطة التفاعلية بعد «تحديث»
+        function markMasterplanMoved() {
+            if (masterplanMoved) {
+                return;
+            }
+            masterplanMoved = true;
+            var flag = document.getElementById('masterplan_moved');
+            if (flag) {
+                flag.value = '1';
+            }
+            sxMasterplanStatus('moved');
+        }
+
+        function sxMasterplanStatus(kind, text) {
+            var box = document.getElementById('masterplanStatus');
+            if (!box) {
+                return;
+            }
+            var words = {
+                moved: 'اتحركت ✓ — دوس «تحديث» تحت عشان المكان يتحفظ والماستر بلان تظهر على الخريطة التفاعلية في الموقع.',
+                busy: 'بتتفرّغ دلوقتي… (ثواني)'
+            };
+            box.textContent = text || words[kind] || '';
+            box.className = 'sx-mp-status sx-mp-status--' + kind;
+        }
+
+        // نسبة الصورة (الارتفاع ÷ العرض) — عشان الماستر بلان ما تتمطّش
+        function sxMasterplanRatio(url, done) {
+            if (!url) {
+                return;
+            }
+            var img = new Image();
+            img.onload = function () {
+                if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+                    done(img.naturalHeight / img.naturalWidth);
+                }
+            };
+            img.src = url;
+        }
+
+        // حدود المشروع الحقيقية [[lng, lat], ...] من الفورم — المربع الأوتوماتيك حوالين الدبوس مش حدود
+        function sxRealBoundsRing() {
+            var parsed = parseMapJson((document.getElementById('bounds') || {}).value || '');
+            if (!parsed) {
+                return null;
+            }
+            var polygon = parsed.geometry && parsed.geometry.type === 'Polygon' ? parsed.geometry : parsed;
+            var ring = polygon && polygon.coordinates && polygon.coordinates[0] ? polygon.coordinates[0] : (Array.isArray(parsed) ? parsed : null);
+            if (!Array.isArray(ring) || ring.length < 3 || !Array.isArray(ring[0])) {
+                return null;
+            }
+            var lngs = ring.map(function (p) { return Number(p[0]); }), lats = ring.map(function (p) { return Number(p[1]); });
+            var w = Math.max.apply(null, lngs) - Math.min.apply(null, lngs), h = Math.max.apply(null, lats) - Math.min.apply(null, lats);
+            if (!(w > 0) || !(h > 0) || (ring.length <= 5 && Math.abs(w - 0.004) < 0.0004 && Math.abs(h - 0.004) < 0.0004)) {
+                return null;
+            }
+            return ring;
+        }
+
+        // بداية الماستر بلان اللي لسه ما اتحطتش: جوه حدود المشروع (لو مرسومة) بنفس نسبة الصورة ، وإلا 600 متر عرض حوالين الدبوس
+        function defaultMasterplanState(initialLat, initialLng) {
+            var ratio = masterplanRatio || 0.75;
+            var ring = sxRealBoundsRing();
+            if (ring) {
+                var lngs = ring.map(function (p) { return Number(p[0]); }), lats = ring.map(function (p) { return Number(p[1]); });
+                var center = {lat: (Math.min.apply(null, lats) + Math.max.apply(null, lats)) / 2, lng: (Math.min.apply(null, lngs) + Math.max.apply(null, lngs)) / 2};
+                var w = (Math.max.apply(null, lngs) - Math.min.apply(null, lngs)) * mpMetersPerDegLng(center.lat);
+                var h = (Math.max.apply(null, lats) - Math.min.apply(null, lats)) * MP_METERS_PER_DEG_LAT;
+                var width = Math.min(w, h / ratio);
+                return {center: center, halfWidth: Math.max(30, width / 2), halfHeight: Math.max(30, width * ratio / 2), rotation: 0};
+            }
+            var lat = parseFloat(document.getElementById('lat').value) || initialLat;
+            var lng = parseFloat(document.getElementById('lng').value) || initialLng;
+            return {center: {lat: lat, lng: lng}, halfWidth: 300, halfHeight: 300 * ratio, rotation: 0};
         }
 
         var MasterplanImageOverlayClass = null;
@@ -1526,10 +1657,18 @@
         }
 
         function initMasterplanOverlay(initialLat, initialLng) {
-            var saved = currentMasterplanCorners();
+            // Shary: المكان المحفوظ بجد بس — غير كده الماستر بلان بتبدأ جوه حدود المشروع بنفس نسبة صورتها (ومش بتتحفظ لحد ما تتحرك)
+            var saved = masterplanPlaced ? currentMasterplanCorners() : null;
             masterplanState = saved
                 ? masterplanStateFromCorners(saved)
-                : {center: {lat: initialLat, lng: initialLng}, halfWidth: 60, halfHeight: 60, rotation: 0};
+                : defaultMasterplanState(initialLat, initialLng);
+            sxMasterplanRatio(masterplanImageUrl, function (ratio) {
+                masterplanRatio = ratio;
+                if (!masterplanPlaced && !masterplanMoved) {
+                    masterplanState = defaultMasterplanState(initialLat, initialLng);
+                    afterMasterplanChange();
+                }
+            });
 
             var OverlayClass = getMasterplanOverlayClass();
             masterplanOverlayView = new OverlayClass();
@@ -1557,11 +1696,12 @@
             });
 
             repositionMasterplanHandles();
-            syncMasterplanCornersInput();
+            // Shary: مفيش مكان بيتكتب في الفورم هنا — بيتكتب أول ما الفريق يحرّك الماستر بلان (afterMasterplanChange)
 
             masterplanCenterMarker.addListener('drag', function () {
                 var pos = masterplanCenterMarker.getPosition();
                 masterplanState.center = {lat: pos.lat(), lng: pos.lng()};
+                markMasterplanMoved();
                 afterMasterplanChange();
             });
 
@@ -1571,6 +1711,7 @@
                 var local = mpUnrotate(offset.dx, offset.dy, masterplanState.rotation);
                 masterplanState.halfWidth = Math.max(5, Math.abs(local.x));
                 masterplanState.halfHeight = Math.max(5, Math.abs(local.y));
+                markMasterplanMoved();
                 afterMasterplanChange();
             });
 
@@ -1578,6 +1719,7 @@
                 var pos = masterplanRotateMarker.getPosition();
                 var offset = mpMetersOffset(masterplanState.center, {lat: pos.lat(), lng: pos.lng()});
                 masterplanState.rotation = Math.atan2(offset.dy, offset.dx) * 180 / Math.PI - 90;
+                markMasterplanMoved();
                 afterMasterplanChange();
             });
 
@@ -1596,6 +1738,17 @@
                     if (this.files && this.files[0]) {
                         masterplanImageUrl = URL.createObjectURL(this.files[0]);
                         masterplanOverlayView.draw();
+                        // Shary: الصورة الجديدة بنسبتها هي (من غير مط): نفس العرض والمكان واللفّة لو كانت متحطة ، وإلا جوه حدود المشروع
+                        sxMasterplanRatio(masterplanImageUrl, function (ratio) {
+                            masterplanRatio = ratio;
+                            if (masterplanPlaced || masterplanMoved) {
+                                masterplanState.halfHeight = masterplanState.halfWidth * ratio;
+                                markMasterplanMoved();
+                            } else {
+                                masterplanState = defaultMasterplanState(initialLat, initialLng);
+                            }
+                            afterMasterplanChange();
+                        });
                     }
                 });
             }
@@ -1631,9 +1784,40 @@
                 syncBoundsInput();
             });
 
+            // Shary: كليك يمين (أو دبل كليك) على نقطة بيمسحها
+            markerInstance.addListener('rightclick', function () {
+                removeBoundsPoint(markerInstance);
+            });
+            markerInstance.addListener('dblclick', function () {
+                removeBoundsPoint(markerInstance);
+            });
+
             boundsMarkers.push(markerInstance);
             redrawBoundsPolygon();
             syncBoundsInput();
+        }
+
+        // Shary: مسح نقطة من حدود المشروع (والترقيم بيتظبط)
+        function removeBoundsPoint(markerInstance) {
+            var index = boundsMarkers.indexOf(markerInstance);
+            if (index < 0) {
+                return;
+            }
+            markerInstance.setMap(null);
+            boundsMarkers.splice(index, 1);
+            boundsMarkers.forEach(function (item, i) {
+                if (item.setLabel) {
+                    item.setLabel(String(i + 1));
+                }
+            });
+            redrawBoundsPolygon();
+            if (boundsMarkers.length) {
+                syncBoundsInput();
+            } else {
+                document.getElementById('bounds').value = '';
+                syncMapDerivedInputs();
+                document.getElementById('boundsStatus').textContent = 'اختر نقاط حدود المشروع من الخريطة.';
+            }
         }
 
         function redrawBoundsPolygon() {
@@ -1685,6 +1869,11 @@
                 coordinates: [coordinates]
             });
             syncMapDerivedInputs();
+            // Shary: الماستر بلان اللي لسه ما اتحطتش بتتنقل جوه الحدود الجديدة
+            if (masterplanState && !masterplanPlaced && !masterplanMoved && masterplanCenterMarker) {
+                masterplanState = defaultMasterplanState(parseFloat(document.getElementById('lat').value) || 0, parseFloat(document.getElementById('lng').value) || 0);
+                afterMasterplanChange();
+            }
 
             status.textContent = coordinates.length >= 4
                 ? 'تم تحديث حدود المشروع. يمكنك سحب النقاط لتعديلها.'
@@ -2530,22 +2719,7 @@
                             </div>
 
                             <div class="col-12 shary-index-fields" style="">
-                                <div class="row">
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>متوسط السعر / م²</label><input type="number" step="0.01" min="0" class="form-control" name="avg_price_per_m" value="22900"><small class="text-muted" style="font-weight:700">بيتحسب لوحده كل يوم من وحدات المشروع (وسيط سعر المتر) لو فيه وحدتين أو أكتر.</small></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>العائد على الاستثمار (ROI)</label><input type="number" step="0.01" class="form-control" name="roi" value="13.5"></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>المؤشر</label><input type="number" min="0" max="100" class="form-control" name="index" value="89"></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>معدل النمو</label><input type="number" step="0.01" class="form-control" name="growth_rate" value="25.5"></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>نسبة الملاءة القانونية</label><input type="number" min="0" max="100" class="form-control" name="legal_solvency" value="81"></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>الطلب</label><input type="number" min="0" max="100" class="form-control" name="demand" value="70"></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>العائد الإيجاري</label><input type="number" step="0.01" class="form-control" name="rental_yield" value="6.2"></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>السيولة</label><input type="text" class="form-control" name="liquidity" value="Medium" placeholder="45 Day"></div></div>
-                                    <div class="col-lg-3 col-sm-6 col-12"><div class="form-group"><label>اتحرك بسرعة</label><input type="text" class="form-control" name="act_fast" value="Stable" placeholder="Act Fast"></div></div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <h5 class="card-title">عنوان المشروع</h5>
-                        <div class="row" id="sx-map-block">
+                                <div class="row" id="sx-map-block">
 
                             <div class="form-group">
                                 <div id="shoplocation" style="width:100%;height:350px"></div>
@@ -2555,7 +2729,7 @@
                                 <div class="form-group">
                                     <label>عنوان المشروع </label>
                                     <input type="text" class="form-control" name="address"
-                                           value="The Pearl, Qatar"
+                                           value="Dubai Creek Harbour, Dubai"
                                            id="autocomplete"
                                            placeholder="بحث عن مكان" required>
                                 </div>
@@ -2579,9 +2753,12 @@
                                     <label>Project Bounds</label>
                                     <input type="text" id="boundsSearch" class="form-control mb-2" placeholder="ابحث عن مكان للوصول السريع داخل حدود المشروع">
                                     <div id="boundsMap" class="mb-2"></div>
-                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
                                         <button type="button" id="resetBounds" class="btn btn-sm btn-outline-danger">إعادة رسم الحدود</button>
+                                        
+                                        <button type="button" id="sxUndoPoint" class="btn btn-sm btn-outline-secondary">امسح آخر نقطة</button>
                                         <small id="boundsStatus" class="text-muted">اختر نقاط حدود المشروع من الخريطة.</small>
+                                        <small class="text-muted">(كليك يمين أو دبل كليك على أي نقطة بيمسحها)</small>
                                     </div>
                                     <label class="mt-3">موضع الماستر بلان</label>
                                     <p class="text-muted mb-2" style="font-size: 12px;">
@@ -2594,8 +2771,75 @@
                                         <input type="range" id="masterplanOpacity" min="20" max="100" value="75" style="max-width: 200px;">
                                         <button type="button" id="toggleMasterplanRect" class="btn btn-sm btn-outline-secondary">إخفاء أدوات الماستر بلان</button>
                                     </div>
+                                    
+                                                                        <p id="masterplanStatus" class="sx-mp-status sx-mp-status--todo" role="status" aria-live="polite">لسه ما اتحطتش على الخريطة: حرّكها بالنقطة البرتقالي وكبّرها بالأزرق ولفّها بالأخضر فوق حدود المشروع ، وبعدين دوس «تحديث» تحت — هتظهر على الخريطة التفاعلية على طول.</p>
+                                    
+                                                                                                                <div class="sx-mp-tools" id="sxMpTools"
+                                             data-search="#preview/shary-admin.projects.masterplan.search/315"
+                                             data-outline="#preview/shary-admin.projects.masterplan.outline/315"
+                                             data-fit="#preview/shary-admin.projects.masterplan.fit/315"
+                                             data-agent="#preview/shary-admin.projects.masterplan.agent/315"
+                                             data-crop="#preview/shary-admin.projects.masterplan.crop/315"
+                                             data-token="preview">
+                                            <p class="sx-mp-tools__title">أدوات الماستر بلان <small>— النتيجة بتظهر على الخريطة اللي فوق ، وتقدر تظبّطها بالنقط. المكان بيتحفظ بزرار «تحديث» تحت.</small></p>
+
+                                            <div class="sx-mp-tools__group">
+                                                <label class="sx-mp-tools__label" for="sxPlaceQuery">١ · دوّر على مكان المشروع</label>
+                                                <div class="sx-mp-search">
+                                                    <input type="search" id="sxPlaceQuery" class="form-control" value="Creek Harbour Residences Dubai" placeholder="اكتب اسم الكمبوند أو المنطقة…" autocomplete="off" aria-describedby="sxPlaceHint" aria-controls="sxPlaceResults">
+                                                    <button type="button" class="btn btn-primary btn-sm fw-bold" id="sxPlaceGo">دوّر</button>
+                                                </div>
+                                                <small class="sx-mp-hint" id="sxPlaceHint">وانت بتكتب الخريطة (قمر صناعي) بتروح على المكان على طول — دوس «اختار المكان ده» والدبوس والحدود والماستر بلان بيتحطوا عليه تقريبي ، وبعدين ظبّطهم بالنقط.</small>
+                                                <div id="sxPlaceResults" class="sx-mp-results" hidden></div>
+                                            </div>
+
+                                            <div class="sx-mp-tools__group">
+                                                <span class="sx-mp-tools__label">٢ · حدود المشروع ومكان الماستر بلان</span>
+                                                <div class="sx-mp-actions">
+                                                    <button type="button" class="btn btn-sm btn-outline-primary fw-bold" id="sxOutlineGo">هات حدود المشروع من الخريطة</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-primary fw-bold" id="sxFitGo">حطّ الماستر بلان على الحدود</button>
+                                                                                                            <button type="button" class="btn btn-sm btn-outline-primary fw-bold" id="sxAgentGo">خلّي الإيجنت يحطها</button>
+                                                                                                    </div>
+                                                <div id="sxAgentOutline" class="sx-mp-results" hidden></div>
+                                            </div>
+
+                                            <div class="sx-mp-tools__group">
+                                                <span class="sx-mp-tools__label">٣ · صورة الماستر بلان على الخريطة</span>
+                                                <div class="sx-mp-actions">
+                                                                                                            <button type="button" class="btn btn-sm btn-outline-primary fw-bold sx-mp-cutout">فرّغها (شيل الخلفية)</button>
+                                                                                                        <button type="button" class="btn btn-sm btn-outline-primary fw-bold" id="sxCropOpen" >قص الماستر بلان</button>
+                                                    <label class="btn btn-sm btn-outline-secondary fw-bold mb-0" for="sxOverlayFile">ارفع نسخة شفافة (PNG / WebP)</label>
+                                                    <input type="file" name="masterplan_overlay" id="sxOverlayFile" accept="image/png,image/webp" class="d-none">
+                                                    <button type="button" class="btn btn-sm btn-outline-secondary fw-bold" id="sxPlanPick">ارفع ماستر بلان جديدة</button>
+                                                </div>
+                                                <small class="sx-mp-hint">أو اسحب صورة الماستر بلان وسيبها على الخريطة اللي فوق.</small>
+                                                <small id="sxFileChosen" class="sx-mp-chosen" hidden></small>
+                                            </div>
+
+                                                                                                                                            <p class="sx-mp-agent">الإيجنت: <b>لسه ما اتعملش</b>                                                                                                            · <a href="#preview/shary-admin.agent.masterplans/" target="_blank" rel="noopener">كل الماستر بلانز مع الإيجنت ↗</a>
+                                                                                                    </p>
+                                                                                        <p class="sx-mp-credit" id="sxMpCredit" hidden></p>
+                                        </div>
+                                                                                                        </div>
+                            </div>
+                            
+                            <div class="sx-crop" id="sxCrop" hidden role="dialog" aria-modal="true" aria-labelledby="sxCropTitle">
+                                <div class="sx-crop__box">
+                                    <div class="sx-crop__head">
+                                        <strong id="sxCropTitle">قص الماستر بلان</strong>
+                                        <small>اسحب على الصورة واختار الماستر بلان نفسها من غير العنوان والـ legend واللوجو والهوامش. الجزء اللي هتختاره بيفضل في نفس مكانه على الخريطة. الماستر بلان اللي العميل بيشوفها في صفحة المشروع ما بتتغيّرش.</small>
+                                    </div>
+                                    <div class="sx-crop__stage" id="sxCropStage" dir="ltr">
+                                        <img id="sxCropImg" alt="الماستر بلان" draggable="false">
+                                        <div class="sx-crop__sel" id="sxCropSel" hidden><span data-h="nw"></span><span data-h="ne"></span><span data-h="se"></span><span data-h="sw"></span></div>
+                                    </div>
+                                    <div class="sx-crop__bar">
+                                        <button type="button" class="btn btn-light fw-bold" id="sxCropCancel">إلغاء</button>
+                                        <button type="button" class="btn btn-submit fw-bold" id="sxCropSave" disabled>قص</button>
+                                    </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="masterplan_moved" id="masterplan_moved" value="0">
                             <input type="hidden" name="bounds" id="bounds"
                                    value='{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[[[55.34,25.2034],[55.356,25.2034],[55.356,25.1906],[55.34,25.1906],[55.34,25.2034]]]}'>
                             <input type="hidden" name="coordinates" id="coordinates"
@@ -2953,13 +3197,10 @@
                                                 class="custom-file-container__custom-file__custom-file-control"></span>
                                         </label>
                                         <div class="custom-file-container__image-preview"></div>
-                                        <img src="" alt="img">
+                                        <img src="a/images/compounds/master_plan/creek-harbour-masterplan.jpg" alt="img">
                                     </div>
                                     
-                                                                            <div class="sx-mp-auto mt-3 p-3" style="border:1.5px solid #dfe6ee;border-radius:12px;background:#f8fafc">
-                                            <strong class="d-block mb-1" style="color:#123a5c">تفريغ الماستر بلان للخريطة التفاعلية</strong>
-                                                                                            <small class="d-block text-muted fw-bold">مفيش ماستر بلان مرفوعة للمشروع لسه — ارفعها من الخانة اللي فوق واحفظ، وبعدين اضغط التفريغ.</small>
-                                                                                    </div>
+                                                                            <div class="sx-mp-auto mt-3 p-3" style="border:1.5px solid #dfe6ee;border-radius:12px;background:#f8fafc"><strong class="d-block mb-1" style="color:#123a5c">تفريغ الماستر بلان للخريطة التفاعلية</strong><small class="d-block mb-2 text-muted fw-bold">بضغطة واحدة الماستر بلان بتتفرّغ (خلفيتها بتبقى شفافة) للخريطة التفاعلية — بنفس كادر الصورة ، فمكانها على الخريطة ما بيتغيّرش. التفريغ بيحصل لوحده كمان أول ما ماستر بلان جديدة تترفع وتدوس «تحديث».</small><button type="button" class="btn btn-primary fw-bold sx-mp-cutout">فرّغ الماستر بلان للخريطة</button> <a class="btn btn-light fw-bold" target="_top" href="admin-shary-all-projects-315.html?tab=map">مكان المشروع والماستر بلان</a></div>
                                                                     </div>
                             </div>
 
@@ -3006,9 +3247,738 @@
                                     class="btn btn-submit me-2">تحديث </button>
                         </div>
                     </form>
-                                            <form id="sx-mp-auto-form" method="post" action="#preview/admin/shary/projects/315/masterplan-auto" class="d-none">
-                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="action" value="both">
+                                            <form id="sx-mp-auto-form" method="post" action="#preview/shary-admin.projects.masterplan-auto/315" class="d-none">
+                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="action" value="cutout">
                         </form>
+                        <script>
+                            // Shary: «فرّغها للخريطة» من غير ما تسيب الصفحة: النسخة المفرّغة (بنفس كادر الصورة) بتظهر على الخريطة فوق مكانها
+                            document.addEventListener('click', function (event) {
+                                var button = event.target.closest ? event.target.closest('.sx-mp-cutout') : null;
+                                if (!button) {
+                                    return;
+                                }
+                                event.preventDefault();
+                                var form = document.getElementById('sx-mp-auto-form');
+                                var buttons = document.querySelectorAll('.sx-mp-cutout');
+                                buttons.forEach(function (b) { b.disabled = true; });
+                                if (typeof sxMasterplanStatus === 'function') {
+                                    sxMasterplanStatus('busy');
+                                }
+                                fetch(form.action, {method: 'POST', body: new FormData(form), headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest'}, credentials: 'same-origin'})
+                                    .then(function (response) { return response.json().catch(function () { return {ok: false, message: 'حصلت مشكلة — جرّب تاني.'}; }); })
+                                    .then(function (data) {
+                                        if (data && data.overlay && typeof masterplanOverlayView !== 'undefined' && masterplanOverlayView) {
+                                            masterplanImageUrl = data.overlay;
+                                            masterplanOverlayView.draw();
+                                        }
+                                        if (typeof sxMasterplanStatus === 'function') {
+                                            sxMasterplanStatus(data && data.ok ? 'ok' : 'bad', (data && data.message) || '');
+                                        } else {
+                                            alert((data && data.message) || '');
+                                        }
+                                    })
+                                    .catch(function () {
+                                        if (typeof sxMasterplanStatus === 'function') {
+                                            sxMasterplanStatus('bad', 'السيرفر ما ردّش — جرّب تاني.');
+                                        }
+                                    })
+                                    .then(function () { buttons.forEach(function (b) { b.disabled = false; }); });
+                            });
+                        </script>
+<script>
+// المعاينة بس (GitHub Pages): أدوات الماستر بلان بترد بنتايج تجريبية بدل السيرفر — على السيرفر الحقيقي ده مش موجود
+document.addEventListener('DOMContentLoaded', function () {
+    // بعد preview.js (اللي بيرد على أي طلب بـ «ده لينك معاينة»): أدوات الماستر بلان بس بترد بنتايج تجريبية
+    var real = window.fetch ? window.fetch.bind(window) : null;
+    var tag = ' (معاينة)';
+    function reply(body) { return Promise.resolve({ ok: true, status: 200, json: function () { return Promise.resolve(body); } }); }
+    function rectInside(ring, ratio, turn) {
+        var lats = ring.map(function (p) { return Number(p[1]); }), lngs = ring.map(function (p) { return Number(p[0]); });
+        var c = { lat: (Math.min.apply(null, lats) + Math.max.apply(null, lats)) / 2, lng: (Math.min.apply(null, lngs) + Math.max.apply(null, lngs)) / 2 };
+        var k = 111320 * Math.cos(c.lat * Math.PI / 180);
+        var w = (Math.max.apply(null, lngs) - Math.min.apply(null, lngs)) * k, h = (Math.max.apply(null, lats) - Math.min.apply(null, lats)) * 111320;
+        var width = Math.min(w, h / ratio) * 0.95, hw = width / 2, hh = width * ratio / 2, t = (turn || 0) * Math.PI / 180;
+        function at(x, y) { var rx = x * Math.cos(t) - y * Math.sin(t), ry = x * Math.sin(t) + y * Math.cos(t); return [Number((c.lng + rx / k).toFixed(7)), Number((c.lat + ry / 111320).toFixed(7))]; }
+        return [at(-hw, hh), at(hw, hh), at(hw, -hh), at(-hw, -hh)];
+    }
+    var outline = [[55.3405, 25.2030], [55.3555, 25.2032], [55.3558, 25.1910], [55.3402, 25.1908], [55.3405, 25.2030]];
+    window.fetch = function (url, options) {
+        url = String(url);
+        if (url.indexOf('#preview/') === -1 || !/masterplan/.test(url)) { return real ? real(url, options) : Promise.reject(new Error('offline')); }
+        var body = {};
+        try { body = options && typeof options.body === 'string' ? JSON.parse(options.body) : {}; } catch (e) { body = {}; }
+        var ratio = (typeof masterplanRatio !== 'undefined' && masterplanRatio) || 0.72;
+        var ring = (typeof sxRealBoundsRing === 'function' && sxRealBoundsRing()) || outline;
+        return new Promise(function (resolve) { setTimeout(resolve, 450); }).then(function () {
+            if (url.indexOf('masterplan.search') > -1) {
+                return reply({ ok: true, credit: '© OpenStreetMap contributors', results: [
+                    { name: 'Dubai Creek Harbour', address: 'Dubai, UAE', lat: 25.2006, lng: 55.35, viewport: [25.188, 55.335, 25.212, 55.365], source: 'Google', ring: null },
+                    { name: 'Creek Harbour Residences', address: '', lat: 25.197, lng: 55.348, viewport: null, source: 'OpenStreetMap', ring: outline }] });
+            }
+            if (url.indexOf('masterplan.outline') > -1) {
+                return reply({ ok: true, ring: outline, name: 'Creek Harbour', credit: '© OpenStreetMap contributors', message: 'لقيت حدوده على OpenStreetMap (Creek Harbour) — اترسمت على الخريطة: بص عليها وظبّط النقط لو محتاج ، وبعدين «تحديث».' + tag });
+            }
+            if (url.indexOf('masterplan.fit') > -1) {
+                return reply({ ok: true, corners: rectInside(ring, ratio, 0), overlay: null, message: 'اتحطت على الحدود (تطابق 86%). دوس «تحديث» عشان تتحفظ.' + tag });
+            }
+            if (url.indexOf('masterplan.agent') > -1) {
+                return reply({ ok: true, corners: rectInside(ring, ratio, 4), outline: null, center: null, notes: [], credit: '© OpenStreetMap contributors',
+                    message: 'الإيجنت حطها: تطابق 88% مع الحدود المرسومة على الموقع — بص عليها على الخريطة وظبّطها بالنقط لو محتاج ، وبعدين «تحديث».' + tag });
+            }
+            if (url.indexOf('masterplan-auto') > -1) {
+                return reply({ ok: true, message: 'النسخة المفرّغة للخريطة اتعملت ✓ (بنفس كادر الصورة — لو الماستر بلان متحطة مكانها بتفضل في نفس المكان).' + tag, overlay: 'a/images/compounds/master_plan/overlay/auto-315-preview.webp' });
+            }
+            if (url.indexOf('masterplan.crop') > -1) {
+                // القص في المتصفح (في المعاينة بس)
+                return new Promise(function (done) {
+                    var img = new Image();
+                    img.onload = function () {
+                        var r = body.rect, c = document.createElement('canvas');
+                        c.width = Math.round((r[2] - r[0]) * img.naturalWidth); c.height = Math.round((r[3] - r[1]) * img.naturalHeight);
+                        c.getContext('2d').drawImage(img, r[0] * img.naturalWidth, r[1] * img.naturalHeight, c.width, c.height, 0, 0, c.width, c.height);
+                        c.toBlob(function (blob) {
+                            var corners = null;
+                            if (body.corners) {
+                                var q = body.corners, at = function (u, v) { return [0, 1].map(function (a) { return (1 - u) * (1 - v) * q[0][a] + u * (1 - v) * q[1][a] + u * v * q[2][a] + (1 - u) * v * q[3][a]; }); };
+                                corners = [at(r[0], r[1]), at(r[2], r[1]), at(r[2], r[3]), at(r[0], r[3])];
+                            }
+                            done({ ok: true, status: 200, json: function () { return Promise.resolve({ ok: true, overlay: URL.createObjectURL(blob).replace(/^blob:/, 'blob:'), corners: corners, message: 'اتقصّت ✓' + (corners ? ' — والجزء اللي اتساب فضل في مكانه على الخريطة.' : '.') + tag }); } });
+                        });
+                    };
+                    img.onerror = function () { done({ ok: true, status: 200, json: function () { return Promise.resolve({ ok: false, message: 'الصورة مش متاحة في المعاينة.' }); } }); };
+                    img.src = (typeof masterplanImageUrl !== 'undefined' && masterplanImageUrl) || '';
+                });
+            }
+            return reply({ ok: false, message: 'في المعاينة الزرار ده بيشتغل على السيرفر بس.' });
+        });
+    };
+});
+</script>
+
+<script>
+                        // Shary: أدوات الماستر بلان على خريطة جوجل اللي فوق: دوّر على مكان · حدود المشروع · حطها على الحدود · الإيجنت · قص · نسخة شفافة.
+                        // كل نتيجة بتظهر على الخريطة وتتسحب بالنقط زي ما هي — والمكان بيتحفظ بزرار «تحديث» (القص بس بيتحفظ على طول).
+                        (function () {
+                            var tools = document.getElementById('sxMpTools');
+                            if (!tools) {
+                                return;
+                            }
+                            var token = tools.getAttribute('data-token');
+                            var busy = false;
+
+                            function say(kind, text) {
+                                if (typeof sxMasterplanStatus === 'function') {
+                                    sxMasterplanStatus(kind, text);
+                                }
+                            }
+                            function mapReady(quiet) {
+                                if (typeof boundsMap !== 'undefined' && boundsMap && window.google && google.maps) {
+                                    return true;
+                                }
+                                if (!quiet) {
+                                    say('bad', 'خريطة جوجل مش شغالة في الصفحة دي دلوقتي (غالبًا مفتاح جوجل ماب مش مسموح على الدومين ده) — الأدوات دي محتاجاها.');
+                                }
+                                return false;
+                            }
+                            function lock(on) {
+                                busy = on;
+                                tools.querySelectorAll('button').forEach(function (b) {
+                                    if (on) {
+                                        b.setAttribute('data-was-disabled', b.disabled ? '1' : '');
+                                        b.disabled = true;
+                                    } else {
+                                        b.disabled = b.getAttribute('data-was-disabled') === '1';
+                                    }
+                                });
+                            }
+                            function call(url, body, method) {
+                                var options = {method: method || 'POST', credentials: 'same-origin', headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': token}};
+                                if (body && options.method !== 'GET') {
+                                    options.headers['Content-Type'] = 'application/json';
+                                    options.body = JSON.stringify(body);
+                                }
+                                return fetch(url, options).then(function (response) {
+                                    if (response.status === 429) {
+                                        return {ok: false, message: 'استنى دقيقة وجرّب تاني (اتضغط كتير ورا بعض).'};
+                                    }
+                                    if (response.status === 419) {
+                                        return {ok: false, message: 'الصفحة فضلت مفتوحة كتير — اعمل ريفريش للصفحة وجرّب تاني.'};
+                                    }
+                                    if (response.status === 403) {
+                                        return {ok: false, message: 'حسابك مش مسموح له بالأداة دي.'};
+                                    }
+                                    return response.json().catch(function () {
+                                        return {ok: false, message: 'السيرفر ما ردّش برد مفهوم — جرّب تاني.'};
+                                    });
+                                }).catch(function () {
+                                    return {ok: false, message: 'السيرفر ما ردّش — اتأكد من النت وجرّب تاني.'};
+                                });
+                            }
+                            function run(url, body, method, busyText, done) {
+                                if (busy) {
+                                    return;
+                                }
+                                lock(true);
+                                say('busy', busyText);
+                                call(url, body, method).then(function (data) {
+                                    lock(false);
+                                    if (!data || !data.ok) {
+                                        say('bad', (data && data.message) || 'حصلت مشكلة — جرّب تاني.');
+                                        return;
+                                    }
+                                    done(data);
+                                    credit(data.credit);
+                                });
+                            }
+                            function credit(text) {
+                                var box = document.getElementById('sxMpCredit');
+                                if (box && text) {
+                                    box.textContent = 'الحدود والأماكن من: ' + text;
+                                    box.hidden = false;
+                                }
+                            }
+                            function button(label, kind, onClick) {
+                                var b = document.createElement('button');
+                                b.type = 'button';
+                                b.className = 'btn btn-sm fw-bold ' + kind;
+                                b.textContent = label;
+                                b.addEventListener('click', onClick);
+                                return b;
+                            }
+                            function pagePin() {
+                                return {lat: parseFloat(document.getElementById('lat').value) || null, lng: parseFloat(document.getElementById('lng').value) || null};
+                            }
+                            function fitTo(points) {
+                                if (!points || !points.length) {
+                                    return;
+                                }
+                                var box = new google.maps.LatLngBounds();
+                                points.forEach(function (p) { box.extend(new google.maps.LatLng(Number(p[1]), Number(p[0]))); });
+                                boundsMap.fitBounds(box);
+                            }
+                            // حدود المشروع (نفس نقط «Project Bounds» — بتتسحب وتتعدل زي ما هي)
+                            function useRing(ring) {
+                                var points = ring.slice();
+                                if (points.length > 1 && points[0][0] === points[points.length - 1][0] && points[0][1] === points[points.length - 1][1]) {
+                                    points.pop();
+                                }
+                                clearBounds();
+                                points.forEach(function (p) { addBoundsPoint(new google.maps.LatLng(Number(p[1]), Number(p[0]))); });
+                                fitTo(points);
+                            }
+                            // مكان الماستر بلان (4 أركان [lng, lat]) — بيتحفظ مع «تحديث»
+                            function useCorners(corners) {
+                                masterplanState = masterplanStateFromCorners(corners);
+                                markMasterplanMoved();
+                                afterMasterplanChange();
+                                fitTo(corners);
+                            }
+                            function setPin(lat, lng) {
+                                var latLng = new google.maps.LatLng(lat, lng);
+                                document.getElementById('lat').value = lat;
+                                document.getElementById('lng').value = lng;
+                                if (typeof marker !== 'undefined' && marker) {
+                                    marker.setPosition(latLng);
+                                    if (marker.getMap()) {
+                                        marker.getMap().panTo(latLng);
+                                    }
+                                }
+                                if (!sxRealBoundsRing()) {
+                                    updateBoundsInput(lat, lng);
+                                    loadExistingBounds();
+                                }
+                                boundsMap.setCenter(latLng);
+                                boundsMap.setZoom(16);
+                            }
+
+                            // ---- ١ · دوّر على مكان المشروع — وانت بتكتب الخريطة (قمر صناعي) بتروح على أقرب نتيجة
+                            var query = document.getElementById('sxPlaceQuery');
+                            var results = document.getElementById('sxPlaceResults');
+                            var typingTimer = null, serverBusy = false, session = null, predictions = null, details = null;
+                            function googlePlaces() {
+                                try {
+                                    if (window.google && google.maps && google.maps.places && boundsMap) {
+                                        predictions = predictions || new google.maps.places.AutocompleteService();
+                                        details = details || new google.maps.places.PlacesService(boundsMap);
+                                        return true;
+                                    }
+                                } catch (error) {
+                                }
+                                return false;
+                            }
+                            // [جنوب ، غرب ، شمال ، شرق] من حدود المكان أو مساحته
+                            function boxOf(place) {
+                                if (place.viewport) {
+                                    return place.viewport;
+                                }
+                                if (place.ring && place.ring.length > 2) {
+                                    var lats = place.ring.map(function (p) { return Number(p[1]); }), lngs = place.ring.map(function (p) { return Number(p[0]); });
+                                    return [Math.min.apply(null, lats), Math.min.apply(null, lngs), Math.max.apply(null, lats), Math.max.apply(null, lngs)];
+                                }
+                                return null;
+                            }
+                            // الخريطة بتروح على المكان (من غير ما حاجة تتغير)
+                            function look(place) {
+                                var box = boxOf(place);
+                                if (box) {
+                                    boundsMap.fitBounds(new google.maps.LatLngBounds(new google.maps.LatLng(box[0], box[1]), new google.maps.LatLng(box[2], box[3])));
+                                } else {
+                                    boundsMap.setCenter(new google.maps.LatLng(place.lat, place.lng));
+                                    boundsMap.setZoom(16);
+                                }
+                            }
+                            // اقتراح جوجل ← مكانه (الإحداثيات وحدوده التقريبية)
+                            function resolve(place, done) {
+                                if (place.lat !== undefined && place.lat !== null) {
+                                    done(place);
+                                    return;
+                                }
+                                if (!place.place_id || !googlePlaces()) {
+                                    return;
+                                }
+                                details.getDetails({placeId: place.place_id, fields: ['geometry', 'name', 'formatted_address'], sessionToken: session || undefined}, function (found, status) {
+                                    if (status !== google.maps.places.PlacesServiceStatus.OK || !found || !found.geometry) {
+                                        return;
+                                    }
+                                    session = null;     // جلسة البحث خلصت
+                                    var v = found.geometry.viewport;
+                                    place.lat = found.geometry.location.lat();
+                                    place.lng = found.geometry.location.lng();
+                                    place.viewport = v ? [v.getSouthWest().lat(), v.getSouthWest().lng(), v.getNorthEast().lat(), v.getNorthEast().lng()] : null;
+                                    place.address = place.address || found.formatted_address || '';
+                                    done(place);
+                                });
+                            }
+                            // الماستر بلان اللي لسه ما اتحطتش: تقريبي على المكان (بنسبة صورتها ، جوه حدوده لو معروفة)
+                            function approxPlace(lat, lng, box) {
+                                if (masterplanPlaced || masterplanMoved || !masterplanImageUrl || !masterplanState) {
+                                    return false;
+                                }
+                                var ratio = masterplanRatio || 0.75, width = 600;
+                                if (box) {
+                                    var w = (box[3] - box[1]) * mpMetersPerDegLng(lat), h = (box[2] - box[0]) * MP_METERS_PER_DEG_LAT;
+                                    var fit = Math.min(w, h / ratio) * 0.9;
+                                    if (fit >= 100 && fit <= 6000) {
+                                        width = fit;
+                                    }
+                                }
+                                masterplanState = {center: {lat: lat, lng: lng}, halfWidth: width / 2, halfHeight: width * ratio / 2, rotation: 0};
+                                markMasterplanMoved();
+                                afterMasterplanChange();
+                                return true;
+                            }
+                            // «اختار المكان ده»: الدبوس + الحدود (لو معروفة) + الماستر بلان تقريبي — وبعدين الفريق بيظبّط بالنقط
+                            function choose(place) {
+                                resolve(place, function (spot) {
+                                    setPin(spot.lat, spot.lng);
+                                    var words = ['دبوس المشروع اتحط'];
+                                    if (spot.ring && spot.ring.length > 3) {
+                                        useRing(spot.ring);
+                                        words.push('حدوده اترسمت');
+                                    }
+                                    if (approxPlace(spot.lat, spot.lng, boxOf(spot))) {
+                                        words.push('الماستر بلان اتحطت عليه تقريبي');
+                                    }
+                                    look(spot);
+                                    say('moved', words.join(' · ') + ' ✓ — ظبّط بالنقط لو محتاج ، وبعدين دوس «تحديث» تحت عشان يتحفظ.');
+                                });
+                            }
+                            function show(list) {
+                                results.innerHTML = '';
+                                list.forEach(function (place, index) {
+                                    var row = document.createElement('div');
+                                    row.className = 'sx-mp-result' + (index === 0 ? ' is-top' : '');
+                                    var text = document.createElement('div');
+                                    text.className = 'sx-mp-result__text';
+                                    text.textContent = place.name || '';
+                                    var small = document.createElement('small');
+                                    small.textContent = [place.address, place.source].filter(Boolean).join(' · ');
+                                    text.appendChild(small);
+                                    row.appendChild(text);
+                                    row.appendChild(button('اختار المكان ده', 'btn-primary', function () { choose(place); }));
+                                    row.appendChild(button('روح هنا', 'btn-light', function () { resolve(place, look); }));
+                                    results.appendChild(row);
+                                });
+                                results.hidden = !list.length;
+                            }
+                            // من السيرفر: جوجل (مفتاح السيرفر) + OpenStreetMap (ومعاه حدود المكان لو مرسومة)
+                            function serverSearch(q, quiet) {
+                                if (serverBusy) {
+                                    return;
+                                }
+                                serverBusy = true;
+                                if (!quiet) {
+                                    say('busy', 'بيدوّر على «' + q + '»…');
+                                }
+                                call(tools.getAttribute('data-search') + '?q=' + encodeURIComponent(q), null, 'GET').then(function (data) {
+                                    serverBusy = false;
+                                    if (quiet && q !== query.value.trim()) {
+                                        return;
+                                    }
+                                    if (!data || !data.ok || !data.results || !data.results.length) {
+                                        if (!quiet) {
+                                            say('bad', (data && data.message) || 'ما لقيتش مكان بالاسم ده.');
+                                        }
+                                        return;
+                                    }
+                                    show(data.results);
+                                    look(data.results[0]);
+                                    credit(data.credit);
+                                    say('ok', 'لقيت ' + data.results.length + ' — الخريطة راحت على أول نتيجة. اختار المكان الصح من تحت.');
+                                });
+                            }
+                            function live(q) {
+                                if (!mapReady(true)) {
+                                    return;
+                                }
+                                if (!googlePlaces()) {
+                                    serverSearch(q, true);
+                                    return;
+                                }
+                                try {
+                                    session = session || new google.maps.places.AutocompleteSessionToken();
+                                } catch (error) {
+                                    session = null;
+                                }
+                                predictions.getPlacePredictions({input: q, sessionToken: session || undefined}, function (found, status) {
+                                    if (q !== query.value.trim()) {
+                                        return;      // اتكتب غيره
+                                    }
+                                    if (status !== google.maps.places.PlacesServiceStatus.OK || !found || !found.length) {
+                                        serverSearch(q, true);
+                                        return;
+                                    }
+                                    var list = found.slice(0, 5).map(function (p) {
+                                        var f = p.structured_formatting || {};
+                                        return {name: f.main_text || p.description, address: f.secondary_text || '', place_id: p.place_id, source: 'Google'};
+                                    });
+                                    show(list);
+                                    resolve(list[0], function (place) {
+                                        if (q === query.value.trim()) {
+                                            look(place);
+                                        }
+                                    });
+                                });
+                            }
+                            query.addEventListener('input', function () {
+                                clearTimeout(typingTimer);
+                                var q = query.value.trim();
+                                if (q.length < 3) {
+                                    return;
+                                }
+                                typingTimer = setTimeout(function () { live(q); }, googlePlaces() ? 400 : 800);
+                            });
+                            function searchNow() {
+                                if (!mapReady()) {
+                                    return;
+                                }
+                                var q = (query.value || '').trim();
+                                if (q.length < 2) {
+                                    say('bad', 'اكتب اسم المكان أو المشروع.');
+                                    return;
+                                }
+                                clearTimeout(typingTimer);
+                                serverSearch(q, false);
+                            }
+                            document.getElementById('sxPlaceGo').addEventListener('click', searchNow);
+                            query.addEventListener('keydown', function (e) {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();      // Enter هنا ما يبعتش فورم المشروع
+                                    searchNow();
+                                }
+                            });
+
+                            // ---- ٢ · حدود المشروع ومكان الماستر بلان
+                            document.getElementById('sxOutlineGo').addEventListener('click', function () {
+                                if (!mapReady()) {
+                                    return;
+                                }
+                                run(tools.getAttribute('data-outline'), pagePin(), 'POST', 'بيدوّر على حدود المشروع على OpenStreetMap…', function (data) {
+                                    useRing(data.ring);
+                                    say(data.guess ? 'todo' : 'moved', data.message);
+                                });
+                            });
+                            document.getElementById('sxFitGo').addEventListener('click', function () {
+                                if (!mapReady()) {
+                                    return;
+                                }
+                                if (!sxRealBoundsRing()) {
+                                    say('bad', 'ارسم حدود المشروع على الخريطة الأول (دوس على أركانه) أو دوس «هات حدود المشروع من الخريطة».');
+                                    return;
+                                }
+                                var pin = pagePin();
+                                run(tools.getAttribute('data-fit'), {bounds: document.getElementById('bounds').value, lat: pin.lat, lng: pin.lng}, 'POST', 'بيطابق شكل الماستر بلان على الحدود…', function (data) {
+                                    if (data.overlay) {
+                                        masterplanImageUrl = data.overlay;
+                                    }
+                                    useCorners(data.corners);
+                                    say('moved', data.message);
+                                });
+                            });
+                            var agentButton = document.getElementById('sxAgentGo');
+                            var agentBox = document.getElementById('sxAgentOutline');
+                            if (agentButton) {
+                                agentButton.addEventListener('click', function () {
+                                    if (!mapReady()) {
+                                        return;
+                                    }
+                                    run(tools.getAttribute('data-agent'), {}, 'POST', 'الإيجنت بيدوّر على مكان المشروع وحدوده وبيطابق الماستر بلان عليها… (ممكن ياخد دقيقة)', function (data) {
+                                        if (data.overlay) {
+                                            masterplanImageUrl = data.overlay;
+                                        }
+                                        var pin = pagePin();
+                                        if (data.center && (!pin.lat || !pin.lng)) {
+                                            setPin(data.center.lat, data.center.lng);
+                                        }
+                                        agentBox.innerHTML = '';
+                                        agentBox.hidden = true;
+                                        if (data.outline && data.outline.length > 3) {
+                                            if (!sxRealBoundsRing()) {
+                                                useRing(data.outline);
+                                            } else {
+                                                var row = document.createElement('div');
+                                                row.className = 'sx-mp-result';
+                                                var text = document.createElement('div');
+                                                text.className = 'sx-mp-result__text';
+                                                text.textContent = 'الإيجنت لقى حدود للمشروع غير اللي مرسومة هنا.';
+                                                row.appendChild(text);
+                                                row.appendChild(button('ارسم حدود الإيجنت بدل اللي عندي', 'btn-outline-primary', function () {
+                                                    useRing(data.outline);
+                                                    agentBox.hidden = true;
+                                                }));
+                                                agentBox.appendChild(row);
+                                                agentBox.hidden = false;
+                                            }
+                                        }
+                                        useCorners(data.corners);
+                                        say('moved', data.message + (data.notes && data.notes.length ? ' · ' + data.notes.join(' · ') : ''));
+                                    });
+                                });
+                            }
+
+                            // ---- ٣ · صورة الماستر بلان: ماستر بلان جديدة / نسخة شفافة
+                            var chosen = document.getElementById('sxFileChosen');
+                            var planInput = document.querySelector('input[name="master_plan"]');
+                            document.getElementById('sxPlanPick').addEventListener('click', function () {
+                                if (planInput) {
+                                    planInput.click();
+                                }
+                            });
+                            if (planInput) {
+                                planInput.addEventListener('change', function () {
+                                    if (this.files && this.files[0]) {
+                                        chosen.textContent = 'الماستر بلان الجديدة: ' + this.files[0].name + ' — هتترفع مع «تحديث» (وبتتفرّغ للخريطة لوحدها).';
+                                        chosen.hidden = false;
+                                    }
+                                });
+                            }
+                            // اسحب صورة الماستر بلان وسيبها على الخريطة ← نفس خانة «الماستر بلان» في الفورم
+                            var dropZone = document.getElementById('boundsMap');
+                            if (dropZone && planInput && window.DataTransfer) {
+                                var hasFiles = function (e) {
+                                    return e.dataTransfer && Array.prototype.indexOf.call(e.dataTransfer.types || [], 'Files') > -1;
+                                };
+                                ['dragenter', 'dragover'].forEach(function (name) {
+                                    dropZone.addEventListener(name, function (e) {
+                                        if (hasFiles(e)) {
+                                            e.preventDefault();
+                                            dropZone.classList.add('sx-drop-on');
+                                        }
+                                    });
+                                });
+                                ['dragleave', 'drop'].forEach(function (name) {
+                                    dropZone.addEventListener(name, function () { dropZone.classList.remove('sx-drop-on'); });
+                                });
+                                dropZone.addEventListener('drop', function (e) {
+                                    var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+                                    if (!file) {
+                                        return;
+                                    }
+                                    e.preventDefault();
+                                    if (!/^image\/(png|jpe?g|webp)$/.test(file.type)) {
+                                        say('bad', 'اسحب صورة JPG أو PNG أو WebP.');
+                                        return;
+                                    }
+                                    try {
+                                        var list = new DataTransfer();
+                                        list.items.add(file);
+                                        planInput.files = list.files;
+                                        planInput.dispatchEvent(new Event('change', {bubbles: true}));
+                                        say('moved', 'الماستر بلان الجديدة ظهرت على الخريطة — حطها مكانها ودوس «تحديث» عشان تترفع.');
+                                    } catch (error) {
+                                        say('bad', 'المتصفح ده ما بيسمحش بالسحب — دوس «ارفع ماستر بلان جديدة».');
+                                    }
+                                });
+                            }
+                            document.getElementById('sxOverlayFile').addEventListener('change', function () {
+                                if (!(this.files && this.files[0])) {
+                                    return;
+                                }
+                                chosen.textContent = 'النسخة الشفافة: ' + this.files[0].name + ' — هتترفع مع «تحديث» وتبقى هي اللي على الخريطة.';
+                                chosen.hidden = false;
+                                if (typeof masterplanOverlayView !== 'undefined' && masterplanOverlayView) {
+                                    masterplanImageUrl = URL.createObjectURL(this.files[0]);
+                                    masterplanOverlayView.draw();
+                                    sxMasterplanRatio(masterplanImageUrl, function (ratio) {
+                                        masterplanRatio = ratio;
+                                        if (masterplanPlaced || masterplanMoved) {
+                                            masterplanState.halfHeight = masterplanState.halfWidth * ratio;
+                                            markMasterplanMoved();
+                                        } else {
+                                            masterplanState = defaultMasterplanState(pagePin().lat || 0, pagePin().lng || 0);
+                                        }
+                                        afterMasterplanChange();
+                                    });
+                                }
+                            });
+
+                            // ---- ٣ · قص الماستر بلان
+                            var modal = document.getElementById('sxCrop');
+                            var stage = document.getElementById('sxCropStage');
+                            var img = document.getElementById('sxCropImg');
+                            var sel = document.getElementById('sxCropSel');
+                            var save = document.getElementById('sxCropSave');
+                            var rect = null, mode = null, start = null, orig = null;
+                            function clamp(v) {
+                                return Math.max(0, Math.min(1, v));
+                            }
+                            function at(e) {
+                                var r = img.getBoundingClientRect();
+                                return {x: clamp((e.clientX - r.left) / r.width), y: clamp((e.clientY - r.top) / r.height)};
+                            }
+                            function norm(r) {
+                                return {x0: Math.min(r.x0, r.x1), y0: Math.min(r.y0, r.y1), x1: Math.max(r.x0, r.x1), y1: Math.max(r.y0, r.y1)};
+                            }
+                            function draw() {
+                                if (!rect) {
+                                    sel.hidden = true;
+                                    save.disabled = true;
+                                    return;
+                                }
+                                var r = norm(rect), w = img.clientWidth, h = img.clientHeight;
+                                sel.hidden = false;
+                                sel.style.left = (r.x0 * w) + 'px';
+                                sel.style.top = (r.y0 * h) + 'px';
+                                sel.style.width = ((r.x1 - r.x0) * w) + 'px';
+                                sel.style.height = ((r.y1 - r.y0) * h) + 'px';
+                                save.disabled = (r.x1 - r.x0) < 0.03 || (r.y1 - r.y0) < 0.03;
+                            }
+                            function close() {
+                                modal.hidden = true;
+                                mode = null;
+                            }
+                            document.getElementById('sxCropOpen').addEventListener('click', function () {
+                                if (!masterplanImageUrl) {
+                                    say('bad', 'ارفع الماستر بلان الأول.');
+                                    return;
+                                }
+                                if (/^blob:/.test(masterplanImageUrl)) {
+                                    say('bad', 'احفظ الصورة الجديدة الأول («تحديث») وبعدين قصّها.');
+                                    return;
+                                }
+                                rect = null;
+                                img.onload = draw;
+                                img.src = masterplanImageUrl;
+                                modal.hidden = false;
+                                draw();
+                            });
+                            document.getElementById('sxCropCancel').addEventListener('click', close);
+                            modal.addEventListener('click', function (e) {
+                                if (e.target === modal) {
+                                    close();
+                                }
+                            });
+                            document.addEventListener('keydown', function (e) {
+                                if (e.key === 'Escape' && !modal.hidden) {
+                                    close();
+                                }
+                            });
+                            stage.addEventListener('pointerdown', function (e) {
+                                var handle = e.target.getAttribute ? e.target.getAttribute('data-h') : null;
+                                var p = at(e);
+                                if (handle && rect) {
+                                    rect = norm(rect);
+                                    mode = handle;
+                                } else if (e.target === sel && rect) {
+                                    rect = norm(rect);
+                                    mode = 'move';
+                                } else {
+                                    mode = 'new';
+                                    rect = {x0: p.x, y0: p.y, x1: p.x, y1: p.y};
+                                }
+                                start = p;
+                                orig = {x0: rect.x0, y0: rect.y0, x1: rect.x1, y1: rect.y1};
+                                try {
+                                    stage.setPointerCapture(e.pointerId);
+                                } catch (error) {
+                                }
+                                e.preventDefault();
+                                draw();
+                            });
+                            stage.addEventListener('pointermove', function (e) {
+                                if (!mode) {
+                                    return;
+                                }
+                                var p = at(e);
+                                if (mode === 'new') {
+                                    rect.x1 = p.x;
+                                    rect.y1 = p.y;
+                                } else if (mode === 'move') {
+                                    var w = orig.x1 - orig.x0, h = orig.y1 - orig.y0;
+                                    var x0 = Math.max(0, Math.min(1 - w, orig.x0 + p.x - start.x)), y0 = Math.max(0, Math.min(1 - h, orig.y0 + p.y - start.y));
+                                    rect = {x0: x0, y0: y0, x1: x0 + w, y1: y0 + h};
+                                } else {
+                                    if (mode.indexOf('n') > -1) { rect.y0 = p.y; }
+                                    if (mode.indexOf('s') > -1) { rect.y1 = p.y; }
+                                    if (mode.indexOf('w') > -1) { rect.x0 = p.x; }
+                                    if (mode.indexOf('e') > -1) { rect.x1 = p.x; }
+                                }
+                                draw();
+                            });
+                            stage.addEventListener('pointerup', function () {
+                                if (rect) {
+                                    rect = norm(rect);
+                                }
+                                mode = null;
+                                draw();
+                            });
+                            stage.addEventListener('pointercancel', function () {
+                                mode = null;
+                            });
+                            save.addEventListener('click', function () {
+                                if (!rect) {
+                                    return;
+                                }
+                                var r = norm(rect);
+                                // مكان الماستر بلان اللي على الخريطة دلوقتي (لو متحطة): الجزء اللي هيتساب بيفضل في نفس مكانه
+                                var corners = (masterplanPlaced || masterplanMoved) && masterplanState ? masterplanCorners() : null;
+                                run(tools.getAttribute('data-crop'), {rect: [r.x0, r.y0, r.x1, r.y1], corners: corners}, 'POST', 'بيقص الماستر بلان…', function (data) {
+                                    close();
+                                    if (data.overlay) {
+                                        masterplanImageUrl = data.overlay;
+                                    }
+                                    if (data.corners) {
+                                        masterplanState = masterplanStateFromCorners(data.corners);
+                                        masterplanPlaced = true;          // القص بيحفظ المكان الجديد على طول
+                                        syncMasterplanCornersInput();
+                                        afterMasterplanChange();
+                                    } else {
+                                        sxMasterplanRatio(masterplanImageUrl, function (ratio) {
+                                            masterplanRatio = ratio;
+                                            if (!masterplanPlaced && !masterplanMoved) {
+                                                masterplanState = defaultMasterplanState(pagePin().lat || 0, pagePin().lng || 0);
+                                            }
+                                            afterMasterplanChange();
+                                        });
+                                    }
+                                    if (typeof masterplanOverlayView !== 'undefined' && masterplanOverlayView) {
+                                        masterplanOverlayView.draw();
+                                    }
+                                    say('ok', data.message);
+                                });
+                            });
+                        })();
+                    </script>
                                     </div>
             </div>
             <!-- /add -->
