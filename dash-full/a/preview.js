@@ -432,8 +432,19 @@
         setTimeout(function () { URL.revokeObjectURL(a.href); a.parentNode.removeChild(a); }, 1000);
         note(L.downloaded);
     }
+    function fileLink(url, name) {
+        var a = doc.createElement('a');
+        a.href = url; a.download = name || ''; doc.body.appendChild(a); a.click();
+        setTimeout(function () { if (a.parentNode) { a.parentNode.removeChild(a); } }, 500);
+        note(L.downloaded);
+    }
     function missingLink(link) {
         var text = (link.textContent || '').replace(/\s+/g, ' ').trim(), why = link.getAttribute('data-sx-note') || '';
+        if (/^(إلغاء|الغاء|cancel|رجوع|back)$/i.test(text)) { if (window.history.length > 1) { window.history.back(); } else { location.href = pageUrl('index.html'); } return; }
+        if (/مثال|example|sample/i.test(text)) { fileLink(ASSETS + 'downloads/shary-list-example.csv', 'shary-list-example.csv'); return; }
+        if (/zip|بلجن|plugin/i.test(text)) { fileLink(ASSETS + 'downloads/shary-figma-plugin.zip', 'shary-figma-plugin.zip'); return; }
+        if (/افتح الملف|open (the )?file/i.test(text)) { window.open(ASSETS + 'downloads/llms.txt', '_blank'); return; }
+        if (/^(افتح|open)$/i.test(text) && /performance/.test(HERE)) { window.open(pageUrl(HERE), '_blank'); return; }
         if (/^(حسابي|my account|حسابى|profile|الملف الشخصي)$/i.test(text)) { location.href = pageUrl(hasPage('edit-supervisor-3.html') ? 'edit-supervisor-3.html' : 'supervisor.html'); return; }
         if (/^(خروج|log ?out|تسجيل الخروج|sign ?out)$/i.test(text)) { location.href = pageUrl('signin.html'); return; }
         if (/تحميل|download|csv|excel|تصدير|export|نزّل|نزل/i.test(text + ' ' + why)) {
