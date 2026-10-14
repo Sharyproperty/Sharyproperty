@@ -342,7 +342,17 @@
             var list = shown();
             if (!gl || !list.length) return;
             var wide = window.matchMedia('(min-width: 1024px)').matches;
-            gl.fitBounds(bounds(list), { padding: wide ? 90 : { top: 70, right: 46, bottom: 230, left: 46 }, maxZoom: 13.5, duration: duration || 1400, essential: true });
+            try {
+                gl.fitBounds(bounds(list), { padding: wide ? 90 : { top: 70, right: 46, bottom: 230, left: 46 }, maxZoom: 13.5, duration: duration || 1400, essential: true });
+            } catch (error) { /* الضمان تحت */ }
+            // ضمان: لو الكاميرا فضلت على الكرة الأرضية (Mapbox ما قدرش يحسب الحركة) بنقرّب على المشاريع مرة واحدة من غير حركة
+            window.setTimeout(function () {
+                if (!gl || gl.getZoom() >= 3 || !shown().length) return;
+                try {
+                    var cam = gl.cameraForBounds(bounds(shown()), { padding: 40, maxZoom: 13.5 });
+                    if (cam) gl.jumpTo(cam);
+                } catch (error) { /* */ }
+            }, (duration || 1400) + 900);
         }
 
         // ---- الخريطة: الكرة الأرضية + علامة سعر لكل مشروع
