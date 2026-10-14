@@ -247,6 +247,31 @@
         if (listLink && !root.getAttribute('data-search-url')) listLink.hidden = true;
         if (!frame || !items.length) return;
 
+        // اسم المشروع بس على تابة الخريطة: من غير "كمبوند / قرية / مشروع" ومن غير المنطقة ("الساحل الشمالي" ، "القاهرة الجديدة" ، اسم المدينة ...)
+        // ومن غير أي حاجة بعد " - " أو " | " (زي "ذا واترواي - كمبوند واتر واي ويست الشيخ زايد" ← "ذا واترواي")
+        var PLACES = ['الساحل الشمالي', 'الساحل', 'العلمين الجديدة', 'العلمين', 'رأس الحكمة', 'سيدي عبد الرحمن', 'مرسى مطروح', 'العين السخنة', 'السخنة', 'الجلالة',
+            'القاهرة الجديدة', 'التجمع الخامس', 'التجمع', 'العاصمة الإدارية الجديدة', 'العاصمة الإدارية', 'الشيخ زايد', 'زايد', 'مدينة 6 أكتوبر', '6 أكتوبر', 'أكتوبر', 'المستقبل سيتي',
+            'مدينة المستقبل', 'الشروق', 'مدينتي', 'الرحاب', 'القاهرة', 'الجيزة', 'الإسكندرية', 'الغردقة', 'الجونة', 'سوما باي', 'مصر',
+            'North Coast', 'Sahel', 'New Alamein', 'Ras El Hekma', 'Ain Sokhna', 'Sokhna', 'New Cairo', 'Fifth Settlement', 'New Capital', 'New Administrative Capital',
+            'Sheikh Zayed', 'El Sheikh Zayed', '6th of October', '6 October', 'October', 'Mostakbal City', 'El Shorouk', 'Madinaty', 'Cairo', 'Giza', 'Alexandria', 'Hurghada', 'El Gouna', 'Egypt'];
+        function pinName(p) {
+            var name = String(p.name || '').trim();
+            var head = name.split(/\s+[-–—|]\s+/)[0].trim();
+            if (head) name = head;
+            name = name.replace(/^(كمبوند|كومباوند|قرية|مشروع|منتجع|Compound|Village|Resort)\s+/i, '');
+            var places = [p.area_label, p.group_label].concat(PLACES).filter(Boolean).sort(function (a, b) { return b.length - a.length; });
+            for (var round = 0; round < 3; round++) {
+                var before = name;
+                places.forEach(function (place) {
+                    var esc = String(place).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    var cut = name.replace(new RegExp('\\s+(?:(?:في|ب|بال|in|at)\\s+)?(?:ال)?' + esc + '\\s*$', 'i'), '').replace(/[\s,،\-–—]+$/, '').trim();
+                    if (cut.length >= 2) name = cut;
+                });
+                if (name === before) break;
+            }
+            return name;
+        }
+
         function priceLabel(p) {
             return p.price_value ? (Math.round(p.price_value / 100000) / 10) + (root.getAttribute('data-million') || 'M') : '•';
         }
@@ -391,7 +416,7 @@
                     pin.setAttribute('aria-label', p.name || '');
                     // اسم المشروع المختصر (من غير "كمبوند / قرية / Compound") جوه تابة صغيرة — السعر في الـ title
                     var label = document.createElement('span');
-                    label.textContent = String(p.name || '').replace(/^(كمبوند|قرية|مشروع|Compound|Village)\s+/i, '') || priceLabel(p);
+                    label.textContent = pinName(p) || priceLabel(p);
                     pin.appendChild(label);
                     pin.title = (p.name || '') + ' — ' + priceLabel(p);
                     pin.addEventListener('click', function (event) { event.stopPropagation(); select(item, true); });

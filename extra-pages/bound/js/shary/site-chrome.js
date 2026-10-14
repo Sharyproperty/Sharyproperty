@@ -368,8 +368,8 @@ window.SharyZoom = function () {
             more.innerHTML = '<span class="shary-share__icon shary-share__icon--more"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></span><span></span>';
             more.lastChild.textContent = en ? 'More' : 'المزيد';
             more.addEventListener('click', function () {
-                // قايمة الموبايل: نفس الرسالة الكاملة (اللينك جواها) — ولو مفيش بيانات: العنوان + اللينك
-                navigator.share(waText.indexOf(url) > -1 ? { title: title, text: waText } : { title: title, text: title, url: url }).then(closeShareSheet, function (error) {
+                // قايمة الموبايل: نفس رسالة البيانات (من غير لينكات) — ولو مفيش بيانات: العنوان + اللينك
+                navigator.share(waText !== title + '\n' + url ? { title: title, text: waText } : { title: title, text: title, url: url }).then(closeShareSheet, function (error) {
                     if (!error || error.name !== 'AbortError') { nativeShareBlocked = true; more.remove(); }
                 });
             });
@@ -432,7 +432,8 @@ window.SharyZoom = function () {
     function shareMessage(button, url, title) {
         var page = button && button.closest ? button.closest('[data-wa-page]') : null;
         var has = button && button.closest && (button.closest('[data-wa-text]') || (page && !button.closest('[data-card], [data-unit], [data-project], article')));
-        var detail = { text: has ? whatsappText(button, url) : title + '\n' + url };
+        // المشاركة (واتساب / المزيد): بيانات الوحدة / المشروع بس — من غير سطر "رابط المشروع:" ولا اللينك ولا لينك الصورة
+        var detail = { text: has ? whatsappText(button, '\u0000').split(' \u0000')[0].replace(/\n[^\n]*:\s*$/, '') : title + '\n' + url };
         if (button && button.dispatchEvent) button.dispatchEvent(new CustomEvent('shary:whatsapp', { bubbles: true, cancelable: true, detail: detail }));
         return detail.text;
     }

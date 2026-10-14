@@ -423,6 +423,14 @@
         }, { passive: true });
         dots[0].setAttribute('aria-current', 'true');
         mark();
+        // ديسك توب: الماوس لما يقف على صورة بتتفتح هي وتبقى بالألوان على طول (من غير كليك) — الكليك على المفتوحة بيفتح عارض الصور زي ما هو
+        var hover = window.matchMedia('(hover: hover) and (pointer: fine)');
+        slides.forEach(function (slide) {
+            slide.addEventListener('mouseenter', function () {
+                if (!hover.matches || (narrow.matches && !thumbs)) return;
+                slides.forEach(function (other) { other.setAttribute('data-active', other === slide ? '1' : '0'); });
+            });
+        });
 
         // الصور بتتقلّب لوحدها بالراحة، واحدة واحدة (كل 4.5 ثانية): موبايل بتتسحب للصورة اللي بعدها — ديسك توب الشريحة اللي بعدها هي اللي بتتفتح.
         // بتقف طول ما العميل ماسكها أو واقف عليها بالماوس، ولو عارض الصور مفتوح، ولو المعرض مش ظاهر على الشاشة، ولو الجهاز مطفّي الحركة.

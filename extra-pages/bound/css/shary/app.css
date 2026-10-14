@@ -25536,3 +25536,38 @@ html:not(.sx-ready) .own-unit-card__btn, html:not(.sx-ready) .own-unit-card__btn
 
 /* Mapbox / MapLibre: علامات المشاريع لازم تفضل absolute (ملف المكتبة بيتحمّل قبل app.css فـ position: relative كان بيرصّهم تحت بعض) */
 .mapboxgl-marker.smap__marker, .maplibregl-marker.smap__marker { position: absolute; }
+
+/* شيت التطبيق: زرار × في الركن فوق يقفل الشيت */
+.app-sheet__x{position:absolute;top:12px;inset-inline-end:14px;z-index:1;display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border:0;border-radius:50%;background:#eef2f6;color:#1E4266;cursor:pointer}
+.app-sheet__x:active{background:#dfe6ed}
+
+/* الفوتر ديسك توب: 4 أعمدة ثابتة العرض (الأعلى بحثًا أعرض) — الكلام بينزل سطر جوه عموده وما يدخلش في العمود اللي جنبه ، وخط اللينكات أصغر */
+@media (min-width:1024px){
+.site-footer__cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr) minmax(0,1.9fr);column-gap:40px;align-items:start}
+.site-footer__col li{white-space:normal}
+.site-footer__col>ul{font-size:14.5px;line-height:1.55;gap:10px;overflow-wrap:anywhere}
+.site-footer__col--wide>ul{max-width:none}
+}
+@media (min-width:1340px){.site-footer__col--wide>ul{column-gap:28px;row-gap:10px}}
+
+/* تابة المشروع على الخريطة: الاسم بس (من غير المنطقة) — مساحة أكبر عشان الاسم يبان كامل */
+.smap__marker{max-width:200px}
+
+/* معرض الوحدة / المشروع ديسك توب: الصورة اللي الماوس عليها بتتفتح وتتلوّن بسرعة */
+@media (min-width:1024px){.rent-gallery.rent-gallery--slider .rent-gallery__item{transition:flex-grow .5s ease}.rent-gallery.rent-gallery--slider .rent-gallery__item img{transition:filter .3s ease}}
+
+/* اسم المشروع / الوحدة (فوق تحت الصور) وعنوان «خطط السداد في …»: خط أصغر ومريح للعين — موبايل وديسك توب */
+.prop-bar .prop-bar__head h1{font-size:16.5px;line-height:1.5}
+[data-plan-list]>h2{font-size:17px;line-height:1.45}
+@media (min-width:1024px){.prop-bar .prop-bar__head h1{font-size:19px}[data-plan-list]>h2{font-size:20px}}
+
+/* الفوتر ديسك توب — زي الريفرنس: 4 أعمدة مرتّبة (المناطق ، المشاريع ، المطورين ، الأعلى بحثًا عمودين) ، عناوين صغيرة بولد ،
+   لينكات خط صغير رمادي سطر واحد — الاسم الطويل بيتقص بـ «…» (والاسم كامل بيظهر لما الماوس يقف عليه) فمفيش حاجة بتدخل في التانية */
+@media (min-width:1024px){
+.site-footer__cols{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1fr) minmax(0,1fr) minmax(0,2.1fr);column-gap:48px;align-items:start}
+.site-footer__col>button{font-size:15.5px;line-height:1.4}
+.site-footer__col>ul{padding-top:14px;font-size:13.5px;font-weight:600;line-height:1.5;gap:9px;color:#5a6b7e;overflow-wrap:normal}
+.site-footer__col li{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.site-footer__col li a{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.site-footer__col--wide>ul{display:grid;max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:9px}
+}
