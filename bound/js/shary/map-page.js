@@ -441,8 +441,9 @@
         // أول حركة بعد ما الخريطة تفتح: من الكرة الأرضية للمشروع / المنطقة — أو تقريب بسيط على مصر والقايمة مفتوحة
         function intro() {
             state.intro = true;
-            if (state.focus && state.current) {
-                var p = info(state.current);
+            var focusPoint = state.current ? info(state.current) : null;
+            if (state.focus && state.current && isFinite(focusPoint.lat) && isFinite(focusPoint.lng) && (focusPoint.lat || focusPoint.lng)) {
+                var p = focusPoint;
                 leaveGlobe();
                 if (plans) plans.refresh();
                 // جاي من صفحة المشروع / الوحدة: على الماستر بلان على طول (من غير لفة الكرة الأرضية) — وإلا حركة الدخول العادية
@@ -454,7 +455,8 @@
                 return;
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
-            if (state.area || state.fit) { leaveGlobe(); fitAll(INTRO); return; }
+            // جاي من صفحة مشروع (?project=) والمشروع مالوش مكان على الخريطة: مقرّبة على مشاريع منطقته (أو كل المشاريع) — مش الكرة الأرضية والأسامي فوق بعض
+            if (state.area || state.fit || state.focus || state.asked) { leaveGlobe(); fitAll(INTRO); return; }
             // الكرة بتيجي من بعيد وتكبر بالراحة لحد ما تقف فوق مصر — وبعدها قايمة "اختر المنطقة" بتنزل
             gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: INTRO, easing: easeOut, essential: true });
             // جاي من صفحة مشروع / وحدة (?project=): قايمة "اختر المنطقة" ما بتفتحش لوحدها أبدًا

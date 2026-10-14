@@ -8992,3 +8992,10 @@ html:not(.sx-ready) .shary-home-root .hero-featured__btn, html:not(.sx-ready) .s
 
 /* ---- New Launches على الديسكتوب بس: الكارت أوطى (مستطيل عريض مش قريب من المربع) — الموبايل والتابلت زي ما هم */
 @media (min-width: 1024px) { .new-projects-track .new-project-card { aspect-ratio: 21 / 9; } }
+
+/* «مشاريع مميزة»: اسم المشروع الطويل بيتقصّ بـ … — وزرار «اكتشف المشروع» وكلمة «مشاريع مميزة» ما بيتقصّوش أبدًا */
+.shary-home-root .hero-featured__btn, .shary-home-root .hero-featured__label { flex-shrink: 0; white-space: nowrap; }
+@media (max-width: 1023.98px) {
+  .shary-home-root .hero-featured { box-sizing: border-box; }
+  .shary-home-root .hero-featured__name { min-width: 0; flex: 1 1 auto; max-width: none; }
+}

@@ -761,9 +761,7 @@ window.SharyZoom = function () {
         } else if (android && store) {
             event.preventDefault();
             var id = button.getAttribute('data-android-package') || '';
-            launch('intent://home#Intent;scheme=shary;' + (id ? 'package=' + id + ';' : '') + 'S.browser_fallback_url=' + encodeURIComponent(store) + ';end', function (opened) {
-                if (!opened) window.location.href = store;
-            });
+            window.location.href = store;   // Google Play: «فتح» لو متحمّل ، «تثبيت» لو لأ (من غير intent)
         }
     });
 
