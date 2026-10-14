@@ -40,3 +40,8 @@
 .notify-bell__count--sm{top:0;height:17px;min-width:17px;font-size:10.5px;line-height:17px}
 .notify-bell__count.hidden{display:none}
 .notify-bell__count.flex{display:flex}
+
+/* الخريطة التفاعلية أخف: من غير تغبيش ورا كروت المشاريع (موبايل) وعلامات الماستر بلان + أزرار التكبير / التصغير جنب لوحة المشروع (ديسك توب) */
+@media (max-width:1023px){.smap__item{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(241,247,253,.95)}}
+.smap:not(.is-globe) .smap__marker.has-plan{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(30,65,102,.9)}
+@media (min-width:1024px){.smap.has-ps .smap__tools{left:458px}[dir="ltr"] .smap.has-ps .smap__tools{left:auto;right:458px}}
