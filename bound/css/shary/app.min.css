@@ -52,3 +52,8 @@
   .content-cta{width:-moz-fit-content;width:fit-content;max-width:100%;margin-inline:auto}
   .content-cta__buttons > .content-cta__button,.content-cta__buttons > .content-cta__button--meeting,.content-cta__buttons--2 > .content-cta__button{flex:0 0 auto;min-width:200px;padding-inline:24px}
 }
+
+/* الخريطة التفاعلية أخف: من غير تغبيش ورا كروت المشاريع (موبايل) وعلامات الماستر بلان + أزرار التكبير / التصغير جنب لوحة المشروع (ديسك توب) */
+@media (max-width:1023px){.smap__item{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(241,247,253,.95)}}
+.smap:not(.is-globe) .smap__marker.has-plan{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(30,65,102,.9)}
+@media (min-width:1024px){.smap.has-ps .smap__tools{left:458px}[dir="ltr"] .smap.has-ps .smap__tools{left:auto;right:458px}}
