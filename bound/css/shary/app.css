@@ -25577,3 +25577,15 @@ html:not(.sx-ready) .own-unit-card__btn, html:not(.sx-ready) .own-unit-card__btn
 .notify-bell__count--sm{top:0;height:17px;min-width:17px;font-size:10.5px;line-height:17px}
 .notify-bell__count.hidden{display:none}
 .notify-bell__count.flex{display:flex}
+
+/* أزرار التواصل جوه المحتوى ([shary-cta] — مقالات ، المدونة ، صفحة المشروع والوحدة ، أي مكان): الصندوق اللبني على قد الأزرار وفي النص —
+   3 أزرار = التلاتة جنب بعض ، 2 = الاتنين في النص ، 1 = زرار واحد في النص بمقاسه — ولو زرار اتشال ما بيفضلش مكانه فاضي */
+.content-cta{align-items:center;text-align:center}
+.content-cta__buttons,.content-cta__buttons--1,.content-cta__buttons--2,.content-cta__buttons--3{display:flex !important;flex-wrap:wrap;justify-content:center;width:100%}
+.content-cta__buttons > .content-cta__button{flex:1 1 140px;min-width:-moz-max-content;min-width:max-content;padding-inline:18px}
+.content-cta__buttons > .content-cta__button--meeting{flex-basis:100%}
+.content-cta__buttons > .content-cta__button:only-child{flex:0 1 auto;min-width:220px}
+@media (min-width:1024px){
+  .content-cta{width:-moz-fit-content;width:fit-content;max-width:100%;margin-inline:auto}
+  .content-cta__buttons > .content-cta__button,.content-cta__buttons > .content-cta__button--meeting,.content-cta__buttons--2 > .content-cta__button{flex:0 0 auto;min-width:200px;padding-inline:24px}
+}

@@ -145,7 +145,8 @@
      *     (القسم [data-filter-section][data-key] بيتنقل للّوحة وبيرجع مكانه بعد القفل، فمفيش حقول متكررة). العدد: data-sheet-count="sec:bedrooms bathrooms".
      *   - الفورم اللي عليه data-filter-sidebar: على الديسك توب صفحة "تصفية" بتبقى عمود ثابت جنب النتايج، وأي تغيير فيه بيتبعت لوحده.
      */
-    document.querySelectorAll('[data-area-filters]').forEach(function (form) {
+    // الفلتر: دالة لكل فورم [data-area-filters] — نافذة الفلتر (js/shary/filter-window.js) بتتحمّل بعدين وبتنده window.SharyAreaFilters.init()
+    function setupAreaFilters(form) {
         var STEPS = 1000;
         var stack = [];      // اللوحات المفتوحة فوق بعض
         var ranges = {};     // price / size
@@ -577,7 +578,17 @@
         applyMode();
         Object.keys(ranges).forEach(function (name) { commit(ranges[name]); });
         badges();
-    });
+    }
+    document.querySelectorAll('[data-area-filters]').forEach(function (form) { form.__sxFilters = true; setupAreaFilters(form); });
+    window.SharyAreaFilters = {
+        init: function (root) {
+            (root || document).querySelectorAll('[data-area-filters]').forEach(function (form) {
+                if (form.__sxFilters) return;
+                form.__sxFilters = true;
+                setupAreaFilters(form);
+            });
+        }
+    };
     // العروض: "عرض الكل" بيفرد كل العروض تحت بعض (زي قايمة بتتفتح)، و"عرض أقل" بيرجّع أول 3
     document.querySelectorAll('[data-offers]').forEach(function (section) {
         var toggle = section.querySelector('[data-offers-toggle]');

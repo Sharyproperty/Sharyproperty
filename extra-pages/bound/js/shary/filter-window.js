@@ -11,9 +11,35 @@
     'use strict';
 
     var box = document.querySelector('[data-home-filter]');
-    var form = box && box.querySelector('form');
-    if (!form) return;
+    if (!box) return;
+    var form = box.querySelector('form');
     var applying = false;
+
+    // الفورم مش جوه كود الصفحة (SEO): بيتجاب من data-filter-src أول ما العميل يقرّب من زرار الفلتر (تحميل مسبق) ، ويتحط في الصفحة لما يدوس بس
+    var src = box.getAttribute('data-filter-src') || '';
+    var html = null, fetching = null;
+    function prefetch() {
+        if (form || html !== null || fetching || !src || !window.fetch) return fetching;
+        fetching = fetch(src, { credentials: 'same-origin', headers: { 'Accept': 'text/html', 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function (r) { return r.ok ? r.text() : ''; })
+            .then(function (text) { html = text || ''; return html; })
+            .catch(function () { html = ''; return ''; });
+        return fetching;
+    }
+    function ensure(run) {
+        if (form) { run(); return; }
+        (prefetch() || Promise.resolve(html)).then(function () {
+            if (!form && html) {
+                box.innerHTML = html;
+                form = box.querySelector('form');
+                if (window.SharyAreaFilters) window.SharyAreaFilters.init(box);
+            }
+            if (form) run();
+        });
+    }
+    document.addEventListener('pointerover', function (event) { if (event.target.closest && event.target.closest('[data-filter-modal-open], #openFilters')) prefetch(); }, { passive: true });
+    document.addEventListener('touchstart', function (event) { if (event.target.closest && event.target.closest('[data-filter-modal-open], #openFilters')) prefetch(); }, { passive: true });
+    document.addEventListener('focusin', function (event) { if (event.target.closest && event.target.closest('[data-search-strip], #heroSearchInput')) prefetch(); });
 
     function ready(run) {
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run); else run();
@@ -28,13 +54,14 @@
             filterReady = false;
             var script = document.createElement('script');
             script.src = config.areaPage;
-            script.onload = script.onerror = function () { filterReady = true; if (waiting) { waiting = false; ready(open); } };
+            script.onload = script.onerror = function () { filterReady = true; if (form && window.SharyAreaFilters) window.SharyAreaFilters.init(box); if (waiting) { waiting = false; ready(open); } };
             document.body.appendChild(script);
         }
     })();
 
     function open() {
         if (!filterReady) { waiting = true; return; }   // الضغطة اتسجّلت: النافذة بتفتح أول ما السكربت يجهز
+        if (!form) { ensure(open); return; }
         // الرئيسية: تبويب البحث (بيع / إيجار) وحالة العقار (من المطور / إعادة بيع) بيتعلّموا في الفلتر
         var tab = document.querySelector('.home-search-tab.is-active, .home-search-tab.active');
         var status = document.querySelector('.property-status.active');
