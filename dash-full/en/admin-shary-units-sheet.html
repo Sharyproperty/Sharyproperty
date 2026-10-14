@@ -813,77 +813,28 @@
 
                 
             <style>
-        .sx-kind__dl { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 14px; border-radius: 999px; background: #e8f0fb; color: #1E4266; font-size: 13px; font-weight: 800; text-decoration: none; width: fit-content; }
-        .sx-kind__dl:hover { background: #1E4266; color: #fff; }
-        .sx-dl-data[aria-disabled="true"] { opacity: .5; pointer-events: none; }
-        .sx-dl-hint { margin-top: 8px; }
-        .sx-kinds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-        .sx-kind { position: relative; margin: 0; cursor: pointer; }
-        .sx-kind input { position: absolute; opacity: 0; inset: 0; }
-        .sx-kind__box { display: block; height: 100%; padding: 14px 16px; border: 2px solid var(--sx-line, #e1e8f1); border-radius: 14px; background: #fff; }
-        .sx-kind__box b { display: block; margin-bottom: 4px; font-size: 16.5px; font-weight: 800; color: var(--sx-navy, #123a5c); }
-        .sx-kind__box small { display: block; font-size: 13.5px; font-weight: 600; line-height: 1.75; color: var(--sx-muted, #5b6b7c); }
-        .sx-kind input:checked + .sx-kind__box { border-color: var(--sx-blue, #1f63c6); background: #f1f6fd; box-shadow: 0 0 0 3px rgba(31, 99, 198, .14); }
-        .sx-kind input:focus-visible + .sx-kind__box { outline: 3px solid rgba(31, 99, 198, .45); outline-offset: 2px; }
-        .sx-cols { margin-top: 12px; border: 1px solid var(--sx-line, #e1e8f1); border-radius: 12px; background: #fafbfc; }
+        .sx-sheet-dl { display: inline-flex; align-items: center; gap: 8px; }
+        .sx-cols { margin-top: 14px; border: 1px solid var(--sx-line, #e1e8f1); border-radius: 12px; background: #fafbfc; }
         .sx-cols summary { padding: 10px 14px; cursor: pointer; font-weight: 800; color: var(--sx-navy, #123a5c); }
         .sx-cols__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; padding: 4px 14px 12px; }
-        .sx-cols__grid div { display: flex; gap: 10px; align-items: baseline; padding: 7px 0; border-top: 1px dashed #dde5ee; font-size: 13.5px; font-weight: 600; color: #33475b; }
-        .sx-cols__grid code { flex: none; min-width: 150px; color: #0d3b66; font-size: 12.5px; }
-        @media (max-width: 800px) { .sx-kinds, .sx-cols__grid { grid-template-columns: minmax(0, 1fr); } .sx-cols__grid code { min-width: 120px; } }
+        .sx-cols__grid div { display: flex; gap: 10px; align-items: baseline; padding: 7px 0; border-top: 1px dashed #dde5ee; font-size: 13.5px; font-weight: 700; color: #33475b; min-width: 0; }
+        .sx-cols__grid code { flex: none; min-width: 170px; color: #0d3b66; font-size: 12.5px; }
+        .sx-cols__grid span { min-width: 0; }
+        @media (max-width: 800px) { .sx-cols__grid { grid-template-columns: minmax(0, 1fr); } .sx-cols__grid code { min-width: 130px; } }
     </style>
     <div class="page-wrapper" id="sx-main">
         <div class="content">
             <div class="page-header">
                 <div class="page-title">
-                    <h4>Upload a units sheet</h4>
-                    <h6>Choose the kind of units, then the project, download the template of that kind, fill it and upload it. The units are added to the chosen project.</h6>
+                    <h4>Import units</h4>
+                    <h6>The same units sheet as before: choose the project, press «Download the file», write the units from row 3 and upload the file — the units are added to the project right away, as before.</h6>
                 </div>
             </div>
-            
-            
-            <form id="sx-sheet" method="post" action="#preview/admin/shary/units-sheet/review" enctype="multipart/form-data" novalidate
-                  data-review="1" data-legacy="/create-excel-unit"
-                  data-need-project="Choose the project first." data-need-file="Choose the sheet file." data-done="The sheet was uploaded and the units were added." data-fail="The upload did not complete. Check the file and try again." data-wait="Uploading…" data-reading="Reading the sheet…">
-                <input type="hidden" name="_token" value="preview" autocomplete="off">                
+            <form id="sx-sheet" method="post" action="#preview/create-excel-unit" enctype="multipart/form-data" novalidate
+                  data-need-project="Choose the project first." data-need-file="Choose the sheet file." data-done="The sheet was uploaded and the units were added." data-fail="The upload did not go through. Check the file and try again." data-wait="Uploading…" data-preview="In the preview the file is not sent to a server. On the test domain the units are added to the project right away and a message tells you how many were added.">
+                <input type="hidden" name="_token" value="preview" autocomplete="off">
                 <div class="card"><div class="card-body">
-                    <div class="sx-card-head"><h3>1 · What kind of units?</h3></div>
-                    <div class="sx-kinds" role="radiogroup" aria-label="1 · What kind of units?">
-                                                    <label class="sx-kind">
-                                <input type="radio" name="sheet_kind" value="developer" checked>
-                                <span class="sx-kind__box"><b>Primary (developer units)</b><small>Price + payment plans (up to 5: down payment, years, instalment, how often) + maintenance.</small>
-                                    
-                                                                            <a class="sx-kind__dl" href="../a/shary-admin/templates/units-developer.xlsx" download onclick="event.stopPropagation()">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
-                                            Download the sheet to fill
-                                        </a>
-                                                                    </span>
-                            </label>
-                                                    <label class="sx-kind">
-                                <input type="radio" name="sheet_kind" value="resale" >
-                                <span class="sx-kind__box"><b>Resale</b><small>The asked price + how it is paid: all cash, or cash now and the rest in instalments (amount, how often, years left).</small>
-                                    
-                                                                            <a class="sx-kind__dl" href="../a/shary-admin/templates/units-resale.xlsx" download onclick="event.stopPropagation()">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
-                                            Download the sheet to fill
-                                        </a>
-                                                                    </span>
-                            </label>
-                                                    <label class="sx-kind">
-                                <input type="radio" name="sheet_kind" value="rent" >
-                                <span class="sx-kind__box"><b>Rent</b><small>The rent + per (day / week / month / year) + furnished or not + deposit + minimum stay.</small>
-                                    
-                                                                            <a class="sx-kind__dl" href="../a/shary-admin/templates/units-rent.xlsx" download onclick="event.stopPropagation()">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
-                                            Download the sheet to fill
-                                        </a>
-                                                                    </span>
-                            </label>
-                                            </div>
-                </div></div>
-
-                <div class="card"><div class="card-body">
-                    <div class="sx-card-head"><h3>2 · Choose the project</h3></div>
+                    <div class="sx-card-head"><h3>1 · Choose the project</h3></div>
                     <div class="form-group">
                         <label class="sx-sr" for="sx-sheet-find">Type the project name…</label>
                         <input type="search" class="form-control" id="sx-sheet-find" placeholder="Type the project name…" autocomplete="off" style="max-width:420px">
@@ -1236,61 +1187,28 @@
                                                 <p class="sx-pick__none" hidden>No project with this name</p>
                     </div>
                 </div></div>
-
                 <div class="card"><div class="card-body">
-                    <div class="sx-card-head"><h3>3 · Download the template</h3></div>
-                    <p class="shary-help">Every kind has its own template. Row 1 holds the column names (do not change them), row 2 explains each column, and the units start at row 3 — one row per unit.</p>
-                                            <div data-sheet-kind="developer" >
-                                                            <a class="btn btn-primary sx-dl-main" href="../a/shary-admin/templates/units-developer.xlsx" download>Download the template: Primary (developer units)</a>
-                                                        
-                                                            <a class="btn btn-secondary sx-dl-data" href="../a/shary-admin/templates/units-developer.xlsx" download data-export="/admin/shary/units-sheet/export/developer"  aria-disabled="true" >
-                                    Download the project units with their data: Primary (developer units)
-                                </a>
-                                <p class="shary-help sx-dl-hint">Pick the project above first. The sheet comes with all the project units of this kind — change what you want and add new rows, then upload it below: a row with a unit code updates that unit, a new row (no code) is added.</p>
-                                                                                </div>
-                                            <div data-sheet-kind="resale"  hidden >
-                                                            <a class="btn btn-primary sx-dl-main" href="../a/shary-admin/templates/units-resale.xlsx" download>Download the template: Resale</a>
-                                                        
-                                                            <a class="btn btn-secondary sx-dl-data" href="../a/shary-admin/templates/units-resale.xlsx" download data-export="/admin/shary/units-sheet/export/resale"  aria-disabled="true" >
-                                    Download the project units with their data: Resale
-                                </a>
-                                <p class="shary-help sx-dl-hint">Pick the project above first. The sheet comes with all the project units of this kind — change what you want and add new rows, then upload it below: a row with a unit code updates that unit, a new row (no code) is added.</p>
-                                                                                        <details class="sx-cols"><summary>Columns of this template (30)</summary>
-                                    <div class="sx-cols__grid">
-                                        <div><code dir="ltr">name_ar</code><span>الاسم بالعربي (مطلوب)</span></div><div><code dir="ltr">name_en</code><span>الاسم بالإنجليزي (مطلوب)</span></div><div><code dir="ltr">property_id</code><span>نوع العقار — اختار من القايمة</span></div><div><code dir="ltr">apartment_area</code><span>المساحة بالمتر (رقم بس)</span></div><div><code dir="ltr">Bedrooms</code><span>عدد الغرف</span></div><div><code dir="ltr">Bathrooms</code><span>عدد الحمامات</span></div><div><code dir="ltr">finishing_type_id</code><span>التشطيب — اختار من القايمة</span></div><div><code dir="ltr">featured_type</code><span>الإطلالة / التميز — اختار من القايمة</span></div><div><code dir="ltr">land_size</code><span>مساحة الأرض / الجاردن (اختياري)</span></div><div><code dir="ltr">garages</code><span>عدد الجراجات (اختياري)</span></div><div><code dir="ltr">delivery_in</code><span>التسليم: &quot;جاهز للتسليم&quot; أو سنة (2027)</span></div><div><code dir="ltr">price</code><span>السعر المطلوب كله (رقم بس — مثال: 5000000)</span></div><div><code dir="ltr">currency</code><span>العملة — اختار: جنيه / دولار (الفاضي = جنيه)</span></div><div><code dir="ltr">payment_type</code><span>طريقة الدفع — اختار: كاش كله / كاش + أقساط</span></div><div><code dir="ltr">cash_now</code><span>المطلوب كاش دلوقتي (لو كاش + أقساط)</span></div><div><code dir="ltr">installment_amount</code><span>قيمة القسط (لو كاش + أقساط)</span></div><div><code dir="ltr">installment_frequency</code><span>القسط كل قد إيه — اختار: شهري / ربع سنوي / نصف سنوي / سنوي</span></div><div><code dir="ltr">installment_years</code><span>باقي كام سنة أقساط</span></div><div><code dir="ltr">maintenance_fees</code><span>وديعة الصيانة (اختياري)</span></div><div><code dir="ltr">desc_ar</code><span>الوصف بالعربي</span></div><div><code dir="ltr">desc_en</code><span>الوصف بالإنجليزي</span></div><div><code dir="ltr">video</code><span>لينك الفيديو — يوتيوب / تيك توك … (اختياري)</span></div><div><code dir="ltr">image_vr</code><span>لينك جولة 360° / VR (اختياري)</span></div><div><code dir="ltr">address</code><span>العنوان (اختياري)</span></div><div><code dir="ltr">lat</code><span>خط العرض (اختياري)</span></div><div><code dir="ltr">lng</code><span>خط الطول (اختياري)</span></div><div><code dir="ltr">phone</code><span>رقم الاتصال (اختياري — الفاضي = رقم المشروع)</span></div><div><code dir="ltr">whatsapp</code><span>رقم الواتساب (اختياري)</span></div><div><code dir="ltr">recommend</code><span>وحدة مقترحة؟ — نعم / لا (اختياري)</span></div><div><code dir="ltr">card_badges</code><span>الشارات على الكارت — اختار: تلقائي / شارة / شارتين (اختياري)</span></div>                                    </div>
-                                </details>
-                                                    </div>
-                                            <div data-sheet-kind="rent"  hidden >
-                                                            <a class="btn btn-primary sx-dl-main" href="../a/shary-admin/templates/units-rent.xlsx" download>Download the template: Rent</a>
-                                                        
-                                                            <a class="btn btn-secondary sx-dl-data" href="../a/shary-admin/templates/units-rent.xlsx" download data-export="/admin/shary/units-sheet/export/rent"  aria-disabled="true" >
-                                    Download the project units with their data: Rent
-                                </a>
-                                <p class="shary-help sx-dl-hint">Pick the project above first. The sheet comes with all the project units of this kind — change what you want and add new rows, then upload it below: a row with a unit code updates that unit, a new row (no code) is added.</p>
-                                                                                        <details class="sx-cols"><summary>Columns of this template (27)</summary>
-                                    <div class="sx-cols__grid">
-                                        <div><code dir="ltr">name_ar</code><span>الاسم بالعربي (مطلوب)</span></div><div><code dir="ltr">name_en</code><span>الاسم بالإنجليزي (مطلوب)</span></div><div><code dir="ltr">property_id</code><span>نوع العقار — اختار من القايمة</span></div><div><code dir="ltr">apartment_area</code><span>المساحة بالمتر (رقم بس)</span></div><div><code dir="ltr">Bedrooms</code><span>عدد الغرف</span></div><div><code dir="ltr">Bathrooms</code><span>عدد الحمامات</span></div><div><code dir="ltr">finishing_type_id</code><span>التشطيب — اختار من القايمة</span></div><div><code dir="ltr">featured_type</code><span>الإطلالة / التميز — اختار من القايمة</span></div><div><code dir="ltr">rent_value</code><span>قيمة الإيجار (رقم بس — مثال: 45000)</span></div><div><code dir="ltr">currency</code><span>العملة — اختار: جنيه / دولار (الفاضي = جنيه)</span></div><div><code dir="ltr">rent_period</code><span>الإيجار بالـ — اختار: يومي / أسبوعي / شهري / سنوي</span></div><div><code dir="ltr">furnished</code><span>مفروشة؟ — اختار: نعم / لا</span></div><div><code dir="ltr">deposit_months</code><span>التأمين — اختار: من غير تأمين / شهر / شهرين / 3 شهور ...</span></div><div><code dir="ltr">minimum_stay_months</code><span>أقل مدة إيجار بالشهور (اختياري)</span></div><div><code dir="ltr">floor_number</code><span>الدور (اختياري)</span></div><div><code dir="ltr">garages</code><span>عدد الجراجات (اختياري)</span></div><div><code dir="ltr">desc_ar</code><span>الوصف بالعربي</span></div><div><code dir="ltr">desc_en</code><span>الوصف بالإنجليزي</span></div><div><code dir="ltr">video</code><span>لينك الفيديو — يوتيوب / تيك توك … (اختياري)</span></div><div><code dir="ltr">image_vr</code><span>لينك جولة 360° / VR (اختياري)</span></div><div><code dir="ltr">address</code><span>العنوان (اختياري)</span></div><div><code dir="ltr">lat</code><span>خط العرض (اختياري)</span></div><div><code dir="ltr">lng</code><span>خط الطول (اختياري)</span></div><div><code dir="ltr">phone</code><span>رقم الاتصال (اختياري — الفاضي = رقم المشروع)</span></div><div><code dir="ltr">whatsapp</code><span>رقم الواتساب (اختياري)</span></div><div><code dir="ltr">recommend</code><span>وحدة مقترحة؟ — نعم / لا (اختياري)</span></div><div><code dir="ltr">card_badges</code><span>الشارات على الكارت — اختار: تلقائي / شارة / شارتين (اختياري)</span></div>                                    </div>
-                                </details>
-                                                    </div>
-                                    </div></div>
-
+                    <div class="sx-card-head"><h3>2 · Download the file</h3></div>
+                    <p class="shary-help">This is the same units sheet as before, with the same columns in the same order. Row 1 holds the column names (do not change them), row 2 explains each column, and the units start at row 3 — one row per unit. Sale type: developer_sale, resale or rent.</p>
+                    <a class="btn btn-primary sx-sheet-dl" href="../a/shary-admin/templates/Units.xlsx" download>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10.5 5 5 5-5"/><path d="M5 20h14"/></svg>
+                        Download the file
+                    </a>
+                    <details class="sx-cols">
+                        <summary>New columns at the end of the sheet — after the 49 columns of the old sheet (44 columns)</summary>
+                        <div class="sx-cols__grid"><div><code dir="ltr">second_down_payment</code><span>Payment Plan 1 Down Payment 2 (مقدم 2)</span></div><div><code dir="ltr">third_down_payment</code><span>Payment Plan 1 Down Payment 3 (مقدم 3)</span></div><div><code dir="ltr">months_between</code><span>Payment Plan 1 Months Between Payments (عدد الشهور بين الدفعات: 1 / 3 / 6 / 12 ...)</span></div><div><code dir="ltr">second_down_payment_2</code><span>Payment Plan 2 Down Payment 2 (مقدم 2)</span></div><div><code dir="ltr">third_down_payment_2</code><span>Payment Plan 2 Down Payment 3 (مقدم 3)</span></div><div><code dir="ltr">months_between_2</code><span>Payment Plan 2 Months Between Payments (عدد الشهور بين الدفعات: 1 / 3 / 6 / 12 ...)</span></div><div><code dir="ltr">second_down_payment_3</code><span>Payment Plan 3 Down Payment 2 (مقدم 2)</span></div><div><code dir="ltr">third_down_payment_3</code><span>Payment Plan 3 Down Payment 3 (مقدم 3)</span></div><div><code dir="ltr">months_between_3</code><span>Payment Plan 3 Months Between Payments (عدد الشهور بين الدفعات: 1 / 3 / 6 / 12 ...)</span></div><div><code dir="ltr">second_down_payment_4</code><span>Payment Plan 4 Down Payment 2 (مقدم 2)</span></div><div><code dir="ltr">third_down_payment_4</code><span>Payment Plan 4 Down Payment 3 (مقدم 3)</span></div><div><code dir="ltr">months_between_4</code><span>Payment Plan 4 Months Between Payments (عدد الشهور بين الدفعات: 1 / 3 / 6 / 12 ...)</span></div><div><code dir="ltr">second_down_payment_5</code><span>Payment Plan 5 Down Payment 2 (مقدم 2)</span></div><div><code dir="ltr">third_down_payment_5</code><span>Payment Plan 5 Down Payment 3 (مقدم 3)</span></div><div><code dir="ltr">months_between_5</code><span>Payment Plan 5 Months Between Payments (عدد الشهور بين الدفعات: 1 / 3 / 6 / 12 ...)</span></div><div><code dir="ltr">currency</code><span>العملة: جنيه / دولار (الفاضي = جنيه)</span></div><div><code dir="ltr">image_vr</code><span>لينك جولة 360° / VR (اختياري)</span></div><div><code dir="ltr">card_badges</code><span>الشارات على الكارت — اختار: تلقائي / شارة / شارتين (اختياري)</span></div><div><code dir="ltr">max_apartment_area</code><span>المساحة لحد (اختياري — لو المساحة من … لـ …)</span></div><div><code dir="ltr">rent_period</code><span>للإيجار: الإيجار بالـ — اختار: يومي / أسبوعي / شهري / سنوي (قيمة الإيجار في عمود السعر)</span></div><div><code dir="ltr">furnished</code><span>للإيجار: مفروشة؟ — نعم / لا</span></div><div><code dir="ltr">deposit_months</code><span>للإيجار: التأمين — من غير تأمين / شهر / شهرين / 3 شهور …</span></div><div><code dir="ltr">minimum_stay_months</code><span>للإيجار: أقل مدة إيجار بالشهور (اختياري)</span></div><div><code dir="ltr">floor_number</code><span>للإيجار: الدور (اختياري)</span></div><div><code dir="ltr">nearby_1_name_ar</code><span>مكان قريب 1 (عربي) — مثال: الجامعة الأمريكية</span></div><div><code dir="ltr">nearby_1_name_en</code><span>مكان قريب 1 (إنجليزي) — مثال: AUC</span></div><div><code dir="ltr">nearby_1_value_ar</code><span>المسافة / الوقت 1 (عربي) — مثال: 10 دقايق</span></div><div><code dir="ltr">nearby_1_value_en</code><span>المسافة / الوقت 1 (إنجليزي) — مثال: 10 min</span></div><div><code dir="ltr">nearby_2_name_ar</code><span>مكان قريب 2 (عربي) — مثال: الجامعة الأمريكية</span></div><div><code dir="ltr">nearby_2_name_en</code><span>مكان قريب 2 (إنجليزي) — مثال: AUC</span></div><div><code dir="ltr">nearby_2_value_ar</code><span>المسافة / الوقت 2 (عربي) — مثال: 10 دقايق</span></div><div><code dir="ltr">nearby_2_value_en</code><span>المسافة / الوقت 2 (إنجليزي) — مثال: 10 min</span></div><div><code dir="ltr">nearby_3_name_ar</code><span>مكان قريب 3 (عربي) — مثال: الجامعة الأمريكية</span></div><div><code dir="ltr">nearby_3_name_en</code><span>مكان قريب 3 (إنجليزي) — مثال: AUC</span></div><div><code dir="ltr">nearby_3_value_ar</code><span>المسافة / الوقت 3 (عربي) — مثال: 10 دقايق</span></div><div><code dir="ltr">nearby_3_value_en</code><span>المسافة / الوقت 3 (إنجليزي) — مثال: 10 min</span></div><div><code dir="ltr">nearby_4_name_ar</code><span>مكان قريب 4 (عربي) — مثال: الجامعة الأمريكية</span></div><div><code dir="ltr">nearby_4_name_en</code><span>مكان قريب 4 (إنجليزي) — مثال: AUC</span></div><div><code dir="ltr">nearby_4_value_ar</code><span>المسافة / الوقت 4 (عربي) — مثال: 10 دقايق</span></div><div><code dir="ltr">nearby_4_value_en</code><span>المسافة / الوقت 4 (إنجليزي) — مثال: 10 min</span></div><div><code dir="ltr">nearby_5_name_ar</code><span>مكان قريب 5 (عربي) — مثال: الجامعة الأمريكية</span></div><div><code dir="ltr">nearby_5_name_en</code><span>مكان قريب 5 (إنجليزي) — مثال: AUC</span></div><div><code dir="ltr">nearby_5_value_ar</code><span>المسافة / الوقت 5 (عربي) — مثال: 10 دقايق</span></div><div><code dir="ltr">nearby_5_value_en</code><span>المسافة / الوقت 5 (إنجليزي) — مثال: 10 min</span></div></div>
+                    </details>
+                </div></div>
                 <div class="card"><div class="card-body">
-                    <div class="sx-card-head"><h3>4 · Upload the file</h3></div>
+                    <div class="sx-card-head"><h3>3 · Upload the file</h3></div>
                     <div class="form-group">
-                        <label for="sx-sheet-file">Units file (xlsx, xls or csv)</label>
-                        <input type="file" class="form-control" id="sx-sheet-file" name="unit_file" accept=".xlsx,.xls,.csv,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" style="max-width:520px">
+                        <label for="sx-sheet-file">Units file (xlsx or xls)</label>
+                        <input type="file" class="form-control" id="sx-sheet-file" name="unit_file" accept=".xlsx,.xls,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" style="max-width:520px">
                     </div>
-                                            <p class="sx-sheet-review-note">After the upload every unit is shown in a table before anything is saved: change any cell, see the errors, the repeats and the payment sums, and save only the ready ones.</p>
-                                        <div class="alert" id="sx-sheet-msg" role="status" hidden></div>
-                    <button type="submit" class="btn btn-primary" id="sx-sheet-go">Upload and review before saving</button>
+                    <div class="alert" id="sx-sheet-msg" role="status" hidden></div>
+                    <button type="submit" class="btn btn-primary" id="sx-sheet-go">Upload the sheet</button>
                     <a class="btn btn-secondary" id="sx-sheet-open" href="#" hidden>Open the project units</a>
-                                            
-                        <details class="sx-sheet-old">
-                            <summary>Upload directly without a review (the old way)</summary>
-                            <p>The file goes straight to the old dashboard import and every unit is added at once — no preview and no repeat check.</p>
-                            <button type="button" class="btn btn-light fw-bold" id="sx-sheet-direct">Upload directly</button>
-                        </details>
-                                    </div></div>
+                </div></div>
             </form>
         </div>
     </div>
@@ -1301,74 +1219,22 @@
             var rows = Array.prototype.slice.call(document.querySelectorAll('#sx-sheet-list .sx-pick__row'));
             var none = document.querySelector('#sx-sheet-list .sx-pick__none');
             var message = document.getElementById('sx-sheet-msg');
-            var go = document.getElementById('sx-sheet-go');
-            var open = document.getElementById('sx-sheet-open');
             var fold = function (text) { return String(text).toLowerCase().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').trim(); };
             find.addEventListener('input', function () {
                 var term = fold(find.value), shown = 0;
                 rows.forEach(function (row) { var hit = !term || fold(row.getAttribute('data-name')).indexOf(term) >= 0; row.hidden = !hit; if (hit) { shown++; } });
-                none.hidden = shown > 0;
+                if (none) { none.hidden = shown > 0; }
             });
-            var kindBoxes = Array.prototype.slice.call(document.querySelectorAll('[data-sheet-kind]'));
-            var showKind = function () { var on = form.querySelector('input[name=sheet_kind]:checked'); kindBoxes.forEach(function (box) { box.hidden = !on || box.getAttribute('data-sheet-kind') !== on.value; }); };
-            Array.prototype.forEach.call(form.querySelectorAll('input[name=sheet_kind]'), function (radio) { radio.addEventListener('change', showKind); });
-            showKind();
             var say = function (text, kind) { message.textContent = text; message.className = 'alert alert-' + kind; message.hidden = false; };
-            var ready = function () {
-                open.hidden = true;
-                if (!form.querySelector('input[name=compound_id]:checked')) { say(form.getAttribute('data-need-project'), 'warning'); return false; }
-                if (!form.unit_file.files.length) { say(form.getAttribute('data-need-file'), 'warning'); return false; }
-                return true;
-            };
-            // the old way: the file goes straight to the dashboard's own import (no review) — the same request as always
-            var direct = function (button) {
-                var label = button.textContent;
-                button.disabled = true; button.textContent = form.getAttribute('data-wait');
-                fetch(form.getAttribute('data-legacy'), { method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' })
-                    .then(function (response) { return response.json().catch(function () { return {}; }).then(function (data) { return { ok: response.ok, data: data }; }); })
-                    .then(function (result) {
-                        var data = result.data || {};
-                        if (result.ok && (data.status === 1 || data.status === true)) {
-                            say(data.message ? data.message + ' — ' + form.getAttribute('data-done') : form.getAttribute('data-done'), 'success');
-                            if (data.route) { open.href = data.route; open.hidden = false; }
-                            form.unit_file.value = '';
-                        } else {
-                            var errors = data.errors ? Object.keys(data.errors).map(function (key) { return data.errors[key][0]; }).join(' — ') : (data.message || '');
-                            say(errors || form.getAttribute('data-fail'), 'danger');
-                        }
-                    })
-                    .catch(function () { say(form.getAttribute('data-fail'), 'danger'); })
-                    .then(function () { button.disabled = false; button.textContent = label; });
-            };
-            form.addEventListener('submit', function (event) {
-                if (!ready()) { event.preventDefault(); return; }
-                if (form.getAttribute('data-review') === '1') {
-                    // «ارفع وراجع»: the page goes to the review of the file (nothing is saved before the review)
-                    go.disabled = true; go.textContent = form.getAttribute('data-reading');
-                    return;
-                }
+            // المعاينة: سكربت المعاينة بيوقف أي فورم — فالفحص على زرار الرفع نفسه
+            document.getElementById('sx-sheet-go').addEventListener('click', function (event) {
                 event.preventDefault();
-                direct(go);
+                if (!form.querySelector('input[name=compound_id]:checked')) { say(form.getAttribute('data-need-project'), 'warning'); return; }
+                if (!form.unit_file.files.length) { say(form.getAttribute('data-need-file'), 'warning'); return; }
+                say(form.getAttribute('data-preview'), 'info');      // المعاينة: مفيش سيرفر
             });
-            var old = document.getElementById('sx-sheet-direct');
-            if (old) { old.addEventListener('click', function () { if (ready()) { direct(old); } }); }
         })();
     </script>
-
-<script>
-    // «نزّل وحدات المشروع بالداتا»: اللينك بياخد المشروع المختار
-    (function () {
-        function sync() {
-            var picked = document.querySelector('#sx-sheet input[name="compound_id"]:checked');
-            document.querySelectorAll('.sx-dl-data').forEach(function (a) {
-                if (picked) { a.href = a.getAttribute('data-export') + '?compound_id=' + encodeURIComponent(picked.value); a.removeAttribute('aria-disabled'); }
-                else { a.setAttribute('aria-disabled', 'true'); }
-            });
-        }
-        document.addEventListener('change', function (e) { if (e.target && e.target.name === 'compound_id') sync(); });
-        sync();
-    })();
-</script>
 </div>
 <!-- /Main Wrapper -->
     <!-- jQuery -->
