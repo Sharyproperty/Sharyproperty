@@ -637,6 +637,7 @@
                                                                                                 <li><a href="admin-compounds.html" class="is-on"  aria-current="page" ><span>All projects</span></a></li>
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
+<li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-projects.html" class="" ><span>Project data for the website</span></a></li>
                                                             
@@ -1961,6 +1962,52 @@
             }
         }
     </script>
+    <script>
+        document.addEventListener('sx:draft-restored', function (event) {
+            var form = event.target;
+            if (!form || !form.querySelector || !form.querySelector('#bounds')) {
+                return;
+            }
+            var fields = (event.detail && event.detail.fields) || {};
+            var tries = 0;
+            (function draw() {
+                if (!window.google || !google.maps || !boundsMap || !marker) {
+                    if (++tries < 60) {
+                        setTimeout(draw, 500);      // الخريطة لسه بتحمّل
+                    }
+                    return;
+                }
+                var lat = parseFloat(document.getElementById('lat').value);
+                var lng = parseFloat(document.getElementById('lng').value);
+                if (('lat' in fields || 'lng' in fields) && !isNaN(lat) && !isNaN(lng)) {
+                    var where = new google.maps.LatLng(lat, lng);
+                    marker.setPosition(where);
+                    if (marker.getMap()) {
+                        marker.getMap().panTo(where);
+                    }
+                }
+                if ('bounds' in fields) {
+                    loadExistingBounds();
+                }
+                var corners = 'masterplan_corners' in fields ? currentMasterplanCorners() : null;
+                if (corners) {
+                    var placed = typeof masterplanPlaced !== 'undefined' && masterplanPlaced;
+                    if ((document.getElementById('masterplan_moved') || {}).value === '1') {
+                        masterplanMoved = true;
+                        if (typeof sxMasterplanStatus === 'function') {
+                            sxMasterplanStatus('moved');
+                        }
+                    }
+                    if (placed || masterplanMoved) {
+                        masterplanState = masterplanStateFromCorners(corners);
+                        if (masterplanCenterMarker) {
+                            afterMasterplanChange();
+                        }
+                    }
+                }
+            })();
+        });
+    </script>
     <script async defer
             src="../a/gmaps-preview.js?libraries=places&amp;callback=initMap">
     </script>
@@ -2841,12 +2888,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="masterplan_moved" id="masterplan_moved" value="0">
-                            <input type="hidden" name="bounds" id="bounds"
+                            <input type="hidden" name="masterplan_moved" id="masterplan_moved" value="0" data-draft>
+                            <input type="hidden" name="bounds" id="bounds" data-draft
                                    value='{&quot;type&quot;:&quot;Polygon&quot;,&quot;coordinates&quot;:[[[55.34,25.2034],[55.356,25.2034],[55.356,25.1906],[55.34,25.1906],[55.34,25.2034]]]}'>
-                            <input type="hidden" name="coordinates" id="coordinates"
+                            <input type="hidden" name="coordinates" id="coordinates" data-draft
                                    value='[55.348,25.197]'>
-                            <input type="hidden" name="masterplan_corners" id="masterplan_corners"
+                            <input type="hidden" name="masterplan_corners" id="masterplan_corners" data-draft
                                    value=''>
 
                         </div>
@@ -2885,7 +2932,7 @@
                                     Payment plans                                </label>
 
                                 <div class="col-lg-12 col-sm-12 col-12">
-                                    <button type="button" id="add_payment_plan_row" class="btn btn-primary mb-3">Add payment plans</button>
+                                    <button type="button" id="add_payment_plan_row" data-draft-rows="down_payment[]" data-draft-row=".payment-row" class="btn btn-primary mb-3">Add payment plans</button>
                                 </div>
 
                                 <div id="payment_append">
@@ -2934,7 +2981,7 @@
                             <div class="row cash_append" id="cash_append">
 
                                 <div class="col-lg-12 col-sm-12 col-12">
-                                    <button type="button" id="add_cash_row"
+                                    <button type="button" id="add_cash_row" data-draft-rows="cash_discount[]" data-draft-row=".cash-row"
                                             class="btn btn-primary mb-3">Add cash discounts</button>
                                 </div>
 
@@ -3156,7 +3203,7 @@
                                     </div>
                                 </div>
                                                     </div>
-                        <button type="button" id="add_compound_faq_row" class="btn btn-primary mb-3">Add FAQ</button>
+                        <button type="button" id="add_compound_faq_row" data-draft-rows="faq_question_en[]" data-draft-row=".compound-faq-row" class="btn btn-primary mb-3">Add FAQ</button>
 
                         <br>
                         <div class="row">
@@ -4031,7 +4078,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"YPxQpi4jFLMI434HhVcLf4tdHkgjCbjlM1hewg5U","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"YPxQpi4jFLMI434HhVcLf4tdHkgjCbjlM1hewg5U","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       </body>
 </html>

@@ -12,6 +12,13 @@
     var D = window.SharyPreviewData || { screens: [], records: {}, files: [] };
     var EN = D.lang === 'en' || /\/en\//.test(location.pathname);
     var doc = document;
+    // صفحة «كمّل» القديمة (…_open_draft_1.html) = نفس الشاشة ?open_draft=1 — عشان المسودة اللي اتحفظت من الشاشة نفسها ترجع لوحدها
+    (function () {
+        var m = /^(.*\/)([^/]+)_open_draft_1(\.html)$/.exec(location.pathname);
+        if (!m || !window.history || !history.replaceState) { return; }
+        if (D.files && D.files.indexOf(m[2] + m[3]) < 0) { return; }
+        try { history.replaceState(history.state, '', m[1] + m[2] + m[3] + '?open_draft=1' + location.hash); } catch (e) { /* */ }
+    })();
     var L = EN ? {
         success: 'Good job!.', ok: 'OK', saved: 'Saved successfully', updated: 'updated successfully', deleted: 'Deleted successfully', deletedTitle: 'Deleted!',
         sure: 'Are you sure?', revert: "You won't be able to revert this!", yes: 'Yes, delete it!', cancel: 'Cancel', choose: 'Choose',
@@ -164,7 +171,9 @@
             if (dr[1] === 'find') { return json({ draft: key && all[key] ? all[key] : null }); }
             if (dr[1] === 'forget') { if (key) { delete all[key]; keepDrafts(all); } return json({ ok: true }); }
             var fields = {}; try { fields = JSON.parse(f.fields || '{}'); } catch (e) { fields = {}; }
-            if (key) { all[key] = { fields: fields, when: clock(), url: f.url || location.pathname, title: f.title || '', screen: f.screen || '' }; keepDrafts(all); }
+            // merge=1: اللي اتغيّر بس — بيتضم على المسودة اللي قبله (زي السيرفر: FormDrafts::save)
+            if (key && String(f.merge) === '1' && all[key] && all[key].fields) { fields = Object.assign({}, all[key].fields, fields); }
+            if (key) { all[key] = { fields: fields, when: clock(), at: Date.now(), url: f.url || location.pathname, title: f.title || '', screen: f.screen || '' }; keepDrafts(all); }
             return json({ ok: true, when: clock() });
         }
         // بحث الهيدر
@@ -485,6 +494,71 @@
         var row = event.target.closest && event.target.closest('.sx-find__row a');
         if (row && row.getAttribute('data-sample') !== '0') { try { window.sessionStorage.setItem('sx-preview-note', L.sample); } catch (e) { /* */ } }
     }, true);
+
+    // ---------------------------------------------------------------- صفحة «المسودات»: مسوداتك انت (اللي اتحفظت من المعاينة على الجهاز ده) — زي الداشبورد بالظبط
+    var PROJECT_DRAFT = /compounds|shary-projects|masterplans|project-landing-pages/;     // FormDrafts::KINDS['projects']
+    var UNIT_DRAFTS = 9;                                                                     // صفحة مسودات الوحدات والشيتات (بيانات تجريبية)
+    function draftList(kind) {
+        var all = drafts();
+        return Object.keys(all).map(function (key) { var d = all[key] || {}; return { key: key, title: d.title || '', screen: d.screen || '', url: d.url || '', at: d.at || 0, when: d.when || '' }; })
+            .filter(function (d) { return kind !== 'projects' || PROJECT_DRAFT.test(d.key); })
+            .sort(function (a, b) { return b.at - a.at; });
+    }
+    function stamp(ms) {
+        if (!ms) { return ''; }
+        var d = new Date(ms), p = function (n) { return String(n).padStart(2, '0'); };
+        return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+    }
+    function esc(text) { return String(text == null ? '' : text).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    function setTag(link, n) {
+        var tag = link.querySelector('.sx-tag');
+        if (!n) { if (tag) { tag.parentNode.removeChild(tag); } return; }
+        if (!tag) { tag = doc.createElement('b'); tag.className = 'sx-tag'; link.appendChild(tag); }
+        tag.textContent = String(n);
+    }
+    function draftCounts() {
+        var all = draftList().length, projects = draftList('projects').length;
+        Array.prototype.forEach.call(doc.querySelectorAll('a.sx-one[href$="admin-shary-drafts.html"]'), function (a) { setTag(a, all + UNIT_DRAFTS); });
+        Array.prototype.forEach.call(doc.querySelectorAll('.sx-grp a[href$="admin-shary-drafts_only_projects.html"]'), function (a) { setTag(a, projects); });
+        Array.prototype.forEach.call(doc.querySelectorAll('.page-btn a.btn[href$="admin-shary-drafts_only_projects.html"]'), function (a) {
+            a.textContent = (EN ? 'Project drafts' : 'مسودات المشاريع') + (projects ? ' (' + projects + ')' : '');
+        });
+    }
+    whenReady(function () {
+        draftCounts();
+        var page = /^admin-shary-drafts(_only_projects)?\.html$/.exec(HERE);
+        var body = page && doc.querySelector('.page-wrapper .content .card .card-body');
+        if (!body) { return; }
+        var kind = page[1] ? 'projects' : '';
+        var T = EN
+            ? { title: 'Drafts', screen: 'Screen', when: 'Last change', open: 'Continue', drop: 'Delete the draft',
+                none: kind ? 'No project drafts right now. Any project you add or edit is saved as a draft by itself while you work.' : 'No drafts right now.' }
+            : { title: 'المسودات', screen: 'الشاشة', when: 'آخر تعديل', open: 'كمّل', drop: 'امسح المسودة',
+                none: kind ? 'مفيش مسودات مشاريع دلوقتي. أي مشروع بتضيفه أو بتعدّله بيتحفظ كمسودة لوحده وانت شغال.' : 'مفيش مسودات دلوقتي.' };
+        function paint() {
+            var rows = draftList(kind);
+            if (!rows.length) { body.innerHTML = '<p class="shary-help" style="margin:0">' + esc(T.none) + '</p>'; return; }
+            body.innerHTML = '<div class="table-responsive"><table class="table"><thead><tr><th>' + esc(T.title) + '</th><th>' + esc(T.screen) + '</th><th>' + esc(T.when) + '</th><th></th></tr></thead><tbody>'
+                + rows.map(function (d) {
+                    var href = d.url ? d.url + (d.url.indexOf('?') > -1 ? '&' : '?') + 'open_draft=1' : '';
+                    return '<tr data-sx-draft="' + esc(d.key) + '"><td style="font-weight:800">' + esc(d.title || '—') + '</td><td>' + esc(d.screen || d.key) + '</td>'
+                        + '<td dir="ltr" style="text-align:start">' + esc(stamp(d.at) || d.when) + '</td><td style="white-space:nowrap">'
+                        + (href ? '<a class="btn btn-primary btn-sm" href="' + esc(href) + '">' + esc(T.open) + '</a> ' : '')
+                        + '<button type="button" class="btn btn-outline-danger btn-sm" data-sx-draft-drop="' + esc(d.key) + '">' + esc(T.drop) + '</button></td></tr>';
+                }).join('') + '</tbody></table></div>';
+        }
+        paint();
+        body.addEventListener('click', function (event) {
+            var button = event.target.closest && event.target.closest('[data-sx-draft-drop]');
+            if (!button) { return; }
+            if (!window.confirm(T.drop + (EN ? '?' : '؟'))) { return; }
+            var all = drafts();
+            delete all[button.getAttribute('data-sx-draft-drop')];
+            keepDrafts(all);
+            paint();
+            draftCounts();
+        });
+    });
 
     // ---------------------------------------------------------------- علامة «نسخة معاينة» + رسالة الصفحة اللي قبلها
     whenReady(function () {
