@@ -315,6 +315,7 @@
   
     <head>
     <meta charset="utf-8">
+<script src="a/preview-data.js"></script><script src="a/site-links.js"></script><script src="a/preview.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 <meta name="description" content="Shary">
 <meta name="keywords" content="Shary">
@@ -1960,7 +1961,7 @@
         }
     </script>
     <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=PREVIEW&libraries=places&callback=initMap">
+            src="a/gmaps-preview.js?libraries=places&amp;callback=initMap">
     </script>
     <style>
         .d-none {
@@ -3285,75 +3286,7 @@
                                     .then(function () { buttons.forEach(function (b) { b.disabled = false; }); });
                             });
                         </script>
-<script>
-// المعاينة بس (GitHub Pages): أدوات الماستر بلان بترد بنتايج تجريبية بدل السيرفر — على السيرفر الحقيقي ده مش موجود
-document.addEventListener('DOMContentLoaded', function () {
-    // بعد preview.js (اللي بيرد على أي طلب بـ «ده لينك معاينة»): أدوات الماستر بلان بس بترد بنتايج تجريبية
-    var real = window.fetch ? window.fetch.bind(window) : null;
-    var tag = ' (معاينة)';
-    function reply(body) { return Promise.resolve({ ok: true, status: 200, json: function () { return Promise.resolve(body); } }); }
-    function rectInside(ring, ratio, turn) {
-        var lats = ring.map(function (p) { return Number(p[1]); }), lngs = ring.map(function (p) { return Number(p[0]); });
-        var c = { lat: (Math.min.apply(null, lats) + Math.max.apply(null, lats)) / 2, lng: (Math.min.apply(null, lngs) + Math.max.apply(null, lngs)) / 2 };
-        var k = 111320 * Math.cos(c.lat * Math.PI / 180);
-        var w = (Math.max.apply(null, lngs) - Math.min.apply(null, lngs)) * k, h = (Math.max.apply(null, lats) - Math.min.apply(null, lats)) * 111320;
-        var width = Math.min(w, h / ratio) * 0.95, hw = width / 2, hh = width * ratio / 2, t = (turn || 0) * Math.PI / 180;
-        function at(x, y) { var rx = x * Math.cos(t) - y * Math.sin(t), ry = x * Math.sin(t) + y * Math.cos(t); return [Number((c.lng + rx / k).toFixed(7)), Number((c.lat + ry / 111320).toFixed(7))]; }
-        return [at(-hw, hh), at(hw, hh), at(hw, -hh), at(-hw, -hh)];
-    }
-    var outline = [[55.3405, 25.2030], [55.3555, 25.2032], [55.3558, 25.1910], [55.3402, 25.1908], [55.3405, 25.2030]];
-    window.fetch = function (url, options) {
-        url = String(url);
-        if (url.indexOf('#preview/') === -1 || !/masterplan/.test(url)) { return real ? real(url, options) : Promise.reject(new Error('offline')); }
-        var body = {};
-        try { body = options && typeof options.body === 'string' ? JSON.parse(options.body) : {}; } catch (e) { body = {}; }
-        var ratio = (typeof masterplanRatio !== 'undefined' && masterplanRatio) || 0.72;
-        var ring = (typeof sxRealBoundsRing === 'function' && sxRealBoundsRing()) || outline;
-        return new Promise(function (resolve) { setTimeout(resolve, 450); }).then(function () {
-            if (url.indexOf('masterplan.search') > -1) {
-                return reply({ ok: true, credit: '© OpenStreetMap contributors', results: [
-                    { name: 'Dubai Creek Harbour', address: 'Dubai, UAE', lat: 25.2006, lng: 55.35, viewport: [25.188, 55.335, 25.212, 55.365], source: 'Google', ring: null },
-                    { name: 'Creek Harbour Residences', address: '', lat: 25.197, lng: 55.348, viewport: null, source: 'OpenStreetMap', ring: outline }] });
-            }
-            if (url.indexOf('masterplan.outline') > -1) {
-                return reply({ ok: true, ring: outline, name: 'Creek Harbour', credit: '© OpenStreetMap contributors', message: 'لقيت حدوده على OpenStreetMap (Creek Harbour) — اترسمت على الخريطة: بص عليها وظبّط النقط لو محتاج ، وبعدين «تحديث».' + tag });
-            }
-            if (url.indexOf('masterplan.fit') > -1) {
-                return reply({ ok: true, corners: rectInside(ring, ratio, 0), overlay: null, message: 'اتحطت على الحدود (تطابق 86%). دوس «تحديث» عشان تتحفظ.' + tag });
-            }
-            if (url.indexOf('masterplan.agent') > -1) {
-                return reply({ ok: true, corners: rectInside(ring, ratio, 4), outline: null, center: null, notes: [], credit: '© OpenStreetMap contributors',
-                    message: 'الإيجنت حطها: تطابق 88% مع الحدود المرسومة على الموقع — بص عليها على الخريطة وظبّطها بالنقط لو محتاج ، وبعدين «تحديث».' + tag });
-            }
-            if (url.indexOf('masterplan-auto') > -1) {
-                return reply({ ok: true, message: 'النسخة المفرّغة للخريطة اتعملت ✓ (بنفس كادر الصورة — لو الماستر بلان متحطة مكانها بتفضل في نفس المكان).' + tag, overlay: 'a/images/compounds/master_plan/overlay/auto-315-preview.webp' });
-            }
-            if (url.indexOf('masterplan.crop') > -1) {
-                // القص في المتصفح (في المعاينة بس)
-                return new Promise(function (done) {
-                    var img = new Image();
-                    img.onload = function () {
-                        var r = body.rect, c = document.createElement('canvas');
-                        c.width = Math.round((r[2] - r[0]) * img.naturalWidth); c.height = Math.round((r[3] - r[1]) * img.naturalHeight);
-                        c.getContext('2d').drawImage(img, r[0] * img.naturalWidth, r[1] * img.naturalHeight, c.width, c.height, 0, 0, c.width, c.height);
-                        c.toBlob(function (blob) {
-                            var corners = null;
-                            if (body.corners) {
-                                var q = body.corners, at = function (u, v) { return [0, 1].map(function (a) { return (1 - u) * (1 - v) * q[0][a] + u * (1 - v) * q[1][a] + u * v * q[2][a] + (1 - u) * v * q[3][a]; }); };
-                                corners = [at(r[0], r[1]), at(r[2], r[1]), at(r[2], r[3]), at(r[0], r[3])];
-                            }
-                            done({ ok: true, status: 200, json: function () { return Promise.resolve({ ok: true, overlay: URL.createObjectURL(blob).replace(/^blob:/, 'blob:'), corners: corners, message: 'اتقصّت ✓' + (corners ? ' — والجزء اللي اتساب فضل في مكانه على الخريطة.' : '.') + tag }); } });
-                        });
-                    };
-                    img.onerror = function () { done({ ok: true, status: 200, json: function () { return Promise.resolve({ ok: false, message: 'الصورة مش متاحة في المعاينة.' }); } }); };
-                    img.src = (typeof masterplanImageUrl !== 'undefined' && masterplanImageUrl) || '';
-                });
-            }
-            return reply({ ok: false, message: 'في المعاينة الزرار ده بيشتغل على السيرفر بس.' });
-        });
-    };
-});
-</script>
+<script src="a/mp-tools-preview.js"></script>
 
 <script>
                         // Shary: أدوات الماستر بلان على خريطة جوجل اللي فوق: دوّر على مكان · حدود المشروع · حطها على الحدود · الإيجنت · قص · نسخة شفافة.
@@ -3650,7 +3583,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                     }
                                     var list = found.slice(0, 5).map(function (p) {
                                         var f = p.structured_formatting || {};
-                                        return {name: f.main_text || p.description, address: f.secondary_text || '', place_id: p.place_id, source: 'Google'};
+                                        return {name: f.main_text || p.description, address: f.secondary_text || '', place_id: p.place_id, source: (google.maps.__preview ? 'OpenStreetMap' : 'Google')};
                                     });
                                     show(list);
                                     resolve(list[0], function (place) {
@@ -4099,5 +4032,5 @@ document.addEventListener('DOMContentLoaded', function () {
     </style>
     <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
-      <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
+      </body>
 </html>
