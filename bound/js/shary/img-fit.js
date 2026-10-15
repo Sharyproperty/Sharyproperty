@@ -19,6 +19,8 @@
   var SKIP_SEL = '[data-fit="off"], .dev-logo-link, .dev-icon__logo, [data-logo-fit], [data-developer-logo], header, footer, .article-content';
   function skip(el, w) {
     if (!el || el.closest(SKIP_SEL)) return true;
+    // معرض صور المشروع / الوحدة على الديسك توب: كل شريحة (حتى الضيقة الأبيض وأسود) بتتملي بالصورة كاملة — من غير تصغير في النص ولا بلور فوق وتحت
+    if (window.innerWidth >= 1024 && el.closest('[data-rent-gallery]')) return true;
     if (w < 220) {
       var r = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
       if (r >= w / 2 - 1) return true; // دايرة (لوجو / صورة شخص)
@@ -91,7 +93,12 @@
     if (w < MIN_SIZE || h < MIN_SIZE) return null; // مخفية أو صغيرة (لوجو / أيقونة)
     var key = src + '|' + w + 'x' + h;
     if (img.__sxKey === key) return null; // نفس الصورة ونفس المقاس: اتظبطت قبل كده
-    if (skip(img, w)) { img.__sxKey = key; return null; }
+    if (skip(img, w)) {
+      img.__sxKey = key;
+      // كانت متظبطة قبل كده (مثلًا الشاشة اتكبرت من موبايل لديسك توب): ترجع زي ما هي
+      if (img.dataset.sxFit) { var host = img.parentElement && img.parentElement.tagName === 'PICTURE' ? img.parentElement.parentElement : img.parentElement; return { img: img, src: src, parent: host, on: false }; }
+      return null;
+    }
     var fit = img.dataset.sxFit ? 'cover' : getComputedStyle(img).objectFit;
     // cover = بيقص (يبان متزوّم) ، fill = بيمطّ الصورة (تبان مش طبيعية) — الاتنين بيتظبطوا
     if (fit !== 'cover' && fit !== 'fill') { img.__sxKey = key; return null; }
