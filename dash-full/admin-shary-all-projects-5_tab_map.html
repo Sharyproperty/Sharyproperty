@@ -3,7 +3,6 @@
   
     <head>
     <meta charset="utf-8">
-<script src="a/preview-data.js"></script><script src="a/site-links.js"></script><script src="a/preview.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 <meta name="description" content="Shary">
 <meta name="keywords" content="Shary">
@@ -83,8 +82,11 @@
                             });
                         }
                     }
-                    var drop = params.get('hide') && document.getElementById(params.get('hide'));
-                    if (drop) drop.style.display = 'none';
+                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    String(params.get('hide') || '').split(',').forEach(function (id) {
+                        var drop = id && document.getElementById(id.trim());
+                        if (drop) drop.style.display = 'none';
+                    });
                 });
                 var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
                 if (open) {
@@ -144,8 +146,8 @@
         <div class="sx-top__end">
                     <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="بحث في لوحة التحكم"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 30"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>30</b></a>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 38"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>38</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="افتح الموقع" title="افتح الموقع"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
         <a class="sx-lang" href="en/admin-shary-all-projects-5_tab_map.html" data-sx-lang="1" lang="en">English</a>
@@ -180,7 +182,7 @@
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>المسودات</span>
-                        <b class="sx-tag">101</b>                    </a>
+                        <b class="sx-tag">102</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -219,13 +221,15 @@
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-market.html" class="" ><span>السوق والتقارير</span><b class="sx-tag">2</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-tools.html" class="" ><span>الأدوات</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-connect.html" class="" ><span>الربط</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-keys.html" class="" ><span>المفاتيح والربط</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-health.html" class="" ><span>حالة الإيجنت</span></a></li>
                                                             
+                                                                
+                                                                
                                                                                                 <li><a href="admin-shary-agent-log.html" class="" ><span>السجل والتراجع</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-settings.html" class="" ><span>الصلاحيات والربط</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-settings.html" class="" ><span>الإعدادات والصلاحيات</span></a></li>
                                                             
                                                                 
                                                                 
@@ -254,11 +258,11 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>الطلبات والرسائل</span>
-                            <b class="sx-tag">56</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">59</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">56</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">59</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>طلبات بيع عقار</span></a></li>
                                                             
@@ -295,7 +299,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-units-sheet.html" class="" ><span>استيراد وتصدير الوحدات</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">9</b></a></li>
+                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">11</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units-photo-sets.html" class="" ><span>صور الوحدات حسب المشروع</span></a></li>
                                                             
@@ -319,20 +323,13 @@
                         </button>
                         <ul id="sx-grp-projects">
                                                             
-                                                                                                <li><a href="admin-shary-all-projects.html" class="is-on"  aria-current="page" ><span>⭐ كل بيانات المشروع (صفحة واحدة)</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-compounds.html" class="" ><span>كل المشاريع</span></a></li>
+                                                                                                <li><a href="admin-compounds.html" class="is-on"  aria-current="page" ><span>كل المشاريع</span></a></li>
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>إضافة مشروع</span></a></li>
-<li><a href="admin-shary-drafts_only_projects.html" class="" ><span>المسودات</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-projects.html" class="" ><span>بيانات المشروع للموقع</span></a></li>
+                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>المسودات</span><b class="sx-tag">2</b></a></li>
                                                             
                                                                                                 <li><a href="project-landing-pages.html" class="" ><span>صفحات الهبوط</span></a></li>
-                                                            
-                                                                                                <li><a href="compounds-boundaries.html" class="" ><span>حدود المشاريع على الخريطة</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-masterplans.html" class="" ><span>تفريغ وتركيب الماستر بلانز</span></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="developers">
@@ -516,15 +513,15 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">4</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">11</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
                                                                                                 <li><a href="admin-shary-ai.html" class="" ><span>الإعدادات والتجربة</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>محادثات العملاء</span><b class="sx-tag">3</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>محادثات العملاء</span><b class="sx-tag">8</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>كاليندر المتابعة</span><b class="sx-tag">1</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>كاليندر المتابعة</span><b class="sx-tag">3</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -539,7 +536,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-refresh.html" class="" ><span>تحديث الموقع</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-site-tags.html" class="" ><span>أكواد التتبع والإعلانات</span></a></li>
+                                                                                                <li><a href="admin-shary-site-tags.html" class="" ><span>جوجل كونسول وأناليتكس وأكواد التتبع</span></a></li>
                                                     </ul>
                     </div>
                                                 <h6 class="sx-nav__title">التطبيق</h6>                                                <div class="sx-grp " data-sx-grp="app">
@@ -789,11 +786,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog",
+                token: "4aaY4UdeGsBqW5NjohzWqXHSKiNatvk1heI5tCBJ",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=4aaY4UdeGsBqW5NjohzWqXHSKiNatvk1heI5tCBJ",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -803,7 +800,7 @@
         <script src="a/js/shary-admin/editor.js"></script>
         
              
-    <template data-sx-crumb><div class="sx-crumb">المشاريع ‹ ⭐ كل بيانات المشروع (صفحة واحدة)</div></template>
+    <template data-sx-crumb><div class="sx-crumb">المشاريع ‹ كل المشاريع</div></template>
 
                 
     <style>
@@ -925,7 +922,7 @@
     </style>
     <script>
         (function () {
-            var token = (document.querySelector('meta[name=csrf-token]') || {}).content || "H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog";
+            var token = (document.querySelector('meta[name=csrf-token]') || {}).content || "4aaY4UdeGsBqW5NjohzWqXHSKiNatvk1heI5tCBJ";
             function toast(text, bad) {
                 var el = document.createElement('div');
                 el.className = 'shub-toast' + (bad ? ' is-bad' : ''); el.setAttribute('role', 'status'); el.textContent = text;
@@ -958,10 +955,14 @@
             });
         })();
     </script>
-                    <small>كل بيانات المشروع في الصفحة دي تحت بعض (19 أجزاء) — كل جزء ليه زرار حفظ ، وبيتحفظ في مكانه من غير ما تخرج من الصفحة.</small>
+                    <small>كل بيانات المشروع في الصفحة دي تحت بعض (17 أجزاء) — كل جزء ليه زرار حفظ ، وبيتحفظ في مكانه من غير ما تخرج من الصفحة.</small>
                 </div>
-                <div class="d-flex gap-2 flex-wrap">
-                    <a class="btn btn-outline-secondary" href="admin-shary-all-projects.html">← كل المشاريع</a>                    <a class="btn btn-outline-primary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">شوفه على الموقع ↗</a>                </div>
+                <div class="d-flex gap-2 flex-wrap align-items-center">
+                    
+                    <button type="button" class="btn btn-primary fw-bold" data-save-all disabled>💾 احفظ كل التعديلات</button>
+                    <span class="shub-dirty" data-dirty-note hidden></span>
+                    <a class="btn btn-outline-secondary" href="admin-compounds.html">← كل المشاريع</a>
+                                        <a class="btn btn-outline-primary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">شوفه على الموقع ↗</a>                </div>
             </div>
 
             <div class="shub-layout">
@@ -1012,65 +1013,65 @@
                                     <b>2</b><span>صور المشروع</span>
                                     <em data-miss="gallery"  hidden >ناقص 0</em>
                                 </button>
+                                                            <button type="button" data-tab="masterplans">
+                                    <b>3</b><span>الماستر بلان والماستر بلان المفرّغ</span>
+                                    <em data-miss="masterplans"  hidden >ناقص 0</em>
+                                </button>
                                                             <button type="button" data-tab="map">
-                                    <b>3</b><span>مكان المشروع والماستر بلان على الخريطة</span>
+                                    <b>4</b><span>مكان المشروع والماستر بلان على الخريطة</span>
                                     <em data-miss="map"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="labels">
-                                    <b>4</b><span>الكتابة والمراحل على الخريطة</span>
+                                    <b>5</b><span>الكتابة والمراحل على الخريطة</span>
                                     <em data-miss="labels"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="plans">
-                                    <b>5</b><span>خطط السداد على الموقع</span>
+                                    <b>6</b><span>خطط السداد على الموقع</span>
                                     <em data-miss="plans"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="phases">
-                                    <b>6</b><span>المراحل</span>
+                                    <b>7</b><span>المراحل</span>
                                     <em data-miss="phases"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="indicators">
-                                    <b>7</b><span>مؤشر شاري للمشروع</span>
+                                    <b>8</b><span>مؤشر شاري للمشروع</span>
                                     <em data-miss="indicators"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="nearby">
-                                    <b>8</b><span>الأماكن القريبة</span>
+                                    <b>9</b><span>الأماكن القريبة</span>
                                     <em data-miss="nearby"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="units">
-                                    <b>9</b><span>وحدات المشروع</span>
+                                    <b>10</b><span>وحدات المشروع</span>
                                     <em data-miss="units"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="inherit">
-                                    <b>10</b><span>اللي بينزل على الوحدات لوحده</span>
+                                    <b>11</b><span>اللي بينزل على الوحدات لوحده</span>
                                     <em data-miss="inherit"  hidden >ناقص 0</em>
                                 </button>
+                                                            <button type="button" data-tab="photosets">
+                                    <b>12</b><span>صور الوحدات حسب النوع</span>
+                                    <em data-miss="photosets"  hidden >ناقص 0</em>
+                                </button>
                                                             <button type="button" data-tab="cta">
-                                    <b>11</b><span>زرار التواصل</span>
+                                    <b>13</b><span>زرار التواصل</span>
                                     <em data-miss="cta"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="address">
-                                    <b>12</b><span>كود المشروع ورابطه</span>
+                                    <b>14</b><span>كود المشروع ورابطه</span>
                                     <em data-miss="address"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="launch">
-                                    <b>13</b><span>كارت &quot;أحدث الإطلاقات&quot;</span>
+                                    <b>15</b><span>كارت &quot;أحدث الإطلاقات&quot;</span>
                                     <em data-miss="launch"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="links">
-                                    <b>14</b><span>لينكات داخلية (سيو)</span>
+                                    <b>16</b><span>لينكات داخلية (سيو)</span>
                                     <em data-miss="links"  hidden >ناقص 0</em>
                                 </button>
                                                             <button type="button" data-tab="landing">
-                                    <b>15</b><span>صفحة الهبوط للإعلانات</span>
+                                    <b>17</b><span>صفحة الهبوط للإعلانات</span>
                                     <em data-miss="landing"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="old_units">
-                                    <b>16</b><span>وحدات المشروع (الشاشة القديمة)</span>
-                                    <em data-miss="old_units"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="old_show">
-                                    <b>17</b><span>ملخص المشروع (الشاشة القديمة)</span>
-                                    <em data-miss="old_show"  hidden >ناقص 0</em>
                                 </button>
                                                     </nav>
                     </div>
@@ -1090,7 +1091,7 @@
                             </header>
                             <div class="shub-sec__body">
                                 <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="البيانات الأساسية" data-src="admin-compounds-315-edit.html?hide=sx-map-block&embed=1"  src="admin-compounds-315-edit.html?hide=sx-map-block&embed=1" ></iframe>
+                                <iframe name="sx-embed" title="البيانات الأساسية" data-src="admin-compounds-315-edit.html?hide=sx-map-block%2Csx-mp-field&embed=1"  src="admin-compounds-315-edit.html?hide=sx-map-block%2Csx-mp-field&embed=1" ></iframe>
                             </div>
                         </section>
                                             <section class="shub-sec" id="sec-gallery" data-sec="gallery" >
@@ -1109,9 +1110,25 @@
                                 <iframe name="sx-embed" title="صور المشروع" data-src="gallery-315-1.html?embed=1"  src="gallery-315-1.html?embed=1" ></iframe>
                             </div>
                         </section>
-                                            <section class="shub-sec" id="sec-map" data-sec="map" >
+                                            <section class="shub-sec" id="sec-masterplans" data-sec="masterplans" >
                             <header class="shub-sec__head">
                                 <b class="shub-sec__n">3</b>
+                                <div class="shub-sec__t">
+                                    <h5>الماستر بلان والماستر بلان المفرّغ <em data-miss="masterplans"  hidden >ناقص 0</em></h5>
+                                    <small>رفع الماستر بلان · النسخة المفرّغة جنبها · تفريغ تلقائي</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="الماستر بلان والماستر بلان المفرّغ" data-src="admin-shary-projects-315.html?tab=masterplans&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-map" data-sec="map" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">4</b>
                                 <div class="shub-sec__t">
                                     <h5>مكان المشروع والماستر بلان على الخريطة <em data-miss="map"  hidden >ناقص 0</em></h5>
                                     <small>العنوان والدبوس · البحث عن المكان · حدود المشروع (بالنقط أو من الخريطة) · مكان الماستر بلان: تحريك وتكبير ولف وشفافية · حطها على الحدود أو بالإيجنت · التفريغ · القص · نسخة شفافة</small>                                </div>
@@ -1127,7 +1144,7 @@
                         </section>
                                             <section class="shub-sec" id="sec-labels" data-sec="labels" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">4</b>
+                                <b class="shub-sec__n">5</b>
                                 <div class="shub-sec__t">
                                     <h5>الكتابة والمراحل على الخريطة <em data-miss="labels"  hidden >ناقص 0</em></h5>
                                     <small>اسم المشروع · أسماء المراحل · العماير · الوحدات فوق الماستر بلان · المرحلة الظاهرة وباقي الماستر بلان متظلّل</small>                                </div>
@@ -1143,55 +1160,55 @@
                         </section>
                                             <section class="shub-sec" id="sec-plans" data-sec="plans" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">5</b>
+                                <b class="shub-sec__n">6</b>
                                 <div class="shub-sec__t">
                                     <h5>خطط السداد على الموقع <em data-miss="plans"  hidden >ناقص 0</em></h5>
                                     <small>المقدم · السنين · الخصم — زي ما بتظهر في صفحة المشروع</small>                                </div>
                                 <div class="shub-sec__acts">
                                     <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_plans.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
                                 </div>
                             </header>
                             <div class="shub-sec__body">
                                 <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="خطط السداد على الموقع" data-src="admin-shary-projects-315_tab_plans.html?tab=plans&embed=1" ></iframe>
+                                <iframe name="sx-embed" title="خطط السداد على الموقع" data-src="admin-shary-projects-315.html?tab=plans&embed=1" ></iframe>
                             </div>
                         </section>
                                             <section class="shub-sec" id="sec-phases" data-sec="phases" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">6</b>
+                                <b class="shub-sec__n">7</b>
                                 <div class="shub-sec__t">
                                     <h5>المراحل <em data-miss="phases"  hidden >ناقص 0</em></h5>
                                     <small>مراحل المشروع وتسليم كل مرحلة</small>                                </div>
                                 <div class="shub-sec__acts">
                                     <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_phases.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
                                 </div>
                             </header>
                             <div class="shub-sec__body">
                                 <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="المراحل" data-src="admin-shary-projects-315_tab_phases.html?tab=phases&embed=1" ></iframe>
+                                <iframe name="sx-embed" title="المراحل" data-src="admin-shary-projects-315.html?tab=phases&embed=1" ></iframe>
                             </div>
                         </section>
                                             <section class="shub-sec" id="sec-indicators" data-sec="indicators" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">7</b>
+                                <b class="shub-sec__n">8</b>
                                 <div class="shub-sec__t">
                                     <h5>مؤشر شاري للمشروع <em data-miss="indicators"  hidden >ناقص 0</em></h5>
                                     <small>النمو · العائد · الطلب · متوسط سعر المتر · توقع الأسعار · نصيحة شاري</small>                                </div>
                                 <div class="shub-sec__acts">
                                     <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_indicators.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
                                 </div>
                             </header>
                             <div class="shub-sec__body">
                                 <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="مؤشر شاري للمشروع" data-src="admin-shary-projects-315_tab_indicators.html?tab=indicators&embed=1" ></iframe>
+                                <iframe name="sx-embed" title="مؤشر شاري للمشروع" data-src="admin-shary-projects-315.html?tab=indicators&embed=1" ></iframe>
                             </div>
                         </section>
                                             <section class="shub-sec" id="sec-nearby" data-sec="nearby" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">8</b>
+                                <b class="shub-sec__n">9</b>
                                 <div class="shub-sec__t">
                                     <h5>الأماكن القريبة <em data-miss="nearby"  hidden >ناقص 0</em></h5>
                                     <small>المسافات للأماكن المهمة</small>                                </div>
@@ -1207,7 +1224,7 @@
                         </section>
                                             <section class="shub-sec" id="sec-units" data-sec="units" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">9</b>
+                                <b class="shub-sec__n">10</b>
                                 <div class="shub-sec__t">
                                     <h5>وحدات المشروع <em data-miss="units"  hidden >ناقص 0</em></h5>
                                     <small>إضافة وتعديل الوحدات والأسعار والعروض</small>                                </div>
@@ -1223,7 +1240,7 @@
                         </section>
                                             <section class="shub-sec" id="sec-inherit" data-sec="inherit" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">10</b>
+                                <b class="shub-sec__n">11</b>
                                 <div class="shub-sec__t">
                                     <h5>اللي بينزل على الوحدات لوحده <em data-miss="inherit"  hidden >ناقص 0</em></h5>
                                     <small>الصور · الوصف · المرافق · السداد … تتاخد من المشروع في صفحة الوحدة</small>                                </div>
@@ -1237,25 +1254,41 @@
                                 <iframe name="sx-embed" title="اللي بينزل على الوحدات لوحده" data-src="admin-shary-projects-315_tab_inherit.html?tab=inherit&embed=1" ></iframe>
                             </div>
                         </section>
+                                            <section class="shub-sec" id="sec-photosets" data-sec="photosets" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">12</b>
+                                <div class="shub-sec__t">
+                                    <h5>صور الوحدات حسب النوع <em data-miss="photosets"  hidden >ناقص 0</em></h5>
+                                    <small>صور لكل نوع (شقة · فيلا · …) ونموذج ونوع تعامل — بتظهر على الوحدات اللي مالهاش صور بتاعتها</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-units-photo-sets.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="صور الوحدات حسب النوع" data-src="admin-shary-units-photo-sets.html?embed=1" ></iframe>
+                            </div>
+                        </section>
                                             <section class="shub-sec" id="sec-cta" data-sec="cta" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">11</b>
+                                <b class="shub-sec__n">13</b>
                                 <div class="shub-sec__t">
                                     <h5>زرار التواصل <em data-miss="cta"  hidden >ناقص 0</em></h5>
                                     <small>نص زرار التواصل في صفحة المشروع</small>                                </div>
                                 <div class="shub-sec__acts">
                                     <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_cta.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
                                 </div>
                             </header>
                             <div class="shub-sec__body">
                                 <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="زرار التواصل" data-src="admin-shary-projects-315_tab_cta.html?tab=cta&embed=1" ></iframe>
+                                <iframe name="sx-embed" title="زرار التواصل" data-src="admin-shary-projects-315.html?tab=cta&embed=1" ></iframe>
                             </div>
                         </section>
                                             <section class="shub-sec" id="sec-address" data-sec="address" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">12</b>
+                                <b class="shub-sec__n">14</b>
                                 <div class="shub-sec__t">
                                     <h5>كود المشروع ورابطه <em data-miss="address"  hidden >ناقص 0</em></h5>
                                     <small>الكود اللي بيظهر في شريط صفحة المشروع ورسالة واتساب</small>                                </div>
@@ -1271,7 +1304,7 @@
                         </section>
                                             <section class="shub-sec" id="sec-launch" data-sec="launch" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">13</b>
+                                <b class="shub-sec__n">15</b>
                                 <div class="shub-sec__t">
                                     <h5>كارت &quot;أحدث الإطلاقات&quot; <em data-miss="launch"  hidden >ناقص 0</em></h5>
                                     <small>لو المشروع إطلاق جديد: ضيف صورته ووصفه</small>                                </div>
@@ -1287,7 +1320,7 @@
                         </section>
                                             <section class="shub-sec" id="sec-links" data-sec="links" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">14</b>
+                                <b class="shub-sec__n">16</b>
                                 <div class="shub-sec__t">
                                     <h5>لينكات داخلية (سيو) <em data-miss="links"  hidden >ناقص 0</em></h5>
                                     <small>لينكات لصفحات تانية جوه الموقع</small>                                </div>
@@ -1303,7 +1336,7 @@
                         </section>
                                             <section class="shub-sec" id="sec-landing" data-sec="landing" >
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">15</b>
+                                <b class="shub-sec__n">17</b>
                                 <div class="shub-sec__t">
                                     <h5>صفحة الهبوط للإعلانات <em data-miss="landing"  hidden >ناقص 0</em></h5>
                                     <small>صفحة Landing للحملات</small>                                </div>
@@ -1314,45 +1347,29 @@
                             </header>
                             <div class="shub-sec__body">
                                 <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="صفحة الهبوط للإعلانات" data-src="project-landing-pages.html?embed=1" ></iframe>
+                                <iframe name="sx-embed" title="صفحة الهبوط للإعلانات" data-src="#preview/project-landing-pages" ></iframe>
                             </div>
                         </section>
-                                            <section class="shub-sec" id="sec-old_units" data-sec="old_units" >
+                                        
+                                            <section class="shub-sec" id="sec-preview" data-preview>
                             <header class="shub-sec__head">
-                                <b class="shub-sec__n">16</b>
-                                <div class="shub-sec__t">
-                                    <h5>وحدات المشروع (الشاشة القديمة) <em data-miss="old_units"  hidden >ناقص 0</em></h5>
-                                    <small>نفس وحدات المشروع بالشكل القديم — إضافة وتعديل</small>                                </div>
+                                <b class="shub-sec__n">👁</b>
+                                <div class="shub-sec__t"><h5>معاينة على الموقع</h5><small>نفس الصفحة اللي العميل بيشوفها (بعد الحفظ دوس «حدّث المعاينة»)</small></div>
                                 <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="units-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                    <button type="button" class="btn btn-sm btn-light" data-preview-reload>حدّث المعاينة</button>
+                                    <a class="btn btn-sm btn-light" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">افتحها ↗</a>
                                 </div>
                             </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="وحدات المشروع (الشاشة القديمة)" data-src="units-315.html?embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-old_show" data-sec="old_show" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">17</b>
-                                <div class="shub-sec__t">
-                                    <h5>ملخص المشروع (الشاشة القديمة) <em data-miss="old_show"  hidden >ناقص 0</em></h5>
-                                    <small>كل بيانات المشروع للعرض</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-compounds-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="ملخص المشروع (الشاشة القديمة)" data-src="admin-compounds-315.html?embed=1" ></iframe>
-                            </div>
+                            <div class="shub-sec__body"><iframe title="معاينة" data-src="#preview/ar/v2/project/Fifth-Settlement-6/ماونتن-فيو-آي-سيتي" style="height:780px"></iframe></div>
                         </section>
                                     </div>
             </div>
         </div>
     </div>
+    <style>
+        .shub-dirty { font-weight: 800; color: #b45309; font-size: 13px; }
+        .shub-sec.is-dirty .shub-sec__head { box-shadow: inset 4px 0 0 #f59e0b; }
+    </style>
     <script>
         (function () {
             var checksUrl = "\/admin\/shary\/all\/projects\/5\/checks";
@@ -1415,10 +1432,44 @@
                         setTimeout(function () { size(sec); }, 800); setTimeout(function () { size(sec); }, 2500);
                     } catch (e) {}
                     var key = sec.getAttribute('data-sec');
+                    if (key === 'map') kickMap(sec, frame);
                     if (first[key]) { refresh(); sync(sec); } else first[key] = true;      // أول تحميل مش حفظ
                 });
             });
             window.addEventListener('resize', function () { secs.forEach(size); });
+
+            // خرايط جوجل جوه جزء «مكان المشروع والماستر بلان»: الإطار بيكبر بعد ما الخريطة اتعملت ، فبنقول للخرايط تعيد رسم نفسها على المقاس الجديد.
+            // ولو جوجل ما حمّلش خالص بعد 12 ثانية: رسالة وزرار يفتح الجزء ده في صفحة لوحده (الخرايط بتشتغل هناك)
+            function kickMap(sec, frame) {
+                var win; try { win = frame.contentWindow; } catch (e) { return; }
+                [600, 1500, 3000, 6000, 10000].forEach(function (ms) {
+                    setTimeout(function () {
+                        try {
+                            win.dispatchEvent(new win.Event('resize'));
+                            if (win.google && win.google.maps) {
+                                ['map', 'boundsMap'].forEach(function (n) {
+                                    var m = win[n];
+                                    if (m && m.getCenter) { var c = m.getCenter(); win.google.maps.event.trigger(m, 'resize'); if (c) m.setCenter(c); }
+                                });
+                            }
+                        } catch (e) {}
+                    }, ms);
+                });
+                setTimeout(function () {
+                    var ok = false; try { ok = !!(win.google && win.google.maps); } catch (e) {}
+                    if (ok || sec.querySelector('[data-map-note]')) return;
+                    var note = document.createElement('div');
+                    note.setAttribute('data-map-note', '');
+                    note.className = 'alert alert-warning m-3 fw-bold d-flex flex-wrap align-items-center gap-2';
+                    note.innerHTML = 'خرايط جوجل ما حمّلتش هنا. افتح الجزء ده في صفحة لوحده:';
+                    var a = document.createElement('a');
+                    a.className = 'btn btn-sm btn-primary fw-bold'; a.target = '_blank'; a.rel = 'noopener';
+                    a.href = frame.getAttribute('data-src') + (frame.getAttribute('data-src').indexOf('?') === -1 ? '?' : '&') + 'embed=1';
+                    a.textContent = 'افتح الخرايط والماستر بلان ↗';
+                    note.appendChild(a);
+                    sec.querySelector('.shub-sec__body').prepend(note);
+                }, 12000);
+            }
 
             // نفس الفورم مفتوح في جزئين (البيانات الأساسية + مكان الخريطة): لما واحد يتحفظ التاني يتحمّل من جديد عشان مايرجعش يكتب بيانات قديمة
             function path(frame) { try { return frame.contentWindow.location.pathname; } catch (e) { return ''; } }
@@ -1457,6 +1508,106 @@
                         });
                     }).catch(function () {});
             }
+            // ---- حفظ موحّد
+            var saveAll = document.querySelector('[data-save-all]');
+            var note = document.querySelector('[data-dirty-note]');
+            var saving = false;
+            function dirtyForms() {
+                var out = [];
+                secs.forEach(function (sec) {
+                    var frame = sec.querySelector('iframe'), doc;
+                    try { doc = frame.contentDocument; } catch (e) { return; }
+                    if (!doc) return;
+                    [].forEach.call(doc.querySelectorAll('form[data-sx-dirty]'), function (form) { out.push({ sec: sec, frame: frame, form: form }); });
+                });
+                return out;
+            }
+            function paintDirty() {
+                var list = dirtyForms();
+                secs.forEach(function (sec) { sec.classList.toggle('is-dirty', list.some(function (d) { return d.sec === sec; })); });
+                if (saveAll) saveAll.disabled = saving || !list.length;
+                if (note) { note.hidden = !list.length; note.textContent = list.length ? 'فيه تعديلات مش محفوظة في ' + new Set(list.map(function (d) { return d.sec; })).size + ' جزء' : ''; }
+            }
+            function watch(sec) {
+                var frame = sec.querySelector('iframe'), doc;
+                try { doc = frame.contentDocument; } catch (e) { return; }
+                if (!doc || doc.__sxWatch) return;
+                doc.__sxWatch = true;
+                var mark = function (e) {
+                    var form = e.target && e.target.form ? e.target.form : (e.target && e.target.closest ? e.target.closest('form') : null);
+                    if (!form || (form.method || '').toLowerCase() !== 'post' || form.hasAttribute('data-shary-confirm')) return;
+                    if (form.querySelector('input[name="delete"]')) return;   // فورم مسح — مايتبعتش مع الحفظ الموحّد
+                    form.setAttribute('data-sx-dirty', '1');
+                    // الحقول اللي اتغيرت بس (عشان الدمج ما يرجّعش قيم قديمة)
+                    var names = (form.getAttribute('data-sx-changed') || '').split('|').filter(Boolean);
+                    if (e.target.name && names.indexOf(e.target.name) === -1) names.push(e.target.name);
+                    form.setAttribute('data-sx-changed', names.join('|'));
+                    paintDirty();
+                };
+                doc.addEventListener('input', mark, true);
+                doc.addEventListener('change', mark, true);
+                doc.addEventListener('submit', function (e) { if (e.target && e.target.removeAttribute) e.target.removeAttribute('data-sx-dirty'); setTimeout(paintDirty, 50); }, true);
+            }
+            secs.forEach(function (sec) { sec.querySelector('iframe').addEventListener('load', function () { watch(sec); paintDirty(); }); });
+
+            // نفس الفورم مفتوح في جزئين (البيانات الأساسية + الخريطة): القيم المتعدلة في التاني بتتنقل للأول ويتبعت مرة واحدة
+            function merge(list) {
+                var byPath = {}, out = [];
+                list.forEach(function (d) {
+                    var key = path(d.frame) + '|' + (d.form.getAttribute('action') || '');
+                    if (!byPath[key]) { byPath[key] = d; out.push(d); return; }
+                    var main = byPath[key].form;
+                    var changed = (d.form.getAttribute('data-sx-changed') || '').split('|');
+                    // الخريطة بتكتب في حقول مخفية (الحدود ، مكان الماستر بلان ، الإحداثيات) — دي بتتنقل دايماً
+                    ['lat', 'lng', 'address', 'bounds', 'coordinates', 'masterplan_corners'].forEach(function (n) { if (changed.indexOf(n) === -1) changed.push(n); });
+                    [].forEach.call(d.form.elements, function (el) {
+                        if (changed.indexOf(el.name) === -1) return;
+                        if (!el.name || el.type === 'file' || el.name === '_token' || el.name === '_method' || /\[\]$/.test(el.name)) return;
+                        var same = main.querySelectorAll('[name="' + el.name.replace(/"/g, '\\"') + '"]');
+                        if (same.length !== 1) return;
+                        var target = same[0];
+                        if (el.type === 'checkbox' || el.type === 'radio') target.checked = el.checked; else target.value = el.value;
+                    });
+                });
+                return out;
+            }
+            function submitOne(d) {
+                return new Promise(function (resolve) {
+                    var done = false, finish = function () { if (!done) { done = true; resolve(); } };
+                    d.frame.addEventListener('load', finish, { once: true });
+                    setTimeout(finish, 45000);
+                    try {
+                        var button = d.form.querySelector('[type=submit]');
+                        if (d.form.requestSubmit) d.form.requestSubmit(button || undefined); else d.form.submit();
+                    } catch (e) { finish(); }
+                });
+            }
+            if (saveAll) saveAll.addEventListener('click', function () {
+                var list = merge(dirtyForms());
+                if (!list.length || saving) return;
+                saving = true; saveAll.disabled = true; saveAll.textContent = 'بيحفظ… (' + list.length + ')';
+                list.reduce(function (p, d, i) {
+                    return p.then(function () { saveAll.textContent = 'بيحفظ ' + (i + 1) + ' من ' + list.length + '…'; return submitOne(d); });
+                }, Promise.resolve()).then(function () {
+                    saving = false; saveAll.textContent = '✅ اتحفظ — 💾 احفظ كل التعديلات';
+                    setTimeout(function () { saveAll.textContent = '💾 احفظ كل التعديلات'; }, 4000);
+                    secs.forEach(function (sec) { var f = sec.querySelector('iframe'); try { [].forEach.call(f.contentDocument.querySelectorAll('form[data-sx-dirty]'), function (x) { x.removeAttribute('data-sx-dirty'); }); } catch (e) {} });
+                    paintDirty(); refresh(); reloadPreview();
+                });
+            });
+            window.addEventListener('beforeunload', function (e) { if (!saving && dirtyForms().length) { e.preventDefault(); e.returnValue = ''; } });
+
+            // ---- المعاينة
+            var preview = document.querySelector('[data-preview] iframe');
+            function reloadPreview() { if (preview && preview.getAttribute('src')) preview.setAttribute('src', preview.getAttribute('data-src') + (preview.getAttribute('data-src').indexOf('?') === -1 ? '?' : '&') + 'sxp=' + Date.now()); }
+            if (preview) {
+                var pv = document.querySelector('[data-preview]');
+                if ('IntersectionObserver' in window) {
+                    new IntersectionObserver(function (en, ob) { if (en[0].isIntersecting) { preview.setAttribute('src', preview.getAttribute('data-src')); ob.disconnect(); } }, { rootMargin: '600px 0px' }).observe(pv);
+                } else preview.setAttribute('src', preview.getAttribute('data-src'));
+                document.querySelector('[data-preview-reload]').addEventListener('click', function () { if (!preview.getAttribute('src')) preview.setAttribute('src', preview.getAttribute('data-src')); else reloadPreview(); });
+            }
+
             var start = new URLSearchParams(location.search).get('tab');
             if (start) {
                 // الأجزاء اللي فوق بتطول وهي بتتحمل — نرجع نظبط المكان لحد ما المستخدم يتحرك بنفسه
@@ -1580,7 +1731,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"4aaY4UdeGsBqW5NjohzWqXHSKiNatvk1heI5tCBJ","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
-      </body>
+      <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>

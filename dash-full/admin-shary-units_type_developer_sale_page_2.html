@@ -3,7 +3,6 @@
   
     <head>
     <meta charset="utf-8">
-<script src="a/preview-data.js"></script><script src="a/site-links.js"></script><script src="a/preview.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
 <meta name="description" content="Shary">
 <meta name="keywords" content="Shary">
@@ -83,8 +82,11 @@
                             });
                         }
                     }
-                    var drop = params.get('hide') && document.getElementById(params.get('hide'));
-                    if (drop) drop.style.display = 'none';
+                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    String(params.get('hide') || '').split(',').forEach(function (id) {
+                        var drop = id && document.getElementById(id.trim());
+                        if (drop) drop.style.display = 'none';
+                    });
                 });
                 var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
                 if (open) {
@@ -164,8 +166,8 @@
         <div class="sx-top__end">
                     <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="بحث في لوحة التحكم"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 30"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>30</b></a>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 38"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>38</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="افتح الموقع" title="افتح الموقع"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
         <a class="sx-lang" href="en/admin-shary-units_type_developer_sale_page_2.html" data-sx-lang="1" lang="en">English</a>
@@ -200,7 +202,7 @@
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>المسودات</span>
-                        <b class="sx-tag">101</b>                    </a>
+                        <b class="sx-tag">102</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -239,13 +241,15 @@
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-market.html" class="" ><span>السوق والتقارير</span><b class="sx-tag">2</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-tools.html" class="" ><span>الأدوات</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-connect.html" class="" ><span>الربط</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-keys.html" class="" ><span>المفاتيح والربط</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-health.html" class="" ><span>حالة الإيجنت</span></a></li>
                                                             
+                                                                
+                                                                
                                                                                                 <li><a href="admin-shary-agent-log.html" class="" ><span>السجل والتراجع</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-settings.html" class="" ><span>الصلاحيات والربط</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-settings.html" class="" ><span>الإعدادات والصلاحيات</span></a></li>
                                                             
                                                                 
                                                                 
@@ -274,11 +278,11 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>الطلبات والرسائل</span>
-                            <b class="sx-tag">56</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">59</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">56</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">59</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>طلبات بيع عقار</span></a></li>
                                                             
@@ -315,7 +319,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-units-sheet.html" class="" ><span>استيراد وتصدير الوحدات</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">9</b></a></li>
+                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">11</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units-photo-sets.html" class="" ><span>صور الوحدات حسب المشروع</span></a></li>
                                                             
@@ -339,20 +343,13 @@
                         </button>
                         <ul id="sx-grp-projects">
                                                             
-                                                                                                <li><a href="admin-shary-all-projects.html" class="" ><span>⭐ كل بيانات المشروع (صفحة واحدة)</span></a></li>
-                                                            
                                                                                                 <li><a href="admin-compounds.html" class="" ><span>كل المشاريع</span></a></li>
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>إضافة مشروع</span></a></li>
-<li><a href="admin-shary-drafts_only_projects.html" class="" ><span>المسودات</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-projects.html" class="" ><span>بيانات المشروع للموقع</span></a></li>
+                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>المسودات</span><b class="sx-tag">2</b></a></li>
                                                             
                                                                                                 <li><a href="project-landing-pages.html" class="" ><span>صفحات الهبوط</span></a></li>
-                                                            
-                                                                                                <li><a href="compounds-boundaries.html" class="" ><span>حدود المشاريع على الخريطة</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-masterplans.html" class="" ><span>تفريغ وتركيب الماستر بلانز</span></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="developers">
@@ -536,15 +533,15 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">4</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">11</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
                                                                                                 <li><a href="admin-shary-ai.html" class="" ><span>الإعدادات والتجربة</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>محادثات العملاء</span><b class="sx-tag">3</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>محادثات العملاء</span><b class="sx-tag">8</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>كاليندر المتابعة</span><b class="sx-tag">1</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>كاليندر المتابعة</span><b class="sx-tag">3</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -559,7 +556,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-refresh.html" class="" ><span>تحديث الموقع</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-site-tags.html" class="" ><span>أكواد التتبع والإعلانات</span></a></li>
+                                                                                                <li><a href="admin-shary-site-tags.html" class="" ><span>جوجل كونسول وأناليتكس وأكواد التتبع</span></a></li>
                                                     </ul>
                     </div>
                                                 <h6 class="sx-nav__title">التطبيق</h6>                                                <div class="sx-grp " data-sx-grp="app">
@@ -809,11 +806,11 @@
         </style>
         <script>
             window.SharyEditorConfig = {
-                token: "H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog",
+                token: "4aaY4UdeGsBqW5NjohzWqXHSKiNatvk1heI5tCBJ",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=4aaY4UdeGsBqW5NjohzWqXHSKiNatvk1heI5tCBJ",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -853,7 +850,7 @@
             <li class="nav-item"><a class="nav-link " href="admin-shary-units_type_resale.html">إعادة بيع <span class="badge bg-secondary">34</span></a></li>
             <li class="nav-item"><a class="nav-link " href="admin-shary-units_type_rent.html">إيجار <span class="badge bg-secondary">22</span></a></li>
         <li class="nav-item"><a class="nav-link " href="admin-shary-units_standalone_1.html">وحدات مستقلة <span class="badge bg-secondary">8</span></a></li>
-            <li class="nav-item"><a class="nav-link " href="admin-shary-units-drafts.html">المسودات <span class="badge bg-warning text-dark">9</span></a></li>
+            <li class="nav-item"><a class="nav-link " href="admin-shary-units-drafts.html">المسودات <span class="badge bg-warning text-dark">11</span></a></li>
     </ul>
 
             <div class="card">
@@ -2505,7 +2502,7 @@
         .sx-draftnote__open { background: #1E4266; color: #fff; }
         .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
     </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"H7vn6rF9Ru4Ze9T4rQJ8HXQhiwtYOyyXpsOXAyog","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"4aaY4UdeGsBqW5NjohzWqXHSKiNatvk1heI5tCBJ","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
             <script>
             (function () {
@@ -2568,5 +2565,5 @@
                 });
             })();
         </script>
-      </body>
+      <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>
