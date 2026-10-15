@@ -778,6 +778,69 @@ window.SharyZoom = function () {
 })();
 
 /**
+ * بوب أب «حمل تطبيق شاري» [data-app-card] (partials/app-card.blade.php — موبايل بس): أول حاجة بتظهر لما الموقع يتفتح.
+ * الترتيب على الموبايل: البوب أب ده ← تنبيه الخصوصية (أول زيارة) ← شيت «شوف شاري في…» [data-app-popup].
+ * - مرة في كل زيارة (sessionStorage: shary-app-card) ، وما يظهرش لو التطبيق متسطّب (زرار التطبيق data-state="open")
+ *   أو العميل ضغط «حمل التطبيق» قبل كده على الجهاز ده (localStorage: shary-app-got).
+ * - window.SharyAppCard.pending = لسه هيظهر / ظاهر ؛ ولما يخلص (اتقفل أو مش هيظهر): حدث shary:app-card-done على document
+ *   — تنبيه الخصوصية وشيت التطبيق بيستنوه.
+ */
+(function () {
+    var card = document.querySelector('[data-app-card]');
+    var api = window.SharyAppCard = { pending: false };
+    if (!card) return;
+    var KEY = 'shary-app-card';
+    var GOT = 'shary-app-got';
+    function read(store, key) { try { return window[store].getItem(key); } catch (error) { return null; } }
+    var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
+    if (!mobile || read('sessionStorage', KEY) || read('localStorage', GOT) === '1' || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    api.pending = true;
+
+    function done() {
+        if (!api.pending) return;
+        api.pending = false;
+        document.dispatchEvent(new CustomEvent('shary:app-card-done'));
+    }
+    function close() {
+        if (card.hidden) { done(); return; }
+        card.classList.remove('is-open');
+        card.setAttribute('aria-hidden', 'true');
+        window.setTimeout(function () { card.hidden = true; }, 380);
+        done();
+    }
+    function open() {
+        try { window.sessionStorage.setItem(KEY, String(Date.now())); } catch (error) { /* التخزين مقفول */ }
+        card.hidden = false;
+        card.setAttribute('aria-hidden', 'false');
+        window.requestAnimationFrame(function () { window.requestAnimationFrame(function () { card.classList.add('is-open'); }); });
+    }
+
+    card.addEventListener('click', function (event) {
+        if (event.target.closest('[data-app-card-close]')) { close(); return; }
+        var cta = card.querySelector('[data-app-button]');
+        if (event.target.closest('[data-app-button]')) { window.setTimeout(close, 200); return; }   // المتجر / التطبيق بيتفتح ، والبوب أب يتقفل
+        if (cta && event.target.closest('.app-pop__card')) cta.click();                           // الكارت كله = «حمل التطبيق»
+    });
+    document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !card.hidden) close(); });
+
+    // صورة التليفون بتتحمّل الأول ، والبوب أب بيظهر كامل مرة واحدة (أو بعد ثانية وربع بالكتير — هو أول حاجة في الموقع)
+    var device = card.querySelector('.app-pop__device');
+    function ready(next) {
+        if (!device || (device.complete && device.naturalWidth > 0)) { next(); return; }
+        var fired = false;
+        var go = function () { if (!fired) { fired = true; next(); } };
+        device.addEventListener('load', go);
+        device.addEventListener('error', function () { window.setTimeout(go, 80); });
+        window.setTimeout(go, 1250);
+    }
+    window.setTimeout(function () {
+        var button = card.querySelector('[data-app-button]');
+        if (button && button.getAttribute('data-state') === 'open') { done(); return; }   // التطبيق متسطّب
+        ready(open);
+    }, 900);
+})();
+
+/**
  * بوب أب تحميل التطبيق [data-app-popup] (موبايل بس): بيظهر بعد data-delay من فتح الصفحة وبيدخل من الشمال.
  * - بيظهر مرة واحدة في الزيارة: أول ما يظهر بيتسجّل (sessionStorage) فما يظهرش تاني وهو بيتنقل بين الصفحات — ولما يقفل المتصفح ويفتح الموقع تاني بيظهر مرة.
  * - بيفضل كده لحد ما العميل يضغط زرار التحميل (في البوب أب أو الهيدر): ساعتها بيتسجّل على الجهاز (localStorage: shary-app-got) وما يظهرش تاني خالص.
@@ -865,6 +928,11 @@ window.SharyZoom = function () {
     }
     // العميل فاتح Shary AI: البوب أب ما يقطعش المحادثة — بيستنى لحد ما يقفلها
     function show() {
+        // بوب أب «حمل تطبيق شاري» ظاهر / لسه هيظهر: الشيت بيستناه (وبعده تنبيه الخصوصية)
+        if (window.SharyAppCard && window.SharyAppCard.pending) {
+            document.addEventListener('shary:app-card-done', function () { window.setTimeout(show, 1200); }, { once: true });
+            return;
+        }
         var button = pop.querySelector('[data-app-button]');
         if (button && button.getAttribute('data-state') === 'open' && !pop.hasAttribute('data-app-sheet')) return;   // التطبيق متسطّب (الشيت بيظهر بـ "افتح التطبيق")
         var ai = document.querySelector('[data-ai-panel]');
@@ -897,7 +965,12 @@ window.SharyZoom = function () {
     try { session = window.sessionStorage; } catch (error) { /* التخزين مقفول */ }
     // وافق قبل كده (على الجهاز — أو في الزيارة دي لو التخزين الدائم مقفول)
     if (read(local) || read(session) || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
-    note.classList.remove('hidden');
+    // بيظهر بعد بوب أب «حمل تطبيق شاري» (لو هيظهر) — مش الاتنين مع بعض
+    if (window.SharyAppCard && window.SharyAppCard.pending) {
+        document.addEventListener('shary:app-card-done', function () { note.classList.remove('hidden'); }, { once: true });
+    } else {
+        note.classList.remove('hidden');
+    }
     note.addEventListener('click', function (event) {
         if (!event.target.closest('[data-privacy-accept]')) return;
         try { if (local) local.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ }
