@@ -8477,6 +8477,47 @@ input:focus-visible + .area-chip,
   text-decoration: underline;
 }
 
+/* «نسيت كلمة السر»: الكود يوصل على (الإيميل / SMS / واتساب) */
+.auth-channels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 8px;
+}
+
+.auth-channel {
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  border: 1.5px solid #dfe6ee;
+  border-radius: 14px;
+  background: #fff;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #123a5c;
+}
+
+.auth-channel input {
+  height: 18px;
+  width: 18px;
+  accent-color: #1f63c6;
+}
+
+.auth-channel:has(input:checked) {
+  border-color: #1f63c6;
+  background: #eef5ff;
+}
+
+/* خانة الكود: أرقام كبيرة ومتباعدة */
+.auth-code {
+  letter-spacing: 8px;
+  font-size: 20px !important;
+  font-weight: 800;
+}
+
 .auth-check {
   margin-top: 14px;
   display: flex;
