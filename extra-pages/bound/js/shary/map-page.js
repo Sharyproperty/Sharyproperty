@@ -338,6 +338,8 @@
 
         // الخروج من وضع "الكرة الأرضية" (أول ما العميل يختار منطقة / مشروع / فلتر): كروت المشاريع بتظهر
         function leaveGlobe() { root.classList.remove('is-globe'); }
+        // ديسك توب + جاي من لينك مشروع (?project=): الفتحة بالكرة الأرضية اللي بتلف وبعدين المشروع — الموبايل بيفتح على المشروع على طول (زي ما هو)
+        function globeTrip() { return (!!state.asked || /[?&]area=/.test(window.location.search)) && !state.fit && window.matchMedia('(min-width: 1024px)').matches; }
 
         // ---- المكتبة: Mapbox (بتوكن — data-mapbox-src) أو MapLibre (data-gl-src). الاتنين بيتحملوا بعد ما الصفحة تظهر (مش في الـ head) ، مرة واحدة.
         //      Mapbox ما اتحملتش (الشبكة / مقفولة / اتأخرت قوي): الخريطة بتكمّل بـ MapLibre (صور القمر الصناعي من Esri) — عمرها ما تقف
@@ -448,7 +450,7 @@
                 var options = { container: glBox, style: token ? MAPBOX_STYLES[state.type] : libreStyle(state.type), center: START.center, zoom: START.zoom, minZoom: -1, attributionControl: false };
                 if (token) options.projection = 'globe';
                 // جاي من صفحة مشروع / وحدة: الخريطة بتتفتح على المشروع نفسه من أول لحظة (مش على الكرة الأرضية)
-                if (state.asked && state.focus && state.current) {
+                if (state.asked && state.focus && state.current && !globeTrip()) {
                     var here = info(state.current);
                     if (isFinite(here.lng) && isFinite(here.lat)) { options.center = [here.lng, here.lat]; options.zoom = 14; leaveGlobe(); }
                 }
@@ -544,6 +546,21 @@
         function intro() {
             state.intro = true;
             var focusPoint = state.current ? info(state.current) : null;
+            if (state.focus && state.current && isFinite(focusPoint.lat) && isFinite(focusPoint.lng) && (focusPoint.lat || focusPoint.lng) && globeTrip()) {
+                // ديسك توب ، جاي من كارت مشروع / صفحة مشروع: الكرة الأرضية بتلف وتقرّب على مصر ، وبعدين بتنزل على المشروع (الموبايل زي ما هو)
+                var trip = focusPoint, lift = 2200;
+                root.classList.add('is-project');
+                openSheet(state.current);
+                revealRow(state.current);
+                gl.easeTo({ center: [trip.lng, trip.lat], zoom: 2.8, duration: lift, easing: easeOut, essential: true });
+                window.setTimeout(function () {
+                    leaveGlobe();
+                    if (plans) plans.refresh();
+                    goTo(trip, 3000);
+                    outline(trip);
+                }, lift);
+                return;
+            }
             if (state.focus && state.current && isFinite(focusPoint.lat) && isFinite(focusPoint.lng) && (focusPoint.lat || focusPoint.lng)) {
                 var p = focusPoint;
                 leaveGlobe();
@@ -558,6 +575,12 @@
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
             // جاي من صفحة مشروع (?project=) والمشروع مالوش مكان على الخريطة: مقرّبة على مشاريع منطقته (أو كل المشاريع) — مش الكرة الأرضية والأسامي فوق بعض
+            if ((state.area || state.focus || state.asked) && !state.fit && globeTrip() && root.classList.contains('is-globe')) {
+                // ديسك توب ، جاي من لينك (مشروع مالوش مكان / منطقة): الكرة الأرضية بتلف وبعدين بتقرّب على المشاريع
+                gl.easeTo({ center: EGYPT, zoom: 2.8, duration: 2200, easing: easeOut, essential: true });
+                window.setTimeout(function () { leaveGlobe(); fitAll(3000); }, 2200);
+                return;
+            }
             if (state.area || state.fit || state.focus || state.asked) { leaveGlobe(); fitAll(INTRO); return; }
             // الكرة بتيجي من بعيد وتكبر بالراحة لحد ما تقف فوق مصر — وبعدها قايمة "اختر المنطقة" بتنزل
             gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: INTRO, easing: easeOut, essential: true });
@@ -1334,7 +1357,7 @@
         // البداية: فلتر المنطقة (لو موجود) + المشروع المطلوب (لو اللينك جاي عليه)
         if (state.area) setArea(state.area);
         if (state.focus) { state.current = bySlug(root.getAttribute('data-selected')) || null; if (state.current) state.current.setAttribute('aria-current', 'true'); }
-        if (state.focus || state.area || state.fit) leaveGlobe();
+        if (((state.focus || state.area) && !globeTrip()) || state.fit) leaveGlobe();
         filter(true);
 
         if ('IntersectionObserver' in window) {
