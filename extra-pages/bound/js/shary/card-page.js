@@ -25,9 +25,11 @@
 
         if (strip) strip.addEventListener('click', function () {
             if (!code.textContent.trim()) {
-                // زائر لسه ما أخدش كارت: ينزل لفورم الطلب
+                // لسه ما أخدش كارت: العميل المسجل ينزل لفورم الطلب ، والزائر لبوكس «سجّل واحصل على كارتك»
                 var first = form && form.querySelector('input[name="name"]');
-                if (first) { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); first.focus({ preventScroll: true }); }
+                if (first) { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); first.focus({ preventScroll: true }); return; }
+                var guest = page.querySelector('[data-card-guest]');
+                if (guest) { guest.scrollIntoView({ behavior: 'smooth', block: 'center' }); var join = guest.querySelector('a'); if (join) join.focus({ preventScroll: true }); }
                 return;
             }
             strip.classList.toggle('is-revealed');
