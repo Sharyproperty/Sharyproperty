@@ -39,6 +39,8 @@
     var START = { center: [8, 12], zoom: -0.6 };  // أول فتحة: الكرة الأرضية صغيرة من بعيد — وبتكبر بحركة ناعمة
     function easeOut(t) { return 1 - Math.pow(1 - t, 2.2); }
     var INTRO = 4600;   // مدة حركة الفتح (مللي ثانية) — نفس السرعة لخريطة مصر (الكرة الأرضية) وخريطة المنطقة (?area= — زي خريطة الساحل)
+    // لون الأرض مكان صور القمر الصناعي اللي لسه بتتحمل: كحلي على الكرة الأرضية ← لون أرض هادي من زوم المدن (بدل الأسود)
+    var GROUND = ['interpolate', ['linear'], ['zoom'], 4, '#0d2238', 7, '#9d8f74'];
 
     // ستايل MapLibre (من غير توكن): كرة أرضية + قمر صناعي وأسماء الأماكن (h) أو خريطة الشوارع (m)
     function libreStyle(type) {
@@ -48,8 +50,10 @@
         } : {
             base: { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256, maxzoom: 19, attribution: '&copy; OpenStreetMap' }
         };
-        var layers = [{ id: 'ground', type: 'background', paint: { 'background-color': type === 'h' ? '#0d2238' : '#dfe9f3' } }, { id: 'base', type: 'raster', source: 'base' }];
-        if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels' });
+        // الأرضية = اللي بيبان مكان الصور اللي لسه بتتحمل: على الكرة كحلي (زي البحر) — ومن زوم المدن لون أرض هادي (مش أسود) ،
+        // والصور بتظهر على طول من غير تلاشي — فالزوم أوت ما بيجيبش شاشة سودا نازلة
+        var layers = [{ id: 'ground', type: 'background', paint: { 'background-color': type === 'h' ? GROUND : '#dfe9f3' } }, { id: 'base', type: 'raster', source: 'base', paint: { 'raster-fade-duration': 0 } }];
+        if (sources.labels) layers.push({ id: 'labels', type: 'raster', source: 'labels', paint: { 'raster-fade-duration': 0 } });
         // حوالين الكرة: الفضا بالنجوم (canvas ورا الخريطة) — الكرة نفسها بألوانها الطبيعية (صور القمر الصناعي من غير أي تلوين) ، وهالة زرقا رفيعة على حافتها بس
         return { version: 8, projection: { type: 'globe' }, sources: sources, layers: layers,
             sky: { 'sky-color': 'rgba(0, 0, 0, 0)', 'horizon-color': 'rgba(150, 195, 255, 0.5)', 'fog-color': 'rgba(150, 195, 255, 0)', 'sky-horizon-blend': 0.35, 'horizon-fog-blend': 0, 'fog-ground-blend': 1, 'atmosphere-blend': ['interpolate', ['linear'], ['zoom'], 0, 0.55, 5, 0.55, 7, 0] } };
@@ -289,11 +293,16 @@
                 var wideScreen = window.matchMedia('(min-width: 1024px)').matches;
                 // لوحة الوحدات مفتوحة: المشروع بيقف في الجزء الظاهر فوقها (موبايل) أو جنبها (ديسك توب)
                 var sheetOpen = root.classList.contains('has-ps'), h = window.innerHeight;
-                var pad = wideScreen ? (sheetOpen ? { top: 90, bottom: 90, left: 480, right: 90 } : 90) : { top: 60, right: 26, bottom: sheetOpen ? Math.round(h * 0.56) + 20 : 240, left: 26 };
+                // اللوحة على شمال الخريطة بالعربي وعلى يمينها بالإنجليزي: المشروع بيقف في الجزء الظاهر جنبها
+                var rtl = window.getComputedStyle(root).direction === 'rtl';
+                var pad = wideScreen ? (sheetOpen ? { top: 90, bottom: 90, left: rtl ? 480 : 90, right: rtl ? 90 : 480 } : 90) : { top: 60, right: 26, bottom: sheetOpen ? Math.round(h * 0.56) + 20 : 240, left: 26 };
                 gl.fitBounds([[box[0], box[1]], [box[2], box[3]]], { padding: pad, maxZoom: 17.5, duration: duration, essential: true });
             } else {
                 var openNow = root.classList.contains('has-ps') && !window.matchMedia('(min-width: 1024px)').matches;
-                gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(16, Math.min(18, state.zoom)), offset: openNow ? [0, -Math.round(window.innerHeight * 0.26)] : [0, 0], duration: duration, essential: true });
+                // ديسك توب واللوحة مفتوحة: النقطة بتقف في نص الجزء الظاهر جنب اللوحة (مش تحتها)
+                var deskOpen = root.classList.contains('has-ps') && window.matchMedia('(min-width: 1024px)').matches;
+                var side = deskOpen ? (window.getComputedStyle(root).direction === 'rtl' ? 215 : -215) : 0;
+                gl.flyTo({ center: [p.lng, p.lat], zoom: Math.max(16, Math.min(18, state.zoom)), offset: openNow ? [0, -Math.round(window.innerHeight * 0.26)] : [side, 0], duration: duration, essential: true });
             }   // قريب كفاية عشان علامات وحدات المشروع تبان متفرّقة
         }
         // العلامات اللي ماستر بلان مشروعها معروضة: بتختفي لما العميل يقرّب (عشان ما تغطيش المخطط)
@@ -330,24 +339,71 @@
         // الخروج من وضع "الكرة الأرضية" (أول ما العميل يختار منطقة / مشروع / فلتر): كروت المشاريع بتظهر
         function leaveGlobe() { root.classList.remove('is-globe'); }
 
-        // ---- المكتبة: Mapbox (بتوكن — متحملة في الصفحة) أو MapLibre (بتتحمل لوحدها مرة واحدة)
+        // ---- المكتبة: Mapbox (بتوكن — data-mapbox-src) أو MapLibre (data-gl-src). الاتنين بيتحملوا بعد ما الصفحة تظهر (مش في الـ head) ، مرة واحدة.
+        //      Mapbox ما اتحملتش (الشبكة / مقفولة / اتأخرت قوي): الخريطة بتكمّل بـ MapLibre (صور القمر الصناعي من Esri) — عمرها ما تقف
         function loadLib() {
             if (libState) return;
-            if (token) { libState = window.mapboxgl ? 'ready' : 'failed'; return; }
-            if (window.maplibregl) { libState = 'ready'; return; }
-            var src = root.getAttribute('data-gl-src');
-            if (!src) { libState = 'failed'; return; }
+            var want = token ? 'mapboxgl' : 'maplibregl';
+            if (window[want]) { libState = 'ready'; return; }
+            var src = root.getAttribute(token ? 'data-mapbox-src' : 'data-gl-src');
+            var css = root.getAttribute(token ? 'data-mapbox-css' : 'data-gl-css');
+            if (!src) {
+                if (token) { token = ''; loadLib(); return; }      // صفحة من غير لينك Mapbox: MapLibre
+                libState = 'failed'; return;
+            }
             libState = 'loading';
-            var done = function (ok) { if (libState !== 'loading') return; libState = ok && window.maplibregl ? 'ready' : 'failed'; paint(); };
-            var css = root.getAttribute('data-gl-css');
-            if (css) { var sheetLink = document.createElement('link'); sheetLink.rel = 'stylesheet'; sheetLink.href = css; document.head.appendChild(sheetLink); }
+            var timer = null;
+            var done = function (ok) {
+                if (libState !== 'loading') return;
+                window.clearTimeout(timer);
+                if (!(ok && window[want]) && token) { token = ''; libState = ''; loadLib(); if (libState !== 'loading') paint(); return; }
+                libState = ok && window[want] ? 'ready' : 'failed';
+                paint();
+            };
+            if (css && !document.querySelector('link[rel="stylesheet"][href="' + css + '"]')) { var sheetLink = document.createElement('link'); sheetLink.rel = 'stylesheet'; sheetLink.href = css; document.head.appendChild(sheetLink); }
             var script = document.createElement('script');
+            if (token) script.crossOrigin = 'anonymous';   // نفس طلب الـ preload اللي في الـ head (من غير ما الملف يتحمل مرتين)
             script.src = src;
             script.async = true;
             script.onload = function () { done(true); };
             script.onerror = function () { done(false); };
             document.head.appendChild(script);
-            window.setTimeout(function () { done(false); }, 12000);
+            timer = window.setTimeout(function () { done(false); }, token ? 25000 : 15000);
+        }
+
+        // صور القمر الصناعي بتظهر على طول من غير تلاشي ، ومكان الصور اللي لسه بتتحمل لون أرض هادي بدل الأسود (ستايل Mapbox — بتاع MapLibre متظبط في libreStyle)
+        function tuneStyle() {
+            if (!gl) return;
+            try {
+                var style = gl.getStyle();
+                ((style && style.layers) || []).forEach(function (layer) {
+                    if (/^(masterplan-|mp-ann-|smap-)/.test(layer.id)) return;
+                    if (layer.type === 'raster') gl.setPaintProperty(layer.id, 'raster-fade-duration', 0);
+                    else if (layer.type === 'background' && state.type === 'h') gl.setPaintProperty(layer.id, 'background-color', GROUND);
+                });
+            } catch (error) { /* الستايل لسه بيتحمّل */ }
+        }
+
+        // العلامات اللي في الشاشة (وحواليها) بس هي اللي على الخريطة — الباقي بيتشال من الصفحة لحد ما العميل يروح عنده:
+        // كل علامة على الخريطة بتتحسب مع كل فريم وهي بتتحرك ، فمئات العلامات مع بعض كانت بتتقّل الخريطة (خصوصًا الموبايل).
+        // على الكرة الأرضية (بعيد) كلها ظاهرة ، والمشروع المختار دايمًا ظاهر.
+        function cull() {
+            if (!gl) return;
+            var b = null;
+            try { if (gl.getZoom() >= 4.5) b = gl.getBounds(); } catch (error) { b = null; }
+            var w = 0, e = 0, s = 0, n = 0;
+            if (b) {
+                var padX = (b.getEast() - b.getWest()) * 0.6, padY = (b.getNorth() - b.getSouth()) * 0.6;
+                w = b.getWest() - padX; e = b.getEast() + padX; s = b.getSouth() - padY; n = b.getNorth() + padY;
+            }
+            items.forEach(function (item) {
+                var marker = item.__marker;
+                if (!marker) return;
+                var inside = !b || item === state.current;
+                if (!inside) { var at = marker.getLngLat(); inside = at.lng >= w && at.lng <= e && at.lat >= s && at.lat <= n; }
+                if (inside && !item.__onMap) { marker.addTo(gl); item.__onMap = true; }
+                else if (!inside && item.__onMap) { marker.remove(); item.__onMap = false; }
+            });
         }
 
         function bounds(list) {
@@ -398,6 +454,7 @@
                 }
                 gl = new lib.Map(options);
                 glLib = lib;
+                gl.on('style.load', tuneStyle);
                 // مصدر صور الخريطة: مفيش علامة فوق الخريطة — المصدر مكتوب سطر صغير آخر قايمة "اختر المنطقة" ([data-smap-credit]) وبيتحدّث مع نوع الخريطة
                 var creditNode = root.querySelector('[data-smap-credit]');
                 var showCredit = function () {
@@ -422,7 +479,9 @@
                     pin.addEventListener('click', function (event) { event.stopPropagation(); select(item, true); });
                     pin.style.display = item.parentNode.hidden ? 'none' : '';
                     item.__pin = pin;
-                    item.__marker = new lib.Marker({ element: pin, anchor: 'bottom' }).setLngLat([p.lng, p.lat]).addTo(gl);
+                    // بتتحط على الخريطة بعد حركة الفتح (cull) — مش مئات العلامات بتتحرك مع الكرة الأرضية وهي بتلف
+                    item.__marker = new lib.Marker({ element: pin, anchor: 'bottom' }).setLngLat([p.lng, p.lat]);
+                    item.__onMap = false;
                 });
                 // الضغط على أي مكان فاضي في الخريطة بيقفل قايمة المناطق وكارت الوحدة
                 gl.on('click', function () { toggleAreas(false); closeUnit(); });
@@ -430,19 +489,21 @@
                 var declutterTimer = null;
                 var declutter = function () {
                     var placed = [];
-                    var order = items.filter(function (item) { return item.__pin && !item.parentNode.hidden; });
+                    var order = items.filter(function (item) { return item.__pin && item.__onMap && !item.parentNode.hidden; });
                     order.sort(function (a, b) { return (b === state.current) - (a === state.current) || ((b.__pin.classList.contains('has-plan') ? 1 : 0) - (a.__pin.classList.contains('has-plan') ? 1 : 0)); });
-                    order.forEach(function (item) {
-                        var pin = item.__pin;
-                        pin.classList.remove('is-crowded');
-                        var r = pin.getBoundingClientRect();
-                        if (!r.width) return;
-                        var pad = 4, hit = item !== state.current && placed.some(function (o) { return r.left < o.right + pad && r.right > o.left - pad && r.top < o.bottom + pad && r.bottom > o.top - pad; });
-                        if (hit) pin.classList.add('is-crowded'); else placed.push(r);
+                    // المقاسات كلها مرة واحدة الأول وبعدين التغيير (مش قراية وكتابة مع كل علامة — كانت بتخلي المتصفح يعيد حساب الصفحة مئات المرات)
+                    var rects = order.map(function (item) { return item.__pin.getBoundingClientRect(); });
+                    order.forEach(function (item, i) {
+                        var r = rects[i], pad = 4, hit = false;
+                        if (r.width) {
+                            hit = item !== state.current && placed.some(function (o) { return r.left < o.right + pad && r.right > o.left - pad && r.top < o.bottom + pad && r.bottom > o.top - pad; });
+                            if (!hit) placed.push(r);
+                        }
+                        item.__pin.classList.toggle('is-crowded', hit);
                     });
                 };
                 var declutterSoon = function () { clearTimeout(declutterTimer); declutterTimer = setTimeout(declutter, 60); };
-                gl.on('moveend', declutterSoon);
+                gl.on('moveend', function () { cull(); declutterSoon(); });
                 gl.on('zoomend', declutterSoon);
                 root.addEventListener('shary:map-select', declutterSoon);
                 root.__declutter = declutterSoon;
@@ -460,7 +521,13 @@
                     gl.on('zoom', function () { root.classList.toggle('is-close', gl.getZoom() >= 14.5); });
                 }
                 var started = false;
-                var begin = function () { if (started) return; started = true; intro(); };
+                var begin = function () {
+                    if (started) return;
+                    started = true;
+                    intro();
+                    // العلامات بتنزل على الخريطة أول ما حركة الفتح تخلص (moveend) — والضمان لو الحركة ما خلصتش
+                    window.setTimeout(function () { cull(); declutterSoon(); }, INTRO + 900);
+                };
                 gl.on('load', function () { window.setTimeout(begin, 350); });
                 window.setTimeout(begin, 2200);   // لو صور الخريطة اتأخرت: الحركة بتبدأ برضه
                 frame.hidden = true;
@@ -534,13 +601,16 @@
             items.forEach(function (other) { other.setAttribute('aria-current', other === item ? 'true' : 'false'); });
             if (!item) { paint(false); closeSheet(); outline({}); return; }
             if (state.intro || !gl) leaveGlobe();
+            // لوحة المشروع بتتفتح قبل حركة الخريطة: المشروع بيقف في الجزء الظاهر جنبها / فوقها (مش تحتها)
+            var sheetNow = reveal || state.focus;
+            if (sheetNow) openSheet(item);
             paint();
             if (reveal) revealRow(item, 'smooth');
             root.dispatchEvent(new CustomEvent('shary:map-select', { bubbles: true, detail: info(item) }));
             // مشروع تاني: علامات وحدات المشروع القديم بتتشال ، ووحدات الجديد بتتحمل (وبتظهر أول ما الخريطة تقرّب عليه)
             if (unitsFor !== null && unitsFor !== info(item).id) clearUnits();
             showUnits();
-            if (reveal || state.focus) openSheet(item);   // اختيار العميل (أو لينك على مشروع بعينه) — مش المشروع الافتراضي وقت الفتح
+            // (لوحة الوحدات اتفتحت فوق — اختيار العميل أو لينك على مشروع بعينه ، مش المشروع الافتراضي وقت الفتح)
             outline(info(item));
         }
 
@@ -753,20 +823,54 @@
             ps.querySelector('[data-smap-ps-meta]').textContent = [p.developer_name, p.area_label].filter(Boolean).join(' · ');
             var url = ps.querySelector('[data-smap-ps-url]'); url.href = p.url || '#'; url.hidden = !p.url;
             var logo = ps.querySelector('[data-smap-ps-logo]'), short = ps.querySelector('[data-smap-ps-short]');
+            showLogo(p, logo, short);
             // اللوجو بيفتح صفحة المطور (لو ليه صفحة) — من غير لينك: مش كليكابل
             var dev = ps.querySelector('[data-smap-ps-dev]');
             if (dev) {
                 if (p.developer_url) { dev.href = p.developer_url; dev.setAttribute('aria-label', p.developer_name || ''); dev.style.cursor = 'pointer'; }
                 else { dev.removeAttribute('href'); dev.removeAttribute('aria-label'); dev.style.cursor = 'default'; }
             }
-            if (p.developer_logo) { logo.hidden = false; logo.removeAttribute('data-logo-done'); logo.src = p.developer_logo; logo.alt = p.developer_name || ''; short.textContent = ''; }
-            else { logo.hidden = true; short.textContent = (p.developer_name || p.name || '').slice(0, 2); }
             var wa = ps.querySelector('[data-smap-ps-wa]');
             if (wa && ps.getAttribute('data-whatsapp')) wa.href = 'https://wa.me/' + ps.getAttribute('data-whatsapp') + '?text=' + encodeURIComponent(String(psText.wa_text || '').replace(':name', (p.name || '') + (p.url ? ' ' + p.url : '')));
             ps.hidden = false; ps.classList.remove('is-full');
             root.classList.add('has-ps');
             psRender();
             unitsOf(p, function () { if (psState.id === p.id) psRender(); });
+        }
+        // لوجو المطور فوق لوحة المشروع: نفس صورة الموقع — ولو ما حملتش (لينك من دومين تاني / الملف مش موجود / النسخة المتصغّرة ما اتعملتش)
+        // بنجرّب الصورة الأصلية ، وبعدها حروف المطور. عمر الدايرة ما تبقى فاضية.
+        function sameSite(url) {
+            try {
+                var u = new URL(url, window.location.href);
+                // صورة من الموقع نفسه بس متسجلة بدومين تاني (الدومين التجريبي / الأساسي): نفس المسار على الدومين المفتوح
+                if (u.origin !== window.location.origin && /^\/(responsive-image|images)\//.test(u.pathname)) return window.location.origin + u.pathname + u.search;
+                return u.href;
+            } catch (error) { return String(url || ''); }
+        }
+        function originalOf(url) {
+            var at = url.indexOf('/responsive-image/'), m = /\/responsive-image\/\d+\/(images\/[^?#]+)/.exec(url);
+            return at > -1 && m ? url.slice(0, at) + '/' + m[1] : '';
+        }
+        function showLogo(p, logo, short) {
+            if (!logo) return;
+            var initials = function () { logo.hidden = true; logo.removeAttribute('src'); if (short) short.textContent = p.developer_short || String(p.developer_name || p.name || '').slice(0, 2); };
+            var url = p.developer_logo && !/\/images\/logo\.(png|jpe?g)(\?|$)/i.test(p.developer_logo) ? sameSite(p.developer_logo) : '';
+            if (!url) { initials(); return; }
+            var tries = [url], plain = originalOf(url);
+            if (plain && plain !== url) tries.push(plain);
+            // نفس الدايرة بتتعاد لكل مشروع: من غير بقايا اللوجو اللي قبله (القص / المقاس / الخلفية — js/shary/site-chrome.js)
+            logo.__trimmed = false; logo.__logoFit = ''; logo.__cover = false; logo.__ratio = 0; logo.__logoRing = null;
+            logo.removeAttribute('style');
+            var at = 0, id = p.id;
+            logo.onerror = function () {
+                if (psState.id !== id) return;
+                at++;
+                if (at < tries.length) logo.src = tries[at]; else initials();
+            };
+            if (short) short.textContent = '';
+            logo.alt = p.developer_name || '';
+            logo.hidden = false;
+            logo.src = tries[0];
         }
         function closeSheet() { if (!ps) return; ps.hidden = true; root.classList.remove('has-ps'); root.classList.remove('is-project'); if (root.__declutter) root.__declutter(); }
         if (ps) {

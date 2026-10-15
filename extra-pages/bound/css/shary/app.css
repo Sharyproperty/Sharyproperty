@@ -25589,3 +25589,20 @@ html:not(.sx-ready) .own-unit-card__btn, html:not(.sx-ready) .own-unit-card__btn
   .content-cta{width:-moz-fit-content;width:fit-content;max-width:100%;margin-inline:auto}
   .content-cta__buttons > .content-cta__button,.content-cta__buttons > .content-cta__button--meeting,.content-cta__buttons--2 > .content-cta__button{flex:0 0 auto;min-width:200px;padding-inline:24px}
 }
+
+/* تقييم المشروع جنب المكان (summary-bar) — نفس تقييم بيانات جوجل */
+.prop-rating{display:inline-flex;align-items:center;gap:4px;margin-inline-start:8px;padding-inline-start:8px;border-inline-start:1px solid #dfe6ee;white-space:nowrap;color:#1E4266;font-weight:700}
+.prop-rating b{font-weight:800}
+.prop-rating span{color:#5a6b7e;font-weight:600}
+/* الخريطة التفاعلية أخف (موبايل وديسك توب): من غير تغبيش (backdrop-filter) ورا كروت المشاريع وعلامات الماستر بلان —
+   المتصفح كان بيعيد تغبيش اللي ورا كل كارت وكل علامة مع كل فريم والخريطة بتتحرك (تقل وسخونية على الموبايل).
+   نفس الشكل (لبني أبيض فاتح / كحلي) بخلفية أتقل سنة بدل التغبيش. الديسك توب: الكروت أصلًا بيضا في العمود اللي على الجنب */
+@media (max-width: 1023px) {
+  .smap__item { -webkit-backdrop-filter: none; backdrop-filter: none; background-color: rgba(241, 247, 253, 0.95); }
+}
+.smap:not(.is-globe) .smap__marker.has-plan { -webkit-backdrop-filter: none; backdrop-filter: none; background-color: rgba(30, 65, 102, .9); }
+/* ديسك توب: لوحة المشروع المفتوحة كانت بتغطي أزرار الجنب (تكبير / تصغير / كل المشاريع / موقعي) — الأزرار بتقف جنب اللوحة */
+@media (min-width: 1024px) {
+  .smap.has-ps .smap__tools { left: 458px; }
+  [dir="ltr"] .smap.has-ps .smap__tools { left: auto; right: 458px; }
+}

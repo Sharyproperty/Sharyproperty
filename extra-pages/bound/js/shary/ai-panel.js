@@ -1154,15 +1154,34 @@
         }
 
         // again = إعادة المحاولة بعد خطأ (من غير ما رسالة العميل تتكرر)
-        function send(text, extra, again) {
+        // ---------- الإيجنت بيبادر: العميل سكت بعد آخر رد ← السيرفر بيبعت السؤال الجاي (via=nudge — App\Shary\Ai\Nudge) ----------
+        // مرتين بالكتير من غير ما العميل يرد (بعد 40 ثانية وبعدين 75) — وبيقف لو العميل بيكتب ، أو النافذة مقفولة ، أو الصفحة مش ظاهرة
+        var nudgeTimer = null;
+        var nudgeCount = 0;
+        var NUDGE_AFTER = [40000, 75000];
+        function stopNudge() { if (nudgeTimer) { window.clearTimeout(nudgeTimer); nudgeTimer = null; } }
+        function armNudge() {
+            stopNudge();
+            if (nudgeCount >= NUDGE_AFTER.length || !panel.getAttribute('data-endpoint')) return;
+            nudgeTimer = window.setTimeout(function () {
+                nudgeTimer = null;
+                if (busy || panel.classList.contains('hidden') || panel.closest('[hidden]') || String(input.value || '').trim() || document.visibilityState === 'hidden' || panel.querySelector('.sai__book')) { armNudge(); return; }
+                nudgeCount += 1;
+                send('…', null, true, true);
+            }, NUDGE_AFTER[Math.min(nudgeCount, NUDGE_AFTER.length - 1)]);
+        }
+
+        function send(text, extra, again, nudge) {
             text = String(text || '').trim();
             if (!text || busy) return;
+            stopNudge();
+            if (!nudge) nudgeCount = 0;      // العميل كتب: البدء بالسؤال يرجع من الأول
             showChat();
             if (!again) bubble(text, true);
-            input.value = ''; grow();
+            if (!nudge) { input.value = ''; grow(); }
             // العميل طالب ميتنج: الحجز بيبدأ على طول جوه الشات
             if (!extra && !again && wantsMeeting(text)) { startMeeting(null); return; }
-            lastText = text;
+            if (!nudge) lastText = text;
             busy = true;
             form.classList.add('is-busy');
             if (sendButton) sendButton.setAttribute('aria-label', U.stop || '');
@@ -1216,6 +1235,7 @@
                 if (sendButton) sendButton.setAttribute('aria-label', sendLabel);
                 dropTyping();
                 more = more || {};
+                if (nudge && (more.error || more.silent || !(answer || liveText))) { save(); return; }   // سؤال المبادرة ما وصلش: من غير رسالة خطأ
                 var textOut = answer || liveText;
                 var node = live;
                 if (live) { live.classList.remove('sai__msg--live'); live.textContent = ''; fill(live, textOut); }
@@ -1249,6 +1269,7 @@
                 if (more.book) startMeeting(typeof more.book === 'object' ? more.book : null);
                 else toNode(top);
                 save();
+                if (!more.error && !more.book) armNudge();
             }
             function fail() { reply('', { error: true }); }
             // "إيقاف": اللي اتكتب بيفضل ، والطلب بيتلغي
@@ -1259,13 +1280,14 @@
 
             var answersNow = (extra && extra.answers) || plainAnswers();
             var detail = {
-                text: text, answers: answersNow, context: context, session: session, lang: english ? 'en' : 'ar', via: extra ? 'steps' : 'text',
+                text: text, answers: answersNow, context: context, session: session, lang: english ? 'en' : 'ar', via: nudge ? 'nudge' : (extra ? 'steps' : 'text'),
                 reply: reply, status: status, stream: stream, fail: fail, signal: controller ? controller.signal : null, sample: sampleFor(text)
             };
-            var go = panel.dispatchEvent(new CustomEvent('shary:ai-send', { bubbles: true, cancelable: true, detail: detail }));
+            var go = nudge ? true : panel.dispatchEvent(new CustomEvent('shary:ai-send', { bubbles: true, cancelable: true, detail: detail }));
             if (!go) return;
 
             var endpoint = panel.getAttribute('data-endpoint');
+            if (!endpoint && nudge) { reply('', { silent: true }); return; }
             if (!endpoint) {
                 // من غير سيرفر (معاينة): الرد التجريبي لو موجود
                 window.setTimeout(function () { reply(detail.sample && detail.sample.reply ? detail.sample.reply : '', detail.sample || {}); }, 1500);
@@ -1288,6 +1310,7 @@
 
         function restart() {
             if (stopNow) stopNow();
+            stopNudge(); nudgeCount = 0;
             answers = {}; session = ''; busy = false; stepsShown = 0; book = null; understood = []; lastText = '';
             form.classList.remove('is-busy');
             list.textContent = '';
@@ -1340,6 +1363,8 @@
             if (!panel.classList.contains('hidden')) return;
             opener = from || null;
             panel.classList.remove('hidden');
+            // فتح الشات ومحدش كتب: الإيجنت بيبدأ هو بالسؤال بعد شوية
+            if (!busy && !list.children.length) { nudgeCount = 0; armNudge(); }
             if (!wide.matches) {
                 document.documentElement.style.overflow = 'hidden';
                 // موبايل: زرار الرجوع بيقفل الصفحة دي والعميل بيفضل في صفحته
@@ -1349,6 +1374,7 @@
         }
         function close() {
             if (panel.classList.contains('hidden')) return;
+            stopNudge();
             panel.classList.add('hidden');
             document.documentElement.style.overflow = '';
             if (opener) { try { opener.focus({ preventScroll: true }); } catch (error) { /* العنصر اتشال */ } }
@@ -1461,6 +1487,8 @@
         if (sendButton) sendButton.addEventListener('click', function (event) { if (busy && stopNow) { event.preventDefault(); stopNow(); } });
         window.addEventListener('pagehide', function () { if (list.children.length) save(); });
         input.addEventListener('input', grow);
+        // العميل بيكتب: سؤال المبادرة يستنى
+        input.addEventListener('input', function () { if (nudgeTimer) armNudge(); });
         input.addEventListener('keydown', function (event) { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); send(input.value); } });
         if (startButton) startButton.addEventListener('click', function () { if (!startButton.disabled) send(queryText(), { answers: plainAnswers() }); });
         if (skipButton) skipButton.addEventListener('click', function () { showChat(); if (!wide.matches || list.children.length < 2) input.focus(); });
@@ -1633,6 +1661,14 @@
         renderContext();
         // بعد ما الصفحة تجهز: رجّع المحادثة المحفوظة (ولو النافذة كانت مفتوحة على الديسك توب بتفتح لوحدها)
         window.setTimeout(restore, 300);
+        // لينك المتابعة (إشعار «شاري AI — متابعة طلبك»): ?ai=1 بيفتح الشات على طول ويكمّل من آخر طلب
+        window.setTimeout(function () {
+            try {
+                if (!/[?&]ai=1(&|$)/.test(window.location.search) || panel.closest('[hidden]')) return;
+                open(null);
+                if (!busy && !list.children.length) send(english ? 'continue from there' : 'كمل من هناك', null, true);
+            } catch (error) { /* الصفحة من غير شات */ }
+        }, 700);
     });
 
     // أي زرار Shary AI بيفتح الصفحة الأقرب له

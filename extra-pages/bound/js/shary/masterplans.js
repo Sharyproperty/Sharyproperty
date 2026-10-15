@@ -12,10 +12,14 @@
  * 3) تغيير شكل الخريطة (قمر صناعي ⇄ خريطة) بيمسح الطبقات: بترجع كلها في مكانها لوحدها.
  * 4) الجودة: الصورة الأصلية بتتعرض من غير إعادة رسم + نسخة masterplan_hd بتتحمل من زوم hdZoom + دعم Tiles (masterplan_tiles).
  * 5) الذاكرة: بيتحمل اللي في الشاشة بس (من زوم minZoom) بحد أقصى maxActive ، والبعيد بيتشال. المشروع المختار دايمًا معروض.
+ * 6) الخفة (موبايل وديسك توب): وهي بعيدة بتتعرض النسخة الخفيفة (masterplan_light — 1280px من السيرفر) والكاملة بتتحمل مع التقريب بس
+ *    (وبترجع الخفيفة لما العميل يبعّد) ، الماستر بلان اللي لسه نقطة صغيرة على الشاشة (أقل من minPixels) ما بتتحملش ،
+ *    والصور بتتحمل بالدور (parallel في نفس الوقت — المختار والأقرب لنص الشاشة الأول) ، وأي تصغير / تظليل بيتعمل في الخلفية (blob).
  *
  * بيانات كل مشروع (كلها اختيارية ما عدا masterplan):
  *   id ، lat ، lng
  *   masterplan            لينك الصورة (PNG / WebP مفرّغة — الضلع الأكبر 2048 – 4096px)
+ *   masterplan_light      نسخة خفيفة من نفس الصورة (أطول ضلع 1280) — للخريطة وهي بعيدة
  *   masterplan_corners    [[lng,lat] × 4]
  *   masterplan_placement  { center:[lng,lat], width_m, height_m, rotation, flip_x, flip_y }   (بديل للأركان)
  *   masterplan_hd         نسخة أعلى دقة (لحد 8192px)
@@ -78,11 +82,25 @@
         if (p.flip_y) out = [out[3], out[2], out[1], out[0]];
         return out;
     }
+    // متحسبة مرة واحدة لكل مشروع (لحد ما الأركان نفسها تتغير) — الحساب كان بيتعاد لكل مشروع مع كل حركة للخريطة
     function savedCorners(project) {
-        return project ? (parseCorners(project.masterplan_corners) || placementToCorners(project.masterplan_placement)) : null;
+        if (!project) return null;
+        var memo = project.__mpCorners;
+        if (memo && memo.c === project.masterplan_corners && memo.p === project.masterplan_placement) return memo.v;
+        var value = parseCorners(project.masterplan_corners) || placementToCorners(project.masterplan_placement);
+        project.__mpCorners = { c: project.masterplan_corners, p: project.masterplan_placement, v: value };
+        return value;
     }
     // حدود المشروع: مضلع [[lng,lat], ...] أو GeoJSON Polygon — ولو النقط مكتوبة [lat,lng] بنعرف من مكان المشروع نفسه
     function polygonOf(project) {
+        if (!project) return null;
+        var memo = project.__mpRing;
+        if (memo && memo.b === project.boundary) return memo.v;
+        var value = ringOf(project);
+        project.__mpRing = { b: project.boundary, v: value };
+        return value;
+    }
+    function ringOf(project) {
         var raw = deepJson(project && project.boundary);
         if (raw && raw.type === 'Polygon' && Array.isArray(raw.coordinates)) raw = raw.coordinates[0];
         if (raw && raw.type === 'Feature' && raw.geometry && Array.isArray(raw.geometry.coordinates)) raw = raw.geometry.coordinates[0];
@@ -113,10 +131,14 @@
             minZoom: options.minZoom || 9,         // من زوم المنطقة (مش مصر كلها)
             hdZoom: options.hdZoom || 15.5,
             labelZoom: options.labelZoom || 13.5,
-            // كل الماستر بلانز اللي في الكادر بتظهر مع بعض (زي ناوي) — الحد ده للأمان بس
-            maxActive: options.maxActive || (wide() ? 80 : 40),
-            // وهي كتير مع بعض (بعيد شوية): كل صورة بنسخة أخف — والصورة الكاملة بترجع لوحدها مع التقريب (zoom >= hdZoom - 1)
-            overviewCap: options.overviewCap || (wide() ? 2048 : 1024),
+            // كل الماستر بلانز اللي في الكادر بتظهر مع بعض (زي ناوي) — بحد أقصى ده (الأقرب لنص الشاشة الأول): كل واحدة صورة على كارت الشاشة
+            maxActive: options.maxActive || (wide() ? 40 : 18),
+            // وهي كتير مع بعض (بعيد شوية): النسخة الخفيفة (masterplan_light) أو الصورة متصغّرة للمقاس ده — والكاملة بترجع لوحدها مع التقريب (zoom >= hdZoom - 1)
+            overviewCap: options.overviewCap || (wide() ? 1280 : 1024),
+            // الماستر بلان اللي مقاسها على الشاشة أقل من كده (بيكسل) لسه نقطة: ما بتتحملش لحد ما العميل يقرّب
+            minPixels: options.minPixels || 36,
+            // كام صورة بتتحمل في نفس الوقت (الباقي بالدور)
+            parallel: options.parallel || (wide() ? 4 : 2),
             viewBuffer: options.viewBuffer || 0.5,
             unplaced: options.unplaced || 'bbox',
             rendered: {},          // id -> { token, sourceId, layerId, coords, hd, tiles, saved }
@@ -165,10 +187,28 @@
             }
             return [u * w, v * h];
         }
-        function fitTexture(img, limit, project, coords) {
-            var cap = Math.min(textureCap(), limit || Infinity), w = img.naturalWidth, h = img.naturalHeight;
+        // الصورة اللي هتتحط على الخريطة: الصورة نفسها لو مقاسها مناسب ومفيش مرحلة متظللة — وإلا نسخة متصغّرة / متظللة ،
+        // بتتعمل في الخلفية (canvas.toBlob — مش toDataURL اللي كان بيوقف الصفحة مع كل ماستر بلان) ← done(لينك ، blob؟)
+        function texture(img, limit, project, coords, done) {
+            var cap = Math.min(textureCap(), limit || Infinity), w = img.naturalWidth, h = img.naturalHeight, side = Math.max(w, h);
             var rings = coords ? activeRings(project) : [];
-            if (Math.max(w, h) <= cap && !rings.length) return img.src;
+            // قريبة من المقاس (لحد 30% أكبر): زي ما هي من غير إعادة رسم
+            if (side <= Math.min(cap * 1.3, textureCap()) && !rings.length) { done(img.src, false); return; }
+            var canvas = fitTexture(img, cap, project, coords, rings);
+            if (!canvas) { done(img.src, false); return; }
+            if (canvas.toBlob && window.URL && URL.createObjectURL) {
+                try {
+                    canvas.toBlob(function (blob) {
+                        if (blob) { done(URL.createObjectURL(blob), true); return; }
+                        try { done(canvas.toDataURL('image/png'), false); } catch (error) { done(img.src, false); }
+                    }, 'image/png');
+                    return;
+                } catch (error) { /* المتصفح ما بيدعمش — تحت */ }
+            }
+            try { done(canvas.toDataURL('image/png'), false); } catch (error) { done(img.src, false); }
+        }
+        function fitTexture(img, cap, project, coords, rings) {
+            var w = img.naturalWidth, h = img.naturalHeight;
             try {
                 var scale = Math.min(1, cap / Math.max(w, h)), canvas = document.createElement('canvas');
                 canvas.width = Math.round(w * scale); canvas.height = Math.round(h * scale);
@@ -185,15 +225,38 @@
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                     ctx.restore();
                 }
-                return canvas.toDataURL('image/png');
-            } catch (error) { return img.src; }
+                return canvas;
+            } catch (error) { return null; }
+        }
+        function revokeLater(url) {
+            if (!url || !/^blob:/.test(url)) return;
+            // المكتبة بتقرا الصورة من اللينك بعد ما يتحط — بنسيبه شوية قبل ما يتمسح
+            setTimeout(function () { try { URL.revokeObjectURL(url); } catch (error) { /* */ } }, 20000);
+        }
+        function setBlob(entry, url, isBlob) {
+            var old = entry.blob;
+            entry.blob = isBlob ? url : null;
+            if (old && old !== url) revokeLater(old);
         }
         function loadImage(url, done) {
-            var img = new Image();
+            var img = new Image(), finished = false;
+            var finish = function (value) { if (finished) return; finished = true; done(value); };
             try { if (!/^(data:|blob:)/.test(url) && new URL(url, window.location.href).origin !== window.location.origin) img.crossOrigin = 'anonymous'; } catch (error) { /* لينك غريب */ }
-            img.onload = function () { done(img); };
-            img.onerror = function () { done(null); };
+            img.onload = function () { finish(img); };
+            img.onerror = function () { finish(null); };
+            // صورة علّقت (الشبكة): الدور ما يقفش عليها
+            setTimeout(function () { finish(img.complete && img.naturalWidth ? img : null); }, 30000);
             img.src = url;
+        }
+        // الدور: كام صورة بتتحمل وتتجهز في نفس الوقت (MP.parallel) — المختار والأقرب لنص الشاشة الأول
+        var jobs = [], running = 0;
+        function enqueue(job, urgent) { if (urgent) jobs.unshift(job); else jobs.push(job); pump(); }
+        function pump() { while (running < MP.parallel && jobs.length) start(jobs.shift()); }
+        function start(job) {
+            var finished = false;
+            running++;
+            var next = function () { if (finished) return; finished = true; running--; setTimeout(pump, 0); };
+            try { job(next); } catch (error) { next(); }
         }
         function withVersion(url, project) {
             var v = project.masterplan_version;
@@ -257,11 +320,25 @@
             var lat = Number(project.lat), lng = Number(project.lng);
             return isFinite(lat) && isFinite(lng) ? [lng - 0.01, lat - 0.01, lng + 0.01, lat + 0.01] : null;
         }
-        function inView(project) {
+        // الكادر + هامش (viewBuffer) — بيتحسب مرة واحدة لكل تحديث (مش لكل مشروع)
+        function viewBox() {
+            var b = map.getBounds(), padLng = (b.getEast() - b.getWest()) * MP.viewBuffer, padLat = (b.getNorth() - b.getSouth()) * MP.viewBuffer;
+            return [b.getWest() - padLng, b.getSouth() - padLat, b.getEast() + padLng, b.getNorth() + padLat];
+        }
+        function inView(project, view) {
             var box = boundsOf(project);
             if (!box) return false;
-            var b = map.getBounds(), padLng = (b.getEast() - b.getWest()) * MP.viewBuffer, padLat = (b.getNorth() - b.getSouth()) * MP.viewBuffer;
-            return box[2] >= b.getWest() - padLng && box[0] <= b.getEast() + padLng && box[3] >= b.getSouth() - padLat && box[1] <= b.getNorth() + padLat;
+            view = view || viewBox();
+            return box[2] >= view[0] && box[0] <= view[2] && box[3] >= view[1] && box[1] <= view[3];
+        }
+        // مقاس الماستر بلان على الشاشة (بيكسل — الضلع الأكبر)
+        function pixels(project) {
+            var box = boundsOf(project);
+            if (!box) return 0;
+            try {
+                var a = map.project([box[0], box[3]]), b = map.project([box[2], box[1]]);
+                return Math.max(Math.abs(b.x - a.x), Math.abs(b.y - a.y));
+            } catch (error) { return Infinity; }
         }
 
         // ---------- الكتابة والمراحل فوق الماستر بلان (masterplan_annotations من لوحة التحكم) ----------
@@ -342,7 +419,7 @@
                 if (map.getSource(x.sourceId)) map.removeSource(x.sourceId);
             } catch (error) { /* الخريطة بتغيّر شكلها */ }
         }
-        function remove(id) { dropAnnotations(id); drop(ids(id)); delete MP.rendered[id]; changed(); }
+        function remove(id) { var entry = MP.rendered[id]; if (entry && entry.blob) revokeLater(entry.blob); dropAnnotations(id); drop(ids(id)); delete MP.rendered[id]; changed(); }
         function paintFor(project) {
             var opacity = Number(project.masterplan_opacity);
             return { 'raster-opacity': isFinite(opacity) && opacity > 0 && opacity <= 1 ? opacity : 1, 'raster-fade-duration': 0, 'raster-resampling': 'linear' };
@@ -355,7 +432,7 @@
             var id = project.id, x = ids(id);
             if (MP.rendered[id] || (MP.failed[id] || 0) >= 2) return;
             var token = {};
-            MP.rendered[id] = { token: token, sourceId: x.sourceId, layerId: x.layerId, coords: null, hd: false, tiles: false, saved: false };
+            MP.rendered[id] = { token: token, sourceId: x.sourceId, layerId: x.layerId, coords: null, hd: false, tiles: false, saved: false, level: '', blob: null };
             function alive() { return !dead && MP.rendered[id] && MP.rendered[id].token === token; }
             function fail(error) { MP.failed[id] = (MP.failed[id] || 0) + 1; remove(id); if (error && window.console) console.warn('masterplan', id, error); }
 
@@ -371,68 +448,107 @@
                 } catch (error) { fail(error); }
                 return;
             }
-            // 2) صورة واحدة فوق الخريطة
-            loadImage(withVersion(absolute(project.masterplan), project), function (img) {
-                if (!alive()) return;                      // المشروع اتشال أو الخريطة اتغيّر شكلها والصورة لسه بتتحمل
-                if (!img) { fail('image'); return; }
-                try {
-                    var place = coordsFor(project, img);
-                    if (!place) { MP.failed[id] = 2; remove(id); return; }      // لسه ما اتضبطش ومفيش حدود: ما يتعرضش
-                    drop(x);
-                    var close = map.getZoom() >= MP.hdZoom - 1 || String(id) === String(activeId());
+            // 2) صورة واحدة فوق الخريطة — بالدور (المختار الأول): وهي بعيدة النسخة الخفيفة ، ومع التقريب (أو المختار) الكاملة
+            var urgent = String(id) === String(activeId());
+            enqueue(function (next) {
+                if (!alive()) { next(); return; }
+                var close = map.getZoom() >= MP.hdZoom - 1 || String(id) === String(activeId());
+                var full = withVersion(absolute(project.masterplan), project);
+                var lightUrl = usableImage(project.masterplan_light) ? withVersion(absolute(project.masterplan_light), project) : '';
+                var useLight = !close && !!lightUrl;
+                var got = function (img) {
+                    if (!alive()) { next(); return; }
+                    if (!img && useLight) { useLight = false; loadImage(full, got); return; }   // النسخة الخفيفة مش موجودة: الكاملة
+                    if (!img) { next(); fail('image'); return; }
+                    var place = null;
+                    try { place = coordsFor(project, img); } catch (error) { place = null; }
+                    if (!place) { next(); MP.failed[id] = 2; remove(id); return; }      // لسه ما اتضبطش ومفيش حدود: ما يتعرضش
                     var cap = close ? 0 : MP.overviewCap;
-                    map.addSource(x.sourceId, { type: 'image', url: fitTexture(img, cap, project, place.coords), coordinates: place.coords });
-                    MP.rendered[id].light = !!cap && Math.max(img.naturalWidth, img.naturalHeight) > cap;
-                    MP.rendered[id].url = img.src;
-                    // بتتضاف مخفية (شفافة) وبتظهر مرة واحدة لما الصورة تجهز على الخريطة — من غير ما تتشاف وهي بتترسم
-                    var paint = paintFor(project), target = paint['raster-opacity'];
-                    paint['raster-opacity'] = 0;
-                    map.addLayer({ id: x.layerId, type: 'raster', source: x.sourceId, paint: paint });
-                    MP.rendered[id].coords = place.coords; MP.rendered[id].saved = place.saved;
-                    delete MP.failed[id];
-                    show(id); changed(); upgrade();
-                    var revealed = false;
-                    var reveal = function () {
-                        if (revealed || !alive()) return;
-                        revealed = true;
-                        try { map.setPaintProperty(x.layerId, 'raster-opacity', target); } catch (error) { /* اتشالت */ }
-                        drawAnnotations(project);
-                    };
-                    map.once('idle', reveal);
-                    setTimeout(reveal, 1500);
-                } catch (error) {
-                    // الخريطة لسه بتحمّل شكلها: مش فشل — هتترسم في المحاولة الجاية
-                    if (/style/i.test(String(error && error.message))) { delete MP.rendered[id]; schedule(); } else fail(error);
-                }
-            });
+                    texture(img, cap, project, place.coords, function (src, isBlob) {
+                        next();
+                        if (!alive()) { if (isBlob) revokeLater(src); return; }
+                        try {
+                            drop(x);
+                            map.addSource(x.sourceId, { type: 'image', url: src, coordinates: place.coords });
+                            var entry = MP.rendered[id];
+                            setBlob(entry, src, isBlob);
+                            entry.full = full; entry.lightUrl = lightUrl;
+                            // light = متعروضة بنسخة أخف من الكاملة (الكاملة بتتحمل مع التقريب)
+                            entry.level = !close && (useLight || Math.max(img.naturalWidth, img.naturalHeight) > Math.min(cap * 1.3, textureCap())) ? 'light' : 'full';
+                            entry.url = img.src;
+                            // بتتضاف مخفية (شفافة) وبتظهر مرة واحدة لما الصورة تجهز على الخريطة — من غير ما تتشاف وهي بتترسم
+                            var paint = paintFor(project), target = paint['raster-opacity'];
+                            paint['raster-opacity'] = 0;
+                            map.addLayer({ id: x.layerId, type: 'raster', source: x.sourceId, paint: paint });
+                            entry.coords = place.coords; entry.saved = place.saved;
+                            delete MP.failed[id];
+                            show(id); changed(); upgrade();
+                            var revealed = false;
+                            var reveal = function () {
+                                if (revealed || !alive()) return;
+                                revealed = true;
+                                try { map.setPaintProperty(x.layerId, 'raster-opacity', target); } catch (error) { /* اتشالت */ }
+                                drawAnnotations(project);
+                            };
+                            map.once('idle', reveal);
+                            setTimeout(reveal, 1500);
+                        } catch (error) {
+                            // الخريطة لسه بتحمّل شكلها: مش فشل — هتترسم في المحاولة الجاية
+                            if (/style/i.test(String(error && error.message))) { if (isBlob) revokeLater(src); delete MP.rendered[id]; schedule(); } else fail(error);
+                        }
+                    });
+                };
+                loadImage(useLight ? lightUrl : full, got);
+            }, urgent);
         }
-        // الجودة مع الزوم: نسخة HD
-        function upgrade() {
-            // النسخة الخفيفة ← الصورة الكاملة لما العميل يقرّب
-            if (map.getZoom() >= MP.hdZoom - 1) {
-                Object.keys(MP.rendered).forEach(function (id) {
-                    var entry = MP.rendered[id], project = byId(id);
-                    if (!entry || !entry.light || !entry.coords || !project || !inView(project)) return;
-                    entry.light = false;
-                    var token = entry.token;
-                    loadImage(entry.url, function (img) {
-                        var now = MP.rendered[id];
-                        if (!img || !now || now.token !== token) return;
-                        try { var source = map.getSource(entry.sourceId); if (source && source.updateImage) source.updateImage({ url: fitTexture(img, 0, project, entry.coords), coordinates: entry.coords }); } catch (error) { /* اتشالت */ }
+        // صورة تانية لنفس الماستر بلان (الكاملة مع التقريب ، الخفيفة لما العميل يبعّد ، أو الـ HD) — بالدور
+        function swap(id, url, level, limit) {
+            var entry = MP.rendered[id], project = byId(id);
+            if (!entry || !entry.coords || !project || !url) return;
+            var token = entry.token;
+            if (level) entry.level = level;          // ما يتطلبش تاني وهو بيتحمّل
+            enqueue(function (next) {
+                var now = MP.rendered[id];
+                if (!now || now.token !== token) { next(); return; }
+                loadImage(url, function (img) {
+                    var still = MP.rendered[id];
+                    if (!img || !still || still.token !== token) { next(); return; }
+                    texture(img, limit, project, still.coords, function (src, isBlob) {
+                        next();
+                        var again = MP.rendered[id];
+                        if (!again || again.token !== token) { if (isBlob) revokeLater(src); return; }
+                        try {
+                            var source = map.getSource(again.sourceId);
+                            if (source && source.updateImage) { source.updateImage({ url: src, coordinates: again.coords }); setBlob(again, src, isBlob); again.url = img.src; }
+                            else if (isBlob) revokeLater(src);
+                        } catch (error) { if (isBlob) revokeLater(src); }
                     });
                 });
-            }
-            if (map.getZoom() < MP.hdZoom) return;
+            });
+        }
+        // الجودة مع الزوم: الكاملة لما العميل يقرّب ، الخفيفة ترجع لما يبعّد (ذاكرة الموبايل) ، ونسخة HD من hdZoom
+        function upgrade() {
+            var zoom = map.getZoom(), active = String(activeId()), view = null;
             Object.keys(MP.rendered).forEach(function (id) {
                 var entry = MP.rendered[id], project = byId(id);
-                if (!entry || entry.hd || entry.tiles || !entry.coords || !project || !project.masterplan_hd || !inView(project)) return;
+                if (!entry || !entry.coords || entry.tiles || !project) return;
+                if (zoom >= MP.hdZoom - 1) {
+                    if (entry.level !== 'light') return;
+                    view = view || viewBox();
+                    if (inView(project, view)) swap(id, entry.full, 'full', 0);
+                } else if (zoom < MP.hdZoom - 2.5 && entry.level === 'full' && entry.lightUrl && String(id) !== active) {
+                    entry.hd = false;
+                    swap(id, entry.lightUrl, 'light', MP.overviewCap);
+                }
+            });
+            if (zoom < MP.hdZoom) return;
+            Object.keys(MP.rendered).forEach(function (id) {
+                var entry = MP.rendered[id], project = byId(id);
+                if (!entry || entry.hd || entry.tiles || !entry.coords || !project || !project.masterplan_hd) return;
+                view = view || viewBox();
+                if (!inView(project, view)) return;
                 entry.hd = true;
-                var token = entry.token;
-                loadImage(withVersion(absolute(project.masterplan_hd), project), function (img) {
-                    var now = MP.rendered[id];
-                    if (!img || !now || now.token !== token) return;
-                    try { var source = map.getSource(entry.sourceId); if (source && source.updateImage) source.updateImage({ url: fitTexture(img, 0, project, entry.coords), coordinates: entry.coords }); } catch (error) { /* اتشالت */ }
-                });
+                swap(id, withVersion(absolute(project.masterplan_hd), project), 'full', 0);
             });
         }
 
@@ -450,12 +566,22 @@
             applyPlacements();
             // طبقة اتمسحت من بره (تغيير شكل الخريطة): تتسجل إنها مش معروضة عشان ترجع
             Object.keys(MP.rendered).forEach(function (id) { var entry = MP.rendered[id]; if ((entry.coords || entry.tiles) && !map.getSource(entry.sourceId)) delete MP.rendered[id]; });
-            var zoom = map.getZoom(), center = map.getCenter(), active = activeId();
+            var zoom = map.getZoom(), center = map.getCenter(), active = activeId(), view = viewBox();
             var wanted = projects().filter(function (project) {
                 if (!usableImage(project.masterplan) && !project.masterplan_tiles) return false;
                 // تحت minZoom مفيش رسم حتى للمشروع المختار (ما تظهرش متجمعة في نقطة) — والخريطة بتقرّب عليه أصلًا
-                return zoom >= MP.minZoom && (String(project.id) === String(active) || inView(project));
+                if (zoom < MP.minZoom) return false;
+                if (String(project.id) === String(active)) return true;
+                // في الكادر ومقاسها على الشاشة يستاهل (مش نقطة)
+                return inView(project, view) && (MP.rendered[project.id] || pixels(project) >= MP.minPixels);
             });
+            // اللي بقت نقطة صغيرة (العميل بعّد قوي): بتتشال (ذاكرة) — وبترجع لما يقرّب
+            Object.keys(MP.rendered).forEach(function (id) {
+                if (String(id) === String(active)) return;
+                var project = byId(id);
+                if (project && MP.rendered[id].coords && pixels(project) < MP.minPixels * 0.35) remove(id);
+            });
+            wanted = wanted.filter(function (project) { return String(project.id) === String(active) || MP.rendered[project.id] || pixels(project) >= MP.minPixels; });
             // ماستر بلان مكانها غلط (متسجلة بأركان غريبة) أو داخلة في ماستر بلان تانية: ما بتترسمش — عشان الخريطة ما يبقاش فيها صور فوق بعض.
             //   المقاس: أصغر من 60 متر أو أكبر من 12 كم = أركان غلط.  التداخل: لو أكتر من 35% من الأصغر جوه واحدة اتقبلت قبلها
             //   (الأولوية: المشروع المختار ، وبعده اللي اتضبط بإيد الفريق ، وبعده الأقرب لنص الشاشة).
@@ -505,7 +631,9 @@
                 var dist = function (id) { var b = boundsOf(byId(id) || {}) || [0, 0, 0, 0]; return Math.hypot((b[0] + b[2]) / 2 - center.lng, (b[1] + b[3]) / 2 - center.lat); };
                 extra.sort(function (a, b) { return dist(b) - dist(a); }).slice(0, extra.length - Math.max(0, room)).forEach(remove);
             }
-            wanted.forEach(render);
+            // الأقرب لنص الشاشة بيتحمل الأول
+            var distance = function (project) { var b = boundsOf(project) || [0, 0, 0, 0]; return Math.hypot((b[0] + b[2]) / 2 - center.lng, (b[1] + b[3]) / 2 - center.lat); };
+            wanted.slice().sort(function (a, b) { return distance(a) - distance(b); }).forEach(render);
             labelsByZoom();
             upgrade();
         }
@@ -521,13 +649,13 @@
         map.on('zoomend', upgrade);
         map.on('zoom', labelsByZoom);
         // أي تغيير لشكل الخريطة بيمسح كل الطبقات: نرجّع الماستر بلان كلها في مكانها
-        map.on('style.load', function () { Object.keys(MP.rendered).forEach(function (id) { var e = MP.rendered[id]; if (e && e.labels) e.labels.forEach(function (m) { m.remove(); }); }); MP.rendered = {}; setTimeout(refresh, 80); });
+        map.on('style.load', function () { Object.keys(MP.rendered).forEach(function (id) { var e = MP.rendered[id]; if (e && e.labels) e.labels.forEach(function (m) { m.remove(); }); if (e && e.blob) revokeLater(e.blob); }); MP.rendered = {}; jobs = []; setTimeout(refresh, 80); });
         map.on('styledata', function () { clearTimeout(styleTimer); styleTimer = setTimeout(refresh, 250); });
         loadPlacements();
         refresh();
 
         MP.refresh = refresh;
-        MP.status = function () { return { mapReady: mapReady, placementsDone: placementsDone, canDraw: canDraw(), projects: projects().length }; };
+        MP.status = function () { return { mapReady: mapReady, placementsDone: placementsDone, canDraw: canDraw(), projects: projects().length, rendered: Object.keys(MP.rendered).length, loading: running, waiting: jobs.length }; };
         MP.map = map;
         MP.savedCorners = savedCorners;
         MP.has = function (id) { var entry = MP.rendered[id]; return !!(entry && (entry.coords || entry.tiles)); };
