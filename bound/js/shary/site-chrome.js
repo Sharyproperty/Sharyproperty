@@ -271,15 +271,18 @@ window.SharyZoom = function () {
     var ICON_LINK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.400-6.400l-1 1"/><path d="M14 10a4.500 4.500 0 0 0-6.400 0l-3 3a4.500 4.500 0 0 0 6.400 6.400l1-1"/></svg>';
     var ICON_PHONE = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.800a15.100 15.100 0 0 0 6.600 6.600l2.200-2.200a1 1 0 0 1 1-.250 11.400 11.400 0 0 0 3.600.570 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.500a1 1 0 0 1 1 1c0 1.250.200 2.450.570 3.570a1 1 0 0 1-.250 1L6.600 10.800Z"/></svg>';
 
+    // المشاركة من غير أي رابط (لا رابط الصفحة ولا الصورة): بيانات الوحدة / المشروع بس — واتساب ، إكس ، تيليجرام ، نسخ.
+    // فيسبوك بيشارك لينك بس: بيشارك لينك موقع شاري الرئيسي (shary.eg) — مش لينك الوحدة / المشروع
+    var SITE_HOME = 'https://shary.eg/';
     function openShareMenu(button, url, title, en) {
-        var u = encodeURIComponent(url), t = encodeURIComponent(title);
+        var text = shareMessage(button, url, title), x = encodeURIComponent(text);
         openMenu(button, [
-            ['shary-share__icon--whatsapp', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(shareMessage(button, url, title))],
-            ['shary-share__icon--facebook', '<i class="fa-brands fa-facebook-f" aria-hidden="true"></i>', en ? 'Facebook' : 'فيسبوك', 'https://www.facebook.com/sharer/sharer.php?u=' + u],
-            ['shary-share__icon--x', '<i class="fa-brands fa-x-twitter" aria-hidden="true"></i>', en ? 'X' : 'منصة إكس', 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t],
-            ['shary-share__icon--telegram', '<i class="fa-brands fa-telegram" aria-hidden="true"></i>', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + u + '&text=' + t],
-            ['shary-share__icon--more', ICON_LINK, en ? 'Copy link' : 'نسخ الرابط', function (row) {
-                copyText(url, function () { row.lastChild.textContent = en ? 'Link copied' : 'تم نسخ الرابط'; setTimeout(closeMenu, 900); }, function () { toast(url); closeMenu(); });
+            ['shary-share__icon--whatsapp', '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + x],
+            ['shary-share__icon--facebook', '<i class="fa-brands fa-facebook-f" aria-hidden="true"></i>', en ? 'Facebook' : 'فيسبوك', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(SITE_HOME + (en ? 'en' : 'ar'))],
+            ['shary-share__icon--x', '<i class="fa-brands fa-x-twitter" aria-hidden="true"></i>', en ? 'X' : 'منصة إكس', 'https://twitter.com/intent/tweet?text=' + x],
+            ['shary-share__icon--telegram', '<i class="fa-brands fa-telegram" aria-hidden="true"></i>', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + x],
+            ['shary-share__icon--more', ICON_LINK, en ? 'Copy' : 'نسخ', function (row) {
+                copyText(text, function () { row.lastChild.textContent = en ? 'Copied' : 'تم النسخ'; setTimeout(closeMenu, 900); }, function () { toast(text); closeMenu(); });
             }]
         ], en, en ? 'Share' : 'مشاركة');
     }
@@ -316,16 +319,15 @@ window.SharyZoom = function () {
             document.addEventListener('keydown', function (event) { if (event.key === 'Escape') closeShareSheet(); });
         }
 
-        var u = encodeURIComponent(url);
-        var t = encodeURIComponent(title);
-        // واتساب: رسالة المشاركة الكاملة (بيانات الوحدة / المشروع + اللينك + لينك الصورة) — من الكارت أو من صفحة العنصر نفسها
+        // كل المشاركات: بيانات الوحدة / المشروع بس — من غير رابط الصفحة ولا رابط الصورة ، وفيسبوك بيشارك لينك موقع شاري الرئيسي بس
         var waText = shareMessage(button, url, title);
+        var x = encodeURIComponent(waText);
         var targets = [
-            ['shary-share__icon--whatsapp', 'fa-brands fa-whatsapp', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + encodeURIComponent(waText)],
-            ['shary-share__icon--telegram', 'fa-brands fa-telegram', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + u + '&text=' + t],
-            ['shary-share__icon--facebook', 'fa-brands fa-facebook-f', en ? 'Facebook' : 'فيسبوك', 'https://www.facebook.com/sharer/sharer.php?u=' + u],
-            ['shary-share__icon--x', 'fa-brands fa-x-twitter', 'X', 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t],
-            ['shary-share__icon--mail', '', en ? 'Email' : 'البريد', 'mailto:?subject=' + t + '&body=' + u]
+            ['shary-share__icon--whatsapp', 'fa-brands fa-whatsapp', en ? 'WhatsApp' : 'واتساب', 'https://wa.me/?text=' + x],
+            ['shary-share__icon--telegram', 'fa-brands fa-telegram', en ? 'Telegram' : 'تيليجرام', 'https://t.me/share/url?url=' + x],
+            ['shary-share__icon--facebook', 'fa-brands fa-facebook-f', en ? 'Facebook' : 'فيسبوك', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(SITE_HOME + (en ? 'en' : 'ar'))],
+            ['shary-share__icon--x', 'fa-brands fa-x-twitter', 'X', 'https://twitter.com/intent/tweet?text=' + x],
+            ['shary-share__icon--mail', '', en ? 'Email' : 'البريد', 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + x]
         ];
 
         shareSheet.dir = en ? 'ltr' : 'rtl';
@@ -334,18 +336,17 @@ window.SharyZoom = function () {
         shareSheet.querySelector('[data-share-heading]').textContent = en ? 'Share' : 'مشاركة';
         shareSheet.querySelectorAll('[data-share-close]')[1].setAttribute('aria-label', en ? 'Close' : 'إغلاق');
         shareSheet.querySelector('[data-share-name]').textContent = title;
-        var shown = url;
-        try { shown = decodeURI(url); } catch (error) { /* لينك فيه ترميز غير سليم: بيتعرض زي ما هو */ }
-        shareSheet.querySelector('[data-share-link]').textContent = shown.replace(/^https?:\/\//, '');
+        // من غير لينك: تحت الاسم سطر البيانات الأول (المرجع) بدل اللينك ، و«نسخ» بينسخ البيانات
+        shareSheet.querySelector('[data-share-link]').textContent = (waText.split('\n')[1] || '').trim();
 
         var copyButton = shareSheet.querySelector('[data-share-copy]');
         copyButton.textContent = en ? 'Copy' : 'نسخ';
         copyButton.classList.remove('is-done');
         copyButton.onclick = function () {
-            copyText(url, function () {
+            copyText(waText, function () {
                 copyButton.textContent = en ? 'Copied' : 'تم النسخ';
                 copyButton.classList.add('is-done');
-            }, function () { toast(url); });
+            }, function () { toast(waText); });
         };
 
         var grid = shareSheet.querySelector('[data-share-targets]');
@@ -369,7 +370,7 @@ window.SharyZoom = function () {
             more.lastChild.textContent = en ? 'More' : 'المزيد';
             more.addEventListener('click', function () {
                 // قايمة الموبايل: نفس رسالة البيانات (من غير لينكات) — ولو مفيش بيانات: العنوان + اللينك
-                navigator.share(waText !== title + '\n' + url ? { title: title, text: waText } : { title: title, text: title, url: url }).then(closeShareSheet, function (error) {
+                navigator.share({ title: title, text: waText }).then(closeShareSheet, function (error) {
                     if (!error || error.name !== 'AbortError') { nativeShareBlocked = true; more.remove(); }
                 });
             });
@@ -416,13 +417,10 @@ window.SharyZoom = function () {
             if (!value) return '';   // مفيش صورة / لينك: ما يتحطش لينك الصفحة بداله
             try { var full = new URL(value, location.href).href; return (web ? /^https?:/ : /^(?!data:|javascript:|blob:)/).test(full) ? full : ''; } catch (error) { return ''; }
         };
-        if (!source) return (en ? 'Hello Shary, I would like to ask about:' : 'مرحبًا شاري، أريد الاستفسار عن:') + '\n' + document.title + '\n' + location.href;
-        // نفس ترتيب رسالة الموقع: البيانات ، سطر اللينك ، سطر فاضي ، لينك الصورة
-        var text = (source.getAttribute(holder ? 'data-wa-text' : 'data-wa-page') || '').replace(/^\s+|\s+$/g, '');
-        var url = shareUrl || absolute(source.getAttribute('data-wa-url') || '') || location.href;
-        var photo = holder ? holder.querySelector('img.card-photo') : null;   // الكارت: صورته نفسها
-        var image = absolute(source.getAttribute('data-wa-image') || (photo ? photo.currentSrc || photo.getAttribute('src') : '') || '', true);
-        return text + ' ' + url + (image ? '\n\n' + image : '');
+        if (!source) return (en ? 'Hello Shary, I would like to ask about:' : 'مرحبًا شاري، أريد الاستفسار عن:') + '\n' + document.title;
+        // البيانات بس (الاسم ، المرجع ، المشروع / المطور ، السعر ، المنطقة) — من غير أي رابط: لا رابط الصفحة ولا رابط الصورة
+        void absolute; void shareUrl;
+        return (source.getAttribute(holder ? 'data-wa-text' : 'data-wa-page') || '').replace(/^\s+|\s+$/g, '').replace(/\n[^\n]*:\s*$/, '');
     }
 
     // رسالة المشاركة (زرار المشاركة على الكارت أو جوه صفحة الوحدة / المشروع) — نفس شكل رسالة الموقع:
@@ -433,7 +431,7 @@ window.SharyZoom = function () {
         var page = button && button.closest ? button.closest('[data-wa-page]') : null;
         var has = button && button.closest && (button.closest('[data-wa-text]') || (page && !button.closest('[data-card], [data-unit], [data-project], article')));
         // المشاركة (واتساب / المزيد): بيانات الوحدة / المشروع بس — من غير سطر "رابط المشروع:" ولا اللينك ولا لينك الصورة
-        var detail = { text: has ? whatsappText(button, '\u0000').split(' \u0000')[0].replace(/\n[^\n]*:\s*$/, '') : title + '\n' + url };
+        var detail = { text: has ? whatsappText(button) : title };
         if (button && button.dispatchEvent) button.dispatchEvent(new CustomEvent('shary:whatsapp', { bubbles: true, cancelable: true, detail: detail }));
         return detail.text;
     }

@@ -523,15 +523,22 @@
                     gl.on('zoom', function () { root.classList.toggle('is-close', gl.getZoom() >= 14.5); });
                 }
                 var started = false;
+                // لحد ما الخريطة تظهر: «جاري تحميل الخريطة…» بدل شاشة سودا فاضية
+                var waitNote = root.querySelector('[data-smap-note]');
+                if (waitNote && !waitNote.textContent && root.getAttribute('data-loading')) { waitNote.textContent = root.getAttribute('data-loading'); waitNote.hidden = false; waitNote.setAttribute('data-wait', '1'); }
                 var begin = function () {
                     if (started) return;
                     started = true;
+                    if (waitNote && waitNote.getAttribute('data-wait')) { waitNote.hidden = true; waitNote.textContent = ''; waitNote.removeAttribute('data-wait'); }
                     intro();
                     // العلامات بتنزل على الخريطة أول ما حركة الفتح تخلص (moveend) — والضمان لو الحركة ما خلصتش
                     window.setTimeout(function () { cull(); declutterSoon(); }, INTRO + 900);
                 };
+                // الحركة (الكرة الأرضية ← مصر / المشروع) بتبدأ بعد ما الخريطة وصور القمر الصناعي تظهر فعلًا (load) —
+                // كانت بتبدأ بعد 2.2 ثانية حتى لو الخريطة لسه بتحمّل: على الديسك توب (شاشة كبيرة = صور أكتر) الحركة كانت بتخلص
+                // والشاشة لسه سودا ، فالعميل يشوف المنطقة على طول من غير الكرة الأرضية
                 gl.on('load', function () { window.setTimeout(begin, 350); });
-                window.setTimeout(begin, 2200);   // لو صور الخريطة اتأخرت: الحركة بتبدأ برضه
+                window.setTimeout(begin, 9000);   // ضمان: لو حدث التحميل ما جاش خالص
                 frame.hidden = true;
                 root.classList.add('is-gl');
                 return true;
