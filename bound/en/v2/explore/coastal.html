@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head><script>(function(){var B="1792066375";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1792066375"></script>
+<head><script>(function(){var B="1792070537";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1792070537"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="csrf-token" content="jGMemj69I5bAstmXqWWXtmjCsB3kn6jAHm5KZTsl">
+<meta name="csrf-token" content="oNmT0XTK80CR9HJKglUWKIzZke6vPA7gScSeXyjb">
 <meta name="shary-notify" data-count-url="../../v2.html" data-token-url="../../v2.html" data-user="0">
 <title>Coastal projects | Shary</title>
 <meta name="description" content="22 projects in «Coastal projects» — pick a project, see its prices and payment plans and book directly with the developer.">
@@ -435,6 +435,8 @@ data-compare-link data-base="../compare.html" >
 <div class="xfilter__tabs" role="tablist">
 <label class="is-on"><input type="radio" name="view" value="projects" checked> Projects (22)</label>
 <label class=""><input type="radio" name="view" value="units" > Units (57)</label>
+<a href="coastal.html" data-xview-link="projects" hidden aria-hidden="true" tabindex="-1"></a>
+<a href="coastal.html" data-xview-link="units" hidden aria-hidden="true" tabindex="-1"></a>
 </div>
 <div class="xsearch">
 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
@@ -2477,9 +2479,18 @@ Project link:
         (function () {
             var form = document.querySelector('[data-xfilter]'); if (!form) return;
             var client = !!document.querySelector('[data-xlist]');
+            // الفلتر المتقدم (الأيقونة اللي جوه خانة البحث): بيفتح ويقفل في الحالتين (الفلتر في المتصفح أو من السيرفر)
+            var adv = form.querySelector('[data-xadv]'), advBox = form.querySelector('[data-xadv-box]');
+            if (adv && advBox) adv.addEventListener('click', function () { advBox.hidden = !advBox.hidden; adv.setAttribute('aria-expanded', advBox.hidden ? 'false' : 'true'); });
             if (!client) {
                 form.addEventListener('change', function (e) {
-                    if (e.target.name === 'view') { form.querySelectorAll('select[name=sort]').forEach(function (s) { s.disabled = true; }); }
+                    if (e.target.name === 'view') {
+                        // تبويب المشاريع / الوحدات من غير فلاتر: لينك الصفحة على طول
+                        var busy = [].some.call(form.querySelectorAll('select'), function (s) { return s.name !== 'sort' && s.value; }) || ((form.querySelector('[data-xq]') || {}).value || '').trim();
+                        var link = form.querySelector('[data-xview-link="' + e.target.value + '"]');
+                        if (!busy && link) { location.href = link.href; return; }
+                        form.querySelectorAll('select[name=sort]').forEach(function (s) { s.disabled = true; });
+                    }
                     form.querySelectorAll('select').forEach(function (s) { if (!s.value) s.disabled = true; });
                     form.submit();
                 });
@@ -2510,8 +2521,6 @@ Project link:
             ['project', 'developer', 'area', 'type', 'sort'].forEach(function (k) { var s = form.querySelector('select[name=' + k + ']'); if (s && params.get(k)) s.value = params.get(k); });
             var qInput = form.querySelector('[data-xq]'); if (qInput && params.get('q')) qInput.value = params.get('q');
             if (qInput) qInput.addEventListener('input', function () { page = 1; render(false); });
-            var adv = form.querySelector('[data-xadv]'), advBox = form.querySelector('[data-xadv-box]');
-            if (adv && advBox) adv.addEventListener('click', function () { advBox.hidden = !advBox.hidden; adv.setAttribute('aria-expanded', advBox.hidden ? 'false' : 'true'); });
             function state() {
                 var st = { view: (form.querySelector('input[name=view]:checked') || {}).value || 'projects' };
                 ['project', 'developer', 'area', 'type', 'sort'].forEach(function (k) { var s = form.querySelector('select[name=' + k + ']'); st[k] = s ? s.value : ''; });
@@ -2862,7 +2871,7 @@ data-label-get="Get the App" data-label-open="Open app"><span data-app-label>Get
 </button>
 </div>
 <form action="../../v2.html" method="POST" class="mt-4 flex flex-col gap-4" data-meeting-form>
-<input type="hidden" name="_token" value="jGMemj69I5bAstmXqWWXtmjCsB3kn6jAHm5KZTsl" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+<input type="hidden" name="_token" value="oNmT0XTK80CR9HJKglUWKIzZke6vPA7gScSeXyjb" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
 <input type="hidden" name="meeting_date" value="" data-meeting-date>
 <input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
 <div class="grid grid-cols-2 gap-1 rounded-[16px] bg-shary-form p-1.5" role="group" aria-label="Request a meeting">
@@ -3077,5 +3086,5 @@ data-label-get="Get the App" data-label-open="Open app"><span data-app-label>Get
 <script src="../../../js/shary/form-select.min.js?v=tmumbi"></script>
 <script src="../../../js/shary/ai-panel.min.js?v=tmxb6h"></script>
 <script>(function(){try{if(navigator.webdriver||!navigator.sendBeacon)return;var go=function(){var f='';try{var d=new Date().toLocaleDateString('en-CA'),l=localStorage.getItem('sx_v');if(!l)f+='n';if(l!==d){f+='d';localStorage.setItem('sx_v',d);}if(!sessionStorage.getItem('sx_s')){f+='s';sessionStorage.setItem('sx_s','1');}}catch(e){}var n=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0]||{}).name,u=new URL(n||location.href),q=u.searchParams,b=new FormData();b.append('path',u.pathname);b.append('ref',document.referrer||'');b.append('utm',q.get('utm_source')||(q.get('gclid')?'gclid':'')||(q.get('fbclid')?'facebook':''));b.append('v',f);navigator.sendBeacon("\/Sharyproperty\/bound\/shary\/t",b);};if('requestIdleCallback' in window)requestIdleCallback(go,{timeout:4000});else setTimeout(go,2500);}catch(e){}})();</script>
-<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script src="/Sharyproperty/bound/js/snapshot-filters.js?v=1792066375"></script></body>
+<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script src="/Sharyproperty/bound/js/snapshot-filters.js?v=1792070537"></script></body>
 </html>

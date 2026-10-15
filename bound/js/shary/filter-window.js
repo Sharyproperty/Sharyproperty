@@ -22,7 +22,8 @@
         if (form || html !== null || fetching || !src || !window.fetch) return fetching;
         fetching = fetch(src, { credentials: 'same-origin', headers: { 'Accept': 'text/html', 'X-Requested-With': 'XMLHttpRequest' } })
             .then(function (r) { return r.ok ? r.text() : ''; })
-            .then(function (text) { html = text || ''; return html; })
+            // لازم يكون جزء الفلتر بس (فيه فورم) — لو رجع صفحة كاملة (لينك غلط / صفحة خطأ) ما يتحطش جوه الصفحة (كان بيوسّعها ويزقها يمين)
+            .then(function (text) { text = text || ''; html = (/<html[\s>]|<body[\s>]/i.test(text) || !/<form[\s>]/i.test(text)) ? '' : text; return html; })
             .catch(function () { html = ''; return ''; });
         return fetching;
     }
