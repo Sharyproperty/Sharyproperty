@@ -482,12 +482,11 @@
         function send(on, contact) {
             var url = button.getAttribute('data-follow-url');
             if (!url || !window.fetch) return Promise.resolve({ ok: true });
-            var meta = document.querySelector('meta[name="csrf-token"]');
             var body = { id: button.getAttribute('data-follow-id'), following: on };
             if (contact) { body.phone = contact.phone; if (contact.name) body.name = contact.name; }
             return window.fetch(url, {
                 method: 'POST', credentials: 'same-origin',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': meta ? meta.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': window.SharyCsrf(), 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(body)
             }).then(function (r) { return r.json().catch(function () { return { ok: r.ok }; }); }).catch(function () { return { ok: true, offline: true }; });
         }

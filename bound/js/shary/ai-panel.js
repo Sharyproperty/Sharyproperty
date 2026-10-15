@@ -136,11 +136,6 @@
         var skipText = skipButton ? skipButton.textContent : '';
 
         // كود الدولة: علم + الكود بس (من غير اسم الدولة) — select عادي شفاف فوقهم عشان قايمة الموبايل الأصلية تفتح
-        function flagEmoji(iso) {
-            iso = String(iso || '').toUpperCase();
-            if (!/^[A-Z]{2}$/.test(iso) || !String.fromCodePoint) return '';
-            return String.fromCodePoint(127397 + iso.charCodeAt(0), 127397 + iso.charCodeAt(1));
-        }
         function codeField(onChange) {
             var wrap = make('div', 'sai__code-box');
             var button = make('button', 'sai__code'); button.type = 'button'; button.setAttribute('aria-haspopup', 'listbox'); button.setAttribute('aria-expanded', 'false'); button.setAttribute('aria-label', B.code || '');
@@ -166,7 +161,7 @@
                 if (state) { find.value = ''; filterRows(); find.focus(); }
             }
             function pickCode(code) { select.value = code; show(); open(false); if (onChange) onChange(code); button.focus(); }
-            function simple(value) { return String(value || '').toLowerCase().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim(); }
+            function simple(value) { return window.SharyPlain(value); }   // توحيد البحث العربي: shary/partials/head-core
             function filterRows() {
                 var q = simple(find.value).replace(/^\+|^00/, '');
                 Array.prototype.forEach.call(rows.children, function (row) { row.hidden = !!q && row.__hay.indexOf(q) === -1; });
@@ -733,10 +728,9 @@
         function post(url, data) {
             url = String(url || '');
             if (!url || url.charAt(0) === '#') return Promise.resolve({});
-            var token = document.querySelector('meta[name="csrf-token"]');
             return fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': window.SharyCsrf(), 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(data)
             }).then(function (response) {
                 if (!response.ok) throw new Error('failed');
@@ -1017,10 +1011,9 @@
             if (!proceed) return;
             var url = String(contact.meeting || '');
             if (!url || url.charAt(0) === '#') { window.setTimeout(function () { done(true); }, 500); return; }   // معاينة من غير سيرفر
-            var token = document.querySelector('meta[name="csrf-token"]');
             fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': window.SharyCsrf(), 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(data)
             }).then(function (response) {
                 if (!response.ok) throw new Error('failed');
@@ -1297,10 +1290,9 @@
                 window.setTimeout(function () { reply(detail.sample && detail.sample.reply ? detail.sample.reply : '', detail.sample || {}); }, 1500);
                 return;
             }
-            var token = document.querySelector('meta[name="csrf-token"]');
             fetch(endpoint, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, application/x-ndjson, text/event-stream', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, application/x-ndjson, text/event-stream', 'X-CSRF-TOKEN': window.SharyCsrf(), 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify({ message: text, answers: answersNow, context: context, session: session, lang: detail.lang, via: detail.via, page: window.location.pathname }),
                 signal: controller ? controller.signal : undefined
             }).then(function (response) {
@@ -1628,8 +1620,7 @@
                         var data = new FormData();
                         data.append('audio', blob, 'voice.' + ((blob.type.split('/')[1] || 'webm').split(';')[0]));
                         data.append('lang', detail.lang); data.append('seconds', seconds);
-                        var token = document.querySelector('meta[name="csrf-token"]');
-                        fetch(url, { method: 'POST', headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': token ? token.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' }, body: data })
+                        fetch(url, { method: 'POST', headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': window.SharyCsrf(), 'X-Requested-With': 'XMLHttpRequest' }, body: data })
                             .then(function (response) { if (!response.ok) throw new Error('failed'); return response.json(); })
                             .then(function (result) { done(result && (result.text || result.transcript)); })
                             .catch(function () { fail(); });

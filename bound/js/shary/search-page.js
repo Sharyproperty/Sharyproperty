@@ -98,8 +98,7 @@
     // ---- خانة البحث
     // توحيد النص: حروف صغيرة، من غير تشكيل، وتوحيد الألف والياء والتاء المربوطة — عشان "راس الحكمه" تلاقي "رأس الحكمة"
     function plain(text) {
-        return String(text || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه')
-            .replace(/[-_،,]/g, ' ').replace(/\s+/g, ' ').trim();
+        return window.SharyPlain(String(text || '').replace(/[-_،,]/g, ' '));   // توحيد البحث العربي: shary/partials/head-core (+ الشرط والفواصل مسافات)
     }
 
     document.querySelectorAll('form[data-area-filters] input[name="q"]').forEach(function (input) {

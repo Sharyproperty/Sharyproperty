@@ -7,7 +7,7 @@
  */
 (function () {
     function plain(text) {
-        return String(text || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').replace(/\s+/g, ' ').trim();
+        return window.SharyPlain(text);   // توحيد البحث العربي: shary/partials/head-core
     }
     document.querySelectorAll('[data-search-strip]').forEach(function (form) {
         var items = [];

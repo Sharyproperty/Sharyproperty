@@ -101,11 +101,10 @@
     var url = box ? box.getAttribute('data-read-url') : '';
     if (!url || !window.fetch) return;
     function send(body) {
-        var meta = document.querySelector('meta[name="csrf-token"]');
         try {
             fetch(url, {
                 method: 'POST', credentials: 'same-origin', keepalive: true,
-                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': meta ? meta.getAttribute('content') : '', 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': window.SharyCsrf(), 'X-Requested-With': 'XMLHttpRequest' },
                 body: JSON.stringify(body)
             }).catch(function () { /* الحالة في الصفحة اتغيرت — السيرفر هيتحدّث مع المحاولة الجاية */ });
         } catch (error) { /* متصفح قديم */ }

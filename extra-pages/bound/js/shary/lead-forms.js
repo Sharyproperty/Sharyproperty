@@ -13,7 +13,7 @@
     'use strict';
 
     function english() { return (document.documentElement.lang || 'ar').indexOf('en') === 0; }
-    function token() { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; }
+    var token = window.SharyCsrf;
 
     // ---- رسالة تحت الشاشة (نفس شكل رسايل site-chrome: .shary-toast)
     var toastNode = null, toastTimer = null;

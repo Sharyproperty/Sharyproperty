@@ -23,7 +23,7 @@
     function escapeHtml(text) { return String(text == null ? '' : text).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
     function digits(text) { return Number(String(text || '').replace(/[^\d.]/g, '')) || 0; }
     function plain(text) {
-        return String(text || '').toLowerCase().replace(/[ً-ْـ]/g, '').replace(/[أإآ]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه').trim();
+        return window.SharyPlain(text);   // توحيد البحث العربي: shary/partials/head-core
     }
 
     document.querySelectorAll('[data-shary-index]').forEach(function (page) {

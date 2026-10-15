@@ -15,7 +15,7 @@
     var forms = {};
     root.querySelectorAll('[data-auth-form]').forEach(function (form) { forms[form.getAttribute('data-auth-form')] = form; });
 
-    function token() { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; }
+    var token = window.SharyCsrf;
 
     function say(text, ok) {
         if (!alertBox) return;

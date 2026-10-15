@@ -86,3 +86,26 @@
         window.toastr = { info: say('success'), success: say('success'), error: say('error'), warning: say('error') };
     }
 })();
+
+// ---- بحث الرئيسية: لينك صفحة النتايج (للبيع / إعادة البيع ← البحث ، للإيجار ← الإيجار) — home-search.js بيستخدمه
+// لينكات البحث: للبيع / إعادة البيع ← صفحة البحث ، للإيجار ← صفحة الإيجار (نفس باراميترات الهوم — ListingFilters بيفهمها)
+function sharyHomeSearchUrl(params) {
+    var tab = document.querySelector('.home-search-tab.is-active, .home-search-tab.active');
+    if (!params.get('sale_type') && tab && tab.dataset.value) params.set('sale_type', tab.dataset.value);
+    var query = params.toString();
+    return (params.get('sale_type') === 'rent' ? window.SharyHomeConf.rentUrl : window.SharyHomeConf.searchUrl) + (query ? '?' + query : '');
+}
+
+// ---- jQuery بيتحمّل async: أي كود محتاجه يستنى بـ sharyOnJq(run)
+window.sharyOnJq = function (run) {
+    var ready = function () { return window.jQuery && document.readyState !== 'loading'; };
+    if (ready()) { run(); return; }
+    var check = function () {
+        if (!ready()) return;
+        document.removeEventListener('DOMContentLoaded', check);
+        window.removeEventListener('shary:jq', check);
+        run();
+    };
+    document.addEventListener('DOMContentLoaded', check);
+    window.addEventListener('shary:jq', check);
+};

@@ -16,7 +16,7 @@
     var SEEN = 'shary-notify-seen';
 
     function store(key, value) { try { if (value === undefined) return window.localStorage.getItem(key); window.localStorage.setItem(key, value); } catch (e) { return null; } return null; }
-    function csrf() { var m = document.querySelector('meta[name="csrf-token"]'); return m ? m.getAttribute('content') : ''; }
+    var csrf = window.SharyCsrf;
 
     // ---- 1) الجرس
     var onPage = !!document.querySelector('[data-notifications]');

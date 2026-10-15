@@ -29,7 +29,7 @@
         list.insertBefore(searchRow, list.firstChild);
 
         function simple(text) {
-            return String(text || '').toLowerCase().replace(/[أإآ]/g, 'ا').replace(/ة/g, 'ه').replace(/ى/g, 'ي').replace(/\s+/g, ' ').trim();
+            return window.SharyPlain(text);   // توحيد البحث العربي: shary/partials/head-core
         }
         function visible() { return options.filter(function (option) { return option.style.display !== 'none'; }); }
         function filter() {

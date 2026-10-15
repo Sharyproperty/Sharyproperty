@@ -27,7 +27,7 @@
     function write(key, list) { try { window.localStorage.setItem(key, JSON.stringify(list)); } catch (error) { /* التخزين مقفول */ } }
     function meta() { try { return JSON.parse(window.localStorage.getItem(META)) || {}; } catch (error) { return {}; } }
     function onServer(id) { return /^(units|projects)\/.+/.test(String(id || '')); }
-    function token() { var node = document.querySelector('meta[name="csrf-token"]'); return node ? node.getAttribute('content') : ''; }
+    var token = window.SharyCsrf;
 
     function post(data) {
         return fetch(toggleUrl, {
