@@ -1255,7 +1255,7 @@ window.SharyZoom = function () {
     if (!mobile) return;
     document.addEventListener('click', function (event) {
         var link = event.target.closest && event.target.closest('a[href]');
-        if (!link || event.defaultPrevented) return;
+        if (!link || event.defaultPrevented || link.hasAttribute('data-store-direct')) return;   // زراير شات Shary AI: المتجر على طول
         var href = link.getAttribute('href') || '';
         if (!/^https?:\/\/(play\.google\.com\/store\/apps|apps\.apple\.com\/)/i.test(href)) return;
         var open = document.body && document.body.getAttribute('data-app-open');

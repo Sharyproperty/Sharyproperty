@@ -698,7 +698,11 @@
                 if (!item || !item.label) return;
                 if (item.type === 'meeting') { box.appendChild(meetButton(item.label, 'sai__act', null)); return; }
                 var node = make(item.url ? 'a' : 'button', 'sai__act', item.label);
-                if (item.url) node.href = item.url; else { node.type = 'button'; node.setAttribute('data-ai-say', item.say || item.label); }
+                if (item.url) {
+                    node.href = item.url;
+                    // «حمّل لـ iPhone / Android»: المتجر على طول في تاب جديدة (الشات يفضل مفتوح) — من غير صفحة /download
+                    if (/^https?:\/\/(play\.google\.com|apps\.apple\.com)\//i.test(item.url)) { node.target = '_blank'; node.rel = 'noopener'; node.setAttribute('data-store-direct', ''); }
+                } else { node.type = 'button'; node.setAttribute('data-ai-say', item.say || item.label); }
                 box.appendChild(node);
             });
             if (box.children.length) list.appendChild(box);

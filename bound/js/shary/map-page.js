@@ -786,7 +786,7 @@
             var wa = ps.getAttribute('data-whatsapp') || '', phone = ps.getAttribute('data-phone') || '';
             var waText = String(psText.wa_text || '').replace(':name', (u.title || '') + (u.url ? ' ' + u.url : ''));
             return '<article class="smap__ps-unit">'
-                + '<a class="smap__ps-pic" href="' + esc(u.url) + '">' + (u.image ? '<img src="' + esc(u.image) + '" alt="' + esc(u.type) + '" loading="lazy" onerror="this.remove()">' : '') + '</a>'
+                + '<a class="smap__ps-pic" href="' + esc(u.url) + '">' + '<img src="' + esc(u.image ? sameSite(u.image) : window.location.origin + '/images/shary/placeholder.svg') + '" alt="' + esc(u.type) + '" loading="lazy" onerror="window.SharyMapPic(this)">' + '</a>'
                 + '<div class="smap__ps-info"><a href="' + esc(u.url) + '"><b>' + esc(u.type || u.label) + '</b>' + (when ? '<small>' + esc(when) + '</small>' : '') + '</a>'
                 + (specs ? '<p class="smap__ps-specs">' + specs + '</p>' : '')
                 + '<div class="smap__ps-row"><strong dir="ltr">' + (u.price ? esc(u.price) + ' <small>' + esc(u.currency) + '</small>' : '') + '</strong>'
@@ -839,6 +839,13 @@
         }
         // لوجو المطور فوق لوحة المشروع: نفس صورة الموقع — ولو ما حملتش (لينك من دومين تاني / الملف مش موجود / النسخة المتصغّرة ما اتعملتش)
         // بنجرّب الصورة الأصلية ، وبعدها حروف المطور. عمر الدايرة ما تبقى فاضية.
+        // صورة الوحدة في قايمة المشروع ما حملتش: الصورة الأصلية (من غير التصغير) ← وبعدها صورة شاري البديلة — عمر المربع ما يفضل فاضي
+        window.SharyMapPic = function (img) {
+            var src = img.getAttribute('src') || '', plain = originalOf(src);
+            if (plain && plain !== src && !img.__plain) { img.__plain = true; img.src = plain; return; }
+            img.onerror = null;
+            img.src = window.location.origin + '/images/shary/placeholder.svg';
+        };
         function sameSite(url) {
             try {
                 var u = new URL(url, window.location.href);

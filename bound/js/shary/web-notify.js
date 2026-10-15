@@ -93,8 +93,9 @@
     document.addEventListener('shary:notifications-enable', function (event) {
         event.preventDefault();
         var done = event.detail && event.detail.done;
+        var fail = event.detail && event.detail.fail;
         Notification.requestPermission().then(function (result) {
-            if (result !== 'granted') return;
+            if (result !== 'granted') { if (fail) fail(result === 'denied' ? 'denied' : 'later'); return; }
             subscribe().then(function () { if (done) done(); }).catch(function () { if (done) done(); });
         });
     });

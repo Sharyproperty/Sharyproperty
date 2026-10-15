@@ -57,15 +57,38 @@
             if (title) title.textContent = title.getAttribute('data-on') || title.textContent;
             if (button) button.classList.add('hidden');
         }
+        // الزرار لازم يرد على الضغطة دايماً: لو المتصفح قافل الإشعارات (اترفضت قبل كده) أو مش بيدعمها — رسالة بتقول يعمل إيه
+        var en = (document.documentElement.getAttribute('lang') || 'ar').slice(0, 2) === 'en';
+        var HINTS = {
+            denied: en ? 'Notifications are blocked in your browser. Tap the lock icon next to the site address ← Notifications / Permissions ← Allow, then press the button again.'
+                       : 'الإشعارات مقفولة من المتصفح. دوس على علامة القفل جنب عنوان الموقع ← الإشعارات (Notifications / الأذونات) ← سماح ، وبعدها دوس الزرار تاني.',
+            unsupported: en ? 'This browser does not support notifications. On iPhone: add Shary to the Home Screen (Share ← Add to Home Screen) and open it from there — or download the Shary app.'
+                            : 'المتصفح ده مش بيدعم الإشعارات. على الآيفون: ضيف شاري للشاشة الرئيسية (مشاركة ← إضافة إلى الشاشة الرئيسية) وافتحه منها — أو نزّل تطبيق شاري.',
+            later: en ? 'Notifications were not allowed. Press the button again and choose «Allow».' : 'الإشعارات ما اتفعّلتش. دوس الزرار تاني واختار «سماح».'
+        };
+        function hint(kind) {
+            var text = HINTS[kind] || HINTS.later;
+            var note = box.querySelector('[data-notify-hint]');
+            if (!note) {
+                note = document.createElement('p');
+                note.setAttribute('data-notify-hint', '');
+                note.setAttribute('role', 'status');
+                note.style.cssText = 'margin:0;padding:12px 16px;border-radius:12px;background:#fff;border:1px solid #F2C94C;color:#1E4266;font-size:14px;font-weight:800;line-height:1.8';
+                var card = box.querySelector('[data-notify-enable]');
+                if (card && card.parentNode) card.parentNode.insertBefore(note, card.nextSibling); else box.insertBefore(note, box.firstChild);
+            }
+            note.textContent = text;
+        }
+        document.addEventListener('shary:notifications-hint', function (event) { hint(event.detail && event.detail.kind); });
         if (window.Notification && Notification.permission === 'granted') enabled();
         if (button) button.addEventListener('click', function () {
-            var go = button.dispatchEvent(new CustomEvent('shary:notifications-enable', { bubbles: true, cancelable: true, detail: { done: enabled } }));
+            if (!('Notification' in window) || !Notification.requestPermission) { hint('unsupported'); return; }
+            if (Notification.permission === 'denied') { hint('denied'); return; }
+            var go = button.dispatchEvent(new CustomEvent('shary:notifications-enable', { bubbles: true, cancelable: true, detail: { done: enabled, fail: hint } }));
             if (!go) return;
-            if (window.Notification && Notification.requestPermission) {
-                try { Notification.requestPermission().then(function (result) { if (result === 'granted') enabled(); }); } catch (error) { enabled(); }
-            } else {
-                enabled();
-            }
+            try {
+                Notification.requestPermission().then(function (result) { if (result === 'granted') enabled(); else hint(result === 'denied' ? 'denied' : 'later'); });
+            } catch (error) { hint('unsupported'); }
         });
 
         refresh();
