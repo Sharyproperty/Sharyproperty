@@ -676,9 +676,48 @@
             unitsFor = null;
             closeUnit();
         }
-        // أماكن الوحدات اللي من غير مكان متسجل: شبكة جوه حدود الماستر بلان — ومن غير حدود: دواير حوالين نقطة المشروع
+        // النقطة جوه حدود الكمبوند؟ (ray casting — [lng, lat])
+        function inRing(pt, ring) {
+            var inside = false;
+            for (var a = 0, b = ring.length - 1; a < ring.length; b = a++) {
+                var xa = ring[a][0], ya = ring[a][1], xb = ring[b][0], yb = ring[b][1];
+                if ((ya > pt[1]) !== (yb > pt[1]) && pt[0] < (xb - xa) * (pt[1] - ya) / ((yb - ya) || 1e-12) + xa) inside = !inside;
+            }
+            return inside;
+        }
+        // شبكة نقط جوه حدود الكمبوند (مرسومة على الخريطة) — بعيد شوية عن السور ، والوحدات كلها جوه الحدود
+        function insideOutline(p, count) {
+            var ring = Array.isArray(p.outline) && p.outline.length > 2 ? p.outline.map(function (pt) { return [Number(pt[0]), Number(pt[1])]; }).filter(function (pt) { return isFinite(pt[0]) && isFinite(pt[1]); }) : null;
+            if (!ring || ring.length < 3 || !count) return null;
+            var cx = 0, cy = 0;
+            ring.forEach(function (pt) { cx += pt[0]; cy += pt[1]; });
+            cx /= ring.length; cy /= ring.length;
+            var inner = ring.map(function (pt) { return [cx + (pt[0] - cx) * 0.82, cy + (pt[1] - cy) * 0.82]; });   // 18% بعيد عن السور
+            var x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+            inner.forEach(function (pt) { x0 = Math.min(x0, pt[0]); x1 = Math.max(x1, pt[0]); y0 = Math.min(y0, pt[1]); y1 = Math.max(y1, pt[1]); });
+            if (!(x1 > x0 && y1 > y0)) return null;
+            var stretch = Math.cos(cy * Math.PI / 180), ratio = ((x1 - x0) * stretch) / (y1 - y0);
+            for (var n = Math.max(2, Math.ceil(Math.sqrt(count * 1.6))); n <= 80; n += 2) {
+                var cols = Math.max(2, Math.round(n * Math.sqrt(ratio))), rows = Math.max(2, Math.round(n / Math.sqrt(ratio))), found = [];
+                for (var r = 0; r < rows; r++) {
+                    for (var c = 0; c < cols; c++) {
+                        var pt = [x0 + (x1 - x0) * (c + 0.5) / cols, y1 - (y1 - y0) * (r + 0.5) / rows];
+                        if (inRing(pt, inner)) found.push(pt);
+                    }
+                }
+                if (found.length >= count) {
+                    var out = [], step = found.length / count;
+                    for (var k = 0; k < count; k++) out.push(found[Math.floor(k * step + step / 2)]);
+                    return out;
+                }
+            }
+            return null;
+        }
+        // أماكن الوحدات اللي من غير مكان متسجل: جوه حدود الكمبوند لو مرسومة ، وإلا شبكة جوه الماستر بلان — ومن غير الاتنين: دواير صغيرة حوالين نقطة المشروع
         function spread(p, count) {
             var out = [], box = planBox(p), i;
+            var fenced = insideOutline(p, count);
+            if (fenced) return fenced;
             if (box) {
                 var w = (box[2] - box[0]) * 0.62, h = (box[3] - box[1]) * 0.62, cx = (box[0] + box[2]) / 2, cy = (box[1] + box[3]) / 2;
                 var ratio = (w * Math.cos(cy * Math.PI / 180)) / Math.max(h, 1e-9);
@@ -691,7 +730,7 @@
             }
             var ring = 1, used = 0, stretch = 1 / Math.max(0.2, Math.cos(p.lat * Math.PI / 180));
             while (used < count) {
-                var size = Math.min(count - used, ring * 6), radius = 0.0013 * ring;
+                var size = Math.min(count - used, ring * 6), radius = 0.0007 * ring;
                 for (i = 0; i < size; i++) {
                     var angle = (i / size) * Math.PI * 2 + ring * 0.5;
                     out.push([p.lng + Math.cos(angle) * radius * stretch, p.lat + Math.sin(angle) * radius]);

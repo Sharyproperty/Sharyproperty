@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         clearInterval(timer);
 
         timer = setInterval(() => {
-            if (window.innerWidth < 768 && !document.hidden) {
+            if (window.innerWidth < 1024 && !document.hidden) {
                 next();
             }
         }, 3500);

@@ -8091,6 +8091,21 @@ html, body {
   .shary-home-root .mobile-promo-carousel { border-radius: 16px !important; overflow: hidden !important; background: #eaf2fb; box-shadow: 0 6px 16px -10px rgba(18, 58, 92, .45); isolation: isolate; transform: translateZ(0); }
   .shary-home-root .mobile-promo-carousel .mobile-promo-slide { border-radius: 0 !important; }
 }
+/* ---- إعلانات الهوم على الموبايل والتابلت والموبايل المفتوح (Fold) لحد 1023px: إعلان واحد بعرض الشاشة (زي الموقع القديم)
+   بدل صف الكروت اللي جنب بعض ، والإعلان بنسبته الطبيعية (من غير مطّ ولا قص) فمفيش أطراف مبوّظة فوق وتحت ---- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .shary-home-root .promo-banners-carousel { display: none !important; }
+  .shary-home-root section:has(> .promo-banners-carousel) { display: none !important; }
+  .shary-home-root section:has(> .mobile-promo-carousel) { display: block !important; }
+  .shary-home-root .mobile-promo-carousel { width: 100%; overflow: hidden !important; touch-action: pan-y; border-radius: 16px !important; background: #eaf2fb; box-shadow: 0 6px 16px -10px rgba(18, 58, 92, .45); isolation: isolate; transform: translateZ(0); }
+  .shary-home-root .mobile-promo-track { display: flex; width: 100%; will-change: transform; }
+  .shary-home-root .mobile-promo-slide { flex: 0 0 100%; width: 100%; overflow: hidden; border-radius: 0 !important; }
+}
+@media (max-width: 1023px) {
+  .shary-home-root .mobile-promo-track { align-items: center; }
+  .shary-home-root .mobile-promo-slide { height: auto !important; line-height: 0; }
+  .shary-home-root .mobile-promo-slide img { display: block; width: 100% !important; height: auto !important; object-fit: contain !important; pointer-events: none; user-select: none; -webkit-user-drag: none; }
+}
 /* ---- قسم "شاري معاك" على الموبايل: الخلفية أقل والتليفون نازل جواها (الجزء الطالع منه بره الخلفية أقل) ، التليفون بنسبته الطبيعية ، والكلام الأخضر سطر واحد أرفع ---- */
 @media (max-width: 959px) {
   .shary-home-root .sh-hero { --phone-w: 212px; padding-top: 12px !important; }
