@@ -1,3 +1,4 @@
+// ── home-search.js · جزء 1 من 5: فلاتر البحث في الرئيسية (الحالة / النوع / الغرف / الحمامات) (المصدر: resources/js/shary/home-search/01-hero-filters.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * الرئيسية: البحث في الهيرو (اقتراحات ، الفلاتر السريعة ، النتايج) — كان جوه resources/views/shary/home/index.blade.php.
  * الكلام واللينكات من window.SharyHomeConf (بيتحط في <head> الصفحة).
@@ -359,6 +360,7 @@
         SYNC PRICE INPUTS WITH SLIDER
         ========================================================= */
 
+// ── home-search.js · جزء 2 من 5: شريط السعر وخاناته (المصدر: resources/js/shary/home-search/02-price.js — عدّل هنا وشغّل tools/minify-assets.sh)
         function syncHeroPriceInputs() {
 
             const low = document.getElementById('range_heroPrice_low');
@@ -587,6 +589,7 @@
         INITIALIZE
         ========================================================= */
 
+// ── home-search.js · جزء 3 من 5: الاختيارات والبحث المتقدم وزرار البحث (المصدر: resources/js/shary/home-search/03-advanced-and-submit.js — عدّل هنا وشغّل tools/minify-assets.sh)
         document.addEventListener('DOMContentLoaded', function () {
 
             const low = document.getElementById('range_heroPrice_low');
@@ -658,58 +661,14 @@
 
         });
 
+        // البحث المتقدم القديم (ديسك توب) — الرئيسية بتفتح نافذة الفلتر الجديدة (js/shary/filter-window.js بيحط window.toggleHeroAdvancedSearch)
         function toggleHeroAdvancedSearch() {
-
-            const isMobile = window.matchMedia('(max-width: 767px)').matches;
-
             const desktopPanel = document.getElementById('heroAdvancedSearch');
-            const mobilePanel = document.getElementById('filterBar');
-
-            if (isMobile) {
-
-                // Mobile → use filterBar
-                if (!mobilePanel) {
-                    return;
-                }
-
-                mobilePanel.classList.toggle('is-open');
-
-                // Make sure desktop panel is closed
-                if (desktopPanel) {
-                    desktopPanel.classList.remove('show');
-                    desktopPanel.classList.remove('is-open');
-                }
-
-            } else {
-
-                // Desktop → use heroAdvancedSearch
-                if (!desktopPanel) {
-                    return;
-                }
-
-                desktopPanel.classList.toggle('show');
-                desktopPanel.classList.toggle('is-open');
-
-                // Make sure mobile panel is closed
-                if (mobilePanel) {
-                    mobilePanel.classList.remove('is-open');
-                }
+            if (!desktopPanel) {
+                return;
             }
-        }
-
-        function toggleSearchDeveloperBar(type) {
-            const searchBar = document.getElementById("searchDeveloperBar");
-            const searchBarClose = document.getElementById("searchDeveloperBar_close");
-            if (type === "open") {
-                searchBar.style.height = "100dvh";
-                searchBar.style.maxHeight = "100dvh";
-                searchBarClose.classList.replace("z-[-1]", "z-[1]");
-                document.querySelector("body").style.overflow = "hidden";
-            } else {
-                searchBar.style.maxHeight = "0px";
-                searchBarClose.classList.replace("z-[1]", "z-[-1]");
-                document.querySelector("body").style.overflow = "auto";
-            }
+            desktopPanel.classList.toggle('show');
+            desktopPanel.classList.toggle('is-open');
         }
 
         /* COLLECT ADVANCED FILTERS */
@@ -777,118 +736,7 @@
             window.location.href = sharyHomeSearchUrl(params);
         }
 
-        function resetMobileFilterControls(container) {
-            if (!container) return;
-
-            container.querySelectorAll('input, select, textarea').forEach(input => {
-                if (input.type === 'checkbox') {
-                    input.checked = false;
-                } else if (input.type === 'radio') {
-                    input.checked = input.defaultChecked;
-                } else if (input.type === 'range') {
-                    input.value = input.id.endsWith('_high')
-                        ? input.max
-                        : input.min;
-                } else if (input.tagName === 'SELECT') {
-                    input.value = '';
-                } else if (!['button', 'submit'].includes(input.type)) {
-                    input.value = '';
-                }
-            });
-
-            // Refresh slider labels and track styling.
-            container.querySelectorAll('.range-slider[id]').forEach(slider => {
-                const match = slider.id.match(/^range_(.+)_slider$/);
-
-                if (match && typeof updateRangeSlider === 'function') {
-                    updateRangeSlider(match[1]);
-                }
-            });
-        }
-
-        function resetMobileFilterSection(section) {
-            if (!section) return;
-
-            resetMobileFilterControls(section);
-
-            const keys = (section.dataset.filterSection || '')
-                .split(',')
-                .filter(Boolean);
-
-            // Clear state after updating sliders, because their update function
-            // might write the default range back into the filters.
-            keys.forEach(key => {
-                heroSearchFilters[key] =
-                    Array.isArray(heroSearchFilters[key]) ? [] : '';
-            });
-
-            if (keys.includes('location') || keys.includes('developer')) {
-                resetMobileAreaAndDeveloper();
-            }
-        }
-        
-        function resetMobileAreaAndDeveloper() {
-            const addLabel = window.SharyHomeConf.addLabel;
-
-            // Reuse the same selection functions used by your area/developer lists.
-            if (typeof selectHomeArea === 'function') {
-                selectHomeArea('', addLabel);
-            }
-
-            if (typeof selectHomeDeveloper === 'function') {
-                selectHomeDeveloper('', addLabel);
-            }
-
-            heroSearchFilters.location = '';
-            heroSearchFilters.developer = '';
-
-            const panel = document.getElementById('filterBar');
-
-            if (panel) {
-                panel.querySelectorAll(
-                    '[onclick="toggleSearchBar(\'open\')"],' +
-                    '[onclick="toggleSearchDeveloperBar(\'open\')"]'
-                ).forEach(button => {
-                    button.textContent = addLabel;
-                });
-            }
-        }
-
-        function resetMobileFilters() {
-            const panel = document.getElementById('filterBar');
-
-            if (!panel) return;
-
-            resetMobileFilterControls(panel);
-            resetMobileAreaAndDeveloper();
-
-            Object.keys(heroSearchFilters).forEach(key => {
-                heroSearchFilters[key] =
-                    Array.isArray(heroSearchFilters[key]) ? [] : '';
-            });
-
-            // Restore the default selected radio in your HTML.
-            const developerUnits = panel.querySelector('#developerUnits');
-
-            if (developerUnits) {
-                developerUnits.checked = true;
-                developerUnits.dispatchEvent(
-                    new Event('change', { bubbles: true })
-                );
-            }
-        }
-
-        function normalizeMobileSearch(value) {
-            return String(value || '')
-                .normalize('NFKC')
-                .toLowerCase()
-                .replace(/[أإآٱ]/g, 'ا')
-                .replace(/ى/g, 'ي')
-                .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
-                .replace(/\s+/g, ' ')
-                .trim();
-        }
-
+// ── home-search.js · جزء 4 من 5: زرار الفلتر (موبايل) والسوايبر وقايمة المشاركة (المصدر: resources/js/shary/home-search/04-mobile-filters.js — عدّل هنا وشغّل tools/minify-assets.sh)
         /* MOBILE FILTER BUTTON */
         const openFiltersButton = document.getElementById('openFilters');
 
@@ -914,24 +762,6 @@
             },
         });
 
-        function selectDeveloperItem(element) {
-            // Remove selected state from all developers
-            document.querySelectorAll('.developer-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-
-            // Add selected state to clicked developer
-            element.classList.add('selected');
-        }
-
-        function selectArea(element) {
-            document.querySelectorAll('.area-item').forEach(item => {
-                item.classList.remove('selected');
-            });
-
-            element.classList.add('selected');
-        }
-
         // Close the share menu if clicking outside
         document.addEventListener("click", () => {
             document.querySelectorAll(".share-menu").forEach((menu) => {
@@ -948,6 +778,7 @@
         let heroSearchLoading = false;
         let heroSearchCurrentQuery = '';
 
+// ── home-search.js · جزء 5 من 5: البحث وهو بيكتب ونتايجه وخانة البحث التانية (المصدر: resources/js/shary/home-search/05-hero-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
         const heroSearchInput = document.getElementById('heroSearchInput');
         const heroSearchResults = document.getElementById('heroSearchResults');
 

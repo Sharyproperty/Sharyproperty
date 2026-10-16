@@ -1,3 +1,4 @@
+// ── map-page.js · جزء 1 من 7: الشرح والإعدادات وستايل الخريطة والبيانات من الـ API (المصدر: resources/js/shary/map-page/01-start-and-data.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * خريطة شاري التفاعلية (resources/views/map/show.blade.php)
  * - بتفتح على الكرة الأرضية (قمر صناعي) وبتقرّب بحركة: على المشروع المطلوب (data-focus="1") ، أو على المنطقة (data-area) ،
@@ -341,6 +342,7 @@
         // ديسك توب + جاي من لينك مشروع (?project=): الفتحة بالكرة الأرضية اللي بتلف وبعدين المشروع — الموبايل بيفتح على المشروع على طول (زي ما هو)
         function globeTrip() { return (!!state.asked || /[?&]area=/.test(window.location.search)) && !state.fit && window.matchMedia('(min-width: 1024px)').matches; }
 
+// ── map-page.js · جزء 2 من 7: تحميل مكتبة الخريطة (Mapbox / MapLibre) (المصدر: resources/js/shary/map-page/02-map-library.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- المكتبة: Mapbox (بتوكن — data-mapbox-src) أو MapLibre (data-gl-src). الاتنين بيتحملوا بعد ما الصفحة تظهر (مش في الـ head) ، مرة واحدة.
         //      Mapbox ما اتحملتش (الشبكة / مقفولة / اتأخرت قوي): الخريطة بتكمّل بـ MapLibre (صور القمر الصناعي من Esri) — عمرها ما تقف
         function loadLib() {
@@ -438,6 +440,7 @@
             }, (duration || 1400) + 900);
         }
 
+// ── map-page.js · جزء 3 من 7: الكرة الأرضية وعلامات أسعار المشاريع (المصدر: resources/js/shary/map-page/03-globe-and-markers.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- الخريطة: الكرة الأرضية + علامة سعر لكل مشروع
         function startGL() {
             if (gl) return true;
@@ -644,20 +647,27 @@
             outline(info(item));
         }
 
-        // ---- وحدات المشروع على الخريطة: لما العميل يقرّب على المشروع المختار بتظهر علامة لكل وحدة (shary/map/units?project=) ،
-        //      والضغط على العلامة بيفتح كارت الوحدة بتاع الموقع ([data-smap-unit]) بلينك صفحتها وأزرار المشاركة / المفضلة / المقارنة.
+// ── map-page.js · جزء 4 من 7: وحدات المشروع على الخريطة (المصدر: resources/js/shary/map-page/04-project-units.js — عدّل هنا وشغّل tools/minify-assets.sh)
+        // ---- وحدات المشروع على الخريطة: لما العميل يقرّب على المشروع المختار بتظهر لكل وحدة بناية صغيرة عليها النوع والمساحة ("شقة 170 م²" — shary/map/units?project=) ،
+        //      والضغط عليها بيفتح فوقها على الخريطة كارت صغير ([data-smap-unit]): صورة صغيرة ، النوع والمساحة ، السعر — والكارت كله لينك لصفحة الوحدة.
+        //      لوحة وحدات المشروع اللي تحت بتفضل زي ما هي.
         //      الوحدة اللي ليها مكان متسجل بتتحط فيه ، والباقي بيتوزّع جوه حدود الماستر بلان (أو حوالين نقطة المشروع).
         var wantedUnit = '';   // ?unit= من اللينك — بيتفتح كارتها أول ما وحدات المشروع تتحمّل
         var UNITS_ZOOM = 15;
         var unitsUrl = root.getAttribute('data-units-url') || '';
         var unitBox = root.querySelector('[data-smap-unit]');
         var unitBody = unitBox ? unitBox.querySelector('[data-smap-unit-body]') : null;
-        var unitCache = {}, unitMarkers = [], unitsFor = null, unitHinted = {};
+        var unitCache = {}, unitMarkers = [], unitsFor = null, unitHinted = {}, unitPop = null;
 
         function closeUnit() {
             if (unitBox) unitBox.hidden = true;
+            if (unitPop) { unitPop.remove(); unitPop = null; }
+            root.classList.remove('has-unit-on');
             unitMarkers.forEach(function (entry) { entry.pin.classList.remove('is-on'); });
         }
+        // البناية الصغيرة اللي تحت كلمة الوحدة: عمارة بشبابيك وسنّ لتحت على مكانها (نفس الرسمة لكل الوحدات — اللون من الـ CSS: تركواز ، والمختارة كحلي)
+        var BUILDING = '<svg class="smap__bldg" viewBox="0 0 32 36" aria-hidden="true"><path class="smap__bldg-body" d="M4 4.5A2.5 2.5 0 0 1 6.5 2h19A2.5 2.5 0 0 1 28 4.5V29H18.5L16 34l-2.5-5H4Z"/>'
+            + '<path class="smap__bldg-win" d="M7.5 6.5h3v3h-3zM14.5 6.5h3v3h-3zM21.5 6.5h3v3h-3zM7.5 12h3v3h-3zM14.5 12h3v3h-3zM21.5 12h3v3h-3zM7.5 17.5h3v3h-3zM14.5 17.5h3v3h-3zM21.5 17.5h3v3h-3zM14 23h4v6h-4z"/></svg>';
         function clearUnits() {
             unitMarkers.forEach(function (entry) { entry.marker.remove(); });
             unitMarkers = [];
@@ -688,15 +698,45 @@
             }
             return out;
         }
+        // الكارت لازم يبان كله: الخريطة بتتحرك شوية لو طالع برا حدودها أو تحت لوحة وحدات المشروع (موبايل: تحت ، ديسك توب: على الجنب)
+        function keepUnitInView() {
+            if (!gl || !unitBox || unitBox.hidden) return;
+            if (gl.isMoving()) { gl.once('moveend', keepUnitInView); return; }   // الخريطة لسه بتطير للوحدة: نستنى ما تقف (التحريك في النص بيوقف الطيران)
+            var box = unitBox.getBoundingClientRect(), area = gl.getContainer().getBoundingClientRect(), gap = 12, dx = 0, dy = 0;
+            var panel = root.querySelector('[data-smap-ps]'), cover = panel && !panel.hidden ? panel.getBoundingClientRect() : null;
+            var left = area.left + gap, right = area.right - gap, top = area.top + gap, bottom = area.bottom - gap;
+            if (cover && cover.width && cover.height) {
+                if (cover.left <= area.left + gap * 2 && cover.right >= area.right - gap * 2) bottom = Math.min(bottom, cover.top - gap);   // لوحة من تحت
+                else if (cover.top <= box.bottom && cover.bottom >= box.top) {
+                    if (cover.left <= area.left + gap * 2) left = Math.max(left, cover.right + gap); else right = Math.min(right, cover.left - gap);   // لوحة على الجنب
+                }
+            }
+            // أزرار الخريطة (الطبقات / الرسم / مكاني / الزوم): الكارت ما يقعدش تحتها
+            var tools = root.querySelector('.smap__tools'), bar = tools ? tools.getBoundingClientRect() : null;
+            if (bar && bar.width && bar.top <= box.bottom && bar.bottom >= box.top) {
+                if (bar.left + bar.width / 2 < (left + right) / 2) left = Math.max(left, bar.right + gap); else right = Math.min(right, bar.left - gap);
+            }
+            if (box.left < left) dx = box.left - left; else if (box.right > right) dx = box.right - right;
+            if (box.top < top) dy = box.top - top; else if (box.bottom > bottom) dy = box.bottom - bottom;
+            if (dx || dy) gl.panBy([dx, dy], { duration: 350 });
+        }
         function openUnit(unit, pin) {
             if (!unitBox || !unitBody) return;
-            unitBody.innerHTML = unit.html || '';
-            unitMarkers.forEach(function (entry) { entry.pin.classList.toggle('is-on', entry.pin === pin); });
+            unitBody.innerHTML = '<a class="smap__ucard" href="' + esc(unit.url) + '">'
+                + '<img class="smap__ucard-pic" src="' + esc(unit.image ? sameSite(unit.image) : window.location.origin + '/images/shary/placeholder.svg') + '" alt="' + esc(unit.label) + '" loading="lazy" onerror="window.SharyMapPic(this)">'
+                + '<span class="smap__ucard-info"><b>' + esc(unit.label) + '</b>'
+                + (unit.price ? '<strong>' + esc(unit.price) + ' ' + esc(unit.currency) + '</strong>' : '') + '</span>'
+                + '<span class="smap__ucard-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></span></a>';
+            var at = null;
+            unitMarkers.forEach(function (entry) { entry.pin.classList.toggle('is-on', entry.pin === pin); if (entry.pin === pin) at = entry.at; });
+            root.classList.add('has-unit-on');
             unitBox.hidden = false;
-            unitBox.scrollTop = 0;
-            // حالة المفضلة / المقارنة على الكارت الجديد + لوجو المطور جوه الدايرة
-            if (window.SharyCards) window.SharyCards.refresh(unitBody);
-            if (window.SharyLogoFit) window.SharyLogoFit.scan(unitBody);
+            // الكارت فوق البناية نفسها على الخريطة (بيتحرك معاها) — فوق كلمة الوحدة
+            if (at && gl) {
+                if (unitPop) unitPop.remove();
+                unitPop = new glLib.Marker({ element: unitBox, anchor: 'bottom', offset: [0, -(pin.offsetHeight + 8)] }).setLngLat(at).addTo(gl);
+                requestAnimationFrame(keepUnitInView);
+            }
             root.dispatchEvent(new CustomEvent('shary:map-unit', { bubbles: true, detail: { id: unit.id } }));
         }
         // وحدات العمارة: صفوف صغيرة تحت اسم العمارة (العمارة نفسها في النص فوقهم)
@@ -724,12 +764,13 @@
                 if (!at || !isFinite(at[0]) || !isFinite(at[1])) return;
                 var pin = document.createElement('button');
                 pin.type = 'button';
-                pin.className = 'smap__marker smap__marker--unit' + (unit.code ? ' has-code' : '');
+                pin.className = 'smap__marker smap__marker--unit';
                 pin.title = unit.title || unit.label || '';
                 pin.setAttribute('aria-label', unit.title || unit.label || '');
                 var label = document.createElement('span');
                 label.textContent = unit.label || '';
                 pin.appendChild(label);
+                pin.insertAdjacentHTML('beforeend', BUILDING);
                 pin.addEventListener('click', function (event) { event.stopPropagation(); toggleAreas(false); openUnit(unit, pin); });
                 unitMarkers.push({ pin: pin, unit: unit, at: at, marker: new glLib.Marker({ element: pin, anchor: 'bottom' }).setLngLat(at).addTo(gl) });
             });
@@ -751,6 +792,9 @@
                 return;
             }
             if (list === null) return;
+            // الخريطة لسه في البداية (الكرة الأرضية) أو بتطير للمشروع: الطيران للوحدة بعد ما توصل المشروع (عشان واحد ما يلغيش التاني) —
+            // showUnits بتتنده تاني لوحدها مع كل moveend (03-globe-and-markers)
+            if (wantedUnit && (gl.isMoving() || gl.getZoom() < UNITS_ZOOM - 4)) return;
             if (wantedUnit && list.some(function (unit) { return String(unit.id) === wantedUnit; })) {
                 // اللينك جاي على وحدة بعينها (?unit=): علامات وحدات المشروع بتترسم ، والخريطة بتقرّب على مكان الوحدة وكارتها بيتفتح
                 var id = wantedUnit;
@@ -796,6 +840,7 @@
             document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !unitBox.hidden) closeUnit(); });
         }
 
+// ── map-page.js · جزء 5 من 7: لوحة المشروع المختار (الوحدات بالتابات) (المصدر: resources/js/shary/map-page/05-project-panel.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- لوحة المشروع المختار ([data-smap-ps]): وحدات المشروع تحت بعض بتابات (الكل / من المطور / إعادة بيع / شاري معاك) وترتيب + اتصال وواتساب
         var ps = root.querySelector('[data-smap-ps]');
         var psText = {};
@@ -935,6 +980,7 @@
             document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !ps.hidden) closeSheet(); });
         }
 
+// ── map-page.js · جزء 6 من 7: حدود المشروع وشريط السعر والفلترة ولوحة الفلاتر (المصدر: resources/js/shary/map-page/06-bounds-price-filters.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- حدود المشروع المختار (compounds.bounds): خط أصفر حوالين المشروع على الخريطة
         function outline(p) {
             if (!gl || !gl.getStyle) return;
@@ -1124,6 +1170,7 @@
         });
 
 
+// ── map-page.js · جزء 7 من 7: البحث الذكي (اقتراحات وهو بيكتب) (المصدر: resources/js/shary/map-page/07-smart-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- البحث الذكي: اقتراحات وهو بيكتب — مشروع / مطور / منطقة / نوع وحدة (بيفهم الهمزات والتاء المربوطة و"ال" وغلطة حرف)
         var suggestBox = null, suggestRows = [];
         var suggestText = {};

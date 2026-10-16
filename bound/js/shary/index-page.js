@@ -1,3 +1,4 @@
+// ── index-page.js · جزء 1 من 6: الشرح وأرقام السوق والرسم وجدول الأنواع (المصدر: resources/js/shary/index-page/01-market-chart.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * صفحة مؤشر شاري (shary-index/show.blade.php)
  * - نوع الوحدة (سكني / تجاري / ...): بيغيّر أرقام السوق، جملة الشهر، الرسم، جدول المناطق، "الأبرز هذا الشهر"،
@@ -215,6 +216,7 @@
             }
         }
 
+// ── index-page.js · جزء 2 من 6: جدول المناطق والأبرز هذا الشهر (المصدر: resources/js/shary/index-page/02-areas-highlights.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- جدول المناطق ----------
         var section = page.querySelector('[data-index-areas]');
         var body = page.querySelector('[data-index-rows]');
@@ -333,6 +335,7 @@
             if (holder) holder.classList.toggle('hidden', !total);
         }
 
+// ── index-page.js · جزء 3 من 6: ميزانيتك تجيب إيه وحاسبة العائد (المصدر: resources/js/shary/index-page/03-budget-calculator.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- ميزانيتك تجيب إيه ----------
         var budget = page.querySelector('[data-index-budget]');
         var budgetInput = budget ? budget.querySelector('[data-budget-input]') : null;
@@ -461,6 +464,7 @@
             });
         }
 
+// ── index-page.js · جزء 4 من 6: قارن بين منطقتين ومليون جنيه بقوا كام (المصدر: resources/js/shary/index-page/04-compare-million.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- قارن بين منطقتين ----------
         var compare = page.querySelector('[data-index-compare]');
         function picked(side) {
@@ -574,6 +578,7 @@
                 announce();
             });
         }
+// ── index-page.js · جزء 5 من 6: الترتيب وتغيير المنطقة وجدول الأنواع والفلتر المتقدم (المصدر: resources/js/shary/index-page/05-sort-types-filter.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- الترتيب: زرار + قايمة تحته (نفس تصميم صفحة المنطقة). الاختيار بيتكتب في الـ select المخفي ----------
         var sortOpen = page.querySelector('[data-index-sort-open]');
         var sortMenu = page.querySelector('[data-index-sort-menu]');
@@ -678,6 +683,7 @@
             document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !advDialog.classList.contains('hidden')) closeAdv(); });
         }
 
+// ── index-page.js · جزء 6 من 6: أخبار السوق ولوحة اختيار المنطقة (المصدر: resources/js/shary/index-page/06-news-area-panel.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- أخبار السوق: تصفية بنوع الخبر (الكل / طروحات / أسعار / تسليمات / قرارات) ----------
         var newsFilters = page.querySelectorAll('[data-news-filter]');
         if (newsFilters.length) {

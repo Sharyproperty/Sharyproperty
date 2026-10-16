@@ -1,3 +1,4 @@
+// ── masterplans.js · جزء 1 من 5: الحسابات: الإحداثيات والأركان وحدود المشروع (المصدر: resources/js/shary/masterplans/01-geometry.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * الماستر بلان على خريطة شاري التفاعلية (js/shary/map-page.js بيشغّله لوحده لو الملف ده محمّل).
  *
@@ -125,6 +126,7 @@
     }
     function absolute(url) { try { return new URL(String(url), window.location.href).href; } catch (error) { return String(url || ''); } }
 
+// ── masterplans.js · جزء 2 من 5: ربط الخريطة وملف الأماكن (المصدر: resources/js/shary/masterplans/02-attach-and-places.js — عدّل هنا وشغّل tools/minify-assets.sh)
     function attach(map, options) {
         options = options || {};
         var MP = {
@@ -296,6 +298,7 @@
             setTimeout(function () { if (!placementsDone) { placementsDone = true; refresh(); } }, 5000);
         }
 
+// ── masterplans.js · جزء 3 من 5: مكان الصورة والكتابة والمراحل فوقها (المصدر: resources/js/shary/masterplans/03-image-place-and-labels.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- مكان الصورة ----------
         function coordsFor(project, img) {
             var saved = savedCorners(project);
@@ -412,6 +415,7 @@
             box.classList.toggle('mp-units-on', z >= 16.5);             // الوحدات
         }
 
+// ── masterplans.js · جزء 4 من 5: طبقات الماستر بلان على الخريطة (المصدر: resources/js/shary/masterplans/04-layers.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- الطبقات ----------
         function drop(x) {
             try {
@@ -552,6 +556,7 @@
             });
         }
 
+// ── masterplans.js · جزء 5 من 5: اللي في الشاشة بس والتصدير (المصدر: resources/js/shary/masterplans/05-on-screen-only.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- اللي في الشاشة بس ----------
         function styleReady() {
             try { if (map.style && typeof map.style._loaded === 'boolean') return map.style._loaded; } catch (error) { /* نسخة مختلفة من المكتبة */ }

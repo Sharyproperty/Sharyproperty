@@ -205,374 +205,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.resetMobileFilters = function () {
-
-        selectedHomeFilters.locations = [];
-        selectedHomeFilters.developers = [];
-
-        document
-            .querySelectorAll('.area-item.selected')
-            .forEach(item => item.classList.remove('selected'));
-
-        document
-            .querySelectorAll('.developer-item.selected')
-            .forEach(item => item.classList.remove('selected'));
-
-        updateSelectedAreasButton();
-        updateSelectedDevelopersButton();
-
-
-        // Existing reset logic for the other filters
-        document
-            .querySelectorAll('#filterBar input[type="checkbox"]')
-            .forEach(input => {
-                input.checked = false;
-            });
-
-        document
-            .querySelectorAll('#filterBar input[type="radio"]')
-            .forEach(input => {
-                input.checked = false;
-            });
-
-    };
-
-    window.selectHomeArea = function (areaId, areaName, element = null) {
-
-        if (!areaId) {
-            return;
-        }
-
-        // Make sure location is an array
-        if (!Array.isArray(selectedHomeFilters.location)) {
-            selectedHomeFilters.location = [];
-        }
-
-        const existingIndex = selectedHomeFilters.location.findIndex(
-            item => String(item.id) === String(areaId)
-        );
-
-
-        /*
-        * Already selected
-        * => remove it
-        */
-        if (existingIndex !== -1) {
-
-            selectedHomeFilters.location.splice(existingIndex, 1);
-
-            if (element) {
-                element.classList.remove('selected');
-                element.classList.remove('bg-[#F5F5F5]');
-                element.classList.remove('text-[#1563DF]');
-            }
-
-        }
-
-        /*
-        * Not selected
-        * => add it
-        */
-        else {
-
-            selectedHomeFilters.location.push({
-                id: areaId,
-                name: areaName
-            });
-
-            if (element) {
-                element.classList.add('selected');
-                element.classList.add('bg-[#F5F5F5]');
-                element.classList.add('text-[#1563DF]');
-            }
-        }
-
-
-        // updateSelectedAreasUI();
-
-    };
-
-    /* =========================================================
-    HOME FILTER STATE
-    ========================================================= */
-
-    window.selectedHomeFilters = window.selectedHomeFilters || {};
-
-    selectedHomeFilters.locations =
-        Array.isArray(selectedHomeFilters.locations)
-            ? selectedHomeFilters.locations
-            : [];
-
-    selectedHomeFilters.developers =
-        Array.isArray(selectedHomeFilters.developers)
-            ? selectedHomeFilters.developers
-            : [];
-
-    window.toggleAreaSelection = function (element) {
-
-        const areaId = String(element.dataset.areaId || '');
-        const areaName = element.dataset.areaName || '';
-
-        if (!areaId) {
-            return;
-        }
-
-        const existingIndex = selectedHomeFilters.locations.findIndex(
-            item => String(item.id) === areaId
-        );
-
-        if (existingIndex !== -1) {
-
-            // REMOVE
-            selectedHomeFilters.locations.splice(existingIndex, 1);
-
-            element.classList.remove('selected');
-
-        } else {
-
-            // ADD
-            selectedHomeFilters.locations.push({
-                id: areaId,
-                name: areaName
-            });
-
-            element.classList.add('selected');
-        }
-
-        updateSelectedAreasButton();
-    };
-
-    /* =========================================================
-    AREAS - MULTI SELECT
-    ========================================================= */
-    window.toggleAreaSelection = function (element) {
-
-        const areaId = String(element.dataset.areaId || '');
-        const areaName = element.dataset.areaName || '';
-
-        if (!areaId) {
-            return;
-        }
-
-        const existingIndex = selectedHomeFilters.locations.findIndex(
-            item => String(item.id) === areaId
-        );
-
-        if (existingIndex !== -1) {
-
-            // REMOVE
-            selectedHomeFilters.locations.splice(existingIndex, 1);
-
-            element.classList.remove('selected');
-
-        } else {
-
-            // ADD
-            selectedHomeFilters.locations.push({
-                id: areaId,
-                name: areaName
-            });
-
-            element.classList.add('selected');
-        }
-
-        updateSelectedAreasButton();
-    };
-
-
-    /* =========================================================
-    CONFIRM AREAS
-    ========================================================= */
-    window.confirmAreaSelection = function () {
-
-        updateSelectedAreasButton();
-
-        toggleSearchBar('close');
-    };
-
-
-    /* =========================================================
-    UPDATE AREA BUTTON
-    ========================================================= */
-    window.updateSelectedAreasButton = function () {
-
-        const button = document.getElementById('selectedAreasButton');
-
-        if (!button) {
-            return;
-        }
-
-        const locations = selectedHomeFilters.locations || [];
-
-        if (!locations.length) {
-
-            button.textContent = window.SharyHomeConf.addLabel;
-
-            button.classList.remove('has-selection');
-
-            return;
-        }
-
-        const names = locations.map(item => item.name);
-
-        button.textContent = names.join(', ');
-
-        button.classList.add('has-selection');
-    };
-
-    /* =========================================================
-    DEVELOPERS - MULTI SELECT
-    ========================================================= */
-    window.toggleDeveloperSelection = function (element) {
-
-        const developerId = String(element.dataset.developerId || '');
-        const developerName = element.dataset.developerName || '';
-
-        if (!developerId) {
-            return;
-        }
-
-        const existingIndex = selectedHomeFilters.developers.findIndex(
-            item => String(item.id) === developerId
-        );
-
-        if (existingIndex !== -1) {
-
-            // REMOVE
-            selectedHomeFilters.developers.splice(existingIndex, 1);
-
-            element.classList.remove('selected');
-
-        } else {
-
-            // ADD
-            selectedHomeFilters.developers.push({
-                id: developerId,
-                name: developerName
-            });
-
-            element.classList.add('selected');
-        }
-
-        updateSelectedDevelopersButton();
-    };
-
-
-    /* =========================================================
-    CONFIRM DEVELOPERS
-    ========================================================= */
-    window.confirmDeveloperSelection = function () {
-
-        updateSelectedDevelopersButton();
-
-        toggleSearchDeveloperBar('close');
-    };
-
-
-    /* =========================================================
-    UPDATE DEVELOPER BUTTON
-    ========================================================= */
-    window.updateSelectedDevelopersButton = function () {
-
-        const button = document.getElementById('selectedDevelopersButton');
-
-        if (!button) {
-            return;
-        }
-
-        const developers = selectedHomeFilters.developers || [];
-
-        if (!developers.length) {
-
-            button.textContent = window.SharyHomeConf.addLabel;
-
-            button.classList.remove('has-selection');
-
-            return;
-        }
-
-        const names = developers.map(item => item.name);
-
-        button.textContent = names.join(', ');
-
-        button.classList.add('has-selection');
-    };
-
-    window.submitHomeSearchMobile = function (fromMobileFilter) {
+    window.submitHomeSearchMobile = function () {
         const params = new URLSearchParams();
         const searchValue = (
             document.getElementById('heroSearchInput')?.value ||
-            // document.getElementById('homeMobileSearchInput')?.value ||
             document.getElementById('navSearchInput')?.value ||
             document.getElementById('mobileSearchInput')?.value ||
             ''
         ).trim();
 
         Object.entries(selectedHomeFilters).forEach(([key, value]) => {
-            if(key !== 'locations' && key !== 'developers') {
-                params.set(key, value);
-            }
+            params.set(key, value);
         });
         if (searchValue) {
             params.set('q', searchValue);
         }
 
-        const locationIds = (selectedHomeFilters.locations || [])
-            .map(item => item.id)
-            .filter(Boolean);
-
-        locationIds.forEach(locationId => {
-            params.append('location[]', locationId);
-        });
-
-        const developerIds = (selectedHomeFilters.developers || [])
-            .map(item => item.id)
-            .filter(Boolean);
-
-        developerIds.forEach(developerId => {
-            params.append('developer[]', developerId);
-        });
-
-
-        if (fromMobileFilter) {
-            if (document.getElementById('resale')?.checked) {
-                params.set('sale_type', 'resale');
-            } else if (document.getElementById('developerUnits')?.checked) {
-                params.set('sale_type', 'developer_sale');
-            } else if (document.getElementById('forRent')?.checked) {
-                params.set('sale_type', 'rent');
-            }
-
-            collectChecked(params, '#filterBar input[id^="side_property_"]:checked', 'property_type');
-            collectChecked(params, '#filterBar input[id^="side_bedroom_"]:checked', 'bedrooms');
-            collectChecked(params, '#filterBar input[id^="side_bathroom_"]:checked', 'bathrooms');
-            addRangeParams(params, 'price', 'range_sideSmFilterPrice_low', 'range_sideSmFilterPrice_high');
-            addRangeParams(params, 'area', 'range_sideSmFilterArea_low', 'range_sideSmFilterArea_high');
-        } else {
-            collectChecked(params, '#search_advanced input[name="advanced_year[]"]:checked', 'installment_years');
-            collectInput(params, 'down_payment', 'down_payment');
-            collectInput(params, 'monthly_amount', 'monthly_amount');
-            addRangeParams(params, 'price', 'range_searchPrice_low', 'range_searchPrice_high');
-            addRangeParams(params, 'area', 'range_searchArea_low', 'range_searchArea_high');
-        }
+        collectChecked(params, '#search_advanced input[name="advanced_year[]"]:checked', 'installment_years');
+        collectInput(params, 'down_payment', 'down_payment');
+        collectInput(params, 'monthly_amount', 'monthly_amount');
+        addRangeParams(params, 'price', 'range_searchPrice_low', 'range_searchPrice_high');
+        addRangeParams(params, 'area', 'range_searchArea_low', 'range_searchArea_high');
 
         // أزرار الحالة جنب خانة البحث (ديسك توب): "الكل / من المطور / إعادة بيع" — وفي تبويب الإيجار "الكل / مفروش / غير مفروش".
         // الاختيار بيتبعت لصفحة البحث عشان الفلتر هناك يتعلّم عليه: sale_type = developer_sale | resale ، أو furnished = furnished | unfurnished مع الإيجار
-        if (!fromMobileFilter) {
-            const statusButton = document.querySelector('.property-status-filter .property-status.active');
-            const statusValue = statusButton ? (statusButton.dataset.value || '') : '';
-            const activeTab = document.querySelector('.home-search-tab.is-active, .home-search-tab.active');
-            const rentTab = (params.get('sale_type') || (activeTab && activeTab.dataset.value) || '') === 'rent';
-            if (statusValue !== '') {
-                if (rentTab) {
-                    params.set('furnished', String(statusValue) === '1' ? 'furnished' : 'unfurnished');
-                } else if (statusValue === 'resale' || statusValue === 'developer_sale') {
-                    params.set('sale_type', statusValue);
-                }
+        const statusButton = document.querySelector('.property-status-filter .property-status.active');
+        const statusValue = statusButton ? (statusButton.dataset.value || '') : '';
+        const activeTab = document.querySelector('.home-search-tab.is-active, .home-search-tab.active');
+        const rentTab = (params.get('sale_type') || (activeTab && activeTab.dataset.value) || '') === 'rent';
+        if (statusValue !== '') {
+            if (rentTab) {
+                params.set('furnished', String(statusValue) === '1' ? 'furnished' : 'unfurnished');
+            } else if (statusValue === 'resale' || statusValue === 'developer_sale') {
+                params.set('sale_type', statusValue);
             }
         }
-
-        const query = params.toString();
 
         window.location.href = sharyHomeSearchUrl(params);
 

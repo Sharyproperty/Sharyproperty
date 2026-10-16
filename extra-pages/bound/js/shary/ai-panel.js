@@ -1,3 +1,4 @@
+// ── ai-panel.js · جزء 1 من 7: الشرح وبداية البانل والأدوات (make / الأيقونات / كود الدولة) (المصدر: resources/js/shary/ai-panel/01-start-and-helpers.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * صفحة Shary AI (partials/ai-panel.blade.php) — بنفس ستراكشر نسخة شاري AI المعتمدة.
  * - أي عنصر عليه data-ask-ai بيفتح الصفحة. القفل من سهم الرجوع أو الضغط براها أو Esc.
@@ -205,6 +206,7 @@
         }
         function pageInfo() { return { page_url: location.href, page_title: document.title }; }
 
+// ── ai-panel.js · جزء 2 من 7: أسئلة الاختيار وشريط «طلبك» وسياق الصفحة (المصدر: resources/js/shary/ai-panel/02-choice-steps.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- أسئلة الاختيار ----------
         function chosenOf(key) { return answers[key] || []; }
         function optionsOf(step) {
@@ -379,6 +381,7 @@
             if (asks.children.length) contextBox.appendChild(asks);
         }
 
+// ── ai-panel.js · جزء 3 من 7: الشات ورسم الرد (النص / الكروت / الأرقام / المقارنة / الزراير / التقييم / «خلّي مستشار يكلمك») (المصدر: resources/js/shary/ai-panel/03-chat-replies.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- الشات ----------
         function showChat() {
             if (onb) onb.classList.add('hidden');
@@ -816,6 +819,7 @@
             if (!url || url.charAt(0) === '#') { window.setTimeout(function () { done(true); }, 500); return; }   // معاينة من غير سيرفر
             post(url, data).then(function (result) { done(true, result && result.message); }).catch(function () { done(false); });
         }
+// ── ai-panel.js · جزء 4 من 7: حجز الميتنج جوه الشات (المصدر: resources/js/shary/ai-panel/04-meeting.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- حجز الميتنج جوه الشات ----------
         // آخر كروت اتعرضت في المحادثة (عشان "الميتنج بخصوص إيه؟") — من الصفحة نفسها عشان تفضل شغالة بعد استرجاع المحادثة
         function lastSubjects() {
@@ -1112,6 +1116,7 @@
         }
         function grow() { input.style.height = 'auto'; input.style.height = Math.min(input.scrollHeight, 96) + 'px'; }
 
+// ── ai-panel.js · جزء 5 من 7: إرسال الرسالة والرد على مراحل والإيجنت بيبادر (المصدر: resources/js/shary/ai-panel/05-sending-and-nudge.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // رد المعاينة (من غير سيرفر): لو الرسالة فيها كلمة من sample.intents[].words بيرجع الرد ده — وإلا الرد الأساسي
         function sampleFor(text) {
             var sample = config.sample;
@@ -1321,6 +1326,7 @@
             save();
         }
 
+// ── ai-panel.js · جزء 6 من 7: حفظ المحادثة والسياق من بره والضغطات والكتابة (المصدر: resources/js/shary/ai-panel/06-saved-chat-and-events.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- حفظ المحادثة (ديسك توب): النافذة بتفضل مفتوحة بنفس الكلام والعميل بيتنقل بين الصفحات ----------
         function save() {
             try {
@@ -1497,6 +1503,7 @@
             });
         }
 
+// ── ai-panel.js · جزء 7 من 7: المايك والفتح من أي زرار Shary AI (المصدر: resources/js/shary/ai-panel/07-voice-and-open.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- المايك: العميل يسجّل صوته والكلام بيتكتب في خانة الكتابة (زي الشات) ----------
         // 1) لو فيه لينك التحويل (contact.voice ← $aiVoiceUrl) أو كود بيسمع shary:ai-voice: تسجيل حقيقي (MediaRecorder) ← بيترفع للباك ← بيرجع النص.
         //    POST multipart: audio (webm / mp4 / ogg) + lang + seconds  ←  JSON { text: "..." }

@@ -1,3 +1,4 @@
+// ── home-extras.js · جزء 1 من 6: لينك المتجر وفورم الميتنج والأقسام (المصدر: resources/js/shary/home-extras/01-store-meeting-sections.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * الرئيسية: السلايدر والأقسام والحركات وطلب الميتنج (كانوا 4 أجزاء جوه resources/views/shary/home/index.blade.php — نفس الترتيب ونفس المكان في الصفحة).
  * اللينكات من window.SharyHomeConf.
@@ -341,6 +342,7 @@
             searchBox.dataset.searchType = "جميع العقارات";
         });
 
+// ── home-extras.js · جزء 2 من 6: السلايدر الرئيسي والسحب وحركات الصفحة (المصدر: resources/js/shary/home-extras/02-hero-slider.js — عدّل هنا وشغّل tools/minify-assets.sh)
         window.sharyOnJq(function () {   // بيستنى jQuery (async) والصفحة
             // Mobile navigation
             const mobileMenu = $(`
@@ -667,6 +669,7 @@
                 }
             });
 
+// ── home-extras.js · جزء 3 من 6: شريط أرقام السوق (المصدر: resources/js/shary/home-extras/03-market-ticker.js — عدّل هنا وشغّل tools/minify-assets.sh)
             (function () {
 
                 const tickerInstances = new WeakMap();
@@ -966,6 +969,7 @@
             }
         });
 
+// ── home-extras.js · جزء 4 من 6: بوب أب الفلاتر وأسهم الكروت (المصدر: resources/js/shary/home-extras/04-filters-carousels.js — عدّل هنا وشغّل tools/minify-assets.sh)
         window.sharyOnJq(function () {
         const $overlay = $("#heroAdvancedSearch");
 
@@ -1392,6 +1396,7 @@
                 }
             }
 
+// ── home-extras.js · جزء 5 من 6: كروت الاستثمار المتحركة ونقطها (المصدر: resources/js/shary/home-extras/05-investment-carousel.js — عدّل هنا وشغّل tools/minify-assets.sh)
             /* Dynamic Investment Carousel - Mobile */
             const investmentCarousel = document.querySelector(
             ".investment-shortcuts"
@@ -1582,6 +1587,7 @@
             updateActiveDot(0);       
         });
 
+// ── home-extras.js · جزء 6 من 6: فورم الاستشارة (المنطقة مطلوبة) (المصدر: resources/js/shary/home-extras/06-contact-form.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // فورم الاستشارة: المنطقة مطلوبة — لو ما اتختارتش الفورم ما يتبعتش: القائمة بتفتح وإطارها بيتلوّن عشان العميل يختار
         document.addEventListener('DOMContentLoaded', function () {
             var form = document.getElementById('homeContactForm');

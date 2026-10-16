@@ -1,3 +1,4 @@
+// ── property-page.js · جزء 1 من 5: الشرح ورسم سعر الوحدة عبر السنين (المصدر: resources/js/shary/property-page/01-price-chart.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * صفحة الوحدة (units/show.blade.php) وصفحة المشروع (projects/show.blade.php):
  *
@@ -299,6 +300,7 @@
     window.SharyProperty = { refresh: refresh };
     refresh(document);
 
+// ── property-page.js · جزء 2 من 5: بوب أب «قريبًا» وشريط الملخص الثابت ومعرض الصور على الموبايل (المصدر: resources/js/shary/property-page/02-soon-bar-gallery.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ---------- بوب أب "قريبًا" [data-soon-modal]: أيقونة المخطط / مخطط الوحدة لما الصورة لسه ما اترفعتش ([data-soon-open]) ----------
     (function () {
         var modal = document.querySelector('[data-soon-modal]');
@@ -464,6 +466,7 @@
         }, 4500);
     });
 
+// ── property-page.js · جزء 3 من 5: متابعة المشروع وزرار الخريطة وخطط الدفع (المصدر: resources/js/shary/property-page/03-follow-map-plans.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ---------- متابعة المشروع [data-follow-toggle]: "متابعة" ⇄ "متابَع". بتتحفظ على جهاز العميل (localStorage: shary:follows) وعلى السيرفر (shary_follows).
     // حدث shary:follow ({ id, following }) على الزرار: اسمعوه عشان تحفظوا المتابعة على حساب العميل، أو امنعوه (preventDefault).
     // الزائر اللي مش مسجّل (body[data-visitor="g"]) أول ما يدوس «متابعة»: فورم [data-follow-modal] — يسجّل (جوجل / أبل / فيسبوك / حساب جديد)
@@ -577,6 +580,7 @@
         });
     });
 
+// ── property-page.js · جزء 4 من 5: وحدات المشروع: التبويب والترتيب والفلاتر والصفحات (المصدر: resources/js/shary/property-page/04-project-units.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ---------- وحدات المشروع: التبويب + الترتيب + الصفحات ----------
     var desktop = window.matchMedia('(min-width: 1024px)');
     document.querySelectorAll('[data-project-units]').forEach(function (section) {
@@ -744,6 +748,7 @@
     });
 })();
 
+// ── property-page.js · جزء 5 من 5: صفوف الكروت المتحركة وأسهمها (المصدر: resources/js/shary/property-page/05-rails.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /*
  | "عرض المزيد" لقوايم الكروت (data-more-list) — مثال: "وحدات تانية في نفس المشروع" في صفحة الوحدة.
  | الكروت كلها في الصفحة ؛ الظاهر في الأول بيتحدد بالـ CSS (2 موبايل / 6 ديسك توب) وكل ضغطة بتظهر data-step-mobile / data-step-desktop كمان.

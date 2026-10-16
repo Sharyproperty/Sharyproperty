@@ -1,3 +1,4 @@
+// ── site-chrome.js · جزء 1 من 11: الأساس: زرار الرجوع وقايمة الموبايل وقوايم الهيدر والرسالة الصغيرة (المصدر: resources/js/shary/site-chrome/01-core-nav-toast.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * تكبير الديسك توب (html { zoom } في app.css): getBoundingClientRect وإحداثيات الماوس بترجع بالبيكسل الظاهر على الشاشة ،
  * لكن أي مقاس بيتكتب في style أو scrollLeft بيتحسب قبل التكبير. window.SharyZoom() = نسبة التكبير الحالية (1 على الموبايل) —
@@ -150,6 +151,7 @@ window.SharyZoom = function () {
         return ((holder && holder.lang) || document.documentElement.lang || 'ar').indexOf('en') === 0;
     }
 
+// ── site-chrome.js · جزء 2 من 11: المفضلة (القلوب وعدّاد الهيدر) (المصدر: resources/js/shary/site-chrome/02-favorites.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ---- المفضلة: القلب على الكارت بيبقى أحمر، وقلب الهيدر بيبقى أحمر وعليه العدد طول ما فيه حاجة في المفضلة
     var favoriteKey = 'shary-favorites';
     var memory = [];
@@ -206,6 +208,7 @@ window.SharyZoom = function () {
     }, true);   // capture: الزرار بيشتغل حتى لو الكارت اللي حواليه بيوقّف الضغطة (stopPropagation)
     markFavorites(document);
 
+// ── site-chrome.js · جزء 3 من 11: المشاركة والقايمة الصغيرة ورسالة الواتساب (المصدر: resources/js/shary/site-chrome/03-share-whatsapp.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ---- المشاركة
     // موبايل: قايمة شاري بتطلع من تحت (واتساب / تيليجرام / فيسبوك / X / البريد / نسخ الرابط) وآخرها "المزيد" بيفتح قايمة الموبايل نفسه.
     // ديسك توب: قايمة صغيرة جنب زرار المشاركة (واتساب / فيسبوك / منصة إكس / تيليجرام / نسخ الرابط).
@@ -450,6 +453,7 @@ window.SharyZoom = function () {
         link.setAttribute('href', whatsappHref(link));   // قبل ما المتصفح يفتح اللينك
     }, true);
 
+// ── site-chrome.js · جزء 4 من 11: الاتصال والمقارنة والنص المتقصّر (المصدر: resources/js/shary/site-chrome/04-call-compare.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ---- الاتصال على الديسك توب / التابلت: قايمة صغيرة (اتصل / واتساب / نسخ الرقم) — على الموبايل لينك tel: بيفتح الاتصال عادي
     document.addEventListener('click', function (event) {
         var link = closest(event, 'a[href^="tel:"]');
@@ -572,6 +576,7 @@ window.SharyZoom = function () {
         });
     });
 
+// ── site-chrome.js · جزء 5 من 11: عنصر ثابت تحت الهيدر وصف الكروت المتحرك وشريط الإعلانات (المصدر: resources/js/shary/site-chrome/05-page-helpers.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ---- عنصر ثابت تحت الهيدر [data-stick-under-header] (فورم الاستشارة في صفحة المقال على الديسك توب):
     // الـ CSS بيثبته (lg:sticky) والسكربت بيظبط المسافة من فوق على ارتفاع الهيدر الفعلي + 16px.
     document.querySelectorAll('[data-stick-under-header]').forEach(function (box) {
@@ -664,6 +669,7 @@ window.SharyZoom = function () {
     });
 })();
 
+// ── site-chrome.js · جزء 6 من 11: زرار التطبيق في الهيدر (المصدر: resources/js/shary/site-chrome/06-app-button.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * زرار التطبيق في الهيدر [data-app-button]:
  * - الافتراضي "حمل التطبيق" (data-state="get") واللينك بيبقى المتجر المناسب للجهاز: data-ios-url على آيفون/آيباد ، data-android-url على الباقي.
@@ -777,6 +783,7 @@ window.SharyZoom = function () {
     }
 })();
 
+// ── site-chrome.js · جزء 7 من 11: بوب أب «حمل تطبيق شاري» الكبير (المصدر: resources/js/shary/site-chrome/07-app-card.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * بوب أب «حمل تطبيق شاري» [data-app-card] (partials/app-card.blade.php — موبايل بس): أول حاجة بتظهر لما الموقع يتفتح.
  * الترتيب على الموبايل: البوب أب ده ← تنبيه الخصوصية (أول زيارة) ← شيت «شوف شاري في…» [data-app-popup].
@@ -840,6 +847,7 @@ window.SharyZoom = function () {
     }, 900);
 })();
 
+// ── site-chrome.js · جزء 8 من 11: بوب أب تحميل التطبيق (الشيت اللي تحت) (المصدر: resources/js/shary/site-chrome/08-app-popup.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * بوب أب تحميل التطبيق [data-app-popup] (موبايل بس): بيظهر بعد data-delay من فتح الصفحة وبيدخل من الشمال.
  * - بيظهر مرة واحدة في الزيارة: أول ما يظهر بيتسجّل (sessionStorage) فما يظهرش تاني وهو بيتنقل بين الصفحات — ولما يقفل المتصفح ويفتح الموقع تاني بيظهر مرة.
@@ -950,6 +958,7 @@ window.SharyZoom = function () {
     window.setTimeout(show, Number(pop.getAttribute('data-delay')) || 1800);
 })();
 
+// ── site-chrome.js · جزء 9 من 11: تنبيه سياسة الخصوصية (المصدر: resources/js/shary/site-chrome/09-privacy-note.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * تنبيه سياسة الخصوصية [data-privacy-note] (partials/privacy-notice.blade.php): بيظهر أول مرة بس — لحد ما العميل يضغط "موافق" [data-privacy-accept].
  * الموافقة بتتحفظ على الجهاز (localStorage: shary-privacy) فالتنبيه ما يظهرش تاني في أي صفحة ولا في أي زيارة بعد كده (حتى صفحة سياسة الخصوصية نفسها).
@@ -980,6 +989,7 @@ window.SharyZoom = function () {
     });
 })();
 
+// ── site-chrome.js · جزء 10 من 11: سيستم اللوجوهات في الدواير (المصدر: resources/js/shary/site-chrome/10-logos.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * سيستم اللوجوهات — اللوجو كله جوه الدايرة زي صورة واتساب: باين وواضح ومن غير ما حرف منه يتقص ، على أي مقاس شاشة.
  * 1) المساحة الفاضية اللي جوه صورة اللوجو نفسها بتتقص (trim) — فاللوجو الصغير في نص صورة كبيرة بيكبر.
@@ -1178,6 +1188,7 @@ window.SharyZoom = function () {
     window.SharyLogoFit = { scan: scan };
 })();
 
+// ── site-chrome.js · جزء 11 من 11: الصورة الطبيعية وفورمات POST ودايرة البحث والسطر الواحد ومستطيل التطبيق (المصدر: resources/js/shary/site-chrome/11-photo-fit-forms-misc.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * سيستم "الصورة الطبيعية" (photo-fit) — مع ستايل .rent-gallery في app.css:
  * معرض الصور (المشروع / الوحدة / الإيجار) بياخد نسبة أول صورة فيه: السكربت بيحط --photo-ratio (العرض ÷ الارتفاع ، بين 5:4 و 16:9) على المعرض أول ما الصورة تحمل ،

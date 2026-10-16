@@ -4,7 +4,7 @@
  * - initSharySwiper(selector, options): بيشغّل Swiper أول ما مكتبته تتحمّل (حدث shary:swiper-ready).
  * - togglePopup(id): "اطلب اجتماع" (zoomMeeting_… / requestMeeting) بيفتح فورم الاجتماع بتاع الموقع (partials/meeting-modal) ، وأي id تاني بيظهر / يخفي العنصر.
  * - openDropdownMenu(id): قوايم الهوم (المنطقة في فورم الاستشارة) + القفل بالضغط براها.
- * - toggleFilterBar / toggleSearchBar / filterMobileSearchItems / updateRangeSlider / hideCompareNotification / showToast.
+ * - hideCompareNotification / showToast.
  * لازم يتحمّل قبل سكربتات الهوم نفسها.
  */
 (function () {
@@ -60,22 +60,6 @@
     });
 
     def('hideCompareNotification', function (id, event) { if (event) event.stopPropagation(); var el = byId(id || 'compareNotification'); if (el) el.style.display = 'none'; });
-    function bar(id, state) {
-        var el = byId(id);
-        if (!el) return;
-        var open = state === 'open' || (state !== 'close' && (el.style.maxHeight === '' || el.style.maxHeight === '0px'));
-        el.style.maxHeight = open ? '100dvh' : '0px';
-        el.style.overflowY = open ? 'auto' : 'hidden';
-    }
-    def('toggleFilterBar', function (state) { bar('filterBar', state); });
-    def('toggleSearchBar', function (state, id) { bar(id || 'searchBar', state); });
-    def('filterMobileSearchItems', function (input, boxId, selector) {
-        var box = byId(boxId);
-        if (!box) return;
-        var q = (input.value || '').trim().toLowerCase();
-        Array.prototype.forEach.call(box.querySelectorAll(selector), function (item) { item.style.display = !q || item.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none'; });
-    });
-    def('updateRangeSlider', function () {});
     // الرسايل: toastr لو متحمّل ، وإلا رسالة الموقع (lead-forms.js)
     def('showToast', function (message, type) {
         if (window.SharyLead) window.SharyLead.toast(message, type === 'error' ? 'error' : 'success');

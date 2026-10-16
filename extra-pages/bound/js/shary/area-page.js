@@ -1,3 +1,4 @@
+// ── area-page.js · جزء 1 من 5: مؤشر المنطقة ورسم سعر المتر (المصدر: resources/js/shary/area-page/01-index-card.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * صفحة المنطقة:
  * - نوع الوحدة (سكني / تجاري / ...): بيغيّر أرقام المؤشر والمقارنة ونطاق السعر ورسم سعر المتر من غير تحميل الصفحة.
@@ -10,6 +11,10 @@
 (function () {
     function format(number) {
         return Number(number).toLocaleString('en-US');
+    }
+    // رقم مختصر للزرار (5M ، 750K)
+    function short(number) {
+        try { return new Intl.NumberFormat('en', { notation: 'compact', maximumFractionDigits: 1 }).format(number); } catch (error) { return format(number); }
     }
 
     document.querySelectorAll('[data-area-index]').forEach(function (card) {
@@ -133,6 +138,7 @@
 
 
 
+// ── area-page.js · جزء 2 من 5: الفلتر — شريط من–إلى والتبويبات (المصدر: resources/js/shary/area-page/02-filter-ranges-and-tabs.js — عدّل هنا وشغّل tools/minify-assets.sh)
     /**
      * فلاتر المشاريع (areas/partials/filters.blade.php)
      * - [data-sheet-open="اسم"] بيفتح اللوحة [data-filter-sheet="اسم"] (بتطلع من تحت). اللوحات: developer / project / area / price / all (صفحة "تصفية").
@@ -270,6 +276,7 @@
             input.addEventListener('input', function () { input.value = digits(input.value) ? commas(digits(input.value)) : ''; });
         });
 
+// ── area-page.js · جزء 3 من 5: الفلتر — اللوحات والعدد والفلتر الذكي والقيمة جنب الزرار (المصدر: resources/js/shary/area-page/03-filter-sheets-and-counts.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- حفظ الاختيار وقت الفتح عشان يرجع لو اللوحة اتقفلت من غير تطبيق
         function snapshot(root) {
             return {
@@ -334,6 +341,7 @@
 
         function badges() {
             relate();
+            if (typeof placeLists === 'function') placeLists();   // عمود الفلاتر (ديسك توب): المرتبط بالاختيار الجديد يطلع فوق
             // شريط "الأسعار حسب الفلاتر اللي اخترتها" (صفحة البحث): ظاهر طول ما فيه فلتر مختار
             var notice = form.querySelector('[data-filter-notice]');
             if (notice) notice.classList.toggle('hidden', count('all') === 0);
@@ -343,6 +351,17 @@
                 badge.textContent = total ? (name === 'price' ? '✓' : total) : '';
                 var opener = badge.closest('[data-sheet-open]');
                 if (opener) opener.classList.toggle('is-active', total > 0);
+            });
+            // جنب كلمة الزرار: المختار (أول اسم + عدد الباقي) ، وفي السعر: من كام لكام
+            all('[data-sheet-value]').forEach(function (slot) {
+                var name = slot.getAttribute('data-sheet-value'), range = ranges[name], text = '';
+                if (range) {
+                    if (active(range)) text = '\u2066' + short(range.low) + ' – ' + short(range.high) + '\u2069';   // من الشمال لليمين (22K – 30K) حتى في صفحة عربي
+                } else if (sheet(name)) {
+                    var names = all('input:checked', sheet(name)).map(function (box) { var label = box.closest('label').querySelector('[data-list-name]'); return label ? label.textContent.trim() : ''; }).filter(Boolean);
+                    if (names.length) text = names[0] + (names.length > 1 ? ' +' + (names.length - 1) : '');
+                }
+                slot.textContent = text;
             });
         }
 
@@ -406,6 +425,7 @@
             if (event.key !== 'Escape') return;
             if (stack.length) close(false); else closeSort();
         });
+// ── area-page.js · جزء 4 من 5: الفلتر — عرض النتائج ومسح وعمود الديسك توب والترتيب (المصدر: resources/js/shary/area-page/04-filter-apply-and-sidebar.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- "عرض النتائج" على الموبايل: لو نوع البيع اللي اتختار ليه صفحة تانية (data-offer-urls — ListingPage::offerUrls) بتتفتح هي بنفس الاختيارات:
         //      للإيجار ← صفحة الإيجار ، إعادة البيع ← صفحة إعادة البيع ، وحدات المطور ← صفحة البحث. الديسك توب (عمود الفلاتر) بيفلتر مكانه زي ما هو.
         function offerPage() {
@@ -487,13 +507,17 @@
                 if (!body || !home || !sheet(name).classList.contains('hidden')) return;   // اللوحة مفتوحة: القايمة بتفضل جواها
                 var target = wide() ? slot : home;
                 if (body.parentNode !== target) target.appendChild(body);
-                // في العمود: المختار بيتعرض الأول (أول 3 بس ظاهرين، والباقي من "عرض المزيد")
+                // في العمود: المختار الأول ، وبعده المرتبط بالاختيارات (الفلتر الذكي) ، وغير المرتبط (مخفي) في الآخر —
+                // عشان أول 3 ظاهرين يبقوا من المرتبط دايمًا ، والباقي من "عرض المزيد"
                 if (target === slot) {
-                    Array.prototype.slice.call(body.children).filter(function (row) { var box = row.querySelector('input'); return box && box.checked; })
-                        .reverse().forEach(function (row) { body.insertBefore(row, body.firstChild); });
+                    var rank = function (row) { var box = row.querySelector('input'); return box && box.checked ? 0 : (row.classList.contains('is-unrelated') ? 2 : 1); };
+                    Array.prototype.slice.call(body.children).map(function (row, i) { if (!row.hasAttribute('data-order')) row.setAttribute('data-order', i); return [rank(row), +row.getAttribute('data-order'), row]; })
+                        .sort(function (a, b) { return a[0] - b[0] || a[1] - b[1]; })
+                        .forEach(function (item) { body.appendChild(item[2]); });
                 }
                 var more = slot.parentNode.querySelector('[data-list-more]');
-                if (more) more.classList.toggle('hidden', body.children.length <= 3);
+                var shown = Array.prototype.filter.call(body.children, function (row) { return !row.classList.contains('is-unrelated'); }).length;
+                if (more) more.classList.toggle('hidden', shown <= 3);
             });
         }
 
@@ -579,6 +603,7 @@
         Object.keys(ranges).forEach(function (name) { commit(ranges[name]); });
         badges();
     }
+// ── area-page.js · جزء 5 من 5: العروض وخريطة المؤشر (المصدر: resources/js/shary/area-page/05-offers-and-map.js — عدّل هنا وشغّل tools/minify-assets.sh)
     document.querySelectorAll('[data-area-filters]').forEach(function (form) { form.__sxFilters = true; setupAreaFilters(form); });
     window.SharyAreaFilters = {
         init: function (root) {

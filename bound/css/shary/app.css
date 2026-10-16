@@ -1,3 +1,4 @@
+/* ── app.css · جزء 1 من 16: الأساس: إعادة الضبط (Tailwind preflight) والمتغيرات والـ container (المصدر: resources/css/shary/app/01-base.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -616,6 +617,7 @@ video {
 
 /* أيقونات السوشيال (js/shary/brand-icons.js): بتاخد حجم الخط ولون النص */
 
+/* ── app.css · جزء 2 من 16: الهيدر وقايمة الحساب واللغة ، كروت المقالات والمفضلة وصور المشاريع (المصدر: resources/css/shary/app/02-header-account-cards.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 .svg-inline--fa {
   display: inline-block;
   height: 1em;
@@ -1228,6 +1230,7 @@ button.site-login {
   }
 }
 
+/* ── app.css · جزء 3 من 16: بيع/أجّر عقارك ، قوايم الاختيار بالصور ، العروض ، التريند ، شاري كارد ، الوظايف ، الإشعارات ، الشروط (المصدر: resources/css/shary/app/03-requests-offers-pages.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* صفحة "بيع عقارك" / "أجّر عقارك" (requests/property): البانر + دواير الخطوات + خانات بشكل خانات التطبيق + الأزرار */
 
 .req-banner {
@@ -2788,6 +2791,7 @@ button.site-login {
   }
 }
 
+/* ── app.css · جزء 4 من 16: المطورين ، صفحات عرض الكل ، الستوري ، زرار «مسح» الموحد ، المقارنة ، من نحن / اتصل بنا ، الوكلاء ، قايمة الموبايل (المصدر: resources/css/shary/app/04-developers-compare-company.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* أيقونة المطور (صفحة "كل المطورين"): لوجو في دايرة بإطار رمادي رفيع — والمطور اللي له ستوري إطاره أخضر تخين */
 
 .dev-icon {
@@ -3855,6 +3859,7 @@ header:has(> .site-menu:not([class~="hidden"])) {
   white-space: nowrap;
 }
 
+/* ── app.css · جزء 5 من 16: محتوى المقال وأزرار التواصل فيه ، صفحة مؤشر شاري وهيدره ، كروت المناطق (المصدر: resources/css/shary/app/05-articles-index.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* ---------- محتوى المقال (HTML جاي من لوحة التحكم) ---------- */
 
 .article-content {
@@ -5032,6 +5037,7 @@ a.dev-logo-link:hover {
   background-color: rgba(10, 35, 70, 0.18);
 }
 
+/* ── app.css · جزء 6 من 16: صفحة المنطقة ولوحات الفلاتر وصفحة المطور (المصدر: resources/css/shary/app/06-areas-filters.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* درجات الألوان (بلاطات المشاريع الجديدة ودواير المناطق) */
 
 .area-tone-navy {
@@ -5338,6 +5344,50 @@ a.dev-logo-link:hover {
   text-align: start;
 }
 
+/* المختار جنب كلمة الزرار (اسم المنطقة / النوع / المطور ، أو السعر من–إلى): بياخد المساحة الباقية بس ويتقص بـ "…" — الزرار ما يكبرش */
+
+.area-filter__value {
+  flex: 1 1 0%;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: start;
+  font-weight: 600;
+  color: #1f63c6;
+}
+
+.area-filter__value:empty {
+  display: none;
+}
+
+/* موبايل / تابلت: الزرار ضيق — لما يبقى فيه اختيار، الكلمة صغيرة فوق والمختار تحتها (سطرين جوه نفس الزرار) */
+
+@media (max-width: 1023px) {
+  .area-filter button:has(.area-filter__value:not(:empty)) {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1px;
+    line-height: 1.15;
+  }
+
+  .area-filter button:has(.area-filter__value:not(:empty)) > .whitespace-nowrap {
+    font-size: 11px;
+    font-weight: 700;
+    color: #5b7590;
+  }
+
+  .area-filter button:has(.area-filter__value:not(:empty)) .area-filter__value {
+    flex: none;
+    width: 0;
+    min-width: 100%;   /* ياخد عرض الزرار من غير ما يكبّر العمود (الاسم الطويل بيتقص بـ «…») */
+    font-size: 12.5px;
+    font-weight: 800;
+  }
+}
+
 @media (min-width: 1024px) {
   .area-filter select,
         .area-filter button {
@@ -5365,6 +5415,24 @@ a.dev-logo-link:hover {
   }
 }
 
+/* الشريط على قد عدد الأزرار اللي ليها اختيارات (--picks من filters.blade.php) */
+
+form.area-filterbar[data-picks] {
+  grid-template-columns: repeat(var(--picks), minmax(max-content, 1fr)) 44px 44px;
+}
+
+@media (max-width: 359px) {
+  form.area-filterbar[data-picks] {
+    grid-template-columns: repeat(var(--picks), minmax(max-content, 1fr)) 40px 40px;
+  }
+}
+
+@media (min-width: 1024px) {
+  form.area-filterbar[data-picks] {
+    grid-template-columns: repeat(var(--picks), minmax(0, 1fr)) 48px auto 48px;
+  }
+}
+
 /* فلتر "مشاريع المطور في المنطقة" (areas/partials/developer-filters): 3 أزرار بسهم على الموبايل كمان + زرار الترتيب بعدهم بمسافة */
 
 .area-filterbar--developer .area-filter button {
@@ -5376,9 +5444,19 @@ a.dev-logo-link:hover {
   display: block;
 }
 
+form.area-filterbar--developer[data-picks] {
+  grid-template-columns: repeat(var(--picks), minmax(0, 1fr)) 52px;
+}
+
+@media (min-width: 1024px) {
+  form.area-filterbar--developer[data-picks] {
+    grid-template-columns: repeat(var(--picks), minmax(0, 1fr)) 64px;
+  }
+}
+
 @media (max-width: 359px) {
-  form.area-filterbar--developer {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) 46px;
+  form.area-filterbar--developer[data-picks] {
+    grid-template-columns: repeat(var(--picks), minmax(0, 1fr)) 46px;
   }
 
   .area-filterbar--developer .area-filter button {
@@ -6011,6 +6089,7 @@ input:focus-visible + .area-chip,
   opacity: 1;
 }
 
+/* ── app.css · جزء 7 من 16: صفحة نتايج البحث ، فورم الاستشارة ، شريط الملخص ، بوب أب «قريبًا» ، صفحة المشروع / الوحدة (المصدر: resources/css/shary/app/07-search-property.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* ====================== صفحة نتايج البحث ====================== */
 
 /* موبايل: الفورم وراس الصفحة من غير صندوق (contents) عشان خانة البحث تفضل ثابتة تحت الهيدر طول النتايج */
@@ -8044,6 +8123,7 @@ input:focus-visible + .area-chip,
   }
 }
 
+/* ── app.css · جزء 8 من 16: تسجيل الدخول وحساب جديد وكلمة السر (المصدر: resources/css/shary/app/08-auth.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* صفحة تسجيل الدخول / حساب جديد (auth/show): كارت أبيض هادي في نص الصفحة */
 
 /* صفحة تسجيل الدخول: عمودين على الديسك توب (الفورم | تحميل التطبيق) جوه لوحة هادية ، وعلى الموبايل الفورم فوق وتحميل التطبيق تحته */
@@ -8747,6 +8827,7 @@ input:focus-visible + .area-chip,
   }
 }
 
+/* ── app.css · جزء 9 من 16: رسم السعر ، الصفوف المتحركة ، الإعلانات ، الإيجار ، بوكس الصور والصورة الطبيعية ، عارض الصور ، التحميل وأنت نازل (المصدر: resources/css/shary/app/09-property-rent-photos.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* مفتاح ألوان الرسم */
 
 .prop-key {
@@ -9354,6 +9435,10 @@ input:focus-visible + .area-chip,
   gap: 10px 6px;
 }
 
+.rent-bar[data-picks] {
+  grid-template-columns: repeat(var(--picks), minmax(max-content, 1fr));
+}
+
 .rent-tabs {
   grid-column: 1 / -1;
   border-radius: 16px;
@@ -9400,6 +9485,10 @@ input:focus-visible + .area-chip,
     gap: 16px 12px;
   }
 
+  .rent-bar[data-picks] {
+    grid-template-columns: repeat(var(--picks), minmax(0, 1fr)) auto;
+  }
+
   .rent-tabs {
     grid-column: 1;
     grid-row: 1;
@@ -9435,7 +9524,7 @@ input:focus-visible + .area-chip,
   }
 
   .rent-bar__tools {
-    grid-column: 4;
+    grid-column: -2 / -1;
     grid-row: 2;
     align-self: center;
     align-items: center;
@@ -10533,9 +10622,9 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
     display: block;
   }
 
-  .search-side [data-key="type"] label,
-        .search-side [data-key="finishing"] label,
-        .search-side [data-key="delivery"] label {
+  .search-side [data-key="type"] label:not(.hidden),
+        .search-side [data-key="finishing"] label:not(.hidden),
+        .search-side [data-key="delivery"] label:not(.hidden) {
     display: block;
   }
 
@@ -10804,6 +10893,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   }
 }
 
+/* ── app.css · جزء 10 من 16: فورم الاجتماع ، زرار المقارنة العايم ، قايمة المشاركة ، شاري AI (المصدر: resources/css/shary/app/10-meeting-share-ai.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* فورم طلب الاجتماع: موبايل بيطلع من تحت — ديسك توب كارت بيظهر في نص الشاشة فوق الصفحة */
 
 .meeting-panel {
@@ -13105,6 +13195,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   transform: translateY(-2px);
 }
 
+/* ── app.css · جزء 11 من 16: زراير التواصل والفوتر ، فرص إعادة البيع ، الأسئلة الشائعة ، كروت وسط المحتوى ، أشهر الأماكن (المصدر: resources/css/shary/app/11-footer-opportunities-content.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* ديسك توب: زرارين التواصل العايمين (Shary AI وواتساب) لازقين في حافة الشاشة وبمقاس أصغر —
        قاعدين في الهامش الأبيض جنب المحتوى فما بيغطوش الصور ولا الكروت. على الشاشات الأوسع الهامش أكبر فالزرار بيكبر ويبعد عن الحافة */
 
@@ -14678,6 +14769,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   }
 }
 
+/* ── app.css · جزء 12 من 16: خريطة شاري التفاعلية (المصدر: resources/css/shary/app/12-map.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* ---- خريطة شاري التفاعلية (map/show): صفحة لوحدها مالية الشاشة كلها (فوق هيدر الموقع).
        فوق: شريط أبيض (رجوع + بحث ، وتحته الفلاتر) — تحته الخريطة (كرة أرضية / قمر صناعي) وعليها "اختر المنطقة" والقايمة الجلاسي وأزرار الجنب ،
        والمشاريع كروت جلاسي (بالعرض على الموبايل / عمود أبيض على الديسك توب) ---- */
@@ -15234,95 +15326,175 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   background-color: #1f9a8b;
 }
 
-/* علامة وحدة جوه المشروع (بتظهر لما العميل يقرّب): أصغر من علامة المشروع وبلون أخضر شاري — المختارة كحلي */
+/* علامة وحدة جوه المشروع (بتظهر لما العميل يقرّب): عمارة صغيرة بشبابيك وفوقها النوع والمساحة ("شقة 170 م²") — المختارة أكبر وكحلي والباقي بيبهت */
 
 .smap__marker--unit {
-  max-width: 96px;
-  border-radius: 8px;
-  background-color: #1f7f72;
-  padding: 2px 7px 3px;
-  font-size: 10.5px;
-  box-shadow: 0 5px 12px -4px rgba(13, 32, 51, 0.65);
+  display: flex;
+  max-width: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  border: 0;
+  background: none;
+  padding: 0;
+  box-shadow: none;
+  transition: opacity 0.15s;
 }
 
 .smap__marker--unit::after {
-  bottom: -5px;
-  height: 7px;
-  width: 7px;
+  display: none;
+}
+
+.smap__marker--unit > span {
+  max-width: 150px;
+  border-radius: 9px;
+  background-color: #fff;
+  padding: 2px 9px 3px;
+  font-size: 12px;
+  font-weight: 800;
+  color: #123a5c;
+  box-shadow: 0 6px 14px -6px rgba(13, 32, 51, 0.55);
+}
+
+.smap__bldg {
+  display: block;
+  height: 34px;
+  width: 30px;
+  filter: drop-shadow(0 4px 4px rgba(13, 32, 51, 0.35));
+  transition: transform 0.15s;
+}
+
+.smap__bldg-body {
+  fill: #1f9a8b;
+  stroke: #fff;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+}
+
+.smap__bldg-win {
+  fill: #fff;
+  opacity: 0.9;
 }
 
 .smap__marker--unit.is-on {
   z-index: 3;
-  background-color: #123a5c;
+  gap: 13px;                    /* البناية بتكبر لفوق (scale 1.3) — مسافة عشان ما تغطيش الكلام */
+  background: none;
 }
 
-/* كارت الوحدة فوق الخريطة: موبايل من تحت بعرض الشاشة ، ديسك توب على جنب الخريطة */
+.smap__marker--unit.is-on > span {
+  background-color: #123a5c;
+  color: #fff;
+}
+
+.smap__marker--unit.is-on .smap__bldg {
+  transform: scale(1.3);
+  transform-origin: 50% 100%;   /* السنّ اللي تحت يفضل على مكان الوحدة */
+}
+
+.smap__marker--unit.is-on .smap__bldg-body {
+  fill: #1e4166;
+}
+
+.smap.has-unit-on .smap__marker--unit:not(.is-on) {
+  opacity: 0.55;
+}
+
+/* كارت الوحدة الصغير: بيطلع على الخريطة فوق البناية اللي اتضغطت (صورة صغيرة + النوع والمساحة + السعر) — الكارت كله لينك لصفحة الوحدة */
 
 .smap__unit {
-  position: fixed;
-  inset-inline: 10px;
-  bottom: 10px;
-  z-index: 1100;
-  max-height: min(calc(78vh / var(--z, 1)), 620px);
-  overflow-y: auto;
-  border-radius: 20px;
-  background-color: #fff;
-  box-shadow: 0 24px 60px -18px rgba(13, 32, 51, 0.65);
-  scrollbar-width: none;
+  z-index: 6;
+  width: 236px;
 }
 
 .smap__unit[hidden] {
   display: none;
 }
 
-.smap__unit::-webkit-scrollbar {
-  display: none;
+.smap__unit-close {
+  position: absolute;
+  inset-inline-end: -8px;
+  top: -10px;
+  z-index: 1;
+  display: flex;
+  height: 26px;
+  width: 26px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background-color: #fff;
+  color: #123a5c;
+  box-shadow: 0 4px 10px -4px rgba(13, 32, 51, 0.55);
 }
 
-.smap__unit-head {
-  position: sticky;
-  top: 0;
-  z-index: 5;
+.smap__ucard {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
+  border-radius: 16px;
   background-color: #fff;
-  padding: 10px 14px 8px 10px;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.5;
+  padding: 7px;
   color: #123a5c;
+  box-shadow: 0 14px 30px -12px rgba(13, 32, 51, 0.6);
 }
 
-[dir="ltr"] .smap__unit-head {
-  padding: 10px 10px 8px 14px;
+.smap__ucard::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  height: 12px;
+  width: 12px;
+  background-color: #fff;
+  transform: translateX(-50%) rotate(45deg);
 }
 
-.smap__unit-close {
+.smap__ucard-pic {
+  height: 56px;
+  width: 56px;
+  flex: none;
+  border-radius: 11px;
+  background-color: #dbe2e8;
+  object-fit: cover;
+}
+
+.smap__ucard-info {
   display: flex;
-  height: 32px;
-  width: 32px;
+  min-width: 0;
+  flex: 1 1 0%;
+  flex-direction: column;
+  line-height: 1.4;
+}
+
+.smap__ucard-info b {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13.5px;
+  font-weight: 800;
+}
+
+.smap__ucard-info strong {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1f7f72;
+}
+
+.smap__ucard-go {
+  display: flex;
+  height: 28px;
+  width: 28px;
   flex: none;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;
-  background-color: #e8f0fb;
-  color: #123a5c;
+  background-color: #1e4166;
+  color: #fff;
 }
 
-.smap__unit-body > * {
-  box-shadow: none;
-}
-
-@media (min-width: 1024px) {
-  .smap__unit {
-    position: absolute;
-    inset-inline: auto 20px;
-    bottom: 20px;
-    width: 380px;
-    max-height: calc(100% - 40px);
-  }
+[dir="ltr"] .smap__ucard-go svg {
+  transform: scaleX(-1);
 }
 
 /* العميل قرّب على ماستر بلان معروضة: علامة المشروع بتختفي عشان ما تغطيش المخطط */
@@ -16061,6 +16233,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   }
 }
 
+/* ── app.css · جزء 13 من 16: قناة شاري ، شاري كارد «سفير» ، نافذة الفلتر بره البحث ، تنبيه الخصوصية ، زرار التطبيق (المصدر: resources/css/shary/app/13-channels-popups.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* ---- اشترك في قناة شاري (واتساب / تليجرام): partials/channels-cta ---- */
 
 .chan-cta {
@@ -16967,6 +17140,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   color: #fff;
 }
 
+/* ── app.css · جزء 14 من 16: عقارات دولية ، بوب أب التطبيق ، حركة زراير التواصل ، شريط الموبايل (المصدر: resources/css/shary/app/14-abroad-app-fab.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* ---- عقارات دولية (abroad/index + abroad/country): الدول ← المناطق ← المطورين ← المشاريع ---- */
 
 /* كارت الدولة: الصورة مالية الكارت + العلم + الاسم والمدن + عدد المشاريع و"يبدأ من" */
@@ -18316,6 +18490,7 @@ img.abroad-dev__logo {
   }
 }
 
+/* ── app.css · جزء 15 من 16: أدوات Tailwind (كلاسات المسافات / الألوان / المقاسات …) — آخر الملف عشان تغلب (المصدر: resources/css/shary/app/15-utilities.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -25086,6 +25261,7 @@ img.abroad-dev__logo {
   }
 }
 
+/* ── app.css · جزء 16 من 16: تعديلات مكتوبة بالإيد فوق الأدوات (أسماء الكروت ، الخريطة التفاعلية ، شيت التطبيق ، صفحات الخدمات ، لوجو المطور ، الفوتر …) — آخر الملف عشان تغلب (المصدر: resources/css/shary/app/16-overrides.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* الأسماء كاملة من غير نقط (…): "المطور - المشروع" في صفحة المشروع ، اسم الوحدة ، المكان ، الشريط الثابت ، أسماء المراحل والفرص —
    لو الاسم طويل بينزل سطر تاني بنفس الخط (من غير تصغير ولا تكبير) */
 .prop-bar .prop-bar__head h1,
@@ -25150,7 +25326,6 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 .mp-label.has-units { font-size: 12.5px; padding: 4px 6px 4px 12px; box-shadow: 0 4px 12px -4px rgba(13, 32, 51, .6); }
 .mp-label.has-units:hover { background: #157a6e; }
 .mp-label__count { min-width: 20px; height: 20px; border-radius: 999px; background: #fff; color: #157a6e; font-size: 11.5px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px; }
-.smap__marker--unit.has-code span { direction: ltr; unicode-bidi: isolate; letter-spacing: .2px; }
 
 /* لوحات الفلاتر والاختيارات: من غير أي ظل أو تغميق ورا اللوحة (لا على الصفحة ولا حوالين اللوحة) — حد رفيع بس عشان تبان */
 [data-filter-sheet] > .area-sheet,
