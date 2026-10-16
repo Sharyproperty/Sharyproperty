@@ -465,8 +465,24 @@
         }
 
 // ── index-page.js · جزء 4 من 6: قارن بين منطقتين ومليون جنيه بقوا كام (المصدر: resources/js/shary/index-page/04-compare-million.js — عدّل هنا وشغّل tools/minify-assets.sh)
-        // ---------- قارن بين منطقتين ----------
+        // ---------- أنواع الوحدات الموجودة في المنطقة (areas[slug].has): الفلتر والمقارنة بيعرضوا اللي ليه وحدات بس ----------
+        var allTypes = Array.prototype.map.call(page.querySelectorAll('[data-index-type]'), function (button) { return button.getAttribute('data-index-type'); });
+        // الأنواع الموجودة في كل المناطق دي ('' = مصر كلها) — ولو مفيش نوع مشترك: الموجودة في أي واحدة ، ولو مفيش داتا خالص: كل الأنواع
+        function typesIn(slugs) {
+            var lists = slugs.filter(function (slug) { return slug && areas[slug]; }).map(function (slug) { return areas[slug].has || []; })
+                .filter(function (list) { return list.length; });
+            if (!lists.length) return allTypes;
+            var inAll = allTypes.filter(function (key) { return lists.every(function (list) { return list.indexOf(key) > -1; }); });
+            var inAny = allTypes.filter(function (key) { return lists.some(function (list) { return list.indexOf(key) > -1; }); });
+            return inAll.length ? inAll : (inAny.length ? inAny : allTypes);
+        }
+        function showTypes(nodes, attribute, keys) {
+            nodes.forEach(function (node) { node.classList.toggle('hidden', keys.indexOf(node.getAttribute(attribute)) < 0); });
+        }
+
+        // ---------- قارن بين منطقتين (المنطقتين الأول ، وبعدين نوع من الموجود فيهم — مستقل عن نوع الفلتر اللي فوق) ----------
         var compare = page.querySelector('[data-index-compare]');
+        var compareKey = typeKey;
         function picked(side) {
             var select = compare ? compare.querySelector('[data-compare-select="' + side + '"]') : null;
             return select ? select.value : '';
@@ -479,8 +495,8 @@
             var known = 0;
             compare.querySelectorAll('[data-compare-metric]').forEach(function (block) {
                 var metric = block.getAttribute('data-compare-metric');
-                var va = (a.values[typeKey] || {})[metric];
-                var vb = (b.values[typeKey] || {})[metric];
+                var va = (a.values[compareKey] || {})[metric];
+                var vb = (b.values[compareKey] || {})[metric];
                 // المقياس اللي مالوش رقم للمنطقتين بيختفي ، واللي ناقص لمنطقة واحدة بيتكتب "—" من غير شريط
                 block.classList.toggle('hidden', !has(va) && !has(vb));
                 if (has(va) || has(vb)) known++;
@@ -493,19 +509,23 @@
                     block.querySelector('[data-compare-name="' + entry[0] + '"]').textContent = entry[1].name;
                     block.querySelector('[data-compare-fill="' + entry[0] + '"]').style.width = given ? Math.max(2, Math.abs(value) / top * 100) + '%' : '0';
                     block.querySelector('[data-compare-value="' + entry[0] + '"]').textContent = !given ? '—' :
-                        metric === 'price' || metric === 'resale' ? ((entry[1].values[typeKey] || {})[metric + '_range_text'] || format(value)) : metric === 'yearly' ? percent(value) : metric === 'yield' ? value.toFixed(1) + '%' : value;
+                        metric === 'price' || metric === 'resale' ? ((entry[1].values[compareKey] || {})[metric + '_range_text'] || format(value)) : metric === 'yearly' ? percent(value) : metric === 'yield' ? value.toFixed(1) + '%' : value;
                 });
             });
             // المنطقتين مالهمش أرقام للنوع المختار: رسالة بدل الكارت الفاضي
             var none = compare.querySelector('[data-compare-empty]');
             if (none) none.classList.toggle('hidden', known > 0);
         }
-        // نوع الوحدة في المقارنة [data-compare-type]: نفس اختيار الفلتر اللي فوق — الضغط هنا بيغيّر الفلتر (والصفحة كلها) ، وتغيير الفلتر بيعلّم هنا
+        // نوع الوحدة في المقارنة [data-compare-type]: الأنواع الموجودة في المنطقتين بس ، والمختار بيفضل لو لسه موجود (وإلا نوع الفلتر اللي فوق ، وإلا أول نوع)
         function markCompareType() {
             if (!compare) return;
+            var chips = Array.prototype.slice.call(compare.querySelectorAll('[data-compare-type]'));
+            var keys = typesIn([picked('a'), picked('b')]);
+            showTypes(chips, 'data-compare-type', keys);
+            if (keys.indexOf(compareKey) < 0) compareKey = keys.indexOf(typeKey) > -1 ? typeKey : keys[0];
             var label = '';
-            compare.querySelectorAll('[data-compare-type]').forEach(function (chip) {
-                var on = chip.getAttribute('data-compare-type') === typeKey;
+            chips.forEach(function (chip) {
+                var on = chip.getAttribute('data-compare-type') === compareKey;
                 chip.setAttribute('aria-pressed', on ? 'true' : 'false');
                 if (on) label = chip.textContent.trim();
             });
@@ -513,12 +533,12 @@
         }
         if (compare) {
             compare.querySelectorAll('[data-compare-select]').forEach(function (select) {
-                select.addEventListener('change', function () { showCompare(); announce(); });
+                select.addEventListener('change', function () { markCompareType(); showCompare(); announce(); });
             });
             compare.querySelectorAll('[data-compare-type]').forEach(function (chip) {
                 chip.addEventListener('click', function () {
-                    var target = page.querySelector('[data-index-type="' + chip.getAttribute('data-compare-type') + '"]');
-                    if (target) target.click();
+                    compareKey = chip.getAttribute('data-compare-type');
+                    markCompareType(); showCompare(); announce();
                 });
             });
         }
@@ -545,7 +565,7 @@
         function announce() {
             page.dispatchEvent(new CustomEvent('shary:index-change', { bubbles: true, detail: {
                 type: typeKey, area: areaKey, period: period, sort: sort ? sort.value : 'price', query: search ? search.value : '',
-                a: picked('a'), b: picked('b'), budget: budgetInput ? digits(budgetInput.value) : 0, advanced: adv
+                a: picked('a'), b: picked('b'), compareType: compareKey, budget: budgetInput ? digits(budgetInput.value) : 0, advanced: adv
             } }));
         }
 
@@ -565,16 +585,25 @@
             button.addEventListener('click', function () {
                 buttons.forEach(function (other) { other.setAttribute('aria-pressed', other === button ? 'true' : 'false'); });
                 typeKey = button.getAttribute('data-index-type');
+                // المقارنة بتمشي مع نوع الفلتر لو موجود في المنطقتين
+                if (typesIn([picked('a'), picked('b')]).indexOf(typeKey) > -1) compareKey = typeKey;
                 show();
                 markCompareType();
                 announce();
             });
         });
+        // المنطقة الأول: الأنواع اللي تحتها = الموجودة فيها بس ، ولو النوع المختار مش موجود فيها بيتغير لأول نوع موجود
+        function fitHeroTypes() {
+            var keys = typesIn([areaKey]);
+            showTypes(buttons, 'data-index-type', keys);
+            return keys.indexOf(typeKey) > -1 ? null : buttons.filter(function (button) { return button.getAttribute('data-index-type') === keys[0]; })[0];
+        }
         var areaSelect = page.querySelector('[data-index-area]');
         if (areaSelect) {
             areaSelect.addEventListener('change', function () {
                 areaKey = areaSelect.value;
-                showMarket();
+                var other = fitHeroTypes();
+                if (other) other.click(); else showMarket();
                 announce();
             });
         }
@@ -628,6 +657,8 @@
             jump.addEventListener('click', function () {
                 var target = page.querySelector('[data-index-type="' + jump.getAttribute('data-index-type-jump') + '"]');
                 if (!target) return;
+                // النوع مش موجود في المنطقة المختارة فوق: نرجع لمصر كلها الأول عشان يبان ويتختار
+                if (target.classList.contains('hidden') && areaSelect) { areaSelect.value = ''; areaSelect.dispatchEvent(new Event('change')); }
                 target.click();
                 var filter = page.querySelector('[data-index-filter]');
                 if (filter) filter.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -746,6 +777,8 @@
                     image.setAttribute('data-all', image.getAttribute('src'));
                     if (holder(button).value && areas[holder(button).value]) paint(button); else image.classList.add('index-pick__mark');
                 }
+                // أي تغيير في الاختيار (من اللوحة أو من الصفحة نفسها) بيحدّث اسم الزرار وصورته
+                holder(button).addEventListener('change', function () { paint(button); });
                 button.addEventListener('click', function () {
                     target = button;
                     var value = holder(button).value;
@@ -783,6 +816,14 @@
 
         var current = page.querySelector('[data-index-type][aria-pressed="true"]');
         if (current) typeKey = current.getAttribute('data-index-type');
+        // الصفحة مفتوحة على منطقة: أنواعها بس — والنوع المختار مش فيها؟ أول نوع موجود
+        var fit = fitHeroTypes();
+        if (fit) {
+            buttons.forEach(function (other) { other.setAttribute('aria-pressed', other === fit ? 'true' : 'false'); });
+            typeKey = fit.getAttribute('data-index-type');
+        }
+        compareKey = typeKey;
+        markCompareType();
         show();
     });
 })();

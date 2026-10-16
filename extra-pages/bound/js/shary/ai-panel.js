@@ -209,6 +209,16 @@
 // ── ai-panel.js · جزء 2 من 7: أسئلة الاختيار وشريط «طلبك» وسياق الصفحة (المصدر: resources/js/shary/ai-panel/02-choice-steps.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---------- أسئلة الاختيار ----------
         function chosenOf(key) { return answers[key] || []; }
+        // مفاتيح الاختيارات المعتمدة: سؤال واحد ('area' ← "new-cairo") أو أكتر (['area', 'use'] ← "new-capital|residential")
+        function dependKeys(step) {
+            var keys = [''];
+            [].concat(step.depends).forEach(function (key) {
+                var next = [];
+                keys.forEach(function (head) { chosenOf(key).forEach(function (item) { next.push(head ? head + '|' + item.value : item.value); }); });
+                keys = next;
+            });
+            return keys;
+        }
         function optionsOf(step) {
             var out = [];
             if (!step.depends) out = Array.isArray(step.options) ? step.options.slice() : [];
@@ -216,8 +226,8 @@
                 // اختيارات معتمدة على سؤال قبله: لو العميل اختار أكتر من قيمة هناك، الاختيارات بتتجمع من غير تكرار
                 var map = step.options || {};
                 var seen = {};
-                chosenOf(step.depends).forEach(function (parent) {
-                    (Array.isArray(map[parent.value]) ? map[parent.value] : []).forEach(function (option) {
+                dependKeys(step).forEach(function (key) {
+                    (Array.isArray(map[key]) ? map[key] : []).forEach(function (option) {
                         if (seen[option.value]) return;
                         seen[option.value] = true;
                         out.push(option);
@@ -309,7 +319,10 @@
             var subMap = (subStep && subStep.options) || {};
             var places = [];
             chosenOf('area').forEach(function (area) {
-                var mine = chosenOf('sub').filter(function (sub) { return sub.value !== '' && (Array.isArray(subMap[area.value]) ? subMap[area.value] : []).some(function (option) { return option.value === sub.value; }); });
+                // أحياء المنطقة دي (المفتاح "المنطقة" أو "المنطقة|الاستخدام")
+                var own = [];
+                Object.keys(subMap).forEach(function (key) { if (key === area.value || key.indexOf(area.value + '|') === 0) own = own.concat(subMap[key]); });
+                var mine = chosenOf('sub').filter(function (sub) { return sub.value !== '' && own.some(function (option) { return option.value === sub.value; }); });
                 if (mine.length) mine.forEach(function (sub) { places.push(sub.label); }); else places.push(area.label);
             });
             var map = { type: labels('type', or), use: labels('use', or), place: places.join(or), budget: labels('budget', or), purpose: labels('purpose', T.and || ' + ') };

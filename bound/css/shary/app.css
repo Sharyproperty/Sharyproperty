@@ -5722,8 +5722,15 @@ input:focus-visible + .area-chip,
   [data-filter-sheet="all"] > .area-sheet {
     top: calc(7vh / var(--z, 1)) !important;
     overflow: hidden;
+    overflow: clip;               /* clip مش hidden: الموبايل ما يقدرش يسكرول اللوحة نفسها لما اختيار يتعلّم (كانت بتبان فاضية) */
     border-radius: 28px 28px 0 0;
   }
+}
+
+/* الاختيار المخفي (sr-only) يفضل جوه الزرار بتاعه: غير كده الموبايل بيسكرول اللوحة لمكانه البعيد لما يتعلّم */
+
+label:has(> input.sr-only) {
+  position: relative;
 }
 
 /* خلفية اللوحات: لبني هادي بتدرّج بدل الأبيض الصريح (الخانات والكروت اللي جواها بتفضل بيضا فبتبان) */
@@ -25827,8 +25834,9 @@ a.dev-logo-link:hover{box-shadow:0 10px 20px -6px rgba(18,58,92,.38),0 1px 3px r
 /* صفحة كارت «مشاريع تستحق الاستكشاف»: خانة بحث دايرية وجواها أيقونة الفلتر المتقدم */
 .xsearch{display:flex;align-items:center;gap:8px;height:54px;border-radius:999px;border:1.5px solid #D5DEE8;background:#F7F9FC;padding-inline:18px 6px;color:#5B6B7F}
 .xsearch:focus-within{border-color:#4CBFB2;background:#fff;box-shadow:0 0 0 3px rgba(76,191,178,.18)}
-.xsearch input{flex:1;min-width:0;height:100%;border:0;background:transparent;font-size:15.5px;font-weight:700;color:#1E4266;outline:none}
-.xsearch input::placeholder{color:#8A97A8;font-weight:600}
+.xsearch input{flex:1;min-width:0;height:100%;text-overflow:ellipsis;border:0;background:transparent;font-size:15.5px;font-weight:700;color:#1E4266;outline:none}
+.xsearch input::placeholder{color:#8A97A8;font-weight:600;font-size:12px}   /* نفس حجم بحث الرئيسية — الجملة كلها ظاهرة من غير ما تتقطع */
+@media (min-width:768px){.xsearch input::placeholder{font-size:14px}}
 .xsearch__adv{flex:none;width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#1E4266;color:#fff}
 .xsearch__adv[aria-expanded=true]{background:#1F7F72}
 .xfilter__row[hidden]{display:none!important}

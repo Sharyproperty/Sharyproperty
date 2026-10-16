@@ -45,9 +45,11 @@
 
     // ستايل MapLibre (من غير توكن): كرة أرضية + قمر صناعي وأسماء الأماكن (h) أو خريطة الشوارع (m)
     function libreStyle(type) {
+        // صور القمر الصناعي في مصر (الساحل وغيره) آخرها زوم 17 — بعده Esri بيرجّع صورة «Map data not yet available»،
+        // فالخريطة بتكبّر صورة زوم 17 نفسها بدل ما تطلب الزوم اللي ملوش صور
         var sources = type === 'h' ? {
-            base: { type: 'raster', tiles: [ESRI + 'World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 19, attribution: 'Imagery &copy; Esri' },
-            labels: { type: 'raster', tiles: [ESRI + 'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 19 }
+            base: { type: 'raster', tiles: [ESRI + 'World_Imagery/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 17, attribution: 'Imagery &copy; Esri' },
+            labels: { type: 'raster', tiles: [ESRI + 'Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'], tileSize: 256, maxzoom: 17 }
         } : {
             base: { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256, maxzoom: 19, attribution: '&copy; OpenStreetMap' }
         };
@@ -615,7 +617,7 @@
             frame.hidden = false;
             leaveGlobe();
             // صورة القمر الصناعي للمكان (نفس خلفية الخريطة — مش خرائط جوجل)
-            var z = Math.max(3, Math.min(18, Number(state.zoom) || 14)), per = 360 / (256 * Math.pow(2, z)), hw = 1200 * per / 2, hh = 800 * per * Math.cos(q.lat * Math.PI / 180) / 2;
+            var z = Math.max(3, Math.min(17, Number(state.zoom) || 14)), per = 360 / (256 * Math.pow(2, z)), hw = 1200 * per / 2, hh = 800 * per * Math.cos(q.lat * Math.PI / 180) / 2;
             var url = ESRI + 'World_Imagery/MapServer/export?bbox=' + [q.lng - hw, q.lat - hh, q.lng + hw, q.lat + hh].map(function (n) { return n.toFixed(6); }).join(',') + '&bboxSR=4326&imageSR=3857&size=1200,800&format=jpg&f=image';
             if (frame.getAttribute('src') !== url) frame.setAttribute('src', url);
             frame.setAttribute('title', (root.getAttribute('data-frame-title') || '').replace(':name', q.name || ''));
