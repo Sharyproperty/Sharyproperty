@@ -8101,13 +8101,17 @@ html, body {
   .shary-home-root .mobile-promo-track { display: flex; width: 100%; will-change: transform; }
   .shary-home-root .mobile-promo-slide { flex: 0 0 100%; width: 100%; overflow: hidden; border-radius: 0 !important; }
 }
-/* بوكس الإعلان مستطيل ثابت زي الموقع القديم (الصورة بتملاه): موبايل ≈ 2.5 : 1 ، Fold / تابلت ≈ 5.2 : 1 */
+/* بوكس الإعلان نفس مقاس الموقع القديم بالظبط: عرض الشاشة × ارتفاع ثابت 120px (الصورة بتملاه) —
+   على الموبايل العادي والـ Fold مقفول ومفتوح والتابلت */
 @media (max-width: 1023px) {
-  .shary-home-root .mobile-promo-slide { height: auto !important; aspect-ratio: 2.47 / 1; line-height: 0; }
+  .shary-home-root .mobile-promo-slide { height: 120px !important; aspect-ratio: auto; line-height: 0; }
   .shary-home-root .mobile-promo-slide img { display: block; width: 100% !important; height: 100% !important; object-fit: fill !important; pointer-events: none; user-select: none; -webkit-user-drag: none; }
 }
-@media (min-width: 768px) and (max-width: 1023px) {
-  .shary-home-root .mobile-promo-slide { aspect-ratio: 5.2 / 1; }
+/* ---- "أفضل المطورين" على الموبايل والـ Fold والتابلت: 4 لوجوهات في عرض الشاشة (والباقي بالسحب) ---- */
+@media (max-width: 959px) {
+  .shary-home-root .developers-carousel { container-type: inline-size; }
+  .shary-home-root .developers-track { gap: 12px; }
+  .shary-home-root .developer-card { flex: 0 0 calc((100cqi - 36px) / 4); width: calc((100cqi - 36px) / 4); height: calc((100cqi - 36px) / 4); }
 }
 /* ---- قسم "شاري معاك" على الموبايل: الخلفية أقل والتليفون نازل جواها (الجزء الطالع منه بره الخلفية أقل) ، التليفون بنسبته الطبيعية ، والكلام الأخضر سطر واحد أرفع ---- */
 @media (max-width: 959px) {
