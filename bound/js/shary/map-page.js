@@ -455,11 +455,7 @@
                 glBox.setAttribute('dir', 'ltr');
                 var options = { container: glBox, style: token ? MAPBOX_STYLES[state.type] : libreStyle(state.type), center: START.center, zoom: START.zoom, minZoom: -1, attributionControl: false };
                 if (token) options.projection = 'globe';
-                // جاي من صفحة مشروع / وحدة: الخريطة بتتفتح على المشروع نفسه من أول لحظة (مش على الكرة الأرضية)
-                if (state.asked && state.focus && state.current && !globeTrip()) {
-                    var here = info(state.current);
-                    if (isFinite(here.lng) && isFinite(here.lat)) { options.center = [here.lng, here.lat]; options.zoom = 14; leaveGlobe(); }
-                }
+                // جاي من صفحة مشروع / وحدة: الخريطة بتبدأ بالكرة الأرضية زي العادي — وبعدين بتلف وتطير لحد المشروع (start() تحت)
                 gl = new lib.Map(options);
                 glLib = lib;
                 gl.on('style.load', tuneStyle);
@@ -576,14 +572,20 @@
             }
             if (state.focus && state.current && isFinite(focusPoint.lat) && isFinite(focusPoint.lng) && (focusPoint.lat || focusPoint.lng)) {
                 var p = focusPoint;
-                leaveGlobe();
-                if (plans) plans.refresh();
-                // جاي من صفحة المشروع / الوحدة: على الماستر بلان على طول (من غير لفة الكرة الأرضية) — وإلا حركة الدخول العادية
                 root.classList.add('is-project');          // جاي من صفحة المشروع: من غير فلاتر ولا «اختر المنطقة» — المشروع ووحداته على طول
-                openSheet(state.current);                  // لوحة وحدات المشروع من تحت على طول
-                goTo(p, state.asked ? 0 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
-                revealRow(state.current);                  // كارت المشروع ظاهر في القايمة من الأول
-                outline(p);
+                if (plans) plans.refresh();                // الماستر بلان والوحدات بيتحمّلوا في الخلفية وهي بتطير
+                // جاي من صفحة المشروع / الوحدة: الكرة الأرضية بتلف لحد مصر ، وبعدين بتطير وتقرّب على المشروع (مش في وشه على طول)
+                var wideTrip = window.matchMedia('(min-width: 1024px)').matches;
+                var spin = state.asked ? 1800 : 0;
+                if (spin) gl.easeTo({ center: [p.lng, p.lat], zoom: wideTrip ? 2.8 : 2.1, duration: spin, easing: easeOut, essential: true });
+                window.setTimeout(function () {
+                    leaveGlobe();
+                    if (plans) plans.refresh();
+                    openSheet(state.current);              // لوحة وحدات المشروع من تحت
+                    goTo(p, state.asked ? 3200 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
+                    revealRow(state.current);              // كارت المشروع ظاهر في القايمة
+                    outline(p);
+                }, spin);
                 return;
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة

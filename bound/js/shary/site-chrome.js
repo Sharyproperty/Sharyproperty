@@ -746,8 +746,7 @@ window.SharyZoom = function () {
 
     /**
      * أندرويد: لينك intent بتاع كروم — التطبيق متحمّل ← بيتفتح على طول (من غير صفحة جوجل بلاي) ، مش متحمّل ← جوجل بلاي لوحده (S.browser_fallback_url).
-     *   deep = لينك شاشة في التطبيق من المطوّر (زي shary://legal — خانة «لينك الخدمة في التطبيق» في الداشبورد) ← بيفتح على الشاشة دي.
-     *   من غيره ← التطبيق بيفتح على شاشته الرئيسية (LAUNCHER — مش محتاج أي لينك من التطبيق).
+     *   بيفتح التطبيق على نفس الصفحة (appLink) — والتطبيق مش متحمّل ← جوجل بلاي.
      * لازم يتنادى من ضغطة العميل نفسها (كروم بيرفض intent من تحويل أوتوماتيك) — فبنستخدمه جوه click بس.
      * متصفحات جوه فيسبوك / إنستجرام / تيك توك… مش بتفتح intent ← صفحة التطبيق على جوجل بلاي زي الأول.
      */
@@ -757,13 +756,21 @@ window.SharyZoom = function () {
         var store = buttons[0] && buttons[0].getAttribute('data-android-url');
         return store || ('https://play.google.com/store/apps/details?id=' + PACKAGE);
     }
+    /**
+     * لينك التطبيق (shary://home/…): التطبيق بيفهم أي مسار من مسارات الموقع بعد shary://home (website_deep_link_resolver في كود التطبيق)
+     * ← بيفتح على نفس الصفحة / الخدمة جوه التطبيق (المساعد القانوني ، احجز مع المطور ، مشروع ، Shary AI …) ، والمسار اللي ما يعرفوش ← رئيسية التطبيق.
+     *   deep فاضي = الصفحة اللي العميل فاتحها دلوقتي. shary://legal-assistant (من الداشبورد) = shary://home/legal-assistant.
+     */
+    function appLink(deep) {
+        deep = String(deep || '');
+        if (/^shary:\/\/home(\/|$)/i.test(deep)) return deep;
+        if (/^shary:\/\//i.test(deep)) return 'shary://home/' + deep.replace(/^shary:\/\//i, '').replace(/^\/+/, '');
+        var path = (window.location.pathname || '/').replace(/^(\/(?:ar|en))\/v2(?=\/|$)/, '$1').replace(/\.html$/, '');
+        return 'shary://home' + (path === '/' ? '' : path);
+    }
     function androidIntent(deep) {
         var fallback = ';S.browser_fallback_url=' + encodeURIComponent(playUrl()) + ';end';
-        var m = /^([a-z][a-z0-9+.\-]*):\/\/(.*)$/i.exec(deep || '');
-        if (m && !/^(https?|intent)$/i.test(m[1]) && !/^home\/?$/i.test(m[2])) {
-            return 'intent://' + m[2] + '#Intent;scheme=' + m[1] + ';package=' + PACKAGE + fallback;
-        }
-        return 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=' + PACKAGE + fallback;
+        return 'intent://' + appLink(deep).replace(/^shary:\/\//i, '') + '#Intent;scheme=shary;package=' + PACKAGE + fallback;
     }
     /** افتح التطبيق (على الشاشة deep لو موجودة) — ولو مش متحمّل: المتجر. store = لينك المتجر للآيفون / الاحتياطي */
     function openApp(deep, store) {
@@ -776,7 +783,7 @@ window.SharyZoom = function () {
         }
         if (android) { window.location.href = playUrl(); return; }
         if (ios) {
-            launch(deep || DEEP_LINK, function (opened) {
+            launch(appLink(deep), function (opened) {
                 if (opened) { remember(); return; }
                 forget();
                 apply(false);
@@ -852,7 +859,7 @@ window.SharyZoom = function () {
     var GOT = 'shary-app-got';
     function read(store, key) { try { return window[store].getItem(key); } catch (error) { return null; } }
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
-    if (!mobile || read('sessionStorage', KEY) || read('localStorage', GOT) === '1' || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    if (!mobile || read('sessionStorage', KEY) || read('localStorage', GOT) === '1' || navigator.webdriver || document.documentElement.classList.contains('app-mode')) return;   // navigator.webdriver: اختبارات آلية ؛ app-mode: الصفحة جوه تطبيق شاري
     api.pending = true;
 
     function done() {
@@ -984,7 +991,7 @@ window.SharyZoom = function () {
 
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
     // شيت التطبيق بيظهر كل مرة الموقع يتفتح (حتى لو ضغط "حمل التطبيق" قبل كده ، وحتى لو التطبيق متحمل ← "افتح التطبيق") — مرة في الزيارة بس عشان ما يتكررش في كل صفحة
-    if (!mobile || seen() || (got() && !pop.hasAttribute('data-app-sheet')) || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    if (!mobile || seen() || (got() && !pop.hasAttribute('data-app-sheet')) || navigator.webdriver || document.documentElement.classList.contains('app-mode')) return;   // navigator.webdriver: اختبارات آلية ؛ app-mode: الصفحة جوه تطبيق شاري
     // صورة التليفون بتتحمّل من أول ما الصفحة تفتح (مش lazy — جوه بوب أب مخفي ما كانتش بتتحمّل غير لما يظهر ، فالكارت كان بيظهر الأول والصورة بعده)
     // والبوب أب ما بيظهرش غير لما الصورة تبقى جاهزة (أو بعد 3 ثواني زيادة بالكتير) — يظهر مرة واحدة كامل
     var device = pop.querySelector('.app-pop__device');
@@ -1040,7 +1047,7 @@ window.SharyZoom = function () {
     try { local = window.localStorage; } catch (error) { /* التخزين مقفول */ }
     try { session = window.sessionStorage; } catch (error) { /* التخزين مقفول */ }
     // وافق قبل كده (على الجهاز — أو في الزيارة دي لو التخزين الدائم مقفول)
-    if (read(local) || read(session) || navigator.webdriver) return;   // navigator.webdriver: اختبارات آلية
+    if (read(local) || read(session) || navigator.webdriver || document.documentElement.classList.contains('app-mode')) return;   // navigator.webdriver: اختبارات آلية ؛ app-mode: الصفحة جوه تطبيق شاري
     // بيظهر بعد بوب أب «حمل تطبيق شاري» (لو هيظهر) — مش الاتنين مع بعض
     if (window.SharyAppCard && window.SharyAppCard.pending) {
         document.addEventListener('shary:app-card-done', function () { note.classList.remove('hidden'); }, { once: true });

@@ -26010,3 +26010,17 @@ html.in-app .shary-share__panel { padding-bottom: 22px; }
 html.in-app .sai__note { padding-bottom: 8px; }
 html.in-app .smap__panel { bottom: 14px; }
 html.in-app .app-sheet__panel { padding-bottom: 22px; }
+
+/* «وضع التطبيق» (html.app-mode — shary/partials/head-core): صفحات الموقع متفتحة جوه شاشة في تطبيق شاري —
+   التطبيق عنده شريطه وأزراره ، فالصفحة بتظهر من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر ، ومن غير «حمّل التطبيق» وبوب أب التطبيق وتنبيه الكوكيز */
+html.app-mode body > header,
+html.app-mode .site-footer,
+html.app-mode [data-breadcrumb],
+html.app-mode .site-ticker,
+html.app-mode [data-app-card],
+html.app-mode [data-app-popup],
+html.app-mode [data-privacy-note],
+html.app-mode [data-app-button],
+html.app-mode [data-app-row] { display: none !important; }
+/* اللي كان لازق تحت هيدر الموقع (72px) بيلزق في أول الشاشة */
+html.app-mode .search-bar { top: 0; }
