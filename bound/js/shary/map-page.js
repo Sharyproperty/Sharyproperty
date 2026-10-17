@@ -341,8 +341,9 @@
 
         // الخروج من وضع "الكرة الأرضية" (أول ما العميل يختار منطقة / مشروع / فلتر): كروت المشاريع بتظهر
         function leaveGlobe() { root.classList.remove('is-globe'); }
-        // ديسك توب + جاي من لينك مشروع (?project=): الفتحة بالكرة الأرضية اللي بتلف وبعدين المشروع — الموبايل بيفتح على المشروع على طول (زي ما هو)
-        function globeTrip() { return (!!state.asked || /[?&]area=/.test(window.location.search)) && !state.fit && window.matchMedia('(min-width: 1024px)').matches; }
+        // جاي من صفحة مشروع / وحدة (?project= / ?unit=): الخريطة بتفتح على المشروع (أو بناية الوحدة) على طول — ديسك توب وموبايل ، من غير لفّة الكرة الأرضية.
+        // لفّة الكرة الأرضية (ديسك توب بس) للينك منطقة لوحده (?area= من غير مشروع)
+        function globeTrip() { return !state.asked && /[?&]area=/.test(window.location.search) && !state.fit && window.matchMedia('(min-width: 1024px)').matches; }
 
 // ── map-page.js · جزء 2 من 7: تحميل مكتبة الخريطة (Mapbox / MapLibre) (المصدر: resources/js/shary/map-page/02-map-library.js — عدّل هنا وشغّل tools/minify-assets.sh)
         // ---- المكتبة: Mapbox (بتوكن — data-mapbox-src) أو MapLibre (data-gl-src). الاتنين بيتحملوا بعد ما الصفحة تظهر (مش في الـ head) ، مرة واحدة.

@@ -27,6 +27,17 @@ window.SharyZoom = function () {
  * - المقارنة (data-compare-toggle + data-compare-id): بتظهر زرار المقارنة تحت (data-compare-bar) بعدد المختار، وبيفتح صفحة المقارنة. حدث shary:compare.
  */
 (function () {
+    // ---- تغيير اللغة (عربي / English): الصفحة باللغة القديمة ما بتفضلش في تاريخ المتصفح —
+    // فزرار الرجوع (أو سحبة الرجوع في الموبايل) بعد تغيير اللغة ما يرجّعش العميل للغة اللي سابها
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest && event.target.closest('a[data-lang-toggle]');
+        if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        var href = link.getAttribute('href');
+        if (!href || href === '#' || link.target === '_blank') return;
+        event.preventDefault();
+        window.location.replace(link.href);
+    });
+
     // ---- زرار الرجوع بيقفل اللي مفتوح بدل ما يخرج من الصفحة
     // opened(close): بتتنادى لما لوحة تتفتح. closed(after): لما تتقفل من X / Esc / الضغط براها (after بتتنفذ بعد ما التاريخ يرجع خطوة).
     window.SharyBack = (function () {
@@ -830,15 +841,15 @@ window.SharyZoom = function () {
     });
     document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !card.hidden) close(); });
 
-    // صورة التليفون بتتحمّل الأول ، والبوب أب بيظهر كامل مرة واحدة (أو بعد ثانية وربع بالكتير — هو أول حاجة في الموقع)
+    // صورة التليفون بتتحمّل الأول ، والبوب أب بيظهر كامل مرة واحدة (الصورة جاهزة ومفكوكة) — أو بعد 4 ثواني بالكتير لو النت بطيء
     var device = card.querySelector('.app-pop__device');
     function ready(next) {
         if (!device || (device.complete && device.naturalWidth > 0)) { next(); return; }
         var fired = false;
         var go = function () { if (!fired) { fired = true; next(); } };
-        device.addEventListener('load', go);
+        device.addEventListener('load', function () { (device.decode ? device.decode().catch(function () {}) : Promise.resolve()).then(go); });
         device.addEventListener('error', function () { window.setTimeout(go, 80); });
-        window.setTimeout(go, 1250);
+        window.setTimeout(go, 4000);
     }
     window.setTimeout(function () {
         var button = card.querySelector('[data-app-button]');

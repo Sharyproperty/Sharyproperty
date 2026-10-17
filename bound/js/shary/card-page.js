@@ -24,7 +24,7 @@
         var codeText = page.querySelector('[data-card-code-text]');
 
         if (strip) strip.addEventListener('click', function () {
-            if (!code.textContent.trim()) {
+            if (!(code.getAttribute('data-raw') || code.textContent).trim()) {
                 // لسه ما أخدش كارت: العميل المسجل ينزل لفورم الطلب ، والزائر لبوكس «سجّل واحصل على كارتك»
                 var first = form && form.querySelector('input[name="name"]');
                 if (first) { form.scrollIntoView({ behavior: 'smooth', block: 'center' }); first.focus({ preventScroll: true }); return; }
@@ -36,7 +36,7 @@
         });
 
         if (copyButton) copyButton.addEventListener('click', function () {
-            var value = code.textContent.trim();
+            var value = (code.getAttribute('data-raw') || code.textContent).replace(/\s+/g, '').trim();
             if (!value) return;
             var label = copyButton.querySelector('[data-card-copy-label]');
             var original = label.textContent;
@@ -60,8 +60,11 @@
             if (pendingBox) pendingBox.classList.add('hidden');
             if (invite) invite.href = 'https://wa.me/?text=' + encodeURIComponent((invite.getAttribute('data-message') || '').replace(':code', card.code));
             name.textContent = card.name || name.getAttribute('data-empty');
-            code.textContent = card.code;
-            if (codeText) codeText.textContent = card.code;
+            // العرض زي كروت البنوك (الأرقام كل 4 مع بعض) — والنسخ بالكود زي ما هو
+            var pretty = String(card.code).replace(/^(#?[A-Za-z]*)(\d+)$/, function (all, letters, digits) { return (letters + ' ' + digits.replace(/(\d{4})(?=\d)/g, '$1 ')).trim(); });
+            code.setAttribute('data-raw', card.code);
+            code.textContent = pretty;
+            if (codeText) codeText.textContent = pretty;
             strip.classList.add('is-revealed');
             page.setAttribute('data-state', 'member');
             if (form) form.classList.add('hidden');

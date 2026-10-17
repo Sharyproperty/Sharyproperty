@@ -8851,12 +8851,12 @@ html[lang="en"] .advanced-search-btn { flex-direction: row-reverse; }
   .shary-home-root .hero-featured { left: 3%; bottom: calc(var(--hero-over, 111px) + 26px); padding: 14px 16px 14px; min-width: 150px; }
   [dir="ltr"] .shary-home-root .hero-featured { left: auto; right: 3%; align-items: flex-end; }
 }
-/* موبايل وتابلت: الجملة تحت على اليمين ، وتحتها شريط «مشاريع مميزة» صغير (سطر واحد) ، والنقط تحت خالص */
+/* موبايل وتابلت: الجملة تحت على اليمين ، وتحتها شريط «مشاريع مميزة» صغير (سطر واحد) لازق في خانة البحث — فصورة الكفر من فوق تبان أكتر ، والنقط تحت خالص */
 @media (max-width: 1023.98px) {
   .shary-home-root .hero-brand__title { font-size: clamp(20px, 5.6vw, 26px) !important; line-height: 1.3 !important; }
   .shary-home-root .hero-brand__sub { font-size: clamp(11.5px, 3.1vw, 14px) !important; line-height: 1.6 !important; margin-top: 4px !important; max-width: 100%; }
-  .shary-home-root .hero-project-info.hero-brand { width: calc(100% - 32px) !important; top: auto !important; bottom: calc(var(--hero-over, 100px) + 52px) !important; }
-  .shary-home-root .hero-featured { flex-direction: row; align-items: center; gap: 6px; right: 16px; left: auto; top: auto; bottom: calc(var(--hero-over, 100px) + 18px);
+  .shary-home-root .hero-project-info.hero-brand { width: calc(100% - 32px) !important; top: auto !important; bottom: calc(var(--hero-over, 100px) + 22px) !important; }
+  .shary-home-root .hero-featured { flex-direction: row; align-items: center; gap: 6px; right: 16px; left: auto; top: auto; bottom: calc(var(--hero-over, 100px) - 12px);
     padding: 5px 6px 5px 10px; border-radius: 999px; max-width: calc(100% - 32px); }
   [dir="ltr"] .shary-home-root .hero-featured { right: auto; left: 16px; padding: 5px 10px 5px 6px; }
   .shary-home-root .hero-featured__label { font-size: 11px; white-space: nowrap; }
@@ -8963,3 +8963,7 @@ html:not(.sx-ready) .shary-home-root .hero-featured__btn, html:not(.sx-ready) .s
 @media (min-width: 768px) {
   .shary-home-root .recommended-section { padding-top: 8px !important; }
 }
+
+/* ---- أحدث المشاريع: الصورة <img> بمقاس الشاشة (srcset) بدل خلفية 480 — حادة من غير بلور ، مالية الكارت (cover) من أول ما تظهر ، ولون هادي لحد ما توصل */
+.new-projects-track .new-project-card { background-color: #e9eef4; }
+.new-projects-track .new-project-card > .np-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; display: block; pointer-events: none; user-select: none; }
