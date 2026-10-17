@@ -8932,3 +8932,34 @@ html:not(.sx-ready) .shary-home-root .hero-featured__btn, html:not(.sx-ready) .s
   .shary-home-root .hero-featured { box-sizing: border-box; }
   .shary-home-root .hero-featured__name { min-width: 0; flex: 1 1 auto; max-width: none; }
 }
+/* ---- مسافات متساوية بين أقسام الهوم (من آخر محتوى القسم لأول محتوى اللي بعده):
+   الموبايل والـ Fold ≈ 28px — الديسك توب ≈ 36px. (كروت الخريطة ← عندك وحدة؟ ← أحدث المشاريع ← المطورين ← الإعلان ← الاستكشاف ← المناطق) ---- */
+@media (max-width: 767px) {
+  .shary-home-root #properties { padding-top: 4px !important; padding-bottom: 28px !important; }
+  .shary-home-root #developers { padding-top: 28px !important; }
+  .shary-home-root section:has(> .mobile-promo-carousel) { padding-top: 4px !important; padding-bottom: 28px !important; }
+  .shary-home-root .areas-section { padding-top: 2px !important; }
+}
+@media (min-width: 768px) {
+  .shary-home-root #properties { padding-top: 0 !important; padding-bottom: 36px !important; margin-top: -4px; }
+  .shary-home-root section:has(> .mobile-promo-carousel) { padding-top: 12px !important; }
+  .shary-home-root #developers { padding-top: 36px !important; }
+  .shary-home-root section:has(> .promo-banners-carousel), .shary-home-root section:has(> .mobile-promo-carousel) { padding-bottom: 36px !important; }
+  .shary-home-root .areas-section { padding-top: 16px !important; }
+}
+/* نفس الإيقاع لآخر الصفحة: وحدات مقترحة ← «شاري معاك» ← «تحتاج استشارة؟» */
+@media (max-width: 767px) {
+  .shary-home-root .sh-hero { padding-top: 28px !important; }
+  .shary-home-root #contact { padding-top: 12px !important; }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .shary-home-root .sh-hero { padding-top: 8px !important; }
+  .shary-home-root #contact { padding-top: 20px !important; }
+}
+@media (min-width: 1024px) {
+  .shary-home-root .sh-hero { padding-top: 8px !important; padding-bottom: 36px !important; }
+  .shary-home-root #contact { padding-top: 0 !important; }
+}
+@media (min-width: 768px) {
+  .shary-home-root .recommended-section { padding-top: 8px !important; }
+}

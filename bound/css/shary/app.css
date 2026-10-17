@@ -8236,20 +8236,27 @@ label:has(> input.sr-only) {
 
 .auth-promo__stores {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;   /* جوجل بلاي وآبل جنب بعض على كل المقاسات — زي «شاري معاك» في الرئيسية */
   justify-content: center;
   gap: 10px;
 }
 
+.auth-store svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
 .auth-store {
   display: inline-flex;
-  height: 48px;
+  height: 46px;
+  min-width: 0;
   align-items: center;
   gap: 9px;
   border: 1.5px solid #123a5c;
   border-radius: 12px;
   background-color: #ffffff;
-  padding-inline: 14px;
+  padding-inline: 12px;
   color: #123a5c;
   transition: background-color 0.15s, color 0.15s, transform 0.15s;
 }
@@ -8278,7 +8285,7 @@ label:has(> input.sr-only) {
 }
 
 .auth-store b {
-  font-size: 15.5px;
+  font-size: 15px;
   font-weight: 800;
   line-height: 1.2;
 }
