@@ -692,7 +692,7 @@ window.SharyZoom = function () {
  */
 (function () {
     var buttons = Array.prototype.slice.call(document.querySelectorAll('[data-app-button]'));
-    if (!buttons.length) return;
+    // من غير زرار تطبيق في الصفحة (صفحات خدمات التطبيق مثلاً): window.SharyApp بيتعمل برضه — سكربتات الصفحة بتستخدم SharyApp.open
     var ua = navigator.userAgent || '';
     var ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
     var KEY = 'shary-app-installed';
@@ -744,19 +744,65 @@ window.SharyZoom = function () {
         window.location.href = link;
     }
 
-    // للسكربتات التانية (كروت "ما يميزنا" في الرئيسية): لما لينك تطبيق يفتح فعلاً بنفتكر إن التطبيق متسطّب والزرار يبقى "افتح التطبيق"
+    /**
+     * أندرويد: لينك intent بتاع كروم — التطبيق متحمّل ← بيتفتح على طول (من غير صفحة جوجل بلاي) ، مش متحمّل ← جوجل بلاي لوحده (S.browser_fallback_url).
+     *   deep = لينك شاشة في التطبيق من المطوّر (زي shary://legal — خانة «لينك الخدمة في التطبيق» في الداشبورد) ← بيفتح على الشاشة دي.
+     *   من غيره ← التطبيق بيفتح على شاشته الرئيسية (LAUNCHER — مش محتاج أي لينك من التطبيق).
+     * لازم يتنادى من ضغطة العميل نفسها (كروم بيرفض intent من تحويل أوتوماتيك) — فبنستخدمه جوه click بس.
+     * متصفحات جوه فيسبوك / إنستجرام / تيك توك… مش بتفتح intent ← صفحة التطبيق على جوجل بلاي زي الأول.
+     */
+    var PACKAGE = (buttons[0] && buttons[0].getAttribute('data-android-package')) || 'com.sharyproperties.app';
+    var noIntent = /FBAN|FBAV|FB_IAB|Instagram|Snapchat|TikTok|musical_ly|Line\//i.test(ua);
+    function playUrl() {
+        var store = buttons[0] && buttons[0].getAttribute('data-android-url');
+        return store || ('https://play.google.com/store/apps/details?id=' + PACKAGE);
+    }
+    function androidIntent(deep) {
+        var fallback = ';S.browser_fallback_url=' + encodeURIComponent(playUrl()) + ';end';
+        var m = /^([a-z][a-z0-9+.\-]*):\/\/(.*)$/i.exec(deep || '');
+        if (m && !/^(https?|intent)$/i.test(m[1]) && !/^home\/?$/i.test(m[2])) {
+            return 'intent://' + m[2] + '#Intent;scheme=' + m[1] + ';package=' + PACKAGE + fallback;
+        }
+        return 'intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=' + PACKAGE + fallback;
+    }
+    /** افتح التطبيق (على الشاشة deep لو موجودة) — ولو مش متحمّل: المتجر. store = لينك المتجر للآيفون / الاحتياطي */
+    function openApp(deep, store) {
+        if (android && !noIntent) {
+            var onHide = function () { if (document.hidden) { remember(); apply(true); document.removeEventListener('visibilitychange', onHide); } };
+            document.addEventListener('visibilitychange', onHide);
+            window.setTimeout(function () { document.removeEventListener('visibilitychange', onHide); }, 4000);
+            window.location.href = androidIntent(deep);
+            return;
+        }
+        if (android) { window.location.href = playUrl(); return; }
+        if (ios) {
+            launch(deep || DEEP_LINK, function (opened) {
+                if (opened) { remember(); return; }
+                forget();
+                apply(false);
+                if (store) window.location.href = store;
+            });
+            return;
+        }
+        if (store) window.location.href = store;
+    }
+
+    // للسكربتات التانية (كروت "ما يميزنا" في الرئيسية ، صفحات خدمات التطبيق ، زراير المتاجر): لما لينك تطبيق يفتح فعلاً بنفتكر إن التطبيق متسطّب والزرار يبقى "افتح التطبيق"
     window.SharyApp = {
         installed: remembered,
         remember: function () { remember(); apply(true); },
         forget: function () { forget(); apply(false); },
         launch: launch,
+        open: openApp,
+        android: android,
+        ios: ios,
     };
 
     /**
      * الضغط على الزرار (موبايل):
      *   "افتح التطبيق": لو data-open-url لينك https خاص بالتطبيق (Universal Link / App Link) بيتفتح زي ما هو — غير كده بيفتح shary://home ،
      *                   ولو التطبيق ما اتفتحش (اتمسح من الجهاز) الزرار بيرجع "حمل التطبيق" وبيروح للمتجر.
-     *   "حمل التطبيق" على أندرويد: intent:// بتاع كروم — التطبيق متسطّب ← بيفتح ، مش متسطّب ← جوجل بلاي (من غير رسالة خطأ).
+     *   "حمل التطبيق" / "افتح التطبيق" على أندرويد: intent بتاع كروم (openApp) — التطبيق متسطّب ← بيفتح على طول ، مش متسطّب ← جوجل بلاي.
      *   "حمل التطبيق" على آيفون: المتجر على طول (سفاري مش بيسمح بمعرفة التطبيقات المتسطّبة ، وتجربة لينك التطبيق بتطلّع رسالة خطأ للي مش منزّله).
      */
     document.addEventListener('click', function (event) {
@@ -768,16 +814,11 @@ window.SharyZoom = function () {
             // لينك فتح خاص بالتطبيق = $appOpenUrl مكتوب ومختلف عن لينك التحميل العادي ($appUrl) ومش لينك متجر
             if (/^https?:/i.test(open) && !isStore(open) && open !== button.getAttribute('data-get-url')) return;
             event.preventDefault();
-            launch(button.getAttribute('data-deep-link') || DEEP_LINK, function (opened) {
-                if (opened) { remember(); return; }
-                forget();
-                apply(false);
-                if (store) window.location.href = store;
-            });
-        } else if (android && store) {
+            openApp(button.getAttribute('data-deep-link') || '', store);
+        } else if (android) {
+            // «حمل التطبيق» على أندرويد: متحمّل ← بيفتح على طول ، مش متحمّل ← جوجل بلاي (intent)
             event.preventDefault();
-            var id = button.getAttribute('data-android-package') || '';
-            window.location.href = store;   // Google Play: «فتح» لو متحمّل ، «تثبيت» لو لأ (من غير intent)
+            openApp(button.getAttribute('data-deep-link') || '', store);
         }
     });
 
@@ -787,7 +828,7 @@ window.SharyZoom = function () {
 
     if (navigator.getInstalledRelatedApps) {
         navigator.getInstalledRelatedApps().then(function (apps) {
-            var id = buttons[0].getAttribute('data-android-package');
+            var id = buttons[0] ? buttons[0].getAttribute('data-android-package') : PACKAGE;
             var found = (apps || []).some(function (app) { return !id || app.id === id; });
             if (found) { remember(); apply(true); }
         }).catch(function () { /* المتصفح مش بيدعمها */ });
@@ -841,9 +882,19 @@ window.SharyZoom = function () {
     });
     document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && !card.hidden) close(); });
 
-    // صورة التليفون بتتحمّل الأول ، والبوب أب بيظهر كامل مرة واحدة (الصورة جاهزة ومفكوكة) — أو بعد 4 ثواني بالكتير لو النت بطيء
+    // السرعة: صورة التليفون (data-src) ما بتتحمّلش مع أول الصفحة — بتبدأ بعد ما الصفحة نفسها تخلص تحميل (صورة المشروع / الهيدر الأول) ،
+    // والبوب أب بيظهر كامل مرة واحدة أول ما الصورة تبقى جاهزة ومفكوكة — أو بعد 4 ثواني بالكتير لو النت بطيء
     var device = card.querySelector('.app-pop__device');
+    // الصورة بتبدأ تتحمّل بأولوية واطية (fetchpriority=low) أول ما الصفحة تتقري — بعد صورة الصفحة الأساسية ، ومن غير ما تسابقها
+    function fetchDevice() {
+        if (!device || device.getAttribute('src') || !device.getAttribute('data-src')) return;
+        device.setAttribute('loading', 'eager');   // جوه بوب أب مخفي: lazy (من أي سكربت) كان بيخليها ما تتحمّلش غير لما البوب أب يظهر
+        device.setAttribute('fetchpriority', 'low');
+        device.setAttribute('src', device.getAttribute('data-src'));
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fetchDevice, { once: true }); else fetchDevice();
     function ready(next) {
+        fetchDevice();
         if (!device || (device.complete && device.naturalWidth > 0)) { next(); return; }
         var fired = false;
         var go = function () { if (!fired) { fired = true; next(); } };
@@ -851,13 +902,18 @@ window.SharyZoom = function () {
         device.addEventListener('error', function () { window.setTimeout(go, 80); });
         window.setTimeout(go, 4000);
     }
-    window.setTimeout(function () {
-        var button = card.querySelector('[data-app-button]');
-        if (button && button.getAttribute('data-state') === 'open') { done(); return; }   // التطبيق متسطّب
-        ready(open);
-    }, 900);
+    var started = false;
+    function start() {
+        if (started) return;
+        started = true;
+        window.setTimeout(function () {
+            var button = card.querySelector('[data-app-button]');
+            if (button && button.getAttribute('data-state') === 'open') { done(); return; }   // التطبيق متسطّب
+            ready(open);
+        }, 700);
+    }
+    if (document.readyState === 'complete') start(); else { window.addEventListener('load', start, { once: true }); window.setTimeout(start, 6000); }   // 6 ثواني: صفحة لسه بتحمّل حاجات كتير
 })();
-
 // ── site-chrome.js · جزء 8 من 11: بوب أب تحميل التطبيق (الشيت اللي تحت) (المصدر: resources/js/shary/site-chrome/08-app-popup.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
  * بوب أب تحميل التطبيق [data-app-popup] (موبايل بس): بيظهر بعد data-delay من فتح الصفحة وبيدخل من الشمال.
@@ -1351,10 +1407,31 @@ window.SharyZoom = function () {
         if (!link || event.defaultPrevented || link.hasAttribute('data-store-direct')) return;   // زراير شات Shary AI: المتجر على طول
         var href = link.getAttribute('href') || '';
         if (!/^https?:\/\/(play\.google\.com\/store\/apps|apps\.apple\.com\/)/i.test(href)) return;
+        // أندرويد: التطبيق متحمّل ← بيفتح على طول (intent — من غير صفحة جوجل بلاي) ، مش متحمّل ← جوجل بلاي (site-chrome/06-app-button.js)
+        if (window.SharyApp && window.SharyApp.android && window.SharyApp.open) {
+            event.preventDefault();
+            event.stopPropagation();   // أي onclick تاني على الزرار (المتجر على طول) ما يشتغلش بعدها
+            window.SharyApp.open('', href);
+            return;
+        }
         var open = document.body && document.body.getAttribute('data-app-open');
         if (!open) return;
         event.preventDefault();
         window.location.href = open;
+    }, true);
+
+/* لينكات «حمّل التطبيق» جوه الموقع (/download ، /app — الإعلانات والبانرات والفوتر) على أندرويد: نفس الكلام —
+   بتفتح التطبيق على طول لو متحمّل (من غير ما تعدّي على صفحة جوجل بلاي) ، ولو مش متحمّل جوجل بلاي */
+    document.addEventListener('click', function (event) {
+        if (!(window.SharyApp && window.SharyApp.android && window.SharyApp.open)) return;
+        var link = event.target.closest && event.target.closest('a[href]');
+        if (!link || event.defaultPrevented || link.hasAttribute('data-store-direct') || link.closest('[data-app-button]')) return;
+        var url;
+        try { url = new URL(link.getAttribute('href') || '', window.location.href); } catch (error) { return; }
+        if (url.origin !== window.location.origin || !/^(?:\/(?:ar|en))?\/(?:download|app|download-app)\/?$/i.test(url.pathname)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        window.SharyApp.open(link.getAttribute('data-afp-open') || '', '');
     }, true);
 })();
 

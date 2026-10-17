@@ -44,9 +44,10 @@ function handleInvestmentLink(event, link) {
     const storeUrl = isAndroid ? stores.android : stores.ios;
     const deepLink = isDeep ? href : (link.getAttribute('data-app-link') || 'shary://home');
 
-    // أندرويد: intent «افتح التطبيق» — متحمّل ← بيفتح ، مش متحمّل ← جوجل بلاي (من غير صفحة خطأ)
-    if (isAndroid && storeUrl) {
-        window.location.href = storeUrl;   // Google Play: «فتح» لو متحمّل ، «تثبيت» لو لأ
+    // أندرويد: التطبيق متحمّل ← بيفتح على طول (على الشاشة دي لو لينكها shary://…) ، مش متحمّل ← جوجل بلاي (site-chrome/06-app-button.js)
+    if (isAndroid) {
+        if (window.SharyApp && window.SharyApp.open) window.SharyApp.open(deepLink, storeUrl);
+        else if (storeUrl) window.location.href = storeUrl;
         return;
     }
 

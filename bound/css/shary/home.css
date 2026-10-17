@@ -61,7 +61,7 @@
 }
 .shary-home-root {
   scroll-behavior: smooth;
-  font-family:'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-size:16px;
   font-weight: normal;
 }
@@ -1132,7 +1132,7 @@
   display: block;
   margin-top: 7px;
   font-size: 14px;
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-weight: 600;
   white-space: nowrap;
   /* margin-bottom: 7px; */
@@ -1271,7 +1271,7 @@
   justify-content: space-between;
   /* direction: ltr; */
   margin: auto;
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-weight: normal;
 }
 
@@ -1688,7 +1688,7 @@
 }
 
 .new-project-card, .project-card {
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-weight: normal;
 }
 
@@ -2356,7 +2356,7 @@
 .home-area-card h3 {
   margin: 0;
   color: var(--color-heading);
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-size: 18px;
   line-height: 1.2;
   font-weight: 600;
@@ -2411,7 +2411,7 @@
 }
 
 .properties-headline-3 {
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-weight: 600;
   font-size: 24px;
 }
@@ -3436,7 +3436,7 @@
     0 2px 5px rgba(15, 54, 82, 0.08);
   z-index: 20;
   box-sizing: border-box;
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-weight: normal;
 }
 
@@ -3603,7 +3603,7 @@
 }
 
 .headline-2 {
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-size: 24px;
   font-weight: 600;
   margin: 0;
@@ -3611,7 +3611,7 @@
 }
 
 .show-all-btn {
-  font-family: 'Almarai';
+  font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
   font-weight: 600;
 }
 
@@ -3621,7 +3621,7 @@
     width: 100%;
     max-width: 100%;
     overflow-x: clip !important;
-    font-family:'Almarai';
+    font-family: 'Almarai', 'Cairo', Tahoma, sans-serif;
     font-weight: normal;
     font-size:16px;
   }
@@ -8967,3 +8967,28 @@ html:not(.sx-ready) .shary-home-root .hero-featured__btn, html:not(.sx-ready) .s
 /* ---- أحدث المشاريع: الصورة <img> بمقاس الشاشة (srcset) بدل خلفية 480 — حادة من غير بلور ، مالية الكارت (cover) من أول ما تظهر ، ولون هادي لحد ما توصل */
 .new-projects-track .new-project-card { background-color: #e9eef4; }
 .new-projects-track .new-project-card > .np-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; display: block; pointer-events: none; user-select: none; }
+
+/* أيقونتين Font Awesome بس في الهوم (البحث 🔍 والدعم 🎧): مرسومين هنا بنفس شكل ومقاس أيقونات Font Awesome 5 بالظبط (Font Awesome Free — CC BY 4.0)
+   بدل تحميل مكتبة Font Awesome كلها + خطها (حوالي 150 كيلو من cdnjs) — نفس <i class="fas fa-search"> زي ما هو */
+.shary-home-root i.fas { display: inline-block; font-style: normal; line-height: 1; }
+.shary-home-root i.fas::before { content: ""; display: inline-block; width: 1em; height: 1em; vertical-align: -.125em; background-color: currentColor; -webkit-mask: var(--fa-i) center / contain no-repeat; mask: var(--fa-i) center / contain no-repeat; }
+.shary-home-root i.fa-search { --fa-i: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z'/%3E%3C/svg%3E"); }
+.shary-home-root i.fa-headset { --fa-i: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath d='M192 208c0-17.67-14.33-32-32-32h-16c-35.35 0-64 28.65-64 64v48c0 35.35 28.65 64 64 64h16c17.67 0 32-14.33 32-32V208zm176 144c35.35 0 64-28.65 64-64v-48c0-35.35-28.65-64-64-64h-16c-17.67 0-32 14.33-32 32v112c0 17.67 14.33 32 32 32h16zM256 0C113.18 0 4.58 118.83 0 256v16c0 8.84 7.16 16 16 16h16c8.84 0 16-7.16 16-16v-16c0-114.69 93.31-208 208-208s208 93.31 208 208h-.12c.08 2.43.12 165.72.12 165.72 0 23.35-18.93 42.28-42.28 42.28H320c0-26.51-21.49-48-48-48h-32c-26.51 0-48 21.49-48 48s21.49 48 48 48h181.72c49.86 0 90.28-40.42 90.28-90.28V256C507.42 118.83 398.82 0 256 0z'/%3E%3C/svg%3E"); }
+
+/* ---- «عندك وحدة؟» على الشاشات الضيقة (الفولد مقفول / موبايل صغير): كلام الزرارين ما يخرجش برّه الزرار أبداً
+   - الكلام سطر واحد ، وبيصغر شوية لوحده على قد عرض الزرار (container query) — بحد أدنى 11.5px
+   - تحت 480px: الزرارين بينزلوا سطر لوحدهم بعرض الكارت كله تحت الكلام (عربي وإنجليزي) — جنب بعض زي ما هم */
+.own-unit-card__actions { container-type: inline-size; }
+.own-unit-card__btn { white-space: nowrap; text-overflow: ellipsis; }
+@media (max-width: 1023.98px) {
+  @supports (font-size: 1cqi) {
+    .own-unit-card__btn { font-size: clamp(11.5px, calc(6.4cqi - 2px), 13.5px); }
+  }
+}
+@media (max-width: 479.98px) {
+  .own-unit-card { flex-wrap: wrap; row-gap: 12px; }
+  .own-unit-card__body { display: contents; }
+  .own-unit-card__copy { flex: 1 1 0; min-width: 0; }
+  .own-unit-card__text { margin-bottom: 0; }
+  .own-unit-card__actions { flex: 1 0 100%; }
+}

@@ -2517,9 +2517,9 @@ button.site-login {
 /* الكود زي أرقام كروت البنوك: دهبي بارز (embossed) — الأرقام كل 4 مع بعض ، ومقاس صغير يدخل في الكارت */
 .shary-card__code {
   font-family: "OCR A Std", "OCR-A", "Courier New", ui-monospace, Menlo, Consolas, monospace;
-  font-size: clamp(11px, 3.3vw, 14px);
+  font-size: clamp(10.5px, 3vw, 13px);
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.07em;
   line-height: 1.1;
   white-space: nowrap;
   color: #e9c46a;
@@ -25997,3 +25997,16 @@ html:not(.sx-ready) .own-unit-card__btn, html:not(.sx-ready) .own-unit-card__btn
   .lg\:min-h-\[120px\] { min-height: 120px; }
   .lg\:h-\[160px\] { height: 160px; }
 }
+
+/* الموقع مفتوح من جوه تطبيق (تطبيق شاري / أي WebView — html.in-app من shary/partials/head-core):
+   التطبيق نفسه شايل مساحة شريط الموبايل اللي تحت (شريط تابات التطبيق) ، فـ safe-area-inset-bottom اللي بيبعتها الـ WebView
+   كانت بتتحسب مرتين ← شريط «اتصال / واتساب / Shary AI» طالع لفوق وتحته فراغ أبيض. هنا: نفس مقاسات المتصفح العادي بالظبط */
+html.in-app [data-quick-bar] { padding-bottom: 10px; }
+html.in-app .search-switch { bottom: 78px; }
+html.in-app .privacy-note { bottom: 84px; }
+html.in-app .story__go { bottom: 18px; }
+html.in-app .site-menu__scroll { padding-bottom: 0; }
+html.in-app .shary-share__panel { padding-bottom: 22px; }
+html.in-app .sai__note { padding-bottom: 8px; }
+html.in-app .smap__panel { bottom: 14px; }
+html.in-app .app-sheet__panel { padding-bottom: 22px; }

@@ -10,7 +10,9 @@
             const ua = navigator.userAgent;
 
             if (/Android/i.test(ua)) {
-                window.location.href = androidURL;
+                // التطبيق متحمّل ← بيفتح على طول ، مش متحمّل ← جوجل بلاي (site-chrome/06-app-button.js)
+                if (window.SharyApp && window.SharyApp.open) window.SharyApp.open('', androidURL);
+                else window.location.href = androidURL;
             } else if (/iPhone|iPad|iPod/i.test(ua)) {
                 window.location.href = iosURL;
             } else {
