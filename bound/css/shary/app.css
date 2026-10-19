@@ -15487,6 +15487,66 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   opacity: 0.55;
 }
 
+/* رقم الوحدة جنب النوع والمساحة: دايرة صغيرة تركواز (المختارة: بيضا على كحلي) — ومن غير زحمة (js: declutterUnits):
+   is-compact = الرقم بس فوق البناية ، is-mini = البناية بس (لما حتى الرقم مش لاقي مكان) */
+.smap__marker--unit > span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.smap__unum {
+  display: inline-flex;
+  height: 18px;
+  min-width: 18px;
+  max-width: 76px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: #1f9a8b;
+  padding: 0 5px;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+  color: #fff;
+  text-overflow: ellipsis;
+  direction: ltr;
+}
+
+.smap__utext {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.smap__marker--unit.is-on .smap__unum {
+  background-color: #fff;
+  color: #123a5c;
+}
+
+.smap__marker--unit.is-compact > span {
+  background: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.smap__marker--unit.is-compact .smap__utext {
+  display: none;
+}
+
+.smap__marker--unit.is-compact .smap__unum {
+  height: 20px;
+  min-width: 20px;
+  border: 1.5px solid #fff;
+  box-shadow: 0 4px 10px -4px rgba(13, 32, 51, 0.6);
+}
+
+.smap__marker--unit.is-mini > span {
+  visibility: hidden;
+}
+
 /* كارت الوحدة الصغير: بيطلع على الخريطة فوق البناية اللي اتضغطت (صورة صغيرة + النوع والمساحة + السعر) — الكارت كله لينك لصفحة الوحدة */
 
 .smap__unit {

@@ -514,6 +514,10 @@
                 root.__declutter = declutterSoon;
                 // وحدات المشروع المختار: بتظهر / تختفي مع التقريب والتحريك
                 gl.on('moveend', showUnits);
+                // علامات الوحدات من غير زحمة: بتتظبط تاني مع التقريب / اللف (04-project-units: declutterUnits)
+                gl.on('zoomend', unitsDeclutterSoon);
+                gl.on('rotateend', unitsDeclutterSoon);
+                gl.on('pitchend', unitsDeclutterSoon);
                 // الماستر بلان فوق القمر الصناعي — كل مشروع في مكانه المحفوظ (المشاريع الظاهرة بعد الفلتر بس)
                 if (window.SharyMasterplans) {
                     plans = window.SharyMasterplans.attach(gl, {
@@ -790,6 +794,7 @@
                 + '<span class="smap__ucard-go" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></span></a>';
             var at = null;
             unitMarkers.forEach(function (entry) { entry.pin.classList.toggle('is-on', entry.pin === pin); if (entry.pin === pin) at = entry.at; });
+            unitsDeclutterSoon();      // المفتوحة بتبان كاملة (رقمها ونوعها) والباقي يتظبط حواليها
             root.classList.add('has-unit-on');
             unitBox.hidden = false;
             // الكارت فوق البناية نفسها على الخريطة (بيتحرك معاها) — فوق كلمة الوحدة
@@ -828,14 +833,61 @@
                 pin.className = 'smap__marker smap__marker--unit';
                 pin.title = unit.title || unit.label || '';
                 pin.setAttribute('aria-label', unit.title || unit.label || '');
+                // الكلام فوق البناية: رقم الوحدة (دايرة صغيرة) + النوع والمساحة — ولو الوحدات زحمة: الرقم بس ، أو البناية بس (declutterUnits)
                 var label = document.createElement('span');
-                label.textContent = unit.label || '';
+                if (unit.ref) {
+                    var num = document.createElement('b');
+                    num.className = 'smap__unum';
+                    num.textContent = unit.ref;
+                    label.appendChild(num);
+                }
+                var text = document.createElement('span');
+                text.className = 'smap__utext';
+                text.textContent = unit.label || '';
+                label.appendChild(text);
                 pin.appendChild(label);
                 pin.insertAdjacentHTML('beforeend', BUILDING);
                 pin.addEventListener('click', function (event) { event.stopPropagation(); toggleAreas(false); openUnit(unit, pin); });
                 unitMarkers.push({ pin: pin, unit: unit, at: at, marker: new glLib.Marker({ element: pin, anchor: 'bottom' }).setLngLat(at).addTo(gl) });
             });
+            requestAnimationFrame(declutterUnits);
         }
+        // من غير زحمة: كل وحدة بالرقم والنوع والمساحة لو فيه مكان — ولو الكلام هيقع على وحدة تانية: الرقم بس (is-compact) ،
+        // ولو حتى الرقم مش لاقي مكان: البناية بس (is-mini — الضغط عليها بيفتح كارت الوحدة برضه). المفتوحة دايمًا كاملة.
+        // بيتعاد مع كل تقريب / تبعيد للخريطة (المسافات بين الوحدات على الشاشة بتتغير)
+        function declutterUnits() {
+            if (!unitMarkers.length) return;
+            unitMarkers.forEach(function (entry) { entry.pin.classList.remove('is-compact', 'is-mini'); });
+            var GAP = 3, taken = [];
+            var hit = function (r, own) {
+                for (var i = 0; i < taken.length; i++) {
+                    var t = taken[i];
+                    if (t.own === own) continue;
+                    if (r.left < t.right + GAP && r.right > t.left - GAP && r.top < t.bottom + GAP && r.bottom > t.top - GAP) return true;
+                }
+                return false;
+            };
+            var rows = unitMarkers.map(function (entry) {
+                var pill = entry.pin.firstElementChild, num = pill && pill.querySelector('.smap__unum'), bldg = entry.pin.lastElementChild;
+                return { entry: entry, full: pill.getBoundingClientRect(), num: num ? num.getBoundingClientRect() : null, bldg: bldg.getBoundingClientRect() };
+            });
+            // البنايات نفسها دايمًا ظاهرة: الكلام ما يقعدش فوق بناية وحدة تانية
+            rows.forEach(function (row) { taken.push({ own: row.entry, left: row.bldg.left, right: row.bldg.right, top: row.bldg.top, bottom: row.bldg.bottom }); });
+            // الوحدة المفتوحة الأول ، وبعدها بالترتيب
+            rows.sort(function (a, b) { return (b.entry.pin.classList.contains('is-on') ? 1 : 0) - (a.entry.pin.classList.contains('is-on') ? 1 : 0); });
+            rows.forEach(function (row) {
+                var full = row.full;
+                if (row.entry.pin.classList.contains('is-on') || !hit(full, row.entry)) { taken.push({ own: row.entry, left: full.left, right: full.right, top: full.top, bottom: full.bottom }); return; }
+                if (row.num) {
+                    var cx = (row.bldg.left + row.bldg.right) / 2, w = row.num.width + 4;
+                    var compact = { left: cx - w / 2, right: cx + w / 2, top: full.bottom - row.num.height - 4, bottom: full.bottom };
+                    if (!hit(compact, row.entry)) { row.entry.pin.classList.add('is-compact'); compact.own = row.entry; taken.push(compact); return; }
+                }
+                row.entry.pin.classList.add('is-mini');
+            });
+        }
+        var declutterLater = 0;
+        function unitsDeclutterSoon() { window.clearTimeout(declutterLater); declutterLater = window.setTimeout(declutterUnits, 60); }
         function showUnits() {
             if (!gl || !unitsUrl) return;
             var item = state.current;
