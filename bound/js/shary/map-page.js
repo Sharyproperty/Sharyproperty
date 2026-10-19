@@ -578,13 +578,27 @@
                 var wideTrip = window.matchMedia('(min-width: 1024px)').matches;
                 var spin = state.asked ? 1800 : 0;
                 if (spin) gl.easeTo({ center: [p.lng, p.lat], zoom: wideTrip ? 2.8 : 2.1, duration: spin, easing: easeOut, essential: true });
+                // على مرحلتين: الأول المنطقة اللي فيها المشروع (مشاريعها ظاهرة حواليه) ، وبعدها بتدخل على المشروع نفسه
+                var area = state.current.getAttribute('data-area');
+                var peers = state.asked && area ? items.filter(function (item) {
+                    var q = info(item);
+                    return item.getAttribute('data-area') === area && isFinite(q.lat) && isFinite(q.lng) && (q.lat || q.lng);
+                }) : [];
+                var areaStage = peers.length > 1 ? 2600 : 0;
                 window.setTimeout(function () {
                     leaveGlobe();
                     if (plans) plans.refresh();
-                    openSheet(state.current);              // لوحة وحدات المشروع من تحت
-                    goTo(p, state.asked ? 3200 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
-                    revealRow(state.current);              // كارت المشروع ظاهر في القايمة
-                    outline(p);
+                    if (areaStage) {
+                        try {
+                            gl.fitBounds(bounds(peers), { padding: wideTrip ? 110 : { top: 80, right: 40, bottom: 200, left: 40 }, maxZoom: 12.5, duration: areaStage, essential: true });
+                        } catch (error) { areaStage = 0; }
+                    }
+                    window.setTimeout(function () {
+                        openSheet(state.current);              // لوحة وحدات المشروع من تحت
+                        goTo(p, state.asked ? 3000 : INTRO + 600);   // على حدود الماستر بلان لو معروفة — وإلا قريب من نقطة المشروع (علامات الوحدات بتظهر)
+                        revealRow(state.current);              // كارت المشروع ظاهر في القايمة
+                        outline(p);
+                    }, areaStage ? areaStage + 900 : 0);       // وقفة صغيرة على المنطقة قبل ما تدخل على المشروع
                 }, spin);
                 return;
             }
