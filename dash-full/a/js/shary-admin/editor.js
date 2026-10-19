@@ -1,3 +1,4 @@
+// ── editor.js · جزء 1 من 5: ربط أدوات المحرر بـ CKEditor (المصدر: resources/js/shary-admin/editor/01-setup.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /*
  | Shary dashboard — writing tools for EVERY rich-text box (CKEditor 4) of the dashboard: articles, projects, units, areas, developers …
  |
@@ -241,6 +242,7 @@
         }
     }
 
+// ── editor.js · جزء 2 من 5: مساعدات: النافذة والبحث (المصدر: resources/js/shary-admin/editor/02-helpers.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ helpers
     function escapeHtml(value) {
         return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -324,6 +326,7 @@
             .map(function (key) { return '<option value="' + key + '">' + escapeHtml(types[key]) + '</option>'; }).join('');
     }
 
+// ── editor.js · جزء 3 من 5: زرار التواصل والفيديو واللينك الداخلي (المصدر: resources/js/shary-admin/editor/03-cta-video-link.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 1) call-to-action block
     function openCta(editor) {
         var lang = langOf(editor);
@@ -412,6 +415,7 @@
         });
     }
 
+// ── editor.js · جزء 4 من 5: بلوكات الموقع: الكروت والزرار واللينك الخارجي والأماكن (المصدر: resources/js/shary-admin/editor/04-site-blocks.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 2-b) the blocks of the website's articles
     function dirOf(lang) { return lang === 'ar' ? 'rtl' : 'ltr'; }
     function selectedText(editor) { var selection = editor.getSelection(); return selection ? (selection.getSelectedText() || '') : ''; }
@@ -517,6 +521,7 @@
         });
     }
 
+// ── editor.js · جزء 5 من 5: المعاينة زي الموقع (المصدر: resources/js/shary-admin/editor/05-preview.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 3) preview as the website shows it
     function openPreview(editor) {
         var box = open(L.preview_title || 'Preview',

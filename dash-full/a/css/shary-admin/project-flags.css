@@ -1,0 +1,14 @@
+/* لوحة التحكم — resources/views/shary_admin/hub/_flags.blade.php */
+.shub-flags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.shub-flag { display: inline-flex; align-items: center; gap: 8px; border: 1.5px solid #dfe6ee; background: #fff; color: #5b7189; border-radius: 12px; padding: 6px 10px; font: inherit; font-size: 12.5px; font-weight: 800; cursor: pointer; line-height: 1.4; }
+.shub-sw { position: relative; flex: 0 0 34px; width: 34px; height: 20px; border-radius: 999px; background: #c9d3de; transition: background .15s; }
+.shub-sw::after { content: ""; position: absolute; top: 2px; inset-inline-start: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25); transition: inset-inline-start .15s; }
+.shub-flag.is-on { border-color: #9fd9b9; color: #11845b; background: #f3fbf6; }
+.shub-flag.is-on .shub-sw { background: #1f9d5c; }
+.shub-flag.is-on .shub-sw::after { inset-inline-start: 16px; }
+.shub-flag.is-site:not(.is-on) { background: #fdf3f2; border-color: #f3b8b2; color: #c0392b; }
+.shub-flag[disabled] { opacity: .55; cursor: wait; }
+.shub-flag:focus-visible { outline: 3px solid #2c6386; outline-offset: 2px; }
+.shub-toast { position: fixed; inset-inline-start: 50%; bottom: 22px; transform: translateX(-50%); z-index: 3000; background: #123a5c; color: #fff; border-radius: 12px; padding: 10px 18px; font-weight: 800; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+[dir="rtl"] .shub-toast { transform: translateX(50%); }
+.shub-toast.is-bad { background: #c0392b; }

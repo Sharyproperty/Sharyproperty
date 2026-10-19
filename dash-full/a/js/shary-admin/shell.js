@@ -1,3 +1,4 @@
+// ── shell.js · جزء 1 من 5: الشرح وتوحيد الحروف والقايمة (المصدر: resources/js/shary-admin/shell/01-start-menu.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /*
  * Shary dashboard shell — the behaviour of the one menu, the header search and the search box above every list.
  * No library is needed; when the old template's DataTables is on a table, the list search drives it.
@@ -95,6 +96,7 @@
         if (user && user.open && !user.contains(event.target)) { user.open = false; }
     });
 
+// ── shell.js · جزء 2 من 5: بحث الهيدر (المصدر: resources/js/shary-admin/shell/02-header-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 2 header search
     var top = $('[data-sx-top]');
     var find = $('[data-sx-find]');
@@ -194,6 +196,7 @@
         if (event.key === 'Escape' && side && side.classList.contains('is-open')) { drawer(false); }
     });
 
+// ── shell.js · جزء 3 من 5: الجداول (كروت على الموبايل) والبحث في القوايم والصور الناقصة (المصدر: resources/js/shary-admin/shell/03-tables-list-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 3 tables
     var page = $('.page-wrapper') || $('.sx-page');
     var ACTIONS = [[/edit/i, T.actions_edit], [/delete|trash|close-circle/i, T.actions_delete], [/eye|view/i, T.actions_view], [/plus/i, T.actions_add]];
@@ -413,6 +416,7 @@
     })();
 
 
+// ── shell.js · جزء 4 من 5: قوايم الاختيار بالبحث (المصدر: resources/js/shary-admin/shell/04-choice-lists.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 5 choice lists: a search box inside every list of choices
     //   · lists the old template turns into "select2": its own search box is switched on (the template hides it)
     //   · plain <select> lists: a small searchable list of our own (the <select> stays in the form and keeps its name, value and events)
@@ -664,6 +668,7 @@
     }, 600);
     doc.addEventListener('shown.bs.modal', function () { setTimeout(choiceLists, 30); setTimeout(markRequired, 30); });
 
+// ── shell.js · جزء 5 من 5: النوافذ والحقول المطلوبة (المصدر: resources/js/shary-admin/shell/05-popups-required.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 6 pop-ups: lists and editors inside them work
     //   · the template's select2 opens its list at the end of the page — under Bootstrap's pop-up layer: shell.css lifts an open list above it
     //   · Bootstrap's pop-up pulls the focus back inside itself — the list's search box (and an editor's link window) could not be typed in:
