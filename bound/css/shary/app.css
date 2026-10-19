@@ -26061,3 +26061,10 @@ html.app-mode .search-bar { top: 0; }
 @keyframes upd-sheen{0%,52%{transform:translateX(0) skewX(-18deg)}84%,100%{transform:translateX(520%) skewX(-18deg)}}
 html:not(.sx-ready) .upd-chip::after,html:not(.sx-ready) .upd-chip__dot::after{animation-play-state:paused}
 @media (prefers-reduced-motion:reduce){.upd-chip::after,.upd-chip__dot::after{animation:none}}
+
+/* سرعة الصفحات الطويلة (المشروع …): الأجزاء اللي تحت أول شاشة المتصفح بيرسمها لما الزائر يقرب منها بس (content-visibility) —
+   نفس الشكل بالظبط ، وأول الصفحة بتظهر وتتحرك أسرع. contain-intrinsic-size: مساحة تقريبية لحد ما الجزء يترسم (وبعدها بيفتكر مقاسه) */
+.sx-cv {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}

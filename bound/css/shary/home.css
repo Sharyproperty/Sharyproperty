@@ -8999,3 +8999,10 @@ html:not(.sx-ready) .shary-home-root .hero-featured__btn, html:not(.sx-ready) .s
   [dir="rtl"] .shary-home-root .flex.items-center.justify-between > .headline-2 { font-size: min(16px, 4.4vw) !important; }
   .shary-home-root .flex.items-center.justify-between > .show-all-btn { flex-shrink: 0; white-space: nowrap; margin-inline-start: 12px; font-size: min(15px, 3.9vw) !important; }
 }
+
+/* سرعة الرئيسية على الموبايل: الأقسام اللي تحت أول شاشة المتصفح بيرسمها لما الزائر يقرب منها بس (content-visibility) —
+   أول الصفحة بتظهر أسرع وبنفس الشكل بالظبط. contain-intrinsic-size: مساحة تقريبية لحد ما القسم يترسم (وبعدها بيفتكر مقاسه الحقيقي) */
+.new-projects-section, #developers, .home-explore, .areas-section, .recommended-section {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 640px;
+}
