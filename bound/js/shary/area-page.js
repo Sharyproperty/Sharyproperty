@@ -316,11 +316,13 @@
             }
             return sheet(name) ? all('input[type="checkbox"]:checked', sheet(name)).length : 0;
         }
+        function picked(name) { return all('input[name="' + name + '[]"]:checked').map(function (box) { return box.value; }); }
+        function rows(name) { var body = form.querySelector('[data-list-body="' + name + '"]'); return body ? Array.prototype.slice.call(body.querySelectorAll('label')) : []; }
+        function rowValue(row) { var box = row.querySelector('input[type="checkbox"]'); return box ? box.value : ''; }
+
         // ---- الفلتر الذكي: المنطقة ← المطور ← المشروع. الصف اللي مش مرتبط بالمختار بيختفي (is-unrelated) ولو كان متعلّم بيتشال اختياره.
         //      المطور: data-areas = مناطق مشاريعه. المشروع: data-developer + data-areas. من غير الخصائص دي القايمة بتفضل كاملة.
         function relate() {
-            function picked(name) { return all('input[name="' + name + '[]"]:checked').map(function (box) { return box.value; }); }
-            function rows(name) { var body = form.querySelector('[data-list-body="' + name + '"]'); return body ? Array.prototype.slice.call(body.querySelectorAll('label')) : []; }
             function inAreas(row, areas) {
                 if (!areas.length || !row.hasAttribute('data-areas')) return true;
                 var own = row.getAttribute('data-areas').split(' ');
@@ -337,6 +339,140 @@
             rows('project').forEach(function (row) {
                 set(row, inAreas(row, areas) && (!developers.length || !row.hasAttribute('data-developer') || developers.indexOf(row.getAttribute('data-developer')) !== -1));
             });
+            narrow();
+        }
+
+        // ---- الفلتر الذكي (2): المشاريع اللي ليها علاقة باختيارك (المشروع المختار ، أو مشاريع المطور / المنطقة) ← باقي الفلاتر بتعرض
+        //      الموجود فيها بس ، ونوع العقار ← الغرف والحمامات والتشطيب والسعر بتوعه. السعر والمساحة: من أقل لأعلى رقم فيها (مكتوبين في الخانات).
+        //      اللي موجود في كل مشروع: data-facets-url (/shary/filter-facets — App\Shary\Data\FilterFacets) — بيتجاب مرة واحدة أول ما العميل
+        //      يلمس الفلتر ، وبعدها كل حاجة بتتحسب على الجهاز على طول (من غير تحميل).
+        var FACETS = { 'type[]': 't', 'bedrooms[]': 'b', 'bathrooms[]': 'ba', 'finishing[]': 'f', 'delivery[]': 'dl', 'years[]': 'y', 'amenities[]': 'm' };
+        var facetsUrl = form.getAttribute('data-facets-url') || '';
+        var fixedProject = form.getAttribute('data-facets-project') || '';   // صفحة المشروع: الفلتر على وحدات مشروع واحد
+        var pageProjects = (form.getAttribute('data-facets-projects') || '').split(' ').filter(Boolean);   // صفحة المطور: مشاريعه (من غير قايمة مشاريع في الفلتر)
+        function loadFacets() {
+            if (!facetsUrl || window.SharyFacets) return;
+            window.SharyFacets = { data: null };
+            fetch(facetsUrl, { credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
+                .then(function (response) { return response.ok ? response.json() : null; })
+                .then(function (json) {
+                    if (!json || !json.p) throw new Error('facets');
+                    window.SharyFacets.data = json.p;
+                    document.dispatchEvent(new CustomEvent('shary:facets'));
+                })
+                .catch(function () { window.SharyFacets = null; });   // المرة الجاية بيجرّب تاني
+        }
+        // تبويب الوحدات: "وحدات المطور" في صفحة البحث = كل البيع (المطور + إعادة البيع — data-sale-all) ، ومن غير تبويب: كله
+        function kinds() {
+            if (fixedProject) {   // صفحة المشروع: تبويب الوحدات اللي فوق الكروت (الكل / من المطور / إعادة البيع / شاري معاك)
+                var tab = document.querySelector('[data-unit-tab][aria-current="true"]');
+                var value = tab ? tab.getAttribute('data-unit-tab') : '';
+                return ['developer', 'resale', 'rent'].indexOf(value) > -1 ? [value] : null;
+            }
+            var current = mode();
+            if (!current) return null;
+            return current === 'developer' && form.hasAttribute('data-sale-all') ? ['developer', 'resale'] : [current];
+        }
+        // اللي موجود في المشاريع دي (لتبويبات kinds) — types: الأنواع المختارة (الغرف والسعر … بتوعها بس ، والأنواع نفسها كلها)
+        function collect(data, ids, wanted, types) {
+            var out = { t: {}, m: {} }, found = false;
+            ids.forEach(function (id) {
+                var project = data[id];
+                if (!project) return;
+                Object.keys(project).forEach(function (kind) {
+                    if (kind === 'm') { project.m.forEach(function (value) { out.m[value] = 1; }); return; }
+                    if (wanted && wanted.indexOf(kind) === -1) return;
+                    Object.keys(project[kind]).forEach(function (type) {
+                        found = true;
+                        out.t[type] = 1;
+                        if (types.length && types.indexOf(type) === -1) return;
+                        var group = project[kind][type];
+                        ['b', 'ba', 'f', 'dl', 'y'].forEach(function (key) {
+                            (group[key] || []).forEach(function (value) { (out[key] = out[key] || {})[String(value)] = 1; });
+                        });
+                        ['p', 's'].forEach(function (key) {
+                            if (group[key]) out[key] = out[key] ? [Math.min(out[key][0], group[key][0]), Math.max(out[key][1], group[key][1])] : group[key].slice();
+                        });
+                    });
+                });
+            });
+            return found ? out : null;
+        }
+        // رقم "مدوّر" زي حدود الشريط: 5,123,000 ← 5,100,000 (لتحت) / 5,200,000 (لفوق)
+        function nice(value, up, log) {
+            if (!log) return up ? Math.ceil(value) : Math.floor(value);
+            var step = Math.pow(10, Math.max(0, Math.floor(Math.log(Math.max(value, 1)) / Math.LN10) - 1));
+            return (up ? Math.ceil(value / step) : Math.floor(value / step)) * step;
+        }
+        function narrow() {
+            var data = window.SharyFacets && window.SharyFacets.data;
+            var projectRows = rows('project');
+            var have = null;
+            if (data) {
+                var types = picked('type'), ids = [];
+                if (fixedProject) ids = [fixedProject];                                   // صفحة المشروع
+                else if (picked('project').length) ids = picked('project');               // مشروع (أو أكتر) مختار
+                else if (picked('developer').length || picked('area').length) {           // مشاريع المطور / المنطقة المختارة
+                    ids = projectRows.filter(function (row) { return !row.classList.contains('is-unrelated'); }).map(rowValue);
+                } else if (types.length) {                                                // نوع عقار من غير مكان: مشاريع الفلتر كلها
+                    ids = projectRows.length ? projectRows.map(rowValue) : pageProjects;
+                }
+                if (ids.length) {
+                    // الأنواع اللي موجودة في المكان ده الأول — نوع مختار مش موجود فيه ما بيتحسبش (وبيتشال اختياره تحت)
+                    have = collect(data, ids, kinds(), []);
+                    types = have ? types.filter(function (type) { return have.t[type]; }) : [];
+                    if (have && types.length) have = collect(data, ids, kinds(), types);
+                }
+            }
+            all('input[type="checkbox"]').forEach(function (box) {
+                var key = FACETS[box.name], row = box.closest('label');
+                if (!key || !row) return;
+                var ok = !have || !!(have[key] && have[key][String(box.value)]);
+                row.classList.toggle('is-unrelated', !ok);
+                if (!ok && box.checked) box.checked = false;
+            });
+            // قسم كل اختياراته مش موجودة في اختيارك (مثلًا مفيش تشطيب مسجّل): بيختفي كله
+            all('[data-filter-section]').forEach(function (part) {
+                var chips = all('label', part).filter(function (row) { var box = row.querySelector('input[type="checkbox"]'); return box && FACETS[box.name]; });
+                if (!chips.length) return;
+                part.classList.toggle('is-unrelated', !chips.some(function (row) { return !row.classList.contains('is-unrelated') && !row.classList.contains('hidden'); }));
+            });
+            ['price', 'size'].forEach(function (name) {
+                var range = ranges[name];
+                if (!range) return;
+                var pair = have && have[name === 'price' ? 'p' : 's'];
+                var base = bounds(range), min = base.min, max = base.max;
+                if (pair) {
+                    min = Math.max(base.min, nice(pair[0], false, range.log));
+                    max = Math.min(base.max, nice(pair[1], true, range.log));
+                    if (max <= min) max = Math.min(base.max, nice(min + 1, true, range.log));   // سعر واحد: خطوة واحدة فوقه
+                    if (max <= min) { min = base.min; max = base.max; pair = null; }
+                }
+                range.narrow = !!pair;
+                if (min === range.min && max === range.max) return;
+                var full = range.low <= range.min && range.high >= range.max;   // العميل ما حرّكش الشريط: الخانات بتاخد الحدود الجديدة
+                range.min = min;
+                range.max = max;
+                if (full) {
+                    range.low = min;
+                    range.high = max;
+                } else {
+                    range.low = Math.max(min, Math.min(range.low, max));
+                    range.high = Math.min(max, Math.max(range.high, min));
+                    if (range.low >= range.high) { range.low = min; range.high = max; }
+                }
+                paint(range);
+            });
+        }
+        if (facetsUrl) {
+            // أول لمسة على الفلتر (أو اختيار جاي من اللينك): نجيب اللي موجود في كل مشروع
+            form.addEventListener('pointerdown', loadFacets, { passive: true });
+            form.addEventListener('focusin', loadFacets);
+            form.addEventListener('change', loadFacets);
+            if (fixedProject || picked('project').length || picked('developer').length || picked('area').length || picked('type').length) loadFacets();
+            document.addEventListener('shary:facets', function () { badges(); });
+            // صفحة المشروع: تبديل تبويب الوحدات بيغيّر الموجود (js/shary/property-page.js بيطلع shary:project-units)
+            if (fixedProject) document.addEventListener('shary:project-units', function () { setTimeout(badges, 0); });
         }
 
         function badges() {
@@ -357,6 +493,7 @@
                 var name = slot.getAttribute('data-sheet-value'), range = ranges[name], text = '';
                 if (range) {
                     if (active(range)) text = '\u2066' + short(range.low) + ' – ' + short(range.high) + '\u2069';   // من الشمال لليمين (22K – 30K) حتى في صفحة عربي
+                    else if (range.narrow) text = '\u2066' + short(range.min) + ' – ' + short(range.max) + '\u2069';   // أسعار المشاريع اللي اخترتها
                 } else if (sheet(name)) {
                     var names = all('input:checked', sheet(name)).map(function (box) { var label = box.closest('label').querySelector('[data-list-name]'); return label ? label.textContent.trim() : ''; }).filter(Boolean);
                     if (names.length) text = names[0] + (names.length > 1 ? ' +' + (names.length - 1) : '');
