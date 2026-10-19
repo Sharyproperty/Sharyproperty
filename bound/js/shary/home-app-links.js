@@ -15,7 +15,8 @@ function showInvestmentComingSoon() {
  * الكمبيوتر: الكارت بيفتح صفحته عادي ، وكروت التطبيق بس ← صفحة التطبيق على المتجر (site-chrome/11-photo-fit-forms-misc.js).
  */
 function handleInvestmentLink(event, link) {
-    const href = link.getAttribute('href') || '';
+    // اللينك كامل (link.href): اللينك النسبي بيتعامل زي الكامل بالظبط — صفحة الكارت تفضل صفحة على الموقع
+    const href = link.href || link.getAttribute('href') || '';
     const appPath = link.getAttribute('data-app-link') || '';
     const isAndroid = /Android/i.test(navigator.userAgent);
     const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent)
