@@ -1399,13 +1399,22 @@ window.SharyZoom = function () {
             jobs.push([el, cw, sw, parseFloat(window.getComputedStyle(el).fontSize) || 16]);
         });
         jobs.forEach(function (job) {
-            var size = Math.max(10, Math.floor(job[3] * job[1] / job[2] * 2) / 2 - 0.5);
+            var one = job[0].getAttribute('data-fit-line') === 'one';
+            // سطر واحد (one): بالربع بكسل — أكبر مقاس داخل بالظبط (مش أصغر من اللازم)
+            var size = one ? Math.max(9, Math.floor(job[3] * job[1] / job[2] * 4) / 4) : Math.max(10, Math.floor(job[3] * job[1] / job[2] * 2) / 2 - 0.5);
             job[0].style.fontSize = size + 'px';
             job[0].__fit = true;
             job[0].__base = job[3];
         });
-        // حتى بأصغر خط مش داخل: سطر تاني بخط مقروء بدل القص أو النقط
         jobs.forEach(function (job) {
+            if (job[0].getAttribute('data-fit-line') !== 'one') return;
+            for (var step = 0; step < 4 && job[0].scrollWidth > job[0].clientWidth + 1 && parseFloat(job[0].style.fontSize) > 9; step++) {
+                job[0].style.fontSize = (parseFloat(job[0].style.fontSize) - 0.25) + 'px';
+            }
+        });
+        // حتى بأصغر خط مش داخل: سطر تاني بخط مقروء بدل القص أو النقط — إلا data-fit-line="one" (المكان على الكروت): سطر واحد دايمًا
+        jobs.forEach(function (job) {
+            if (job[0].getAttribute('data-fit-line') === 'one') return;
             if (job[0].scrollWidth > job[0].clientWidth + 1 || parseFloat(job[0].style.fontSize) <= 10) {
                 job[0].classList.add('fit-wrap');
                 job[0].style.fontSize = Math.max(12, Math.round(job[3] * 0.85)) + 'px';

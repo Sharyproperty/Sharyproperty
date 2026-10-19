@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<head><script>(function(){var B="1792442657";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1792442657"></script>
+<head><script>(function(){var B="1792444064";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1792444064"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="csrf-token" content="oaY1lpbm0Nqhws798n0vulgDTVMuesQWvGZ8bYvj">
+<meta name="csrf-token" content="4cfEeAXFTf2EWD47rXKuYUxUJBT4sajs3yQ3Xl7b">
 <meta name="shary-notify" data-count-url="../../v2.html" data-token-url="../../v2.html" data-user="0">
 <title>Villas | Shary</title>
 <script>
@@ -23,6 +23,25 @@ if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.te
 // نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
 window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
 window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
+// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
+// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+document.addEventListener('DOMContentLoaded', function () {
+    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
+    for (i = 0; i < els.length; i++) {
+        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
+        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
+    }
+    for (i = 0; i < jobs.length; i++) {
+        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
+        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
+        jobs[i][0].__fit = true;
+    }
+    for (i = 0; i < jobs.length; i++) {
+        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
+            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
+        }
+    }
+});
 document.addEventListener('error', function (e) {
     var img = e.target;
     if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
@@ -58,7 +77,7 @@ document.addEventListener('error', function (e) {
 @font-face{font-family:Cairo;font-style:normal;font-weight:500 800;font-display:swap;src:url(../../../fonts/shary/cairo-arabic-v1.woff2) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0898-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC}
 @font-face{font-family:Cairo;font-style:normal;font-weight:500 800;font-display:swap;src:url(../../../fonts/shary/cairo-latin-v1.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-200B,U+2012-204E,U+2050-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 </style>
-<link rel="stylesheet" href="../../../css/shary/app.min.css?v=tn69e2">
+<link rel="stylesheet" href="../../../css/shary/app.min.css?v=tn6a4s">
 <script defer src="../../../js/shary/brand-icons.min.js?v=tn1y1r"></script>
 </head>
 <body class="bg-white pb-[70px] lg:pb-0 font-cairo text-shary-navy antialiased"
@@ -1234,7 +1253,7 @@ Location: North Coast, Al Dabaa, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Al-Dabaa/d-bay.html" class="card-link hover:text-shary-link">D-Bay</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Al Dabaa</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Al Dabaa, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -1302,7 +1321,7 @@ Location: North Coast, Ras El Hekma, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Ras-El-Hekma/fouka-bay.html" class="card-link hover:text-shary-link">Fouka Bay</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Ras El Hekma</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Ras El Hekma, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -1370,7 +1389,7 @@ Location: North Coast, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/North-Coast-16/marassi.html" class="card-link hover:text-shary-link">Marassi</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -1438,7 +1457,7 @@ Location: 6 October City, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/October-City-9/badya.html" class="card-link hover:text-shary-link">Badya</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>6 October City</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">6 October City, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -1506,7 +1525,7 @@ Location: Sheikh Zayed City, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Sheikh-Zayed-City-10/zed-west.html" class="card-link hover:text-shary-link">ZED West</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>Sheikh Zayed City</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Sheikh Zayed City, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -1575,7 +1594,7 @@ Location: New Cairo, Mostakbal City, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Mostakbal-City/bloomfields.html" class="card-link hover:text-shary-link">Bloomfields</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>New Cairo, Mostakbal City</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Mostakbal City, New Cairo, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -1643,7 +1662,7 @@ Location: New Cairo, Fifth Settlement, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Fifth-Settlement-6/villette.html" class="card-link hover:text-shary-link">Villette</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>New Cairo, Fifth Settlement</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Fifth Settlement, New Cairo, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -1715,7 +1734,7 @@ Location: New Cairo, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/New-cairo-2/palm-hills-new-cairo.html" class="card-link hover:text-shary-link">Palm Hills New Cairo</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>New Cairo</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">New Cairo, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Twin House</span>
@@ -1783,7 +1802,7 @@ Location: New Cairo, Mostakbal City, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Mostakbal-City/scenes-phase-three.html" class="card-link hover:text-shary-link">Scenes - Phase three</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>New Cairo, Mostakbal City</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Mostakbal City, New Cairo, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -1852,7 +1871,7 @@ Location: New Cairo, Mostakbal City, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Mostakbal-City/scenes-phase-two.html" class="card-link hover:text-shary-link">Scenes - Phase two</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>New Cairo, Mostakbal City</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Mostakbal City, New Cairo, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -1921,7 +1940,7 @@ Location: New Cairo, Mostakbal City, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Mostakbal-City/scenes-phase-one.html" class="card-link hover:text-shary-link">Scenes - Phase one</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>New Cairo, Mostakbal City</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Mostakbal City, New Cairo, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -1991,7 +2010,7 @@ Location: North Coast, Alam Al Roum, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Alam-Al-Roum/four.html" class="card-link hover:text-shary-link">Four</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Alam Al Roum</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Alam Al Roum, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -2059,7 +2078,7 @@ Location: North Coast, Ghazala Bay, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Ghazala-Bay/bo-islands.html" class="card-link hover:text-shary-link">Bo Islands</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Ghazala Bay</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Ghazala Bay, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -2128,7 +2147,7 @@ Location: North Coast, Ghazala Bay, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Ghazala-Bay/ghazala-bay.html" class="card-link hover:text-shary-link">Ghazala Bay</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Ghazala Bay</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Ghazala Bay, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Twin House</span>
@@ -2196,7 +2215,7 @@ Location: North Coast, Al Alamein, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Al-Alamein/lvls.html" class="card-link hover:text-shary-link">LVLS</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Al Alamein</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Al Alamein, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -2264,7 +2283,7 @@ Location: North Coast, Al Alamein, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Al-Alamein/mazarine.html" class="card-link hover:text-shary-link">Mazarine</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Al Alamein</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Al Alamein, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Twin House</span>
@@ -2333,7 +2352,7 @@ Location: North Coast, Al Alamein, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Al-Alamein/north-edge.html" class="card-link hover:text-shary-link">North Edge</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Al Alamein</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Al Alamein, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -2401,7 +2420,7 @@ Location: North Coast, Sidi Abdel Rahman, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Sidi-Abdel-Rahman/mountain-view-north-coast.html" class="card-link hover:text-shary-link">Mountain View North Coast</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Sidi Abdel Rahman</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Sidi Abdel Rahman, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Twin House</span>
@@ -2469,7 +2488,7 @@ Location: North Coast, Sidi Abdel Rahman, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Sidi-Abdel-Rahman/stella-heights.html" class="card-link hover:text-shary-link">Stella Heights</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Sidi Abdel Rahman</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Sidi Abdel Rahman, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -2538,7 +2557,7 @@ Location: North Coast, Sidi Abdel Rahman, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Sidi-Abdel-Rahman/telal.html" class="card-link hover:text-shary-link">Telal</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Sidi Abdel Rahman</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Sidi Abdel Rahman, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Twin House</span>
@@ -2607,7 +2626,7 @@ Location: North Coast, Al Dabaa, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Al-Dabaa/la-vista-bay-east.html" class="card-link hover:text-shary-link">La Vista Bay East</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Al Dabaa</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Al Dabaa, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -2675,7 +2694,7 @@ Location: North Coast, Sidi Heneish, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Sidi-Heneish/caesar.html" class="card-link hover:text-shary-link">Caesar</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Sidi Heneish</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Sidi Heneish, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -2744,7 +2763,7 @@ Location: North Coast, Sidi Heneish, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Sidi-Heneish/beyond-blue.html" class="card-link hover:text-shary-link">Beyond Blue</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Sidi Heneish</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Sidi Heneish, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Villa</span>
@@ -2813,7 +2832,7 @@ Location: North Coast, Ras El Hekma, Egypt
 <h3 class="text-[17px] font-bold leading-[1.35] lg:text-[18px]"><a href="../project/Ras-El-Hekma/la-vista-bay.html" class="card-link hover:text-shary-link">La Vista Bay</a></h3>
 <small class="mt-1 flex items-center gap-1 text-[12px] font-semibold leading-normal text-shary-link lg:text-[13px]">
 <svg class="shrink-0" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>
-<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line>North Coast, Ras El Hekma</span>
+<span class="min-w-0 overflow-hidden whitespace-nowrap" data-fit-line="one">Ras El Hekma, North Coast, Egypt</span>
 </small>
 <p class="mt-2 flex flex-wrap gap-x-2.5 gap-y-1 text-[12.5px] font-semibold leading-normal text-shary-navy lg:text-[13px]">
 <span class="">Townhouse</span>
@@ -3162,7 +3181,7 @@ data-label-get="Get the App" data-label-open="Open app"><span data-app-label>Get
 </button>
 </div>
 <form action="../../v2.html" method="POST" class="mt-4 flex flex-col gap-4" data-meeting-form>
-<input type="hidden" name="_token" value="oaY1lpbm0Nqhws798n0vulgDTVMuesQWvGZ8bYvj" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+<input type="hidden" name="_token" value="4cfEeAXFTf2EWD47rXKuYUxUJBT4sajs3yQ3Xl7b" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
 <input type="hidden" name="meeting_date" value="" data-meeting-date>
 <input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
 <div class="grid grid-cols-2 gap-1 rounded-[16px] bg-shary-form p-1.5" role="group" aria-label="Request a meeting">
@@ -3363,7 +3382,7 @@ data-label-get="Get the App" data-label-open="Open app"><span data-app-label>Get
 </div>
 <!-- /meeting-modal -->
 <script src="../../../js/shary/smart-text.min.js?v=tn1y1t"></script>
-<script src="../../../js/shary/site-chrome.min.js?v=tn62db"></script>
+<script src="../../../js/shary/site-chrome.min.js?v=tn6a6z"></script>
 <script defer src="../../../js/shary/web-notify.min.js?v=tn1y1u"></script>
 <script src="../../../js/shary/img-fit.min.js?v=tn60wa" defer></script>
 <script src="../../../js/shary/filter-live.min.js?v=tn1y1s"></script>
@@ -3378,5 +3397,5 @@ data-label-get="Get the App" data-label-open="Open app"><span data-app-label>Get
 <script src="../../../js/shary/ai-panel.min.js?v=tn1y1r"></script>
 <script defer src="../../../js/shary/explore-page.min.js?v=tn1y1r"></script>
 <script>(function(){try{if(navigator.webdriver||!navigator.sendBeacon)return;var go=function(){var f='';try{var d=new Date().toLocaleDateString('en-CA'),l=localStorage.getItem('sx_v');if(!l)f+='n';if(l!==d){f+='d';localStorage.setItem('sx_v',d);}if(!sessionStorage.getItem('sx_s')){f+='s';sessionStorage.setItem('sx_s','1');}}catch(e){}var n=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0]||{}).name,u=new URL(n||location.href),q=u.searchParams,b=new FormData();b.append('path',u.pathname);b.append('ref',document.referrer||'');b.append('utm',q.get('utm_source')||(q.get('gclid')?'gclid':'')||(q.get('fbclid')?'facebook':''));b.append('v',f);navigator.sendBeacon("\/Sharyproperty\/bound\/shary\/t",b);};if('requestIdleCallback' in window)requestIdleCallback(go,{timeout:4000});else setTimeout(go,2500);}catch(e){}})();</script>
-<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script>window.SHARY_PV_BASE="/Sharyproperty/bound/";</script><script src="/Sharyproperty/bound/js/snapshot-search.js?v=1792442657"></script></body>
+<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script>window.SHARY_PV_BASE="/Sharyproperty/bound/";</script><script src="/Sharyproperty/bound/js/snapshot-search.js?v=1792444064"></script></body>
 </html>
