@@ -8992,3 +8992,10 @@ html:not(.sx-ready) .shary-home-root .hero-featured__btn, html:not(.sx-ready) .s
   .own-unit-card__text { margin-bottom: 0; }
   .own-unit-card__actions { flex: 1 0 100%; }
 }
+/* عناوين أقسام الهوم + «عرض الكل»: سطر واحد على أي موبايل (حتى Z Fold المقفول) — العنوان بيصغر مع عرض الشاشة ، «عرض الكل» ما بينزلش سطر */
+@media (max-width: 767px) {
+  .shary-home-root .flex.items-center.justify-between > .headline-2 { min-width: 0; white-space: nowrap; }
+  [dir="ltr"] .shary-home-root .flex.items-center.justify-between > .headline-2 { font-size: min(20px, 5vw) !important; }
+  [dir="rtl"] .shary-home-root .flex.items-center.justify-between > .headline-2 { font-size: min(16px, 4.4vw) !important; }
+  .shary-home-root .flex.items-center.justify-between > .show-all-btn { flex-shrink: 0; white-space: nowrap; margin-inline-start: 12px; font-size: min(15px, 3.9vw) !important; }
+}

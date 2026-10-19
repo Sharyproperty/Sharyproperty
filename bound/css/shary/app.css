@@ -25988,6 +25988,12 @@ html:not(.sx-ready) .own-unit-card__btn, html:not(.sx-ready) .own-unit-card__btn
 .text-\[\#b42318\] { color: #b42318; }
 .text-\[\#c2410c\] { color: #c2410c; }
 .accent-\[\#2799b1\] { accent-color: #2799b1; }
+/* «إزاي اتحسب؟» (shary/partials/index-method): العوامل تحت بعض — الاسم ← الوزن ← الشريط ← الدرجة */
+.grid-cols-\[minmax\(0\2c 1\.35fr\)_36px_minmax\(0\2c 1fr\)_22px\] { grid-template-columns: minmax(0, 1.35fr) 36px minmax(0, 1fr) 22px; }
+.min-h-\[70vh\] { min-height: 70vh; }
+@media (min-width: 1024px) {
+  .lg\:grid-cols-\[minmax\(0\2c 240px\)_44px_minmax\(0\2c 1fr\)_28px\] { grid-template-columns: minmax(0, 240px) 44px minmax(0, 1fr) 28px; }
+}
 .\[\&\:\:-webkit-details-marker\]\:hidden::-webkit-details-marker { display: none; }
 
 @media (min-width: 1024px) {
@@ -26024,3 +26030,34 @@ html.app-mode [data-app-button],
 html.app-mode [data-app-row] { display: none !important; }
 /* اللي كان لازق تحت هيدر الموقع (72px) بيلزق في أول الشاشة */
 html.app-mode .search-bar { top: 0; }
+/* «خليك أول واحد يعرف» (partials/channels-cta): الوسوم اتنين قصاد اتنين — الكارت ما يطولش على الفاضي (المقال / وصف المشروع / أي مكان) */
+.chan-cta__tags,.article-content .chan-cta__tags,.prop-about .chan-cta__tags{display:grid;grid-template-columns:repeat(2,max-content);gap:6px 8px;justify-content:start;flex-direction:initial}
+.chan-cta__tags li{white-space:nowrap}
+/* أزرار التواصل التلاتة (طلب مقابلة + اتصال + واتساب): من تابلت ولفوق التلاتة في صف واحد بنفس العرض (واتساب ما بينزلش سطر لوحده) ، وشكل أشيك */
+@media (min-width:640px){
+  .content-cta:has(.content-cta__buttons--3){width:100%;max-width:760px;margin-inline:auto}
+  .content-cta__buttons--3{flex-wrap:nowrap !important;gap:10px}
+  .content-cta__buttons--3 > .content-cta__button,.content-cta__buttons--3 > .content-cta__button--meeting{flex:1 1 0 !important;min-width:0 !important;height:50px;padding-inline:12px !important;font-size:15.5px;border-radius:14px}
+}
+.content-cta__button--call{box-shadow:0 10px 20px -14px rgba(18,58,92,.75)}
+.content-cta__button--whatsapp{box-shadow:0 10px 20px -14px rgba(37,160,70,.85)}
+.content-cta__button--meeting{box-shadow:0 8px 18px -16px rgba(18,58,92,.6)}
+.content-cta__button{transition:transform .15s ease,filter .2s,background-color .2s}
+.content-cta__button:hover{transform:translateY(-1px)}
+
+/* «آخر تحديث» (shary/partials/updated-chip) — شارة تركواز واضحة في كل الصفحات: نقطة «لايف» بتنبض + لمعة بتعدّي كل شوية (زي زرار Shary AI).
+   الحركة بـ transform بس (خفيفة على الموبايل) ، بتبدأ بعد ما الصفحة تهدى (html.sx-ready) ، ومن غير حركة لو الجهاز طالب كده */
+.upd-chip{position:relative;isolation:isolate;overflow:hidden;display:inline-flex;align-items:center;gap:7px;max-width:100%;white-space:nowrap;padding:5px 12px 5px 11px;border-radius:999px;background:linear-gradient(135deg,#e7f8f5 0%,#cfeee8 100%);border:1px solid rgba(42,157,143,.45);color:#11685e;font-size:12px;font-weight:800;line-height:1.35;box-shadow:0 6px 14px -10px rgba(31,127,114,.7)}
+.upd-chip>span{overflow:hidden;text-overflow:ellipsis}
+@media (min-width:1024px){.upd-chip{font-size:13px;padding:6px 14px 6px 13px}}
+.upd-chip__dot{position:relative;flex:none;width:8px;height:8px;border-radius:50%;background:#2a9d8f;box-shadow:0 0 0 2px rgba(42,157,143,.18)}
+.upd-chip__dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:#2a9d8f;animation:upd-pulse 2.2s ease-out infinite}
+.upd-chip::after{content:"";position:absolute;top:-2px;bottom:-2px;left:-45%;width:34%;z-index:-1;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.85),rgba(255,255,255,0));transform:translateX(0) skewX(-18deg);animation:upd-sheen 4.4s ease-in-out 1.4s infinite}
+.upd-chip--solid{background:linear-gradient(135deg,#2fae9f 0%,#1f8a7d 100%);border-color:rgba(255,255,255,.4);color:#fff;box-shadow:0 8px 18px -10px rgba(0,0,0,.5)}
+.upd-chip--solid .upd-chip__dot,.upd-chip--solid .upd-chip__dot::after{background:#fff}
+.upd-chip--solid .upd-chip__dot{box-shadow:0 0 0 2px rgba(255,255,255,.25)}
+.upd-chip--solid::after{background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.38),rgba(255,255,255,0))}
+@keyframes upd-pulse{0%{transform:scale(1);opacity:.75}70%,100%{transform:scale(2.9);opacity:0}}
+@keyframes upd-sheen{0%,52%{transform:translateX(0) skewX(-18deg)}84%,100%{transform:translateX(520%) skewX(-18deg)}}
+html:not(.sx-ready) .upd-chip::after,html:not(.sx-ready) .upd-chip__dot::after{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.upd-chip::after,.upd-chip__dot::after{animation:none}}

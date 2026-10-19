@@ -16,7 +16,7 @@
   var MIN_SIZE = 110;
 
   // الاستثناءات الرخيصة الأول (من غير getComputedStyle) — الحساب التقيل بيحصل بس للصور اللي لسه محتاجة
-  var SKIP_SEL = '[data-fit="off"], .dev-logo-link, .dev-icon__logo, [data-logo-fit], [data-developer-logo], header, footer, .article-content';
+  var SKIP_SEL = '[data-fit="off"], .np-img, .dev-logo-link, .dev-icon__logo, [data-logo-fit], [data-developer-logo], header, footer, .article-content';
   function skip(el, w) {
     if (!el || el.closest(SKIP_SEL)) return true;
     // معرض صور المشروع / الوحدة على الديسك توب: كل شريحة (حتى الضيقة الأبيض وأسود) بتتملي بالصورة كاملة — من غير تصغير في النص ولا بلور فوق وتحت
