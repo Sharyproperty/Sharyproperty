@@ -15660,6 +15660,56 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   display: none;
 }
 
+/* الخريطة الحرارية للمنطقة (?heat=): أسامي الدواير التلاتة بألوانها — كارت جلاسي صغير فوق الخريطة (تحت قايمة «اختر المنطقة») */
+.smap-heat-legend {
+  position: absolute;
+  top: 70px;
+  inset-inline-start: 12px;
+  z-index: 6;
+  display: flex;
+  max-width: calc(100% - 24px);
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 9px 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: #123a5c;
+  box-shadow: 0 10px 24px -14px rgba(18, 58, 92, 0.55);
+  -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.smap-heat-legend b {
+  font-size: 13.5px;
+  font-weight: 800;
+}
+
+.smap-heat-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.smap-heat-legend i {
+  display: block;
+  height: 10px;
+  width: 18px;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.smap.is-globe .smap-heat-legend {
+  opacity: 0;
+}
+
+.smap-heat-legend {
+  transition: opacity 0.4s;
+}
+
 /* المشاريع — موبايل: فوق أسفل الخريطة (زرار "عرض القائمة" + كروت بالعرض) */
 
 .smap__panel {
@@ -25387,6 +25437,7 @@ img.abroad-dev__logo {
 .shot-card--launch .new-project-caption__name a { color: inherit; }
 .shot-card--launch .new-project-caption__place { margin: 4px 0 0; display: flex; align-items: center; gap: 6px; font-size: 13.5px; line-height: 1.5; font-weight: 700; color: rgba(255, 255, 255, .95); text-shadow: 0 1px 2px rgba(4, 31, 56, .85), 0 0 12px rgba(4, 31, 56, .6); }
 .shot-card--launch .new-project-caption__place svg { flex: 0 0 auto; }
+.new-project-caption__place > span[data-fit-line] { min-width: 0; overflow: hidden; white-space: nowrap; }
 @media (max-width: 640px) { .shot-card--launch .new-project-caption__name { font-size: 15px; } .shot-card--launch .new-project-caption__place { font-size: 12.5px; } }
 
 /* المشروع اللي الماستر بلان بتاعته ظاهرة: العلامة بتبقى اسم صغير شفاف فوق المخطط (من غير السهم) — الماستر بلان هي اللي باينة مش النقط ،

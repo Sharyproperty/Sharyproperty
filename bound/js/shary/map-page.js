@@ -459,6 +459,7 @@
                 gl = new lib.Map(options);
                 glLib = lib;
                 gl.on('style.load', tuneStyle);
+                gl.on('style.load', heatRings);      // الخريطة الحرارية للمنطقة (?heat=) — بترجع بعد تغيير نوع الخريطة
                 // مصدر صور الخريطة: مفيش علامة فوق الخريطة — المصدر مكتوب سطر صغير آخر قايمة "اختر المنطقة" ([data-smap-credit]) وبيتحدّث مع نوع الخريطة
                 var creditNode = root.querySelector('[data-smap-credit]');
                 var showCredit = function () {
@@ -604,13 +605,15 @@
             }
             // data-fit="1" (خريطة الساحل): الخريطة بتفتح مقرّبة على كل المشاريع المعروضة من غير اختيار منطقة
             // جاي من صفحة مشروع (?project=) والمشروع مالوش مكان على الخريطة: مقرّبة على مشاريع منطقته (أو كل المشاريع) — مش الكرة الأرضية والأسامي فوق بعض
-            if ((state.area || state.focus || state.asked) && !state.fit && globeTrip() && root.classList.contains('is-globe')) {
+            // جاي من الخريطة الحرارية في صفحة المنطقة (?heat=): نفس الرحلة بس النهاية على الدواير التلاتة (fitHeat) — مش كل مشاريع المنطقة
+            var land = heatData() ? fitHeat : fitAll;
+            if ((state.area || state.focus || state.asked || heatData()) && !state.fit && globeTrip() && root.classList.contains('is-globe')) {
                 // ديسك توب ، جاي من لينك (مشروع مالوش مكان / منطقة): الكرة الأرضية بتلف وبعدين بتقرّب على المشاريع
                 gl.easeTo({ center: EGYPT, zoom: 2.8, duration: 2200, easing: easeOut, essential: true });
-                window.setTimeout(function () { leaveGlobe(); fitAll(3000); }, 2200);
+                window.setTimeout(function () { leaveGlobe(); land(3000); }, 2200);
                 return;
             }
-            if (state.area || state.fit || state.focus || state.asked) { leaveGlobe(); fitAll(INTRO); return; }
+            if (state.area || state.fit || state.focus || state.asked || heatData()) { leaveGlobe(); land(INTRO); return; }
             // الكرة بتيجي من بعيد وتكبر بالراحة لحد ما تقف فوق مصر — وبعدها قايمة "اختر المنطقة" بتنزل
             gl.easeTo({ center: EGYPT, zoom: window.matchMedia('(min-width: 1024px)').matches ? 2.6 : 1.9, duration: INTRO, easing: easeOut, essential: true });
             // جاي من صفحة مشروع / وحدة (?project=): قايمة "اختر المنطقة" ما بتفتحش لوحدها أبدًا
@@ -1052,6 +1055,54 @@
                     gl.addLayer({ id: 'smap-outline', type: 'line', source: 'smap-outline', paint: { 'line-color': '#FCB424', 'line-width': 3 } });
                 }
             } catch (e) { /* الستايل لسه بيتحمّل */ if (gl.once) gl.once('idle', function () { outline(p); }); }
+        }
+
+        // ---- الخريطة الحرارية للمنطقة (data-heat — جاي من كارت المؤشر في صفحة المنطقة ?heat=): 3 حلقات حوالين مركز المنطقة
+        //      بألوان الكارت: الصغيرة 0–32% «طلب عالي» ، النص 35–65% «عائد» ، الكبيرة 68–100% «فرصة» (بينهم خط أبيض زي الرسمة) — من نُص القُطر r بالكيلو
+        var heatInfo = null;
+        function heatData() {
+            if (heatInfo !== null) return heatInfo;
+            try { heatInfo = JSON.parse(root.getAttribute('data-heat') || 'null') || false; } catch (e) { heatInfo = false; }
+            if (heatInfo && !(isFinite(Number(heatInfo.lat)) && isFinite(Number(heatInfo.lng)))) heatInfo = false;
+            return heatInfo;
+        }
+        function heatCircle(lat, lng, km) {
+            var pts = [];
+            for (var i = 0; i <= 96; i++) {
+                var a = i / 96 * Math.PI * 2;
+                pts.push([lng + (km / (111.32 * Math.cos(lat * Math.PI / 180))) * Math.cos(a), lat + (km / 111.32) * Math.sin(a)]);
+            }
+            return pts;
+        }
+        function heatRings() {
+            var h = heatData();
+            if (!h || !gl || !gl.getStyle) return;
+            var r = Number(h.r) || 4, lat = Number(h.lat), lng = Number(h.lng), c = h.c || [];
+            var ring = function (inner, outer, color) {
+                var coords = [heatCircle(lat, lng, r * outer)];
+                if (inner > 0) coords.push(heatCircle(lat, lng, r * inner).reverse());
+                return { type: 'Feature', properties: { c: color }, geometry: { type: 'Polygon', coordinates: coords } };
+            };
+            var data = { type: 'FeatureCollection', features: [ring(0.68, 1, c[2] || '#6baee6'), ring(0.35, 0.65, c[1] || '#3fb386'), ring(0, 0.32, c[0] || '#d9604f')] };
+            try {
+                if (gl.getSource('smap-heat')) { gl.getSource('smap-heat').setData(data); return; }
+                // تحت أسامي الخريطة (أول طبقة كلام) — الماستر بلان والعلامات فوقها
+                var layers = (gl.getStyle() && gl.getStyle().layers) || [], before;
+                for (var i = 0; i < layers.length; i++) { if (layers[i].type === 'symbol') { before = layers[i].id; break; } }
+                gl.addSource('smap-heat', { type: 'geojson', data: data });
+                gl.addLayer({ id: 'smap-heat', type: 'fill', source: 'smap-heat', paint: { 'fill-color': ['get', 'c'], 'fill-opacity': 0.42 } }, before);
+                gl.addLayer({ id: 'smap-heat-line', type: 'line', source: 'smap-heat', paint: { 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 } }, before);
+            } catch (e) { /* الستايل لسه بيتحمّل */ if (gl.once) gl.once('idle', heatRings); }
+        }
+        // الكاميرا على الدواير (مع شوية هامش) — بدل كل مشاريع المنطقة
+        function fitHeat(duration) {
+            var h = heatData();
+            if (!h || !gl) { fitAll(duration); return; }
+            var r = (Number(h.r) || 4) * 1.12, lat = Number(h.lat), lng = Number(h.lng);
+            var dLat = r / 111.32, dLng = r / (111.32 * Math.cos(lat * Math.PI / 180));
+            try {
+                gl.fitBounds([[lng - dLng, lat - dLat], [lng + dLng, lat + dLat]], { padding: window.matchMedia('(min-width: 1024px)').matches ? 60 : { top: 90, right: 24, bottom: 200, left: 24 }, duration: duration, essential: true });
+            } catch (e) { fitAll(duration); }
         }
 
         // ---- السعر: شريط من–إلى بطرفين + خانتين (زي فلتر السعر في الموقع). الحدود = أقل وأعلى سعر في مشاريع المنطقة المختارة (مقياس لوغاريتمي)
