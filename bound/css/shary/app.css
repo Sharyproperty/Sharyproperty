@@ -9157,6 +9157,14 @@ label:has(> input.sr-only) {
         .ad-box {
     --ad-h: 160px;
   }
+
+  /* إعلانات صور (ads_images): الكارت بنسبة الصورة نفسها (--ad-ratio من السيرفر) — واحد مالي البوكس بعرضه ، من 160 لحد 340px ارتفاع */
+  .ad-strip--fit .ad-card {
+    height: auto;
+    min-height: var(--ad-h);
+    max-height: 340px;
+    aspect-ratio: var(--ad-ratio, 7.6);
+  }
 }
 
 /* كارت صورة وعليه الاسم (إعلان مشروع / مرحلة) */
