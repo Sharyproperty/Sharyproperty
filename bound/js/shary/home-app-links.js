@@ -7,105 +7,40 @@ function showInvestmentComingSoon() {
 }
 
 /*
- * كروت "ما يميزنا" المربوطة بالتطبيق:
- *   - لينك الكارت لينك تطبيق (shary://...) : التطبيق متحمل ← بيفتح على الشاشة دي ، مش متحمل ← المتجر.
- *   - لينك الكارت لينك تحميل (المتجر) : التطبيق متحمل ← بيفتح التطبيق (data-app-link = shary://<slug الكارت>) ، مش متحمل ← المتجر.
- *   - أي لينك تاني (صفحة في الموقع) بيفتح عادي.
+ * كروت «ما يميزنا» (shary/home/sections/investment.blade.php):
+ *   href = صفحة الكارت على الموقع (https — للكمبيوتر وجوجل ومن غير جافاسكريبت) ، data-app-link = نفس الصفحة للتطبيق ('/ar/academy' …)
+ *   والكروت اللي في التطبيق بس (استثمار شاري …): href = صفحة التحميل ، data-app-link = '/shary-investment'.
+ * الموبايل: SharyApp.open (site-chrome/06-app-button.js) — أندرويد: التطبيق متسطّب ← بيفتح على طول على الشاشة دي ، مش متسطّب ← صفحة الكارت
+ * على الموقع (أو المتجر للكروت اللي في التطبيق بس) — عمره ما بيروح جوجل بلاي على طول. آيفون: متسطّب ← التطبيق ، مش معروف ← صفحة الموقع.
+ * الكمبيوتر: الكارت بيفتح صفحته عادي ، وكروت التطبيق بس ← صفحة التطبيق على المتجر (site-chrome/11-photo-fit-forms-misc.js).
  */
 function handleInvestmentLink(event, link) {
     const href = link.getAttribute('href') || '';
-    const isDeep = /^shary:\/\//i.test(href);
-    const isStore = /play\.google\.com\/store\/apps|apps\.apple\.com|itunes\.apple\.com/i.test(href);
-
-    // Normal website links follow their href.
-    if (!isDeep && !isStore) {
-        return;
-    }
-
+    const appPath = link.getAttribute('data-app-link') || '';
     const isAndroid = /Android/i.test(navigator.userAgent);
     const isIOS = /iPad|iPhone|iPod/i.test(navigator.userAgent)
         || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const stores = window.SharyHomeConf.appStores || {};
-
     if (!isAndroid && !isIOS) {
-        // كمبيوتر: مفيش تطبيق يتفتح — لينك المتجر زي ما هو ، ولينك التطبيق ← صفحة التطبيق على المتجر
-        if (isStore) {
-            return;
-        }
-        event.preventDefault();
-        event.stopPropagation();
-        window.location.href = stores.android;
         return;
     }
-
+    if (!window.SharyApp || !window.SharyApp.open) {
+        return;      // من غير السكربت: اللينك العادي
+    }
+    const stores = (window.SharyHomeConf && window.SharyHomeConf.appStores) || {};
+    // صفحة على الموقع (مش لينك تطبيق / متجر / تحميل): لو التطبيق مش متسطّب العميل بيروح لها
+    const isWeb = /^(https?:\/\/|\/)/i.test(href)
+        && !/play\.google\.com|apps\.apple\.com|itunes\.apple\.com/i.test(href)
+        && !/^(?:https?:\/\/[^\/]+)?(?:\/(?:ar|en))?\/(?:download|app|download-app)\/?(?:[?#].*)?$/i.test(href);
+    // صفحة على الموقع التطبيق ما بيفتحهاش (أو لينك موقع تاني): اللينك العادي
+    if (!appPath && isWeb) {
+        return;
+    }
     event.preventDefault();
     event.stopPropagation();
-
-    const storeUrl = isAndroid ? stores.android : stores.ios;
-    const deepLink = isDeep ? href : (link.getAttribute('data-app-link') || 'shary://home');
-
-    // أندرويد: التطبيق متحمّل ← بيفتح على طول (على الشاشة دي لو لينكها shary://…) ، مش متحمّل ← جوجل بلاي (site-chrome/06-app-button.js)
-    if (isAndroid) {
-        if (window.SharyApp && window.SharyApp.open) window.SharyApp.open(deepLink, storeUrl);
-        else if (storeUrl) window.location.href = storeUrl;
-        return;
-    }
-
-    // Cancel a previous attempt if another card was clicked.
-    if (window.cancelInvestmentAppRedirect) {
-        window.cancelInvestmentAppRedirect();
-    }
-
-    let timer;
-
-    function cleanup() {
-        clearTimeout(timer);
-        document.removeEventListener('visibilitychange', onVisibilityChange);
-        window.removeEventListener('pagehide', opened);
-        window.removeEventListener('blur', opened);
-
-        if (window.cancelInvestmentAppRedirect === cleanup) {
-            window.cancelInvestmentAppRedirect = null;
-        }
-    }
-
-    // التطبيق اتفتح ← ما نروحش للمتجر ، وزرار الهيدر يبقى "افتح التطبيق" من هنا ورايح
-    function opened() {
-        cleanup();
-        if (window.SharyApp) {
-            window.SharyApp.remember();
-        }
-    }
-
-    function onVisibilityChange() {
-        if (document.hidden) {
-            opened();
-        }
-    }
-
-    window.cancelInvestmentAppRedirect = cleanup;
-
-    document.addEventListener('visibilitychange', onVisibilityChange);
-    window.addEventListener('pagehide', opened);
-    if (isAndroid) {
-        // (على آيفون رسالة سفاري بتاعة اللي مش منزّل التطبيق ما تتحسبش فتح)
-        window.addEventListener('blur', opened);
-    }
-
-    timer = setTimeout(() => {
-        const shouldRedirect = !document.hidden;
-        cleanup();
-
-        if (shouldRedirect) {
-            // التطبيق مش متسطّب: زرار الهيدر يفضل / يرجع "حمل التطبيق"
-            if (window.SharyApp && window.SharyApp.installed()) {
-                window.SharyApp.forget();
-            }
-            window.location.href = storeUrl;
-        }
-    }, 2500);
-
-    window.location.href = deepLink;
+    window.SharyApp.open(appPath, {
+        webUrl: isWeb ? link.href : '',
+        storeUrl: isIOS ? stores.ios : stores.android,
+    });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

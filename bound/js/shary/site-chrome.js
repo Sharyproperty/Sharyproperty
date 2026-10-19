@@ -714,7 +714,6 @@ window.SharyZoom = function () {
     }
 
     var android = /Android/i.test(ua);
-    var DEEP_LINK = 'shary://home';
     // لينك الزرار الأصلي ($appUrl) قبل ما يتبدّل بلينك المتجر / لينك الفتح
     buttons.forEach(function (button) { button.setAttribute('data-get-url', button.getAttribute('href') || ''); });
     function forget() { try { window.localStorage.removeItem(KEY); } catch (error) { /* التخزين مقفول */ } }
@@ -757,41 +756,71 @@ window.SharyZoom = function () {
         return store || ('https://play.google.com/store/apps/details?id=' + PACKAGE);
     }
     /**
-     * لينك التطبيق (shary://home/…): التطبيق بيفهم أي مسار من مسارات الموقع بعد shary://home (website_deep_link_resolver في كود التطبيق)
-     * ← بيفتح على نفس الصفحة / الخدمة جوه التطبيق (المساعد القانوني ، احجز مع المطور ، مشروع ، Shary AI …) ، والمسار اللي ما يعرفوش ← رئيسية التطبيق.
-     *   deep فاضي = الصفحة اللي العميل فاتحها دلوقتي. shary://legal-assistant (من الداشبورد) = shary://home/legal-assistant.
+     * مسار التطبيق (appPath): مسار صفحة الموقع + الـ query — '/ar/academy' ، '/ar/for-sale?offer=resale' — والتطبيق بيفتح نفس الصفحة
+     * من shary://home<appPath> (بيفهم المسار بـ /ar أو /en أو من غيرهم ، والمسار اللي ما يعرفوش ← رئيسية التطبيق).
+     *   فاضي = الصفحة اللي العميل فاتحها دلوقتي (المسار + الـ query) · shary://home/… أو shary://… (من الداشبورد) أو لينك https للموقع ← المسار بتاعهم.
+     *   (/v2 بتاعة المعاينة و .html بتتشال)
      */
-    function appLink(deep) {
-        deep = String(deep || '');
-        if (/^shary:\/\/home(\/|$)/i.test(deep)) return deep;
-        if (/^shary:\/\//i.test(deep)) return 'shary://home/' + deep.replace(/^shary:\/\//i, '').replace(/^\/+/, '');
-        var path = (window.location.pathname || '/').replace(/^(\/(?:ar|en))\/v2(?=\/|$)/, '$1').replace(/\.html$/, '');
-        return 'shary://home' + (path === '/' ? '' : path);
+    function appPath(value) {
+        var raw = String(value == null ? '' : value).trim();
+        if (raw === '' ) {
+            raw = (window.location.pathname || '/') + (window.location.search || '');
+        } else if (/^shary:\/\//i.test(raw)) {
+            raw = '/' + raw.replace(/^shary:\/\/(home(?=\/|$|\?))?/i, '').replace(/^\/+/, '');
+        } else if (/^https?:\/\//i.test(raw)) {
+            try { var u = new URL(raw); raw = u.pathname + u.search; } catch (error) { raw = ''; }
+        } else if (raw.charAt(0) !== '/') {
+            raw = '/' + raw;
+        }
+        raw = raw.replace(/#.*$/, '');
+        // صفحة المعاينة: /…/ar/v2/academy.html ← /ar/academy
+        var lang = /\/(ar|en)(?:\/v2)?(\/[^?]*)?(\?.*)?$/.exec(raw);
+        if (lang) raw = '/' + lang[1] + (lang[2] || '') + (lang[3] || '');
+        raw = raw.replace(/\.html(?=\?|$)/, '').replace(/\/+$/, '').replace(/^\/(\?|$)/, '$1');
+        return raw === '/' ? '' : raw;
     }
-    function androidIntent(deep) {
-        var fallback = ';S.browser_fallback_url=' + encodeURIComponent(playUrl()) + ';end';
-        return 'intent://' + appLink(deep).replace(/^shary:\/\//i, '') + '#Intent;scheme=shary;package=' + PACKAGE + fallback;
+    function appLink(path) { return 'shary://home' + appPath(path); }
+    function iosStore() {
+        var store = buttons[0] && buttons[0].getAttribute('data-ios-url');
+        return store || 'https://apps.apple.com/app/id6743754160';
     }
-    /** افتح التطبيق (على الشاشة deep لو موجودة) — ولو مش متحمّل: المتجر. store = لينك المتجر للآيفون / الاحتياطي */
-    function openApp(deep, store) {
+    function androidIntent(path, fallback) {
+        return 'intent://home' + appPath(path) + '#Intent;scheme=shary;package=' + PACKAGE + ';S.browser_fallback_url=' + encodeURIComponent(fallback || playUrl()) + ';end';
+    }
+    /**
+     * SharyApp.open(appPath, { webUrl, storeUrl }) — افتح التطبيق على الصفحة دي (كروت «ما يميزنا» ، زراير «افتح التطبيق» ، صفحات الخدمات ، زراير المتاجر):
+     *   أندرويد: لينك intent بتاع كروم ← التطبيق متسطّب: بيفتح على طول على نفس الصفحة · مش متسطّب: webUrl (صفحة الموقع) أو المتجر — عمره ما بيروح المتجر على طول.
+     *            (متصفحات جوه فيسبوك / إنستجرام / تيك توك ما بتفتحش intent ← webUrl أو المتجر)
+     *   آيفون: متسطّب (أو الحاجة في التطبيق بس — من غير webUrl) ← shary://home… ولو ما اتفتحش في 2.5 ثانية: webUrl وإلا المتجر ،
+     *          مش معروف إنه متسطّب وفيه webUrl ← webUrl على طول (من غير رسالة سفاري «العنوان غير صالح»).
+     *   كمبيوتر: عمره ما بيفتح التطبيق — webUrl ، أو المتجر للحاجات اللي في التطبيق بس.
+     *   (الشكل القديم open(deep, store) لسه شغال: التاني نص = لينك المتجر)
+     */
+    function openApp(path, options) {
+        options = typeof options === 'string' || options == null ? { storeUrl: options || '' } : options;
+        var webUrl = options.webUrl || '';
+        var storeUrl = options.storeUrl || (ios ? iosStore() : playUrl());
         if (android && !noIntent) {
             var onHide = function () { if (document.hidden) { remember(); apply(true); document.removeEventListener('visibilitychange', onHide); } };
             document.addEventListener('visibilitychange', onHide);
             window.setTimeout(function () { document.removeEventListener('visibilitychange', onHide); }, 4000);
-            window.location.href = androidIntent(deep);
+            window.location.href = androidIntent(path, webUrl || storeUrl);
             return;
         }
-        if (android) { window.location.href = playUrl(); return; }
         if (ios) {
-            launch(appLink(deep), function (opened) {
-                if (opened) { remember(); return; }
-                forget();
-                apply(false);
-                if (store) window.location.href = store;
-            });
+            if (remembered() || !webUrl) {
+                launch(appLink(path), function (opened) {
+                    if (opened) { remember(); return; }
+                    forget();
+                    apply(false);
+                    window.location.href = webUrl || storeUrl;
+                });
+                return;
+            }
+            window.location.href = webUrl;
             return;
         }
-        if (store) window.location.href = store;
+        window.location.href = webUrl || storeUrl;
     }
 
     // للسكربتات التانية (كروت "ما يميزنا" في الرئيسية ، صفحات خدمات التطبيق ، زراير المتاجر): لما لينك تطبيق يفتح فعلاً بنفتكر إن التطبيق متسطّب والزرار يبقى "افتح التطبيق"
@@ -801,6 +830,8 @@ window.SharyZoom = function () {
         forget: function () { forget(); apply(false); },
         launch: launch,
         open: openApp,
+        path: appPath,
+        intent: androidIntent,
         android: android,
         ios: ios,
     };
