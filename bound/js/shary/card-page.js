@@ -65,6 +65,9 @@
             code.setAttribute('data-raw', card.code);
             code.textContent = pretty;
             if (codeText) codeText.textContent = pretty;
+            // عدد الحروف ← مقاس الكود اللي يخليه جوه البوكس (CSS --code-len)
+            code.style.setProperty('--code-len', pretty.length);
+            if (codeText) codeText.style.setProperty('--code-len', pretty.length);
             strip.classList.add('is-revealed');
             page.setAttribute('data-state', 'member');
             if (form) form.classList.add('hidden');

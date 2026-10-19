@@ -733,6 +733,19 @@
             });
         }
 
+        // موبايل (صفحة البحث): «الترتيب» جوه «تصفية» — الزرار بيختار نفس راديو الترتيب (القايمة اللي فوق مستخبية على الموبايل)
+        // ويتطبّق مع «عرض النتائج» زي باقي اختيارات «تصفية»
+        all('[data-sort-pick]').forEach(function (pick) {
+            pick.addEventListener('click', function () {
+                var value = pick.getAttribute('data-sort-pick');
+                var radio = all('input[name="sort"]').filter(function (input) { return input.value === value; })[0];
+                if (!radio) return;
+                radio.checked = true;
+                all('[data-sort-pick]').forEach(function (other) { other.setAttribute('aria-pressed', other === pick ? 'true' : 'false'); });
+                if (sortOpen) sortOpen.classList.add('is-active');
+            });
+        });
+
         // اختيارات على الصفحة نفسها بتتبعت أول ما تتغير (تبويب الفرش في صفحة الإيجار)
         all('[data-submit-on-change]').forEach(function (input) { input.addEventListener('change', submit); });
 

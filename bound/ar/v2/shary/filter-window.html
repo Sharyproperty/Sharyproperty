@@ -13,33 +13,6 @@ data-kind-area="منطقة" data-kind-developer="مطور" data-kind-project="ك
 </button>
 </div>
 <div class="search-quick">
-<div class="shary-scroll -ms-5 flex min-w-0 flex-1 gap-2 overflow-x-auto ps-5 lg:hidden">
-<button type="button" class="search-chip" aria-haspopup="dialog" aria-expanded="false"
-data-sheet-open="section" data-sections="type" >
-<span>نوع العقار</span>
-<span class="area-filter__count" data-sheet-count="sec:type"></span>
-</button>
-<button type="button" class="search-chip" aria-haspopup="dialog" aria-expanded="false"
-data-sheet-open="section" data-sections="bedrooms bathrooms" >
-<span>الغرف والحمامات</span>
-<span class="area-filter__count" data-sheet-count="sec:bedrooms bathrooms"></span>
-</button>
-<button type="button" class="search-chip" aria-haspopup="dialog" aria-expanded="false"
-data-sheet-open="price" >
-<span>السعر</span>
-<span class="area-filter__count" data-sheet-count="price"></span>
-</button>
-<button type="button" class="search-chip" aria-haspopup="dialog" aria-expanded="false"
-data-sheet-open="section" data-sections="finishing" >
-<span>التشطيب</span>
-<span class="area-filter__count" data-sheet-count="sec:finishing"></span>
-</button>
-<button type="button" class="search-chip" aria-haspopup="dialog" aria-expanded="false"
-data-sheet-open="section" data-sections="delivery" >
-<span>التسليم</span>
-<span class="area-filter__count" data-sheet-count="sec:delivery"></span>
-</button>
-</div>
 <div class="search-tools hidden items-center gap-2.5 lg:flex">
 <button type="button" class="search-tool search-tool--side" data-side-toggle aria-expanded="true">
 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg>
@@ -156,6 +129,22 @@ data-sheet-open="section" data-sections="delivery" >
 <span>غير مفروش</span>
 </label>
 </div>
+<section class="area-fsec lg:hidden" data-sort-section>
+<div class="mb-4 flex items-center gap-3">
+<span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-shary-form text-shary-link" aria-hidden="true">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5v14M8 19l-3-3M8 19l3-3M16 19V5M16 5l-3 3M16 5l3 3"/></svg>
+</span>
+<p role="heading" aria-level="3" class="relative pb-2 text-[18px] font-bold leading-normal text-shary-navy after:absolute after:bottom-0 after:start-0 after:h-[3px] after:w-11 after:rounded-full after:bg-[#a9c4ec]">ترتيب</p>
+</div>
+<div class="flex flex-wrap gap-2.5">
+<button type="button" class="sort-pick" data-sort-pick="price_asc" aria-pressed="false"><span class="area-chip">أقل سعر</span></button>
+<button type="button" class="sort-pick" data-sort-pick="price_desc" aria-pressed="false"><span class="area-chip">أعلى سعر</span></button>
+<button type="button" class="sort-pick" data-sort-pick="delivery" aria-pressed="false"><span class="area-chip">تاريخ التسليم</span></button>
+<button type="button" class="sort-pick" data-sort-pick="newest" aria-pressed="false"><span class="area-chip">الأحدث</span></button>
+<button type="button" class="sort-pick" data-sort-pick="installment_asc" aria-pressed="false"><span class="area-chip">أقل قسط</span></button>
+<button type="button" class="sort-pick" data-sort-pick="installment_desc" aria-pressed="false"><span class="area-chip">أعلى قسط</span></button>
+</div>
+</section>
 <div class="lg:contents">
 <section class="area-fsec hidden lg:block" data-filter-section data-key="area-list">
 <div class="mb-4 flex items-start justify-between gap-3">

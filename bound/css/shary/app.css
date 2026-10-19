@@ -2530,6 +2530,16 @@ button.site-login {
   filter: drop-shadow(0 1px 0 rgba(90, 58, 6, 0.55)) drop-shadow(0 -0.5px 0 rgba(255, 249, 220, 0.6)) drop-shadow(0 2px 2px rgba(13, 44, 73, 0.35));
 }
 
+/* الكود جوه البوكس بتاعه دايمًا: المقاس على قد عرض الشريط وعدد حروف الكود (--code-len) — في أصغر موبايل ما بيطلعش برّه ولا يدخل على الـ QR */
+.shary-card__strip {
+  container-type: inline-size;
+  padding-inline: 2px;
+}
+
+.shary-card__code {
+  font-size: min(clamp(10.5px, 3vw, 13px), calc(100cqi / (max(var(--code-len, 21), 12) * 0.69)));
+}
+
 /* الشريط الرمادي اللي بيغطي الكود */
 
 .shary-card__cover {
@@ -2583,6 +2593,7 @@ button.site-login {
 
   .shary-card__code {
     font-size: 16px;
+    font-size: min(16px, calc(100cqi / (max(var(--code-len, 21), 12) * 0.69)));
   }
 }
 
@@ -2808,11 +2819,22 @@ button.site-login {
   line-height: 1.2;
   white-space: nowrap;
   color: #b07d1e;
-  background-image: linear-gradient(180deg, #e7b94c 0%, #b9831f 45%, #8a5a0c 60%, #d6a43a 100%);
+  background-image: linear-gradient(180deg, #f0c95e 0%, #c3902a 44%, #94620f 58%, #dcaa40 100%);
   -webkit-background-clip: text;
           background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 1px 0 rgba(255, 244, 205, 0.9)) drop-shadow(0 -0.5px 0 rgba(90, 58, 6, 0.35));
+  /* بارز (مش محفور): نور خفيف فوق وضل دهبي غامق تحت — زي أرقام الكروت */
+  filter: drop-shadow(0 -0.5px 0 rgba(255, 255, 255, 0.95)) drop-shadow(0 1px 0 rgba(110, 72, 8, 0.5)) drop-shadow(0 1.5px 1.5px rgba(110, 72, 8, 0.18));
+  font-size: min(clamp(13px, 4vw, 17px), calc(100cqi / (max(var(--code-len, 21), 12) * 0.7)));
+}
+
+/* البوكس اللي فيه الكود: الكود ياخد المساحة اللي جنب «كودك» ويتظبط مقاسه عليها — ما بيطلعش برّه البوكس */
+.card-code-fit {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 0%;
+  justify-content: flex-end;
+  container-type: inline-size;
 }
 /* ── app.css · جزء 4 من 16: المطورين ، صفحات عرض الكل ، الستوري ، زرار «مسح» الموحد ، المقارنة ، من نحن / اتصل بنا ، الوكلاء ، قايمة الموبايل (المصدر: resources/css/shary/app/04-developers-compare-company.css — عدّل هنا وشغّل tools/minify-assets.sh) */
 /* أيقونة المطور (صفحة "كل المطورين"): لوجو في دايرة بإطار رمادي رفيع — والمطور اللي له ستوري إطاره أخضر تخين */
@@ -6357,11 +6379,24 @@ label:has(> input.sr-only) {
   color: #1f63c6;
 }
 
+/* الموبايل: صف الفلاتر السريعة + الترتيب اتشال (كله في «تصفية» — الترتيب كمان: .sort-pick) — الديسك توب بيظهره (09-property-rent-photos.css) */
 .search-quick {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 8px;
   margin-top: 2px;
+}
+
+/* «الترتيب» جوه «تصفية» على الموبايل: نفس شكل الاختيار المتعلّم */
+.sort-pick[aria-pressed="true"] > .area-chip {
+  border-color: #1e4166;
+  background-color: #1e4166;
+  color: #fff;
+}
+
+.sort-pick:focus-visible > .area-chip {
+  outline: 2px solid #1f63c6;
+  outline-offset: 2px;
 }
 
 .search-chip {
@@ -10358,6 +10393,7 @@ body:has(.rent-viewer[data-group="gallery"]:not([class~="hidden"])) .rent-galler
   }
 
   .search-quick {
+    display: flex;
     grid-area: quick;
     gap: 10px;
     margin: 0;
