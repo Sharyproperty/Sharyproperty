@@ -5254,6 +5254,51 @@ a.dev-logo-link:hover {
   transition: width 0.5s ease;
 }
 
+/* «إزاي اتحسب؟» في كارت المنطقة: العامل ← وزنه (شارة) ← درجة المنطقة فيه (شريط + رقم) — عمودين منفصلين بعنوان فوقهم */
+.area-how__row {
+  display: grid;
+  grid-template-columns: minmax(0, 112px) 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 4px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.area-how__head {
+  align-items: end;
+  margin-bottom: 2px;
+  padding: 0 0 6px;
+  border-bottom: 1px solid #e3e9ef;
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #5b6b7c;
+}
+.area-how__head span:nth-child(2) { text-align: center; }
+.area-how__name { font-weight: 700; }
+.area-how__weight {
+  justify-self: center;
+  padding: 1px 8px;
+  border-radius: 9999px;
+  background: #eef2f7;
+  color: #123a5c;
+  font-size: 11.5px;
+  font-style: normal;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.area-how__score {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 26px;
+  align-items: center;
+  gap: 8px;
+}
+.area-how__score b { text-align: end; font-size: 12.5px; font-weight: 700; }
+@media (min-width: 1024px) {
+  .area-how__row { grid-template-columns: minmax(0, 150px) 60px minmax(0, 1fr); font-size: 14px; }
+  .area-how__head { font-size: 11.5px; }
+}
+
 /* رسم سعر المتر */
 
 .area-plot {
