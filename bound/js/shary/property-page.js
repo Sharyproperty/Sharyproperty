@@ -616,9 +616,9 @@
             return radio ? radio.value : '';
         }
 
-        // الكروت اللي تبع التبويب المفتوح والفلاتر المختارة، مترتبة بالترتيب المختار
-        function matching() {
-            var tab = current(tabs, 'data-unit-tab');
+        // الكروت اللي تبع التبويب المفتوح (أو التبويب forTab) والفلاتر المختارة، مترتبة بالترتيب المختار
+        function matching(forTab) {
+            var tab = forTab === undefined ? current(tabs, 'data-unit-tab') : forTab;
             var sort = sortValue();
             var types = picked('type'), beds = picked('bedrooms'), baths = picked('bathrooms'), finishing = picked('finishing'), delivery = picked('delivery'), years = picked('years');
             var priceLow = field('[data-range-min="price"]'), priceHigh = field('[data-range-max="price"]');
@@ -745,6 +745,20 @@
         // لو الكروت اتبدّلت من بره (مثلاً من السيرفر): section.__renderUnits() بيعيد العرض من أول صفحة
         section.__renderUnits = function () { shown = step(); render(); };
         render();
+
+        // بعد ما الصفحة تحمل: صور أول صفحة في كل تبويب بتتحمّل في الخلفية — تبديل التبويب بيظهر الكروت بصورها على طول (من غير مربعات فاضية)
+        function warm() {
+            tabs.forEach(function (link) {
+                matching(link.getAttribute('data-unit-tab')).slice(0, step()).forEach(function (card) {
+                    var img = card.querySelector('img[loading="lazy"]');
+                    if (img) img.loading = 'eager';
+                });
+            });
+        }
+        if (tabs.length > 1) {
+            var later = function () { window.setTimeout(warm, 1200); };
+            if (document.readyState === 'complete') later(); else window.addEventListener('load', later);
+        }
     });
 })();
 

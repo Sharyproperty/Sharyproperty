@@ -759,10 +759,12 @@ window.SharyZoom = function () {
      * مسار التطبيق (appPath): مسار صفحة الموقع + الـ query — '/ar/academy' ، '/ar/for-sale?offer=resale' — والتطبيق بيفتح نفس الصفحة
      * من shary://home<appPath> (بيفهم المسار بـ /ar أو /en أو من غيرهم ، والمسار اللي ما يعرفوش ← رئيسية التطبيق).
      *   فاضي = الصفحة اللي العميل فاتحها دلوقتي (المسار + الـ query) · shary://home/… أو shary://… (من الداشبورد) أو لينك https للموقع ← المسار بتاعهم.
+     *   لينك تطبيق من غير مسار (shary://# ، shary://home) = زي الفاضي: التطبيق بيفتح على نفس الصفحة اللي العميل فيها (مش رئيسية التطبيق).
      *   (/v2 بتاعة المعاينة و .html بتتشال)
      */
     function appPath(value) {
         var raw = String(value == null ? '' : value).trim();
+        if (/^shary:\/\/(home)?\/?(#.*)?$/i.test(raw)) raw = '';
         if (raw === '' ) {
             raw = (window.location.pathname || '/') + (window.location.search || '');
         } else if (/^shary:\/\//i.test(raw)) {

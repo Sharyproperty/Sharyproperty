@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head><script>(function(){var B="1792449872";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1792449872"></script>
+<head><script>(function(){var B="1792456603";try{fetch("/Sharyproperty/bound/version.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){if(!j||!j.v||j.v===B)return;var u=new URL(location.href);if(u.searchParams.get("fresh")===j.v)return;u.searchParams.set("fresh",j.v);location.replace(u.href)}).catch(function(){})}catch(e){}})();</script><script src="/Sharyproperty/bound/js/snapshot-post.js?v=1792456603"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="csrf-token" content="k7xoMH2WXhdjBMeO3uD9bDtF2FuXpx0oEgSsEcPz">
+<meta name="csrf-token" content="Bhrdiqi0GHAIp4mSQMWs54t5o0JxJWmRmBheZxIS">
 <meta name="shary-notify" data-count-url="../v2.html" data-token-url="../v2.html" data-user="0">
 <title>المساعد القانوني من شاري: عقدك وأوراقك صح | شاري</title>
 <script>
@@ -608,31 +608,13 @@ data-compare-link data-base="compare.html" >
         </script>
 <script>
             (function () {
-                var ua = navigator.userAgent;
-                var android = /Android/i.test(ua);
-                var ios = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-                var play = "https:\/\/play.google.com\/store\/apps\/details?id=com.sharyproperties.app", apple = "https:\/\/apps.apple.com\/eg\/app\/shary-real-estate\/id6743754160";
-                var pkg = 'com.sharyproperties.app';
-                function remember() { try { if (window.SharyApp) window.SharyApp.remember(); else localStorage.setItem('shary-app-installed', '1'); } catch (e) {} }
-                function tryOpen(deep, store) {
-                    var left = false;
-                    var onHide = function () { if (document.hidden) { left = true; remember(); } };
-                    document.addEventListener('visibilitychange', onHide);
-                    window.location.href = deep;
-                    setTimeout(function () { document.removeEventListener('visibilitychange', onHide); if (!left && !document.hidden) window.location.href = store; }, 1600);
-                }
-                document.querySelectorAll('[data-afp-open], main.afp .afp-actions a.afp-btn').forEach(function (link) {
+                var stores = { ios: "https:\/\/apps.apple.com\/eg\/app\/shary-real-estate\/id6743754160", android: "https:\/\/play.google.com\/store\/apps\/details?id=com.sharyproperties.app" };
+                document.querySelectorAll('main.afp [data-afp-open], main.afp .afp-actions a.afp-btn, main.afp .afp-cta a.afp-btn').forEach(function (link) {
                     link.addEventListener('click', function (event) {
-                        if (!android && !ios) return;      // الكمبيوتر: site-chrome.js
+                        var app = window.SharyApp;      // site-chrome.js بيتحمّل بعد الصفحة: بيتشاف وقت الضغط
+                        if (!app || !app.open || !(app.android || app.ios)) return;      // الكمبيوتر (أو من غير السكربت): اللينك العادي
                         event.preventDefault();
-                        var deep = link.getAttribute('data-afp-open') || 'shary://home';
-                        if (android) {
-                            // التطبيق متحمّل ← بيفتح على طول (على شاشة الخدمة لو لينكها متسجل في الداشبورد ، وإلا الرئيسية) — مش متحمّل ← جوجل بلاي (site-chrome/06-app-button.js)
-                            if (window.SharyApp && window.SharyApp.open) window.SharyApp.open(link.getAttribute('data-afp-open') || '', play);
-                            else window.location.href = play;
-                            return;
-                        }
-                        tryOpen(deep, apple);     // آيفون: بيجرّب يفتح التطبيق ، ولو ما اتفتحش في ثانية ونص ← آب ستور
+                        app.open(link.getAttribute('data-afp-open') || '', { storeUrl: app.ios ? stores.ios : stores.android });
                     });
                 });
             })();
@@ -806,7 +788,7 @@ data-compare-link data-base="compare.html" >
 </button>
 </div>
 <form action="../v2.html" method="POST" class="mt-4 flex flex-col gap-4" data-meeting-form>
-<input type="hidden" name="_token" value="k7xoMH2WXhdjBMeO3uD9bDtF2FuXpx0oEgSsEcPz" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
+<input type="hidden" name="_token" value="Bhrdiqi0GHAIp4mSQMWs54t5o0JxJWmRmBheZxIS" autocomplete="off">            <input type="hidden" name="meeting_type" value="zoom" data-meeting-type>
 <input type="hidden" name="meeting_date" value="" data-meeting-date>
 <input type="hidden" name="meeting_time" value="10:00" data-meeting-time>
 <div class="grid grid-cols-2 gap-1 rounded-[16px] bg-shary-form p-1.5" role="group" aria-label="طلب اجتماع">
@@ -1007,7 +989,7 @@ data-compare-link data-base="compare.html" >
 </div>
 <!-- /meeting-modal -->
 <script src="../../js/shary/smart-text.min.js?v=tn1y1t"></script>
-<script src="../../js/shary/site-chrome.min.js?v=tn6a6z"></script>
+<script src="../../js/shary/site-chrome.min.js?v=tn6gjx"></script>
 <script defer src="../../js/shary/web-notify.min.js?v=tn1y1u"></script>
 <script src="../../js/shary/img-fit.min.js?v=tn60wa" defer></script>
 <script src="../../js/shary/filter-live.min.js?v=tn1y1s"></script>
@@ -1018,5 +1000,5 @@ data-compare-link data-base="compare.html" >
 <script src="../../js/shary/lead-forms.min.js?v=tn1y1s"></script>
 <script src="../../js/shary/saved-sync.min.js?v=tn1y1t"></script>
 <script>(function(){try{if(navigator.webdriver||!navigator.sendBeacon)return;var go=function(){var f='';try{var d=new Date().toLocaleDateString('en-CA'),l=localStorage.getItem('sx_v');if(!l)f+='n';if(l!==d){f+='d';localStorage.setItem('sx_v',d);}if(!sessionStorage.getItem('sx_s')){f+='s';sessionStorage.setItem('sx_s','1');}}catch(e){}var n=(performance.getEntriesByType&&performance.getEntriesByType('navigation')[0]||{}).name,u=new URL(n||location.href),q=u.searchParams,b=new FormData();b.append('path',u.pathname);b.append('ref',document.referrer||'');b.append('utm',q.get('utm_source')||(q.get('gclid')?'gclid':'')||(q.get('fbclid')?'facebook':''));b.append('v',f);navigator.sendBeacon("\/Sharyproperty\/bound\/shary\/t",b);};if('requestIdleCallback' in window)requestIdleCallback(go,{timeout:4000});else setTimeout(go,2500);}catch(e){}})();</script>
-<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script>window.SHARY_PV_BASE="/Sharyproperty/bound/";</script><script src="/Sharyproperty/bound/js/snapshot-search.js?v=1792449872"></script></body>
+<script src="/Sharyproperty/bound/js/ai-demo.js"></script><script>window.SHARY_PV_BASE="/Sharyproperty/bound/";</script><script src="/Sharyproperty/bound/js/snapshot-search.js?v=1792456603"></script></body>
 </html>
