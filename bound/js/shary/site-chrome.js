@@ -695,7 +695,9 @@ window.SharyZoom = function () {
     // من غير زرار تطبيق في الصفحة (صفحات خدمات التطبيق مثلاً): window.SharyApp بيتعمل برضه — سكربتات الصفحة بتستخدم SharyApp.open
     var ua = navigator.userAgent || '';
     var ios = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
-    var KEY = 'shary-app-installed';
+    // «التطبيق متسطّب» على الجهاز ده (-v2): المفتاح القديم كان بيتسجّل غلط على أندرويد لما «حمل التطبيق» يفتح جوجل بلاي — بيتمسح
+    var KEY = 'shary-app-installed-v2';
+    try { window.localStorage.removeItem('shary-app-installed'); } catch (error) { /* التخزين مقفول */ }
 
     function remembered() { try { return window.localStorage.getItem(KEY) === '1'; } catch (error) { return false; } }
     function remember() { try { window.localStorage.setItem(KEY, '1'); } catch (error) { /* التخزين مقفول */ } }
@@ -803,9 +805,7 @@ window.SharyZoom = function () {
         var webUrl = options.webUrl || '';
         var storeUrl = options.storeUrl || (ios ? iosStore() : playUrl());
         if (android && !noIntent) {
-            var onHide = function () { if (document.hidden) { remember(); apply(true); document.removeEventListener('visibilitychange', onHide); } };
-            document.addEventListener('visibilitychange', onHide);
-            window.setTimeout(function () { document.removeEventListener('visibilitychange', onHide); }, 4000);
+            // من غير «اتفتح ← متسطّب»: الصفحة بتختفي كمان لما جوجل بلاي يفتح (التطبيق مش متسطّب) — فمش دليل
             window.location.href = androidIntent(path, webUrl || storeUrl);
             return;
         }
@@ -825,7 +825,8 @@ window.SharyZoom = function () {
         window.location.href = webUrl || storeUrl;
     }
 
-    // للسكربتات التانية (كروت "ما يميزنا" في الرئيسية ، صفحات خدمات التطبيق ، زراير المتاجر): لما لينك تطبيق يفتح فعلاً بنفتكر إن التطبيق متسطّب والزرار يبقى "افتح التطبيق"
+    // للسكربتات التانية (كروت "ما يميزنا" في الرئيسية ، صفحات خدمات التطبيق ، زراير المتاجر). «متسطّب» بيتفتكر بس من دليل أكيد: الصفحة جوه التطبيق / ?from=app ،
+    // آيفون لما لينك التطبيق يفتح فعلاً ، أو getInstalledRelatedApps — والزرار ساعتها «افتح التطبيق»
     window.SharyApp = {
         installed: remembered,
         remember: function () { remember(); apply(true); },
@@ -879,8 +880,8 @@ window.SharyZoom = function () {
 /**
  * بوب أب «حمل تطبيق شاري» [data-app-card] (partials/app-card.blade.php — موبايل بس): أول حاجة بتظهر لما الموقع يتفتح.
  * الترتيب على الموبايل: البوب أب ده ← تنبيه الخصوصية (أول زيارة) ← شيت «شوف شاري في…» [data-app-popup].
- * - مرة في كل زيارة (sessionStorage: shary-app-card) ، وما يظهرش لو التطبيق متسطّب (زرار التطبيق data-state="open")
- *   أو العميل ضغط «حمل التطبيق» قبل كده على الجهاز ده (localStorage: shary-app-got).
+ * - مرة في كل زيارة (sessionStorage: shary-app-card) طول ما التطبيق مش متسطّب — حتى لو العميل فتح الموقع كتير أو ضغط «حمل التطبيق» قبل كده.
+ *   ما يظهرش لو التطبيق متسطّب (زرار التطبيق data-state="open") أو الصفحة جوه التطبيق (app-mode).
  * - window.SharyAppCard.pending = لسه هيظهر / ظاهر ؛ ولما يخلص (اتقفل أو مش هيظهر): حدث shary:app-card-done على document
  *   — تنبيه الخصوصية وشيت التطبيق بيستنوه.
  */
@@ -889,10 +890,9 @@ window.SharyZoom = function () {
     var api = window.SharyAppCard = { pending: false };
     if (!card) return;
     var KEY = 'shary-app-card';
-    var GOT = 'shary-app-got';
     function read(store, key) { try { return window[store].getItem(key); } catch (error) { return null; } }
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
-    if (!mobile || read('sessionStorage', KEY) || read('localStorage', GOT) === '1' || navigator.webdriver || document.documentElement.classList.contains('app-mode')) return;   // navigator.webdriver: اختبارات آلية ؛ app-mode: الصفحة جوه تطبيق شاري
+    if (!mobile || read('sessionStorage', KEY) || navigator.webdriver || document.documentElement.classList.contains('app-mode')) return;   // navigator.webdriver: اختبارات آلية ؛ app-mode: الصفحة جوه تطبيق شاري
     api.pending = true;
 
     function done() {
@@ -956,10 +956,9 @@ window.SharyZoom = function () {
 })();
 // ── site-chrome.js · جزء 8 من 11: بوب أب تحميل التطبيق (الشيت اللي تحت) (المصدر: resources/js/shary/site-chrome/08-app-popup.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /**
- * بوب أب تحميل التطبيق [data-app-popup] (موبايل بس): بيظهر بعد data-delay من فتح الصفحة وبيدخل من الشمال.
- * - بيظهر مرة واحدة في الزيارة: أول ما يظهر بيتسجّل (sessionStorage) فما يظهرش تاني وهو بيتنقل بين الصفحات — ولما يقفل المتصفح ويفتح الموقع تاني بيظهر مرة.
- * - بيفضل كده لحد ما العميل يضغط زرار التحميل (في البوب أب أو الهيدر): ساعتها بيتسجّل على الجهاز (localStorage: shary-app-got) وما يظهرش تاني خالص.
- *   ومش بيظهر كمان لو التطبيق متسطّب (زرار التطبيق data-state="open").
+ * شيت «شوف شاري في…» [data-app-popup] (موبايل بس — partials/app-popup.blade.php): بيطلع من تحت بعد بوب أب «حمل تطبيق شاري» (07-app-card.js).
+ * - مرة واحدة في الزيارة: أول ما يظهر بيتسجّل (sessionStorage) فما يظهرش تاني وهو بيتنقل بين الصفحات — ولما يفتح الموقع تاني (زيارة جديدة) بيظهر مرة.
+ *   ولو التطبيق متسطّب بيظهر بزرار «افتح التطبيق».
  *   عايزينه أقل؟ غيّروا DAYS لعدد الأيام بين كل ظهور (بيتحفظ في localStorage بدل الزيارة).
  * - القفل: × أو الضغط براه أو Esc أو الضغط على زرار التحميل. window.SharyAppPopup.open() / .close() للتحكم من أي كود.
  * - حدث shary:app-popup ({ open }) على العنصر.
@@ -974,14 +973,6 @@ window.SharyZoom = function () {
     function store() { return DAYS > 0 ? window.localStorage : window.sessionStorage; }
     function seen() { try { var at = Number(store().getItem(KEY)); return !!at && (DAYS === 0 || Date.now() - at < DAYS * 86400000); } catch (error) { return false; } }
     function mark() { try { store().setItem(KEY, String(Date.now())); } catch (error) { /* التخزين مقفول */ } }
-    // العميل ضغط "حمل التطبيق" قبل كده: البوب أب ما يظهرش تاني على الجهاز ده
-    var GOT = 'shary-app-got';
-    function got() { try { return window.localStorage.getItem(GOT) === '1'; } catch (error) { return false; } }
-    document.addEventListener('click', function (event) {
-        if (!event.target.closest('[data-app-button]')) return;
-        try { window.localStorage.setItem(GOT, '1'); } catch (error) { /* التخزين مقفول */ }
-    }, true);
-
     function close() {
         if (pop.hidden) return;
         pop.classList.remove('is-open');
@@ -1024,7 +1015,7 @@ window.SharyZoom = function () {
 
     var mobile = window.matchMedia && window.matchMedia('(max-width: 1023px)').matches;
     // شيت التطبيق بيظهر كل مرة الموقع يتفتح (حتى لو ضغط "حمل التطبيق" قبل كده ، وحتى لو التطبيق متحمل ← "افتح التطبيق") — مرة في الزيارة بس عشان ما يتكررش في كل صفحة
-    if (!mobile || seen() || (got() && !pop.hasAttribute('data-app-sheet')) || navigator.webdriver || document.documentElement.classList.contains('app-mode')) return;   // navigator.webdriver: اختبارات آلية ؛ app-mode: الصفحة جوه تطبيق شاري
+    if (!mobile || seen() || navigator.webdriver || document.documentElement.classList.contains('app-mode')) return;   // navigator.webdriver: اختبارات آلية ؛ app-mode: الصفحة جوه تطبيق شاري
     // صورة التليفون بتتحمّل من أول ما الصفحة تفتح (مش lazy — جوه بوب أب مخفي ما كانتش بتتحمّل غير لما يظهر ، فالكارت كان بيظهر الأول والصورة بعده)
     // والبوب أب ما بيظهرش غير لما الصورة تبقى جاهزة (أو بعد 3 ثواني زيادة بالكتير) — يظهر مرة واحدة كامل
     var device = pop.querySelector('.app-pop__device');
@@ -1048,8 +1039,6 @@ window.SharyZoom = function () {
             document.addEventListener('shary:app-card-done', function () { window.setTimeout(show, 1200); }, { once: true });
             return;
         }
-        var button = pop.querySelector('[data-app-button]');
-        if (button && button.getAttribute('data-state') === 'open' && !pop.hasAttribute('data-app-sheet')) return;   // التطبيق متسطّب (الشيت بيظهر بـ "افتح التطبيق")
         var ai = document.querySelector('[data-ai-panel]');
         if (ai && Array.prototype.some.call(document.querySelectorAll('[data-ai-panel]'), function (panel) { return !panel.classList.contains('hidden'); })) { window.setTimeout(show, 4000); return; }
         // تنبيه الخصوصية ظاهر (أول زيارة): الشيت بيستنى لحد ما العميل يضغط "موافق" ، وبعدها بـ AFTER_PRIVACY يطلع — مش الاتنين مع بعض
@@ -1058,9 +1047,8 @@ window.SharyZoom = function () {
             privacy.addEventListener('shary:privacy-accept', function () { window.setTimeout(show, AFTER_PRIVACY); }, { once: true });
             return;
         }
-        var sheet = pop.hasAttribute('data-app-sheet');
-        if (seen() || (got() && !sheet)) return;
-        ready(function () { if (!seen() && (sheet || !got())) open(); });
+        if (seen()) return;
+        ready(function () { if (!seen()) open(); });
     }
     window.setTimeout(show, Number(pop.getAttribute('data-delay')) || 1800);
 })();

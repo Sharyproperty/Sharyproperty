@@ -25598,7 +25598,6 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
 .app-sheet__btn:active { transform: scale(.96); background: #eef3f8; }
 .app-sheet__btn--main { background: #1E4266; border-color: #1E4266; color: #fff; }
 .app-sheet__btn--main:hover, .app-sheet__btn--main:active { background: #163352; color: #fff; }
-.app-sheet__btn--main[data-state="open"] { background: #4CBFB2; border-color: #4CBFB2; }
 
 /* شيت التطبيق: كلام الزراير ("حمل التطبيق" / "افتح التطبيق" / "كمّل") بولد وأوضح */
 .app-sheet__btn, .app-sheet__btn [data-app-label] { font-weight: 800 !important; font-size: 16px; letter-spacing: 0; }
@@ -26243,3 +26242,15 @@ html:not(.sx-ready) .upd-chip::after,html:not(.sx-ready) .upd-chip__dot::after{a
   content-visibility: auto;
   contain-intrinsic-size: auto 600px;
 }
+
+/* ---- السوشيال ميديا السبعة في سطر واحد على أي شاشة (اتصل بنا ، الفوتر ، قايمة الموبايل): على الشاشات الضيقة (الفولد مقفول 344px ، 320px)
+   الأيقونات والمسافات بتصغر مع بعض بدل ما أيقونة تنزل سطر تاني ---- */
+.social-row { flex-wrap: nowrap; min-width: 0; }
+.social-row > li { flex: 0 1 auto; min-width: 0; }
+.social-brand { flex: 0 1 36px; width: auto; height: auto; aspect-ratio: 1 / 1; min-width: 0; font-size: clamp(13px, 4.4vw, 17px); }
+[data-contact-social] .social-row { gap: clamp(4px, 2.4vw, 10px); }
+@media (min-width: 1024px) {
+  .social-brand { flex-basis: 48px; font-size: 23px; }
+  [data-contact-social] .social-row { gap: 12px; }
+}
+@media (max-width: 1023.98px) { .site-footer .social-row, .site-menu__info .social-row { column-gap: clamp(8px, 4vw, 20px); } }
