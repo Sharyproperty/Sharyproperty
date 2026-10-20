@@ -142,8 +142,11 @@
 
         // جدول "متوسط سعر المتر حسب نوع الوحدة" [data-type-row]: أرقام المنطقة المختارة في الفلتر (أو السوق كله لو "مصر كلها")
         function fillTypeRows() {
+            // الصفوف = أنواع المنطقة المختارة بس (areas[].has) ، أو أول الأنواع في مصر كلها (topTypes)
+            var shown = areaKey && areas[areaKey] && (areas[areaKey].has || []).length ? areas[areaKey].has : (data.topTypes && data.topTypes.length ? data.topTypes : null);
             page.querySelectorAll('[data-type-row]').forEach(function (row) {
                 var key = row.getAttribute('data-type-row');
+                row.classList.toggle('hidden', !!shown && shown.indexOf(key) < 0);
                 var market = data.types[key] ? data.types[key].market : null;
                 var own = areaKey && areas[areaKey] && areas[areaKey].values[key] ? areas[areaKey].values[key] : null;
                 var from = own || market;
@@ -177,9 +180,38 @@
                 headline: v.headline || '', insights: v.insights || [] };
         }
 
+        // مؤشر شاري للمنطقة المختارة + «إزاي اتحسب؟» [data-index-how]: عوامل حسبة المنطقة بأوزانها ودرجاتها للنوع المختار (area.how من الباك إند) —
+        // «مصر كلها» أو منطقة من غير عوامل: البلوك مخفي
+        var howBox = page.querySelector('[data-index-how]');
+        function showHow() {
+            if (!howBox) return;
+            var area = areaKey ? areas[areaKey] : null;
+            var how = area && area.how && (area.how.factors || []).length ? area.how : null;
+            howBox.classList.toggle('hidden', !how);
+            if (!how) return;
+            var v = area.values[typeKey] || {};
+            var bars = (how.bars && how.bars[typeKey]) || [];
+            set('how_area', area.name);
+            set('how_type', data.types[typeKey] ? data.types[typeKey].label : '');
+            set('how_score', dash(v.score));
+            var rowsBox = howBox.querySelector('[data-how-rows]');
+            rowsBox.innerHTML = how.factors.map(function (factor, i) {
+                var score = has(bars[i]) ? Number(bars[i]) : null;
+                return '<div class="index-how__row"><span class="index-how__name">' + escapeHtml(factor[0]) + '</span>'
+                    + '<em class="index-how__weight" dir="ltr">' + escapeHtml(factor[1]) + '</em>'
+                    + '<span class="index-how__bar"><span><i style="width: ' + (score === null ? 0 : Math.max(0, Math.min(100, score))) + '%"></i></span><b>' + (score === null ? '—' : score) + '</b></span></div>';
+            }).join('');
+            var own = howBox.querySelector('[data-how-own]');
+            if (own) {
+                own.classList.toggle('hidden', !how.own);
+                own.textContent = String(data.howOwn || '').replace(':area', area.name);
+            }
+        }
+
         function showMarket() {
             var type = data.types[typeKey];
             var now = scope();
+            showHow();
             set('label', type.label);
             set('label_in_units', type.label);
             set('scope', now.name);
@@ -594,7 +626,8 @@
         });
         // المنطقة الأول: الأنواع اللي تحتها = الموجودة فيها بس ، ولو النوع المختار مش موجود فيها بيتغير لأول نوع موجود
         function fitHeroTypes() {
-            var keys = typesIn([areaKey]);
+            // المنطقة: أنواعها هي بس ، «مصر كلها»: أول الأنواع (الأكتر وحدات)
+            var keys = areaKey ? typesIn([areaKey]) : (data.topTypes && data.topTypes.length ? data.topTypes : allTypes);
             showTypes(buttons, 'data-index-type', keys);
             return keys.indexOf(typeKey) > -1 ? null : buttons.filter(function (button) { return button.getAttribute('data-index-type') === keys[0]; })[0];
         }

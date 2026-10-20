@@ -8107,6 +8107,12 @@ html, body {
   .shary-home-root .mobile-promo-slide { height: 120px !important; aspect-ratio: auto; line-height: 0; }
   .shary-home-root .mobile-promo-slide img { display: block; width: 100% !important; height: 100% !important; object-fit: fill !important; pointer-events: none; user-select: none; -webkit-user-drag: none; }
 }
+/* ---- إعلانات الهوم على الديسك توب (1024px+): البوكس بنسبة صور الإعلانات نفسها (‎--ad-ratio من الصفحة) — الصورة مالية البوكس كله
+   من غير بلور على الجناب ولا مطّ (img-fit مستثني البوكس ده على الديسك توب). إعلان واحد = بعرض الشاشة كلها ---- */
+@media (min-width: 1024px) {
+  .shary-home-root .promo-banners-carousel--fit .shary-promo-banner { height: auto; aspect-ratio: var(--ad-ratio); }
+  .shary-home-root .promo-banners-carousel--fit .shary-promo-banner > img { object-fit: cover; }
+}
 /* ---- "أفضل المطورين" على الموبايل والـ Fold والتابلت: 4 لوجوهات في عرض الشاشة (والباقي بالسحب) ---- */
 @media (max-width: 959px) {
   .shary-home-root .developers-carousel { container-type: inline-size; }

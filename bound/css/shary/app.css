@@ -2652,6 +2652,25 @@ button.site-login {
   background-color: #e8f0fb;
 }
 
+/* صورة المشروع / الوحدة في الإشعار (على الطرف التاني من الأيقونة) */
+.notify-item__pic {
+  height: 60px;
+  width: 80px;
+  flex-shrink: 0;
+  align-self: center;
+  border-radius: 12px;
+  background-color: #e8f0fb;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+@media (max-width: 420px) {
+  .notify-item__pic {
+    height: 52px;
+    width: 64px;
+  }
+}
+
 .notify-item__icon {
   display: flex;
   height: 46px;
@@ -3026,6 +3045,14 @@ button.site-login {
   width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
+}
+
+/* ستوري لينك يوتيوب: بيشتغل جوه الستوري نفسه بعرض الإطار كله (الضغط يمين / شمال فوقه للتخطي زي الفيديو) */
+.story__stage iframe {
+  height: 100%;
+  width: 100%;
+  border: 0;
+  background-color: #000;
 }
 
 .story__tap {
@@ -5071,6 +5098,80 @@ a.dev-logo-link:hover {
   .index-glass {
     background-color: rgba(18, 52, 86, 0.82);
   }
+}
+
+/* مؤشر شاري للمنطقة المختارة + «إزاي اتحسب؟» تحت أرقام هيدر المؤشر (index-page.js بيملاه) —
+   نفس أعمدة «إزاي اتحسب» في كارت المنطقة (العامل ← وزنه ← درجة المنطقة فيه) بألوان الهيدر الغامق */
+.index-how { color: #ffffff; }
+.index-how__summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  list-style: none;
+}
+.index-how__summary::-webkit-details-marker { display: none; }
+.index-how__score {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-inline-start: auto;
+  white-space: nowrap;
+}
+.index-how__score b { font-size: 26px; font-weight: 800; line-height: 1; color: #fcb424; }
+.index-how__score small { font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.8); }
+.index-how__chevron { flex-shrink: 0; transition: transform 0.2s ease; }
+.index-how[open] .index-how__chevron { transform: rotate(180deg); }
+.index-how__body { padding: 0 14px 14px; }
+.index-how__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1.1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.index-how__head {
+  align-items: end;
+  margin-bottom: 2px;
+  padding: 0 0 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  font-size: 10.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.8);
+}
+.index-how__head span:nth-child(2) { text-align: center; }
+.index-how__name { font-weight: 700; }
+.index-how__weight {
+  justify-self: center;
+  padding: 1px 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 11.5px;
+  font-style: normal;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.index-how__bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px;
+  align-items: center;
+  gap: 8px;
+}
+.index-how__bar > span { height: 8px; overflow: hidden; border-radius: 9999px; background: rgba(255, 255, 255, 0.18); }
+.index-how__bar i { display: block; height: 100%; border-radius: 9999px; background: #fcb424; }
+.index-how__bar b { text-align: end; font-size: 13px; font-weight: 800; }
+.index-how__note { margin-top: 8px; font-size: 12px; font-weight: 600; line-height: 1.8; color: rgba(255, 255, 255, 0.85); }
+@media (min-width: 1024px) {
+  .index-how__summary { padding: 16px 22px; }
+  .index-how__score b { font-size: 34px; }
+  .index-how__body { padding: 0 22px 20px; }
+  .index-how__row { grid-template-columns: minmax(0, 260px) 64px minmax(0, 1fr); font-size: 14.5px; }
+  .index-how__head { font-size: 12px; }
+  .index-how__note { font-size: 13px; }
 }
 
 .area-hero {
@@ -9203,11 +9304,11 @@ label:has(> input.sr-only) {
     --ad-h: 160px;
   }
 
-  /* إعلانات صور (ads_images): الكارت بنسبة الصورة نفسها (--ad-ratio من السيرفر) — واحد مالي البوكس بعرضه ، من 160 لحد 340px ارتفاع */
+  /* إعلانات صور (ads_images): الكارت بنسبة الصورة نفسها (--ad-ratio من السيرفر) — الإعلان مالي عرض الصفحة كله على الديسك توب
+     (من غير سقف للارتفاع: السقف كان بيصغّر الصورة في النص والجناب بتتملي بنسخة مغبّشة) */
   .ad-strip--fit .ad-card {
     height: auto;
     min-height: var(--ad-h);
-    max-height: 340px;
     aspect-ratio: var(--ad-ratio, 7.6);
   }
 }
@@ -9724,9 +9825,10 @@ label:has(> input.sr-only) {
   inset: 0;
 }
 
-/* إعلان صورة (مرفوعة من لوحة التحكم): الصورة مالية البوكس والإعلان كله لينك */
+/* إعلان صورة (مرفوعة من لوحة التحكم): الصورة مالية البوكس والإعلان كله لينك — من غير حواف حتى على الديسك توب
+   (حواف كروت الإعلانات المكتوبة 18px × 36px على الديسك توب كانت بتعمل إطار حوالين الصورة) */
 
-.ad-card--image {
+.ad-card.ad-card--image {
   padding: 0;
 }
 
@@ -25597,6 +25699,11 @@ img.area-map__frame { object-fit: cover; top: 0 !important; height: 100% !import
     border: 1px solid #c6d6ea !important;
 }
 [data-filter-sheet] > .area-sheet:not(.inset-0) { border-bottom-width: 0 !important; }
+/* عمود الفلاتر الثابت جنب النتايج على الديسك توب (المشاريع / البحث): الحد الرفيع اللي فوق كان لازق في الكلام من غير أي مسافة —
+   بقى كارت أبيض بمسافة جوه ، فـ«مسح» والعناوين والمربعات بعيد عن الحرف (نوافذ الفلاتر اللي بتفتح على الموبايل زي ما هي) */
+@media (min-width: 1024px) {
+    .search-side[data-filter-sheet] > .area-sheet { border: 1px solid #e4e9ef !important; border-radius: 18px; background: #fff !important; padding: 16px 18px 8px; }
+}
 
 .smap__map::before {
     inset: 0 !important;
@@ -25914,6 +26021,7 @@ a.dev-logo-link:hover>img,a.dev-logo-link:hover>span,.dev-icon__logo:hover{box-s
 .sx-fit-host{overflow:hidden}
 .sx-fit-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(24px) saturate(1.15) brightness(.97);transform:scale(1.18);pointer-events:none}
 img.sx-fit-contain{object-fit:contain!important}
+img.sx-fit-cover{object-fit:cover!important}
 .sx-fit-pic{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
 /* فورم «متابعة المشروع» للزائر (property/partials/follow-modal) */
 .fmodal{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:16px}

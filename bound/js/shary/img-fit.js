@@ -17,15 +17,26 @@
 
   // الاستثناءات الرخيصة الأول (من غير getComputedStyle) — الحساب التقيل بيحصل بس للصور اللي لسه محتاجة
   var SKIP_SEL = '[data-fit="off"], .np-img, .dev-logo-link, .dev-icon__logo, [data-logo-fit], [data-developer-logo], header, footer, .article-content';
+  var ADS = '.ad-strip, .promo-banners-carousel';
   function skip(el, w) {
     if (!el || el.closest(SKIP_SEL)) return true;
-    // معرض صور المشروع / الوحدة على الديسك توب: كل شريحة (حتى الضيقة الأبيض وأسود) بتتملي بالصورة كاملة — من غير تصغير في النص ولا بلور فوق وتحت
-    if (window.innerWidth >= 1024 && el.closest('[data-rent-gallery]')) return true;
+    // بوكس الإعلانات على الديسك توب (إعلانات صور — ad-strip--fit): البوكس بنسبة الصورة نفسها ، فالإعلان مالي العرض كله من غير صورة مغبّشة على الجناب
+    if (window.innerWidth >= 1024 && el.closest('.ad-strip--fit, .promo-banners-carousel--fit')) return true;
     if (w < 220) {
       var r = parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0;
       if (r >= w / 2 - 1) return true; // دايرة (لوجو / صورة شخص)
     }
     return false;
+  }
+
+  /*
+   * الديسك توب: أي صورة (غير الإعلانات) بتملى البوكس بتاعها كله — صورة المشروع / الوحدة في أي كارت (المشاريع ، البحث ، الرئيسية ،
+   * المؤشر ، المنطقة ، المطور ، صفحة المشروع) ، معرض الصور ، الهيدر ، وكروت الأقسام: من غير بلور على الجناب ومن غير تصغير.
+   * الصورة اللي بتملى بوكسها (cover) بتفضل زي ما هي ، والمتمطّة (من غير object-fit) بتبقى cover — فما بتتمطّش ولا بتبان ناقصة.
+   * الإعلانات ليها نظامها (البوكس بنسبة الإعلان — فوق). الموبايل والتابلت زي ما هما.
+   */
+  function deskFill(el) {
+    return window.innerWidth >= 1024 && !el.closest(ADS);
   }
 
   function isHero(el) {
@@ -96,28 +107,41 @@
     if (skip(img, w)) {
       img.__sxKey = key;
       // كانت متظبطة قبل كده (مثلًا الشاشة اتكبرت من موبايل لديسك توب): ترجع زي ما هي
-      if (img.dataset.sxFit) { var host = img.parentElement && img.parentElement.tagName === 'PICTURE' ? img.parentElement.parentElement : img.parentElement; return { img: img, src: src, parent: host, on: false }; }
+      if (img.dataset.sxFit || img.dataset.sxCover) { var host = img.parentElement && img.parentElement.tagName === 'PICTURE' ? img.parentElement.parentElement : img.parentElement; return { img: img, src: src, parent: host, on: false }; }
       return null;
     }
-    var fit = img.dataset.sxFit ? 'cover' : getComputedStyle(img).objectFit;
+    // sxOrig = الـ object-fit الأصلي (قبل ما الصورة تتظبط) — عشان لو الشاشة اتغيرت بين موبايل وديسك توب نرجع للصح
+    var fit = img.dataset.sxOrig || (img.dataset.sxFit ? 'cover' : getComputedStyle(img).objectFit);
     // cover = بيقص (يبان متزوّم) ، fill = بيمطّ الصورة (تبان مش طبيعية) — الاتنين بيتظبطوا
     if (fit !== 'cover' && fit !== 'fill') { img.__sxKey = key; return null; }
     var c = crop(w, h, img.naturalWidth, img.naturalHeight);
     img.__sxKey = key;
-    if (fit === 'fill' && c <= 0.04) return null; // المط صغير مش باين
+    var touched = !!(img.dataset.sxFit || img.dataset.sxCover);
     var parent = img.parentElement;
     if (parent && parent.tagName === 'PICTURE') parent = parent.parentElement;
+    if (deskFill(img)) {
+      // ديسك توب: مالية بوكسها — من غير بلور (ولو كانت متمطّة: cover)
+      var cover = fit === 'fill' && c > 0.04;
+      if (!cover && !touched) return null;
+      return { img: img, src: src, parent: parent, on: false, cover: cover, fit: fit };
+    }
+    if (fit === 'fill' && c <= 0.04) return touched ? { img: img, src: src, parent: parent, on: false, fit: fit } : null; // المط صغير مش باين
     var on = c > (fit === 'fill' ? 0.04 : (isHero(img) ? LIMIT_HERO : LIMIT));
-    if (!on && !img.dataset.sxFit) return null;
+    if (!on && !touched) return null;
     return {
-      img: img, src: src, parent: parent, on: on,
+      img: img, src: src, parent: parent, on: on, fit: fit,
       imgStatic: on && getComputedStyle(img).position === 'static',
-      parentStatic: on && parent && getComputedStyle(parent).position === 'static'
+      // أب inline (لينك حوالين صورة absolute — زي كروت المشاريع): ما يتعملش relative — كان بيقفل الصورة على مقاسه (0×0) فتختفي
+      parentStatic: on && parent && getComputedStyle(parent).position === 'static' && getComputedStyle(parent).display !== 'inline'
     };
   }
 
   function applyImg(m) {
     var img = m.img;
+    if (m.fit) img.dataset.sxOrig = m.fit;
+    // ديسك توب: صورة متمطّة ← cover (بتملى البوكس من غير مط)
+    if (m.cover) { img.dataset.sxCover = '1'; img.classList.add('sx-fit-cover'); }
+    else if (img.dataset.sxCover) { delete img.dataset.sxCover; img.classList.remove('sx-fit-cover'); }
     if (m.on) {
       img.dataset.sxFit = '1';
       img.classList.add('sx-fit-contain');
@@ -135,9 +159,18 @@
   /* كروت بخلفية صورة (background-size: cover) زي كروت المشاريع في الرئيسية */
   var bgCache = {};
   function fitBg(el) {
-    if (el.dataset.sxBgDone) return;
+    if (el.dataset.sxBgDone) {
+      // اتظبطت على الموبايل والشاشة كبرت لديسك توب: ترجع خلفية مالية البوكس (cover) زي الأول
+      if (deskFill(el)) {
+        var pic = el.querySelector(':scope > .sx-fit-pic');
+        if (pic) { el.style.backgroundImage = 'url("' + pic.getAttribute('src').replace(/"/g, '%22') + '")'; pic.remove(); }
+        clearBackdrop(el);
+        delete el.dataset.sxBgDone;
+      }
+      return;
+    }
     var bw = el.clientWidth;
-    if (bw < MIN_SIZE || el.clientHeight < MIN_SIZE || skip(el, bw)) return;
+    if (bw < MIN_SIZE || el.clientHeight < MIN_SIZE || skip(el, bw) || deskFill(el)) return;
     var cs = getComputedStyle(el);
     if (cs.backgroundSize !== 'cover') return;
     var m = /url\(["']?([^"')]+)["']?\)/.exec(cs.backgroundImage || '');

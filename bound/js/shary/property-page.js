@@ -473,6 +473,8 @@
     // وبعد ما يرجع الصفحة (?follow=1) المتابعة بتتعمل لوحدها ، أو يكتب رقم واتساب ← المتابعة بالرقم (localStorage: shary:follow-phone عشان مايتسألش تاني).
     var isGuest = (document.body.getAttribute('data-visitor') || 'g') === 'g';
     function followPhone() { try { return window.localStorage.getItem('shary:follow-phone') || ''; } catch (e) { return ''; } }
+    // الاسم مطلوب مع الرقم (زي كل فورمات الموقع): بيتحفظ معاه ، والزائر اللي رقمه محفوظ من غير اسم بيتسأل تاني
+    function followName() { try { return window.localStorage.getItem('shary:follow-name') || ''; } catch (e) { return ''; } }
     document.querySelectorAll('[data-follow-toggle]').forEach(function (button) {
         var label = button.querySelector('[data-label]');
         var modal = button.parentElement.querySelector('[data-follow-modal]') || document.querySelector('[data-follow-modal]');
@@ -517,7 +519,12 @@
             step('ask');
             modal.hidden = false;
             document.documentElement.classList.add('fmodal-open');
-            var input = modal.querySelector('input[name="phone"]'); if (input && window.innerWidth > 768) setTimeout(function () { input.focus(); }, 60);
+            // الرقم المحفوظ قبل كده (من غير اسم): بيتكتب لوحده والمؤشر على خانة الاسم
+            var input = modal.querySelector('input[name="phone"]'), nameInput = modal.querySelector('input[name="name"]');
+            if (input && !input.value && followPhone()) input.value = followPhone();
+            if (nameInput && !nameInput.value && followName()) nameInput.value = followName();
+            var first = input && input.value && nameInput ? nameInput : input;
+            if (first && window.innerWidth > 768) setTimeout(function () { first.focus(); }, 60);
             return true;
         }
         function closeModal() { if (modal) { modal.hidden = true; document.documentElement.classList.remove('fmodal-open'); } }
@@ -527,16 +534,20 @@
             var form = modal.querySelector('[data-follow-wa]');
             if (form) form.addEventListener('submit', function (e) {
                 e.preventDefault();
-                var phone = (form.elements.phone.value || '').trim(), name = (form.elements.name.value || '').trim();
+                var phone = (form.elements.phone.value || '').trim(), name = (form.elements.name.value || '').replace(/\s+/g, ' ').trim();
                 var err = modal.querySelector('[data-follow-err]');
+                var nameErr = modal.querySelector('[data-follow-name-err]');
                 var digits = phone.replace(/[^\d+٠-٩]/g, '');
                 if (digits.replace(/\D/g, '').length < 10 && !/[٠-٩]{10,}/.test(digits)) { if (err) err.hidden = false; return; }
                 if (err) err.hidden = true;
+                if (name.length < 2) { if (nameErr) nameErr.hidden = false; form.elements.name.focus(); return; }
+                if (nameErr) nameErr.hidden = true;
                 var submit = form.querySelector('[type="submit"]'); if (submit) submit.disabled = true;
                 follow(true, { phone: phone, name: name }).then(function (res) {
                     if (submit) submit.disabled = false;
                     if (res && res.ok === false && res.error === 'phone') { mark(false); if (err) err.hidden = false; return; }
-                    try { window.localStorage.setItem('shary:follow-phone', phone); } catch (x) {}
+                    if (res && res.ok === false && res.error === 'name') { mark(false); if (nameErr) nameErr.hidden = false; return; }
+                    try { window.localStorage.setItem('shary:follow-phone', phone); window.localStorage.setItem('shary:follow-name', name); } catch (x) {}
                     step('done');
                 });
             });
@@ -544,8 +555,8 @@
 
         button.addEventListener('click', function () {
             var on = button.getAttribute('aria-pressed') !== 'true';
-            if (on && isGuest && modal && !followPhone()) { openModal(); return; }
-            follow(on, on && isGuest && followPhone() ? { phone: followPhone() } : null);
+            if (on && isGuest && modal && (!followPhone() || !followName())) { openModal(); return; }
+            follow(on, on && isGuest && followPhone() ? { phone: followPhone(), name: followName() } : null);
         });
 
         // رجع من التسجيل (?follow=1) وهو مسجّل: المتابعة بتتعمل لوحدها
