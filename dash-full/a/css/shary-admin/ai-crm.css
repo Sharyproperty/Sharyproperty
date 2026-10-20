@@ -1,0 +1,46 @@
+/* لوحة التحكم — resources/views/shary_admin/ai/partials/crm-style.blade.php */
+.crm-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.crm-tab { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; border: 1.5px solid #e3e8f0; background: #fff; color: #1E4266; font-weight: 800; font-size: 14px; text-decoration: none; }
+.crm-tab b { background: #eef3f8; border-radius: 999px; padding: 0 8px; font-size: 12px; }
+.crm-tab.is-on { border-color: #1E4266; background: #1E4266; color: #fff; }
+.crm-tab.is-on b { background: rgba(255,255,255,.2); color: #fff; }
+.crm-temp { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 900; }
+.crm-temp::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+.crm-temp--hot { background: #fde8e6; color: #c4321f; }
+.crm-temp--warm { background: #fff4dc; color: #a26b00; }
+.crm-temp--cold { background: #eef3f8; color: #5b6b7c; }
+.crm-chip { display: inline-block; padding: 2px 9px; border-radius: 999px; background: #e6f6f4; color: #1F7F72; font-size: 12px; font-weight: 800; margin: 2px 0 2px 4px; }
+.crm-chip--ob { background: #fff1ee; color: #b4442c; }
+.crm-list td { vertical-align: top; font-size: 14px; }
+.crm-list .crm-name { font-weight: 900; color: #1E4266; font-size: 15px; }
+.crm-sum { white-space: pre-line; font-size: 14px; line-height: 1.9; font-weight: 600; color: #344456; }
+.crm-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 1200px) { .crm-grid { grid-template-columns: 1.15fr 1fr; } }
+.crm-chat { max-height: 620px; overflow: auto; display: flex; flex-direction: column; gap: 10px; padding: 4px; }
+.crm-msg { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.8; white-space: pre-line; font-weight: 600; }
+.crm-msg small { display: block; font-size: 11px; opacity: .6; margin-top: 4px; font-weight: 700; }
+.crm-msg--u { align-self: flex-start; background: #1E4266; color: #fff; border-end-start-radius: 4px; }
+.crm-msg--a { align-self: flex-end; background: #f1f6fa; color: #1E4266; border-end-end-radius: 4px; }
+.crm-kv { display: grid; grid-template-columns: 130px 1fr; gap: 8px 12px; font-size: 14px; }
+.crm-kv dt { color: #6b7a8c; font-weight: 700; }
+.crm-kv dd { margin: 0; font-weight: 800; color: #1E4266; }
+.crm-next { background: #fff8e8; border: 1.5px solid #fbe7b5; border-radius: 14px; padding: 12px 14px; font-weight: 800; color: #6b4b00; }
+.crm-fu { display: flex; justify-content: space-between; gap: 10px; align-items: center; border: 1px solid #e9eef4; border-radius: 12px; padding: 10px 12px; margin-bottom: 8px; }
+.crm-fu.is-done { opacity: .55; }
+.crm-fu b { color: #1E4266; }
+.crm-st { font-size: 12px; font-weight: 900; padding: 2px 8px; border-radius: 999px; background: #eef3f8; color: #5b6b7c; }
+.crm-st--pending { background: #e6f6f4; color: #1F7F72; }
+.crm-st--done { background: #e9f7ee; color: #14804a; }
+.crm-st--missed { background: #fde8e6; color: #c4321f; }
+.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+.cal__h { text-align: center; font-size: 13px; font-weight: 900; color: #6b7a8c; padding: 4px 0; }
+.cal__d { min-height: 110px; border: 1px solid #e9eef4; border-radius: 12px; padding: 6px; background: #fff; }
+.cal__d.is-out { background: #f8fafc; opacity: .6; }
+.cal__d.is-today { border: 2px solid #4CBFB2; }
+.cal__n { font-size: 13px; font-weight: 900; color: #1E4266; }
+.cal__e { display: block; margin-top: 4px; padding: 3px 6px; border-radius: 8px; font-size: 12px; font-weight: 800; text-decoration: none; background: #e6f6f4; color: #1F7F72; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cal__e--meeting { background: #fff4dc; color: #8a5a00; }
+.cal__e--done { background: #eef3f8; color: #8a97a6; text-decoration: line-through; }
+.cal__e--missed { background: #fde8e6; color: #c4321f; }
+.cal__e--hot::before { content: '● '; color: #c4321f; }
+@media (max-width: 767px) { .cal { grid-template-columns: 1fr; } .cal__h, .cal__d.is-out { display: none; } .cal__d { min-height: 0; } }

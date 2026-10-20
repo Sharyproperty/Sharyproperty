@@ -6,6 +6,8 @@
  *   4 rows added / removed in a form: data-ma3ak-repeater · data-ma3ak-rows · data-ma3ak-row · <template> with __i__ · data-ma3ak-add · data-ma3ak-remove
  *   5 copy a text: data-ma3ak-copy="…"      6 a chosen picture shows at once: <input type="file" data-ma3ak-preview="#img-id">
  *   7 tick rows and add them («اختار من الوحدات»): <form data-ma3ak-pick> · row boxes data-ma3ak-pick-row (form="…") · data-ma3ak-pick-all · data-ma3ak-pick-count
+ *     + «علّم الكل» / «شيل التعليم»: data-ma3ak-pick-mark="all|none" (every data-ma3ak-pick-count on the page shows the ticked count)
+ *   8 the smart search box: <div data-ma3ak-suggest="JSON url" data-ma3ak-suggest-url="pick url" data-ma3ak-suggest-texts='{…}'> + input + [data-ma3ak-suggest-menu]
  * Loaded once by resources/views/shary_admin/ma3ak/partials/head.blade.php (texts: window.SharyMa3ak).
  */
 (function () {
@@ -156,11 +158,11 @@
     if (pick) {
         var pickRows = function () { return Array.prototype.slice.call(doc.querySelectorAll('[data-ma3ak-pick-row]')); };
         var pickAll = doc.querySelector('[data-ma3ak-pick-all]');
-        var pickCount = pick.querySelector('[data-ma3ak-pick-count]');
+        var pickCounts = Array.prototype.slice.call(doc.querySelectorAll('[data-ma3ak-pick-count]'));
         var pickRefresh = function () {
             var list = pickRows();
             var on = list.filter(function (box) { return box.checked; }).length;
-            if (pickCount) { pickCount.textContent = String(on); }
+            pickCounts.forEach(function (count) { count.textContent = String(on); });
             if (pickAll) { pickAll.checked = list.length > 0 && on === list.length; pickAll.indeterminate = on > 0 && on < list.length; }
         };
         if (pickAll) {
@@ -169,11 +171,93 @@
         doc.addEventListener('change', function (event) {
             if (event.target && event.target.matches && event.target.matches('[data-ma3ak-pick-row]')) { pickRefresh(); }
         });
+        Array.prototype.slice.call(doc.querySelectorAll('[data-ma3ak-pick-mark]')).forEach(function (button) {
+            button.addEventListener('click', function () {
+                var on = button.getAttribute('data-ma3ak-pick-mark') === 'all';
+                pickRows().forEach(function (box) { box.checked = on; });
+                pickRefresh();
+            });
+        });
         pick.addEventListener('submit', function (event) {
             var problem = !pickRows().some(function (box) { return box.checked; }) ? pick.getAttribute('data-ma3ak-none')
                 : (!pick.querySelector('input[name="goals[]"]:checked') ? pick.getAttribute('data-ma3ak-no-goal') : null);
             if (problem) { event.preventDefault(); event.stopImmediatePropagation(); window.alert(problem); }
         }, true);
         pickRefresh();
+    }
+
+    // ---- 8 the smart search box: projects / developers / units as you type; a choice opens the list on it
+    var smart = doc.querySelector('[data-ma3ak-suggest]');
+    if (smart) {
+        var smartInput = smart.querySelector('input');
+        var smartMenu = smart.querySelector('[data-ma3ak-suggest-menu]');
+        var smartTexts = {};
+        try { smartTexts = JSON.parse(smart.getAttribute('data-ma3ak-suggest-texts') || '{}'); } catch (e) { smartTexts = {}; }
+        var smartTimer = null;
+        var smartAsked = 0;
+        var money = function (value) { return value ? Math.round(value).toLocaleString('en-US') : ''; };
+        var say = function (key, n) { return String(smartTexts[key] || '').replace(':n', n).replace(':price', n); };
+        var target = function (kind, id) {
+            var url = new URL(smart.getAttribute('data-ma3ak-suggest-url'), window.location.href);
+            if (kind === 'projects') { url.searchParams.set('compound_id', id); }
+            if (kind === 'developers') { url.searchParams.set('developer_id', id); }
+            if (kind === 'units') { url.searchParams.set('ids', id); }
+            return url.toString();
+        };
+        var row = function (kind, item) {
+            var link = doc.createElement('a');
+            link.className = 'ma3ak-smart__item';
+            link.href = target(kind, item.id);
+            link.setAttribute('role', 'option');
+            var pic = doc.createElement('span');
+            pic.className = 'ma3ak-smart__pic' + (kind === 'developers' ? ' is-logo' : '');
+            if (item.image) { var img = doc.createElement('img'); img.src = item.image; img.alt = ''; img.loading = 'lazy'; pic.appendChild(img); }
+            var text = doc.createElement('span');
+            text.className = 'ma3ak-smart__text';
+            var name = doc.createElement('b'); name.textContent = item.name; text.appendChild(name);
+            var bits = [];
+            if (item.sub) { bits.push(item.sub); }
+            if (kind === 'developers' && item.projects) { bits.push(say('projects_n', item.projects)); }
+            if (kind !== 'units' && item.units) { bits.push(say('units_n', item.units)); }
+            if (item.price) { bits.push(say('from', money(item.price))); }
+            if (bits.length) { var sub = doc.createElement('span'); sub.className = 'ma3ak-sub'; sub.textContent = bits.join(' · '); text.appendChild(sub); }
+            link.appendChild(pic);
+            link.appendChild(text);
+            return link;
+        };
+        var render = function (data) {
+            smartMenu.innerHTML = '';
+            var any = false;
+            ['projects', 'developers', 'units'].forEach(function (kind) {
+                var list = (data && data[kind]) || [];
+                if (!list.length) { return; }
+                any = true;
+                var head = doc.createElement('div'); head.className = 'ma3ak-smart__group'; head.textContent = smartTexts[kind] || kind;
+                smartMenu.appendChild(head);
+                list.forEach(function (item) { smartMenu.appendChild(row(kind, item)); });
+            });
+            if (!any) { var none = doc.createElement('div'); none.className = 'ma3ak-smart__empty'; none.textContent = smartTexts.empty || ''; smartMenu.appendChild(none); }
+            smartMenu.hidden = false;
+        };
+        var ask2 = function () {
+            var q = smartInput.value.trim();
+            if (q.length < 2 && !/^#?\d+$/.test(q)) { smartMenu.hidden = true; return; }
+            var ticket = ++smartAsked;
+            smartMenu.innerHTML = '<div class="ma3ak-smart__empty">' + (smartTexts.loading || '…') + '</div>';
+            smartMenu.hidden = false;
+            var url = new URL(smart.getAttribute('data-ma3ak-suggest'), window.location.href);
+            url.searchParams.set('q', q);
+            fetch(url.toString(), { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' })
+                .then(function (response) { return response.ok ? response.json() : {}; })
+                .then(function (data) { if (ticket === smartAsked) { render(data); } })
+                .catch(function () { if (ticket === smartAsked) { render({}); } });
+        };
+        smartInput.addEventListener('input', function () { window.clearTimeout(smartTimer); smartTimer = window.setTimeout(ask2, 250); });
+        smartInput.addEventListener('focus', function () { if (smartMenu.childNodes.length && smartInput.value.trim().length > 1) { smartMenu.hidden = false; } });
+        smartInput.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') { smartMenu.hidden = true; }
+            if (event.key === 'Enter') { var first = smartMenu.querySelector('a'); if (first) { event.preventDefault(); window.location.href = first.href; } }
+        });
+        doc.addEventListener('click', function (event) { if (!smart.contains(event.target)) { smartMenu.hidden = true; } });
     }
 })();

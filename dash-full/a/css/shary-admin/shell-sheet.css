@@ -1,0 +1,16 @@
+/* لوحة التحكم — resources/views/shary_admin/shell/sheet.blade.php */
+.sx-sheet-dl { display: inline-flex; align-items: center; gap: 8px; }
+.sx-kinds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.sx-kind { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border: 2px solid var(--sx-line, #e1e8f1); border-radius: 14px; background: #fff; cursor: pointer; }
+.sx-kind b { font-size: 16px; font-weight: 800; color: var(--sx-navy, #123a5c); }
+.sx-kind span { font-size: 13px; font-weight: 700; color: #4a5b6e; line-height: 1.7; }
+.sx-kind input { position: absolute; opacity: 0; pointer-events: none; }
+.sx-kind:has(input:checked) { border-color: #1d5fd1; background: #eef4ff; }
+@media (max-width: 800px) { .sx-kinds { grid-template-columns: minmax(0, 1fr); } }
+.sx-cols { margin-top: 14px; border: 1px solid var(--sx-line, #e1e8f1); border-radius: 12px; background: #fafbfc; }
+.sx-cols summary { padding: 10px 14px; cursor: pointer; font-weight: 800; color: var(--sx-navy, #123a5c); }
+.sx-cols__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 18px; padding: 4px 14px 12px; }
+.sx-cols__grid div { display: flex; gap: 10px; align-items: baseline; padding: 7px 0; border-top: 1px dashed #dde5ee; font-size: 13.5px; font-weight: 700; color: #33475b; min-width: 0; }
+.sx-cols__grid code { flex: none; min-width: 170px; color: #0d3b66; font-size: 12.5px; }
+.sx-cols__grid span { min-width: 0; }
+@media (max-width: 800px) { .sx-cols__grid { grid-template-columns: minmax(0, 1fr); } .sx-cols__grid code { min-width: 130px; } }

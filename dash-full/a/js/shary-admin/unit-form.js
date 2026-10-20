@@ -1,3 +1,4 @@
+// ── unit-form.js · جزء 1 من 3: أقسام الفورم والطي والتنقل (المصدر: resources/js/shary-admin/unit-form/01-sections-and-folding.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /*
  | Shary dashboard — the unit form on ONE page (resources/views/shary_admin/units/form.blade.php):
  |
@@ -119,6 +120,7 @@
     var start = (window.location.hash || '').replace('#', '').replace(/^sec-/, '');
     if (start && byKey(start)) { window.setTimeout(function () { goTo(start, false); }, 80); } else { spy(); }
 
+// ── unit-form.js · جزء 2 من 3: الحقول اللي محتاجة مراجعة (المصدر: resources/js/shary-admin/unit-form/02-fields-to-check.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ the fields to look at: open their section, count them
     function sectionOf(field) { return field && field.closest ? field.closest('.sx-unit-sec') : null; }
     function recount() {
@@ -173,6 +175,7 @@
         }
     }
 
+// ── unit-form.js · جزء 3 من 3: المسودات والحفظ (المصدر: resources/js/shary-admin/unit-form/03-drafts.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ «المسودات»: the form saves itself
     var url = form.getAttribute('data-autosave');
     var statusBox = form.querySelector('[data-draft-status]');
@@ -210,10 +213,6 @@
         Object.keys(window.CKEDITOR.instances).forEach(function (name) {
             try { window.CKEDITOR.instances[name].updateElement(); } catch (e) { /* ignore */ }
         });
-    }
-    function fileField(name) {
-        // image · master_plan · video_file · gallery[] → gallery · floor_plans[0][image] → floor_plans.0.image · floor_replace[12] → floor_replace.12
-        return String(name).replace(/\[\]$/, '').replace(/\[(\w+)\]/g, '.$1');
     }
     function picked() {
         return Array.prototype.filter.call(form.querySelectorAll('input[type=file]'), function (input) { return input.files && input.files.length; });

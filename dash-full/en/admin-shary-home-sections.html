@@ -106,6 +106,52 @@
         } catch (e) {}
     })();
 </script>
+<script>
+// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
+if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
+// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
+// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
+(function () {
+    var KEY = 'shary-app-mode', on = false;
+    try {
+        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
+        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
+        on = sessionStorage.getItem(KEY) === '1';
+    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
+    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
+})();
+// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
+window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
+window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
+// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
+// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+document.addEventListener('DOMContentLoaded', function () {
+    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
+    for (i = 0; i < els.length; i++) {
+        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
+        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
+    }
+    for (i = 0; i < jobs.length; i++) {
+        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
+        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
+        jobs[i][0].__fit = true;
+    }
+    for (i = 0; i < jobs.length; i++) {
+        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
+            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
+        }
+    }
+});
+document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
+    img.removeAttribute('srcset'); img.removeAttribute('sizes');
+    var alt = img.getAttribute('data-fallback');
+    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
+    img.removeAttribute('data-img-fallback');
+    img.src = "\/images\/shary\/placeholder.svg";
+}, true);
+</script>
 <style>
     html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
     html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
@@ -147,8 +193,8 @@
         <div class="sx-top__end">
                     <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="Search the dashboard"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 38"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>38</b></a>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 57"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>57</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
         <a class="sx-lang" href="../admin-shary-home-sections.html" data-sx-lang="1" lang="ar">عربي</a>
@@ -156,7 +202,8 @@
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
             <div class="sx-user__menu">
-                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                
+                <a href="admin-shary-pins.html">PINs</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
             </div>
         </details>
     </div>
@@ -180,10 +227,18 @@
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
                         <span>Where do I edit what?</span>
                                             </a>
+                                                                <a class="sx-one " href="admin-shary-refresh.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M19.5 12a7.5 7.5 0 0 1-13.2 4.9"/><path d="M4.5 12a7.5 7.5 0 0 1 13.2-4.9"/><path d="M18 3.5v4h-4M6 20.5v-4h4"/></svg>
+                        <span>Refresh the website</span>
+                                            </a>
+                                                                <a class="sx-one " href="admin-shary-errors.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
+                        <span>Errors</span>
+                        <b class="sx-tag">6</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
-                        <b class="sx-tag">102</b>                    </a>
+                        <b class="sx-tag">106</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -259,11 +314,11 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>Requests &amp; messages</span>
-                            <b class="sx-tag">59</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">64</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">59</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">64</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
                                                             
@@ -300,7 +355,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-units-sheet.html" class="" ><span>Import &amp; export units</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">11</b></a></li>
+                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">17</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units-photo-sets.html" class="" ><span>Unit photos by project</span></a></li>
                                                             
@@ -514,15 +569,15 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">11</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">48</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
                                                                                                 <li><a href="admin-shary-ai.html" class="" ><span>Settings &amp; testing</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">8</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">41</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">3</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">7</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -534,8 +589,6 @@
                         <ul id="sx-grp-seo">
                                                             
                                                                                                 <li><a href="admin-redirections.html" class="" ><span>Redirects</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-refresh.html" class="" ><span>Refresh the website</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-site-tags.html" class="" ><span>Search Console, Analytics and tracking tags</span></a></li>
                                                     </ul>
@@ -591,6 +644,64 @@
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M11 3.1A9 9 0 1 0 20.9 13H11z"/><path d="M14 2.6A8.5 8.5 0 0 1 21.4 10H14z"/></svg>
                         <span>Overview</span>
                                             </a>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_resale">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_resale">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>Buy to sell</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_resale">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>Buy to sale</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_resale.html" class="" ><span>Pick from the units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_resale.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_rental">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_rental">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>Buy to rent</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_rental">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>Buy to rent</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_rental.html" class="" ><span>Pick from the units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_rental.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_ready">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_ready">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>Ready now</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_ready">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>Ready now</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_ready.html" class="" ><span>Pick from the units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_ready.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
+                            <span>Shary Shares (shared investment)</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_shares">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>Share properties</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>Add a share property</span></a></li>
+                                                    </ul>
+                    </div>
                                                                 <div class="sx-grp " data-sx-grp="ma3ak_goals">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goals">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
@@ -599,28 +710,9 @@
                         </button>
                         <ul id="sx-grp-ma3ak_goals">
                                                             
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>Buy to sale</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>Buy to rent</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>Ready now</span></a></li>
-                                                            
                                                                                                 <li><a href="admin-shary-ma3ak-opportunities.html" class="" ><span>All opportunities</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-ma3ak-opportunities-create.html" class="" ><span>Add an opportunity</span></a></li>
-                                                    </ul>
-                    </div>
-                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
-                            <span>Share Investment</span>
-                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
-                        </button>
-                        <ul id="sx-grp-ma3ak_goal_shares">
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>Share properties</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>Add a share property</span></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="ma3ak_money">
@@ -748,50 +840,14 @@
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
- <style>
-            .shary-ed { position: fixed; inset: 0; z-index: 20000; display: flex; align-items: flex-start; justify-content: center; background: rgba(10, 20, 35, .6); padding: 5vh 16px; overflow: auto; }
-            .shary-ed__box { width: min(620px, 100%); border-radius: 10px; background: #fff; box-shadow: 0 20px 60px rgba(0, 0, 0, .3); }
-            .shary-ed--wide .shary-ed__box { width: min(1180px, 100%); }
-            .shary-ed__head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid #e9ecef; font-size: 16px; }
-            .shary-ed__x { border: 0; background: none; font-size: 26px; line-height: 1; color: #6c757d; cursor: pointer; }
-            .shary-ed__body { padding: 14px 16px 16px; }
-            .shary-ed__kinds, .shary-ed__checks { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-bottom: 12px; }
-            .shary-ed__kinds label, .shary-ed__checks label { margin: 0; cursor: pointer; font-weight: normal; }
-            .shary-ed__label { display: block; margin: 8px 0 4px; font-weight: 600; }
-            .shary-ed__hint { color: #6c757d; margin: 4px 0 10px; }
-            .shary-ed__bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
-            .shary-ed__bar select { max-width: 180px; }
-            .shary-ed__bar input { flex: 1 1 220px; }
-            .shary-ed__results { max-height: 46vh; overflow: auto; border: 1px solid #e9ecef; border-radius: 8px; margin-top: 8px; }
-            .shary-ed__results .shary-ed__hint { padding: 12px; margin: 0; }
-            .shary-ed__row { display: flex; align-items: center; gap: 8px; width: 100%; border: 0; border-bottom: 1px solid #f1f3f5; background: #fff; padding: 9px 12px; text-align: start; cursor: pointer; }
-            .shary-ed__row:hover { background: #f4f8fc; }
-            .shary-ed__row small { margin-inline-start: auto; color: #8a97a6; max-width: 46%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-            .shary-ed__tag { flex: 0 0 auto; border-radius: 999px; background: #e8f0fb; color: #123a5c; font-size: 12px; padding: 2px 9px; }
-            .shary-ed__name { font-weight: 600; }
-            .shary-ed__foot { margin-top: 14px; }
-            .shary-ed__frame { background: #e9edf2; border-radius: 8px; padding: 10px; text-align: center; }
-            .shary-ed__frame iframe { width: 100%; height: 70vh; border: 0; border-radius: 6px; background: #fff; transition: width .2s; }
-            /* the Shary buttons show their names (they have no icon): writing row, symbols, call-to-action / link / preview */
-            [class*="cke_button__shary"] .cke_button_icon { display: none !important; }
-            [class*="cke_button__shary"] .cke_button_label { display: inline !important; padding: 0 7px; font-weight: 700; color: #0d3b66; font-size: 13px; line-height: 26px; }
-            a[class*="cke_button__shary"] { background: #e8f0fb !important; border-radius: 6px; margin: 2px !important; min-height: 28px; }
-            a[class*="cke_button__sharysym"] { background: #fff !important; border: 1px solid #cfdbe8 !important; min-width: 30px; text-align: center; }
-            a[class*="cke_button__sharysym"] .cke_button_label { font-size: 15px; padding: 0 4px; }
-            a.cke_button__sharycta, a.cke_button__sharylink, a.cke_button__sharypreview { background: #123a5c !important; }
-            .cke_button__sharycta .cke_button_label, .cke_button__sharylink .cke_button_label, .cke_button__sharypreview .cke_button_label { color: #fff !important; }
-            a[class*="cke_button__shary"].cke_button_on { box-shadow: inset 0 0 0 2px #1f63c6; }
-            /* the blocks of the website's articles (cards, link button, external link, note, places) */
-            a.cke_button__sharycards, a.cke_button__sharybutton, a.cke_button__sharyexternal, a.cke_button__sharynote, a.cke_button__sharyplaces { background: #e3f3ef !important; }
-            .cke_button__sharycards .cke_button_label, .cke_button__sharybutton .cke_button_label, .cke_button__sharyexternal .cke_button_label, .cke_button__sharynote .cke_button_label, .cke_button__sharyplaces .cke_button_label { color: #0f5d52 !important; }
-        </style>
+ <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "Es4hV7Ab3vT4tEGqdb2RmkJYBeNpW8w5ocsgtQbT",
+                token: "s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=Es4hV7Ab3vT4tEGqdb2RmkJYBeNpW8w5ocsgtQbT",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -804,80 +860,7 @@
     <template data-sx-crumb><div class="sx-crumb">Website home page ‹ Home page sections (choose)</div></template>
 
                 
-    <style>
-    .sx-hs { --hs-navy: #123a5c; --hs-blue: #1f63c6; --hs-line: #dfe6ee; --hs-soft: #f4f7fb; --hs-green: #11845b; --hs-red: #b42318; }
-    .sx-hs-tabs { flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; gap: 4px; border-bottom: 1.5px solid var(--hs-line); margin-bottom: 16px; scrollbar-width: thin; }
-    .sx-hs-tabs .nav-link { white-space: nowrap; font-weight: 800; color: #4b6075; border: 0; border-bottom: 3px solid transparent; border-radius: 0; padding: 10px 14px; }
-    .sx-hs-tabs .nav-link.active { color: var(--hs-blue); border-bottom-color: var(--hs-blue); background: transparent; }
-    .sx-hs-count { display: inline-flex; min-width: 22px; height: 22px; align-items: center; justify-content: center; margin-inline-start: 4px; padding: 0 6px; border-radius: 11px; background: #e8eef6; color: var(--hs-navy); font-size: 12px; font-weight: 800; }
-    .sx-hs-tabs .nav-link.active .sx-hs-count { background: var(--hs-blue); color: #fff; }
-    .sx-hs .card { border: 1.5px solid var(--hs-line); border-radius: 14px; box-shadow: none; }
-    .sx-hs .card-header { background: #fff; border-bottom: 1.5px solid var(--hs-line); border-radius: 14px 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; }
-    .sx-hs .card-header h5 { margin: 0; font-size: 16px; font-weight: 800; color: var(--hs-navy); }
-    .sx-hs-note { color: #5b7189; font-size: 13.5px; font-weight: 700; line-height: 1.7; }
-    /* search to add */
-    .sx-hs-search { position: relative; }
-    .sx-hs-search .form-control { min-height: 48px; border: 1.5px solid var(--hs-line); border-radius: 12px; font-weight: 700; font-size: 16px; }
-    .sx-hs-search .form-control:focus { border-color: var(--hs-blue); box-shadow: 0 0 0 3px rgba(31, 99, 198, .14); }
-    .sx-hs-results { position: absolute; z-index: 30; inset-inline: 0; top: calc(100% + 6px); max-height: 380px; overflow-y: auto; border: 1.5px solid var(--hs-line); border-radius: 14px; background: #fff; box-shadow: 0 18px 40px -16px rgba(18, 58, 92, .45); padding: 6px; }
-    .sx-hs-results[hidden] { display: none; }
-    .sx-hs-state { padding: 12px; color: #5b7189; font-weight: 700; text-align: center; }
-    .sx-hs-hit { display: flex; align-items: center; gap: 10px; padding: 8px; border-radius: 10px; }
-    .sx-hs-hit + .sx-hs-hit { border-top: 1px solid #eef2f6; }
-    .sx-hs-hit:hover { background: var(--hs-soft); }
-    .sx-hs-hit__text { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
-    .sx-hs-hit__text strong, .sx-hs-row__name { color: var(--hs-navy); font-weight: 800; line-height: 1.5; overflow-wrap: anywhere; }
-    .sx-hs-hit__text small, .sx-hs-row__sub { color: #5b7189; font-weight: 700; font-size: 12.5px; line-height: 1.5; overflow-wrap: anywhere; }
-    .sx-hs-thumb { flex: none; width: 64px; height: 46px; border-radius: 9px; overflow: hidden; background: #e8eef6; display: inline-flex; align-items: center; justify-content: center; color: #8a97a6; font-weight: 800; }
-    .sx-hs-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .sx-hs-thumb--logo img { object-fit: contain; background: #fff; padding: 4px; }
-    .sx-hs-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 800; line-height: 1.6; white-space: normal; max-width: 100%; overflow-wrap: anywhere; }
-    .sx-hs-badge--home { background: #e3f6ee; color: var(--hs-green); }
-    .sx-hs-badge--off { background: #fdecea; color: var(--hs-red); }
-    .sx-hs-badge--launch { background: #fff2dc; color: #a15c00; }
-    .sx-hs-badge--muted { background: #eef2f6; color: #5b7189; }
-    /* the list of the section */
-    .sx-hs-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
-    .sx-hs-row + .sx-hs-row { border-top: 1px solid #eef2f6; }
-    .sx-hs-row.is-out { background: #fbfcfe; }
-    .sx-hs-pos { flex: none; width: 30px; height: 30px; border-radius: 50%; background: #e8eef6; color: var(--hs-navy); font-weight: 900; display: inline-flex; align-items: center; justify-content: center; }
-    .sx-hs-row.is-home .sx-hs-pos { background: var(--hs-blue); color: #fff; }
-    .sx-hs-row__info { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
-    .sx-hs-row__badges { display: flex; flex-wrap: wrap; gap: 6px; }
-    .sx-hs-actions { flex: none; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: flex-end; }
-    .sx-hs-actions form { margin: 0; }
-    .sx-hs-actions .btn, .sx-hs-btn { min-height: 38px; border-radius: 10px; font-weight: 800; font-size: 13px; padding: 6px 12px; display: inline-flex; align-items: center; gap: 4px; }
-    .sx-hs-icon { min-width: 38px; justify-content: center; }
-    .sx-hs-divider { padding: 10px 16px; background: #f4f7fb; color: #5b7189; font-weight: 800; font-size: 13px; border-top: 1px solid #eef2f6; }
-    .sx-hs-empty { padding: 22px 16px; color: #5b7189; font-weight: 700; text-align: center; }
-    /* slider */
-    .sx-hs-slide { scroll-margin-top: 90px; }
-    .sx-hs-slide .card-header .sx-hs-slide__title { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-    .sx-hs-photo { position: relative; overflow: hidden; border: 1.5px solid var(--hs-line); border-radius: 10px; background: #eef3f8; display: flex; align-items: center; justify-content: center; color: #8a97a6; font-size: 13px; font-weight: 700; }
-    .sx-hs-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-    .sx-hs-photo--desktop { aspect-ratio: 2880 / 1180; }
-    .sx-hs-photo--mobile { aspect-ratio: 1170 / 965; max-width: 280px; }
-    .sx-hs-chip { display: inline-block; margin-top: 6px; font-size: 12.5px; font-weight: 800; color: #5b7189; }
-    .sx-hs-chip--auto { color: var(--hs-green); }
-    .sx-hs-chip--custom { color: var(--hs-blue); }
-    .sx-hs-warn { margin-top: 6px; color: #a15c00; font-size: 12.5px; font-weight: 800; }
-    .sx-hs-pics { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
-    .sx-hs-pics form { margin: 0; flex: none; }
-    .sx-hs-pic { position: relative; width: 120px; height: 80px; padding: 0; border: 2px solid var(--hs-line); border-radius: 10px; overflow: hidden; background: #eef3f8; cursor: pointer; }
-    .sx-hs-pic img { width: 100%; height: 100%; object-fit: cover; }
-    .sx-hs-pic.is-on { border-color: var(--hs-blue); box-shadow: 0 0 0 3px rgba(31, 99, 198, .2); }
-    .sx-hs-pic span { position: absolute; inset-inline: 0; bottom: 0; background: rgba(18, 58, 92, .82); color: #fff; font-size: 11px; font-weight: 800; padding: 2px 4px; text-align: center; }
-    .sx-hs details summary { cursor: pointer; font-weight: 800; color: var(--hs-navy); }
-    .sx-hs-also { margin-top: 12px; color: #5b7189; font-weight: 700; font-size: 13px; }
-    .sx-hs-toast { position: fixed; z-index: 1070; top: 16px; left: 50%; transform: translateX(-50%); max-width: min(520px, 92vw); padding: 12px 18px; border-radius: 14px; background: #11845b; color: #fff; font-weight: 800; font-size: 14.5px; line-height: 1.7; text-align: center; box-shadow: 0 18px 40px -16px rgba(10, 60, 40, .55); pointer-events: none; animation: sx-hs-toast 4.2s forwards; }
-    @keyframes sx-hs-toast { 0% { opacity: 0; transform: translate(-50%, -8px); } 8% { opacity: 1; transform: translate(-50%, 0); } 85% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
-    @media (max-width: 767.98px) {
-        .sx-hs-row { flex-wrap: wrap; padding: 12px; }
-        .sx-hs-row__info { flex-basis: calc(100% - 120px); }
-        .sx-hs-actions { flex-basis: 100%; justify-content: flex-start; }
-        .sx-hs-photo--mobile { max-width: 100%; }
-    }
-</style>
+    <link rel="stylesheet" href="../a/css/shary-admin/home-sections.css">
     <div class="page-wrapper sx-hs">
         <div class="content">
             <div class="page-header">
@@ -957,7 +940,7 @@
                                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold" for="hero-static-desktop">Desktop photo (2880 × 1180)</label>
                                                     <div class="mb-2 d-flex align-items-center gap-2">
-                                <img src="../a/images/sliders/hero-static-desktop-1791831529.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
+                                <img src="../a/images/sliders/hero-static-desktop-prev.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
                                 <span class="text-muted small">Current</span>
                                 <button type="submit" name="remove" value="desktop" class="btn btn-sm btn-outline-danger" formnovalidate>Remove</button>
                             </div>
@@ -966,7 +949,7 @@
                                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-bold" for="hero-static-mobile">Mobile photo (1170 × 965)</label>
                                                     <div class="mb-2 d-flex align-items-center gap-2">
-                                <img src="../a/images/sliders/hero-static-mobile-1791851314.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
+                                <img src="../a/images/sliders/hero-static-mobile-prev.jpg" alt="" style="height:70px;width:auto;max-width:100%;border-radius:8px;border:1px solid #e1e8f1">
                                 <span class="text-muted small">Current</span>
                                 <button type="submit" name="remove" value="mobile" class="btn btn-sm btn-outline-danger" formnovalidate>Remove</button>
                             </div>
@@ -979,19 +962,19 @@
 </div>
 
 <div class="card" id="hero-brand">
-    <div class="card-header"><h5 class="mb-0 fw-bold">Slider headline (fixed on all slides)</h5></div>
+    <div class="card-header"><h5 class="mb-0 fw-bold">Slider headline — the big title (H1) and the line below (fixed on all slides)</h5></div>
     <div class="card-body">
-        <div class="sx-hs-note mb-3">Shown on the slider instead of the project name and place. Empty = the default sentence.</div>
+        <div class="sx-hs-note mb-3">Shown on the slider instead of the project name and place. Empty = the default sentence. It is the same text as «Page texts & photos → Home — hero (fixed line and cards)»: a change saved in either place shows at once.</div>
         <form method="post" action="#preview/admin/shary/hero/brand">
             <input type="hidden" name="_token" value="preview" autocomplete="off">            <div class="row">
                                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold" for="hero-title_ar">Title (Arabic)</label>
+                        <label class="form-label fw-bold" for="hero-title_ar">Big title H1 (Arabic)</label>
                         <input type="text" class="form-control" id="hero-title_ar" name="title_ar" value=""
                             maxlength="120" dir="rtl"
                             placeholder="عقارك وخدماته، في مكان واحد">
                     </div>
                                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold" for="hero-title_en">Title (English)</label>
+                        <label class="form-label fw-bold" for="hero-title_en">Big title H1 (English)</label>
                         <input type="text" class="form-control" id="hero-title_en" name="title_en" value=""
                             maxlength="120" dir="ltr"
                             placeholder="Your property and its services, in one place">
@@ -1113,9 +1096,9 @@
 
             
             <details>
-                <summary>Title and second line</summary>
+                <summary>Slide picture description for Google (not shown on the slider)</summary>
                 <form method="post" action="#preview/admin/shary/hero/4/texts" class="mt-3">
-                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">Filled from the project automatically — edit them if you like; left empty they go back to the project name and place.</div>
+                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">The slide name and description for Google (the picture description) — filled from the project automatically; left empty they go back to the project name and place. They are not shown on the slider: the words on the slider are edited in «Slider headline» above.</div>
                     <div class="row">
                                                     <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold" for="hs-title_ar-4">Title (Arabic)</label>
@@ -1239,9 +1222,9 @@
                                     </div>
             
             <details>
-                <summary>Title and second line</summary>
+                <summary>Slide picture description for Google (not shown on the slider)</summary>
                 <form method="post" action="#preview/admin/shary/hero/3/texts" class="mt-3">
-                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">Filled from the project automatically — edit them if you like; left empty they go back to the project name and place.</div>
+                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">The slide name and description for Google (the picture description) — filled from the project automatically; left empty they go back to the project name and place. They are not shown on the slider: the words on the slider are edited in «Slider headline» above.</div>
                     <div class="row">
                                                     <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold" for="hs-title_ar-3">Title (Arabic)</label>
@@ -1365,9 +1348,9 @@
                                     </div>
             
             <details>
-                <summary>Title and second line</summary>
+                <summary>Slide picture description for Google (not shown on the slider)</summary>
                 <form method="post" action="#preview/admin/shary/hero/2/texts" class="mt-3">
-                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">Filled from the project automatically — edit them if you like; left empty they go back to the project name and place.</div>
+                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">The slide name and description for Google (the picture description) — filled from the project automatically; left empty they go back to the project name and place. They are not shown on the slider: the words on the slider are edited in «Slider headline» above.</div>
                     <div class="row">
                                                     <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold" for="hs-title_ar-2">Title (Arabic)</label>
@@ -1491,9 +1474,9 @@
                                     </div>
             
             <details>
-                <summary>Title and second line</summary>
+                <summary>Slide picture description for Google (not shown on the slider)</summary>
                 <form method="post" action="#preview/admin/shary/hero/1/texts" class="mt-3">
-                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">Filled from the project automatically — edit them if you like; left empty they go back to the project name and place.</div>
+                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="sx-hs-note mb-2">The slide name and description for Google (the picture description) — filled from the project automatically; left empty they go back to the project name and place. They are not shown on the slider: the words on the slider are edited in «Slider headline» above.</div>
                     <div class="row">
                                                     <div class="col-md-6 mb-3">
                                 <label class="form-label fw-bold" for="hs-title_ar-1">Title (Arabic)</label>
@@ -4419,50 +4402,7 @@
     <div class="sx-hs-also">The same choice is also on each record's own page, and in: <a href="admin-compounds.html">Projects list (home page switch)</a></div>
                                             </div>
                                     <div class="tab-pane fade " id="hs-explore" role="tabpanel" aria-labelledby="hs-tab-explore">
-                                                    <style>
-    .hex-add { border: 1.5px dashed #4CBFB2; border-radius: 16px; padding: 18px; background: #f6fbfa; margin-bottom: 18px; }
-    .hex-add h5 { font-weight: 800; color: #1E4266; }
-    .hex-list { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-    .hex-card { border: 1px solid #e3e8f0; border-radius: 16px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
-    .hex-card__pic { aspect-ratio: 16 / 9; background: linear-gradient(135deg, #EAF7F5, #D5EEEB); }
-    .hex-card__pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .hex-card__body { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
-    .hex-card__body b { font-size: 18px; font-weight: 900; color: #1E4266; }
-    .hex-card__body small { font-weight: 800; color: #1F7F72; }
-    .hex-tag { font-size: 12px; font-weight: 800; border-radius: 999px; padding: 2px 10px; background: #eef3f8; color: #6b7a8c; }
-    .hex-tag.is-on { background: #e6f6f4; color: #1F7F72; }
-    .hex-tag.is-home { background: #fff4dc; color: #a26b00; }
-    .hex-checks { display: flex; flex-wrap: wrap; gap: 8px; }
-    .hex-checks label { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid #e3e8f0; border-radius: 999px; padding: 6px 12px; font-weight: 800; color: #1E4266; cursor: pointer; }
-    .hex-mode { display: grid; gap: 10px; grid-template-columns: 1fr; }
-    @media (min-width: 768px) { .hex-mode { grid-template-columns: 1fr 1fr; } }
-    .hex-mode label { border: 1.5px solid #e3e8f0; border-radius: 14px; padding: 12px 14px; cursor: pointer; display: block; }
-    .hex-mode label b { display: block; color: #1E4266; font-weight: 900; }
-    .hex-mode label small { color: #6b7a8c; font-weight: 700; }
-    .hex-mode input:checked + span { color: #1F7F72; }
-    .hex-pick { display: flex; align-items: center; gap: 10px; border: 1px solid #e9eef4; border-radius: 12px; padding: 8px 10px; margin-bottom: 8px; }
-    .hex-pick img { width: 56px; height: 40px; object-fit: cover; border-radius: 8px; }
-    .hex-pick b { flex: 1; color: #1E4266; }
-    .hex-results { border: 1px solid #e3e8f0; border-radius: 12px; max-height: 300px; overflow: auto; display: none; margin-top: 6px; }
-    .hex-results.is-on { display: block; }
-    .hex-results button { display: flex; width: 100%; gap: 10px; align-items: center; border: 0; background: #fff; padding: 8px 10px; text-align: start; border-bottom: 1px solid #f0f3f7; }
-    .hex-results button:hover { background: #f6fbfa; }
-    .hex-results img { width: 48px; height: 34px; object-fit: cover; border-radius: 6px; }
-    .hex-filter { border: 1.5px solid #e3e8f0; border-radius: 12px; padding: 8px; }
-    .hex-filter__list { max-height: 210px; overflow: auto; margin-top: 6px; display: flex; flex-direction: column; gap: 2px; }
-    .hex-filter__list label { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; font-weight: 700; color: #1E4266; cursor: pointer; }
-    .hex-filter__list label.is-on { background: #e6f6f4; color: #1F7F72; }
-    .hex-filter__list label[hidden] { display: none; }
-    .hex-chosen { display: inline-block; min-width: 20px; border-radius: 999px; background: #1E4266; color: #fff; font-size: 11px; text-align: center; }
-    .hex-chosen:empty { display: none; }
-    .hex-kinds { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
-    .hex-kinds button { border: 1.5px solid #e3e8f0; background: #fff; border-radius: 999px; padding: 4px 12px; font-weight: 800; color: #1E4266; font-size: 13px; }
-    .hex-kinds button.is-on { background: #1E4266; border-color: #1E4266; color: #fff; }
-    .hex-kind { flex: none; font-size: 11px; font-weight: 900; border-radius: 999px; padding: 2px 8px; background: #eef3f8; color: #5b6b7c; }
-    .hex-kind--project { background: #e6f6f4; color: #1F7F72; }
-    .hex-kind--unit { background: #fff4dc; color: #8a5a00; }
-    .hex-kind--developer { background: #eaf2fb; color: #1d4265; }
-</style>
+                                                    <link rel="stylesheet" href="../a/css/shary-admin/home-explore.css">
 <p class="shary-help fw-bold mb-3">These sections appear on the «Projects worth exploring» page (opened from «View all» on home) — those marked «home scroll» also show on the home page. Each section opens its own page.</p>
 <p class="mb-3"><a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm fw-bold">Open «Projects worth exploring»</a></p>
             <form method="post" action="#preview/admin/shary/home-explore" class="hex-add" data-no-draft>
@@ -4513,7 +4453,7 @@
                                 <span class="hex-tag is-home">In the home scroll</span>                                <span class="hex-tag">Automatic by type</span>
                             </div>
                             <b>مشاريع الساحل</b>
-                            <small>22 projects</small>
+                            <small>19 projects</small>
                             <div class="d-flex gap-2 mt-2">
                                 <a href="admin-shary-home-explore-1.html" data-sx-sample="1" class="btn btn-primary btn-sm fw-bold">Edit page</a>
                                 <a href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener" class="btn btn-light btn-sm fw-bold">Open on the site</a>
@@ -8202,185 +8142,7 @@
         <div class="text-danger fw-bold mt-2" data-crop-error style="display:none"></div>
     </div>
 </div>
-        <script>
-    (function () {
-        'use strict';
-        var T = {"add":"Add","chosen":"In the section","hidden":"Hidden from the website","launch":"New launch","searching":"Searching…","none":"Nothing matches","failed":"The search did not work — try again."};
-        function make(tag, className, text) { var node = document.createElement(tag); if (className) { node.className = className; } if (text != null) { node.textContent = text; } return node; }
-
-        // ---- search the data inside → "add"
-        document.querySelectorAll('[data-hs-search]').forEach(function (box) {
-            var input = box.querySelector('[data-hs-input]');
-            var list = box.querySelector('[data-hs-results]');
-            var form = box.querySelector('[data-hs-form]');
-            var idField = form.querySelector('input[name="id"]');
-            var timer = null, last = null, round = 0;
-            function state(text) { list.textContent = ''; list.appendChild(make('div', 'sx-hs-state', text)); list.hidden = false; }
-            function render(items) {
-                list.textContent = '';
-                if (!items.length) { state(T.none); return; }
-                items.forEach(function (item) {
-                    var row = make('div', 'sx-hs-hit');
-                    var thumb = make('span', 'sx-hs-thumb' + (box.getAttribute('data-kind') === 'developer' ? ' sx-hs-thumb--logo' : ''));
-                    if (item.image) { var img = make('img'); img.src = item.image; img.alt = ''; img.loading = 'lazy'; thumb.appendChild(img); } else { thumb.textContent = (item.name || '#').charAt(0); }
-                    row.appendChild(thumb);
-                    var text = make('span', 'sx-hs-hit__text');
-                    text.appendChild(make('strong', '', item.name || ('#' + item.id)));
-                    if (item.sub) { text.appendChild(make('small', '', item.sub)); }
-                    var badges = make('span', 'sx-hs-row__badges');
-                    if (item.launch) { badges.appendChild(make('span', 'sx-hs-badge sx-hs-badge--launch', T.launch)); }
-                    if (item.published === false) { badges.appendChild(make('span', 'sx-hs-badge sx-hs-badge--off', T.hidden)); }
-                    if (badges.childNodes.length) { text.appendChild(badges); }
-                    row.appendChild(text);
-                    if (item.chosen) {
-                        row.appendChild(make('span', 'sx-hs-badge sx-hs-badge--home', '✓ ' + T.chosen));
-                    } else {
-                        var button = make('button', 'btn btn-primary sx-hs-btn', T.add);
-                        button.type = 'button';
-                        button.setAttribute('data-hs-pick', String(item.id));
-                        row.appendChild(button);
-                    }
-                    list.appendChild(row);
-                });
-                list.hidden = false;
-            }
-            function run(force) {
-                var q = input.value.trim();
-                if (!force && q === last && list.childNodes.length) { list.hidden = false; return; }
-                last = q;
-                var mine = ++round;
-                state(T.searching);
-                var url = box.getAttribute('data-url') + (box.getAttribute('data-url').indexOf('?') < 0 ? '?' : '&') + 'q=' + encodeURIComponent(q);
-                fetch(url, { credentials: 'same-origin', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
-                    .then(function (response) { if (!response.ok) { throw new Error(response.status); } return response.json(); })
-                    .then(function (data) { if (mine === round) { render((data && data.items) || []); } })
-                    .catch(function () { if (mine === round) { state(T.failed); last = null; } });
-            }
-            input.addEventListener('focus', function () { run(false); });
-            input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(function () { run(false); }, 260); });
-            input.addEventListener('keydown', function (event) { if (event.key === 'Escape') { list.hidden = true; } if (event.key === 'Enter') { event.preventDefault(); run(true); } });
-            document.addEventListener('click', function (event) { if (!box.contains(event.target)) { list.hidden = true; } });
-            list.addEventListener('click', function (event) {
-                var button = event.target.closest && event.target.closest('[data-hs-pick]');
-                if (!button) { return; }
-                idField.value = button.getAttribute('data-hs-pick');
-                button.disabled = true;
-                button.textContent = '…';
-                if (form.requestSubmit) { form.requestSubmit(); } else { form.querySelector('button[type="submit"]').click(); }
-                setTimeout(function () { button.disabled = false; button.textContent = T.add; }, 4000);
-            });
-        });
-
-        // ---- "remove from the slider": asks first
-        document.querySelectorAll('form[data-hs-confirm]').forEach(function (form) {
-            form.addEventListener('submit', function (event) { if (!window.confirm(form.getAttribute('data-hs-confirm'))) { event.preventDefault(); event.stopImmediatePropagation(); } });
-        });
-
-        // ---- the tab in the address (#slide-12 → the slider tab, #hs-launches-5 → its tab) and the address follows the open tab
-        function openTabOf(hash) {
-            if (!hash) { return; }
-            var target = null;
-            try { target = document.querySelector(hash); } catch (e) { target = null; }
-            var pane = target ? (target.classList.contains('tab-pane') ? target : target.closest('.tab-pane')) : null;
-            if (!pane) { return; }
-            var trigger = document.querySelector('[data-bs-toggle="tab"][href="#' + pane.id + '"]');
-            if (trigger && !trigger.classList.contains('active') && window.bootstrap && window.bootstrap.Tab) { window.bootstrap.Tab.getOrCreateInstance(trigger).show(); }
-            if (target !== pane) { setTimeout(function () { target.scrollIntoView({ block: 'center' }); }, 200); }
-        }
-        openTabOf(window.location.hash);
-        document.querySelectorAll('[data-hs-tab]').forEach(function (link) {
-            link.addEventListener('shown.bs.tab', function () {
-                try { var url = new URL(window.location.href); url.searchParams.set('tab', link.getAttribute('data-hs-tab')); url.hash = ''; window.history.replaceState(null, '', url.toString()); } catch (e) { /* old browser */ }
-            });
-        });
-
-        // ---- crop box (slider): the photo is moved / zoomed inside a frame of the exact shape, then saved as a JPEG of that size
-        var box = document.querySelector('[data-hero-crop]');
-        if (!box) { return; }
-        var stage = box.querySelector('[data-crop-stage]');
-        var image = box.querySelector('[data-crop-image]');
-        var zoom = box.querySelector('[data-crop-zoom]');
-        var error = box.querySelector('[data-crop-error]');
-        var crop = null;
-        var token = "Es4hV7Ab3vT4tEGqdb2RmkJYBeNpW8w5ocsgtQbT";
-        var labels = {"desktop":"Adjust the desktop photo","mobile":"Adjust the phone photo","small":"This photo is small — :width px wide or more is recommended to stay sharp.","failed":"The photo was not uploaded — try again.","saving":"Saving…","save":"Save photo"};
-        function clamp() {
-            var sw = stage.clientWidth, sh = stage.clientHeight;
-            crop.x = Math.min(0, Math.max(sw - image.naturalWidth * crop.scale, crop.x));
-            crop.y = Math.min(0, Math.max(sh - image.naturalHeight * crop.scale, crop.y));
-            image.style.transform = 'translate(' + crop.x + 'px,' + crop.y + 'px) scale(' + crop.scale + ')';
-        }
-        function open(trigger, source) {
-            var w = parseInt(trigger.getAttribute('data-width'), 10), h = parseInt(trigger.getAttribute('data-height'), 10), slot = trigger.getAttribute('data-slot');
-            error.style.display = 'none';
-            image.onload = function () {
-                box.classList.add('is-open');
-                box.querySelector('[data-crop-title]').textContent = labels[slot] + ' — ' + w + ' × ' + h;
-                var maxWidth = Math.min(box.querySelector('.shary-crop__box').clientWidth - 32, slot === 'mobile' ? 520 : 940);
-                stage.style.width = maxWidth + 'px';
-                stage.style.height = Math.round(maxWidth * h / w) + 'px';
-                var min = Math.max(stage.clientWidth / image.naturalWidth, stage.clientHeight / image.naturalHeight);
-                crop = { trigger: trigger, w: w, h: h, slot: slot, scale: min, min: min, x: 0, y: 0 };
-                crop.x = (stage.clientWidth - image.naturalWidth * min) / 2;
-                crop.y = (stage.clientHeight - image.naturalHeight * min) / 2;
-                zoom.value = 100;
-                if (image.naturalWidth < w * 0.6) { error.style.display = 'block'; error.textContent = labels.small.replace(':width', w); }
-                clamp();
-            };
-            image.onerror = function () { window.alert(labels.failed); };
-            image.src = source;
-        }
-        document.querySelectorAll('[data-hero-file]').forEach(function (input) {
-            input.addEventListener('change', function () { if (input.files && input.files[0]) { open(input, URL.createObjectURL(input.files[0])); } });
-        });
-        document.querySelectorAll('[data-hero-adjust]').forEach(function (button) {
-            button.addEventListener('click', function () { open(button, button.getAttribute('data-src')); });
-        });
-        zoom.addEventListener('input', function () {
-            if (!crop) { return; }
-            var cx = stage.clientWidth / 2, cy = stage.clientHeight / 2;
-            var before = crop.scale, after = crop.min * zoom.value / 100;
-            crop.x = cx - (cx - crop.x) * after / before;
-            crop.y = cy - (cy - crop.y) * after / before;
-            crop.scale = after;
-            clamp();
-        });
-        var drag = null;
-        stage.addEventListener('pointerdown', function (event) { if (!crop) { return; } drag = { x: event.clientX - crop.x, y: event.clientY - crop.y }; stage.setPointerCapture(event.pointerId); });
-        stage.addEventListener('pointermove', function (event) { if (!drag || !crop) { return; } crop.x = event.clientX - drag.x; crop.y = event.clientY - drag.y; clamp(); });
-        stage.addEventListener('pointerup', function () { drag = null; });
-        function close() { box.classList.remove('is-open'); if (crop && crop.trigger.tagName === 'INPUT') { crop.trigger.value = ''; } crop = null; }
-        box.querySelector('[data-crop-cancel]').addEventListener('click', close);
-        box.querySelector('[data-crop-save]').addEventListener('click', function () {
-            if (!crop) { return; }
-            var button = this;
-            var canvas = document.createElement('canvas');
-            canvas.width = crop.w; canvas.height = crop.h;
-            var context = canvas.getContext('2d');
-            context.imageSmoothingQuality = 'high';
-            context.drawImage(image, -crop.x / crop.scale, -crop.y / crop.scale, stage.clientWidth / crop.scale, stage.clientHeight / crop.scale, 0, 0, crop.w, crop.h);
-            button.disabled = true; button.textContent = labels.saving;
-            var done = function (ok, message) {
-                button.disabled = false; button.textContent = labels.save;
-                if (ok) { window.location.reload(); return; }
-                error.style.display = 'block'; error.textContent = message || labels.failed;
-            };
-            try {
-                canvas.toBlob(function (blob) {
-                    if (!blob) { done(false); return; }
-                    var data = new FormData();
-                    data.append('_token', token);
-                    data.append('slot', crop.slot);
-                    data.append('photo', blob, 'hero-' + crop.slot + '.jpg');
-                    fetch(crop.trigger.getAttribute('data-url'), { method: 'POST', body: data, credentials: 'same-origin', headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' } })
-                        .then(function (response) { return response.json().then(function (json) { return { ok: response.ok, json: json }; }); })
-                        .then(function (result) { if (result.json && result.json.preview) { close(); button.disabled = false; button.textContent = labels.save; return; } done(result.ok && result.json && result.json.url, result.json && result.json.message); })
-                        .catch(function () { done(false); });
-                }, 'image/jpeg', 0.92);
-            } catch (e) { done(false); }
-        });
-    })();
-</script>
+        <script src="../a/js/shary-admin/home-sections.js" data-conf="{&quot;texts&quot;:{&quot;add&quot;:&quot;Add&quot;,&quot;chosen&quot;:&quot;In the section&quot;,&quot;hidden&quot;:&quot;Hidden from the website&quot;,&quot;launch&quot;:&quot;New launch&quot;,&quot;searching&quot;:&quot;Searching…&quot;,&quot;none&quot;:&quot;Nothing matches&quot;,&quot;failed&quot;:&quot;The search did not work — try again.&quot;},&quot;token&quot;:&quot;s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2&quot;,&quot;crop&quot;:{&quot;desktop&quot;:&quot;Adjust the desktop photo&quot;,&quot;mobile&quot;:&quot;Adjust the phone photo&quot;,&quot;small&quot;:&quot;This photo is small — :width px wide or more is recommended to stay sharp.&quot;,&quot;failed&quot;:&quot;The photo was not uploaded — try again.&quot;,&quot;saving&quot;:&quot;Saving…&quot;,&quot;save&quot;:&quot;Save photo&quot;}}"></script>
 </div>
 <!-- /Main Wrapper -->
     <!-- jQuery -->
@@ -8482,19 +8244,8 @@
     <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
-     <style>
-        .sx-draftbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 14px 0 12px; padding: 10px 12px; border: 1px dashed #c9d8ea; border-radius: 12px; background: #f6f9fd; }
-        .sx-draftbar__save { border: 1px solid #1E4266; background: #fff; color: #1E4266; font-weight: 800; font-size: 14px; padding: 7px 16px; border-radius: 999px; cursor: pointer; }
-        .sx-draftbar__save:hover { background: #1E4266; color: #fff; }
-        .sx-draftbar__state { font-size: 13px; font-weight: 700; color: #6f8091; }
-        .sx-draftbar.is-saved .sx-draftbar__state { color: #15803d; }
-        .sx-draftnote { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 16px; padding: 12px 14px; border-radius: 12px; background: #fff7e6; border: 1px solid #f5d9a3; font-weight: 800; color: #7a4b00; }
-        .sx-draftnote span { flex: 1 1 220px; }
-        .sx-draftnote button { border: 0; border-radius: 999px; padding: 7px 16px; font-weight: 800; font-size: 14px; cursor: pointer; }
-        .sx-draftnote__open { background: #1E4266; color: #fff; }
-        .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
-    </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"Es4hV7Ab3vT4tEGqdb2RmkJYBeNpW8w5ocsgtQbT","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+     <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

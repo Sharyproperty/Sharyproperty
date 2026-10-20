@@ -1,19 +1,183 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="preview">
-    <meta name="robots" content="noindex, nofollow">
-    <title>رسايل العملاء — لوحة تحكم شاري</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
-</head>
-<body class="ag sx" dir="rtl">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Shary">
+<meta name="keywords" content="Shary">
+<meta name="author" content="">
+<meta name="robots" content="noindex, nofollow">
+<meta name="csrf-token" content="preview">
 
-<a class="sx-skip" href="#sx-main">Skip to the content</a>
+<title>Shary</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="../a/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+
+
+    <link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
+
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- animation CSS -->
+<link rel="stylesheet" href="../a/assets/css/animate.css">
+
+<!-- Datetimepicker CSS -->
+<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
+
+<!-- Dragula CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
+
+
+
+
+
+
+<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
+
+<!-- Main CSS -->
+    <link rel="stylesheet" href="../a/assets/css/style.css">
+<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
+
+<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
+<style type="text/css">
+    body, h1, h2, h3, h4, h5, h6, * {
+        font-family: 'Tajawal', serif;
+        font-weight: bold;
+    }
+</style>
+    
+    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
+     <script>
+    (function () {
+        try {
+            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
+                document.documentElement.classList.add('sx-embed');
+                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
+                var params = new URLSearchParams(location.search);
+                document.addEventListener('DOMContentLoaded', function () {
+                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
+                    if (keep) {
+                        document.documentElement.classList.add('sx-focus');
+                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
+                            [].forEach.call(node.parentElement.children, function (sib) {
+                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
+                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
+                                sib.style.display = 'none';
+                            });
+                        }
+                    }
+                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    String(params.get('hide') || '').split(',').forEach(function (id) {
+                        var drop = id && document.getElementById(id.trim());
+                        if (drop) drop.style.display = 'none';
+                    });
+                });
+                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
+                if (open) {
+                    var tries = 0, timer = setInterval(function () {
+                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
+                        var modal = document.getElementById(open);
+                        if ((button && window.bootstrap && modal) || ++tries > 40) {
+                            clearInterval(timer);
+                            if (button && modal) {
+                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
+                            }
+                        }
+                    }, 150);
+                }
+            }
+        } catch (e) {}
+    })();
+</script>
+<script>
+// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
+if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
+// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
+// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
+(function () {
+    var KEY = 'shary-app-mode', on = false;
+    try {
+        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
+        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
+        on = sessionStorage.getItem(KEY) === '1';
+    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
+    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
+})();
+// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
+window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
+window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
+// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
+// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+document.addEventListener('DOMContentLoaded', function () {
+    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
+    for (i = 0; i < els.length; i++) {
+        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
+        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
+    }
+    for (i = 0; i < jobs.length; i++) {
+        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
+        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
+        jobs[i][0].__fit = true;
+    }
+    for (i = 0; i < jobs.length; i++) {
+        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
+            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
+        }
+    }
+});
+document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
+    img.removeAttribute('srcset'); img.removeAttribute('sizes');
+    var alt = img.getAttribute('data-fallback');
+    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
+    img.removeAttribute('data-img-fallback');
+    img.src = "\/images\/shary\/placeholder.svg";
+}, true);
+</script>
+<style>
+    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
+    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
+    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
+    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
+    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
+    html.sx-embed body { background: #fff !important; }
+    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
+    html.sx-embed body { overflow-x: hidden; }
+    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
+    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
+    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
+    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+       </head>
+  <body class="sx" dir="ltr">
+ <div id="global-loader" >
+    <div class="whirly-loader"> </div>
+</div>  <!-- Main Wrapper -->
+<div class="main-wrapper">
+      <a class="sx-skip" href="#sx-main">Skip to the content</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -29,8 +193,8 @@
         <div class="sx-top__end">
                     <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="Search the dashboard"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 38"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>38</b></a>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 57"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>57</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
         <a class="sx-lang" href="../admin-shary-agent-messages_open_draft_1.html" data-sx-lang="1" lang="ar">عربي</a>
@@ -38,7 +202,8 @@
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
             <div class="sx-user__menu">
-                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                
+                <a href="admin-shary-pins.html">PINs</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
             </div>
         </details>
     </div>
@@ -62,12 +227,20 @@
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
                         <span>Where do I edit what?</span>
                                             </a>
+                                                                <a class="sx-one " href="admin-shary-refresh.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M19.5 12a7.5 7.5 0 0 1-13.2 4.9"/><path d="M4.5 12a7.5 7.5 0 0 1 13.2-4.9"/><path d="M18 3.5v4h-4M6 20.5v-4h4"/></svg>
+                        <span>Refresh the website</span>
+                                            </a>
+                                                                <a class="sx-one " href="admin-shary-errors.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
+                        <span>Errors</span>
+                        <b class="sx-tag">6</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
-                        <b class="sx-tag">102</b>                    </a>
-                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
-                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
+                        <b class="sx-tag">106</b>                    </a>
+                                                                <div class="sx-grp " data-sx-grp="agent">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
                             <b class="sx-tag">20</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
@@ -92,7 +265,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-seo.html" class="" ><span>SEO &amp; articles</span><b class="sx-tag">6</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-s-messages.html" class="is-on" ><span>Customer messages</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-s-messages.html" class="" ><span>Customer messages</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-marketing.html" class="" ><span>Marketing</span></a></li>
                                                             
@@ -141,11 +314,11 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>Requests &amp; messages</span>
-                            <b class="sx-tag">59</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">64</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">59</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">64</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
                                                             
@@ -182,7 +355,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-units-sheet.html" class="" ><span>Import &amp; export units</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">11</b></a></li>
+                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>Drafts</span><b class="sx-tag">17</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units-photo-sets.html" class="" ><span>Unit photos by project</span></a></li>
                                                             
@@ -396,15 +569,15 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">11</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">48</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
                                                                                                 <li><a href="admin-shary-ai.html" class="" ><span>Settings &amp; testing</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">8</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">41</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">3</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">7</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -416,8 +589,6 @@
                         <ul id="sx-grp-seo">
                                                             
                                                                                                 <li><a href="admin-redirections.html" class="" ><span>Redirects</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-refresh.html" class="" ><span>Refresh the website</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-site-tags.html" class="" ><span>Search Console, Analytics and tracking tags</span></a></li>
                                                     </ul>
@@ -473,6 +644,64 @@
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M11 3.1A9 9 0 1 0 20.9 13H11z"/><path d="M14 2.6A8.5 8.5 0 0 1 21.4 10H14z"/></svg>
                         <span>Overview</span>
                                             </a>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_resale">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_resale">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>Buy to sell</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_resale">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>Buy to sale</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_resale.html" class="" ><span>Pick from the units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_resale.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_rental">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_rental">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>Buy to rent</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_rental">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>Buy to rent</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_rental.html" class="" ><span>Pick from the units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_rental.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_ready">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_ready">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>Ready now</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_ready">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>Ready now</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_ready.html" class="" ><span>Pick from the units</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_ready.html" class="" ><span>Add an opportunity</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
+                            <span>Shary Shares (shared investment)</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_shares">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>Share properties</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>Add a share property</span></a></li>
+                                                    </ul>
+                    </div>
                                                                 <div class="sx-grp " data-sx-grp="ma3ak_goals">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goals">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
@@ -481,28 +710,9 @@
                         </button>
                         <ul id="sx-grp-ma3ak_goals">
                                                             
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>Buy to sale</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>Buy to rent</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>Ready now</span></a></li>
-                                                            
                                                                                                 <li><a href="admin-shary-ma3ak-opportunities.html" class="" ><span>All opportunities</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-ma3ak-opportunities-create.html" class="" ><span>Add an opportunity</span></a></li>
-                                                    </ul>
-                    </div>
-                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
-                            <span>Share Investment</span>
-                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
-                        </button>
-                        <ul id="sx-grp-ma3ak_goal_shares">
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>Share properties</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>Add a share property</span></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="ma3ak_money">
@@ -630,392 +840,165 @@
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
+ <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
+        <script>
+            window.SharyEditorConfig = {
+                token: "s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2",
+                lang: "en",
+                linksUrl: "\/admin\/shary\/content-editor\/links",
+                previewUrl: "\/admin\/shary\/content-editor\/preview",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2",
+                contentCss: "../a/css/shary-admin/editor-content.css",
+                localEditor: true,
+                localBase: "../a/vendor/shary-editor/",
+                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
+                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
+        </script>
+        <script src="../a/js/shary-admin/editor.js"></script>
+        
+             
 
-    <template data-sx-crumb><div class="sx-crumb">Customer messages ‹ Customer messages</div></template>
+                
+                <link rel="stylesheet" href="../a/css/shary-admin/pin.css">
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="pin-wrap">
+                                                <div class="pin-card">
+                    <div class="pin-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+                    <h4>The agent — PIN</h4>
 
-<div class="sx-page">
-    <main class="ag-main" id="sx-main">
-                                <div class="ag-head">
-    <div class="ag-col">
-        <h1>رسايل العملاء</h1>
-        <p>إشعار على التطبيق · SMS · واتساب · إيميل — الإيجنت بيكتب الرسالة ويحسب هتوصل لكام عميل، وانت اللي بتبعتها. وأي فرصة جديدة في «شاري معاك» رسالتها بتتجهّز لوحدها.</p>
-    </div>
-    <div class="ag-row"><a class="ag-btn" href="admin-shary-agent-lists.html">قوايمي</a><a class="ag-btn ag-btn--primary" href="#new">رسالة جديدة</a></div>
-</div>
-
-
-<div class="ag-tiles">
-    <div class="ag-tile"><span>مستنية مراجعتك</span><b class="blue num">0</b><a href="admin-shary-agent-review_section_messages.html">افتح صندوق المراجعة</a></div>
-    <div class="ag-tile"><span>بتتبعت دلوقتي</span><b class="num">0</b><span>كل 5 دقايق دفعة</span></div>
-    <div class="ag-tile"><span>وصلت للعملاء الأسبوع ده</span><b class="num">0</b><span>رسالة على كل القنوات</span></div>
-    <div class="ag-tile"><span>مش عايزين رسايل</span><b class="num">0</b><a href="#stops">القايمة</a></div>
-</div>
-
-
-<section class="ag-card" id="channels">
-    <div class="ag-card__head"><h2>القنوات</h2><span class="sm mute">كل قناة بتتربط مرة واحدة من «المفاتيح والربط» — من غير المطوّر.</span></div>
-    <div class="ag-card__body">
-        <div class="ag-tiles">
-                            <div class="ag-tile">
-                    <span class="b8" style="color:#123A5C">إشعار التطبيق</span>
-                    <span><span class="ag-pill ag-pill--warn">مش مربوط</span></span>
-                    <span class="sm">ارفع ملف Firebase بتاع التطبيق</span>
-                    <a href="admin-shary-agent-keys.html#key-firebase">اربطه</a>                </div>
-                            <div class="ag-tile">
-                    <span class="b8" style="color:#123A5C">SMS</span>
-                    <span><span class="ag-pill ag-pill--warn">مش مربوط</span></span>
-                    <span class="sm">اربط حساب SMS (SMS Misr أو Twilio أو أي شركة)</span>
-                    <a href="admin-shary-agent-keys.html#key-sms">اربطه</a>                </div>
-                            <div class="ag-tile">
-                    <span class="b8" style="color:#123A5C">واتساب</span>
-                    <span><span class="ag-pill ag-pill--warn">مش مربوط</span></span>
-                    <span class="sm">اربط واتساب (WhatsApp Cloud API)</span>
-                    <a href="admin-shary-agent-keys.html#key-whatsapp">اربطه</a>                </div>
-                            <div class="ag-tile">
-                    <span class="b8" style="color:#123A5C">إيميل</span>
-                    <span><span class="ag-pill ag-pill--warn">مش مربوط</span></span>
-                    <span class="sm">اربط أداة إيميل ماركتينج (Brevo أسهلهم) أو إيميل الموقع (SMTP)</span>
-                    <a href="admin-shary-agent-keys.html#group-marketing">اربطه</a>                </div>
-                    </div>
-                    <form method="post" action="#preview/admin/shary/agent/messages/test" class="ag-row" style="margin-top:14px;align-items:flex-end" data-ag-slow="بيبعت…"><input type="hidden" name="_token" value="preview" autocomplete="off">                <div class="ag-field" style="flex:0 1 180px"><label for="mt-channel">ابعت رسالة تجربة على</label>
-                    <select id="mt-channel" name="channel" class="ag-input"><option value="push" disabled>إشعار التطبيق</option><option value="sms" disabled>SMS</option><option value="whatsapp" disabled>واتساب</option><option value="email" disabled>إيميل</option></select></div>
-                <div class="ag-field" style="flex:1 1 220px"><label for="mt-to">لرقمك أو إيميلك</label>
-                    <input id="mt-to" name="to" class="ag-input" dir="ltr" style="text-align:start" placeholder="01001234567 أو name@example.com" value=""></div>
-                <button class="ag-btn" disabled>ابعت تجربة</button>
-            </form>
-            <p class="xs mute" style="margin-top:6px">إشعار التطبيق بيوصل لو الرقم ده عامل دخول في تطبيق شاري على موبايلك.</p>
-                <details class="ag-note" style="margin-top:12px"><summary class="b8" style="cursor:pointer">رسالة الواتساب المعتمدة للعملاء (مرة واحدة في WhatsApp Manager)</summary>
-            <p class="sm" style="margin-top:8px">الاسم: <b dir="ltr">shary_customer_message</b> · النوع (Category): <b dir="ltr">Marketing</b> · اللغة: <b>Arabic</b> · 3 متغيرات: <bdi dir="ltr">{{1}}</bdi> اسم العميل · <bdi dir="ltr">{{2}}</bdi> الرسالة · <bdi dir="ltr">{{3}}</bdi> اللينك</p>
-            <pre class="sm" dir="rtl" style="white-space:pre-wrap;font-family:inherit;background:#F4F6FA;border-radius:8px;padding:10px 12px;margin:8px 0">أهلاً {{1}} 👋
-{{2}}
-
-التفاصيل: {{3}}
-
-شاري للعقارات</pre>
-            <div class="ag-row"><button type="button" class="ag-btn ag-btn--sm" data-ag-copy="أهلاً {{1}} 👋
-{{2}}
-
-التفاصيل: {{3}}
-
-شاري للعقارات">انسخ النص</button>
-                <a class="ag-btn ag-btn--sm" href="https://business.facebook.com/" target="_blank" rel="noopener noreferrer">افتح WhatsApp Manager ↗</a></div>
-            <p class="xs mute" style="margin-top:6px">ضيف لها زرار «Marketing opt-out» عشان العميل يقدر يوقف الرسايل. بعد ما Meta توافق، اكتب اسمها في «المفاتيح والربط» ← واتساب ← «اسم رسالة العملاء المعتمدة».</p>
-        </details>
-    </div>
-</section>
-
-
-<section class="ag-card" id="new">
-    <div class="ag-card__head"><h2>رسالة جديدة</h2><span class="sm mute">اكتبها بنفسك أو اكتب الفكرة بس وخلّي الإيجنت يكتبها — وفي الحالتين بتتراجع قبل ما تتبعت.</span></div>
-    <form method="post" action="#preview/admin/shary/agent/messages/draft" class="ag-card__body ag-col" style="gap:18px" id="mx-form" data-count-url="/admin/shary/agent/messages/count"><input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-split">
-            <div class="wide">
-                <div class="ag-grid">
-                    <div class="ag-field"><label for="mx-segment">الجمهور</label>
-                        <select id="mx-segment" name="segment" class="ag-input" data-mx-audience>
-                            <option value="all" selected>كل العملاء</option><option value="app_users" >المسجلين في التطبيق والموقع</option><option value="investors" >مستثمرين شاري معاك</option><option value="ma3ak_interested" >المهتمين بشاري معاك</option><option value="leads" >اللي بعتوا طلبات على الموقع</option><option value="followers" >متابعين مشروع</option><option value="customer" >عميل واحد</option>                        </select>
-                        <small data-mx-about>المسجلين في التطبيق والموقع + مستثمرين شاري معاك + اللي بعتوا طلبات على الموقع — من غير تكرار</small></div>
-                    <div class="ag-field" data-mx-when="leads"  hidden ><label for="mx-days">في آخر كام يوم</label>
-                        <input id="mx-days" name="days" type="number" min="1" max="730" class="ag-input" dir="ltr" style="text-align:start" value="90" data-mx-audience></div>
-                                            <div class="ag-field" data-mx-when="leads"  hidden ><label for="mx-form-kind">نوع الطلب</label>
-                            <select id="mx-form-kind" name="form" class="ag-input" data-mx-audience><option value="">كل الطلبات</option><option value="ai-lead" >ai-lead</option><option value="ai-meeting" >ai-meeting</option><option value="card" >card</option><option value="career" >career</option><option value="consultation" >consultation</option><option value="contact" >contact</option><option value="follow" >follow</option><option value="meeting" >meeting</option><option value="offer" >offer</option><option value="property-request" >property-request</option></select></div>
-                                        <div class="ag-field" data-mx-when="investors"  hidden ><span class="ag-label">مين بالظبط</span>
-                        <label class="ag-check"><input type="checkbox" name="verified" value="1"  data-mx-audience> اللي هويتهم اتقبلت بس</label>
-                        <label class="ag-check"><input type="checkbox" name="invested" value="1"  data-mx-audience> اللي استثمروا بس</label></div>
-                    <div class="ag-field" data-mx-when="followers"  hidden ><label for="mx-project">المشروع</label>
-                        <select id="mx-project" name="project_id" class="ag-input" data-mx-audience>
-                            <option value="1" >ميفيدا (1 متابع)</option>
-                                                    </select></div>
-                    <div class="ag-field" data-mx-when="list"  hidden ><label for="mx-list">القايمة</label>
-                        <select id="mx-list" name="list_id" class="ag-input" data-mx-audience>
-                            <option value="">لسه مفيش قوايم</option>                        </select>
-                        <small>القوايم بيوصلها SMS وواتساب وإيميل (مالهاش التطبيق). الـ SMS بيتحط في آخرها سطر الإيقاف لوحده. <a href="admin-shary-agent-lists.html">قوايمي</a></small></div>
-                    <div class="ag-field" data-mx-when="customer"  hidden ><label for="mx-customer">رقم موبايل العميل أو إيميله</label>
-                        <input id="mx-customer" name="customer" class="ag-input" dir="ltr" style="text-align:start" value="" placeholder="01001234567" data-mx-audience>
-                        <small>رسالة لعميل واحد بتتبعت بـ «ابعت دلوقتي» بس، ومش بتتحسب في حد الأسبوع.</small></div>
-                </div>
-                <div class="ag-note ag-reach" data-mx-reach aria-live="polite">بيحسب هتوصل لكام عميل…</div>
-
-                <div class="ag-field"><span class="ag-label">هتتبعت على</span>
-                    <div class="ag-row" style="gap:16px">
-                                                    <label class="ag-check"><input type="checkbox" name="channels[]" value="push" checked data-mx-channel> إشعار التطبيق
-                                <span class="xs mute">(مش مربوط)</span></label>
-                                                    <label class="ag-check"><input type="checkbox" name="channels[]" value="sms" checked data-mx-channel> SMS
-                                <span class="xs mute">(مش مربوط)</span></label>
-                                                    <label class="ag-check"><input type="checkbox" name="channels[]" value="whatsapp"  data-mx-channel> واتساب
-                                <span class="xs mute">(مش مربوط)</span></label>
-                                                    <label class="ag-check"><input type="checkbox" name="channels[]" value="email"  data-mx-channel> إيميل
-                                <span class="xs mute">(مش مربوط)</span></label>
-                                            </div></div>
-
-                <div class="ag-field"><label for="mx-title">العنوان <span class="xs mute">(عنوان الإشعار واسم الرسالة)</span></label>
-                    <input id="mx-title" name="title" class="ag-input" maxlength="120" value="" placeholder="فرصة جديدة في شاري معاك 🔥" data-mx-text="title" data-mx-example="فرصة جديدة في شاري معاك 🔥"></div>
-                <div class="ag-field"><label for="mx-text">الرسالة</label>
-                    <textarea id="mx-text" name="text" class="ag-input" rows="4" maxlength="1000" placeholder="{name}، نزلت فرصة جديدة في شاري معاك … — أو اكتب الفكرة بس ودوس «خلّي الإيجنت يكتبها»" data-mx-text="text" data-mx-example="{name}، نزلت فرصة جديدة في شاري معاك: شقة 165 م² في الشيخ زايد — 8.5 مليون جنيه. شوف التفاصيل وابدأ من التطبيق."></textarea>
-                    <small>{name} = اسم العميل الأول. الإشعار والواتساب والإيميل بيتبعتوا بالنص ده.</small></div>
-                <div class="ag-field" data-mx-when-channel="sms"><label for="mx-sms">الـ SMS <span class="xs mute">(فاضي = أول الرسالة)</span></label>
-                    <textarea id="mx-sms" name="sms" class="ag-input" rows="2" maxlength="480" placeholder="شاري معاك: فرصة جديدة … التفاصيل: {link}" data-mx-text="sms" data-mx-example="شاري معاك: فرصة جديدة في الشيخ زايد بـ 8.5 مليون. التفاصيل: {link}"></textarea>
-                    <small>العربي: 70 حرف = رسالة واحدة ، وأطول من كده كل 67 حرف رسالة بتتحسب. {link} = لينك قصير بيعدّ الضغطات.</small></div>
-                <div class="ag-grid" data-mx-when-channel="email">
-                    <div class="ag-field"><label for="mx-subject">موضوع الإيميل</label>
-                        <input id="mx-subject" name="subject" class="ag-input" maxlength="150" value="" data-mx-text="subject"></div>
-                    <div class="ag-field"><label for="mx-email">نص الإيميل <span class="xs mute">(فاضي = نفس الرسالة)</span></label>
-                        <textarea id="mx-email" name="email" class="ag-input" rows="3" maxlength="5000" data-mx-text="email"></textarea></div>
-                </div>
-
-                <div class="ag-grid">
-                    <div class="ag-field"><label for="mx-link">اللينك بيفتح على</label>
-                        <select id="mx-link" name="link_kind" class="ag-input" data-mx-link>
-                                                                                            <option value="app" selected>التطبيق (جوجل بلاي / آب ستور)</option>
-                                                                                            <option value="opportunity" >فرصة في شاري معاك</option>
-                                                                                            <option value="property" >عقار حصص في شاري معاك</option>
-                                                                                            <option value="project" >صفحة مشروع</option>
-                                                                                            <option value="unit" >صفحة وحدة</option>
-                                                                                            <option value="url" >لينك من الموقع</option>
-                                                                                            <option value="none" >من غير لينك</option>
-                                                    </select>
-                        <small>فرص «شاري معاك» بتفتح التطبيق (أو المتجر على الموبايل) — ولكل قناة عدد اللي ضغطوا.</small></div>
-                    <div class="ag-field" data-mx-link-when="opportunity"  hidden ><label for="mx-opportunity">الفرصة</label>
-                        <select id="mx-opportunity" name="link_opportunity" class="ag-input"><option value="">مفيش فرص شغالة</option></select></div>
-                    <div class="ag-field" data-mx-link-when="property"  hidden ><label for="mx-property">عقار الحصص</label>
-                        <select id="mx-property" name="link_property" class="ag-input"><option value="">مفيش عقارات مفتوحة</option></select></div>
-                    <div class="ag-field" data-mx-link-when="project unit"  hidden ><label for="mx-link-id">رقم المشروع / الوحدة</label>
-                        <input id="mx-link-id" name="link_id" type="number" min="1" class="ag-input" dir="ltr" style="text-align:start" value="" placeholder="مثال: 12">
-                        <small>الرقم اللي جنب الاسم في «كل المشاريع» أو «كل الوحدات».</small></div>
-                    <div class="ag-field" data-mx-link-when="url"  hidden ><label for="mx-link-url">اللينك</label>
-                        <input id="mx-link-url" name="link_url" class="ag-input" dir="ltr" style="text-align:start" value="" placeholder="https://shary.eg/…"></div>
-                </div>
-                <details><summary class="sm b8" style="cursor:pointer">صورة للإشعار والإيميل (اختياري)</summary>
-                    <div class="ag-field" style="margin-top:8px"><label for="mx-image">لينك الصورة (https)</label>
-                        <input id="mx-image" name="image" class="ag-input" dir="ltr" style="text-align:start" value="" placeholder="https://shary.eg/images/…">
-                        <small>الفرصة والعقار والمشروع بياخدوا صورتهم لوحدهم.</small></div>
-                </details>
-            </div>
-            <div class="side">
-                <div class="ag-col" style="gap:10px"><span class="ag-label">هتظهر كده</span>
-                    <div class="ag-pv"  data-pv-root >
-            <div class="ag-pv__item" data-pv-for="push" >
-            <span class="ag-pv__label">إشعار التطبيق</span>
-            <div class="ag-pv__push"><i aria-hidden="true">ش</i>
-                <div><b data-pv="title"></b><span data-pv="text"></span></div></div>
-                    </div>
-                <div class="ag-pv__item" data-pv-for="sms" >
-            <span class="ag-pv__label">SMS · <span class="num" data-pv="sms-chars">0</span> حرف = <span class="num" data-pv="sms-parts">1</span> رسالة</span>
-            <div class="ag-pv__sms" data-pv="sms"></div>
-        </div>
-                <div class="ag-pv__item" data-pv-for="whatsapp"  hidden >
-            <span class="ag-pv__label">واتساب</span>
-            <div class="ag-pv__wa-bg"><div class="ag-pv__wa">أهلاً محمد 👋
-<span data-pv="text"></span>
-
-التفاصيل: <bdi dir="ltr">/msg/2fs</bdi>
-
-شاري للعقارات</div></div>
-        </div>
-                <div class="ag-pv__item" data-pv-for="email"  hidden >
-            <span class="ag-pv__label">إيميل · <span data-pv="subject"></span></span>
-            <div class="ag-pv__mail"><header>شاري للعقارات</header>
-                <div><b data-pv="title"></b>
-<span data-pv="email"></span></div>
-                <span class="ag-pv__btn">شوف التفاصيل</span>
-                <small>لو مش عايز إيميلات تاني: إيقاف</small></div>
-        </div>
-    </div>
-                </div>
-            </div>
-        </div>
-        <div class="ag-row">
-            <button class="ag-btn ag-btn--primary">ابعتها لصندوق المراجعة</button>
-            <button class="ag-btn ag-btn--warn" formaction="/admin/shary/agent/messages/send" data-mx-confirm="الرسالة هتتبعت للعملاء دلوقتي (على دفعات). متأكد من النص والجمهور؟">ابعت دلوقتي</button>            <button type="button" class="ag-btn" disabled>خلّي الإيجنت يكتبها</button><span class="xs mute">محتاج مفتاح الموديل — <a href="admin-shary-agent-keys.html#group-ai">«المفاتيح والربط»</a></span>        </div>
-        <p class="xs mute">الحد: 2 رسايل في الأسبوع لكل عميل · الإشعار والـ SMS والواتساب ما بيتبعتوش من 22:00 لـ 09:00 · اللي في قايمة «مش عايزين رسايل» مش بيوصلهم حاجة.</p>
-    </form>
-</section>
-
-
-
-<section class="ag-card" id="list">
-    <div class="ag-card__head"><h2>الرسايل</h2><span class="sm mute">كل رسالة بنتايجها: وصلت لكام ، ما وصلتش ليه ، وكام واحد ضغط على اللينك.</span></div>
-            <div class="ag-card__body"><p class="mute">لسه ما اتبعتش رسايل.</p></div>
-    </section>
-
-
-<section class="ag-card" id="settings">
-    <div class="ag-card__head"><h2>الفرص الجديدة والقواعد</h2></div>
-    <form method="post" action="#preview/admin/shary/agent/messages/settings" class="ag-card__body ag-col" style="gap:18px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <fieldset class="ag-col" style="gap:12px;border:0;padding:0;margin:0" >
-            <h3 class="ag-h2" style="font-size:16px">أي فرصة جديدة تروح للعملاء</h3>
-            <label class="ag-check"><input type="hidden" name="alerts[on]" value="0"><input type="checkbox" name="alerts[on]" value="1" checked> لما تتضاف فرصة جديدة في «شاري معاك» رسالتها تتجهّز للعملاء لوحدها</label>
-            <div class="ag-grid">
-                <div class="ag-field"><span class="ag-label">إيه اللي يتحسب فرصة جديدة</span>
-                    <label class="ag-check"><input type="checkbox" name="alerts[sources][]" value="opportunities" checked> فرصة جديدة (وحدة كاملة) في شاري معاك</label><label class="ag-check"><input type="checkbox" name="alerts[sources][]" value="properties" checked> عقار حصص جديد اتفتح للاستثمار</label></div>
-                <div class="ag-field"><span class="ag-label">تتبعت على</span>
-                    <label class="ag-check"><input type="checkbox" name="alerts[channels][]" value="push" checked> إشعار التطبيق</label><label class="ag-check"><input type="checkbox" name="alerts[channels][]" value="sms" checked> SMS</label><label class="ag-check"><input type="checkbox" name="alerts[channels][]" value="whatsapp" > واتساب</label><label class="ag-check"><input type="checkbox" name="alerts[channels][]" value="email" > إيميل</label></div>
-                <div class="ag-field"><label for="ms-audience">لمين</label>
-                    <select id="ms-audience" name="alerts[audience][segment]" class="ag-input">
-                        <option value="all" selected>كل العملاء</option><option value="app_users" >المسجلين في التطبيق والموقع</option><option value="investors" >مستثمرين شاري معاك</option><option value="ma3ak_interested" >المهتمين بشاري معاك</option><option value="leads" >اللي بعتوا طلبات على الموقع</option>                    </select>
-                    <label class="ag-check"><input type="hidden" name="alerts[audience][verified]" value="0"><input type="checkbox" name="alerts[audience][verified]" value="1" > للمستثمرين: اللي هويتهم اتقبلت بس</label></div>
-            </div>
-            <label class="ag-check"><input type="hidden" name="alerts[auto]" value="0"><input type="checkbox" name="alerts[auto]" value="1" > <b>ابعتها لوحدها</b> من غير ما تستنى موافقتي (بالنص اللي تحت بالظبط)</label>
-            <p class="xs mute" style="margin-top:-6px">مقفولة = الرسالة بتستنى في صندوق المراجعة وبيوصلك تنبيه على الواتساب. مفتوحة = بتتبعت على طول (والإيجنت ما بيغيّرش في النص).</p>
-            <div class="ag-grid">
-                                    <div class="ag-field"><label for="ms-title">عنوان الإشعار</label><input id="ms-title" name="texts[title]" class="ag-input" maxlength="150" value="فرصة جديدة في شاري معاك: {title}"></div>
-                                    <div class="ag-field"><label for="ms-subject">موضوع الإيميل</label><input id="ms-subject" name="texts[subject]" class="ag-input" maxlength="150" value="فرصة جديدة في شاري معاك: {title}"></div>
+                    
+                                            
+                        <p class="lead">Enter the agent PIN.</p>
+                        <form method="post" action="#preview/admin/shary/pin/agent/unlock" autocomplete="off">
+                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="back" value="/admin/shary/agent/messages?open_draft=1">
+                            <div class="form-group">
+                                <label for="pin">PIN (6 digits)</label>
+                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin" name="pin" autocomplete="off" required autofocus >
                             </div>
-            <div class="ag-field"><label for="ms-text">الرسالة</label><textarea id="ms-text" name="texts[text]" class="ag-input" rows="3" maxlength="600">{name}، نزلت فرصة جديدة في شاري معاك: {title} في {area} — {price}. شوف التفاصيل وابدأ من التطبيق.</textarea></div>
-            <div class="ag-field"><label for="ms-sms">الـ SMS</label><textarea id="ms-sms" name="texts[sms]" class="ag-input" rows="2" maxlength="300">شاري معاك: فرصة جديدة {title} في {area} — {price}. التفاصيل: {link}</textarea>
-                <small>بيتملوا لوحدهم: {title} اسم الفرصة · {area} المنطقة · {price} السعر · {name} اسم العميل · {link} اللينك.</small></div>
+                            <button type="submit" class="btn btn-primary w-100" >Open</button>
+                        </form>
+                                                <details class="pin-more">
+                            <summary>Forgot the PIN?</summary>
+                            <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
+                            <form method="post" action="#preview/admin/shary/pin/agent/reset" autocomplete="off">
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <input type="hidden" name="back" value="/admin/shary/agent/messages?open_draft=1">
+                                <div class="form-group">
+                                    <label for="account_password">Your dashboard account password</label>
+                                    <input type="password" class="form-control" id="account_password" name="account_password" autocomplete="current-password" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
+                            </form>
+                        </details>
+                                                            </div>
+                
+                                    <p class="text-center mt-3 mb-0"><a class="pin-all" href="admin-shary-pins.html">All PINs (create / change / forgot)</a></p>
+                            </div>
+        </div>
+    </div>
+</div>
+<!-- /Main Wrapper -->
+    <!-- jQuery -->
+<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
 
-            <h3 class="ag-h2" style="font-size:16px;margin-top:6px">القواعد</h3>
-            <div class="ag-grid">
-                <div class="ag-field"><label for="ms-cap">أقصى عدد رسايل للعميل في الأسبوع</label>
-                    <input id="ms-cap" name="cap" type="number" min="1" max="14" class="ag-input" dir="ltr" style="text-align:start" value="2">
-                    <small>كل القنوات مع بعض — عشان العميل ما يزهقش.</small></div>
-                <div class="ag-field"><span class="ag-label">ساعات الهدوء (بتوقيت القاهرة)</span>
-                    <div class="ag-row" style="gap:8px">
-                        <label for="ms-from" class="sm">من</label>
-                        <select id="ms-from" name="quiet_from" class="ag-input" style="max-width:110px" dir="ltr"><option value="off" >من غير</option><option value="0" >00:00</option><option value="1" >01:00</option><option value="2" >02:00</option><option value="3" >03:00</option><option value="4" >04:00</option><option value="5" >05:00</option><option value="6" >06:00</option><option value="7" >07:00</option><option value="8" >08:00</option><option value="9" >09:00</option><option value="10" >10:00</option><option value="11" >11:00</option><option value="12" >12:00</option><option value="13" >13:00</option><option value="14" >14:00</option><option value="15" >15:00</option><option value="16" >16:00</option><option value="17" >17:00</option><option value="18" >18:00</option><option value="19" >19:00</option><option value="20" >20:00</option><option value="21" >21:00</option><option value="22" selected>22:00</option><option value="23" >23:00</option></select>
-                        <label for="ms-to" class="sm">لحد</label>
-                        <select id="ms-to" name="quiet_to" class="ag-input" style="max-width:110px" dir="ltr"><option value="0" >00:00</option><option value="1" >01:00</option><option value="2" >02:00</option><option value="3" >03:00</option><option value="4" >04:00</option><option value="5" >05:00</option><option value="6" >06:00</option><option value="7" >07:00</option><option value="8" >08:00</option><option value="9" selected>09:00</option><option value="10" >10:00</option><option value="11" >11:00</option><option value="12" >12:00</option><option value="13" >13:00</option><option value="14" >14:00</option><option value="15" >15:00</option><option value="16" >16:00</option><option value="17" >17:00</option><option value="18" >18:00</option><option value="19" >19:00</option><option value="20" >20:00</option><option value="21" >21:00</option><option value="22" >22:00</option><option value="23" >23:00</option></select>
-                    </div>
-                    <small>الإشعار والـ SMS والواتساب بيستنوا الصبح ، والإيميل بيطلع عادي.</small></div>
-                <div class="ag-field"><label for="ms-email">أقصى عدد إيميلات في اليوم</label>
-                    <input id="ms-email" name="email_daily" type="number" min="10" max="20000" class="ag-input" dir="ltr" style="text-align:start" value="300">
-                    <small>عشان إيميل الشركة ما يتقفلش (Hostinger ليه حد في اليوم).</small></div>
-                <div class="ag-field"><label for="ms-price">سعر رسالة الـ SMS (جنيه)</label>
-                    <input id="ms-price" name="sms_price" type="number" step="0.001" min="0" max="20" class="ag-input" dir="ltr" style="text-align:start" value="0">
-                    <small>عشان صندوق المراجعة يقولك التكلفة قبل ما تبعت.</small></div>
-            </div>
-            <h3 class="ag-h2" style="font-size:16px;margin-top:6px" id="email-from">الإيميلات بتطلع منين</h3>
-            <div class="ag-grid">
-                <div class="ag-field"><label for="ms-provider">أداة الإرسال</label>
-                    <select id="ms-provider" name="email_provider" class="ag-input">
-                        <option value="auto" selected>تلقائي — أداة الإيميل ماركتنج المربوطة، وإلا إيميل الموقع</option>
-                        <option value="brevo" >Brevo (مش مربوط)</option><option value="sendgrid" >SendGrid (مش مربوط)</option><option value="mailgun" >Mailgun (مش مربوط)</option><option value="smtp_marketing" >سيرفر SMTP للتسويق (مش مربوط)</option><option value="site" >إيميل الموقع (SMTP) (مش مربوط)</option>                    </select>
-                    <small>Brevo / SendGrid / Mailgun بيتربطوا من <a href="admin-shary-agent-keys.html#group-marketing">«المفاتيح والربط» ← أدوات الإيميل ماركتينج</a> — حد أعلى ووصول أحسن للـ Inbox.</small></div>
-                <div class="ag-field"><label for="ms-from">الإيميل اللي الرسايل بتطلع منه</label>
-                    <input id="ms-from" name="from_email" class="ag-input" dir="ltr" style="text-align:start" maxlength="150" value="" placeholder="name@example.com">
-                    <small>لازم يكون متوثّق في الأداة (Sender / Domain). فاضي = إيميل الموقع.</small></div>
-                <div class="ag-field"><label for="ms-from-name">اسم الراسل</label>
-                    <input id="ms-from-name" name="from_name" class="ag-input" maxlength="80" value="" placeholder="شاري للعقارات"></div>
-                <div class="ag-field"><label for="ms-reply">الردود تروح على</label>
-                    <input id="ms-reply" name="reply_to" class="ag-input" dir="ltr" style="text-align:start" maxlength="150" value="" placeholder="name@example.com"></div>
-            </div>
-                    </fieldset>
-        <div class="ag-row"><button class="ag-btn ag-btn--primary">احفظ</button></div>    </form>
-</section>
+<!-- Bootstrap Core JS -->
+<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- Feather Icon JS -->
+<script src="../a/assets/js/feather.min.js"></script>
+
+<!-- Slimscroll JS -->
+<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
+
+<!-- Datatable JS -->
+<script src="../a/assets/js/jquery.dataTables.min.js"></script>
+<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
+<script src="../a/assets/js/moment.min.js"></script>
+<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Chart JS -->
+<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
+
+<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
 
 
-<section class="ag-card" id="stops">
-    <div class="ag-card__head"><h2>مش عايزين رسايل</h2><span class="sm mute">اللي داس «إيقاف» في الإيميل ، أو قال للشركة STOP ، أو طلب منكم — مش بيوصلهم حاجة. بنحتفظ ببصمة الرقم بس مش الرقم نفسه.</span></div>
-    <div class="ag-card__body ag-col" style="gap:14px">
-                    <form method="post" action="#preview/admin/shary/agent/messages/stops" class="ag-row" style="align-items:flex-end"><input type="hidden" name="_token" value="preview" autocomplete="off">                <div class="ag-field" style="flex:1 1 220px"><label for="st-address">رقم الموبايل أو الإيميل</label><input id="st-address" name="address" class="ag-input" dir="ltr" style="text-align:start" placeholder="01001234567"></div>
-                <div class="ag-field" style="flex:0 1 180px"><label for="st-channel">من</label>
-                    <select id="st-channel" name="channel" class="ag-input"><option value="all">كل الرسايل</option><option value="push">إشعار التطبيق بس</option><option value="sms">SMS بس</option><option value="whatsapp">واتساب بس</option><option value="email">إيميل بس</option></select></div>
-                <button class="ag-btn">ضيف للقايمة</button>
-            </form>
-                            <p class="mute sm">القايمة فاضية.</p>
-            </div>
-</section>
+
+
+<!-- Owl JS -->
+<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+<!-- Fileupload JS -->
+<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
+<!-- Sweetalert 2 -->
+<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<!-- Custom JS -->
+<script src="../a/assets/js/script.js"></script>
+
+
+
 
 <script>
-    // «رسايل العملاء»: the audience's fields, the live count, the preview while typing, the SMS length, the confirm of «ابعت دلوقتي»
-    (function () {
-        var form = document.getElementById('mx-form');
-        if (!form) { return; }
-        var abouts = {"all":"\u0627\u0644\u0645\u0633\u062c\u0644\u064a\u0646 \u0641\u064a \u0627\u0644\u062a\u0637\u0628\u064a\u0642 \u0648\u0627\u0644\u0645\u0648\u0642\u0639 + \u0645\u0633\u062a\u062b\u0645\u0631\u064a\u0646 \u0634\u0627\u0631\u064a \u0645\u0639\u0627\u0643 + \u0627\u0644\u0644\u064a \u0628\u0639\u062a\u0648\u0627 \u0637\u0644\u0628\u0627\u062a \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639 \u2014 \u0645\u0646 \u063a\u064a\u0631 \u062a\u0643\u0631\u0627\u0631","app_users":"\u0643\u0644 \u0627\u0644\u0644\u064a \u0639\u0627\u0645\u0644 \u062d\u0633\u0627\u0628","investors":"\u0627\u0644\u0644\u064a \u0639\u0627\u0645\u0644\u064a\u0646 \u062d\u0633\u0627\u0628 \u0627\u0633\u062a\u062b\u0645\u0627\u0631 \u2014 \u0648\u062a\u0642\u062f\u0631 \u062a\u062e\u062a\u0627\u0631 \u0627\u0644\u0644\u064a \u0647\u0648\u064a\u062a\u0647\u0645 \u0627\u062a\u0642\u0628\u0644\u062a \u0623\u0648 \u0627\u0644\u0644\u064a \u0627\u0633\u062a\u062b\u0645\u0631\u0648\u0627 \u0628\u0633","ma3ak_interested":"\u0637\u0644\u0628\u0648\u0627 \u0645\u0642\u0627\u0628\u0644\u0629 \u0623\u0648 \u0623\u0648\u0644\u0648\u064a\u0629 \u0623\u0648 \u062d\u0641\u0638\u0648\u0627 \u0639\u0642\u0627\u0631 \u2014 \u0648\u0644\u0633\u0647 \u0645\u0627 \u0627\u0633\u062a\u062b\u0645\u0631\u0648\u0634","leads":"\u0641\u0648\u0631\u0645\u0627\u062a \u0627\u0644\u0645\u0648\u0642\u0639 \u0641\u064a \u0622\u062e\u0631 \u0643\u0627\u0645 \u064a\u0648\u0645 (\u0628\u064a\u0639 \u060c \u0625\u064a\u062c\u0627\u0631 \u060c \u0645\u064a\u062a\u0646\u062c \u060c \u062a\u0648\u0627\u0635\u0644 \u2026)","followers":"\u0627\u0644\u0644\u064a \u062f\u0627\u0633\u0648\u0627 \u00ab\u062a\u0627\u0628\u0639\u00bb \u0639\u0644\u0649 \u0635\u0641\u062d\u0629 \u0645\u0634\u0631\u0648\u0639 \u0648\u0639\u0646\u062f\u0647\u0645 \u062d\u0633\u0627\u0628","customer":"\u0628\u0631\u0642\u0645 \u0645\u0648\u0628\u0627\u064a\u0644\u0647 \u0623\u0648 \u0625\u064a\u0645\u064a\u0644\u0647 \u2014 \u0645\u0646 \u0627\u0644\u0634\u0627\u0634\u0629 \u0628\u0633"};
-        var names = {"push":"\u0625\u0634\u0639\u0627\u0631 \u0627\u0644\u062a\u0637\u0628\u064a\u0642","sms":"SMS","whatsapp":"\u0648\u0627\u062a\u0633\u0627\u0628","email":"\u0625\u064a\u0645\u064a\u0644"};
-        var $ = function (selector) { return form.querySelector(selector); };
-        var all = function (selector) { return Array.prototype.slice.call(form.querySelectorAll(selector)); };
-        var reach = $('[data-mx-reach]');
-        var timer = null;
+    $(document).ready(function () {
+        $(document).on('click', '.confirm-text', function(e) {
 
-        function segment() { return $('[name=segment]').value; }
-        function channels() { return all('[data-mx-channel]').filter(function (box) { return box.checked; }).map(function (box) { return box.value; }); }
+            var parentElement = $(this).parent().parent();
+        var deleteUrl = $(this);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won&#039;t be able to revert this!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel", // Translate "Cancel" here
+            confirmButtonClass: "btn btn-primary",
+            cancelButtonClass: "btn btn-danger ml-1",
+            buttonsStyling: !1,
+        }).then(function (t) {
 
-        function showAudience() {
-            all('[data-mx-when]').forEach(function (box) { box.hidden = box.getAttribute('data-mx-when') !== segment(); });
-            var about = form.querySelector('[data-mx-about]'); if (about) { about.textContent = abouts[segment()] || ''; }
-        }
-        function count() {
-            clearTimeout(timer);
-            timer = setTimeout(function () {
-                var params = new URLSearchParams();
-                ['segment', 'days', 'form', 'project_id', 'list_id', 'customer'].forEach(function (name) { var field = form.querySelector('[name=' + name + ']'); if (field && !field.closest('[hidden]')) { params.set(name, field.value); } });
-                ['verified', 'invested'].forEach(function (name) { var box = form.querySelector('[name=' + name + ']'); if (box && box.checked && !box.closest('[hidden]')) { params.set(name, '1'); } });
-                reach.textContent = 'بيحسب هتوصل لكام عميل…';
-                fetch(form.getAttribute('data-count-url') + '?' + params.toString(), { headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }, credentials: 'same-origin' })
-                    .then(function (response) { return response.json(); })
-                    .then(function (data) {
-                        if (!data.ok) { reach.textContent = data.error || ''; return; }
-                        var parts = channels().map(function (key) { return names[key] + ' ' + Number(data[key] || 0).toLocaleString('en-US'); });
-                        reach.innerHTML = '';
-                        var strong = document.createElement('b');
-                        strong.textContent = 'هتوصل لـ ' + Number(data.people || 0).toLocaleString('en-US') + ' عميل';
-                        reach.appendChild(strong);
-                        reach.appendChild(document.createTextNode(parts.length ? ' — ' + parts.join(' · ') : ' — اختار القنوات'));
-                    })
-                    .catch(function () { reach.textContent = 'ما قدرناش نحسب دلوقتي — هيتحسب في صندوق المراجعة.'; });
-            }, 350);
-        }
-        function smsParts(text) {
-            var unicode = /[^\u0000-\u007F]/.test(text);
-            var length = Array.from(text).length;
-            return [length, length <= (unicode ? 70 : 160) ? 1 : Math.ceil(length / (unicode ? 67 : 153))];
-        }
-        function say(text) { return (text || '').replace(/\{name\}/g, 'محمد').replace(/\{link\}/g, "\/msg\/2fs").replace(/\{stop\}/g, "\u0644\u0644\u0625\u064a\u0642\u0627\u0641: 127.0.0.1:8780\/msg\/off").replace(/[ \t]{2,}/g, ' ').trim(); }
-        function preview() {
-            // an empty form shows an example (lighter) — the real words replace it while typing
-            var example = !$('[data-mx-text=title]').value.trim() && !$('[data-mx-text=text]').value.trim();
-            var value = function (key) { var field = $('[data-mx-text=' + key + ']'); return field.value.trim() || !example ? field.value : (field.getAttribute('data-mx-example') || ''); };
-            var title = value('title'), text = value('text'), sms = value('sms'),
-                subject = $('[data-mx-text=subject]').value, email = $('[data-mx-text=email]').value;
-            document.querySelectorAll('[data-pv-root]').forEach(function (root) { root.classList.toggle('is-example', example); });
-            if (!sms.trim()) { sms = text.replace(/\{link\}/g, '').replace(/\s+/g, ' ').trim().slice(0, 280); if (sms && $('[name=link_kind]').value !== 'none') { sms += ' {link}'; } }
-            // a list of «قوايمي»: every SMS ends with how to stop (the server adds it too)
-            if (sms.trim() && segment() === 'list' && sms.indexOf('{stop}') === -1) { sms += ' {stop}'; }
-            var set = function (key, value) { document.querySelectorAll('[data-pv-root] [data-pv=' + key + ']').forEach(function (node) { node.textContent = value; }); };
-            set('title', say(title || text.slice(0, 60)));
-            set('text', say(text.replace(/\{link\}/g, '')));
-            set('sms', say(sms));
-            set('subject', say(subject || title));
-            set('email', say((email || text).replace(/\{link\}/g, '')));
-            var parts = smsParts(say(sms)); set('sms-chars', parts[0]); set('sms-parts', parts[1]);
-            var chosen = channels();
-            document.querySelectorAll('[data-pv-root] [data-pv-for]').forEach(function (node) { node.hidden = chosen.indexOf(node.getAttribute('data-pv-for')) === -1; });
-            all('[data-mx-when-channel]').forEach(function (node) { node.hidden = chosen.indexOf(node.getAttribute('data-mx-when-channel')) === -1; });
-        }
-        function showLink() {
-            var kind = $('[name=link_kind]').value;
-            all('[data-mx-link-when]').forEach(function (box) { box.hidden = box.getAttribute('data-mx-link-when').split(' ').indexOf(kind) === -1; });
-            preview();
-        }
-
-        all('[data-mx-audience]').forEach(function (field) { field.addEventListener('change', function () { showAudience(); count(); }); field.addEventListener('input', count); });
-        all('[data-mx-channel]').forEach(function (box) { box.addEventListener('change', function () { preview(); count(); }); });
-        all('[data-mx-text]').forEach(function (field) { field.addEventListener('input', preview); });
-        $('[name=link_kind]').addEventListener('change', showLink);
-        all('[data-mx-confirm]').forEach(function (button) {
-            button.addEventListener('click', function (event) { if (!window.confirm(button.getAttribute('data-mx-confirm'))) { event.preventDefault(); } });
+            if (t.value) {
+                parentElement.hide();
+                deleted = deleteUrl.data("delete-url");
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: deleted,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
+                    },
+                    success: function (result) {
+                        // Hide the parent element (delete the row)
+                        parentElement.hide();
+                        // Display a success message
+                        Swal.fire({
+                            type: "success",
+                            title: "Deleted!",
+                            text: "Deleted successfully",
+                            confirmButtonClass: "btn btn-success",
+                        });
+                        // // Redirect to another URL
+                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
+                    },
+                    // User confirmed, hide the parent element (delete the row)
+                })
+            }
         });
-        showAudience(); showLink(); count();
-    })();
+    })
+    });
 </script>
-    </main>
-</div>
-<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
+     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
-<script src="../a/js/shary-admin/agent.js" defer></script>
-<style>
-        .sx-draftbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 14px 0 12px; padding: 10px 12px; border: 1px dashed #c9d8ea; border-radius: 12px; background: #f6f9fd; }
-        .sx-draftbar__save { border: 1px solid #1E4266; background: #fff; color: #1E4266; font-weight: 800; font-size: 14px; padding: 7px 16px; border-radius: 999px; cursor: pointer; }
-        .sx-draftbar__save:hover { background: #1E4266; color: #fff; }
-        .sx-draftbar__state { font-size: 13px; font-weight: 700; color: #6f8091; }
-        .sx-draftbar.is-saved .sx-draftbar__state { color: #15803d; }
-        .sx-draftnote { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 16px; padding: 12px 14px; border-radius: 12px; background: #fff7e6; border: 1px solid #f5d9a3; font-weight: 800; color: #7a4b00; }
-        .sx-draftnote span { flex: 1 1 220px; }
-        .sx-draftnote button { border: 0; border-radius: 999px; padding: 7px 16px; font-weight: 800; font-size: 14px; cursor: pointer; }
-        .sx-draftnote__open { background: #1E4266; color: #fff; }
-        .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
-    </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"Es4hV7Ab3vT4tEGqdb2RmkJYBeNpW8w5ocsgtQbT","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+     <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+      <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

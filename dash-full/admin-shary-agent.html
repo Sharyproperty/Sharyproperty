@@ -1,19 +1,182 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
+<!DOCTYPE html>
+<html lang="ar">
+  
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="preview">
-    <meta name="robots" content="noindex, nofollow">
-    <title>الإيجنت — النهاردة — لوحة تحكم شاري</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-    <link rel="stylesheet" href="a/css/shary-admin/shell.css">
-    <link rel="stylesheet" href="a/css/shary-admin/agent.css">
-</head>
-<body class="ag sx" dir="rtl">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Shary">
+<meta name="keywords" content="Shary">
+<meta name="author" content="">
+<meta name="robots" content="noindex, nofollow">
+<meta name="csrf-token" content="preview">
 
-<a class="sx-skip" href="#sx-main">روح للمحتوى</a>
+<title>شارى</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="a/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="a/assets_rtl/css/bootstrap.rtl.min.css">
+
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- animation CSS -->
+<link rel="stylesheet" href="a/assets/css/animate.css">
+
+<!-- Datetimepicker CSS -->
+<link rel="stylesheet" href="a/assets/css/bootstrap-datetimepicker.min.css">
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.theme.default.min.css">
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="a/assets/plugins/select2/css/select2.min.css">
+
+<!-- Dragula CSS -->
+<link rel="stylesheet" href="a/assets/plugins/dragula/css/dragula.min.css">
+
+
+
+
+
+
+<link rel="stylesheet" href="a/assets/plugins/summernote/summernote-bs4.min.css">
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="a/assets/css/dataTables.bootstrap4.min.css">
+
+<!-- Main CSS -->
+    <link rel="stylesheet" href="a/assets_rtl/css/style.css">
+<link rel="stylesheet" href="a/assets/css/admin-polish.css">
+
+<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
+<style type="text/css">
+    body, h1, h2, h3, h4, h5, h6, * {
+        font-family: 'Tajawal', serif;
+        font-weight: bold;
+    }
+</style>
+    
+    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
+     <script>
+    (function () {
+        try {
+            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
+                document.documentElement.classList.add('sx-embed');
+                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
+                var params = new URLSearchParams(location.search);
+                document.addEventListener('DOMContentLoaded', function () {
+                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
+                    if (keep) {
+                        document.documentElement.classList.add('sx-focus');
+                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
+                            [].forEach.call(node.parentElement.children, function (sib) {
+                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
+                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
+                                sib.style.display = 'none';
+                            });
+                        }
+                    }
+                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    String(params.get('hide') || '').split(',').forEach(function (id) {
+                        var drop = id && document.getElementById(id.trim());
+                        if (drop) drop.style.display = 'none';
+                    });
+                });
+                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
+                if (open) {
+                    var tries = 0, timer = setInterval(function () {
+                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
+                        var modal = document.getElementById(open);
+                        if ((button && window.bootstrap && modal) || ++tries > 40) {
+                            clearInterval(timer);
+                            if (button && modal) {
+                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
+                            }
+                        }
+                    }, 150);
+                }
+            }
+        } catch (e) {}
+    })();
+</script>
+<script>
+// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
+if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
+// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
+// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
+(function () {
+    var KEY = 'shary-app-mode', on = false;
+    try {
+        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
+        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
+        on = sessionStorage.getItem(KEY) === '1';
+    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
+    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
+})();
+// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
+window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
+window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
+// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
+// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+document.addEventListener('DOMContentLoaded', function () {
+    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
+    for (i = 0; i < els.length; i++) {
+        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
+        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
+    }
+    for (i = 0; i < jobs.length; i++) {
+        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
+        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
+        jobs[i][0].__fit = true;
+    }
+    for (i = 0; i < jobs.length; i++) {
+        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
+            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
+        }
+    }
+});
+document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
+    img.removeAttribute('srcset'); img.removeAttribute('sizes');
+    var alt = img.getAttribute('data-fallback');
+    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
+    img.removeAttribute('data-img-fallback');
+    img.src = "\/images\/shary\/placeholder.svg";
+}, true);
+</script>
+<style>
+    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
+    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
+    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
+    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
+    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
+    html.sx-embed body { background: #fff !important; }
+    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
+    html.sx-embed body { overflow-x: hidden; }
+    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
+    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
+    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
+    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="a/css/shary-admin/shell.css">
+       </head>
+  <body class="sx" dir="rtl">
+ <div id="global-loader" >
+    <div class="whirly-loader"> </div>
+</div>  <!-- Main Wrapper -->
+<div class="main-wrapper">
+      <a class="sx-skip" href="#sx-main">روح للمحتوى</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="افتح القايمة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -29,8 +192,8 @@
         <div class="sx-top__end">
                     <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="بحث في لوحة التحكم"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 38"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>38</b></a>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 57"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>57</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="افتح الموقع" title="افتح الموقع"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
         <a class="sx-lang" href="en/admin-shary-agent.html" data-sx-lang="1" lang="en">English</a>
@@ -38,7 +201,8 @@
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
             <div class="sx-user__menu">
-                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">حسابي</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">خروج</a>
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">حسابي</a>                
+                <a href="admin-shary-pins.html">الأرقام السرية</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">خروج</a>
             </div>
         </details>
     </div>
@@ -62,19 +226,27 @@
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></svg>
                         <span>فين أعدّل إيه؟</span>
                                             </a>
+                                                                <a class="sx-one " href="admin-shary-refresh.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M19.5 12a7.5 7.5 0 0 1-13.2 4.9"/><path d="M4.5 12a7.5 7.5 0 0 1 13.2-4.9"/><path d="M18 3.5v4h-4M6 20.5v-4h4"/></svg>
+                        <span>تحديث الموقع</span>
+                                            </a>
+                                                                <a class="sx-one " href="admin-shary-errors.html" >
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
+                        <span>الأخطاء</span>
+                        <b class="sx-tag">6</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>المسودات</span>
-                        <b class="sx-tag">102</b>                    </a>
-                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
-                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
+                        <b class="sx-tag">106</b>                    </a>
+                                                                <div class="sx-grp " data-sx-grp="agent">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>الإيجنت</span>
                             <b class="sx-tag">20</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-agent">
                                                             
-                                                                                                <li><a href="admin-shary-agent.html" class="is-on"  aria-current="page" ><span>النهاردة</span></a></li>
+                                                                                                <li><a href="admin-shary-agent.html" class="" ><span>النهاردة</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-agent-performance.html" class="" ><span>لوحة الأداء</span></a></li>
                                                             
@@ -141,11 +313,11 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>الطلبات والرسائل</span>
-                            <b class="sx-tag">59</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">64</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">59</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">64</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>طلبات بيع عقار</span></a></li>
                                                             
@@ -182,7 +354,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-units-sheet.html" class="" ><span>استيراد وتصدير الوحدات</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">11</b></a></li>
+                                                                                                <li><a href="admin-shary-units-drafts.html" class="" ><span>المسودات</span><b class="sx-tag">17</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-units-photo-sets.html" class="" ><span>صور الوحدات حسب المشروع</span></a></li>
                                                             
@@ -396,15 +568,15 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">11</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">48</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
                                                                                                 <li><a href="admin-shary-ai.html" class="" ><span>الإعدادات والتجربة</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>محادثات العملاء</span><b class="sx-tag">8</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-conversations.html" class="" ><span>محادثات العملاء</span><b class="sx-tag">41</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>كاليندر المتابعة</span><b class="sx-tag">3</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>كاليندر المتابعة</span><b class="sx-tag">7</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -416,8 +588,6 @@
                         <ul id="sx-grp-seo">
                                                             
                                                                                                 <li><a href="admin-redirections.html" class="" ><span>التحويلات (Redirects)</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-refresh.html" class="" ><span>تحديث الموقع</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-site-tags.html" class="" ><span>جوجل كونسول وأناليتكس وأكواد التتبع</span></a></li>
                                                     </ul>
@@ -473,6 +643,64 @@
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M11 3.1A9 9 0 1 0 20.9 13H11z"/><path d="M14 2.6A8.5 8.5 0 0 1 21.4 10H14z"/></svg>
                         <span>نظرة عامة</span>
                                             </a>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_resale">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_resale">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>اشترِ للبيع</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_resale">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>اشترِ للبيع</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_resale.html" class="" ><span>اختار من الوحدات</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_resale.html" class="" ><span>إضافة فرصة</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_rental">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_rental">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>اشترِ للتأجير</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_rental">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>اشترِ للتأجير</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_rental.html" class="" ><span>اختار من الوحدات</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_rental.html" class="" ><span>إضافة فرصة</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_ready">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_ready">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
+                            <span>جاهز الآن</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_ready">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>جاهز الآن</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-pick_goal_ready.html" class="" ><span>اختار من الوحدات</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-opportunities-create_goal_ready.html" class="" ><span>إضافة فرصة</span></a></li>
+                                                    </ul>
+                    </div>
+                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
+                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
+                            <span>شاري شيرز (استثمار مشترك)</span>
+                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <ul id="sx-grp-ma3ak_goal_shares">
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>عقارات الحصص</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>إضافة عقار حصص</span></a></li>
+                                                    </ul>
+                    </div>
                                                                 <div class="sx-grp " data-sx-grp="ma3ak_goals">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goals">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg>
@@ -481,28 +709,9 @@
                         </button>
                         <ul id="sx-grp-ma3ak_goals">
                                                             
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_resale.html" class="" ><span>اشترِ للبيع</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_rental.html" class="" ><span>اشترِ للتأجير</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-opportunities_goal_ready.html" class="" ><span>جاهز الآن</span></a></li>
-                                                            
                                                                                                 <li><a href="admin-shary-ma3ak-opportunities.html" class="" ><span>كل الفرص</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-ma3ak-opportunities-create.html" class="" ><span>إضافة فرصة</span></a></li>
-                                                    </ul>
-                    </div>
-                                                                <div class="sx-grp " data-sx-grp="ma3ak_goal_shares">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_goal_shares">
-                            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 21V5.5L12 3v18"/><path d="M12 9h7a1 1 0 0 1 1 1v11"/><path d="M7.5 8h1M7.5 12h1M7.5 16h1M15.5 13h1M15.5 17h1M2.5 21h19"/></svg>
-                            <span>استثمار مشترك (الحصص)</span>
-                                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
-                        </button>
-                        <ul id="sx-grp-ma3ak_goal_shares">
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-properties.html" class="" ><span>عقارات الحصص</span></a></li>
-                                                            
-                                                                                                <li><a href="admin-shary-ma3ak-properties-create.html" class="" ><span>إضافة عقار حصص</span></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="ma3ak_money">
@@ -630,479 +839,165 @@
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
-
-    <template data-sx-crumb><div class="sx-crumb">الإيجنت ‹ النهاردة</div></template>
-
-<div class="sx-page">
-    <main class="ag-main" id="sx-main">
-                                <div class="ag-head">
-    <div class="ag-col">
-        <h1>الإيجنت — النهاردة</h1>
-        <p>الخميس 15 أكتوبر 2026 · الإيجنت بيجهّز، وأنت اللي بتنشر.</p>
-    </div>
-    <div class="ag-row">
-        <a class="ag-btn" href="admin-shary-agent-tasks.html#new-task">مهمة جديدة</a>
-        <a class="ag-btn ag-btn--primary" href="admin-shary-agent-commands.html">أمر جديد</a>
-    </div>
-</div>
-
-    <div class="ag-alert ag-alert--warn">
-        <div class="ag-col"><b>فيه حاجات واقفة في الإيجنت</b><span>الكرون (الشغل الأوتوماتيك)، الذكاء الاصطناعي (الموديل)</span></div>
-        <a class="ag-btn ag-btn--sm ag-btn--warn" href="admin-shary-agent-health.html">شوف حالة الإيجنت</a>
-    </div>
-    <div class="ag-alert ag-alert--info">
-        <div class="ag-col"><b>الموديل لسه مش مربوط</b><span>مراجعة الطلبات وأرقام شاري وفحص السيو والتقارير شغالين. الكتابة والبحث في جوجل هيشتغلوا لما تربط المفتاح — تلصقه في «المفاتيح والربط» وتدوس «اربط».</span></div>
-        <div class="ag-row"><a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-keys.html#group-ai">اربط المفتاح</a>
-        <a class="ag-btn ag-btn--sm" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">اعمل مفتاح Gemini ↗</a></div>
-    </div>
-    <div class="ag-alert ag-alert--info">
-        <div class="ag-col"><b>خلّي شغل الإيجنت يوصلك على الواتساب</b><span>التقارير، المهام اللي بتخلص واللي جهّزته للمراجعة، الأوامر، وتنبيهات «شاري معاك» — على رقمك من واتساب الشركة الرسمي.</span></div>
-        <a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-settings.html#whatsapp">ظبط الواتساب</a>
-    </div>
-    <div class="ag-alert ag-alert--warn">
-        <div class="ag-col"><b>حاجة واقفة على قرارك</b><span>جرام الذهب عيار 21: مصدرين طلعوا رقمين مختلفين. الإيجنت وقف ومنشرش حاجة.</span></div>
-        <a class="ag-btn ag-btn--sm ag-btn--warn" href="admin-shary-agent-data.html">شوف الرقمين</a>
-    </div>
-
-
-<section class="ag-col" style="gap:12px" id="parts" aria-labelledby="ag-parts-title">
-    <div class="ag-row ag-row--between"><h2 class="ag-h2" id="ag-parts-title">الأقسام — كل حاجة في مكانها</h2><span class="sm mute">ادخل القسم تلاقي أوامره واللي مستني موافقتك واللي اتعمل.</span></div>
-    <div class="ag-hubs">
-                                <a class="ag-hubcard" href="admin-shary-agent-s-projects.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
-</i><b>المشاريع</b></span>
-                <p>بيانات المشاريع وأسعارها وخطط السداد وصورها، والمشاريع الجديدة اللي في السوق ولسه مالهاش صفحة عندنا.</p>
-                <span class="ag-hubcard__n">
-                    <span class="is-wait">مستني موافقتك <span class="num">2</span></span>                                                        </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-units.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
-</i><b>الوحدات</b></span>
-                <p>وحدات البيع والريسيل والإيجار: الأسعار والعروض والوصف والصور وصورة الكارت.</p>
-                <span class="ag-hubcard__n">
-                    <span class="is-wait">مستني موافقتك <span class="num">6</span></span>                                                        </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-design.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>
-</i><b>الصور والتصميم</b></span>
-                <p>جودة صور الموقع وتخفيفها، توزيعها حسب التايب وصورة الكارت، والتصميمات (بانر، كارت، بوست، إعلان) — من الإيجنت أو من فيجما.</p>
-                <span class="ag-hubcard__n">
-                                                            <span>مفيش حاجة مستنياك</span>                </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-website.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 13h5v4H7zM15 13h2M15 16h2"/></svg>
-</i><b>صفحات الموقع</b></span>
-                <p>الصفحة الرئيسية وكروتها، نصوص الصفحات والأزرار، أنواع العقار والمميزات، بيانات التواصل والفريق والوظائف.</p>
-                <span class="ag-hubcard__n">
-                                                            <span>مفيش حاجة مستنياك</span>                </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-seo.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
-</i><b>السيو والمقالات</b></span>
-                <p>خطة الصدارة، الكلمات وترتيب شاري في جوجل، المقالات والأخبار، اللينكات الداخلية والباك لينكس، وظهور شاري في إجابات الذكاء الاصطناعي.</p>
-                <span class="ag-hubcard__n">
-                    <span class="is-wait">مستني موافقتك <span class="num">6</span></span>                                                        </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-messages.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
-</i><b>رسايل العملاء</b></span>
-                <p>إشعار التطبيق والـ SMS والواتساب والإيميل للعملاء — الإيجنت بيكتب، وانت اللي بتبعت.</p>
-                <span class="ag-hubcard__n">
-                                                            <span>مفيش حاجة مستنياك</span>                </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-marketing.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M3.5 10.5v3a1 1 0 0 0 1 1H7l9 4.5v-14L7 9.5H4.5a1 1 0 0 0-1 1z"/><path d="m7.5 14.5 1.5 5h3l-1.3-4.2"/><path d="M19 9.5c1 .7 1.5 1.6 1.5 2.5s-.5 1.8-1.5 2.5"/></svg>
-</i><b>التسويق</b></span>
-                <p>خطة تسويق شاري: بوستات على صفحات شاري السبعة، حملات إعلانية (ميتا، جوجل، تيك توك، سناب، لينكدإن، ChatGPT)، ورسايل لقوايمي — الإيجنت بيخطط ويكتب، وانت اللي بتعتمد وتدوس «شغّل».</p>
-                <span class="ag-hubcard__n">
-                                                            <span>مفيش حاجة مستنياك</span>                </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-requests.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
-</i><b>طلبات العملاء</b></span>
-                <p>طلبات البيع والإيجار والميتنج والتواصل والوظايف — الإيجنت بيراجعها ويجهّز الوحدة أو الرد.</p>
-                <span class="ag-hubcard__n">
-                                                            <span>مفيش حاجة مستنياك</span>                </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-ma3ak.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 10.5-5.1"/><path d="m14.5 19.5 3-3 2 2 3-3.5"/></svg>
-</i><b>شاري معاك</b></span>
-                <p>الإيصالات ومكافآت الدعوة والطلبات والفرص وعقارات الحصص و«تأثير شاري» — الإيجنت بيجهّز القرار وانت اللي بتنفّذ.</p>
-                <span class="ag-hubcard__n">
-                    <span class="is-wait">مستني موافقتك <span class="num">3</span></span>                                                        </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-places.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
-</i><b>المطورين والمناطق</b></span>
-                <p>صفحات المطورين وأرقامهم، صفحات المناطق وأشهر الأماكن فيها.</p>
-                <span class="ag-hubcard__n">
-                    <span class="is-wait">مستني موافقتك <span class="num">1</span></span>                                                        </span>
-            </a>
-                                <a class="ag-hubcard" href="admin-shary-agent-s-market.html">
-                <span class="ag-hubcard__top"><i aria-hidden="true"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20h16"/><rect x="5.5" y="11" width="3" height="7" rx=".8"/><rect x="10.5" y="6" width="3" height="12" rx=".8"/><rect x="15.5" y="9" width="3" height="9" rx=".8"/></svg>
-</i><b>السوق والتقارير</b></span>
-                <p>أرقام السوق ومؤشر شاري، الدولار والذهب ومواد البناء، المنافسين، والتحليلات والتقارير.</p>
-                <span class="ag-hubcard__n">
-                    <span class="is-wait">مستني موافقتك <span class="num">2</span></span>                                                        </span>
-            </a>
-            </div>
-</section>
-
-<div class="ag-tiles">
-    <div class="ag-tile"><span>مستني مراجعتك</span><b class="blue num">20</b><a href="admin-shary-agent-review.html">افتح صندوق المراجعة</a></div>
-    <div class="ag-tile"><span>اتنشر النهاردة</span><b class="num">0</b><span>آخر نشر 7 أكتوبر 11:04 م</span></div>
-    <div class="ag-tile"><span>مهام النهاردة</span><b><span class="num">0</span> من <span class="num">27</span></b><span>خلصت</span></div>
-    <div class="ag-tile"><span>طلبات بيع وإيجار مفتوحة</span><b class="num">6</b><span><span class="num">2</span> جاهزين للنشر · <span class="num">4</span> محتاجين نظرة</span></div>
-    <div class="ag-tile"><span>مشاريع السوق الناقصة</span><b class="num">7</b><a href="admin-shary-agent-projects.html">بيكتب <span class="num">20</span> في اليوم</a></div>
-                        <div class="ag-tile"><span>خطة الصدارة — الأسبوع 2</span><b><span class="num">0</span> من <span class="num">38</span></b><a href="admin-shary-agent-plan.html">شوف شغل الأسبوع</a></div>
-        <div class="ag-tile"><span>صفحات ناقصها حاجة</span><b class="num">386</b><a href="admin-shary-agent-pages.html">شوف الناقص في كل صفحة</a></div>
-</div>
-
-<div class="ag-split">
-    <div class="wide">
-        <section class="ag-card ag-card--pad">
-            <div class="ag-col">
-                <label for="ag-command" class="ag-h2">اكتب أمر للإيجنت</label>
-                <p class="mute sm">اكتب اللي عايزه بالعربي، أو ارفع شيت أسعار أو صور. هيجهّز التعديل وتلاقيه في صندوق المراجعة.</p>
-            </div>
-            <form method="post" action="#preview/admin/shary/agent/commands" enctype="multipart/form-data" class="ag-col" style="gap:12px">
-                <input type="hidden" name="_token" value="preview" autocomplete="off">                <textarea id="ag-command" name="body" rows="3" class="ag-input" placeholder="مثال: زوّد أسعار وحدات مراسي 5% وضيف خطة سداد لسينز بمقدم 5% على 10 سنين"></textarea>
-                <div class="ag-row">
-                    <a class="ag-chip ag-chip--blue" href="admin-shary-agent-new-page.html">ضيف مشروع أو مطور</a>
-                    <button type="button" class="ag-chip" data-ag-say="حدّث أسعار مشروع ">حدّث أسعار مشروع</button>
-                    <button type="button" class="ag-chip" data-ag-say="دي صور وحدة رقم ">ارفع صور وحدة</button>
-                    <button type="button" class="ag-chip" data-ag-say="اعمل عرض على وحدة رقم ">اعمل عرض</button>
-                    <button type="button" class="ag-chip" data-ag-say="اكتب مقال سيو عن منطقة ">اكتب مقال عن منطقة</button>
-                    <button type="button" class="ag-chip" data-ag-say="هات أرقام منطقة ">هات أرقام منطقة</button>
-                    <button type="button" class="ag-chip" data-ag-say="حلّل كلمات وصفحات المنافس ">حلّل منافس</button>
-                    <button type="button" class="ag-chip" data-ag-say="اكتب مقال النهاردة من أهم حاجة في التحليل اليومي">اكتب مقال النهاردة</button>
-                    <button type="button" class="ag-chip" data-ag-say="حلّل السوق النهاردة: المناطق والأسعار والمطورين وشاري قدام المنافسين">حلّل السوق</button>
-                </div>
-                <div class="ag-files" id="ag-today-files"></div>
-                <div class="ag-row ag-row--between">
-                    <label class="ag-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
-                        ارفع ملف أو صور
-                        <input type="file" name="files[]" multiple class="sr" accept=".jpg,.jpeg,.png,.webp,.pdf,.csv,.txt,.xlsx" data-ag-filelist="ag-today-files">
-                    </label>
-                    <button type="submit" class="ag-btn ag-btn--primary">ابعت الأمر</button>
-                </div>
-            </form>
-        </section>
-
+ <link rel="stylesheet" href="a/css/shary-admin/editor-popups.css">
+        <script>
+            window.SharyEditorConfig = {
+                token: "3feP5cr26IcPEjjg9LXrxoWu8DmBkwaoluzoHrqE",
+                lang: "ar",
+                linksUrl: "\/admin\/shary\/content-editor\/links",
+                previewUrl: "\/admin\/shary\/content-editor\/preview",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=3feP5cr26IcPEjjg9LXrxoWu8DmBkwaoluzoHrqE",
+                contentCss: "a/css/shary-admin/editor-content.css",
+                localEditor: true,
+                localBase: "a/vendor/shary-editor/",
+                types: {"project":"\u0645\u0634\u0631\u0648\u0639","unit":"\u0648\u062d\u062f\u0629","area":"\u0645\u0646\u0637\u0642\u0629","developer":"\u0645\u0637\u0648\u0631","blog":"\u0645\u0642\u0627\u0644","search":"\u0635\u0641\u062d\u0629 \u0628\u062d\u062b"},
+                labels: {"cta":"\u0632\u0631 \u062a\u0648\u0627\u0635\u0644","link":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview":"\u0645\u0639\u0627\u064a\u0646\u0629","cta_title":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0648\u0633\u0637 \u0627\u0644\u0645\u062d\u062a\u0648\u0649:","link_title":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview_title":"\u0645\u0639\u0627\u064a\u0646\u0629 \u2014 \u0632\u064a \u0627\u0644\u0645\u0648\u0642\u0639","kind_cta":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644","kind_form":"\u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629","kind_channels":"\u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a","kind_project":"\u0643\u0627\u0631\u062a \u0645\u0634\u0631\u0648\u0639","kind_area":"\u0643\u0627\u0631\u062a \u0645\u0646\u0637\u0642\u0629","cta_buttons":"\u0627\u0644\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0644\u064a \u062a\u0638\u0647\u0631","btn_meeting":"\u0637\u0644\u0628 \u0645\u0642\u0627\u0628\u0644\u0629","btn_call":"\u0627\u062a\u0635\u0627\u0644","btn_whatsapp":"\u0648\u0627\u062a\u0633\u0627\u0628","cta_heading":"\u0627\u0644\u062c\u0645\u0644\u0629 \u0627\u0644\u0644\u064a \u0641\u0648\u0642 \u0627\u0644\u0623\u0632\u0631\u0627\u0631 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","cta_ph_ar":"\u0645\u062b\u0627\u0644: \u0627\u062d\u062c\u0632 \u0648\u062d\u062f\u062a\u0643 \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u062d\u0635\u0644 \u0639\u0644\u0649 \u0623\u062d\u062f\u062b \u0642\u0627\u0626\u0645\u0629 \u0623\u0633\u0639\u0627\u0631","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"\u0628\u064a\u062d\u0637 \u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629 (\u0627\u0644\u0627\u0633\u0645 \u060c \u0627\u0644\u0645\u0648\u0628\u0627\u064a\u0644 \u060c \u0627\u0644\u0645\u0646\u0637\u0642\u0629) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","channels_hint":"\u0628\u064a\u062d\u0637 \u0643\u0627\u0631\u062a \u0022\u0627\u0634\u062a\u0631\u0643 \u0641\u064a \u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a\u0022 (\u0648\u0627\u062a\u0633\u0627\u0628 \/ \u062a\u0644\u064a\u062c\u0631\u0627\u0645 \/ \u064a\u0648\u062a\u064a\u0648\u0628) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","search_ph":"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639 \/ \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \/ \u0627\u0644\u0645\u0637\u0648\u0631 \/ \u0627\u0644\u0645\u0642\u0627\u0644","insert":"\u0625\u0636\u0627\u0641\u0629","cta_note":"\u0628\u064a\u062a\u062d\u0637 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u2014 \u0648\u062a\u0642\u062f\u0631 \u062a\u0645\u0633\u062d\u0647 \u0632\u064a \u0623\u064a \u0633\u0637\u0631.","link_selected":"\u0627\u0644\u0644\u064a\u0646\u0643 \u0647\u064a\u062a\u062d\u0637 \u0639\u0644\u0649:","link_none":"\u0645\u0641\u064a\u0634 \u0643\u0644\u0627\u0645 \u0645\u062a\u0638\u0644\u0644: \u0647\u064a\u062a\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u064a\u0628\u0642\u0649 \u0647\u0648 \u0627\u0644\u0644\u064a\u0646\u0643.","all_types":"\u0643\u0644 \u0627\u0644\u0623\u0646\u0648\u0627\u0639","searching":"\u062c\u0627\u0631\u064a \u0627\u0644\u0628\u062d\u062b\u2026","nothing":"\u0645\u0641\u064a\u0634 \u0646\u062a\u0627\u064a\u062c.","failed":"\u062d\u0635\u0644\u062a \u0645\u0634\u0643\u0644\u0629 \u2014 \u062c\u0631\u0651\u0628 \u062a\u0627\u0646\u064a.","desktop":"\u062f\u064a\u0633\u0643 \u062a\u0648\u0628","mobile":"\u0645\u0648\u0628\u0627\u064a\u0644","preview_note":"\u0627\u0644\u0645\u0639\u0627\u064a\u0646\u0629 \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638 \u2014 \u0627\u062d\u0641\u0638 \u0639\u0634\u0627\u0646 \u064a\u0638\u0647\u0631 \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639.","w_h2":"\u0639\u0646\u0648\u0627\u0646 \u0631\u0626\u064a\u0633\u064a","w_h3":"\u0639\u0646\u0648\u0627\u0646 \u0641\u0631\u0639\u064a","w_p":"\u0646\u0635 \u0639\u0627\u062f\u064a","w_bullets":"\u0646\u0642\u0637","w_numbers":"\u0623\u0631\u0642\u0627\u0645","w_arrows":"\u0646\u0642\u0637 \u0628\u0633\u0647\u0645","w_line":"\u062e\u0637 \u0641\u0627\u0635\u0644","w_space":"\u0645\u0633\u0627\u0641\u0629","symbol":"\u0627\u0643\u062a\u0628","video":"\u0641\u064a\u062f\u064a\u0648","video_title":"\u0641\u064a\u062f\u064a\u0648 \u062c\u0648\u0647 \u0627\u0644\u0645\u0642\u0627\u0644 (\u0644\u064a\u0646\u0643)","video_hint":"\u062d\u0637 \u0644\u064a\u0646\u0643 \u0627\u0644\u0641\u064a\u062f\u064a\u0648 \u0645\u0646 \u064a\u0648\u062a\u064a\u0648\u0628 \u0623\u0648 \u062a\u064a\u0643 \u062a\u0648\u0643 \u0623\u0648 \u0641\u064a\u0633\u0628\u0648\u0643 \u0623\u0648 \u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645 \u0623\u0648 \u0623\u064a \u0645\u0643\u0627\u0646 \u2014 \u0628\u064a\u0638\u0647\u0631 \u0643\u0627\u0631\u062a \u0641\u064a\u062f\u064a\u0648 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u060c \u0648\u0644\u0645\u0627 \u0627\u0644\u0639\u0645\u064a\u0644 \u064a\u062f\u0648\u0633 \u0639\u0644\u064a\u0647 \u0628\u064a\u0641\u062a\u062d \u0627\u0644\u0641\u064a\u062f\u064a\u0648 \u0641\u064a \u0645\u0643\u0627\u0646\u0647 (\u0628\u0631\u0651\u0647 \u0627\u0644\u0645\u0648\u0642\u0639).","video_url":"\u0644\u064a\u0646\u0643 \u0627\u0644\u0641\u064a\u062f\u064a\u0648","video_caption":"\u0639\u0646\u0648\u0627\u0646 \u062a\u062d\u062a \u0627\u0644\u0641\u064a\u062f\u064a\u0648 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","video_bad":"\u0627\u0643\u062a\u0628 \u0627\u0644\u0644\u064a\u0646\u0643 \u0643\u0627\u0645\u0644 \u2014 \u0628\u064a\u0628\u062f\u0623 \u0628\u0640 https:\/\/","b_cards":"\u0643\u0631\u0648\u062a","b_button":"\u0632\u0631\u0627\u0631 \u0644\u064a\u0646\u0643","b_external":"\u0644\u064a\u0646\u0643 \u062e\u0627\u0631\u062c\u064a","b_note":"\u0645\u0644\u0627\u062d\u0638\u0629","b_places":"\u0623\u0645\u0627\u0643\u0646","note_ph":"\u0627\u0643\u062a\u0628 \u0627\u0644\u0645\u0644\u0627\u062d\u0638\u0629 \u0647\u0646\u0627","cards_title":"\u0643\u0627\u0631\u062a \u062c\u0648\u0647 \u0627\u0644\u0643\u0644\u0627\u0645","cards_hint":"\u0627\u062e\u062a\u0627\u0631 \u0627\u0644\u0646\u0648\u0639 \u0648\u0627\u0643\u062a\u0628 \u0627\u0644\u0627\u0633\u0645 \u0648\u062f\u0648\u0633 \u0639\u0644\u064a\u0647. \u0627\u0644\u0643\u0627\u0631\u062a \u0628\u064a\u062a\u062d\u0637 \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631\u060c \u0648\u0628\u064a\u0627\u062e\u062f \u0627\u0644\u0635\u0648\u0631\u0629 \u0648\u0627\u0644\u0633\u0639\u0631 \u0648\u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0644\u0649 \u0637\u0648\u0644 (\u0644\u0648 \u0627\u062a\u063a\u064a\u0631\u062a \u0628\u062a\u062a\u063a\u064a\u0631 \u0644\u0648\u062d\u062f\u0647\u0627).","kind_units":"\u0648\u062d\u062f\u0627\u062a \u0627\u0644\u0645\u0646\u0637\u0642\u0629 (\u0644\u064a\u0646\u0643\u0627\u062a)","kind_article":"\u0627\u0642\u0631\u0623 \u0643\u0645\u0627\u0646 (\u0645\u0642\u0627\u0644)","button_title":"\u0632\u0631\u0627\u0631 \u0644\u064a\u0646\u0643 \u0639\u0631\u064a\u0636","button_hint":"\u0627\u062e\u062a\u0627\u0631 \u0635\u0641\u062d\u0629 \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 (\u0645\u0634\u0631\u0648\u0639\u060c \u0648\u062d\u062f\u0629\u060c \u0645\u0646\u0637\u0642\u0629\u060c \u0645\u0637\u0648\u0631\u060c \u0645\u0642\u0627\u0644\u060c \u0635\u0641\u062d\u0629 \u0628\u062d\u062b) \u0623\u0648 \u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643. \u0628\u064a\u0638\u0647\u0631 \u0632\u0631\u0627\u0631 \u0639\u0631\u064a\u0636 \u062c\u0648\u0647 \u0627\u0644\u0643\u0644\u0627\u0645\u060c \u0632\u064a \u00ab\u062a\u0627\u0628\u0639 \u0645\u062a\u0648\u0633\u0637 \u0633\u0639\u0631 \u0627\u0644\u0645\u062a\u0631 \u0639\u0644\u0649 \u0645\u0624\u0634\u0631 \u0634\u0627\u0631\u064a\u00bb.","button_text":"\u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0644\u064a \u0639\u0644\u0649 \u0627\u0644\u0632\u0631\u0627\u0631","button_url":"\u0623\u0648 \u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643","bad_url":"\u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643 \u0643\u0627\u0645\u0644 (https:\/\/\u2026) \u0623\u0648 \u0644\u064a\u0646\u0643 \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 \u0628\u064a\u0628\u062f\u0623 \u0628\u0640 \/","ext_title":"\u0644\u064a\u0646\u0643 \u0644\u0645\u0648\u0642\u0639 \u062a\u0627\u0646\u064a","ext_hint":"\u062d\u062f\u062f \u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0623\u0648\u0644 \u0648\u0628\u0639\u062f\u064a\u0646 \u062f\u0648\u0633 \u00ab\u0644\u064a\u0646\u0643 \u062e\u0627\u0631\u062c\u064a\u00bb. \u0627\u0644\u0644\u064a\u0646\u0643 \u0628\u064a\u0641\u062a\u062d \u0641\u064a \u062a\u0627\u0628 \u062c\u062f\u064a\u062f.","ext_url":"\u0627\u0644\u0644\u064a\u0646\u0643 (https:\/\/\u2026)","ext_text":"\u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0644\u064a \u0647\u064a\u0628\u0642\u0649 \u0644\u064a\u0646\u0643","places_title":"\u0642\u0627\u064a\u0645\u0629 \u0623\u0645\u0627\u0643\u0646","places_hint":"\u0643\u0644 \u0633\u0637\u0631 \u0645\u0643\u0627\u0646. \u0648\u0644\u0648 \u0639\u0627\u064a\u0632 \u0627\u0644\u0645\u0643\u0627\u0646 \u064a\u0628\u0642\u0649 \u0644\u064a\u0646\u0643 \u0627\u0643\u062a\u0628: \u0627\u0644\u0627\u0633\u0645 | \u0627\u0644\u0644\u064a\u0646\u0643 (\u0632\u064a: \u0643\u0627\u064a\u0631\u0648 \u0641\u064a\u0633\u062a\u064a\u0641\u0627\u0644 | \/ar\/area\/New-Cairo).","places_heading":"\u0627\u0644\u0639\u0646\u0648\u0627\u0646 (\u0632\u064a: \u0623\u064a\u0646 \u062a\u0630\u0647\u0628 \u0641\u064a \u0627\u0644\u0642\u0627\u0647\u0631\u0629 \u0627\u0644\u062c\u062f\u064a\u062f\u0629\u061f)","places_lines":"\u0627\u0644\u0623\u0645\u0627\u0643\u0646","places_caption":"\u0633\u0637\u0631 \u062a\u062d\u062a \u0627\u0644\u0642\u0627\u064a\u0645\u0629 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","places_none":"\u0627\u0643\u062a\u0628 \u0645\u0643\u0627\u0646 \u0648\u0627\u062d\u062f \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644."}            };
+        </script>
+        <script src="a/js/shary-admin/editor.js"></script>
         
-                <section class="ag-card" id="today-analysis">
-            <div class="ag-card__head"><h2>تحليل النهاردة</h2><a class="sm b8" href="admin-shary-agent-analysis.html">افتح التحليل الكامل</a></div>
-            <div class="ag-card__body">
-                                    <ul class="ag-checks an-insights">
-                                                    <li><i aria-hidden="true" style="color:#17665B">▲</i><span>سعر المتر في مدينة المستقبل زاد 3.9% عن آخر تحليل — دلوقتي 144,400 جنيه للمتر.</span></li>
-                                                    <li><i aria-hidden="true" style="color:#A1261F">▼</i><span>سعر المتر في القاهرة الجديدة نزل 2.2% عن آخر تحليل — دلوقتي 45,200 جنيه للمتر.</span></li>
-                                                    <li><i aria-hidden="true" style="color:#17665B">✓</i><span>أكتر مشروع عليه طلبات في آخر 30 يوم: ميفيدا (19 طلب — عندنا فيه 12 وحدة).</span></li>
-                                                    <li><i aria-hidden="true" style="color:#9A5B00">!</i><span>15 حاجة جهّزها الإيجنت ومستنية مراجعتك ونشرك.</span></li>
-                                            </ul>
-                    <p class="sm mute" style="margin-top:6px">تحليل يوم 2026-10-13 — السوق والمناطق والمشاريع والمطورين والأسعار وشاري قدام المنافسين.</p>
-                            </div>
-        </section>
+             
 
-        <section class="ag-card">
-            <div class="ag-card__head"><h2>مستني مراجعتك</h2><a class="sm b8" href="admin-shary-agent-review.html">افتح الكل (<span class="num">20</span>)</a></div>
-                            <div class="ag-scroll"><table>
-                    <thead><tr><th>القسم</th><th>العدد</th><th>آخر حاجة اتجهّزت</th><th><span class="sr">فتح</span></th></tr></thead>
-                    <tbody>
-                                            <tr><td class="b8 nowrap">مقالات ومحتوى</td><td class="b8"><span class="num">5</span></td><td class="mute">مراجعة صور الوحدات: 5 من غير صور ، 0 صورها صغيرة</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_content.html">مراجعة</a></td></tr>
-                                            <tr><td class="b8 nowrap">شاري معاك</td><td class="b8"><span class="num">3</span></td><td class="mute">شاري معاك: أنسب وحدات لـ«جاهز الآن» (8)</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_ma3ak.html">مراجعة</a></td></tr>
-                                            <tr><td class="b8 nowrap">أرقام السوق</td><td class="b8"><span class="num">2</span></td><td class="mute">أسعار المتر لشهر 2026-10 من وحدات شاري</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_market.html">مراجعة</a></td></tr>
-                                            <tr><td class="b8 nowrap">أخبار وقرارات</td><td class="b8"><span class="num">1</span></td><td class="mute">خبر: طرح مرحلة جديدة في ميفيدا</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_news.html">مراجعة</a></td></tr>
-                                            <tr><td class="b8 nowrap">عروض وإعلانات</td><td class="b8"><span class="num">1</span></td><td class="mute">عرض كاش — شقة 165 م² للبيع في ميفيدا</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_offers.html">مراجعة</a></td></tr>
-                                            <tr><td class="b8 nowrap">أسعار وخطط سداد</td><td class="b8"><span class="num">3</span></td><td class="mute">وحدة عميل جاهزة للنشر: شاليه 120م للإيجار في الساحل الشمالي</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_prices.html">مراجعة</a></td></tr>
-                                            <tr><td class="b8 nowrap">طلبات العملاء</td><td class="b8"><span class="num">1</span></td><td class="mute">وحدة عميل جاهزة للنشر: شقة 165م للبيع في ميفيدا</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_requests.html">مراجعة</a></td></tr>
-                                            <tr><td class="b8 nowrap">مقالات وسيو</td><td class="b8"><span class="num">4</span></td><td class="mute">لينكات داخلية لـ 25 كلمة من «خطة الصدارة»</td>
-                            <td class="end nowrap"><a class="b8" href="admin-shary-agent-review_section_seo.html">مراجعة</a></td></tr>
-                                        </tbody>
-                </table></div>
-                    </section>
+                
+                <link rel="stylesheet" href="a/css/shary-admin/pin.css">
+    <div class="page-wrapper">
+        <div class="content">
+            <div class="pin-wrap">
+                                                <div class="pin-card">
+                    <div class="pin-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+                    <h4>الإيجنت — الرقم السري</h4>
 
-        
-                                        <section class="ag-card" id="today-ma3ak">
-                <div class="ag-card__head"><h2>شاري معاك النهاردة</h2><a class="sm b8" href="admin-shary-ma3ak.html">افتح شاري معاك</a></div>
-                <div class="ag-card__body">
-                                            <p class="sm mute">مفيش حاجة مستنية قرار في شاري معاك.</p>
-                                        <div class="ag-tiles">
-                        <div class="ag-tile"><span>إيصالات مستنية</span><b class="num" style="font-size:18px"><bdi>0 ج.م</bdi></b><span>سحب مستني <bdi class="num">0 ج.م</bdi></span></div>
-                        <div class="ag-tile"><span>استثمارات قايمة</span><b class="num">0</b><span>بقيمة <bdi class="num">0 ج.م</bdi></span></div>
-                        <div class="ag-tile"><span>أقساط متأخرة</span><b class="num">0</b><span><bdi class="num">0 ج.م</bdi></span></div>
-                        <div class="ag-tile"><span>المستثمرين</span><b class="num">0</b><span>موثّق <span class="num">0</span> · جديد الأسبوع <span class="num">0</span></span></div>
-                    </div>
-                    <div class="ag-row">
-                        <button type="button" class="ag-chip" data-ag-say="جهّز قرارات إيصالات شاري معاك المستنية" data-ag-into="ag-command">جهّز قرارات الإيصالات</button>
-                        <button type="button" class="ag-chip" data-ag-say="راجع طلبات المقابلة والخدمات الجديدة في شاري معاك وجهّز حالتها" data-ag-into="ag-command">جهّز حالات الطلبات</button>
-                        <button type="button" class="ag-chip" data-ag-say="ضيف وحدات استلام فوري من الموقع لفرص «جاهز الآن» في شاري معاك" data-ag-into="ag-command">وحدات لـ«جاهز الآن»</button>
-                        <button type="button" class="ag-chip" data-ag-say="كمّل الناقص في فرص وعقارات شاري معاك (الإنجليزي والوسوم والوصف)" data-ag-into="ag-command">كمّل محتوى الفرص</button>
-                    </div>
-                    <p class="xs mute">الإيجنت بيجهّز القرار، وأنت اللي بتوافق — وقرارات الفلوس بتستنى تأكيدك. صرف السحب ومراجعة الهوية للفريق بس.</p>
-                </div>
-            </section>
-        
                     
-            <section class="ag-card" id="today-messages">
-                <div class="ag-card__head"><h2>رسايل العملاء</h2><a class="sm b8" href="admin-shary-agent-messages.html">افتح رسايل العملاء</a></div>
-                <div class="ag-card__body ag-col" style="gap:14px">
-                    <div class="ag-tiles">
-                        <div class="ag-tile"><span>مستنية تبعتها</span><b class="blue num">0</b><a href="admin-shary-agent-review_section_messages.html">راجعها</a></div>
-                        <div class="ag-tile"><span>بتتبعت دلوقتي</span><b class="num">0</b><span>كل 5 دقايق دفعة</span></div>
-                        <div class="ag-tile"><span>وصلت الأسبوع ده</span><b class="num">0</b><span>إشعار · SMS · واتساب · إيميل</span></div>
-                    </div>
-                    <div class="ag-row">
-                        <button type="button" class="ag-chip" data-ag-say="اكتب رسالة لكل العملاء عن آخر فرصة في شاري معاك (إشعار + SMS)" data-ag-into="ag-command">رسالة عن آخر فرصة</button>
-                        <button type="button" class="ag-chip" data-ag-say="جهّز إيميل للمستثمرين بملخص فرص شاري معاك المفتوحة" data-ag-into="ag-command">إيميل للمستثمرين</button>
-                        <button type="button" class="ag-chip" data-ag-say="اكتب واتساب للي طلبوا مقابلة في شاري معاك ولسه ما استثمروش" data-ag-into="ag-command">واتساب للمهتمين</button>
-                    </div>
-                    <p class="xs mute">الإيجنت بيكتب الرسالة ويحسب هتوصل لكام عميل — وانت اللي بتبعت. أي فرصة جديدة رسالتها بتتجهّز لوحدها.</p>
-                </div>
-            </section>
-        
-        <section class="ag-card" id="notifications">
-            <div class="ag-card__head"><h2>الإشعارات</h2>
-                                    <form method="post" action="#preview/admin/shary/agent/notifications/read"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm">علّم الكل مقري</button></form>
+                                            
+                        <p class="lead">اكتب الرقم السري بتاع الإيجنت.</p>
+                        <form method="post" action="#preview/admin/shary/pin/agent/unlock" autocomplete="off">
+                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="back" value="/admin/shary/agent">
+                            <div class="form-group">
+                                <label for="pin">الرقم السري (6 أرقام)</label>
+                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin" name="pin" autocomplete="off" required autofocus >
                             </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل ساخن على Shary AI: احمد</span><span class="xs mute nowrap">النهاردة 3:37 ص</span></div>
-                    <span class="sm mute">عايز: التجمع الخامس · شقة · في حدود 6 مليون
-الهدف: سكن
-القرار: بيشاور العيلة / شريك
-اعتراضاته: السعر، هيشاور
-شاف: شقة 120 م² في ماونتن فيو آي سيتي (7,900,000)، شقة 120 م² في جارنيت (6,715,000)، شقة 155 م² إعادة بيع في جارنيت (7,735,000)
-وقف عند: قريب من الحجز
-الخطوة الجاية: كلّمه في الميعاد اللي اتفق عليه — بكرة الساعة 5:00 م
-قوله إيه في المكالمة: ابدأ بالقسط الشهري مش بالإجمالي، واعرض اختيار بمساحة أصغر أو منطقة قريبة بنفس الميزانية.
-معاد المتابعة: بكرة الساعة 5:00 م
-التواصل: احمد +201012345678</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل ساخن على Shary AI: احمد</span><span class="xs mute nowrap">النهاردة 2:30 ص</span></div>
-                    <span class="sm mute">عايز: التجمع الخامس · شقة · في حدود 6 مليون
-الهدف: سكن
-القرار: بيشاور العيلة / شريك
-اعتراضاته: السعر، هيشاور
-شاف: شقة 120 م² في ماونتن فيو آي سيتي (7,900,000)، شقة 120 م² في جارنيت (6,715,000)، شقة 155 م² إعادة بيع في جارنيت (7,735,000)
-وقف عند: قريب من الحجز
-الخطوة الجاية: كلّمه في الميعاد اللي اتفق عليه — بكرة الساعة 5:00 م
-قوله إيه في المكالمة: ابدأ بالقسط الشهري مش بالإجمالي، واعرض اختيار بمساحة أصغر أو منطقة قريبة بنفس الميزانية.
-معاد المتابعة: بكرة الساعة 5:00 م
-التواصل: احمد +201012345678</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>متابعة عميل دلوقتي: تجربة منى</span><span class="xs mute nowrap">امبارح 8:25 م</span></div>
-                    <span class="sm mute">متابعة أوتوماتيك (يوم 1) — ابعتله على واتساب: «أهلًا 👋 لسه بتدوّر على الساحل الشمالي · فيلا؟ أنا لسه فاكر طلبك، وأقدر أكمّل معاك من اللي وقفنا عنده.»
-عايز: الساحل الشمالي · فيلا
-الهدف: استثمار
-إمتى: مستعجل (خلال شهر)
-اعتراضاته: ميعاد الاستلام
-وقف عند: قريب من الحجز
-الخطوة الجاية: كلّمه النهارده وأكّد معاه ميتنج مع سيلز المطور
-التواصل: تجربة منى 01122334455</span>                    <a class="sm b8" href="admin-shary-ai-calendar.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>متابعة عميل دلوقتي: تجربة أحمد</span><span class="xs mute nowrap">امبارح 8:25 م</span></div>
-                    <span class="sm mute">كلّمه في الميعاد اللي اتفق عليه
-عايز: التجمع الخامس · شقة · في حدود 6 مليون
-الهدف: سكن
-القرار: بيشاور العيلة / شريك
-اعتراضاته: السعر، هيشاور
-شاف: شقة 120 م² في جارنيت (6,715,000)، شقة 120 م² في ماونتن فيو آي سيتي (7,900,000)، شقة 155 م² إعادة بيع في جارنيت (7,735,000)
-وقف عند: قريب من الحجز
-الخطوة الجاية: كلّمه في الميعاد اللي اتفق عليه — بكرة الساعة 5:00 م
-معاد المتابعة: بكرة الساعة 5:00 م
-التواصل: تجربة أحمد 01012345678</span>                    <a class="sm b8" href="admin-shary-ai-calendar.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل ساخن على Shary AI: —</span><span class="xs mute nowrap">امبارح 7:56 م</span></div>
-                    <span class="sm mute">وقف عند: قريب من الحجز
-الخطوة الجاية: لسه ماسابش رقم — لو رجع الشات Shary AI هيطلبه</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل بيسأل على خصم / آخر سعر: —</span><span class="xs mute nowrap">امبارح 7:56 م</span></div>
-                    <span class="sm mute">اعتراضاته: بيسأل على خصم
-وقف عند: عنده اعتراض
-الخطوة الجاية: بيسأل على خصم — سيلز المطور يكلمه بالعرض الحالي</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل عايز يكلم حد من الفريق: —</span><span class="xs mute nowrap">امبارح 7:56 م</span></div>
-                    <span class="sm mute">اعتراضاته: مش مهتم
-وقف عند: بيتعرّف
-الخطوة الجاية: طلب يكلم حد من الفريق — كلّمه النهارده</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>شاري إمباكت: Demo Customer اختار</span><span class="xs mute nowrap">امبارح 5:39 م</span></div>
-                    <span class="sm mute">الجمعيات: بنك الطعام.</span>                                    </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل بيسأل على خصم / آخر سعر: —</span><span class="xs mute nowrap">13 أكتوبر 3:05 م</span></div>
-                    <span class="sm mute">اعتراضاته: بيسأل على خصم
-وقف عند: عنده اعتراض
-الخطوة الجاية: بيسأل على خصم — سيلز المطور يكلمه بالعرض الحالي</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>شكوى من عميل على Shary AI: —</span><span class="xs mute nowrap">13 أكتوبر 3:05 م</span></div>
-                    <span class="sm mute">اعتراضاته: شكوى
-وقف عند: عنده اعتراض
-الخطوة الجاية: شكوى — حد مسؤول يكلمه النهارده ويحلها</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل عايز يكلم حد من الفريق: —</span><span class="xs mute nowrap">13 أكتوبر 3:05 م</span></div>
-                    <span class="sm mute">وقف عند: بيتعرّف
-الخطوة الجاية: طلب يكلم حد من الفريق — كلّمه النهارده</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل بيسأل على خصم / آخر سعر: —</span><span class="xs mute nowrap">13 أكتوبر 11:54 ص</span></div>
-                    <span class="sm mute">اعتراضاته: بيسأل على خصم
-وقف عند: عنده اعتراض
-الخطوة الجاية: بيسأل على خصم — سيلز المطور يكلمه بالعرض الحالي</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>شكوى من عميل على Shary AI: —</span><span class="xs mute nowrap">13 أكتوبر 11:54 ص</span></div>
-                    <span class="sm mute">اعتراضاته: شكوى
-وقف عند: عنده اعتراض
-الخطوة الجاية: شكوى — حد مسؤول يكلمه النهارده ويحلها</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل عايز يكلم حد من الفريق: —</span><span class="xs mute nowrap">13 أكتوبر 11:54 ص</span></div>
-                    <span class="sm mute">وقف عند: بيتعرّف
-الخطوة الجاية: طلب يكلم حد من الفريق — كلّمه النهارده</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                            <div class="ag-card__body" style="gap:2px">
-                    <div class="ag-row ag-row--between"><span class="b8"><span class="ag-dot ag-dot--blue" style="display:inline-block;margin-inline-end:6px"></span>عميل بيسأل على خصم / آخر سعر: —</span><span class="xs mute nowrap">13 أكتوبر 10:26 ص</span></div>
-                    <span class="sm mute">اعتراضاته: بيسأل على خصم
-وقف عند: عنده اعتراض
-الخطوة الجاية: بيسأل على خصم — سيلز المطور يكلمه بالعرض الحالي</span>                    <a class="sm b8" href="admin-shary-ai-conversations.html">افتح</a>                </div>
-                    </section>
+                            <button type="submit" class="btn btn-primary w-100" >افتح</button>
+                        </form>
+                                                <details class="pin-more">
+                            <summary>نسيت الرقم السري؟</summary>
+                            <p class="pin-note mt-2">اكتب كلمة سر حسابك في لوحة التحكم (اللي بتدخل بيها). الرقم القديم هيتمسح وتعمل رقم جديد.</p>
+                            <form method="post" action="#preview/admin/shary/pin/agent/reset" autocomplete="off">
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <input type="hidden" name="back" value="/admin/shary/agent">
+                                <div class="form-group">
+                                    <label for="account_password">كلمة سر حسابك في لوحة التحكم</label>
+                                    <input type="password" class="form-control" id="account_password" name="account_password" autocomplete="current-password" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-danger w-100">امسح الرقم واعمل رقم جديد</button>
+                            </form>
+                        </details>
+                                                            </div>
+                
+                                    <p class="text-center mt-3 mb-0"><a class="pin-all" href="admin-shary-pins.html">كل الأرقام السرية (اعمل / غيّر / نسيت الرقم)</a></p>
+                            </div>
+        </div>
     </div>
+</div>
+<!-- /Main Wrapper -->
+    <!-- jQuery -->
+<script src="a/assets/js/jquery-3.6.0.min.js"></script>
 
-    <section class="ag-card side" style="display:block">
-        <div class="ag-card__head"><h2>مهام النهاردة</h2><a class="sm b8" href="admin-shary-agent-tasks.html">كل المهام</a></div>
-        <div class="ag-lines">
-                                            <div>
-                    <div class="ag-col"><span class="b8">الإيميلات وطلبات العملاء</span><span class="xs mute">الجاي: 13 أكتوبر 8:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">متابعة مواقع المطورين والمنافسين</span><span class="xs mute">الجاي: 13 أكتوبر 8:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">كتابة مشاريع السوق الناقصة</span><span class="xs mute">الجاي: 13 أكتوبر 8:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">جديد المنافسين كل يوم</span><span class="xs mute">الجاي: 13 أكتوبر 8:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">الدولار والذهب والحديد والأسمنت والفايدة والبورصة</span><span class="xs mute">الجاي: 13 أكتوبر 9:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">أسعار وخطط سداد المطورين</span><span class="xs mute">الجاي: 13 أكتوبر 9:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">شاري معاك: المتابعة اليومية</span><span class="xs mute">الجاي: 13 أكتوبر 9:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">أخبار السوق والعقارات والبورصة</span><span class="xs mute">الجاي: 13 أكتوبر 10:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">التسويق: كتابة شغل الأيام الجاية</span><span class="xs mute">الجاي: 13 أكتوبر 10:15 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">شاري معاك وتأثير شاري: تكملة النصوص الناقصة</span><span class="xs mute">الجاي: 13 أكتوبر 11:15 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">مقال اليوم</span><span class="xs mute">الجاي: 13 أكتوبر 11:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">التحليل اليومي</span><span class="xs mute">الجاي: 13 أكتوبر 5:30 م</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">التقرير اليومي</span><span class="xs mute">الجاي: 13 أكتوبر 6:00 م</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">تكملة صفحات المشاريع الناقصة</span><span class="xs mute">الجاي: امبارح 2:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">تكملة صفحات الوحدات الناقصة</span><span class="xs mute">الجاي: امبارح 2:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">تكملة صفحات المناطق</span><span class="xs mute">الجاي: امبارح 2:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">فحص سيو صفحات الموقع</span><span class="xs mute">الجاي: امبارح 3:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">صور الموقع: فحص الجديد</span><span class="xs mute">الجاي: امبارح 4:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">الماستر بلان على الخريطة</span><span class="xs mute">الجاي: امبارح 5:15 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">خطة الصدارة: شغل الأسبوع</span><span class="xs mute">الجاي: امبارح 6:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">فريق السيو: AEO — الإجابات المميزة</span><span class="xs mute">الجاي: امبارح 6:20 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">شاري معاك: الأنسب لكل هدف</span><span class="xs mute">الجاي: امبارح 6:40 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">اقتراحات الباك لينك</span><span class="xs mute">الجاي: امبارح 12:00 م</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">تكملة المقالات الناقصة</span><span class="xs mute">الجاي: النهاردة 3:30 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">التسويق: مشروع أو وحدات جديدة ← بوست وتصميم ومقال</span><span class="xs mute">الجاي: النهاردة 11:00 ص</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">التحليل الأسبوعي</span><span class="xs mute">الجاي: النهاردة 5:45 م</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                                            <div>
-                    <div class="ag-col"><span class="b8">التقرير الأسبوعي</span><span class="xs mute">الجاي: النهاردة 6:30 م</span></div>
-                    <span class="ag-pill ">لسه</span>
-                </div>
-                    </div>
-    </section>
-</div>
-    </main>
-</div>
-<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة","pick_search":"اكتب للبحث…","pick_none":"مفيش اختيار بالاسم ده","required_field":"الخانة دي مطلوبة","required_save":"فيه خانات مطلوبة فاضية — اتعلّمت بالأحمر. اكتبها وبعدين احفظ."}};</script>
+<!-- Bootstrap Core JS -->
+<script src="a/assets/js/bootstrap.bundle.min.js"></script>
+
+<!-- Feather Icon JS -->
+<script src="a/assets/js/feather.min.js"></script>
+
+<!-- Slimscroll JS -->
+<script src="a/assets/js/jquery.slimscroll.min.js"></script>
+
+<!-- Datatable JS -->
+<script src="a/assets/js/jquery.dataTables.min.js"></script>
+<script src="a/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="a/assets/plugins/select2/js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
+<script src="a/assets/js/moment.min.js"></script>
+<script src="a/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Chart JS -->
+<script src="a/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="a/assets/plugins/apexchart/chart-data.js"></script>
+
+<script src="a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+
+
+
+<!-- Owl JS -->
+<script src="a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+<!-- Fileupload JS -->
+<script src="a/assets/plugins/fileupload/fileupload.min.js"></script>
+<!-- Sweetalert 2 -->
+<script src="a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<!-- Custom JS -->
+<script src="a/assets_rtl/js/script.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.confirm-text', function(e) {
+
+            var parentElement = $(this).parent().parent();
+        var deleteUrl = $(this);
+        Swal.fire({
+            title: "هل أنت متأكد؟",
+            text: "سيتم حذف البيانات ولا يمكن استرجاعها مرة اخرى",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "نعم، احذفه!",
+            cancelButtonText: "إلغاء", // Translate "Cancel" here
+            confirmButtonClass: "btn btn-primary",
+            cancelButtonClass: "btn btn-danger ml-1",
+            buttonsStyling: !1,
+        }).then(function (t) {
+
+            if (t.value) {
+                parentElement.hide();
+                deleted = deleteUrl.data("delete-url");
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: deleted,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
+                    },
+                    success: function (result) {
+                        // Hide the parent element (delete the row)
+                        parentElement.hide();
+                        // Display a success message
+                        Swal.fire({
+                            type: "success",
+                            title: "تم الحذف!",
+                            text: "تم الحذف بنجاح",
+                            confirmButtonClass: "btn btn-success",
+                        });
+                        // // Redirect to another URL
+                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
+                    },
+                    // User confirmed, hide the parent element (delete the row)
+                })
+            }
+        });
+    })
+    });
+</script>
+    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
+     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة","pick_search":"اكتب للبحث…","pick_none":"مفيش اختيار بالاسم ده","required_field":"الخانة دي مطلوبة","required_save":"فيه خانات مطلوبة فاضية — اتعلّمت بالأحمر. اكتبها وبعدين احفظ."}};</script>
 <script src="a/js/shary-admin/shell.js" defer></script>
-<script src="a/js/shary-admin/agent.js" defer></script>
-<style>
-        .sx-draftbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 14px 0 12px; padding: 10px 12px; border: 1px dashed #c9d8ea; border-radius: 12px; background: #f6f9fd; }
-        .sx-draftbar__save { border: 1px solid #1E4266; background: #fff; color: #1E4266; font-weight: 800; font-size: 14px; padding: 7px 16px; border-radius: 999px; cursor: pointer; }
-        .sx-draftbar__save:hover { background: #1E4266; color: #fff; }
-        .sx-draftbar__state { font-size: 13px; font-weight: 700; color: #6f8091; }
-        .sx-draftbar.is-saved .sx-draftbar__state { color: #15803d; }
-        .sx-draftnote { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 16px; padding: 12px 14px; border-radius: 12px; background: #fff7e6; border: 1px solid #f5d9a3; font-weight: 800; color: #7a4b00; }
-        .sx-draftnote span { flex: 1 1 220px; }
-        .sx-draftnote button { border: 0; border-radius: 999px; padding: 7px 16px; font-weight: 800; font-size: 14px; cursor: pointer; }
-        .sx-draftnote__open { background: #1E4266; color: #fff; }
-        .sx-draftnote__drop { background: transparent; color: #a33; text-decoration: underline; }
-    </style>
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"oubmwrfZ2ZzLzAC2LIq5veyj6KfjjcUBiAAUm0Xi","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
+     <link rel="stylesheet" href="a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"3feP5cr26IcPEjjg9LXrxoWu8DmBkwaoluzoHrqE","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
-<script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
+      <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>

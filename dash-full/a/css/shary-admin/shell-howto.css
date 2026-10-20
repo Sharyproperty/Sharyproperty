@@ -1,0 +1,19 @@
+/* لوحة التحكم — resources/views/shary_admin/shell/howto.blade.php */
+.sx-how { margin-bottom: 14px; border: 1px solid var(--sx-line, #e1e8f1); border-radius: 16px; background: #fff; overflow: hidden; }
+.sx-how > summary { display: flex; align-items: center; gap: 12px; padding: 15px 18px; cursor: pointer; list-style: none; font-size: 17px; font-weight: 800; color: var(--sx-navy, #123a5c); }
+.sx-how > summary::-webkit-details-marker { display: none; }
+.sx-how > summary small { display: block; margin-top: 2px; font-size: 13.5px; font-weight: 600; color: var(--sx-muted, #5b6b7c); line-height: 1.7; }
+.sx-how > summary .sx-how__chev { flex: none; margin-inline-start: auto; transition: transform .15s; color: #6f8091; }
+.sx-how[open] > summary .sx-how__chev { transform: rotate(180deg); }
+.sx-how[open] > summary { border-bottom: 1px solid var(--sx-line, #e1e8f1); background: #f8fafc; }
+.sx-how__body { padding: 16px 18px 18px; }
+.sx-how__body h6 { margin: 0 0 8px; font-size: 13px; font-weight: 800; color: #6f8091; }
+.sx-how__steps { margin: 0 0 14px; padding: 0; list-style: none; counter-reset: how; }
+.sx-how__steps li { position: relative; margin-bottom: 9px; padding-inline-start: 40px; font-size: 15.5px; font-weight: 600; line-height: 1.85; color: #1e3348; counter-increment: how; }
+.sx-how__steps li::before { content: counter(how); position: absolute; inset-inline-start: 0; top: 2px; display: flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 50%; background: var(--sx-soft, #e8f0fb); color: var(--sx-navy, #123a5c); font-size: 13.5px; font-weight: 800; }
+.sx-how__tips { margin: 0 0 14px; padding: 10px 14px; border-radius: 12px; background: #fff8e8; border: 1px solid #f3e1b3; list-style: none; }
+.sx-how__tips li { font-size: 14.5px; font-weight: 700; line-height: 1.8; color: #6b4100; }
+.sx-how__links { display: flex; flex-wrap: wrap; gap: 8px; }
+.sx-how__links a { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 12px; background: var(--sx-navy, #123a5c); color: #fff; font-weight: 800; font-size: 14px; text-decoration: none; }
+.sx-how__links a:hover { background: #0d2c47; color: #fff; }
+@media (max-width: 700px) { .sx-how > summary { font-size: 16px; padding: 13px 14px; } .sx-how__body { padding: 14px; } .sx-how__links a { flex: 1 1 100%; justify-content: center; } }

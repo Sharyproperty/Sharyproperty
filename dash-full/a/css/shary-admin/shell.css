@@ -6,6 +6,7 @@
  *   1  tokens + base            4  the content of the old screens (cards, tables, forms, buttons, tabs, modals)
  *   2  header + search          5  list search + record tabs + home
  *   3  the menu                 6  phones and tablets            7  print
+ *   8  every clickable thing feels clickable (hand cursor, hover, pressed, «working…»)
  */
 
 /* ------------------------------------------------------------------ 1  tokens + base */
@@ -128,10 +129,11 @@ body.sx .page-header .page-title h4, body.sx .page-title h4 { margin: 0 0 4px; f
 body.sx .page-header .page-title h6, body.sx .page-title h6 { margin: 0; font-size: 14.5px; font-weight: 600; line-height: 1.8; color: var(--sx-muted); max-width: 860px; }
 body.sx .page-header .page-btn { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 
-/* buttons */
+/* buttons — every one reads as a button: its colour, an edge a shade darker and a small shadow under it (the shadow and how it
+   answers the mouse and the finger are in section 8) */
 body.sx .page-wrapper .btn, body.sx .modal .btn, body.sx .swal2-actions .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 42px; padding: 6px 18px; border-radius: 12px; border: 1.5px solid transparent;
-    font-size: 14.5px; font-weight: 800; line-height: 1.5; box-shadow: none !important; text-decoration: none; white-space: normal; width: auto; min-width: 0;
+    font-size: 14.5px; font-weight: 800; line-height: 1.5; text-decoration: none; white-space: normal; width: auto; min-width: 0;
 }
 body.sx .page-wrapper .btn-sm, body.sx .modal .btn-sm { min-height: 36px; padding: 3px 12px; font-size: 13.5px; border-radius: 10px; }
 body.sx .btn-primary, body.sx .btn-submit, body.sx .btn-added, body.sx .page-header .btn-added, body.sx .btn-success.btn-added, body.sx .btn-filters, body.sx .btn-login {
@@ -139,19 +141,21 @@ body.sx .btn-primary, body.sx .btn-submit, body.sx .btn-added, body.sx .page-hea
 }
 body.sx .btn-primary:hover, body.sx .btn-submit:hover, body.sx .btn-added:hover { background: #0d2c47 !important; border-color: #0d2c47 !important; color: #fff !important; }
 body.sx .page-wrapper a.btn-primary, body.sx .page-wrapper a.btn-added, body.sx .page-wrapper a.btn-submit, body.sx .page-wrapper a.btn-danger, body.sx .page-wrapper a.btn-success, body.sx .page-wrapper a.btn-info, body.sx .page-wrapper a.btn-dark { color: #fff; }
-body.sx .btn-cancel, body.sx .btn-secondary, body.sx .btn-light, body.sx .btn-outline-secondary, body.sx .btn-outline-primary, body.sx .btn-default {
-    background: var(--sx-soft) !important; border-color: var(--sx-soft) !important; color: var(--sx-ink) !important;
+body.sx .btn-cancel, body.sx .btn-secondary, body.sx .btn-light, body.sx .btn-outline-secondary, body.sx .btn-outline-primary, body.sx .btn-default,
+body.sx .btn-info, body.sx .btn-outline-info {
+    background: var(--sx-soft) !important; border-color: #c6d8ef !important; color: var(--sx-ink) !important;
 }
-body.sx .btn-cancel:hover, body.sx .btn-secondary:hover, body.sx .btn-light:hover, body.sx .btn-outline-secondary:hover, body.sx .btn-outline-primary:hover { background: #d9e6f8 !important; border-color: #d9e6f8 !important; }
-body.sx .btn-success { background: #e3f6f1 !important; border-color: #e3f6f1 !important; color: var(--sx-teal) !important; }
-body.sx .btn-success:hover { background: #cfeee5 !important; }
-body.sx .btn-danger, body.sx .btn-outline-danger { background: #fdecea !important; border-color: #fdecea !important; color: var(--sx-red) !important; }
-body.sx .btn-danger:hover, body.sx .btn-outline-danger:hover { background: #f9d7d3 !important; }
-body.sx .btn-warning, body.sx .btn-outline-warning { background: #fff3dc !important; border-color: #fff3dc !important; color: #7a4a00 !important; }
-body.sx .btn-info, body.sx .btn-outline-info { background: var(--sx-soft) !important; border-color: var(--sx-soft) !important; color: var(--sx-ink) !important; }
+body.sx .btn-cancel:hover, body.sx .btn-secondary:hover, body.sx .btn-light:hover, body.sx .btn-outline-secondary:hover, body.sx .btn-outline-primary:hover,
+body.sx .btn-default:hover, body.sx .btn-info:hover, body.sx .btn-outline-info:hover { background: #d9e6f8 !important; border-color: #9fbde6 !important; color: var(--sx-ink) !important; }
+body.sx .btn-success, body.sx .btn-outline-success { background: #e3f6f1 !important; border-color: #b4e0d2 !important; color: var(--sx-teal) !important; }
+body.sx .btn-success:hover, body.sx .btn-outline-success:hover { background: #cfeee5 !important; border-color: #8fcdb9 !important; color: var(--sx-teal) !important; }
+body.sx .btn-danger, body.sx .btn-outline-danger { background: #fdecea !important; border-color: #f2c4bf !important; color: var(--sx-red) !important; }
+body.sx .btn-danger:hover, body.sx .btn-outline-danger:hover { background: #f9d7d3 !important; border-color: #e8a29b !important; color: var(--sx-red) !important; }
+body.sx .btn-warning, body.sx .btn-outline-warning { background: #fff3dc !important; border-color: #efd29a !important; color: #7a4a00 !important; }
+body.sx .btn-warning:hover, body.sx .btn-outline-warning:hover { background: #ffe8bd !important; border-color: #e2b65f !important; color: #7a4a00 !important; }
 body.sx .btn-dark { background: var(--sx-navy) !important; border-color: var(--sx-navy) !important; color: #fff !important; }
-body.sx .btn-link { color: var(--sx-blue) !important; background: none !important; }
-body.sx .btn:disabled, body.sx .btn.disabled { opacity: .55; }
+body.sx .btn-link { color: var(--sx-blue) !important; background: none !important; border-color: transparent !important; }
+body.sx .btn:disabled, body.sx .btn.disabled { opacity: .5; }
 body.sx .page-btn .btn img, body.sx .btn-added img { width: 16px; height: 16px; }
 
 /* cards */
@@ -326,6 +330,11 @@ body.sx .sx-guide[hidden] { display: none; }
 body.sx .sx-guide__table td:first-child { font-weight: 800; }
 body.sx .sx-guide__table td:last-child { white-space: nowrap; }
 body.sx .sx-home__lead { margin: 0 0 18px; color: var(--sx-muted); font-size: 14.5px; max-width: 860px; }
+/* الرئيسية: «ابدأ من هنا» — كارت لكل نوع (مشروع ، وحدة ، مطور …) يفتح صفحة «كل البيانات» بتاعته */
+body.sx .sx-hubs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+body.sx .sx-hub { display: block; border: 1.5px solid #dfe6ee; border-radius: 14px; padding: 12px 14px; background: #f7fafd; color: var(--sx-navy) !important; text-decoration: none; }
+body.sx .sx-hub b { display: block; font-size: 16px; font-weight: 800; }
+body.sx .sx-hub small { font-weight: 700; color: #5b7189; }
 body.sx .sx-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 16px; }
 body.sx .sx-tile { display: block; background: #fff; border: 1px solid var(--sx-line); border-radius: 18px; padding: 16px 18px; box-shadow: 0 10px 26px -22px rgba(18, 58, 92, .5); color: var(--sx-navy) !important; text-decoration: none; }
 body.sx .sx-tile:hover { border-color: #b9cbe2; }
@@ -509,3 +518,91 @@ body.sx .select2-results__option { padding: 9px 12px; font-weight: 700; }
 
 /* ---- a picture inside a dashboard page is never wider than its box (an old form's big master plan preview widened the page on phones) */
 body.sx .page-wrapper .card-body img:not([width]) { max-width: 100%; }
+
+/* ------------------------------------------------------------------ 8  every clickable thing feels clickable
+   One place for how the dashboard answers the mouse and the finger — colours and shapes stay in each component's own rules:
+     · the hand cursor on everything that does something («not allowed» on a button that is switched off)
+     · computer: a button lifts with a shadow under the mouse, a card that opens a screen lifts with a blue edge,
+       a choice list / chip gets a blue edge, a text link gets underlined
+     · computer + phone: pressing pushes the thing in (a little smaller and a shade darker) — the finger sees the press at once;
+       rows of a menu or a list only get darker (--sx-press: 1), cards get pushed in less
+     · «working…»: the pressed button turns into a spinner until its action is done, and a line runs along the top of the screen
+       while the next page opens (shell.js · 8 adds .sx-busy and .sx-loadbar)
+   A transform never moves an inline text link, so only links shaped as buttons, chips, tabs or cards get pushed in. */
+body.sx :is(a[href], button, summary, select, [role="button"], [role="tab"], [onclick], [data-bs-toggle], .btn, .ag-btn, .checktoggle,
+            label:has(> input:is([type="checkbox"], [type="radio"], [type="file"])), .form-check-label, .custom-file-container__custom-file,
+            input:is([type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="color"], [type="submit"], [type="button"]),
+            .select2-selection, .select2-results__option, .cke_button, .cke_combo_button) { cursor: pointer; }
+body.sx :is(button, .btn, .ag-btn, input, select):is(:disabled, .disabled, [aria-disabled="true"]) { cursor: not-allowed; }
+
+/* buttons: raised (the shadow grows under the mouse and turns inward while pressed) */
+body.sx .btn:not(.btn-link):not(.btn-close), body.sx .ag-btn {
+    --sx-lift: 0 1px 2px rgba(18, 58, 92, .14);
+    transition: background-color .15s, border-color .15s, color .15s, box-shadow .15s, translate .12s, scale .12s, filter .12s;
+}
+body.sx .btn:not(.btn-link):not(.btn-close) { box-shadow: var(--sx-lift) !important; }
+body.sx .ag-btn { box-shadow: var(--sx-lift); }
+body.sx .btn:is(:disabled, .disabled), body.sx .ag-btn[disabled] { --sx-lift: none; }
+body.sx input[type="file"]::file-selector-button { cursor: pointer; background: var(--sx-soft); color: var(--sx-ink); font-weight: 800; transition: background-color .15s; }
+
+/* cards that open a screen, and the size a press pushes things in (rows: no size change, a shade darker only) */
+body.sx :is(.sx-tile, .sx-op, .sx-hub, a.card, .ag-hubcard, a.ag-item, .ag-design, a.ag-key__card, .uo-card, .ma3ak-saved__item) {
+    --sx-press: .985; transition: border-color .15s, box-shadow .15s, translate .15s, scale .12s;
+}
+body.sx :is(.sx-grp > button, .sx-one, .sx-grp li a, .sx-unit-sec__toggle, .sx-choice__item, .select2-results__option, .dropdown-item,
+            .sx-find__row > a, .sx-user__menu a, .sx-rowlist a, summary, label:has(> input:is([type="checkbox"], [type="radio"]))) { --sx-press: 1; --sx-press-dim: .95; }
+
+@media (hover: hover) {
+    body.sx .btn:not(.btn-link):not(.btn-close):not(:disabled):not(.disabled):hover, body.sx .ag-btn:not([disabled]):hover {
+        translate: 0 -1px; --sx-lift: 0 7px 16px -7px rgba(18, 58, 92, .5);
+    }
+    body.sx .btn-link:hover, body.sx :is(.page-wrapper, .sx-page, .modal) a:not([class]):hover { text-decoration: underline; text-underline-offset: 3px; }
+    body.sx :is(.sx-tile, .sx-op, .sx-hub, a.card, .ag-hubcard, a.ag-item, .ag-design, a.ag-key__card, .uo-card, .ma3ak-saved__item):hover {
+        border-color: #8fb0e0; box-shadow: 0 14px 26px -16px rgba(18, 58, 92, .5); translate: 0 -2px;
+    }
+    body.sx :is(select, .form-select, .sx-choice__button, .select2-selection):not(:disabled):not(.sx-invalid, .sx-invalid *):hover { border-color: #9fbde6 !important; }
+    body.sx :is(.ag-chip, .sx-chip, .shub-flag, .ma3ak-type, .orq-state, .orq-tab, .crm-tab, .ag-tab):is(a, button, label):not(.is-on):hover { border-color: var(--sx-blue); }
+    body.sx input[type="file"]:not(:disabled):hover::file-selector-button { background: #d9e6f8; }
+}
+
+/* pressed (mouse button down / finger on it) */
+body.sx :is(button, [role="button"], [role="tab"], a[class], label.btn, summary, .checktoggle, input:is([type="submit"], [type="button"]),
+            label:has(> input:is([type="checkbox"], [type="radio"])), .sx-grp li a, .sx-rowlist a, .sx-find__row > a, .sx-user__menu a):not(:disabled):not(.disabled):active {
+    scale: var(--sx-press, .97); filter: brightness(var(--sx-press-dim, .94));
+}
+body.sx .btn:not(.btn-link):not(.btn-close):not(:disabled):not(.disabled):active, body.sx .ag-btn:not([disabled]):active,
+body.sx :is(.sx-tile, .sx-op, .sx-hub, a.card, .ag-hubcard, a.ag-item, .ag-design, a.ag-key__card, .uo-card, .ma3ak-saved__item):active {
+    translate: none; --sx-lift: inset 0 2px 4px rgba(18, 58, 92, .25);
+}
+/* things without a colour of their own (menu rows, list rows, open tabs and chips) get one while pressed — a filter can't darken nothing */
+body.sx :is(.sx-grp > button, .sx-one, .sx-grp li a, .sx-unit-sec__toggle, .sx-choice__item, .select2-results__option, .dropdown-item,
+            .sx-find__row > a, .sx-user__menu a, .sx-rowlist a, summary, label:has(> input:is([type="checkbox"], [type="radio"])),
+            .nav-link:not(.active), .sx-tabs a:not(.is-on), .ag-tab:not(.is-on), .crm-tab:not(.is-on), .orq-tab:not(.is-on), .orq-state:not(.is-on),
+            .ma3ak-type:not(.is-on), .sx-unit-nav__link:not(.is-on), .sx-chip:not(.is-on), .ag-chip, .sx-act):active { background-color: #e1ecfb; }
+
+/* «working…»: the label gives its place to a spinner in the same colour (shell.js makes the button position: relative when it was static) */
+body.sx .sx-busy { pointer-events: none; cursor: progress; -webkit-text-fill-color: transparent; }
+body.sx .sx-busy > * { visibility: hidden; }
+body.sx .sx-busy::after {
+    content: ''; position: absolute; inset: 0; width: 18px; height: 18px; margin: auto; box-sizing: border-box;
+    border: 2.5px solid currentColor; border-inline-end-color: transparent; border-radius: 50%; animation: sx-spin .7s linear infinite;
+}
+body.sx input.sx-busy { opacity: .6; }
+@keyframes sx-spin { to { transform: rotate(360deg); } }
+
+/* the line on top of the screen while the next page opens */
+.sx-loadbar { position: fixed; z-index: 30002; top: 0; left: 0; right: 0; height: 3px; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .25s; }
+.sx-loadbar.is-on { opacity: 1; }
+.sx-loadbar::before {
+    content: ''; position: absolute; top: 0; bottom: 0; left: 0; width: 45%; border-radius: 3px;
+    background: linear-gradient(90deg, rgba(42, 157, 143, 0), #2a9d8f 35%, #1f63c6 70%, rgba(31, 99, 198, 0));
+    animation: sx-load 1.15s cubic-bezier(.4, 0, .2, 1) infinite;
+}
+[dir="rtl"] .sx-loadbar::before { left: auto; right: 0; animation-name: sx-load-rtl; }
+@keyframes sx-load { from { transform: translateX(-100%); } to { transform: translateX(230%); } }
+@keyframes sx-load-rtl { from { transform: translateX(100%); } to { transform: translateX(-230%); } }
+
+@media (prefers-reduced-motion: reduce) {
+    body.sx * { translate: none !important; scale: none !important; }
+    .sx-loadbar::before { animation-duration: 2.4s; }
+}

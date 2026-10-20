@@ -1,4 +1,4 @@
-// ── shell.js · جزء 1 من 5: الشرح وتوحيد الحروف والقايمة (المصدر: resources/js/shary-admin/shell/01-start-menu.js — عدّل هنا وشغّل tools/minify-assets.sh)
+// ── shell.js · جزء 1 من 6: الشرح وتوحيد الحروف والقايمة (المصدر: resources/js/shary-admin/shell/01-start-menu.js — عدّل هنا وشغّل tools/minify-assets.sh)
 /*
  * Shary dashboard shell — the behaviour of the one menu, the header search and the search box above every list.
  * No library is needed; when the old template's DataTables is on a table, the list search drives it.
@@ -6,6 +6,7 @@
  *   1 menu (groups, phone drawer)      3 tables: sideways scroll, action buttons
  *   2 header search                    4 list search (rows in the browser · DataTables · the server with ?q=)
  *   5 choice lists: a search box inside every <select> (our own small list, or the template's select2 with its search switched on)
+ *   6 pop-ups   7 required fields   8 every press gets an answer (pressed look on phones, «working…» spinner, the line on top — part 6)
  */
 (function () {
     'use strict';
@@ -96,7 +97,7 @@
         if (user && user.open && !user.contains(event.target)) { user.open = false; }
     });
 
-// ── shell.js · جزء 2 من 5: بحث الهيدر (المصدر: resources/js/shary-admin/shell/02-header-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
+// ── shell.js · جزء 2 من 6: بحث الهيدر (المصدر: resources/js/shary-admin/shell/02-header-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 2 header search
     var top = $('[data-sx-top]');
     var find = $('[data-sx-find]');
@@ -196,7 +197,7 @@
         if (event.key === 'Escape' && side && side.classList.contains('is-open')) { drawer(false); }
     });
 
-// ── shell.js · جزء 3 من 5: الجداول (كروت على الموبايل) والبحث في القوايم والصور الناقصة (المصدر: resources/js/shary-admin/shell/03-tables-list-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
+// ── shell.js · جزء 3 من 6: الجداول (كروت على الموبايل) والبحث في القوايم والصور الناقصة (المصدر: resources/js/shary-admin/shell/03-tables-list-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 3 tables
     var page = $('.page-wrapper') || $('.sx-page');
     var ACTIONS = [[/edit/i, T.actions_edit], [/delete|trash|close-circle/i, T.actions_delete], [/eye|view/i, T.actions_view], [/plus/i, T.actions_add]];
@@ -416,7 +417,7 @@
     })();
 
 
-// ── shell.js · جزء 4 من 5: قوايم الاختيار بالبحث (المصدر: resources/js/shary-admin/shell/04-choice-lists.js — عدّل هنا وشغّل tools/minify-assets.sh)
+// ── shell.js · جزء 4 من 6: قوايم الاختيار بالبحث (المصدر: resources/js/shary-admin/shell/04-choice-lists.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 5 choice lists: a search box inside every list of choices
     //   · lists the old template turns into "select2": its own search box is switched on (the template hides it)
     //   · plain <select> lists: a small searchable list of our own (the <select> stays in the form and keeps its name, value and events)
@@ -668,7 +669,7 @@
     }, 600);
     doc.addEventListener('shown.bs.modal', function () { setTimeout(choiceLists, 30); setTimeout(markRequired, 30); });
 
-// ── shell.js · جزء 5 من 5: النوافذ والحقول المطلوبة (المصدر: resources/js/shary-admin/shell/05-popups-required.js — عدّل هنا وشغّل tools/minify-assets.sh)
+// ── shell.js · جزء 5 من 6: النوافذ والحقول المطلوبة (المصدر: resources/js/shary-admin/shell/05-popups-required.js — عدّل هنا وشغّل tools/minify-assets.sh)
     // ------------------------------------------------------------------ 6 pop-ups: lists and editors inside them work
     //   · the template's select2 opens its list at the end of the page — under Bootstrap's pop-up layer: shell.css lifts an open list above it
     //   · Bootstrap's pop-up pulls the focus back inside itself — the list's search box (and an editor's link window) could not be typed in:
@@ -820,4 +821,166 @@
     doc.addEventListener('shown.bs.tab', function () { setTimeout(ready, 30); });
     cfg.refresh = ready;
     window.SharyShell = cfg;
+})();
+// ── shell.js · جزء 6 من 6: الضغطة ليها رد (المصدر: resources/js/shary-admin/shell/06-press-feedback.js — عدّل هنا وشغّل tools/minify-assets.sh)
+/*
+ * 8 every press gets an answer (the looks are in shell.css · 8):
+ *   · phones: the pressed look shows while the finger is on a button (an iPhone applies :active only when the page listens to touches)
+ *   · «working…»: the button that was just pressed turns into a spinner until its action is done —
+ *       a form that is sent (until the next page opens), or a request the page sends because of the press (fetch / jQuery AJAX).
+ *       A button the page already marks itself (disabled / aria-busy / data-state="busy") keeps the page's own look.
+ *   · a line runs along the top of the screen from a press on a link or a sent form until the next page opens
+ *   Never stuck: a download (the page stays) clears it after a few seconds, and so does coming back with the browser's back button.
+ */
+(function () {
+    'use strict';
+    var doc = document;
+    var BUSY = 'sx-busy';
+    var CONTROL = 'button, .btn, .ag-btn, [role="button"], input[type="submit"], input[type="button"]';
+    var LEAVE_WAIT = 10000;          // a download keeps the page: the spinner and the line go away by themselves
+    var REQUEST_WAIT = 60000;        // a request that never answers
+
+    doc.addEventListener('touchstart', function () {}, { passive: true });
+
+    // ---- the line on top of the screen
+    var bar = null;
+    var barTimer = 0;
+    var barSince = 0;
+    function loading(on) {
+        if (!bar) {
+            if (!on || !doc.body) { return; }
+            bar = doc.createElement('div');
+            bar.className = 'sx-loadbar';
+            bar.setAttribute('aria-hidden', 'true');
+            doc.body.appendChild(bar);
+        }
+        clearTimeout(barTimer);
+        bar.classList.toggle('is-on', on);
+        if (on) {
+            barSince = Date.now();
+            barTimer = setTimeout(function () { loading(false); }, LEAVE_WAIT);
+        }
+    }
+
+    // ---- the spinner on the pressed button
+    function ownBusy(control) {
+        return control.disabled || control.getAttribute('aria-busy') === 'true' || control.matches('[data-state="busy"], .is-busy, .is-loading');
+    }
+    function busy(control, on) {
+        var count = Math.max(0, (control.__sxBusy || 0) + (on ? 1 : -1));
+        control.__sxBusy = count;
+        if (count && !control.classList.contains(BUSY)) {
+            if (window.getComputedStyle(control).position === 'static') {
+                control.__sxPosition = control.style.position;
+                control.style.position = 'relative';                            // the spinner sits in the middle of the button
+            }
+            control.classList.add(BUSY);
+            control.setAttribute('aria-busy', 'true');
+        } else if (!count && control.classList.contains(BUSY)) {
+            control.classList.remove(BUSY);
+            control.removeAttribute('aria-busy');
+            if (control.__sxPosition !== undefined) {
+                control.style.position = control.__sxPosition;
+                delete control.__sxPosition;
+            }
+        }
+    }
+    function leaving(control) {
+        if (!control || ownBusy(control)) { return; }
+        busy(control, true);
+        setTimeout(function () { busy(control, false); }, LEAVE_WAIT);
+    }
+
+    // ---- a request the page sends because of a press belongs to that press:
+    //      sent while the press is being handled (also after a confirm() inside it), or within a moment after it
+    var pressed = null;
+    var pressedAt = 0;
+    var sameTask = false;
+    doc.addEventListener('click', function (event) {
+        var control = event.target && event.target.closest ? event.target.closest(CONTROL) : null;
+        if (!control || control.disabled) { return; }
+        pressed = control;
+        pressedAt = Date.now();
+        sameTask = true;
+        setTimeout(function () { sameTask = false; }, 0);
+    }, true);
+    function pressedNow() {
+        if (!pressed || !pressed.isConnected) { return null; }
+        return sameTask || Date.now() - pressedAt < 350 ? pressed : null;
+    }
+    function follow(control, finished) {
+        var shown = false;
+        var since = 0;
+        var over = false;
+        // decided after the page's own click code ran: a button the page marks itself keeps the page's look
+        var start = setTimeout(function () {
+            if (over || ownBusy(control)) { return; }
+            shown = true;
+            since = Date.now();
+            busy(control, true);
+        }, 0);
+        function end() {
+            if (over) { return; }
+            over = true;
+            clearTimeout(start);
+            if (shown) { setTimeout(function () { busy(control, false); }, Math.max(0, 300 - (Date.now() - since))); }   // long enough to be seen
+        }
+        finished.then(end, end);
+        setTimeout(end, REQUEST_WAIT);
+    }
+    if (typeof window.fetch === 'function') {
+        var fetchFirst = window.fetch;
+        window.fetch = function () {
+            var request = fetchFirst.apply(window, arguments);
+            var control = pressedNow();
+            if (control) { follow(control, request); }
+            return request;
+        };
+    }
+    if (window.XMLHttpRequest && XMLHttpRequest.prototype.send) {
+        var sendFirst = XMLHttpRequest.prototype.send;
+        XMLHttpRequest.prototype.send = function () {
+            var control = pressedNow();
+            if (control) {
+                var xhr = this;
+                follow(control, new Promise(function (resolve) { xhr.addEventListener('loadend', resolve); }));
+            }
+            return sendFirst.apply(this, arguments);
+        };
+    }
+
+    // ---- leaving the page: a form that is sent, a link to another screen (after every other script had its say)
+    window.addEventListener('submit', function (event) {
+        if (event.defaultPrevented) { return; }
+        var form = event.target;
+        var control = event.submitter || (form.querySelector ? form.querySelector('[type="submit"]') : null);
+        var target = (control && control.getAttribute('formtarget')) || form.getAttribute('target') || '';
+        if (target && target.toLowerCase() !== '_self') { return; }                  // opens in a new tab: this page stays as it is
+        loading(true);
+        leaving(control);
+    });
+    window.addEventListener('click', function (event) {
+        if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) { return; }
+        var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+        if (!link || link.hasAttribute('download') || (link.target && link.target.toLowerCase() !== '_self')) { return; }
+        var href = link.getAttribute('href') || '';
+        if (href.charAt(0) === '#' || /^\s*javascript:/i.test(href) || link.origin !== window.location.origin || !/^https?:$/.test(link.protocol)) { return; }
+        if (link.pathname === window.location.pathname && link.search === window.location.search && link.hash) { return; }   // a place on the same page
+        if (/(export|download|\.(pdf|xlsx?|csv|zip|docx?))$/i.test(link.pathname)) { return; }                                // a file: the page stays
+        loading(true);
+        if (link.matches('.btn, .ag-btn')) { leaving(link); }
+    });
+    // a «leave this page?» question that was answered «stay»: the next press or key on the page puts the line away
+    ['pointerdown', 'keydown'].forEach(function (type) {
+        doc.addEventListener(type, function () { if (bar && bar.classList.contains('is-on') && Date.now() - barSince > 1000) { loading(false); } }, true);
+    });
+    // back to this page from the browser's memory (back button): nothing is loading any more
+    window.addEventListener('pageshow', function (event) {
+        if (!event.persisted) { return; }
+        loading(false);
+        Array.prototype.forEach.call(doc.querySelectorAll('.' + BUSY), function (control) {
+            control.__sxBusy = 1;
+            busy(control, false);
+        });
+    });
 })();
