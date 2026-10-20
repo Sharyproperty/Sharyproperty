@@ -202,8 +202,10 @@ document.addEventListener('error', function (e) {
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
             <div class="sx-user__menu">
-                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">My account</a>                
-                <a href="admin-shary-pins.html">PINs</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">Log out</a>
+                <a href="profile.html">My account</a>                
+                <a href="admin-shary-pins.html">PINs</a>                
+                <a href="admin-shary-accounts.html">Dashboard accounts</a>                
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">Log out</a>
             </div>
         </details>
     </div>
@@ -234,7 +236,7 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one is-on" href="admin-shary-errors.html"  aria-current="page" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">6</b>                    </a>
+                        <b class="sx-tag">9</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
@@ -814,6 +816,8 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="supervisor.html" class="" ><span>Supervisors &amp; permissions</span></a></li>
                                                             
+                                                                                                <li><a href="admin-shary-accounts.html" class="" ><span>Dashboard accounts</span></a></li>
+                                                            
                                                                                                 <li><a href="admin-shary-social-login.html" class="" ><span>Google / Facebook / Apple sign-in</span></a></li>
                                                     </ul>
                     </div>
@@ -843,11 +847,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2",
+                token: "0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -882,7 +886,23 @@ document.addEventListener('error', function (e) {
                     <h4>Errors</h4>
                     <h6>Every error on the website or the dashboard is recorded here by itself: the page, the reason, where in the code, and how many times. Press &quot;Copy&quot; and send it to the developer — no need to explain what happened.</h6>
                 </div>
-                                    <div class="page-btn"><button type="button" class="btn btn-primary" data-copy-text="Shary error ×1 — 2026-10-20 16:08
+                                    <div class="page-btn"><button type="button" class="btn btn-primary" data-copy-text="Shary error ×1 — 2026-10-20 17:34
+Error: Error: Class &quot;App\Models\Areas&quot; not found
+At: /tmp/claude-0/-home-claude/c2fdf513-f88b-5ae6-b61a-c121304d2d71/scratchpad/click/seo-live.php:31
+
+Shary error ×1 — 2026-10-20 17:32
+Error: Error: Object of class Closure could not be converted to string
+At: /tmp/claude-0/-home-claude/c2fdf513-f88b-5ae6-b61a-c121304d2d71/scratchpad/click/routes-dump.php:17
+
+Shary error ×12 — 2026-10-20 17:32 (first 2026-10-20 01:21)
+Error: ReflectionException: Class &quot;App\Http\Controllers\API\CountriesController&quot; does not exist
+At: vendor/laravel/framework/src/Illuminate/Foundation/Console/RouteListCommand.php:225
+
+Shary error ×2 — 2026-10-20 17:32 (first 2026-10-20 17:32)
+Error: LogicException: Unable to prepare route [ar/home-test] for serialization. Another route has already been assigned name [/home-test].
+At: vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php:247
+
+Shary error ×1 — 2026-10-20 16:08
 Error: UniqueConstraintViolationException: SQLSTATE[23000]: Integrity constraint violation: 19 UNIQUE constraint failed: shary_web_push.token (Connection: sqlite, SQL: insert into &quot;shary_web_push&quot; (&quot;token&quot;, &quot;lang&quot;, &quot;created_at&quot;, &quot;updated_at&quot;) values (web-test-token-ar, ar, 2026-10-20 16:08:55, 2026-10-20 16:08:55))
 At: vendor/laravel/framework/src/Illuminate/Database/Connection.php:824
 
@@ -891,10 +911,6 @@ Error: Uncaught ErrorException: Undefined variable $errors in storage/framework/
 
 Shary error ×2 — 2026-10-20 15:40 (first 2026-10-20 15:40)
 Error: Uncaught Error: Call to a member function relationLoaded() on null in app/Shary/Front.php:157
-
-Shary error ×10 — 2026-10-20 15:38 (first 2026-10-20 01:21)
-Error: ReflectionException: Class &quot;App\Http\Controllers\API\CountriesController&quot; does not exist
-At: vendor/laravel/framework/src/Illuminate/Foundation/Console/RouteListCommand.php:225
 
 Shary error ×1 — 2026-10-20 12:48
 Page: GET https://shary.eg/admin/shary/drafts/find?key=***
@@ -910,6 +926,54 @@ At: resources/views/shary/partials/ad-strip.blade.php">Copy all errors</button><
                                     <li class="nav-item"><a class="nav-link active" href="admin-shary-errors_days_1.html" data-sx-sample="1">Last week</a></li>
                                     <li class="nav-item"><a class="nav-link " href="admin-shary-errors_days_1.html" data-sx-sample="1">Last two weeks</a></li>
                             </ul>
+                            <div class="sx-err">
+                    <div class="sx-err__head">
+                        <span class="sx-err__count">1 times</span>
+                        <span class="sx-err__time">last 2026-10-20 17:34</span>
+                        <button type="button" class="btn btn-sm btn-light ms-auto" data-copy-text="Shary error ×1 — 2026-10-20 17:34
+Error: Error: Class &quot;App\Models\Areas&quot; not found
+At: /tmp/claude-0/-home-claude/c2fdf513-f88b-5ae6-b61a-c121304d2d71/scratchpad/click/seo-live.php:31">Copy</button>
+                    </div>
+                    <p class="sx-err__msg" dir="auto">Error: Class &quot;App\Models\Areas&quot; not found</p>
+                    <div class="sx-err__meta">
+                                                <span>In the code: <code dir="ltr">/tmp/claude-0/-home-claude/c2fdf513-f88b-5ae6-b61a-c121304d2d71/scratchpad/click/seo-live.php:31</code></span>                    </div>
+                </div>
+                            <div class="sx-err">
+                    <div class="sx-err__head">
+                        <span class="sx-err__count">1 times</span>
+                        <span class="sx-err__time">last 2026-10-20 17:32</span>
+                        <button type="button" class="btn btn-sm btn-light ms-auto" data-copy-text="Shary error ×1 — 2026-10-20 17:32
+Error: Error: Object of class Closure could not be converted to string
+At: /tmp/claude-0/-home-claude/c2fdf513-f88b-5ae6-b61a-c121304d2d71/scratchpad/click/routes-dump.php:17">Copy</button>
+                    </div>
+                    <p class="sx-err__msg" dir="auto">Error: Object of class Closure could not be converted to string</p>
+                    <div class="sx-err__meta">
+                                                <span>In the code: <code dir="ltr">/tmp/claude-0/-home-claude/c2fdf513-f88b-5ae6-b61a-c121304d2d71/scratchpad/click/routes-dump.php:17</code></span>                    </div>
+                </div>
+                            <div class="sx-err">
+                    <div class="sx-err__head">
+                        <span class="sx-err__count">12 times</span>
+                        <span class="sx-err__time">last 2026-10-20 17:32</span>
+                        <button type="button" class="btn btn-sm btn-light ms-auto" data-copy-text="Shary error ×12 — 2026-10-20 17:32 (first 2026-10-20 01:21)
+Error: ReflectionException: Class &quot;App\Http\Controllers\API\CountriesController&quot; does not exist
+At: vendor/laravel/framework/src/Illuminate/Foundation/Console/RouteListCommand.php:225">Copy</button>
+                    </div>
+                    <p class="sx-err__msg" dir="auto">ReflectionException: Class &quot;App\Http\Controllers\API\CountriesController&quot; does not exist</p>
+                    <div class="sx-err__meta">
+                                                <span>In the code: <code dir="ltr">vendor/laravel/framework/src/Illuminate/Foundation/Console/RouteListCommand.php:225</code></span>                    </div>
+                </div>
+                            <div class="sx-err">
+                    <div class="sx-err__head">
+                        <span class="sx-err__count">2 times</span>
+                        <span class="sx-err__time">last 2026-10-20 17:32</span>
+                        <button type="button" class="btn btn-sm btn-light ms-auto" data-copy-text="Shary error ×2 — 2026-10-20 17:32 (first 2026-10-20 17:32)
+Error: LogicException: Unable to prepare route [ar/home-test] for serialization. Another route has already been assigned name [/home-test].
+At: vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php:247">Copy</button>
+                    </div>
+                    <p class="sx-err__msg" dir="auto">LogicException: Unable to prepare route [ar/home-test] for serialization. Another route has already been assigned name [/home-test].</p>
+                    <div class="sx-err__meta">
+                                                <span>In the code: <code dir="ltr">vendor/laravel/framework/src/Illuminate/Routing/AbstractRouteCollection.php:247</code></span>                    </div>
+                </div>
                             <div class="sx-err">
                     <div class="sx-err__head">
                         <span class="sx-err__count">1 times</span>
@@ -943,18 +1007,6 @@ Error: Uncaught Error: Call to a member function relationLoaded() on null in app
                     <p class="sx-err__msg" dir="auto">Uncaught Error: Call to a member function relationLoaded() on null in app/Shary/Front.php:157</p>
                     <div class="sx-err__meta">
                                                                     </div>
-                </div>
-                            <div class="sx-err">
-                    <div class="sx-err__head">
-                        <span class="sx-err__count">10 times</span>
-                        <span class="sx-err__time">last 2026-10-20 15:38</span>
-                        <button type="button" class="btn btn-sm btn-light ms-auto" data-copy-text="Shary error ×10 — 2026-10-20 15:38 (first 2026-10-20 01:21)
-Error: ReflectionException: Class &quot;App\Http\Controllers\API\CountriesController&quot; does not exist
-At: vendor/laravel/framework/src/Illuminate/Foundation/Console/RouteListCommand.php:225">Copy</button>
-                    </div>
-                    <p class="sx-err__msg" dir="auto">ReflectionException: Class &quot;App\Http\Controllers\API\CountriesController&quot; does not exist</p>
-                    <div class="sx-err__meta">
-                                                <span>In the code: <code dir="ltr">vendor/laravel/framework/src/Illuminate/Foundation/Console/RouteListCommand.php:225</code></span>                    </div>
                 </div>
                             <div class="sx-err">
                     <div class="sx-err__head">
@@ -1100,7 +1152,7 @@ At: resources/views/shary/partials/ad-strip.blade.php">Copy</button>
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"s4VPz1KyXOXxo0BIEh6kazYCn1IAjNqJkvv8SJc2","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

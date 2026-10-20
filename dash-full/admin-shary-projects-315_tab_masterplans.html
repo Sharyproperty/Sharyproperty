@@ -207,8 +207,10 @@ document.addEventListener('error', function (e) {
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
             <div class="sx-user__menu">
-                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">حسابي</a>                
-                <a href="admin-shary-pins.html">الأرقام السرية</a>                <a href="#" data-sx-missing="1" data-sx-note="في لينك المعاينة مفيش تسجيل دخول أو خروج.">خروج</a>
+                <a href="profile.html">حسابي</a>                
+                <a href="admin-shary-pins.html">الأرقام السرية</a>                
+                <a href="admin-shary-accounts.html">حسابات الداشبورد</a>                
+                <a href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم.">خروج</a>
             </div>
         </details>
     </div>
@@ -239,7 +241,7 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>الأخطاء</span>
-                        <b class="sx-tag">6</b>                    </a>
+                        <b class="sx-tag">9</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>المسودات</span>
@@ -819,6 +821,8 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="supervisor.html" class="" ><span>المشرفين والصلاحيات</span></a></li>
                                                             
+                                                                                                <li><a href="admin-shary-accounts.html" class="" ><span>حسابات الداشبورد</span></a></li>
+                                                            
                                                                                                 <li><a href="admin-shary-social-login.html" class="" ><span>الدخول بجوجل وفيسبوك وأبل</span></a></li>
                                                     </ul>
                     </div>
@@ -848,11 +852,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "3feP5cr26IcPEjjg9LXrxoWu8DmBkwaoluzoHrqE",
+                token: "vBcmvBnsVME7mLZCNvJWIHBTQSh2A5wWlVdo6YPb",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=3feP5cr26IcPEjjg9LXrxoWu8DmBkwaoluzoHrqE",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=vBcmvBnsVME7mLZCNvJWIHBTQSh2A5wWlVdo6YPb",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -1169,7 +1173,7 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة","pick_search":"اكتب للبحث…","pick_none":"مفيش اختيار بالاسم ده","required_field":"الخانة دي مطلوبة","required_save":"فيه خانات مطلوبة فاضية — اتعلّمت بالأحمر. اكتبها وبعدين احفظ."}};</script>
 <script src="a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"3feP5cr26IcPEjjg9LXrxoWu8DmBkwaoluzoHrqE","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"vBcmvBnsVME7mLZCNvJWIHBTQSh2A5wWlVdo6YPb","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
                     <script src="a/js/shary-admin/form-repeaters.js" data-conf="{&quot;lang&quot;:&quot;ar&quot;}"></script>
             <script src="a/js/shary-admin/projects-list.js" data-conf="{&quot;sure&quot;:&quot;هل أنت متأكد؟&quot;,&quot;yes&quot;:&quot;نعم ، احذف&quot;,&quot;no&quot;:&quot;إلغاء&quot;}"></script>
