@@ -847,11 +847,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "prtqqMHQO2DImcGQfdsh2kgWl6zPS7Wun2Nh7dmb",
+                token: "lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=prtqqMHQO2DImcGQfdsh2kgWl6zPS7Wun2Nh7dmb",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -932,6 +932,10 @@ document.addEventListener('error', function (e) {
         .aix-factors { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
         .aix-colors input[type=color] { width: 56px; height: 38px; padding: 2px; }
         .aix-check { display: flex; align-items: center; gap: 8px; min-height: 46px; margin: 0; font-weight: 800; }
+        .aix-show { display: inline-flex; align-items: center; gap: 6px; margin-inline-start: 12px; font-size: 13px; font-weight: 800; color: #1E4266; cursor: pointer; vertical-align: middle; }
+        .aix-show input { width: 18px; height: 18px; accent-color: #1E4266; }
+        .aix-type--hidden { background: #f7f8fa; }
+        .aix-type--hidden h5 { color: #8a97a6; }
         .aix-save { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: flex-start; padding: 12px 0; margin-bottom: 16px; background: var(--sx-mist, #f5f8fc); }
     </style>
     <div class="page-wrapper">
@@ -954,9 +958,13 @@ document.addEventListener('error', function (e) {
                         <div><label class="form-label fw-bold">Month</label>
                             <input type="month" class="form-control" name="month" value="2026-10" onchange="location.href='?month='+this.value"></div>
                     </div>
+                    <input type="hidden" name="show_sent" value="1">
+                    <p class="aix-note" style="margin:0 0 10px">Untick «Show on the website» on any category to hide it for this area on the Shary Index and the area card — its figures stay saved; tick it again to bring it back.</p>
                                                                     
-                                                <div class="aix-type" data-aix-type>
-                            <h5>Coastal </h5>
+                                                <div class="aix-type " data-aix-type data-kind="coastal">
+                            <h5>Coastal                                 
+                                                                    <label class="aix-show"><input type="checkbox" name="show[coastal]" value="1" checked> Show on the website</label>
+                                                            </h5>
                                                         <div class="aix-grid">
                                 <div><label class="form-label">Average price per m²</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[coastal][price_per_m]" value="" placeholder=""></div>
                                 <div><label class="form-label">Price from</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[coastal][price_from]" value=""></div>
@@ -977,8 +985,9 @@ document.addEventListener('error', function (e) {
                             </details>
                         </div>
                                                                                             
-                                                <div class="aix-type" data-aix-type>
-                            <h5>All kinds </h5>
+                                                <div class="aix-type " data-aix-type data-kind="all">
+                            <h5>All kinds                                 
+                                                            </h5>
                             <p class="aix-note" style="margin:-4px 0 8px">The whole area&#039;s average: shown on the Shary Index page when the filter is on «All types» — the area page shows each category above on its own.</p>                            <div class="aix-grid">
                                 <div><label class="form-label">Average price per m²</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[all][price_per_m]" value="105800" placeholder="105800"></div>
                                 <div><label class="form-label">Price from</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[all][price_from]" value="95000"></div>
@@ -1486,7 +1495,7 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"prtqqMHQO2DImcGQfdsh2kgWl6zPS7Wun2Nh7dmb","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

@@ -846,11 +846,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "vA8sYgIhOboR0DyNUS4xPuJqC94TY7R5GIjAQx2v",
+                token: "uqn3HkEImyXYX4ybB3Vm6Ux67DJhhe3DCE4sSpkX",
                 lang: "ar",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=vA8sYgIhOboR0DyNUS4xPuJqC94TY7R5GIjAQx2v",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=uqn3HkEImyXYX4ybB3Vm6Ux67DJhhe3DCE4sSpkX",
                 contentCss: "a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "a/vendor/shary-editor/",
@@ -931,6 +931,10 @@ document.addEventListener('error', function (e) {
         .aix-factors { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 10px; }
         .aix-colors input[type=color] { width: 56px; height: 38px; padding: 2px; }
         .aix-check { display: flex; align-items: center; gap: 8px; min-height: 46px; margin: 0; font-weight: 800; }
+        .aix-show { display: inline-flex; align-items: center; gap: 6px; margin-inline-start: 12px; font-size: 13px; font-weight: 800; color: #1E4266; cursor: pointer; vertical-align: middle; }
+        .aix-show input { width: 18px; height: 18px; accent-color: #1E4266; }
+        .aix-type--hidden { background: #f7f8fa; }
+        .aix-type--hidden h5 { color: #8a97a6; }
         .aix-save { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: flex-start; padding: 12px 0; margin-bottom: 16px; background: var(--sx-mist, #f5f8fc); }
     </style>
     <div class="page-wrapper">
@@ -953,9 +957,13 @@ document.addEventListener('error', function (e) {
                         <div><label class="form-label fw-bold">الشهر</label>
                             <input type="month" class="form-control" name="month" value="2026-10" onchange="location.href='?month='+this.value"></div>
                     </div>
+                    <input type="hidden" name="show_sent" value="1">
+                    <p class="aix-note" style="margin:0 0 10px">شيل علامة «يظهر في الموقع» من أي قسم عشان ما يظهرش للمنطقة دي في مؤشر شاري وكارت المنطقة — أرقامه بتفضل محفوظة ، وترجّعه بالعلامة تاني.</p>
                                                                     
-                                                <div class="aix-type" data-aix-type>
-                            <h5>سكني </h5>
+                                                <div class="aix-type " data-aix-type data-kind="residential">
+                            <h5>سكني                                 
+                                                                    <label class="aix-show"><input type="checkbox" name="show[residential]" value="1" checked> يظهر في الموقع</label>
+                                                            </h5>
                                                         <div class="aix-grid">
                                 <div><label class="form-label">متوسط سعر المتر</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[residential][price_per_m]" value="68800" placeholder="68800"></div>
                                 <div><label class="form-label">السعر من</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[residential][price_from]" value="62000"></div>
@@ -988,8 +996,10 @@ document.addEventListener('error', function (e) {
                             </details>
                         </div>
                                                                                             
-                                                <div class="aix-type" data-aix-type>
-                            <h5>تجاري <small class="aix-note">— الأرقام الظاهرة من آخر شهر متسجل (2026-08)</small></h5>
+                                                <div class="aix-type " data-aix-type data-kind="commercial">
+                            <h5>تجاري <small class="aix-note">— الأرقام الظاهرة من آخر شهر متسجل (2026-08)</small>                                
+                                                                    <label class="aix-show"><input type="checkbox" name="show[commercial]" value="1" checked> يظهر في الموقع</label>
+                                                            </h5>
                                                         <div class="aix-grid">
                                 <div><label class="form-label">متوسط سعر المتر</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[commercial][price_per_m]" value="" placeholder="124500"></div>
                                 <div><label class="form-label">السعر من</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[commercial][price_from]" value="112000"></div>
@@ -1021,8 +1031,10 @@ document.addEventListener('error', function (e) {
                             </details>
                         </div>
                                                                                             
-                                                <div class="aix-type" data-aix-type>
-                            <h5>إداري </h5>
+                                                <div class="aix-type " data-aix-type data-kind="administrative">
+                            <h5>إداري                                 
+                                                                    <label class="aix-show"><input type="checkbox" name="show[administrative]" value="1" checked> يظهر في الموقع</label>
+                                                            </h5>
                                                         <div class="aix-grid">
                                 <div><label class="form-label">متوسط سعر المتر</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[administrative][price_per_m]" value="84600" placeholder="84600"></div>
                                 <div><label class="form-label">السعر من</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[administrative][price_from]" value="77000"></div>
@@ -1055,8 +1067,10 @@ document.addEventListener('error', function (e) {
                             </details>
                         </div>
                                                                                             
-                                                <div class="aix-type" data-aix-type>
-                            <h5>طبي <small class="aix-note">— الأرقام الظاهرة من آخر شهر متسجل (2026-08)</small></h5>
+                                                <div class="aix-type " data-aix-type data-kind="medical">
+                            <h5>طبي <small class="aix-note">— الأرقام الظاهرة من آخر شهر متسجل (2026-08)</small>                                
+                                                                    <label class="aix-show"><input type="checkbox" name="show[medical]" value="1" checked> يظهر في الموقع</label>
+                                                            </h5>
                                                         <div class="aix-grid">
                                 <div><label class="form-label">متوسط سعر المتر</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[medical][price_per_m]" value="" placeholder="103500"></div>
                                 <div><label class="form-label">السعر من</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[medical][price_from]" value="93000"></div>
@@ -1088,8 +1102,10 @@ document.addEventListener('error', function (e) {
                             </details>
                         </div>
                                                                                             
-                                                <div class="aix-type" data-aix-type>
-                            <h5>فندقي <small class="aix-note">— الأرقام الظاهرة من آخر شهر متسجل (2026-08)</small></h5>
+                                                <div class="aix-type " data-aix-type data-kind="hotel">
+                            <h5>فندقي <small class="aix-note">— الأرقام الظاهرة من آخر شهر متسجل (2026-08)</small>                                
+                                                                    <label class="aix-show"><input type="checkbox" name="show[hotel]" value="1" checked> يظهر في الموقع</label>
+                                                            </h5>
                                                         <div class="aix-grid">
                                 <div><label class="form-label">متوسط سعر المتر</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[hotel][price_per_m]" value="" placeholder="91200"></div>
                                 <div><label class="form-label">السعر من</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[hotel][price_from]" value="82000"></div>
@@ -1121,8 +1137,9 @@ document.addEventListener('error', function (e) {
                             </details>
                         </div>
                                                                                             
-                                                <div class="aix-type" data-aix-type>
-                            <h5>كل الأنواع </h5>
+                                                <div class="aix-type " data-aix-type data-kind="all">
+                            <h5>كل الأنواع                                 
+                                                            </h5>
                             <p class="aix-note" style="margin:-4px 0 8px">متوسط المنطقة كلها: بيظهر في صفحة مؤشر شاري لما الفلتر على «كل الأنواع» — صفحة المنطقة بتعرض كل قسم من اللي فوق لوحده.</p>                            <div class="aix-grid">
                                 <div><label class="form-label">متوسط سعر المتر</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[all][price_per_m]" value="68800" placeholder="68800"></div>
                                 <div><label class="form-label">السعر من</label><input class="form-control" dir="ltr" inputmode="decimal" name="types[all][price_from]" value="62000"></div>
@@ -1630,7 +1647,7 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة","pick_search":"اكتب للبحث…","pick_none":"مفيش اختيار بالاسم ده","required_field":"الخانة دي مطلوبة","required_save":"فيه خانات مطلوبة فاضية — اتعلّمت بالأحمر. اكتبها وبعدين احفظ."}};</script>
 <script src="a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"vA8sYgIhOboR0DyNUS4xPuJqC94TY7R5GIjAQx2v","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"uqn3HkEImyXYX4ybB3Vm6Ux67DJhhe3DCE4sSpkX","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
       <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>
