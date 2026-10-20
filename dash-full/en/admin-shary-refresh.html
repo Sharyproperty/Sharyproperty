@@ -236,7 +236,7 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">9</b>                    </a>
+                        <b class="sx-tag">10</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
@@ -847,11 +847,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
+                token: "ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -862,35 +862,91 @@ document.addEventListener('error', function (e) {
         
              
 
-                
-                <link rel="stylesheet" href="../a/css/shary-admin/pin.css">
-    <div class="page-wrapper">
+                <div class="page-wrapper">
         <div class="content">
-            <div class="pin-wrap">
-                                                <div class="pin-card">
-                    <div class="pin-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-                    <h4>Refresh the website — PIN</h4>
-
-                    
-                                            
-                        <p class="lead">“Refresh the website” (clear the cache, apply a code update, images) has its own PIN. Create a 6-digit PIN (different from the agent PIN) — nobody can open it without it.</p>
-                        <form method="post" action="#preview/admin/shary/pin/refresh/create" autocomplete="off">
-                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="back" value="/admin/shary/refresh">
-                            <div class="form-group">
-                                <label for="pin">New PIN (6 digits)</label>
-                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin" name="pin" autocomplete="new-password" required autofocus>
-                            </div>
-                            <div class="form-group">
-                                <label for="pin_confirmation">Type it again</label>
-                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin_confirmation" name="pin_confirmation" autocomplete="new-password" required>
-                            </div>
-                            <p class="pin-note">6 digits — not a sequence like 123456 or repeated like 111111. Keep it private.</p>
-                            <button type="submit" class="btn btn-primary w-100">Save the PIN</button>
-                        </form>
-                                    </div>
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Refresh the website now</h4>
+                    <h6>Show the latest dashboard changes on the new website immediately</h6>
+                </div>
                 
-                                    <p class="text-center mt-3 mb-0"><a class="pin-all" href="admin-shary-pins.html">All PINs (create / change / forgot)</a></p>
+                                    <div class="page-btn"><a class="btn btn-light fw-bold" href="admin-shary-pin-refresh_back_-admin-shary-refresh.html">🔒 Refresh the website — PIN</a></div>
                             </div>
+
+            <div class="row">
+                
+                <div class="col-lg-8 col-12">
+                    <div class="card" style="border:2px solid #e5e7eb">
+                        <div class="card-body" style="font-weight:600">
+                            <h5 style="font-weight:800">تطبيق تحديث الكود</h5>
+                                                                                                                    <p class="mb-3" style="color:#15803d;font-weight:800">الموقع متحدّث ✅ — مفيش حاجة مستنية.</p>
+                                                        <form action="#preview/admin/shary/refresh/apply-update" method="POST" onsubmit="this.querySelector('button').disabled=true;this.querySelector('button').textContent='جاري التطبيق…'">
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <button type="submit" class="btn btn-submit">طبّق التحديث</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <p>The new website keeps some data ready for about 10 minutes to stay fast. Changes saved from the screens of this group appear immediately. Changes saved from the older screens can take up to 10 minutes — press the button to show them now:</p>
+                            <ul class="mb-4">
+                                <li>Header and footer data: contact info, social links, footer links, ads.</li>
+                                <li>Search options, counts and "show on home / footer" switches of areas, projects and developers.</li>
+                                <li>The Shary Index page figures.</li>
+                            </ul>
+                            <form action="#preview/admin/shary/refresh" method="POST">
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <button type="submit" class="btn btn-submit">Refresh now</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                
+                                <div class="col-lg-8 col-12">
+                    <div class="card">
+                        <div class="card-body" style="font-weight:600">
+                            <h5 style="font-weight:800">تجهيز الصور مسبقاً — الصور تفتح على طول</h5>
+                                                                                    <div class="d-flex flex-wrap gap-2 my-3">
+                                <span class="badge bg-light text-dark p-2" style="font-size:14px">جاهزة: <b>245</b> من <b>257</b></span>
+                                <span class="badge bg-warning text-dark p-2" style="font-size:14px">لسه 12</span>
+                            </div>
+                            <p class="mb-3" style="line-height:1.9">صور المشاريع والوحدات والمطورين والمناطق والإعلانات بتتجهّز بمقاسات الموبايل والديسك توب في الخلفية لوحدها — مع الـ cron لو شغال ، ولو مش شغال بعد زيارات الموقع نفسها (من غير ما أي زائر يستنى) — وأي صورة جديدة بتترفع بتتجهّز بعد الحفظ على طول. النسخ القديمة الأتقل بتتعمل تاني أخف بالراحة (نفس الشكل وحجم أقل). الزرار ده بيجهّز دفعة دلوقتي.</p>
+                            <form action="#preview/admin/shary/refresh/images-warm" method="POST" onsubmit="this.querySelector('button').disabled=true;this.querySelector('button').textContent='جاري التجهيز…'">
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <button type="submit" class="btn btn-submit" >جهّز الصور دلوقتي</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <div class="col-lg-8 col-12">
+                    <div class="card">
+                        <div class="card-body" style="font-weight:600">
+                            <h5 style="font-weight:800">تحسين الصور — جودة عالية وحجم صغير</h5>
+                                                        <div class="d-flex flex-wrap gap-2 my-3">
+                                <span class="badge bg-light text-dark p-2" style="font-size:14px">صور الموقع: <b>816</b> (72.8 MB)</span>
+                                <span class="badge bg-light text-dark p-2" style="font-size:14px">اتظبطت: <b>413</b></span>
+                                <span class="badge bg-warning text-dark p-2" style="font-size:14px">محتاجة تتظبط: <b>77</b></span>
+                                <span class="badge bg-success p-2" style="font-size:14px">التوفير لحد دلوقتي: <b>204 KB</b></span>
+                            </div>
+                            <ul class="mb-3" style="line-height:1.9">
+                                <li>كل صورة بتترفع بتتظبط لوحدها أول ما تتعرض في الموقع: أقصى مقاس 2880px ، ضغط بجودة 84 (من غير فرق بالعين) ، بتتلف صح لو متصورة بالموبايل ، وبتتشال منها البيانات الزيادة — بنفس اسمها (والأصلي بيتحفظ نسخة).</li>
+                                <li>الموقع بيعرض كل صورة بمقاس الشاشة بالظبط (موبايل / ديسك توب / Retina) بصيغة WebP مع شحذ خفيف — صورة حادة وحجمها صغير.</li>
+                                <li>للجودة الأحسن: ارفعوا الصور بعرض 1600px على الأقل (صور الهيدر 2400px). الصورة الصغيرة مابتتكبرش عشان ماتبوظش.</li>
+                            </ul>
+                            <form action="#preview/admin/shary/refresh/images" method="POST" class="d-inline">
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <button type="submit" class="btn btn-submit" >حسّن الصور دلوقتي</button>
+                            </form>
+                            <form action="#preview/admin/shary/refresh/images" method="POST" class="d-inline ms-2">
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <input type="hidden" name="auto" value="0">
+                                <button type="submit" class="btn btn-outline-secondary">إيقاف التحسين الأوتوماتيك</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -995,7 +1051,7 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

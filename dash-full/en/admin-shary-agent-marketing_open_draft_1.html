@@ -1,183 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-  
-    <head>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<meta name="description" content="Shary">
-<meta name="keywords" content="Shary">
-<meta name="author" content="">
-<meta name="robots" content="noindex, nofollow">
-<meta name="csrf-token" content="preview">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="preview">
+    <meta name="robots" content="noindex, nofollow">
+    <title>التسويق — لوحة تحكم شاري</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
+</head>
+<body class="ag sx" dir="rtl">
 
-<title>Shary</title>
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="../a/images/logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
-<!-- Bootstrap CSS -->
-
-
-    <link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
-
-
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
-
-<!-- animation CSS -->
-<link rel="stylesheet" href="../a/assets/css/animate.css">
-
-<!-- Datetimepicker CSS -->
-<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
-
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
-
-<!-- Dragula CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
-
-
-
-
-
-
-<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
-
-<!-- Datatable CSS -->
-<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
-
-<!-- Main CSS -->
-    <link rel="stylesheet" href="../a/assets/css/style.css">
-<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
-
-<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
-<style type="text/css">
-    body, h1, h2, h3, h4, h5, h6, * {
-        font-family: 'Tajawal', serif;
-        font-weight: bold;
-    }
-</style>
-    
-    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
-     <script>
-    (function () {
-        try {
-            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
-                document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
-                var params = new URLSearchParams(location.search);
-                document.addEventListener('DOMContentLoaded', function () {
-                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
-                    if (keep) {
-                        document.documentElement.classList.add('sx-focus');
-                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
-                            [].forEach.call(node.parentElement.children, function (sib) {
-                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
-                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
-                                sib.style.display = 'none';
-                            });
-                        }
-                    }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
-                    String(params.get('hide') || '').split(',').forEach(function (id) {
-                        var drop = id && document.getElementById(id.trim());
-                        if (drop) drop.style.display = 'none';
-                    });
-                });
-                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
-                if (open) {
-                    var tries = 0, timer = setInterval(function () {
-                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
-                        var modal = document.getElementById(open);
-                        if ((button && window.bootstrap && modal) || ++tries > 40) {
-                            clearInterval(timer);
-                            if (button && modal) {
-                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
-                            }
-                        }
-                    }, 150);
-                }
-            }
-        } catch (e) {}
-    })();
-</script>
-<script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
-if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
-(function () {
-    var KEY = 'shary-app-mode', on = false;
-    try {
-        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
-        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
-        on = sessionStorage.getItem(KEY) === '1';
-    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
-    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
-})();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
-window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
-window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
-document.addEventListener('DOMContentLoaded', function () {
-    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
-    for (i = 0; i < els.length; i++) {
-        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
-        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
-    }
-    for (i = 0; i < jobs.length; i++) {
-        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
-        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
-        jobs[i][0].__fit = true;
-    }
-    for (i = 0; i < jobs.length; i++) {
-        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
-            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
-        }
-    }
-});
-document.addEventListener('error', function (e) {
-    var img = e.target;
-    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
-    img.removeAttribute('srcset'); img.removeAttribute('sizes');
-    var alt = img.getAttribute('data-fallback');
-    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
-    img.removeAttribute('data-img-fallback');
-    img.src = "\/images\/shary\/placeholder.svg";
-}, true);
-</script>
-<style>
-    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
-    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
-    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
-    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
-    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
-    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
-    html.sx-embed body { background: #fff !important; }
-    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
-    html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
-    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
-    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
-    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-       </head>
-  <body class="sx" dir="ltr">
- <div id="global-loader" >
-    <div class="whirly-loader"> </div>
-</div>  <!-- Main Wrapper -->
-<div class="main-wrapper">
-      <a class="sx-skip" href="#sx-main">Skip to the content</a>
+<a class="sx-skip" href="#sx-main">Skip to the content</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -236,13 +72,13 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">9</b>                    </a>
+                        <b class="sx-tag">10</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
                         <b class="sx-tag">106</b>                    </a>
-                                                                <div class="sx-grp " data-sx-grp="agent">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
                             <b class="sx-tag">20</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
@@ -269,7 +105,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-messages.html" class="" ><span>Customer messages</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-s-marketing.html" class="" ><span>Marketing</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-s-marketing.html" class="is-on" ><span>Marketing</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-requests.html" class="" ><span>Customer requests</span></a></li>
                                                             
@@ -844,165 +680,197 @@ document.addEventListener('error', function (e) {
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
- <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
-        <script>
-            window.SharyEditorConfig = {
-                token: "0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                lang: "en",
-                linksUrl: "\/admin\/shary\/content-editor\/links",
-                previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                contentCss: "../a/css/shary-admin/editor-content.css",
-                localEditor: true,
-                localBase: "../a/vendor/shary-editor/",
-                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
-                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
-        </script>
-        <script src="../a/js/shary-admin/editor.js"></script>
-        
-             
 
-                
-                <link rel="stylesheet" href="../a/css/shary-admin/pin.css">
-    <div class="page-wrapper">
-        <div class="content">
-            <div class="pin-wrap">
-                                                <div class="pin-card">
-                    <div class="pin-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-                    <h4>The agent — PIN</h4>
+    <template data-sx-crumb><div class="sx-crumb">Marketing ‹ Marketing plan</div></template>
 
-                    
-                                            
-                        <p class="lead">Enter the agent PIN.</p>
-                        <form method="post" action="#preview/admin/shary/pin/agent/unlock" autocomplete="off">
-                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="back" value="/admin/shary/agent/marketing?open_draft=1">
-                            <div class="form-group">
-                                <label for="pin">PIN (6 digits)</label>
-                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin" name="pin" autocomplete="off" required autofocus >
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100" >Open</button>
-                        </form>
-                                                <details class="pin-more">
-                            <summary>Forgot the PIN?</summary>
-                            <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
-                            <form method="post" action="#preview/admin/shary/pin/agent/reset" autocomplete="off">
-                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <input type="hidden" name="back" value="/admin/shary/agent/marketing?open_draft=1">
-                                <div class="form-group">
-                                    <label for="account_password">Your dashboard account password</label>
-                                    <input type="password" class="form-control" id="account_password" name="account_password" autocomplete="current-password" required>
-                                </div>
-                                <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
-                            </form>
-                        </details>
-                                                            </div>
-                
-                                    <p class="text-center mt-3 mb-0"><a class="pin-all" href="admin-shary-pins.html">All PINs (create / change / forgot)</a></p>
-                            </div>
-        </div>
+<div class="sx-page">
+    <main class="ag-main" id="sx-main">
+                                <div class="ag-head">
+    <div class="ag-col">
+        <h1>التسويق</h1>
+        <p>الإيجنت بيعمل خطة تسويق لشاري ومشاريعه من داتا شاري نفسها، وبيكتب ويصمم كل بوست وإعلان ورسالة قبل ميعاده — وانت بتعتمد. البوستات بتنزل لوحدها على صفحات شاري، والإعلانات بتتعمل في حساباتك متوقفة لحد ما تدوس «شغّل».</p>
+    </div>
+    <div class="ag-row">
+        <a class="ag-btn" href="admin-shary-agent-marketing-calendar.html">التقويم</a>
+        <a class="ag-btn" href="admin-shary-agent-marketing-ads.html">الإعلانات</a>
+        <a class="ag-btn" href="admin-shary-agent-marketing-pages.html">الصفحات</a>
+        <a class="ag-btn ag-btn--primary" href="#ask">اقترح خطة</a>
     </div>
 </div>
-<!-- /Main Wrapper -->
-    <!-- jQuery -->
-<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
 
-<!-- Bootstrap Core JS -->
-<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
 
-<!-- Feather Icon JS -->
-<script src="../a/assets/js/feather.min.js"></script>
+<ol class="ag-steps" aria-label="التسويق بيمشي إزاي">
+    <li><b>1</b><span><span class="b8">الخطة</span> — الإيجنت بيقترحها بالأرقام وانت بتعتمدها مرة واحدة</span></li>
+    <li><b>2</b><span><span class="b8">كل يوم</span> — بيكتب ويصمم شغل الأيام الجاية ويحطه في صندوق المراجعة</span></li>
+    <li><b>3</b><span><span class="b8">النشر</span> — البوست بينزل في ميعاده، والإعلان بيتعمل متوقف</span></li>
+    <li><b>4</b><span><span class="b8">«شغّل»</span> — انت بس اللي بتشغّل الإعلان، وجوه الحد الشهري اللي حددته</span></li>
+</ol>
 
-<!-- Slimscroll JS -->
-<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
+<div class="ag-tiles">
+    <div class="ag-tile"><span>مستني مراجعتك</span><b class="blue num">0</b><a href="admin-shary-agent-review_hub_marketing.html">افتح صندوق المراجعة</a></div>
+    <div class="ag-tile"><span>بوستات الأسبوع ده</span><b class="num">0 / 0</b><span>اتنشر / في التقويم</span></div>
+    <div class="ag-tile"><span>إعلانات شغالة</span><b class="num">0</b><a href="admin-shary-agent-marketing-ads.html">الإعلانات</a></div>
+    <div class="ag-tile"><span>جاهزة تشغّلها</span><b class="num ">0</b><span>متعملة متوقفة</span></div>
+    </div>
 
-<!-- Datatable JS -->
-<script src="../a/assets/js/jquery.dataTables.min.js"></script>
-<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
 
-<!-- Select2 JS -->
-<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
-
-<!-- Datetimepicker JS -->
-<script src="../a/assets/js/moment.min.js"></script>
-<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
-
-<!-- Chart JS -->
-<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
-<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
-
-<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+<section class="ag-card" id="plan">
+    <div class="ag-card__head"><h2>الخطة</h2>
+        </div>
+            <div class="ag-card__body"><p class="mute">لسه مفيش خطة معتمدة. اطلبها من «اقترح خطة» تحت: الإيجنت بيقرا مشاريعك وأسعارك وطلبات العملاء من كل مصدر ونتايج الشهر اللي فات، ويقترح الجمهور والقنوات وتقسيمة الميزانية والمؤشرات وتقويم الشغل كله.</p></div>
+    </section>
 
 
 
-
-<!-- Owl JS -->
-<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
-<!-- Fileupload JS -->
-<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
-<!-- Sweetalert 2 -->
-<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
-<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
-
-<!-- Custom JS -->
-<script src="../a/assets/js/script.js"></script>
+<section class="ag-card" id="week">
+    <div class="ag-card__head"><h2>الأيام الجاية</h2><a class="ag-btn ag-btn--sm" href="admin-shary-agent-marketing-calendar.html">التقويم كله</a></div>
+            <div class="ag-card__body"><p class="mute">مفيش شغل في الأيام الجاية.</p></div>
+    </section>
 
 
+<section class="ag-card" id="ask">
+    <div class="ag-card__head"><h2>اقترح خطة</h2><span class="sm mute">الخطة بتنزل في صندوق المراجعة — تقراها وتعدّل فيها وتعتمدها.</span></div>
+    <form method="post" action="#preview/admin/shary/agent/marketing/plan" class="ag-card__body ag-col" style="gap:14px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-grid">
+            <div class="ag-field"><label for="mk-goal">الهدف</label>
+                <select id="mk-goal" name="goal" class="ag-input"><option value="leads" selected>عملاء محتملين أكتر (طلبات ورسايل)</option><option value="sales" >بيع وحدات مشاريع بعينها</option><option value="investors" >مستثمرين لـ«شاري معاك»</option><option value="app" >تحميل تطبيق شاري</option><option value="brand" >انتشار اسم شاري (البراند)</option></select></div>
+            <div class="ag-field"><label for="mk-months">المدة</label>
+                <select id="mk-months" name="months" class="ag-input"><option value="1" selected>شهر</option><option value="2" >شهرين</option><option value="3" >3 شهور</option></select></div>
+            <div class="ag-field"><label for="mk-budget">ميزانية الإعلانات في الشهر (جنيه)</label>
+                <input id="mk-budget" name="budget" type="number" min="0" step="100" class="ag-input" dir="ltr" style="text-align:start" value="" placeholder="فاضي = الإيجنت يقترحها"></div>
+            <div class="ag-field"><label for="mk-from">تبدأ من</label>
+                <input id="mk-from" name="from" type="date" class="ag-input" dir="ltr" style="text-align:start" value="2026-10-21"></div>
+        </div>
+        <div class="ag-field"><label for="mk-focus">ركّز على (اختياري)</label>
+            <input id="mk-focus" name="focus" class="ag-input" maxlength="600" value="" placeholder="مشاريع الساحل الشمالي، وشاري معاك للمستثمرين في الخليج"></div>
+        <div class="ag-field"><label for="mk-notes">ملاحظاتك (اختياري)</label>
+            <textarea id="mk-notes" name="notes" class="ag-input" rows="2" maxlength="1500" placeholder="مثال: عندنا لانش يوم 20، وما عايزين إعلانات على تيك توك الشهر ده"></textarea></div>
+        <div class="ag-row">
+            <button type="button" class="ag-btn" disabled>اقترح الخطة</button><span class="xs mute">محتاج مفتاح الموديل — <a href="admin-shary-agent-keys.html#group-ai">«المفاتيح والربط»</a></span>        </div>
+    </form>
+</section>
 
 
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '.confirm-text', function(e) {
+<div class="ag-split">
+    <section class="ag-card wide">
+        <div class="ag-card__head"><h2>صفحات شاري</h2><a class="ag-btn ag-btn--sm" href="admin-shary-agent-marketing-pages.html">الصفحات</a></div>
+        <div class="ag-card__body ag-list">
+                                            <div class="ag-item"><span class="ag-row" style="gap:8px;flex-wrap:nowrap"><i class="ag-dot" style="background:#1877F2" aria-hidden="true"></i><span class="b8">فيسبوك</span></span>
+                    <span class="ag-pill ag-pill--warn">مش مربوطة — بتوصلك على الواتساب</span></div>
+                                            <div class="ag-item"><span class="ag-row" style="gap:8px;flex-wrap:nowrap"><i class="ag-dot" style="background:#D62976" aria-hidden="true"></i><span class="b8">إنستجرام</span></span>
+                    <span class="ag-pill ag-pill--warn">مش مربوطة — بتوصلك على الواتساب</span></div>
+                                            <div class="ag-item"><span class="ag-row" style="gap:8px;flex-wrap:nowrap"><i class="ag-dot" style="background:#111111" aria-hidden="true"></i><span class="b8">X (تويتر)</span></span>
+                    <span class="ag-pill ag-pill--warn">مش مربوطة — بتوصلك على الواتساب</span></div>
+                                            <div class="ag-item"><span class="ag-row" style="gap:8px;flex-wrap:nowrap"><i class="ag-dot" style="background:#0A66C2" aria-hidden="true"></i><span class="b8">لينكدإن</span></span>
+                    <span class="ag-pill ag-pill--warn">مش مربوطة — بتوصلك على الواتساب</span></div>
+                                            <div class="ag-item"><span class="ag-row" style="gap:8px;flex-wrap:nowrap"><i class="ag-dot" style="background:#FF0000" aria-hidden="true"></i><span class="b8">يوتيوب</span></span>
+                    <span class="ag-pill ag-pill--warn">مش مربوطة — بتوصلك على الواتساب</span></div>
+                                            <div class="ag-item"><span class="ag-row" style="gap:8px;flex-wrap:nowrap"><i class="ag-dot" style="background:#111111" aria-hidden="true"></i><span class="b8">تيك توك</span></span>
+                    <span class="ag-pill ag-pill--warn">مش مربوطة — بتوصلك على الواتساب</span></div>
+                                            <div class="ag-item"><span class="ag-row" style="gap:8px;flex-wrap:nowrap"><i class="ag-dot" style="background:#E6C700" aria-hidden="true"></i><span class="b8">سناب شات</span></span>
+                    <span class="ag-pill ag-pill--warn">مش مربوطة — بتوصلك على الواتساب</span></div>
+                    </div>
+    </section>
+    <section class="ag-card side">
+        <div class="ag-card__head"><h2>الإعلانات</h2><a class="ag-btn ag-btn--sm" href="admin-shary-agent-marketing-ads.html">الإعلانات</a></div>
+        <div class="ag-card__body ag-col" style="gap:12px">
+                            <div class="ag-col" style="gap:4px">
+                    <div class="ag-row ag-row--between"><span class="b8">ميتا</span>
+                        <a class="xs" href="admin-shary-agent-keys.html#key-meta_ads">اربطه</a>
+                        </div>
+                                    </div>
+                            <div class="ag-col" style="gap:4px">
+                    <div class="ag-row ag-row--between"><span class="b8">جوجل</span>
+                        <a class="xs" href="admin-shary-agent-keys.html#key-google_ads">اربطه</a>
+                        </div>
+                                    </div>
+                            <div class="ag-col" style="gap:4px">
+                    <div class="ag-row ag-row--between"><span class="b8">تيك توك</span>
+                        <a class="xs" href="admin-shary-agent-keys.html#key-tiktok_ads">اربطه</a>
+                        </div>
+                                    </div>
+                            <div class="ag-col" style="gap:4px">
+                    <div class="ag-row ag-row--between"><span class="b8">سناب</span>
+                        <a class="xs" href="admin-shary-agent-keys.html#key-snapchat_ads">اربطه</a>
+                        </div>
+                                    </div>
+                            <div class="ag-col" style="gap:4px">
+                    <div class="ag-row ag-row--between"><span class="b8">لينكدإن</span>
+                        <a class="xs" href="admin-shary-agent-keys.html#key-linkedin_ads">اربطه</a>
+                        </div>
+                                    </div>
+                            <div class="ag-col" style="gap:4px">
+                    <div class="ag-row ag-row--between"><span class="b8">ChatGPT</span>
+                        <a class="xs" href="admin-shary-agent-keys.html#key-openai_ads">اربطه</a>
+                        </div>
+                                    </div>
+                    </div>
+    </section>
+</div>
 
-            var parentElement = $(this).parent().parent();
-        var deleteUrl = $(this);
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won&#039;t be able to revert this!",
-            type: "warning",
-            showCancelButton: !0,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "Cancel", // Translate "Cancel" here
-            confirmButtonClass: "btn btn-primary",
-            cancelButtonClass: "btn btn-danger ml-1",
-            buttonsStyling: !1,
-        }).then(function (t) {
 
-            if (t.value) {
-                parentElement.hide();
-                deleted = deleteUrl.data("delete-url");
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: deleted,
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
-                    },
-                    success: function (result) {
-                        // Hide the parent element (delete the row)
-                        parentElement.hide();
-                        // Display a success message
-                        Swal.fire({
-                            type: "success",
-                            title: "Deleted!",
-                            text: "Deleted successfully",
-                            confirmButtonClass: "btn btn-success",
-                        });
-                        // // Redirect to another URL
-                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
-                    },
-                    // User confirmed, hide the parent element (delete the row)
-                })
-            }
-        });
-    })
-    });
-</script>
-    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
-     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+<section class="ag-card" id="settings">
+    <div class="ag-card__head"><h2>الإعدادات</h2></div>
+    <form method="post" action="#preview/admin/shary/agent/marketing/settings" class="ag-card__body ag-col" style="gap:16px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <fieldset class="ag-col" style="gap:14px;border:0;padding:0;margin:0" >
+            <h3 class="ag-h2" style="font-size:16px">الحد الشهري لكل منصة (بعملة حساب الإعلانات)</h3>
+            <p class="xs mute" style="margin-top:-8px">0 = مش متحدد: ولا إعلان يشتغل على المنصة دي. لما الصرف يوصل الحد الحملات بتقف لوحدها لحد الشهر الجاي.</p>
+            <div class="ag-grid">
+                                    <div class="ag-field"><label for="cap-meta">ميتا</label>
+                        <input id="cap-meta" name="caps[meta]" type="number" min="0" step="100" class="ag-input" dir="ltr" style="text-align:start" value="0"></div>
+                                    <div class="ag-field"><label for="cap-google">جوجل</label>
+                        <input id="cap-google" name="caps[google]" type="number" min="0" step="100" class="ag-input" dir="ltr" style="text-align:start" value="0"></div>
+                                    <div class="ag-field"><label for="cap-tiktok">تيك توك</label>
+                        <input id="cap-tiktok" name="caps[tiktok]" type="number" min="0" step="100" class="ag-input" dir="ltr" style="text-align:start" value="0"></div>
+                                    <div class="ag-field"><label for="cap-snapchat">سناب</label>
+                        <input id="cap-snapchat" name="caps[snapchat]" type="number" min="0" step="100" class="ag-input" dir="ltr" style="text-align:start" value="0"></div>
+                                    <div class="ag-field"><label for="cap-linkedin">لينكدإن</label>
+                        <input id="cap-linkedin" name="caps[linkedin]" type="number" min="0" step="100" class="ag-input" dir="ltr" style="text-align:start" value="0"></div>
+                                    <div class="ag-field"><label for="cap-openai">ChatGPT</label>
+                        <input id="cap-openai" name="caps[openai]" type="number" min="0" step="100" class="ag-input" dir="ltr" style="text-align:start" value="0"></div>
+                                <div class="ag-field"><label for="mk-daily">أقصى ميزانية يومية للحملة الواحدة</label>
+                    <input id="mk-daily" name="daily_max" type="number" min="10" step="10" class="ag-input" dir="ltr" style="text-align:start" value="3000">
+                    <small>الإيجنت ما يقترحش أكتر من كده لأي حملة.</small></div>
+            </div>
+            <h3 class="ag-h2" style="font-size:16px">أحسن ميعاد لكل صفحة (بتوقيت القاهرة)</h3>
+            <div class="ag-grid">
+                                    <div class="ag-field"><label for="time-facebook">فيسبوك</label>
+                        <input id="time-facebook" name="times[facebook]" type="time" class="ag-input" dir="ltr" style="text-align:start" value="19:00"></div>
+                                    <div class="ag-field"><label for="time-instagram">إنستجرام</label>
+                        <input id="time-instagram" name="times[instagram]" type="time" class="ag-input" dir="ltr" style="text-align:start" value="20:00"></div>
+                                    <div class="ag-field"><label for="time-x">X (تويتر)</label>
+                        <input id="time-x" name="times[x]" type="time" class="ag-input" dir="ltr" style="text-align:start" value="13:00"></div>
+                                    <div class="ag-field"><label for="time-linkedin">لينكدإن</label>
+                        <input id="time-linkedin" name="times[linkedin]" type="time" class="ag-input" dir="ltr" style="text-align:start" value="10:00"></div>
+                                    <div class="ag-field"><label for="time-youtube">يوتيوب</label>
+                        <input id="time-youtube" name="times[youtube]" type="time" class="ag-input" dir="ltr" style="text-align:start" value="18:00"></div>
+                                    <div class="ag-field"><label for="time-tiktok">تيك توك</label>
+                        <input id="time-tiktok" name="times[tiktok]" type="time" class="ag-input" dir="ltr" style="text-align:start" value="21:00"></div>
+                                    <div class="ag-field"><label for="time-snapchat">سناب شات</label>
+                        <input id="time-snapchat" name="times[snapchat]" type="time" class="ag-input" dir="ltr" style="text-align:start" value="20:00"></div>
+                            </div>
+            <div class="ag-grid">
+                <div class="ag-field"><label for="mk-tags">هاشتاجات ثابتة</label><input id="mk-tags" name="hashtags" class="ag-input" maxlength="200" value="#شاري #عقارات_مصر"></div>
+                <div class="ag-field"><label for="mk-app">لينك «التطبيق» (اختياري)</label><input id="mk-app" name="app_link" class="ag-input" dir="ltr" style="text-align:start" maxlength="500" value="" placeholder="https://…">
+                    <small>فاضي = لينكات المتاجر من «بيانات التواصل».</small></div>
+            </div>
+            <div class="ag-field"><label for="mk-voice">طريقة الكلام</label><textarea id="mk-voice" name="voice" class="ag-input" rows="2" maxlength="600">مصري واضح ومحترم — من غير مبالغة ولا وعود بعائد مضمون، وكل سعر أو رقم من داتا شاري نفسها.</textarea></div>
+            <label class="ag-check"><input type="hidden" name="auto_week" value="0"><input type="checkbox" name="auto_week" value="1" checked> الإيجنت يكتب شغل الأيام الجاية لوحده كل صباح (وبيستنى موافقتك)</label>
+            <label class="ag-check"><input type="hidden" name="manual_whatsapp" value="0"><input type="checkbox" name="manual_whatsapp" value="1" checked> الصفحة اللي مش مربوطة: البوست يوصل الفريق جاهز على الواتساب في ميعاده</label>
+            <details><summary class="sm b8" style="cursor:pointer">تيك توك (متقدم)</summary>
+                <div class="ag-col" style="gap:10px;margin-top:10px">
+                    <label class="ag-check"><input type="hidden" name="tiktok_direct" value="0"><input type="checkbox" name="tiktok_direct" value="1" > انشر الفيديو على طول (التطبيق متراجع من تيك توك) — من غيرها بيوصل الحساب Draft وانت بتنشره بضغطة</label>
+                    <div class="ag-field"><label for="mk-identity">Identity ID لإعلانات تيك توك</label><input id="mk-identity" name="tiktok_identity" class="ag-input" dir="ltr" style="text-align:start" maxlength="64" value=""></div>
+                </div>
+            </details>
+        </fieldset>
+        <div class="ag-row"><button class="ag-btn ag-btn--primary">احفظ</button></div>    </form>
+</section>
+    </main>
+</div>
+<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
-     <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+<script src="../a/js/shary-admin/agent.js" defer></script>
+<link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-      <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

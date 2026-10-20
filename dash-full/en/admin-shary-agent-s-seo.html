@@ -1,183 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-  
-    <head>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<meta name="description" content="Shary">
-<meta name="keywords" content="Shary">
-<meta name="author" content="">
-<meta name="robots" content="noindex, nofollow">
-<meta name="csrf-token" content="preview">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="preview">
+    <meta name="robots" content="noindex, nofollow">
+    <title>الإيجنت — السيو والمقالات — لوحة تحكم شاري</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
+</head>
+<body class="ag sx" dir="rtl">
 
-<title>Shary</title>
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="../a/images/logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
-<!-- Bootstrap CSS -->
-
-
-    <link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
-
-
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
-
-<!-- animation CSS -->
-<link rel="stylesheet" href="../a/assets/css/animate.css">
-
-<!-- Datetimepicker CSS -->
-<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
-
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
-
-<!-- Dragula CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
-
-
-
-
-
-
-<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
-
-<!-- Datatable CSS -->
-<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
-
-<!-- Main CSS -->
-    <link rel="stylesheet" href="../a/assets/css/style.css">
-<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
-
-<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
-<style type="text/css">
-    body, h1, h2, h3, h4, h5, h6, * {
-        font-family: 'Tajawal', serif;
-        font-weight: bold;
-    }
-</style>
-    
-    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
-     <script>
-    (function () {
-        try {
-            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
-                document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
-                var params = new URLSearchParams(location.search);
-                document.addEventListener('DOMContentLoaded', function () {
-                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
-                    if (keep) {
-                        document.documentElement.classList.add('sx-focus');
-                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
-                            [].forEach.call(node.parentElement.children, function (sib) {
-                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
-                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
-                                sib.style.display = 'none';
-                            });
-                        }
-                    }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
-                    String(params.get('hide') || '').split(',').forEach(function (id) {
-                        var drop = id && document.getElementById(id.trim());
-                        if (drop) drop.style.display = 'none';
-                    });
-                });
-                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
-                if (open) {
-                    var tries = 0, timer = setInterval(function () {
-                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
-                        var modal = document.getElementById(open);
-                        if ((button && window.bootstrap && modal) || ++tries > 40) {
-                            clearInterval(timer);
-                            if (button && modal) {
-                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
-                            }
-                        }
-                    }, 150);
-                }
-            }
-        } catch (e) {}
-    })();
-</script>
-<script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
-if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
-(function () {
-    var KEY = 'shary-app-mode', on = false;
-    try {
-        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
-        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
-        on = sessionStorage.getItem(KEY) === '1';
-    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
-    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
-})();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
-window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
-window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
-document.addEventListener('DOMContentLoaded', function () {
-    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
-    for (i = 0; i < els.length; i++) {
-        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
-        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
-    }
-    for (i = 0; i < jobs.length; i++) {
-        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
-        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
-        jobs[i][0].__fit = true;
-    }
-    for (i = 0; i < jobs.length; i++) {
-        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
-            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
-        }
-    }
-});
-document.addEventListener('error', function (e) {
-    var img = e.target;
-    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
-    img.removeAttribute('srcset'); img.removeAttribute('sizes');
-    var alt = img.getAttribute('data-fallback');
-    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
-    img.removeAttribute('data-img-fallback');
-    img.src = "\/images\/shary\/placeholder.svg";
-}, true);
-</script>
-<style>
-    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
-    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
-    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
-    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
-    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
-    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
-    html.sx-embed body { background: #fff !important; }
-    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
-    html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
-    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
-    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
-    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-       </head>
-  <body class="sx" dir="ltr">
- <div id="global-loader" >
-    <div class="whirly-loader"> </div>
-</div>  <!-- Main Wrapper -->
-<div class="main-wrapper">
-      <a class="sx-skip" href="#sx-main">Skip to the content</a>
+<a class="sx-skip" href="#sx-main">Skip to the content</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -236,13 +72,13 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">9</b>                    </a>
+                        <b class="sx-tag">10</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
                         <b class="sx-tag">106</b>                    </a>
-                                                                <div class="sx-grp " data-sx-grp="agent">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
                             <b class="sx-tag">20</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
@@ -265,7 +101,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-website.html" class="" ><span>Website pages</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-s-seo.html" class="" ><span>SEO &amp; articles</span><b class="sx-tag">6</b></a></li>
+                                                                                                <li><a href="admin-shary-agent-s-seo.html" class="is-on"  aria-current="page" ><span>SEO &amp; articles</span><b class="sx-tag">6</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-messages.html" class="" ><span>Customer messages</span></a></li>
                                                             
@@ -844,165 +680,295 @@ document.addEventListener('error', function (e) {
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
- <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
-        <script>
-            window.SharyEditorConfig = {
-                token: "0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                lang: "en",
-                linksUrl: "\/admin\/shary\/content-editor\/links",
-                previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                contentCss: "../a/css/shary-admin/editor-content.css",
-                localEditor: true,
-                localBase: "../a/vendor/shary-editor/",
-                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
-                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
-        </script>
-        <script src="../a/js/shary-admin/editor.js"></script>
-        
-             
 
-                
-                <link rel="stylesheet" href="../a/css/shary-admin/pin.css">
-    <div class="page-wrapper">
-        <div class="content">
-            <div class="pin-wrap">
-                                                <div class="pin-card">
-                    <div class="pin-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-                    <h4>The agent — PIN</h4>
+    <template data-sx-crumb><div class="sx-crumb">Agent ‹ SEO &amp; articles</div></template>
 
-                    
-                                            
-                        <p class="lead">Enter the agent PIN.</p>
-                        <form method="post" action="#preview/admin/shary/pin/agent/unlock" autocomplete="off">
-                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="back" value="/admin/shary/agent/s/seo">
-                            <div class="form-group">
-                                <label for="pin">PIN (6 digits)</label>
-                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin" name="pin" autocomplete="off" required autofocus >
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100" >Open</button>
-                        </form>
-                                                <details class="pin-more">
-                            <summary>Forgot the PIN?</summary>
-                            <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
-                            <form method="post" action="#preview/admin/shary/pin/agent/reset" autocomplete="off">
-                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <input type="hidden" name="back" value="/admin/shary/agent/s/seo">
-                                <div class="form-group">
-                                    <label for="account_password">Your dashboard account password</label>
-                                    <input type="password" class="form-control" id="account_password" name="account_password" autocomplete="current-password" required>
-                                </div>
-                                <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
-                            </form>
-                        </details>
-                                                            </div>
-                
-                                    <p class="text-center mt-3 mb-0"><a class="pin-all" href="admin-shary-pins.html">All PINs (create / change / forgot)</a></p>
-                            </div>
+<div class="sx-page">
+    <main class="ag-main" id="sx-main">
+                                <div class="ag-head">
+    <div class="ag-row" style="gap:14px;align-items:center">
+        <span class="ag-hub__icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+</span>
+        <div class="ag-col">
+            <h1>السيو والمقالات</h1>
+            <p>خطة الصدارة، الكلمات وترتيب شاري في جوجل، المقالات والأخبار، اللينكات الداخلية والباك لينكس، وظهور شاري في إجابات الذكاء الاصطناعي.</p>
         </div>
     </div>
+    <div class="ag-row">
+        <a class="ag-btn" href="admin-shary-agent-commands_hub_seo.html">كل أوامر القسم</a>
+        <a class="ag-btn ag-btn--primary" href="admin-shary-agent-review_hub_seo.html">مستني موافقتك <span class="ag-count">6</span></a>
+    </div>
 </div>
-<!-- /Main Wrapper -->
-    <!-- jQuery -->
-<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
-
-<!-- Bootstrap Core JS -->
-<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
-
-<!-- Feather Icon JS -->
-<script src="../a/assets/js/feather.min.js"></script>
-
-<!-- Slimscroll JS -->
-<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
-
-<!-- Datatable JS -->
-<script src="../a/assets/js/jquery.dataTables.min.js"></script>
-<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
-
-<!-- Select2 JS -->
-<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
-
-<!-- Datetimepicker JS -->
-<script src="../a/assets/js/moment.min.js"></script>
-<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
-
-<!-- Chart JS -->
-<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
-<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
-
-<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
 
 
+<nav class="ag-hubnav" aria-label="أقسام الإيجنت">
+            <a href="admin-shary-agent-s-projects.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
+<span>المشاريع</span><b class="ag-count">2</b>        </a>
+            <a href="admin-shary-agent-s-units.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>
+<span>الوحدات</span><b class="ag-count">6</b>        </a>
+            <a href="admin-shary-agent-s-design.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/></svg>
+<span>الصور والتصميم</span>        </a>
+            <a href="admin-shary-agent-s-website.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 13h5v4H7zM15 13h2M15 16h2"/></svg>
+<span>صفحات الموقع</span>        </a>
+            <a href="admin-shary-agent-s-seo.html" class="is-on"  aria-current="page" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>
+<span>السيو والمقالات</span><b class="ag-count">6</b>        </a>
+            <a href="admin-shary-agent-s-messages.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>
+<span>رسايل العملاء</span>        </a>
+            <a href="admin-shary-agent-s-marketing.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M3.5 10.5v3a1 1 0 0 0 1 1H7l9 4.5v-14L7 9.5H4.5a1 1 0 0 0-1 1z"/><path d="m7.5 14.5 1.5 5h3l-1.3-4.2"/><path d="M19 9.5c1 .7 1.5 1.6 1.5 2.5s-.5 1.8-1.5 2.5"/></svg>
+<span>التسويق</span>        </a>
+            <a href="admin-shary-agent-s-requests.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
+<span>طلبات العملاء</span>        </a>
+            <a href="admin-shary-agent-s-ma3ak.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 10.5-5.1"/><path d="m14.5 19.5 3-3 2 2 3-3.5"/></svg>
+<span>شاري معاك</span><b class="ag-count">3</b>        </a>
+            <a href="admin-shary-agent-s-places.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+<span>المطورين والمناطق</span><b class="ag-count">1</b>        </a>
+            <a href="admin-shary-agent-s-market.html" class="" >
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20h16"/><rect x="5.5" y="11" width="3" height="7" rx=".8"/><rect x="10.5" y="6" width="3" height="12" rx=".8"/><rect x="15.5" y="9" width="3" height="9" rx=".8"/></svg>
+<span>السوق والتقارير</span><b class="ag-count">2</b>        </a>
+    </nav>
+
+<ol class="ag-steps" aria-label="القسم ده بيشتغل إزاي">
+    <li><b>1</b><span><span class="b8">اكتب طلبك</span> أو دوس أمر جاهز تحت</span></li>
+    <li><b>2</b><span><span class="b8">الإيجنت بيجهّزه</span> وتلاقيه في «مستني موافقتك»</span></li>
+    <li><b>3</b><span><span class="b8">انت بتوافق</span> فيتنشر — أو تعدّل أو تطلب أحسن</span></li>
+</ol>
 
 
-<!-- Owl JS -->
-<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
-<!-- Fileupload JS -->
-<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
-<!-- Sweetalert 2 -->
-<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
-<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
-
-<!-- Custom JS -->
-<script src="../a/assets/js/script.js"></script>
+<div class="ag-tiles">
+    <div class="ag-tile"><span>مستني موافقتك</span><b class="blue num">6</b><a href="admin-shary-agent-review_hub_seo.html">افتح وراجع</a></div>
+    <div class="ag-tile"><span>الإيجنت شغال على</span><b class="num">0</b><span>مفيش أوامر شغالة دلوقتي</span></div>
+    <div class="ag-tile"><span>اتعمل آخر 7 أيام</span><b class="num">0</b><a href="admin-shary-agent-log_hub_seo.html">شوف السجل</a></div>
+    <div class="ag-tile"><span>بيشتغل لوحده</span><b class="num">15</b><span>مهمة مجدولة للقسم ده</span></div>
+</div>
 
 
+<div class="ag-split">
+    <div class="wide">
+        <section class="ag-card" style="gap:0" id="order">
+            <div class="ag-card__head"><h2>اطلب من الإيجنت</h2><span class="xs mute">الأمر بيتسجّل في «السيو والمقالات»</span></div>
+                            <div class="ag-card__body" style="padding-bottom:0"><div class="ag-note sm">الموديل مش مربوط: الإيجنت هيرد من داتا الموقع بس. الكتابة والبحث محتاجين مفتاح الذكاء الاصطناعي — <a class="b8" href="admin-shary-agent-keys.html#group-ai">اربطه من «المفاتيح والربط»</a>.</div></div>
+                        <div class="ag-chat ag-chat--hub" data-ag-thread aria-live="polite">
+                                    <p class="mute sm">لسه مفيش أوامر في القسم ده. اكتب طلبك تحت أو دوس أمر جاهز.</p>
+                            </div>
+            <form method="post" action="#preview/admin/shary/agent/commands" enctype="multipart/form-data" class="ag-card__body" data-ag-chat >
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <input type="hidden" name="hub" value="seo">
+                <div class="ag-col"><span class="sm b8 mute">أوامر جاهزة — دوس واحد وكمّل الناقص:</span>
+                    <div class="ag-row"><button type="button" class="ag-chip" data-ag-say="اكتب مقال سيو عن ">مقال جديد</button><button type="button" class="ag-chip" data-ag-say="حلّل صفحة المنافس دي واكتب مقال أقوى: ">حلّل منافس</button><button type="button" class="ag-chip" data-ag-say="هات الكلمات اللي المنافسين ظاهرين بيها وإحنا لأ">كلمات ناقصانا</button><button type="button" class="ag-chip" data-ag-say="اكتب مقال النهاردة من أهم حاجة في التحليل اليومي">مقال النهاردة</button><button type="button" class="ag-chip" data-ag-say="راجع صفحة … وقول لي تتحسن إزاي في جوجل">راجع صفحة</button></div>
+                </div>
+                <label class="ag-label" for="ag-command">طلبك</label>
+                <textarea id="ag-command" name="body" rows="3" class="ag-input" maxlength="6000" placeholder="اكتب اللي عايزه بالكلام العادي…"></textarea>
+                <div class="ag-files" id="ag-hub-files"></div>
+                <div class="ag-row ag-row--between">
+                    <label class="ag-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                        ارفع ملف أو صور
+                        <input type="file" name="files[]" multiple class="sr" accept=".jpg,.jpeg,.png,.webp,.pdf,.csv,.txt,.xlsx" data-ag-filelist="ag-hub-files">
+                    </label>
+                    <button type="submit" class="ag-btn ag-btn--primary">ابعت للإيجنت</button>
+                </div>
+            </form>
+        </section>
 
+        <section class="ag-card" id="waiting">
+            <div class="ag-card__head"><h2>مستني موافقتك</h2><a class="sm b8" href="admin-shary-agent-review_hub_seo.html">افتح الكل في صندوق المراجعة</a></div>
+                            <ul class="ag-rows">
+                                            <li>
+                            <span class="ag-col">
+                                <span class="b8">لينكات داخلية لـ 25 كلمة من «خطة الصدارة»</span>
+                                <span class="xs mute">تعديل · 13 أكتوبر 7:16 ص</span>
+                            </span>
+                            <a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-review.html" data-sx-sample="1">راجع</a>
+                        </li>
+                                            <li>
+                            <span class="ag-col">
+                                <span class="b8">مراجعة صور الوحدات: 5 من غير صور ، 0 صورها صغيرة</span>
+                                <span class="xs mute">ملاحظة / رد · 13 أكتوبر 7:16 ص</span>
+                            </span>
+                            <a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-review.html" data-sx-sample="1">راجع</a>
+                        </li>
+                                            <li>
+                            <span class="ag-col">
+                                <span class="b8">لينكات داخلية لـ 25 كلمة من «خطة الصدارة»</span>
+                                <span class="xs mute">تعديل · 8 أكتوبر 5:51 م</span>
+                            </span>
+                            <a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-review.html" data-sx-sample="1">راجع</a>
+                        </li>
+                                            <li>
+                            <span class="ag-col">
+                                <span class="b8">مراجعة صور الوحدات: 2 من غير صور ، 0 صورها صغيرة</span>
+                                <span class="xs mute">ملاحظة / رد · 7 أكتوبر 11:04 م</span>
+                            </span>
+                            <a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-review.html" data-sx-sample="1">راجع</a>
+                        </li>
+                                            <li>
+                            <span class="ag-col">
+                                <span class="b8">خبر: طرح مرحلة جديدة في ميفيدا</span>
+                                <span class="xs mute">مقال · 7 أكتوبر 11:04 م</span>
+                            </span>
+                            <a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-review.html" data-sx-sample="1">راجع</a>
+                        </li>
+                                            <li>
+                            <span class="ag-col">
+                                <span class="b8">مقال: دليل مدينة المستقبل 2026</span>
+                                <span class="xs mute">مقال · 7 أكتوبر 11:04 م</span>
+                            </span>
+                            <a class="ag-btn ag-btn--sm ag-btn--blue" href="admin-shary-agent-review.html" data-sx-sample="1">راجع</a>
+                        </li>
+                                    </ul>
+                    </section>
 
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '.confirm-text', function(e) {
+        <section class="ag-card" id="orders">
+            <div class="ag-card__head"><h2>أوامرك في القسم ده</h2></div>
+                            <div class="ag-card__body"><p class="mute">لسه ما ادّيتش أوامر هنا.</p></div>
+                    </section>
+    </div>
 
-            var parentElement = $(this).parent().parent();
-        var deleteUrl = $(this);
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won&#039;t be able to revert this!",
-            type: "warning",
-            showCancelButton: !0,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "Cancel", // Translate "Cancel" here
-            confirmButtonClass: "btn btn-primary",
-            cancelButtonClass: "btn btn-danger ml-1",
-            buttonsStyling: !1,
-        }).then(function (t) {
+    <div class="side">
+                    <section class="ag-card ag-card--pad">
+                <h2 class="ag-h2">شاشات القسم</h2>
+                <ul class="ag-links">
+                                            <li><a href="admin-shary-agent-seo-team.html"><span class="b8">فريق السيو (SEO + GEO + AEO)</span><span class="xs mute">10 متخصصين بمنهجية — شغّل أي واحد</span></a></li>
+                                            <li><a href="admin-shary-agent-plan.html"><span class="b8">خطة الصدارة (سيو + GEO)</span><span class="xs mute">الكلمات وشغل كل أسبوع</span></a></li>
+                                            <li><a href="admin-shary-agent-seo.html"><span class="b8">الكلمات والمقالات والباك لينكس</span></a></li>
+                                            <li><a href="admin-shary-agent-pages_kind_articles.html"><span class="b8">المقالات الناقصة</span></a></li>
+                                            <li><a href="admin-shary-agent-reviews.html"><span class="b8">تقييمات جوجل</span><span class="xs mute">تقييم شاري على الخريطة وردود جاهزة</span></a></li>
+                                    </ul>
+            </section>
+        
+        <section class="ag-card ag-card--pad">
+            <div class="ag-row ag-row--between"><h2 class="ag-h2">بيشتغل لوحده</h2><a class="sm b8" href="admin-shary-agent-tasks.html">كل المهام</a></div>
+                            <ul class="ag-rows ag-rows--tight">
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">أخبار السوق والعقارات والبورصة</span>
+                                <span class="xs mute">كل يوم  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">مقال اليوم</span>
+                                <span class="xs mute">كل يوم  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فحص سيو صفحات الموقع</span>
+                                <span class="xs mute">كل يوم  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--ok nowrap">خلصت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">خطة الصدارة: شغل الأسبوع</span>
+                                <span class="xs mute">كل يوم  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--ok nowrap">خلصت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: AEO — الإجابات المميزة</span>
+                                <span class="xs mute">كل أسبوع </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">اقتراحات الباك لينك</span>
+                                <span class="xs mute">كل أسبوع </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: تحليل الباك لينكس</span>
+                                <span class="xs mute">كل أسبوع · <span class="ag-pill ag-pill--warn">مقفولة</span> </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">تكملة المقالات الناقصة</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: السيو التقني</span>
+                                <span class="xs mute">كل أسبوع · <span class="ag-pill ag-pill--warn">مقفولة</span> </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">ظهور شاري في إجابات الذكاء الاصطناعي</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: GEO — الظهور في الذكاء الاصطناعي</span>
+                                <span class="xs mute">كل أسبوع · <span class="ag-pill ag-pill--warn">مقفولة</span> </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">خطة الصدارة: الترتيب والنتايج</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: تقارير السيو</span>
+                                <span class="xs mute">كل أسبوع · <span class="ag-pill ag-pill--warn">مقفولة</span> </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">مقال الأسبوع</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: كلمات البحث</span>
+                                <span class="xs mute">كل أسبوع · <span class="ag-pill ag-pill--warn">مقفولة</span> </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">كلمات السيو وترتيب شاري</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">كلمات المنافسين</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: تحليل المنافسين</span>
+                                <span class="xs mute">كل أسبوع · <span class="ag-pill ag-pill--warn">مقفولة</span> </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: الأرشفة والفهرسة</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">فريق السيو: تحسين المحتوى</span>
+                                <span class="xs mute">كل أسبوع  · آخر مرة 13 أكتوبر 7:16 ص</span></span>
+                            <span class="ag-pill ag-pill--warn nowrap">اتخطّت</span>
+                        </li>
+                                                                    <li>
+                            <span class="ag-col"><span class="b8 sm">خطة الصدارة: تحديث خريطة الكلمات</span>
+                                <span class="xs mute">كل شهر </span></span>
+                            <span class="ag-pill  nowrap">لسه ما اشتغلتش</span>
+                        </li>
+                                    </ul>
+                    </section>
 
-            if (t.value) {
-                parentElement.hide();
-                deleted = deleteUrl.data("delete-url");
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: deleted,
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
-                    },
-                    success: function (result) {
-                        // Hide the parent element (delete the row)
-                        parentElement.hide();
-                        // Display a success message
-                        Swal.fire({
-                            type: "success",
-                            title: "Deleted!",
-                            text: "Deleted successfully",
-                            confirmButtonClass: "btn btn-success",
-                        });
-                        // // Redirect to another URL
-                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
-                    },
-                    // User confirmed, hide the parent element (delete the row)
-                })
-            }
-        });
-    })
-    });
-</script>
-    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
-     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+        <section class="ag-card ag-card--pad">
+            <div class="ag-row ag-row--between"><h2 class="ag-h2">اتعمل مؤخراً</h2></div>
+                            <p class="mute sm">لسه مفيش حاجة اتنشرت من القسم ده.</p>
+                    </section>
+    </div>
+</div>
+    </main>
+</div>
+<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
-     <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+<script src="../a/js/shary-admin/agent.js" defer></script>
+<link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-      <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

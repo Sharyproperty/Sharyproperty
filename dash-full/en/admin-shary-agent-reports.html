@@ -1,183 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-  
-    <head>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<meta name="description" content="Shary">
-<meta name="keywords" content="Shary">
-<meta name="author" content="">
-<meta name="robots" content="noindex, nofollow">
-<meta name="csrf-token" content="preview">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="preview">
+    <meta name="robots" content="noindex, nofollow">
+    <title>التقارير — لوحة تحكم شاري</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
+</head>
+<body class="ag sx" dir="rtl">
 
-<title>Shary</title>
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="../a/images/logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
-<!-- Bootstrap CSS -->
-
-
-    <link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
-
-
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
-
-<!-- animation CSS -->
-<link rel="stylesheet" href="../a/assets/css/animate.css">
-
-<!-- Datetimepicker CSS -->
-<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
-
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
-
-<!-- Dragula CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
-
-
-
-
-
-
-<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
-
-<!-- Datatable CSS -->
-<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
-
-<!-- Main CSS -->
-    <link rel="stylesheet" href="../a/assets/css/style.css">
-<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
-
-<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
-<style type="text/css">
-    body, h1, h2, h3, h4, h5, h6, * {
-        font-family: 'Tajawal', serif;
-        font-weight: bold;
-    }
-</style>
-    
-    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
-     <script>
-    (function () {
-        try {
-            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
-                document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
-                var params = new URLSearchParams(location.search);
-                document.addEventListener('DOMContentLoaded', function () {
-                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
-                    if (keep) {
-                        document.documentElement.classList.add('sx-focus');
-                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
-                            [].forEach.call(node.parentElement.children, function (sib) {
-                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
-                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
-                                sib.style.display = 'none';
-                            });
-                        }
-                    }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
-                    String(params.get('hide') || '').split(',').forEach(function (id) {
-                        var drop = id && document.getElementById(id.trim());
-                        if (drop) drop.style.display = 'none';
-                    });
-                });
-                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
-                if (open) {
-                    var tries = 0, timer = setInterval(function () {
-                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
-                        var modal = document.getElementById(open);
-                        if ((button && window.bootstrap && modal) || ++tries > 40) {
-                            clearInterval(timer);
-                            if (button && modal) {
-                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
-                            }
-                        }
-                    }, 150);
-                }
-            }
-        } catch (e) {}
-    })();
-</script>
-<script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
-if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
-(function () {
-    var KEY = 'shary-app-mode', on = false;
-    try {
-        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
-        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
-        on = sessionStorage.getItem(KEY) === '1';
-    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
-    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
-})();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
-window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
-window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
-document.addEventListener('DOMContentLoaded', function () {
-    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
-    for (i = 0; i < els.length; i++) {
-        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
-        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
-    }
-    for (i = 0; i < jobs.length; i++) {
-        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
-        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
-        jobs[i][0].__fit = true;
-    }
-    for (i = 0; i < jobs.length; i++) {
-        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
-            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
-        }
-    }
-});
-document.addEventListener('error', function (e) {
-    var img = e.target;
-    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
-    img.removeAttribute('srcset'); img.removeAttribute('sizes');
-    var alt = img.getAttribute('data-fallback');
-    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
-    img.removeAttribute('data-img-fallback');
-    img.src = "\/images\/shary\/placeholder.svg";
-}, true);
-</script>
-<style>
-    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
-    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
-    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
-    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
-    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
-    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
-    html.sx-embed body { background: #fff !important; }
-    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
-    html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
-    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
-    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
-    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-       </head>
-  <body class="sx" dir="ltr">
- <div id="global-loader" >
-    <div class="whirly-loader"> </div>
-</div>  <!-- Main Wrapper -->
-<div class="main-wrapper">
-      <a class="sx-skip" href="#sx-main">Skip to the content</a>
+<a class="sx-skip" href="#sx-main">Skip to the content</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -236,13 +72,13 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">9</b>                    </a>
+                        <b class="sx-tag">10</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
                         <b class="sx-tag">106</b>                    </a>
-                                                                <div class="sx-grp " data-sx-grp="agent">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
                             <b class="sx-tag">20</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
@@ -277,7 +113,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-agent-s-places.html" class="" ><span>Developers &amp; areas</span><b class="sx-tag">1</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-s-market.html" class="" ><span>Market &amp; reports</span><b class="sx-tag">2</b></a></li>
+                                                                                                <li><a href="admin-shary-agent-s-market.html" class="is-on" ><span>Market &amp; reports</span><b class="sx-tag">2</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-agent-connect.html" class="" ><span>Connections</span></a></li>
                                                             
@@ -844,165 +680,181 @@ document.addEventListener('error', function (e) {
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
- <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
-        <script>
-            window.SharyEditorConfig = {
-                token: "0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                lang: "en",
-                linksUrl: "\/admin\/shary\/content-editor\/links",
-                previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                contentCss: "../a/css/shary-admin/editor-content.css",
-                localEditor: true,
-                localBase: "../a/vendor/shary-editor/",
-                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
-                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
-        </script>
-        <script src="../a/js/shary-admin/editor.js"></script>
-        
-             
 
-                
-                <link rel="stylesheet" href="../a/css/shary-admin/pin.css">
-    <div class="page-wrapper">
-        <div class="content">
-            <div class="pin-wrap">
-                                                <div class="pin-card">
-                    <div class="pin-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-                    <h4>The agent — PIN</h4>
+    <template data-sx-crumb><div class="sx-crumb">Market &amp; reports ‹ Reports</div></template>
 
-                    
-                                            
-                        <p class="lead">Enter the agent PIN.</p>
-                        <form method="post" action="#preview/admin/shary/pin/agent/unlock" autocomplete="off">
-                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="back" value="/admin/shary/agent/reports">
-                            <div class="form-group">
-                                <label for="pin">PIN (6 digits)</label>
-                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin" name="pin" autocomplete="off" required autofocus >
-                            </div>
-                            <button type="submit" class="btn btn-primary w-100" >Open</button>
-                        </form>
-                                                <details class="pin-more">
-                            <summary>Forgot the PIN?</summary>
-                            <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
-                            <form method="post" action="#preview/admin/shary/pin/agent/reset" autocomplete="off">
-                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <input type="hidden" name="back" value="/admin/shary/agent/reports">
-                                <div class="form-group">
-                                    <label for="account_password">Your dashboard account password</label>
-                                    <input type="password" class="form-control" id="account_password" name="account_password" autocomplete="current-password" required>
-                                </div>
-                                <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
-                            </form>
-                        </details>
-                                                            </div>
-                
-                                    <p class="text-center mt-3 mb-0"><a class="pin-all" href="admin-shary-pins.html">All PINs (create / change / forgot)</a></p>
-                            </div>
-        </div>
-    </div>
+<div class="sx-page">
+    <main class="ag-main" id="sx-main">
+                                <div class="ag-head"><div class="ag-col">
+    <h1>التقارير</h1>
+    <p>ملخص شغل الإيجنت والموقع: يومي، أسبوعي، شهري — تحفظه PDF، تبعته على الإيميل أو الواتساب، أو تنسخه.</p>
 </div>
-<!-- /Main Wrapper -->
-    <!-- jQuery -->
-<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
+<form method="post" action="#preview/admin/shary/agent/reports" class="ag-row no-print"><input type="hidden" name="_token" value="preview" autocomplete="off">    <select name="kind" class="ag-input" style="width:auto" aria-label="نوع التقرير"><option value="daily">يومي</option><option value="weekly">أسبوعي</option><option value="monthly">شهري</option><option value="quarterly">ربع سنوي</option></select>
+    <button class="ag-btn ag-btn--primary">اعمل تقرير دلوقتي</button>
+</form></div>
 
-<!-- Bootstrap Core JS -->
-<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
+<details class="ag-card ag-card--pad no-print" id="delivery" style="margin-bottom:16px" >
+    <summary class="ag-h2" style="cursor:pointer">التقرير اليومي يوصلك فين؟ <span class="sm mute" style="font-weight:600">— الإيميل مش مكتوب</span></summary>
+    <form method="post" action="#preview/admin/shary/agent/reports/delivery" class="ag-grid" style="margin-top:14px;gap:14px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <div class="ag-field"><label class="ag-label" for="d-email">الإيميل اللي التقارير تتبعت عليه</label>
+            <input type="email" id="d-email" name="email" class="ag-input" dir="ltr" value="" placeholder="name@example.com">
+            <span class="sm mute">سيبه فاضي = الإيميل المكتوب على السيرفر.</span></div>
+        <div class="ag-field"><span class="ag-label">الواتساب</span>
+            <span class="sm">لسه مش متظبط — التقارير وشغل الإيجنت يوصلوا على رقمك لما تربطه.</span>
+            <a class="ag-btn ag-btn--sm" href="admin-shary-agent-settings.html#whatsapp" style="align-self:flex-start">ظبط الواتساب</a></div>
+        <div class="ag-field" style="grid-column:1/-1">
+            <label class="ag-check"><input type="checkbox" name="auto_email" value="1" checked> ابعت التقرير اليومي على الإيميل أوتوماتيك كل يوم (الساعة 18:00)</label>
+        </div>
+        <div style="grid-column:1/-1"><button class="ag-btn ag-btn--primary">احفظ</button></div>
+    </form>
+</details>
 
-<!-- Feather Icon JS -->
-<script src="../a/assets/js/feather.min.js"></script>
+<div class="ag-split">
+    <div class="ag-list no-print" style="flex:1 1 280px">
+                    <a class="ag-item is-on" href="admin-shary-agent-reports_id_10.html">
+                <span class="ag-row ag-row--between"><span class="ag-pill">أسبوعي</span><span class="xs mute">13 أكتوبر 7:16 ص</span></span>
+                <span class="ag-item__t">تقرير الأسبوع — لحد 2026-10-13</span>
+                            </a>
+                    <a class="ag-item " href="admin-shary-agent-reports_id_10.html" data-sx-sample="1">
+                <span class="ag-row ag-row--between"><span class="ag-pill">يومي</span><span class="xs mute">13 أكتوبر 7:16 ص</span></span>
+                <span class="ag-item__t">تقرير يوم 2026-10-13</span>
+                            </a>
+                    <a class="ag-item " href="admin-shary-agent-reports_id_10.html" data-sx-sample="1">
+                <span class="ag-row ag-row--between"><span class="ag-pill">يومي</span><span class="xs mute">8 أكتوبر 3:34 ص</span></span>
+                <span class="ag-item__t">تقرير يوم 2026-10-08</span>
+                            </a>
+                    <a class="ag-item " href="admin-shary-agent-reports_id_10.html" data-sx-sample="1">
+                <span class="ag-row ag-row--between"><span class="ag-pill">يومي</span><span class="xs mute">7 أكتوبر 11:04 م</span></span>
+                <span class="ag-item__t">تقرير يوم 2026-10-07</span>
+                            </a>
+            </div>
 
-<!-- Slimscroll JS -->
-<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
+        <section class="ag-card ag-detail">
+        <div class="ag-card__head"><h2 style="font-size:19px">تقرير الأسبوع — لحد 2026-10-13</h2></div>
+        <div class="ag-card__body ag-share no-print" data-ag-share data-pdf-box>
+    <div class="ag-row">
+        <a class="ag-btn ag-btn--primary" href="admin-shary-agent-reports-10-print.html" target="_blank" rel="noopener" data-share="pdf">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>
+            احفظه PDF
+        </a>
+        <button type="button" class="ag-btn ag-btn--wa" data-pdf-share data-pdf-src="admin-shary-agent-reports-10-print.html?noprint=1" data-pdf-name="shary-report-10-2026-10-13.pdf" data-pdf-title="تقرير الأسبوع — لحد 2026-10-13" data-share="pdf-whatsapp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h4"/><path d="M14 3v5h5v3"/><path d="M15 17h6m-3-3 3 3-3 3"/></svg>
+            <span data-pdf-label>شير PDF على واتساب</span>
+        </button>
+        <a class="ag-btn" href="https://wa.me/?text=%2A%D8%AA%D9%82%D8%B1%D9%8A%D8%B1%20%D8%A7%D9%84%D8%A3%D8%B3%D8%A8%D9%88%D8%B9%20%E2%80%94%20%D9%84%D8%AD%D8%AF%202026-10-13%2A%0A%0A%E2%80%A2%2015%20%D8%AD%D8%A7%D8%AC%D8%A9%20%D9%85%D8%B3%D8%AA%D9%86%D9%8A%D8%A9%20%D9%85%D8%B1%D8%A7%D8%AC%D8%B9%D8%AA%D9%83%20%D9%81%D9%8A%20%D8%B5%D9%86%D8%AF%D9%88%D9%82%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D8%AC%D8%B9%D8%A9.%0A%E2%80%A2%20%D8%A7%D9%84%D8%A5%D9%8A%D8%AC%D9%86%D8%AA%20%D8%AC%D9%87%D9%91%D8%B2%2017%20%D8%A7%D9%82%D8%AA%D8%B1%D8%A7%D8%AD%20%D8%8C%20%D8%A7%D8%AA%D9%86%D8%B4%D8%B1%20%D9%85%D9%86%D9%87%D9%85%201.%0A%E2%80%A2%20%D8%B7%D9%84%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%85%D9%84%D8%A7%D8%A1%3A%2056.%0A%E2%80%A2%203%20%D8%AC%D8%AF%D9%8A%D8%AF%20%D8%B9%D9%86%D8%AF%20%D8%A7%D9%84%D9%85%D8%B7%D9%88%D8%B1%D9%8A%D9%86%20%D9%88%D8%A7%D9%84%D9%85%D9%86%D8%A7%D9%81%D8%B3%D9%8A%D9%86.%0A%E2%80%A2%20%D8%AC%D8%B1%D8%A7%D9%85%20%D8%A7%D9%84%D8%B0%D9%87%D8%A8%20%D8%B9%D9%8A%D8%A7%D8%B1%2021%20%D8%B2%D8%A7%D8%AF%201.46%25.%0A%E2%80%A2%2010%20%D8%B3%D8%AC%D9%84%D8%A7%D8%AA%20%D9%86%D8%A7%D9%82%D8%B5%D9%87%D8%A7%20%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%20%E2%80%94%20%D8%A3%D9%88%D9%84%D9%87%D9%85%3A%20%D9%85%D8%B7%D9%88%D8%B1%20%D8%AF%D8%B1%D8%A9%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%280%25%20%D9%83%D8%A7%D9%85%D9%84%29.%0A%E2%80%A2%20%D8%B4%D8%A7%D8%B1%D9%8A%20%D9%85%D8%B9%D8%A7%D9%83%3A%20%D9%85%D9%81%D9%8A%D8%B4%20%D8%AD%D8%A7%D8%AC%D8%A9%20%D9%85%D8%B3%D8%AA%D9%86%D9%8A%D8%A9%20%C2%B7%20%D8%A5%D9%8A%D8%B5%D8%A7%D9%84%D8%A7%D8%AA%20%D8%A7%D8%AA%D9%82%D8%A8%D9%84%D8%AA%200%20%280%20%D8%AC.%D9%85%29.%0A%0A%2A%D8%B7%D9%84%D8%A8%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B9%D9%85%D9%84%D8%A7%D8%A1%3A%2A%20%D9%85%D9%86%20Shary%20AI%206%20%D8%8C%20%D9%85%D9%8A%D8%AA%D9%86%D8%AC%20%D9%85%D9%86%20Shary%20AI%2022%20%D8%8C%20%D8%B4%D8%A7%D8%B1%D9%8A%20%D9%83%D8%A7%D8%B1%D8%AF%203%20%D8%8C%20%D8%AA%D9%88%D8%B8%D9%8A%D9%81%202%20%D8%8C%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%205%20%D8%8C%20%D8%AA%D9%88%D8%A7%D8%B5%D9%84%202%0A%0A%2A%D9%86%D8%A7%D9%82%D8%B5%D9%87%D9%85%20%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA%3A%2A%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D8%AF%D8%B1%D8%A9%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D8%A7%D9%84%D9%85%D8%B1%D8%A7%D8%B3%D9%85%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D8%A5%D9%86%D8%B1%D8%B4%D9%8A%D8%A7%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D8%AD%D8%B3%D9%86%20%D8%B9%D9%84%D8%A7%D9%85%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A%D8%A9%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D9%85%D8%AC%D9%85%D9%88%D8%B9%D8%A9%20%D8%B7%D9%84%D8%B9%D8%AA%20%D9%85%D8%B5%D8%B7%D9%81%D9%89%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D9%85%D8%AF%D9%8A%D9%86%D8%A9%20%D9%85%D8%B5%D8%B1%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D9%84%D8%A7%D9%81%D9%8A%D8%B3%D8%AA%D8%A7%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B7%D9%88%D8%B1%20%D9%87%D8%A7%D9%8A%D8%AF%20%D8%A8%D8%A7%D8%B1%D9%83%20%D9%84%D9%84%D8%AA%D8%B7%D9%88%D9%8A%D8%B1%20%D8%A7%D9%84%D8%B9%D9%82%D8%A7%D8%B1%D9%8A%20%E2%80%94%200%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%A7%D9%84%D9%84%D9%88%D8%AC%D9%88%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%86%D8%A8%D8%B0%D8%A9%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D9%86%D8%B7%D9%82%D8%A9%20%D9%85%D9%86%D8%B7%D9%82%D8%A9%20%D9%85%D8%AE%D9%81%D9%8A%D8%A9%20%E2%80%94%2011%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%B5%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D9%86%D8%B7%D9%82%D8%A9%20%D8%8C%20%D9%88%D8%B5%D9%81%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%88%D8%B5%D9%81%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%E2%80%A2%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%AA%D8%AC%D8%B1%D9%8A%D8%A8%D9%8A%20%D8%A8%D8%AF%D9%88%D9%86%20%D9%88%D8%AD%D8%AF%D8%A7%D8%AA%20%E2%80%94%2021%25%20%28%D9%86%D8%A7%D9%82%D8%B5%3A%20%D8%B5%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%8C%20%D9%88%D8%B5%D9%81%20%D8%B9%D8%B1%D8%A8%D9%8A%20%D8%8C%20%D9%88%D8%B5%D9%81%20%D8%A5%D9%86%D8%AC%D9%84%D9%8A%D8%B2%D9%8A%29%0A%0A%2A%D8%B4%D8%A7%D8%B1%D9%8A%20%D9%85%D8%B9%D8%A7%D9%83%3A%2A%20%D9%85%D9%81%D9%8A%D8%B4%20%D8%AD%D8%A7%D8%AC%D8%A9%20%D9%85%D8%B3%D8%AA%D9%86%D9%8A%D8%A9%20%C2%B7%20%D9%85%D8%B3%D8%AA%D8%AB%D9%85%D8%B1%D9%8A%D9%86%20%D8%AC%D8%AF%D8%A7%D8%AF%200%20%C2%B7%20%D8%B5%D9%81%D9%82%D8%A7%D8%AA%20%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9%200%0A%0A%2A%D8%A7%D9%84%D8%B3%D9%88%D9%82%3A%2A%20%D8%B3%D8%B9%D8%B1%20%D8%A7%D9%84%D8%AF%D9%88%D9%84%D8%A7%D8%B1%2048.6%20%28%2B0.52%25%29%20%D8%8C%20%D8%AC%D8%B1%D8%A7%D9%85%20%D8%A7%D9%84%D8%B0%D9%87%D8%A8%20%D8%B9%D9%8A%D8%A7%D8%B1%2021%204%2C860%20%28%2B1.46%25%29%20%D8%8C%20%D8%B7%D9%86%20%D8%A7%D9%84%D8%AD%D8%AF%D9%8A%D8%AF%2039%2C200%20%28%2B0.77%25%29%20%D8%8C%20%D8%B7%D9%86%20%D8%A7%D9%84%D8%A3%D8%B3%D9%85%D9%86%D8%AA%203%2C720%20%28%2B0.54%25%29" target="_blank" rel="noopener" data-share="whatsapp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.1A8.5 8.5 0 1 1 21 11.5Z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5"/></svg>
+            ابعته رسالة واتساب
+        </a>
+        <button type="button" class="ag-btn" data-ag-toggle="ag-share-mail-10" data-share="mail">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            ابعته على الإيميل
+        </button>
+        <button type="button" class="ag-btn" data-ag-copy="*تقرير الأسبوع — لحد 2026-10-13*
 
-<!-- Datatable JS -->
-<script src="../a/assets/js/jquery.dataTables.min.js"></script>
-<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
+• 15 حاجة مستنية مراجعتك في صندوق المراجعة.
+• الإيجنت جهّز 17 اقتراح ، اتنشر منهم 1.
+• طلبات العملاء: 56.
+• 3 جديد عند المطورين والمنافسين.
+• جرام الذهب عيار 21 زاد 1.46%.
+• 10 سجلات ناقصها بيانات — أولهم: مطور درة للتطوير (0% كامل).
+• شاري معاك: مفيش حاجة مستنية · إيصالات اتقبلت 0 (0 ج.م).
 
-<!-- Select2 JS -->
-<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
+*طلبات العملاء:* من Shary AI 6 ، ميتنج من Shary AI 22 ، شاري كارد 3 ، توظيف 2 ، استشارة 5 ، تواصل 2
 
-<!-- Datetimepicker JS -->
-<script src="../a/assets/js/moment.min.js"></script>
-<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
+*ناقصهم بيانات:*
+• مطور درة للتطوير — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• مطور المراسم — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• مطور إنرشيا — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• مطور حسن علام العقارية — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• مطور مجموعة طلعت مصطفى — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• مطور مدينة مصر — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• مطور لافيستا للتطوير العقاري — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• مطور هايد بارك للتطوير العقاري — 0% (ناقص: اللوجو ، نبذة عربي ، نبذة إنجليزي)
+• منطقة منطقة مخفية — 11% (ناقص: صورة المنطقة ، وصف عربي ، وصف إنجليزي)
+• مشروع مشروع تجريبي بدون وحدات — 21% (ناقص: صورة المشروع ، وصف عربي ، وصف إنجليزي)
 
-<!-- Chart JS -->
-<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
-<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
+*شاري معاك:* مفيش حاجة مستنية · مستثمرين جداد 0 · صفقات جديدة 0
 
-<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+*السوق:* سعر الدولار 48.6 (+0.52%) ، جرام الذهب عيار 21 4,860 (+1.46%) ، طن الحديد 39,200 (+0.77%) ، طن الأسمنت 3,720 (+0.54%)" data-share="copy">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>
+            انسخ التقرير
+        </button>
+    </div>
+    <form method="post" action="#preview/admin/shary/agent/reports/10/email" id="ag-share-mail-10" class="ag-row hide" style="margin-top:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <label class="sr" for="ag-share-to-10">الإيميل</label>
+        <input type="email" id="ag-share-to-10" name="to" class="ag-input" style="max-width:320px" dir="ltr" value="" placeholder="name@example.com" required>
+        <button class="ag-btn ag-btn--primary">ابعت</button>
+        <span class="sm mute">بيتبعت التقرير كامل بالجداول.</span>
+    </form>
+        <p class="sm ag-share__note hide" data-pdf-note role="status" aria-live="polite"></p>
+    <p class="sm mute" style="margin-top:8px">"شير PDF على واتساب" بيعمل ملف PDF للتقرير على جهازك ويفتح المشاركة — اختار واتساب والشات وابعت (على الكمبيوتر الملف بيتنزل وتبعته من واتساب ويب). "احفظه PDF" بيفتح صفحة نضيفة ونافذة الحفظ — اختار "Save as PDF". "ابعته رسالة واتساب" بيفتح واتساب والتقرير مكتوب جاهز وتدوس إرسال.</p>
+</div>
+    <script src="../a/js/shary-admin/report-pdf.js" defer></script>
+        <div class="ag-card__body"><h3 class="ag-h2">الخلاصة</h3>
+            <ul class="ag-checks"><li><i aria-hidden="true">•</i><span>15 حاجة مستنية مراجعتك في صندوق المراجعة.</span></li><li><i aria-hidden="true">•</i><span>الإيجنت جهّز 17 اقتراح ، اتنشر منهم 1.</span></li><li><i aria-hidden="true">•</i><span>طلبات العملاء: 56.</span></li><li><i aria-hidden="true">•</i><span>3 جديد عند المطورين والمنافسين.</span></li><li><i aria-hidden="true">•</i><span>جرام الذهب عيار 21 زاد 1.46%.</span></li><li><i aria-hidden="true">•</i><span>10 سجلات ناقصها بيانات — أولهم: مطور درة للتطوير (0% كامل).</span></li><li><i aria-hidden="true">•</i><span>شاري معاك: مفيش حاجة مستنية · إيصالات اتقبلت 0 (0 ج.م).</span></li></ul></div>
 
+        
+                <div class="ag-card__body"><h3 class="ag-h2">محتاج قرارك</h3>
+            <div class="ag-row"><a class="ag-tab no-print" href="admin-shary-agent-review_section_content.html">مقالات ومحتوى<span class="num">4</span></a><a class="ag-tab no-print" href="admin-shary-agent-review_section_market.html">أرقام السوق<span class="num">2</span></a><a class="ag-tab no-print" href="admin-shary-agent-review_section_news.html">أخبار وقرارات<span class="num">1</span></a><a class="ag-tab no-print" href="admin-shary-agent-review_section_offers.html">عروض وإعلانات<span class="num">1</span></a><a class="ag-tab no-print" href="admin-shary-agent-review_section_prices.html">أسعار وخطط سداد<span class="num">3</span></a><a class="ag-tab no-print" href="admin-shary-agent-review_section_requests.html">طلبات العملاء<span class="num">1</span></a><a class="ag-tab no-print" href="admin-shary-agent-review_section_seo.html">مقالات وسيو<span class="num">3</span></a></div>
+            <div class="sm"><a href="admin-shary-agent-review_id_22.html" data-sx-sample="1">أسعار ميفيدا — 12 وحدة</a> <span class="mute">— أسعار وخطط سداد · مستني من 7 أكتوبر 11:04 م</span></div><div class="sm"><a href="admin-shary-agent-review_id_22.html" data-sx-sample="1">عرض كاش — شقة 165 م² للبيع في ميفيدا</a> <span class="mute">— عروض وإعلانات · مستني من 7 أكتوبر 11:04 م</span></div><div class="sm"><a href="admin-shary-agent-review_id_22.html" data-sx-sample="1">مقال: دليل مدينة المستقبل 2026</a> <span class="mute">— مقالات وسيو · مستني من 7 أكتوبر 11:04 م</span></div><div class="sm"><a href="admin-shary-agent-review_id_22.html" data-sx-sample="1">سعر الدولار: 48.85 جنيه</a> <span class="mute">— أرقام السوق · مستني من 7 أكتوبر 11:04 م</span></div><div class="sm"><a href="admin-shary-agent-review_id_22.html" data-sx-sample="1">خبر: طرح مرحلة جديدة في ميفيدا</a> <span class="mute">— أخبار وقرارات · مستني من 7 أكتوبر 11:04 م</span></div>        </div>
+        
+                        <div class="ag-card__body"><h3 class="ag-h2">شاري معاك</h3>
+                            <p class="sm mute">مفيش حاجة مستنية قرار في شاري معاك.</p>
+                        <div class="ag-tiles">
+                <div class="ag-tile"><span>إيصالات اتقبلت</span><b class="num">0</b><span><bdi>0 ج.م</bdi></span></div>
+                <div class="ag-tile"><span>سحب اتصرف</span><b class="num" style="font-size:18px"><bdi>0 ج.م</bdi></b><span>في الفترة دي</span></div>
+                <div class="ag-tile"><span>مستثمرين جداد</span><b class="num">0</b><span>صفقات جديدة <span class="num">0</span></span></div>
+                <div class="ag-tile"><span>أقساط متأخرة</span><b class="num">0</b><span>فات ميعادها ومادفعتش</span></div>
+            </div>
+            <a class="ag-btn ag-btn--sm no-print" style="margin-top:10px" href="https://shary.eg/admin/shary/ma3ak">افتح شاري معاك</a>        </div>
+        
+        
+        <div class="ag-card__body"><h3 class="ag-h2">طلبات العملاء</h3>
+            <p class="sm mute">في الفترة دي <span class="num b8">56</span> طلب — الفترة اللي قبلها <span class="num">0</span>.</p>
+                        <div class="ag-scroll"><table><thead><tr><th>النوع</th><th>العدد</th><th>لسه مفتوح</th></tr></thead><tbody>
+                <tr><td class="b8">من Shary AI</td><td><span class="num">6</span></td><td><span class="num">6</span></td></tr><tr><td class="b8">ميتنج من Shary AI</td><td><span class="num">22</span></td><td><span class="num">22</span></td></tr><tr><td class="b8">شاري كارد</td><td><span class="num">3</span></td><td><span class="num">3</span></td></tr><tr><td class="b8">توظيف</td><td><span class="num">2</span></td><td><span class="num">2</span></td></tr><tr><td class="b8">استشارة</td><td><span class="num">5</span></td><td><span class="num">5</span></td></tr><tr><td class="b8">تواصل</td><td><span class="num">2</span></td><td><span class="num">2</span></td></tr><tr><td class="b8">متابعة مشروع</td><td><span class="num">1</span></td><td><span class="num">1</span></td></tr><tr><td class="b8">ميتنج</td><td><span class="num">5</span></td><td><span class="num">5</span></td></tr><tr><td class="b8">عرض سعر</td><td><span class="num">4</span></td><td><span class="num">4</span></td></tr><tr><td class="b8">بيع / إيجار</td><td><span class="num">6</span></td><td><span class="num">6</span></td></tr>            </tbody></table></div>
+                    </div>
 
+        <div class="ag-card__body"><h3 class="ag-h2">اللي اتغيّر في الموقع</h3>
+            <div class="ag-row"><span class="ag-pill ag-pill--lg">اتجهّز <span class="num">17</span></span><span class="ag-pill ag-pill--lg ag-pill--ok">اتنشر <span class="num">1</span></span><span class="ag-pill ag-pill--lg">اتلغى <span class="num">0</span></span></div>
+                        <div class="ag-scroll"><table><thead><tr><th>الوقت</th><th>مين</th><th>إيه</th><th>فين</th></tr></thead><tbody>
+                <tr><td class="nowrap sm">7 أكتوبر 11:04 م</td><td class="nowrap">Demo Admin</td><td><span class="ag-pill">إضافة</span> خطة سداد: مقدم 5% على 10 سنين — ميفيدا</td><td class="sm mute">خطط سداد المشاريع</td></tr>            </tbody></table></div>
+                    </div>
 
+        <div class="ag-card__body"><h3 class="ag-h2">السوق</h3>
+                        <div class="ag-scroll"><table><thead><tr><th>الرقم</th><th>دلوقتي</th><th>قبل كده</th><th>التغيير</th></tr></thead><tbody>
+                <tr><td class="b8">سعر الدولار</td><td><span class="num b8">48.6</span> <span class="xs mute">جنيه</span></td><td><span class="num">48.35</span></td>
+                    <td><span class="num" style="color:#17665B">+0.52%</span></td></tr><tr><td class="b8">جرام الذهب عيار 21</td><td><span class="num b8">4,860</span> <span class="xs mute">جنيه</span></td><td><span class="num">4,790</span></td>
+                    <td><span class="num" style="color:#17665B">+1.46%</span></td></tr><tr><td class="b8">طن الحديد</td><td><span class="num b8">39,200</span> <span class="xs mute">جنيه</span></td><td><span class="num">38,900</span></td>
+                    <td><span class="num" style="color:#17665B">+0.77%</span></td></tr><tr><td class="b8">طن الأسمنت</td><td><span class="num b8">3,720</span> <span class="xs mute">جنيه</span></td><td><span class="num">3,700</span></td>
+                    <td><span class="num" style="color:#17665B">+0.54%</span></td></tr>            </tbody></table></div>
+                    </div>
 
-<!-- Owl JS -->
-<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
-<!-- Fileupload JS -->
-<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
-<!-- Sweetalert 2 -->
-<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
-<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+        <div class="ag-card__body"><h3 class="ag-h2">السيو</h3>
+                        <div class="ag-tiles">
+                <div class="ag-tile"><span>صفحات اتفحصت</span><b class="num">163</b><span>متوسط الدرجة <span class="num">94</span> من 100</span></div>
+                <div class="ag-tile"><span>كلمات في الصفحة الأولى</span><b class="num">4</b><span>من <span class="num">7</span> كلمة · <span class="num">2</span> في أول 3</span></div>
+                <div class="ag-tile"><span>مقالات وصفحات اتجهّزت</span><b class="num">3</b><span>في الفترة دي</span></div>
+                <div class="ag-tile"><span>مشاريع السوق</span><b class="num">7</b><span>مستني · <span class="num">0</span> اتنشر</span></div>
+            </div>
+        </div>
 
-<!-- Custom JS -->
-<script src="../a/assets/js/script.js"></script>
-
-
-
-
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '.confirm-text', function(e) {
-
-            var parentElement = $(this).parent().parent();
-        var deleteUrl = $(this);
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won&#039;t be able to revert this!",
-            type: "warning",
-            showCancelButton: !0,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "Cancel", // Translate "Cancel" here
-            confirmButtonClass: "btn btn-primary",
-            cancelButtonClass: "btn btn-danger ml-1",
-            buttonsStyling: !1,
-        }).then(function (t) {
-
-            if (t.value) {
-                parentElement.hide();
-                deleted = deleteUrl.data("delete-url");
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: deleted,
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
-                    },
-                    success: function (result) {
-                        // Hide the parent element (delete the row)
-                        parentElement.hide();
-                        // Display a success message
-                        Swal.fire({
-                            type: "success",
-                            title: "Deleted!",
-                            text: "Deleted successfully",
-                            confirmButtonClass: "btn btn-success",
-                        });
-                        // // Redirect to another URL
-                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
-                    },
-                    // User confirmed, hide the parent element (delete the row)
-                })
-            }
-        });
-    })
-    });
-</script>
-    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
-     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+                <div class="ag-card__body"><h3 class="ag-h2">جديد عند المطورين والمنافسين</h3>
+            <div class="sm"><span class="ag-pill">خبر</span>
+                المركزي يثبت أسعار الفايدة <span class="mute">— قرار لجنة السياسة النقدية</span></div><div class="sm"><span class="ag-pill">مشروع جديد</span>
+                <a href="https://www.emaarmisr.com/" target="_blank" rel="noopener nofollow">سول — الساحل الشمالي</a> <span class="mute">— مشروع جديد مالوش صفحة عندنا — اتضاف لقايمة الكتابة</span></div><div class="sm"><span class="ag-pill">لانش</span>
+                <a href="https://www.emaarmisr.com/" target="_blank" rel="noopener nofollow">طرح مرحلة جديدة في مراسي</a> <span class="mute">— مرحلة شاليهات جديدة بمقدم 5%</span></div>        </div>
+        
+        <div class="ag-card__body"><h3 class="ag-h2">المهام والصرف</h3>
+            <div class="sm"><span class="b8">أخبار السوق والعقارات والبورصة:</span> <span class="mute">محتاجة مفتاح الذكاء الاصطناعي على السيرفر</span></div><div class="sm"><span class="b8">الإيميلات وطلبات العملاء:</span> <span class="mute">56 طلب مفتوح ، 26 جديد ، 2 وحدة اتجهّزت للنشر · الإيميل مش مربوط</span></div><div class="sm"><span class="b8">التحليل الأسبوعي:</span> <span class="mute">تحليل الأسبوع جاهز — 14 ملاحظة (الإيميل مش مظبوط — ما اتبعتش)</span></div><div class="sm"><span class="b8">التحليل اليومي:</span> <span class="mute">التحليل جاهز — 12 ملاحظة · سعر المتر في مدينة المستقبل زاد 3.9% عن آخر تحليل — دلوقتي 144,400 جنيه للمتر.</span></div><div class="sm"><span class="b8">التقرير اليومي:</span> <span class="mute">التقرير جاهز (الإيميل مش مظبوط — ما اتبعتش)</span></div><div class="sm"><span class="b8">الدولار والذهب والحديد والأسمنت والفايدة والبورصة:</span> <span class="mute">الباقي محتاجة مفتاح الذكاء الاصطناعي على السيرفر</span></div><div class="sm"><span class="b8">تكملة المقالات الناقصة:</span> <span class="mute">محتاجة مفتاح الذكاء الاصطناعي على السيرفر — 1 صفحة ناقصة في المقالات</span></div><div class="sm"><span class="b8">تكملة صفحات المشاريع الناقصة:</span> <span class="mute">محتاجة مفتاح الذكاء الاصطناعي على السيرفر — 83 صفحة ناقصة في المشاريع</span></div><div class="sm"><span class="b8">تكملة صفحات الوحدات الناقصة:</span> <span class="mute">محتاجة مفتاح الذكاء الاصطناعي على السيرفر — 238 صفحة ناقصة في الوحدات</span></div><div class="sm"><span class="b8">جديد المنافسين كل يوم:</span> <span class="mute">محتاجة مفتاح الذكاء الاصطناعي على السيرفر</span></div><div class="sm"><span class="b8">فحص سيو صفحات الموقع:</span> <span class="mute">فحصت 60 صفحة — 27 فيها ملاحظات</span></div><div class="sm"><span class="b8">كتابة مشاريع السوق الناقصة:</span> <span class="mute">محتاجة مفتاح الذكاء الاصطناعي على السيرفر — 7 مشروع مستني الكتابة</span></div><div class="sm"><span class="b8">متابعة مواقع المطورين والمنافسين:</span> <span class="mute">شفت 3 موقع — مفيش جديد</span></div><div class="sm"><span class="b8">متوسط سعر المتر والإيجار لكل منطقة:</span> <span class="mute">جهّزت أرقام 4 سطر في المؤشر</span></div><div class="sm"><span class="b8">مراجعة جودة صور الوحدات:</span> <span class="mute">2 وحدة من غير صور ، 0 صورها صغيرة</span></div><div class="sm"><span class="b8">مقال اليوم:</span> <span class="mute">محتاجة مفتاح الذكاء الاصطناعي على السيرفر</span></div>                        <p class="sm mute">الصرف على الذكاء الاصطناعي في الفترة: <span class="num b8">0</span> دولار · الشهر: <span class="num">37.4</span> من <span class="num">100</span> دولار.</p>
+        </div>
+    </section>
+    </div>
+    </main>
+</div>
+<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
-     <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+<script src="../a/js/shary-admin/agent.js" defer></script>
+<link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-      <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

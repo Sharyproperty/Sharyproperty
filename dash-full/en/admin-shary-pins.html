@@ -236,7 +236,7 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">9</b>                    </a>
+                        <b class="sx-tag">10</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
@@ -847,11 +847,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
+                token: "ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -879,19 +879,17 @@ document.addEventListener('error', function (e) {
                             <div class="pin-icon pin-icon--sm" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
                             <div class="pins-card__name">
                                 <b>The agent</b>
-                                <span class="pins-state is-set">
-                                    Set — locked
+                                <span class="pins-state is-open">
+                                    Set — open now
                                 </span>
                                 
-                                                                    <small class="pins-owner">Created earlier, not registered to anyone</small>
+                                                                    <small class="pins-owner">You created this PIN — nobody else can change it</small>
                                                             </div>
                                                             <a href="admin-shary-agent.html" class="btn btn-light btn-sm fw-bold">Open the agent</a>
                                                     </div>
 
                         
-                                                                                    
-                                <div class="alert alert-warning fw-bold py-2 mb-2">This PIN was created before the update and is not registered to anyone: change it once now (“Change the PIN” below — the same PIN is fine) so it is registered to you and nobody else can change it later.</div>
-                                                        <div class="pins-actions">
+                                                                                <div class="pins-actions">
                                 
                                 <details class="pin-more pin-more--forgot" >
                                     <summary>Forgot the PIN?</summary>
@@ -927,6 +925,9 @@ document.addEventListener('error', function (e) {
                                         <button type="submit" class="btn btn-outline-primary w-100">Save the new PIN</button>
                                     </form>
                                 </details>
+                                                                    <form method="post" action="#preview/admin/shary/pin/agent/lock" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <button type="submit" class="btn btn-light w-100">Lock now</button>
+                                    </form>
                                                             </div>
                                             </div>
                                                         <div class="pins-card" id="pin-tags">
@@ -934,31 +935,225 @@ document.addEventListener('error', function (e) {
                             <div class="pin-icon pin-icon--sm" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
                             <div class="pins-card__name">
                                 <b>Search Console, Analytics &amp; tracking codes</b>
-                                <span class="pins-state is-none">
-                                    Not created yet
+                                <span class="pins-state is-open">
+                                    Set — open now
                                 </span>
                                 
+                                                                    <small class="pins-owner">You created this PIN — nobody else can change it</small>
                                                             </div>
+                                                            <a href="admin-shary-site-tags.html" class="btn btn-light btn-sm fw-bold">Open Search Console &amp; Analytics</a>
                                                     </div>
 
                         
-                                                                                    <a href="admin-shary-pin-tags.html" class="btn btn-primary w-100">Create the PIN</a>
-                                                                        </div>
+                                                                                <div class="pins-actions">
+                                
+                                <details class="pin-more pin-more--forgot" >
+                                    <summary>Forgot the PIN?</summary>
+                                    <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
+                                    <form method="post" action="#preview/admin/shary/pin/tags/reset" autocomplete="off">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="tags">
+                                        <input type="hidden" name="back" value="/admin/shary/site-tags">
+                                        <div class="form-group">
+                                            <label for="account_password_tags">Your dashboard account password</label>
+                                            <input type="password" class="form-control" id="account_password_tags" name="account_password" autocomplete="current-password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
+                                    </form>
+                                </details>
+                                
+                                <details class="pin-more" >
+                                    <summary>Change the PIN</summary>
+                                    <form method="post" action="#preview/admin/shary/pin/tags/change" autocomplete="off" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="tags">
+                                        <div class="form-group">
+                                            <label for="old_pin_tags">Current PIN</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="old_pin_tags" name="old_pin" autocomplete="off" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_tags">New PIN (6 digits)</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_tags" name="pin" autocomplete="new-password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_confirmation_tags">Type it again</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_confirmation_tags" name="pin_confirmation" autocomplete="new-password" required>
+                                        </div>
+                                        <p class="pin-note">6 digits — not a sequence like 123456 or repeated like 111111. Keep it private.</p>
+                                        <button type="submit" class="btn btn-outline-primary w-100">Save the new PIN</button>
+                                    </form>
+                                </details>
+                                                                    <form method="post" action="#preview/admin/shary/pin/tags/lock" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <button type="submit" class="btn btn-light w-100">Lock now</button>
+                                    </form>
+                                                            </div>
+                                            </div>
                                                         <div class="pins-card" id="pin-refresh">
                         <div class="pins-card__head">
                             <div class="pin-icon pin-icon--sm" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
                             <div class="pins-card__name">
                                 <b>Refresh the website</b>
-                                <span class="pins-state is-none">
-                                    Not created yet
+                                <span class="pins-state is-open">
+                                    Set — open now
                                 </span>
                                 
+                                                                    <small class="pins-owner">You created this PIN — nobody else can change it</small>
                                                             </div>
+                                                            <a href="admin-shary-refresh.html" class="btn btn-light btn-sm fw-bold">Open Refresh the website</a>
                                                     </div>
 
                         
-                                                                                    <a href="admin-shary-pin-refresh.html" class="btn btn-primary w-100">Create the PIN</a>
-                                                                        </div>
+                                                                                <div class="pins-actions">
+                                
+                                <details class="pin-more pin-more--forgot" >
+                                    <summary>Forgot the PIN?</summary>
+                                    <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
+                                    <form method="post" action="#preview/admin/shary/pin/refresh/reset" autocomplete="off">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="refresh">
+                                        <input type="hidden" name="back" value="/admin/shary/refresh">
+                                        <div class="form-group">
+                                            <label for="account_password_refresh">Your dashboard account password</label>
+                                            <input type="password" class="form-control" id="account_password_refresh" name="account_password" autocomplete="current-password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
+                                    </form>
+                                </details>
+                                
+                                <details class="pin-more" >
+                                    <summary>Change the PIN</summary>
+                                    <form method="post" action="#preview/admin/shary/pin/refresh/change" autocomplete="off" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="refresh">
+                                        <div class="form-group">
+                                            <label for="old_pin_refresh">Current PIN</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="old_pin_refresh" name="old_pin" autocomplete="off" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_refresh">New PIN (6 digits)</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_refresh" name="pin" autocomplete="new-password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_confirmation_refresh">Type it again</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_confirmation_refresh" name="pin_confirmation" autocomplete="new-password" required>
+                                        </div>
+                                        <p class="pin-note">6 digits — not a sequence like 123456 or repeated like 111111. Keep it private.</p>
+                                        <button type="submit" class="btn btn-outline-primary w-100">Save the new PIN</button>
+                                    </form>
+                                </details>
+                                                                    <form method="post" action="#preview/admin/shary/pin/refresh/lock" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <button type="submit" class="btn btn-light w-100">Lock now</button>
+                                    </form>
+                                                            </div>
+                                            </div>
+                                                        <div class="pins-card" id="pin-ai">
+                        <div class="pins-card__head">
+                            <div class="pin-icon pin-icon--sm" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+                            <div class="pins-card__name">
+                                <b>Shary AI</b>
+                                <span class="pins-state is-open">
+                                    Set — open now
+                                </span>
+                                
+                                                                    <small class="pins-owner">You created this PIN — nobody else can change it</small>
+                                                            </div>
+                                                            <a href="admin-shary-ai.html" class="btn btn-light btn-sm fw-bold">Open Shary AI</a>
+                                                    </div>
+
+                        
+                                                                                <div class="pins-actions">
+                                
+                                <details class="pin-more pin-more--forgot" >
+                                    <summary>Forgot the PIN?</summary>
+                                    <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
+                                    <form method="post" action="#preview/admin/shary/pin/ai/reset" autocomplete="off">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="ai">
+                                        <input type="hidden" name="back" value="/admin/shary/ai">
+                                        <div class="form-group">
+                                            <label for="account_password_ai">Your dashboard account password</label>
+                                            <input type="password" class="form-control" id="account_password_ai" name="account_password" autocomplete="current-password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
+                                    </form>
+                                </details>
+                                
+                                <details class="pin-more" >
+                                    <summary>Change the PIN</summary>
+                                    <form method="post" action="#preview/admin/shary/pin/ai/change" autocomplete="off" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="ai">
+                                        <div class="form-group">
+                                            <label for="old_pin_ai">Current PIN</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="old_pin_ai" name="old_pin" autocomplete="off" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_ai">New PIN (6 digits)</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_ai" name="pin" autocomplete="new-password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_confirmation_ai">Type it again</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_confirmation_ai" name="pin_confirmation" autocomplete="new-password" required>
+                                        </div>
+                                        <p class="pin-note">6 digits — not a sequence like 123456 or repeated like 111111. Keep it private.</p>
+                                        <button type="submit" class="btn btn-outline-primary w-100">Save the new PIN</button>
+                                    </form>
+                                </details>
+                                                                    <form method="post" action="#preview/admin/shary/pin/ai/lock" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <button type="submit" class="btn btn-light w-100">Lock now</button>
+                                    </form>
+                                                            </div>
+                                            </div>
+                                                        <div class="pins-card" id="pin-requests">
+                        <div class="pins-card__head">
+                            <div class="pin-icon pin-icon--sm" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+                            <div class="pins-card__name">
+                                <b>Requests &amp; messages</b>
+                                <span class="pins-state is-open">
+                                    Set — open now
+                                </span>
+                                
+                                                                    <small class="pins-owner">You created this PIN — nobody else can change it</small>
+                                                            </div>
+                                                            <a href="admin-shary-leads.html" class="btn btn-light btn-sm fw-bold">Open requests &amp; messages</a>
+                                                    </div>
+
+                        
+                                                                                <div class="pins-actions">
+                                
+                                <details class="pin-more pin-more--forgot" >
+                                    <summary>Forgot the PIN?</summary>
+                                    <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
+                                    <form method="post" action="#preview/admin/shary/pin/requests/reset" autocomplete="off">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="requests">
+                                        <input type="hidden" name="back" value="/admin/shary/leads">
+                                        <div class="form-group">
+                                            <label for="account_password_requests">Your dashboard account password</label>
+                                            <input type="password" class="form-control" id="account_password_requests" name="account_password" autocomplete="current-password" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
+                                    </form>
+                                </details>
+                                
+                                <details class="pin-more" >
+                                    <summary>Change the PIN</summary>
+                                    <form method="post" action="#preview/admin/shary/pin/requests/change" autocomplete="off" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <input type="hidden" name="pin_area" value="requests">
+                                        <div class="form-group">
+                                            <label for="old_pin_requests">Current PIN</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="old_pin_requests" name="old_pin" autocomplete="off" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_requests">New PIN (6 digits)</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_requests" name="pin" autocomplete="new-password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pin_confirmation_requests">Type it again</label>
+                                            <input type="password" inputmode="numeric" maxlength="6" class="form-control pin-input" id="pin_confirmation_requests" name="pin_confirmation" autocomplete="new-password" required>
+                                        </div>
+                                        <p class="pin-note">6 digits — not a sequence like 123456 or repeated like 111111. Keep it private.</p>
+                                        <button type="submit" class="btn btn-outline-primary w-100">Save the new PIN</button>
+                                    </form>
+                                </details>
+                                                                    <form method="post" action="#preview/admin/shary/pin/requests/lock" class="mt-2">
+                                        <input type="hidden" name="_token" value="preview" autocomplete="off">                                        <button type="submit" class="btn btn-light w-100">Lock now</button>
+                                    </form>
+                                                            </div>
+                                            </div>
                                 <p class="pin-note mt-3">Forgot a PIN? Press “Forgot the PIN?” on its card and type the password you sign in to the dashboard with — the old PIN is removed and you create a new one right away. Your own account password is changed from “My account”.</p>
             </div>
         </div>
@@ -1065,7 +1260,7 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

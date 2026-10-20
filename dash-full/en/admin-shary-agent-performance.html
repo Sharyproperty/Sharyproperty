@@ -1,183 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-  
-    <head>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-<meta name="description" content="Shary">
-<meta name="keywords" content="Shary">
-<meta name="author" content="">
-<meta name="robots" content="noindex, nofollow">
-<meta name="csrf-token" content="preview">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="preview">
+    <meta name="robots" content="noindex, nofollow">
+    <title>لوحة الأداء — لوحة تحكم شاري</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
+</head>
+<body class="ag sx" dir="rtl">
 
-<title>Shary</title>
-
-<!-- Favicon -->
-<link rel="shortcut icon" href="../a/images/logo.png">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-
-<!-- Bootstrap CSS -->
-
-
-    <link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
-
-
-<!-- Fontawesome CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
-
-<!-- animation CSS -->
-<link rel="stylesheet" href="../a/assets/css/animate.css">
-
-<!-- Datetimepicker CSS -->
-<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
-
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
-<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
-<!-- Select2 CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
-
-<!-- Dragula CSS -->
-<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
-
-
-
-
-
-
-<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
-
-<!-- Datatable CSS -->
-<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
-
-<!-- Main CSS -->
-    <link rel="stylesheet" href="../a/assets/css/style.css">
-<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
-
-<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
-<style type="text/css">
-    body, h1, h2, h3, h4, h5, h6, * {
-        font-family: 'Tajawal', serif;
-        font-weight: bold;
-    }
-</style>
-    
-    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
-     <script>
-    (function () {
-        try {
-            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
-                document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
-                var params = new URLSearchParams(location.search);
-                document.addEventListener('DOMContentLoaded', function () {
-                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
-                    if (keep) {
-                        document.documentElement.classList.add('sx-focus');
-                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
-                            [].forEach.call(node.parentElement.children, function (sib) {
-                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
-                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
-                                sib.style.display = 'none';
-                            });
-                        }
-                    }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
-                    String(params.get('hide') || '').split(',').forEach(function (id) {
-                        var drop = id && document.getElementById(id.trim());
-                        if (drop) drop.style.display = 'none';
-                    });
-                });
-                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
-                if (open) {
-                    var tries = 0, timer = setInterval(function () {
-                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
-                        var modal = document.getElementById(open);
-                        if ((button && window.bootstrap && modal) || ++tries > 40) {
-                            clearInterval(timer);
-                            if (button && modal) {
-                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
-                            }
-                        }
-                    }, 150);
-                }
-            }
-        } catch (e) {}
-    })();
-</script>
-<script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
-if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
-(function () {
-    var KEY = 'shary-app-mode', on = false;
-    try {
-        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
-        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
-        on = sessionStorage.getItem(KEY) === '1';
-    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
-    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
-})();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
-window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
-window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
-document.addEventListener('DOMContentLoaded', function () {
-    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
-    for (i = 0; i < els.length; i++) {
-        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
-        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
-    }
-    for (i = 0; i < jobs.length; i++) {
-        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
-        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
-        jobs[i][0].__fit = true;
-    }
-    for (i = 0; i < jobs.length; i++) {
-        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
-            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
-        }
-    }
-});
-document.addEventListener('error', function (e) {
-    var img = e.target;
-    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
-    img.removeAttribute('srcset'); img.removeAttribute('sizes');
-    var alt = img.getAttribute('data-fallback');
-    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
-    img.removeAttribute('data-img-fallback');
-    img.src = "\/images\/shary\/placeholder.svg";
-}, true);
-</script>
-<style>
-    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
-    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
-    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
-    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
-    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
-    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
-    html.sx-embed body { background: #fff !important; }
-    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
-    html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
-    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
-    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
-    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
-</style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-       </head>
-  <body class="sx" dir="ltr">
- <div id="global-loader" >
-    <div class="whirly-loader"> </div>
-</div>  <!-- Main Wrapper -->
-<div class="main-wrapper">
-      <a class="sx-skip" href="#sx-main">Skip to the content</a>
+<a class="sx-skip" href="#sx-main">Skip to the content</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -236,13 +72,13 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">9</b>                    </a>
+                        <b class="sx-tag">10</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
                         <b class="sx-tag">106</b>                    </a>
-                                                                <div class="sx-grp " data-sx-grp="agent">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="agent">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
                             <span>Agent</span>
                             <b class="sx-tag">20</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
@@ -251,7 +87,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-agent.html" class="" ><span>Today</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-agent-performance.html" class="" ><span>Performance</span></a></li>
+                                                                                                <li><a href="admin-shary-agent-performance.html" class="is-on"  aria-current="page" ><span>Performance</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-agent-review.html" class="" ><span>Review box</span><b class="sx-tag">20</b></a></li>
                                                             
@@ -844,165 +680,200 @@ document.addEventListener('error', function (e) {
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
- <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
-        <script>
-            window.SharyEditorConfig = {
-                token: "0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                lang: "en",
-                linksUrl: "\/admin\/shary\/content-editor\/links",
-                previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub",
-                contentCss: "../a/css/shary-admin/editor-content.css",
-                localEditor: true,
-                localBase: "../a/vendor/shary-editor/",
-                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
-                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
-        </script>
-        <script src="../a/js/shary-admin/editor.js"></script>
+
+    <template data-sx-crumb><div class="sx-crumb">Agent ‹ Performance</div></template>
+
+<div class="sx-page">
+    <main class="ag-main" id="sx-main">
+                                
+<link rel="stylesheet" href="../a/css/shary-admin/performance.css">
+<div class="pf" data-pf data-period="week">
+    <div class="pf-head">
+        <div class="pf-title">
+            <h1>لوحة الأداء</h1>
+            <p data-pf-range></p>
+        </div>
+        <div class="pf-tabs" role="tablist" aria-label="الفترة">
+                            <button type="button" role="tab" data-pf-tab="day" aria-selected="false">اليوم</button>
+                            <button type="button" role="tab" data-pf-tab="week" aria-selected="true">الأسبوع</button>
+                            <button type="button" role="tab" data-pf-tab="month" aria-selected="false">الشهر</button>
+                            <button type="button" role="tab" data-pf-tab="quarter" aria-selected="false">ربع سنة</button>
+                    </div>
+    </div>
+
+    <div class="pf-note" data-pf-note hidden></div>
+
+    
+    <section class="pf-kpis" aria-label="المؤشرات الرئيسية">
+                    <div class="pf-kpi" data-kpi="site.visitors">
+                <span class="pf-kpi__label">الزوار</span>
+                <strong class="pf-kpi__num" data-num>—</strong>
+                <span class="pf-delta" data-delta></span>
+                <svg class="pf-spark" data-spark viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </div>
+                    <div class="pf-kpi" data-kpi="site.views">
+                <span class="pf-kpi__label">مشاهدات الصفحات</span>
+                <strong class="pf-kpi__num" data-num>—</strong>
+                <span class="pf-delta" data-delta></span>
+                <svg class="pf-spark" data-spark viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </div>
+                    <div class="pf-kpi" data-kpi="leads.total">
+                <span class="pf-kpi__label">طلبات العملاء</span>
+                <strong class="pf-kpi__num" data-num>—</strong>
+                <span class="pf-delta" data-delta></span>
+                <svg class="pf-spark" data-spark viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </div>
+                    <div class="pf-kpi" data-kpi="leads.meetings">
+                <span class="pf-kpi__label">ميتنجات</span>
+                <strong class="pf-kpi__num" data-num>—</strong>
+                <span class="pf-delta" data-delta></span>
+                <svg class="pf-spark" data-spark viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </div>
+                    <div class="pf-kpi" data-kpi="ai.conversations">
+                <span class="pf-kpi__label">محادثات Shary AI</span>
+                <strong class="pf-kpi__num" data-num>—</strong>
+                <span class="pf-delta" data-delta></span>
+                <svg class="pf-spark" data-spark viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </div>
+                    <div class="pf-kpi" data-kpi="agent.prepared">
+                <span class="pf-kpi__label">شغل الإيجنت</span>
+                <strong class="pf-kpi__num" data-num>—</strong>
+                <span class="pf-delta" data-delta></span>
+                <svg class="pf-spark" data-spark viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true"></svg>
+            </div>
+            </section>
+
+    <div class="pf-grid">
         
-             
+        <section class="pf-card pf-span2">
+            <header class="pf-card__head"><h2>الزوار كل يوم</h2><div class="pf-legend" data-legend="visits"></div></header>
+            <div class="pf-line" data-chart="visits"></div>
+        </section>
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>جايين منين؟</h2></header>
+            <div class="pf-donut" data-donut="site.sources" data-center="زيارة"></div>
+        </section>
 
-                
-                <link rel="stylesheet" href="../a/css/shary-admin/pin.css">
-    <div class="page-wrapper">
-        <div class="content">
-            <div class="pin-wrap">
-                                                <div class="pin-card">
-                    <div class="pin-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-                    <h4>The agent — PIN</h4>
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>الأجهزة</h2></header>
+            <div class="pf-donut" data-donut="site.devices" data-center="زائر"></div>
+        </section>
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>سرعة الموقع</h2><span class="pf-muted" data-speed-at></span></header>
+            <div class="pf-speed" data-speed></div>
+        </section>
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>من البحث في جوجل</h2></header>
+            <div data-google></div>
+        </section>
 
-                    
-                                            
-                        <p class="lead">Enter the agent PIN.</p>
-                        <form method="post" action="#preview/admin/shary/pin/agent/unlock" autocomplete="off">
-                            <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="back" value="/admin/shary/agent/performance">
-                            <div class="form-group">
-                                <label for="pin">PIN (6 digits)</label>
-                                <input type="password" inputmode="numeric" pattern="[0-9٠-٩]{6}" maxlength="6" class="form-control pin-input" id="pin" name="pin" autocomplete="off" required autofocus >
+        
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>طلبات العملاء حسب النوع</h2></header>
+            <div class="pf-donut" data-donut="leads.by_form" data-center="طلب"></div>
+        </section>
+        <section class="pf-card pf-span2">
+            <header class="pf-card__head"><h2>من زائر لعميل</h2><span class="pf-muted" data-conversion></span></header>
+            <div class="pf-funnel" data-funnel></div>
+            <div class="pf-line pf-line--sm" data-chart="leads"></div>
+        </section>
+
+        
+        <section class="pf-card pf-span2">
+            <header class="pf-card__head"><h2>Shary AI</h2><span class="pf-muted" data-ai-speed></span></header>
+            <div class="pf-stats" data-stats="ai"></div>
+            <div class="pf-bars" data-bars="ai.kinds"></div>
+        </section>
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>العملاء في الشات</h2></header>
+            <div class="pf-donut" data-donut="ai.temperature" data-center="محادثة"></div>
+        </section>
+
+        
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>نجاح مهام الإيجنت</h2></header>
+            <div class="pf-ring" data-agent-ring></div>
+        </section>
+        <section class="pf-card pf-span2">
+            <header class="pf-card__head"><h2>شغل الإيجنت</h2></header>
+            <div class="pf-stats" data-stats="agent"></div>
+            <div class="pf-progress" data-seo-progress></div>
+        </section>
+
+        
+        <section class="pf-card">
+            <header class="pf-card__head"><h2>الزيارات حسب نوع الصفحة</h2></header>
+            <div class="pf-bars" data-bars="site.types"></div>
+        </section>
+        <section class="pf-card pf-span2">
+            <header class="pf-card__head"><h2>أكتر الصفحات زيارة</h2></header>
+            <ol class="pf-pages" data-pages></ol>
+        </section>
+    </div>
+
+    <p class="pf-foot" data-pf-built></p>
+    <script type="application/json" data-pf-json>{"day":{"period":"day","label":"اليوم","from":"2026-10-20","to":"2026-10-20","prev_from":"2026-10-19","prev_to":"2026-10-19","chart_days":["2026-10-07","2026-10-08","2026-10-09","2026-10-10","2026-10-11","2026-10-12","2026-10-13","2026-10-14","2026-10-15","2026-10-16","2026-10-17","2026-10-18","2026-10-19","2026-10-20"],"site":{"tracking":true,"views":{"now":8,"before":0,"change":null},"visitors":{"now":5,"before":0,"change":null},"sessions":{"now":5,"before":0,"change":null},"new":{"now":5,"before":0,"change":null},"pages_per_visit":1.6,"series":{"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":7,"2026-10-18":0,"2026-10-19":0,"2026-10-20":5},"series_views":{"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":9,"2026-10-18":0,"2026-10-19":0,"2026-10-20":8},"series_before":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"sources":{"مباشر":5},"devices":{"موبايل":5},"types":{"الرئيسية":5,"صفحات تانية":3},"pages":{"\/ar":5,"\/ar\/about":3},"locales":{"ar":8}},"leads":{"total":{"now":2,"before":0,"change":null},"meetings":{"now":0,"before":0,"change":null},"sell":{"now":0,"before":0,"change":null},"open":64,"by_form":{"من Shary AI":2},"series":{"2026-10-07":0,"2026-10-08":21,"2026-10-09":0,"2026-10-10":1,"2026-10-11":2,"2026-10-12":2,"2026-10-13":0,"2026-10-14":0,"2026-10-15":3,"2026-10-16":0,"2026-10-17":3,"2026-10-18":0,"2026-10-19":0,"2026-10-20":2},"conversion":40},"ai":{"conversations":{"now":529,"before":0,"change":null},"messages":{"now":575,"before":0,"change":null},"leads":{"now":2,"before":0,"change":null},"hot":32,"temperature":{"لسه بيتفرج":483,"سخن (جاهز يشتري)":32,"دافي":14},"stages":{"closing":34,"discovery":293,"objection":135,"recommend":67},"kinds":{"اعتراضات واستفسارات بيع":234,"تاني":33,"أسئلة لفهم طلب العميل":110,"بحث عن مشروع \/ وحدة":50},"answer_ms":7,"series":{"2026-10-07":577,"2026-10-08":29,"2026-10-09":0,"2026-10-10":13339,"2026-10-11":0,"2026-10-12":24,"2026-10-13":103,"2026-10-14":88,"2026-10-15":85,"2026-10-16":0,"2026-10-17":19,"2026-10-18":0,"2026-10-19":0,"2026-10-20":575}},"agent":{"runs":{"now":0,"before":0,"change":null},"done":0,"failed":0,"success":null,"prepared":{"now":0,"before":0,"change":null},"published":0,"waiting":20,"articles":0,"seo_done":0,"seo_plan":273,"seo_all_done":0,"backlinks":0,"changes":0,"tasks_on":43,"cost":0,"series":{"2026-10-07":18,"2026-10-08":3,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":39,"2026-10-14":0,"2026-10-15":0,"2026-10-16":2,"2026-10-17":0,"2026-10-18":0,"2026-10-19":0,"2026-10-20":0}},"google":null,"speed":null,"built_at":"2026-10-20 20:15"},"week":{"period":"week","label":"الأسبوع","from":"2026-10-13","to":"2026-10-19","prev_from":"2026-10-06","prev_to":"2026-10-12","chart_days":["2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-10","2026-10-11","2026-10-12","2026-10-13","2026-10-14","2026-10-15","2026-10-16","2026-10-17","2026-10-18","2026-10-19"],"site":{"tracking":true,"views":{"now":9,"before":0,"change":null},"visitors":{"now":7,"before":0,"change":null},"sessions":{"now":9,"before":0,"change":null},"new":{"now":7,"before":0,"change":null},"pages_per_visit":1,"series":{"2026-10-06":0,"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":7,"2026-10-18":0,"2026-10-19":0},"series_views":{"2026-10-06":0,"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":9,"2026-10-18":0,"2026-10-19":0},"series_before":[0,0,0,0,0,0,0,0,0,0,0,0,0,0],"sources":{"مباشر":9},"devices":{"موبايل":7},"types":{"صفحات المشاريع":6,"الرئيسية":3},"pages":{"\/ar\/v2\/project\/Mostakbal-City\/سينز":6,"\/ar\/v2":3},"locales":{"ar":9}},"leads":{"total":{"now":6,"before":56,"change":-89},"meetings":{"now":3,"before":27,"change":-89},"sell":{"now":0,"before":6,"change":-100},"open":64,"by_form":{"من Shary AI":3,"ميتنج من Shary AI":3},"series":{"2026-10-06":30,"2026-10-07":0,"2026-10-08":21,"2026-10-09":0,"2026-10-10":1,"2026-10-11":2,"2026-10-12":2,"2026-10-13":0,"2026-10-14":0,"2026-10-15":3,"2026-10-16":0,"2026-10-17":3,"2026-10-18":0,"2026-10-19":0},"conversion":85.7},"ai":{"conversations":{"now":183,"before":5,"change":3560},"messages":{"now":295,"before":14138,"change":-98},"leads":{"now":4,"before":2,"change":100},"hot":7,"temperature":{"لسه بيتفرج":170,"سخن (جاهز يشتري)":7,"دافي":6},"stages":{"booked":1,"closing":6,"discovery":99,"objection":47,"recommend":30},"kinds":{"أسئلة لفهم طلب العميل":84,"تاني":19,"اعتراضات واستفسارات بيع":70,"بحث عن مشروع \/ وحدة":39},"answer_ms":22,"series":{"2026-10-06":169,"2026-10-07":577,"2026-10-08":29,"2026-10-09":0,"2026-10-10":13339,"2026-10-11":0,"2026-10-12":24,"2026-10-13":103,"2026-10-14":88,"2026-10-15":85,"2026-10-16":0,"2026-10-17":19,"2026-10-18":0,"2026-10-19":0}},"agent":{"runs":{"now":0,"before":1,"change":-100},"done":0,"failed":0,"success":null,"prepared":{"now":7,"before":15,"change":-53},"published":0,"waiting":20,"articles":0,"seo_done":0,"seo_plan":273,"seo_all_done":0,"backlinks":0,"changes":41,"tasks_on":43,"cost":0,"series":{"2026-10-06":0,"2026-10-07":18,"2026-10-08":3,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":39,"2026-10-14":0,"2026-10-15":0,"2026-10-16":2,"2026-10-17":0,"2026-10-18":0,"2026-10-19":0}},"google":null,"speed":null,"built_at":"2026-10-20 20:15"},"month":{"period":"month","label":"الشهر","from":"2026-09-20","to":"2026-10-19","prev_from":"2026-08-21","prev_to":"2026-09-19","chart_days":["2026-09-20","2026-09-21","2026-09-22","2026-09-23","2026-09-24","2026-09-25","2026-09-26","2026-09-27","2026-09-28","2026-09-29","2026-09-30","2026-10-01","2026-10-02","2026-10-03","2026-10-04","2026-10-05","2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-10","2026-10-11","2026-10-12","2026-10-13","2026-10-14","2026-10-15","2026-10-16","2026-10-17","2026-10-18","2026-10-19"],"site":{"tracking":true,"views":{"now":9,"before":0,"change":null},"visitors":{"now":7,"before":0,"change":null},"sessions":{"now":9,"before":0,"change":null},"new":{"now":7,"before":0,"change":null},"pages_per_visit":1,"series":{"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":0,"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":7,"2026-10-18":0,"2026-10-19":0},"series_views":{"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":0,"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":9,"2026-10-18":0,"2026-10-19":0},"series_before":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"sources":{"مباشر":9},"devices":{"موبايل":7},"types":{"صفحات المشاريع":6,"الرئيسية":3},"pages":{"\/ar\/v2\/project\/Mostakbal-City\/سينز":6,"\/ar\/v2":3},"locales":{"ar":9}},"leads":{"total":{"now":62,"before":0,"change":null},"meetings":{"now":30,"before":0,"change":null},"sell":{"now":6,"before":0,"change":null},"open":64,"by_form":{"ميتنج من Shary AI":25,"من Shary AI":9,"بيع \/ إيجار":6,"استشارة":5,"تاني":17},"series":{"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":30,"2026-10-07":0,"2026-10-08":21,"2026-10-09":0,"2026-10-10":1,"2026-10-11":2,"2026-10-12":2,"2026-10-13":0,"2026-10-14":0,"2026-10-15":3,"2026-10-16":0,"2026-10-17":3,"2026-10-18":0,"2026-10-19":0},"conversion":885.7},"ai":{"conversations":{"now":188,"before":0,"change":null},"messages":{"now":14433,"before":0,"change":null},"leads":{"now":6,"before":0,"change":null},"hot":9,"temperature":{"لسه بيتفرج":172,"سخن (جاهز يشتري)":9,"دافي":7},"stages":{"booked":1,"closing":8,"discovery":99,"objection":50,"recommend":30},"kinds":{"بحث عن مشروع \/ وحدة":12574,"أسئلة لفهم طلب العميل":598,"أسئلة عن منطقة":583,"تاني":411},"answer_ms":9,"series":{"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":169,"2026-10-07":577,"2026-10-08":29,"2026-10-09":0,"2026-10-10":13339,"2026-10-11":0,"2026-10-12":24,"2026-10-13":103,"2026-10-14":88,"2026-10-15":85,"2026-10-16":0,"2026-10-17":19,"2026-10-18":0,"2026-10-19":0}},"agent":{"runs":{"now":2,"before":0,"change":null},"done":2,"failed":0,"success":100,"prepared":{"now":22,"before":0,"change":null},"published":1,"waiting":20,"articles":3,"seo_done":0,"seo_plan":273,"seo_all_done":0,"backlinks":2,"changes":62,"tasks_on":43,"cost":37.4,"series":{"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":0,"2026-10-07":18,"2026-10-08":3,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":39,"2026-10-14":0,"2026-10-15":0,"2026-10-16":2,"2026-10-17":0,"2026-10-18":0,"2026-10-19":0}},"google":null,"speed":null,"built_at":"2026-10-20 20:15"},"quarter":{"period":"quarter","label":"ربع سنة","from":"2026-07-22","to":"2026-10-19","prev_from":"2026-04-23","prev_to":"2026-07-21","chart_days":["2026-07-22","2026-07-23","2026-07-24","2026-07-25","2026-07-26","2026-07-27","2026-07-28","2026-07-29","2026-07-30","2026-07-31","2026-08-01","2026-08-02","2026-08-03","2026-08-04","2026-08-05","2026-08-06","2026-08-07","2026-08-08","2026-08-09","2026-08-10","2026-08-11","2026-08-12","2026-08-13","2026-08-14","2026-08-15","2026-08-16","2026-08-17","2026-08-18","2026-08-19","2026-08-20","2026-08-21","2026-08-22","2026-08-23","2026-08-24","2026-08-25","2026-08-26","2026-08-27","2026-08-28","2026-08-29","2026-08-30","2026-08-31","2026-09-01","2026-09-02","2026-09-03","2026-09-04","2026-09-05","2026-09-06","2026-09-07","2026-09-08","2026-09-09","2026-09-10","2026-09-11","2026-09-12","2026-09-13","2026-09-14","2026-09-15","2026-09-16","2026-09-17","2026-09-18","2026-09-19","2026-09-20","2026-09-21","2026-09-22","2026-09-23","2026-09-24","2026-09-25","2026-09-26","2026-09-27","2026-09-28","2026-09-29","2026-09-30","2026-10-01","2026-10-02","2026-10-03","2026-10-04","2026-10-05","2026-10-06","2026-10-07","2026-10-08","2026-10-09","2026-10-10","2026-10-11","2026-10-12","2026-10-13","2026-10-14","2026-10-15","2026-10-16","2026-10-17","2026-10-18","2026-10-19"],"site":{"tracking":true,"views":{"now":9,"before":0,"change":null},"visitors":{"now":7,"before":0,"change":null},"sessions":{"now":9,"before":0,"change":null},"new":{"now":7,"before":0,"change":null},"pages_per_visit":1,"series":{"2026-07-22":0,"2026-07-23":0,"2026-07-24":0,"2026-07-25":0,"2026-07-26":0,"2026-07-27":0,"2026-07-28":0,"2026-07-29":0,"2026-07-30":0,"2026-07-31":0,"2026-08-01":0,"2026-08-02":0,"2026-08-03":0,"2026-08-04":0,"2026-08-05":0,"2026-08-06":0,"2026-08-07":0,"2026-08-08":0,"2026-08-09":0,"2026-08-10":0,"2026-08-11":0,"2026-08-12":0,"2026-08-13":0,"2026-08-14":0,"2026-08-15":0,"2026-08-16":0,"2026-08-17":0,"2026-08-18":0,"2026-08-19":0,"2026-08-20":0,"2026-08-21":0,"2026-08-22":0,"2026-08-23":0,"2026-08-24":0,"2026-08-25":0,"2026-08-26":0,"2026-08-27":0,"2026-08-28":0,"2026-08-29":0,"2026-08-30":0,"2026-08-31":0,"2026-09-01":0,"2026-09-02":0,"2026-09-03":0,"2026-09-04":0,"2026-09-05":0,"2026-09-06":0,"2026-09-07":0,"2026-09-08":0,"2026-09-09":0,"2026-09-10":0,"2026-09-11":0,"2026-09-12":0,"2026-09-13":0,"2026-09-14":0,"2026-09-15":0,"2026-09-16":0,"2026-09-17":0,"2026-09-18":0,"2026-09-19":0,"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":0,"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":7,"2026-10-18":0,"2026-10-19":0},"series_views":{"2026-07-22":0,"2026-07-23":0,"2026-07-24":0,"2026-07-25":0,"2026-07-26":0,"2026-07-27":0,"2026-07-28":0,"2026-07-29":0,"2026-07-30":0,"2026-07-31":0,"2026-08-01":0,"2026-08-02":0,"2026-08-03":0,"2026-08-04":0,"2026-08-05":0,"2026-08-06":0,"2026-08-07":0,"2026-08-08":0,"2026-08-09":0,"2026-08-10":0,"2026-08-11":0,"2026-08-12":0,"2026-08-13":0,"2026-08-14":0,"2026-08-15":0,"2026-08-16":0,"2026-08-17":0,"2026-08-18":0,"2026-08-19":0,"2026-08-20":0,"2026-08-21":0,"2026-08-22":0,"2026-08-23":0,"2026-08-24":0,"2026-08-25":0,"2026-08-26":0,"2026-08-27":0,"2026-08-28":0,"2026-08-29":0,"2026-08-30":0,"2026-08-31":0,"2026-09-01":0,"2026-09-02":0,"2026-09-03":0,"2026-09-04":0,"2026-09-05":0,"2026-09-06":0,"2026-09-07":0,"2026-09-08":0,"2026-09-09":0,"2026-09-10":0,"2026-09-11":0,"2026-09-12":0,"2026-09-13":0,"2026-09-14":0,"2026-09-15":0,"2026-09-16":0,"2026-09-17":0,"2026-09-18":0,"2026-09-19":0,"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":0,"2026-10-07":0,"2026-10-08":0,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":0,"2026-10-14":0,"2026-10-15":0,"2026-10-16":0,"2026-10-17":9,"2026-10-18":0,"2026-10-19":0},"series_before":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"sources":{"مباشر":9},"devices":{"موبايل":7},"types":{"صفحات المشاريع":6,"الرئيسية":3},"pages":{"\/ar\/v2\/project\/Mostakbal-City\/سينز":6,"\/ar\/v2":3},"locales":{"ar":9}},"leads":{"total":{"now":62,"before":0,"change":null},"meetings":{"now":30,"before":2,"change":1400},"sell":{"now":6,"before":2,"change":200},"open":64,"by_form":{"ميتنج من Shary AI":25,"من Shary AI":9,"بيع \/ إيجار":6,"استشارة":5,"تاني":17},"series":{"2026-07-22":0,"2026-07-23":0,"2026-07-24":0,"2026-07-25":0,"2026-07-26":0,"2026-07-27":0,"2026-07-28":0,"2026-07-29":0,"2026-07-30":0,"2026-07-31":0,"2026-08-01":0,"2026-08-02":0,"2026-08-03":0,"2026-08-04":0,"2026-08-05":0,"2026-08-06":0,"2026-08-07":0,"2026-08-08":0,"2026-08-09":0,"2026-08-10":0,"2026-08-11":0,"2026-08-12":0,"2026-08-13":0,"2026-08-14":0,"2026-08-15":0,"2026-08-16":0,"2026-08-17":0,"2026-08-18":0,"2026-08-19":0,"2026-08-20":0,"2026-08-21":0,"2026-08-22":0,"2026-08-23":0,"2026-08-24":0,"2026-08-25":0,"2026-08-26":0,"2026-08-27":0,"2026-08-28":0,"2026-08-29":0,"2026-08-30":0,"2026-08-31":0,"2026-09-01":0,"2026-09-02":0,"2026-09-03":0,"2026-09-04":0,"2026-09-05":0,"2026-09-06":0,"2026-09-07":0,"2026-09-08":0,"2026-09-09":0,"2026-09-10":0,"2026-09-11":0,"2026-09-12":0,"2026-09-13":0,"2026-09-14":0,"2026-09-15":0,"2026-09-16":0,"2026-09-17":0,"2026-09-18":0,"2026-09-19":0,"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":30,"2026-10-07":0,"2026-10-08":21,"2026-10-09":0,"2026-10-10":1,"2026-10-11":2,"2026-10-12":2,"2026-10-13":0,"2026-10-14":0,"2026-10-15":3,"2026-10-16":0,"2026-10-17":3,"2026-10-18":0,"2026-10-19":0},"conversion":885.7},"ai":{"conversations":{"now":188,"before":0,"change":null},"messages":{"now":14433,"before":0,"change":null},"leads":{"now":6,"before":0,"change":null},"hot":9,"temperature":{"لسه بيتفرج":172,"سخن (جاهز يشتري)":9,"دافي":7},"stages":{"booked":1,"closing":8,"discovery":99,"objection":50,"recommend":30},"kinds":{"بحث عن مشروع \/ وحدة":12574,"أسئلة لفهم طلب العميل":598,"أسئلة عن منطقة":583,"تاني":411},"answer_ms":9,"series":{"2026-07-22":0,"2026-07-23":0,"2026-07-24":0,"2026-07-25":0,"2026-07-26":0,"2026-07-27":0,"2026-07-28":0,"2026-07-29":0,"2026-07-30":0,"2026-07-31":0,"2026-08-01":0,"2026-08-02":0,"2026-08-03":0,"2026-08-04":0,"2026-08-05":0,"2026-08-06":0,"2026-08-07":0,"2026-08-08":0,"2026-08-09":0,"2026-08-10":0,"2026-08-11":0,"2026-08-12":0,"2026-08-13":0,"2026-08-14":0,"2026-08-15":0,"2026-08-16":0,"2026-08-17":0,"2026-08-18":0,"2026-08-19":0,"2026-08-20":0,"2026-08-21":0,"2026-08-22":0,"2026-08-23":0,"2026-08-24":0,"2026-08-25":0,"2026-08-26":0,"2026-08-27":0,"2026-08-28":0,"2026-08-29":0,"2026-08-30":0,"2026-08-31":0,"2026-09-01":0,"2026-09-02":0,"2026-09-03":0,"2026-09-04":0,"2026-09-05":0,"2026-09-06":0,"2026-09-07":0,"2026-09-08":0,"2026-09-09":0,"2026-09-10":0,"2026-09-11":0,"2026-09-12":0,"2026-09-13":0,"2026-09-14":0,"2026-09-15":0,"2026-09-16":0,"2026-09-17":0,"2026-09-18":0,"2026-09-19":0,"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":169,"2026-10-07":577,"2026-10-08":29,"2026-10-09":0,"2026-10-10":13339,"2026-10-11":0,"2026-10-12":24,"2026-10-13":103,"2026-10-14":88,"2026-10-15":85,"2026-10-16":0,"2026-10-17":19,"2026-10-18":0,"2026-10-19":0}},"agent":{"runs":{"now":2,"before":0,"change":null},"done":2,"failed":0,"success":100,"prepared":{"now":22,"before":0,"change":null},"published":1,"waiting":20,"articles":3,"seo_done":0,"seo_plan":273,"seo_all_done":0,"backlinks":2,"changes":62,"tasks_on":43,"cost":37.4,"series":{"2026-07-22":0,"2026-07-23":0,"2026-07-24":0,"2026-07-25":0,"2026-07-26":0,"2026-07-27":0,"2026-07-28":0,"2026-07-29":0,"2026-07-30":0,"2026-07-31":0,"2026-08-01":0,"2026-08-02":0,"2026-08-03":0,"2026-08-04":0,"2026-08-05":0,"2026-08-06":0,"2026-08-07":0,"2026-08-08":0,"2026-08-09":0,"2026-08-10":0,"2026-08-11":0,"2026-08-12":0,"2026-08-13":0,"2026-08-14":0,"2026-08-15":0,"2026-08-16":0,"2026-08-17":0,"2026-08-18":0,"2026-08-19":0,"2026-08-20":0,"2026-08-21":0,"2026-08-22":0,"2026-08-23":0,"2026-08-24":0,"2026-08-25":0,"2026-08-26":0,"2026-08-27":0,"2026-08-28":0,"2026-08-29":0,"2026-08-30":0,"2026-08-31":0,"2026-09-01":0,"2026-09-02":0,"2026-09-03":0,"2026-09-04":0,"2026-09-05":0,"2026-09-06":0,"2026-09-07":0,"2026-09-08":0,"2026-09-09":0,"2026-09-10":0,"2026-09-11":0,"2026-09-12":0,"2026-09-13":0,"2026-09-14":0,"2026-09-15":0,"2026-09-16":0,"2026-09-17":0,"2026-09-18":0,"2026-09-19":0,"2026-09-20":0,"2026-09-21":0,"2026-09-22":0,"2026-09-23":0,"2026-09-24":0,"2026-09-25":0,"2026-09-26":0,"2026-09-27":0,"2026-09-28":0,"2026-09-29":0,"2026-09-30":0,"2026-10-01":0,"2026-10-02":0,"2026-10-03":0,"2026-10-04":0,"2026-10-05":0,"2026-10-06":0,"2026-10-07":18,"2026-10-08":3,"2026-10-09":0,"2026-10-10":0,"2026-10-11":0,"2026-10-12":0,"2026-10-13":39,"2026-10-14":0,"2026-10-15":0,"2026-10-16":2,"2026-10-17":0,"2026-10-18":0,"2026-10-19":0}},"google":null,"speed":null,"built_at":"2026-10-20 20:15"}}</script>
+</div>
+
+<section class="ag-card ag-card--pad pf-settings" style="margin-top:16px">
+    <h2 class="pf-set-title">افتحها من برّه لوحة التحكم ووصّلها على الإيميل</h2>
+    <div class="pf-set-grid">
+        <div>
+            <h3>اللينك الخاص (موبايل وكمبيوتر)</h3>
+            <p class="mute">نفس الأرقام دي على لينك خاص — للقراءة بس ، من غير تسجيل دخول. أي حد معاه اللينك يقدر يفتحها ، فابعته للي تثق فيهم بس.</p>
+            <div class="pf-link-row">
+                <input class="ag-input" value="/shary-performance/3eaf0795b1c5b738ca4e12121948d4a3df41c579" readonly dir="ltr" aria-label="اللينك الخاص" data-pf-link>
+                <button type="button" class="ag-btn" data-pf-copy>نسخ</button>
+                <a class="ag-btn" href="#" data-sx-missing="1" data-sx-note="ده لينك لصفحة في الموقع نفسه — مش شاشة في لوحة التحكم." target="_blank" rel="noopener">افتح</a>
+            </div>
+            <p class="mute" style="margin-top:6px"> نصيحة: افتحه على الموبايل ودوس «إضافة للشاشة الرئيسية» عشان يبقى زي التطبيق.</p>
+            <form method="post" action="#preview/admin/shary/agent/performance/link" style="margin-top:8px" onsubmit="return confirm('اللينك القديم مش هيفتح تاني. تكمّل؟')"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn">اعمل لينك جديد (القديم يبطل)</button></form>
+        </div>
+        <form method="post" action="#preview/admin/shary/agent/performance/settings">
+            <input type="hidden" name="_token" value="preview" autocomplete="off">            <h3>التقرير على الإيميل</h3>
+            <label class="pf-check"><input type="checkbox" name="email_on" value="1" > ابعت ملخص الأداء على الإيميل لوحده</label>
+            <label class="pf-label">الإيميل<input class="ag-input" type="email" name="email" value="" dir="ltr" placeholder="name@example.com"></label>
+            <label class="pf-label">الساعة (بتوقيت القاهرة)
+                <select class="ag-input" name="email_hour"><option value="5" >5:00 الصبح</option><option value="6" >6:00 الصبح</option><option value="7" >7:00 الصبح</option><option value="8" >8:00 الصبح</option><option value="9" selected>9:00 الصبح</option><option value="10" >10:00 الصبح</option><option value="11" >11:00 الصبح</option><option value="12" >12:00 الضهر</option><option value="13" >1:00 الضهر</option><option value="14" >2:00 الضهر</option><option value="15" >3:00 الضهر</option><option value="16" >4:00 الضهر</option><option value="17" >5:00 بالليل</option><option value="18" >6:00 بالليل</option><option value="19" >7:00 بالليل</option><option value="20" >8:00 بالليل</option><option value="21" >9:00 بالليل</option><option value="22" >10:00 بالليل</option><option value="23" >11:00 بالليل</option></select>
+            </label>
+            <div class="pf-kinds">
+                                    <label class="pf-check"><input type="checkbox" name="kinds[]" value="day" checked> يومي (كل يوم)</label>
+                                    <label class="pf-check"><input type="checkbox" name="kinds[]" value="week" checked> أسبوعي (كل سبت)</label>
+                                    <label class="pf-check"><input type="checkbox" name="kinds[]" value="month" checked> شهري (أول الشهر)</label>
+                                    <label class="pf-check"><input type="checkbox" name="kinds[]" value="quarter" checked> ربع سنوي (كل 3 شهور)</label>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100" >Open</button>
-                        </form>
-                                                <details class="pin-more">
-                            <summary>Forgot the PIN?</summary>
-                            <p class="pin-note mt-2">Enter your dashboard account password. The old PIN is removed and you create a new one.</p>
-                            <form method="post" action="#preview/admin/shary/pin/agent/reset" autocomplete="off">
-                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <input type="hidden" name="back" value="/admin/shary/agent/performance">
-                                <div class="form-group">
-                                    <label for="account_password">Your dashboard account password</label>
-                                    <input type="password" class="form-control" id="account_password" name="account_password" autocomplete="current-password" required>
-                                </div>
-                                <button type="submit" class="btn btn-outline-danger w-100">Remove the PIN and create a new one</button>
-                            </form>
-                        </details>
-                                                            </div>
-                
-                                    <p class="text-center mt-3 mb-0"><a class="pin-all" href="admin-shary-pins.html">All PINs (create / change / forgot)</a></p>
-                            </div>
+            <label class="pf-check"><input type="checkbox" name="link_on" value="1" checked> اللينك الخاص شغال</label>
+            <button class="ag-btn ag-btn--primary" style="margin-top:8px">احفظ</button>
+        </form>
+        <div>
+            <h3>دلوقتي</h3>
+            <form method="post" action="#preview/admin/shary/agent/performance/email" class="pf-now">
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <select class="ag-input" name="period" aria-label="الفترة"><option value="day">اليوم</option><option value="week">الأسبوع</option><option value="month">الشهر</option><option value="quarter">ربع سنة</option></select>
+                <button class="ag-btn">ابعت الملخص على الإيميل</button>
+            </form>
+            <form method="post" action="#preview/admin/shary/agent/performance/speed" class="pf-now">
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <button class="ag-btn">قيس سرعة الموقع دلوقتي</button>
+            </form>
+            <p class="mute">السرعة بتتقاس لوحدها كل يوم الصبح من PageSpeed (جوجل) — موبايل وكمبيوتر. القياس بياخد حوالي دقيقة.</p>
         </div>
     </div>
+</section>
+    </main>
 </div>
-<!-- /Main Wrapper -->
-    <!-- jQuery -->
-<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
-
-<!-- Bootstrap Core JS -->
-<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
-
-<!-- Feather Icon JS -->
-<script src="../a/assets/js/feather.min.js"></script>
-
-<!-- Slimscroll JS -->
-<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
-
-<!-- Datatable JS -->
-<script src="../a/assets/js/jquery.dataTables.min.js"></script>
-<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
-
-<!-- Select2 JS -->
-<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
-
-<!-- Datetimepicker JS -->
-<script src="../a/assets/js/moment.min.js"></script>
-<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
-
-<!-- Chart JS -->
-<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
-<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
-
-<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
-
-
-
-
-<!-- Owl JS -->
-<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
-<!-- Fileupload JS -->
-<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
-<!-- Sweetalert 2 -->
-<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
-<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
-
-<!-- Custom JS -->
-<script src="../a/assets/js/script.js"></script>
-
-
-
-
-<script>
-    $(document).ready(function () {
-        $(document).on('click', '.confirm-text', function(e) {
-
-            var parentElement = $(this).parent().parent();
-        var deleteUrl = $(this);
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won&#039;t be able to revert this!",
-            type: "warning",
-            showCancelButton: !0,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "Cancel", // Translate "Cancel" here
-            confirmButtonClass: "btn btn-primary",
-            cancelButtonClass: "btn btn-danger ml-1",
-            buttonsStyling: !1,
-        }).then(function (t) {
-
-            if (t.value) {
-                parentElement.hide();
-                deleted = deleteUrl.data("delete-url");
-                var csrfToken = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    url: deleted,
-                    type: "DELETE",
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
-                    },
-                    success: function (result) {
-                        // Hide the parent element (delete the row)
-                        parentElement.hide();
-                        // Display a success message
-                        Swal.fire({
-                            type: "success",
-                            title: "Deleted!",
-                            text: "Deleted successfully",
-                            confirmButtonClass: "btn btn-success",
-                        });
-                        // // Redirect to another URL
-                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
-                    },
-                    // User confirmed, hide the parent element (delete the row)
-                })
-            }
-        });
-    })
-    });
-</script>
-    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
-     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
-     <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"0DRcrlSZAHUPvgFF5Gi7KlbcgiaqwQXpKifEg6Ub","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+<script src="../a/js/shary-admin/agent.js" defer></script>
+<script src="../a/js/shary-admin/performance.js" defer></script>
+<script>
+document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pf-copy]'); if (!b) return;
+    var input = document.querySelector('[data-pf-link]'); input.select();
+    (navigator.clipboard ? navigator.clipboard.writeText(input.value) : Promise.reject()).catch(function () { document.execCommand('copy'); });
+    b.textContent = 'اتنسخ ✓'; setTimeout(function () { b.textContent = 'نسخ'; }, 1800);
+});
+</script>
+<link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"ppIsDX2WwcUAeEDodssg59GpCYkMewtUOMeJPhuU","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-      <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

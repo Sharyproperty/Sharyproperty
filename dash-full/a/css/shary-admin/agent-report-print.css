@@ -1,0 +1,37 @@
+/* لوحة التحكم — resources/views/shary_admin/agent/report-print.blade.php */
+body.ag-print { margin: 0; background: #fff; }
+.ag-print .pr-page { max-width: 900px; margin: 0 auto; padding: 22px 18px 40px; }
+.ag-print .pr-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; border-bottom: 3px solid #123A5C; padding-bottom: 12px; margin-bottom: 6px; }
+.ag-print .pr-head h1 { margin: 0; font-size: 22px; font-weight: 800; color: #123A5C; }
+.ag-print .pr-brand { font-weight: 800; font-size: 18px; color: #123A5C; white-space: nowrap; }
+.ag-print .pr-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px 0; padding: 10px 12px; background: #EEF3F8; border-radius: 12px; }
+.ag-print .ag-card__body { padding-inline: 0; }
+.ag-print .ag-scroll { overflow: visible; }
+.ag-print table { width: 100%; }
+.ag-print .ag-split { display: block; }
+.ag-print .ag-split > * { margin-bottom: 12px; }
+.ag-print .ag-tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.ag-print .ag-checks li > span { min-width: 0; overflow-wrap: anywhere; }
+/* on a phone (opened from "شير PDF"): the page fits the screen, wide tables scroll inside their box */
+.ag-print .pr-page { width: 100%; min-width: 0; }
+@media screen and (max-width: 720px) {
+    .ag-print .pr-page { padding: 16px 12px 32px; }
+    .ag-print .pr-head h1 { font-size: 18px; }
+    .ag-print .ag-scroll { overflow-x: auto; }
+    .ag-print .ag-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media print {
+    @page { size: A4; margin: 12mm 10mm; }
+    html, body.ag-print { width: auto !important; min-width: 0 !important; background: #fff; }
+    .ag-print .pr-bar { display: none; }
+    .ag-print .pr-page { padding: 0; max-width: none; width: auto; }
+    .ag-print .ag-scroll { overflow: visible !important; }
+    .ag-print table { width: 100% !important; min-width: 0 !important; table-layout: auto; font-size: 11px; }
+    .ag-print th, .ag-print td { white-space: normal !important; padding: 5px 6px !important; }
+    .ag-print .nowrap { white-space: normal !important; }
+    .ag-print tr, .ag-print .ag-tile, .ag-print .an-bar, .ag-print .ag-checks li { break-inside: avoid; }
+    .ag-print h3, .ag-print h4 { break-after: avoid; }
+    .ag-print .ag-card__body { break-inside: auto; padding-block: 8px; }
+    .ag-print .ag-pill--lg { font-size: 11.5px; }
+    .ag-print * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
