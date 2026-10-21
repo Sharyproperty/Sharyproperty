@@ -1173,11 +1173,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "IouXcP3DhR3FQZn9usDZ6XPPLZg7hkIrv6BDqIJ7",
+                token: "eImNCfYQSqKjhRfyN6VJoXI4wv7Ecm8SFFGCszs9",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=IouXcP3DhR3FQZn9usDZ6XPPLZg7hkIrv6BDqIJ7",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=eImNCfYQSqKjhRfyN6VJoXI4wv7Ecm8SFFGCszs9",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -1466,7 +1466,16 @@ document.addEventListener('error', function (e) {
             sxLocate(map);
         }
 
+        
+        function sxLocateDone() {
+            var box = document.getElementById('sxLocate');
+            if (box) {
+                box.hidden = true;
+            }
+        }
+
         function placeMarkerAndPanTo(latLng, map) {
+            sxLocateDone();
             
             if (map.getZoom() < 9) {
                 map.setZoom(9);
@@ -1477,6 +1486,7 @@ document.addEventListener('error', function (e) {
 
         
         function sxGoToPlace(latLng, viewport, map, name) {
+            sxLocateDone();
             marker.setPosition(latLng);
             if (viewport) {
                 map.fitBounds(viewport);
@@ -2338,9 +2348,9 @@ document.addEventListener('error', function (e) {
             gkey: "",
             keyId: "",
             mapbox: "",
-            js: "\/vendor\/maplibre\/maplibre-gl.js?v=tmesu5",
-            css: "\/vendor\/maplibre\/maplibre-gl.css?v=tmesu5",
-            lite: "\/js\/shary-admin\/gmaps-lite.js?v=tn9a43"        };
+            js: "../a/vendor/maplibre/maplibre-gl.js",
+            css: "../a/vendor/maplibre/maplibre-gl.css",
+            lite: "../a/js/shary-admin/gmaps-lite.js"        };
         var MEMO = 'sx-admin-maps-lite';
         var googleReady = false, lite = false, started = false;
 
@@ -3310,7 +3320,7 @@ document.addEventListener('error', function (e) {
                                              data-fit="/admin/shary/projects/315/masterplan/fit"
                                              data-agent="/admin/shary/projects/315/masterplan/agent"
                                              data-crop="/admin/shary/projects/315/masterplan/crop"
-                                             data-token="IouXcP3DhR3FQZn9usDZ6XPPLZg7hkIrv6BDqIJ7">
+                                             data-token="eImNCfYQSqKjhRfyN6VJoXI4wv7Ecm8SFFGCszs9">
                                             <p class="sx-mp-tools__title">أدوات الماستر بلان <small>— النتيجة بتظهر على الخريطة اللي فوق ، وتقدر تظبّطها بالنقط. المكان بيتحفظ بزرار «تحديث» تحت.</small></p>
 
                                             <div class="sx-mp-tools__group">
@@ -4032,6 +4042,9 @@ document.addEventListener('error', function (e) {
                             
                             function choose(place) {
                                 resolve(place, function (spot) {
+                                    if (typeof sxLocateDone === 'function') {
+                                        sxLocateDone();
+                                    }
                                     setPin(spot.lat, spot.lng);
                                     var words = ['دبوس المشروع اتحط'];
                                     if (spot.ring && spot.ring.length > 3) {
@@ -4565,7 +4578,7 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"IouXcP3DhR3FQZn9usDZ6XPPLZg7hkIrv6BDqIJ7","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"eImNCfYQSqKjhRfyN6VJoXI4wv7Ecm8SFFGCszs9","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>
