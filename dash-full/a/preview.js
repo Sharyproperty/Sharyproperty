@@ -124,7 +124,9 @@
     // ---- the project page's place search (App\Shary\Masterplan\PlaceSuggest): the same ranking over the saved list
     function previewPlaces(kind, qs) {
         var P = D.places || { projects: [], areas: [] };
-        var want = fold(qs.get('q') || '');
+        var words = qs.get('q') || '';
+        if (kind === 'search') { words = words.split(/[،,]/)[0]; }      // the box holds «name، area» after a pick
+        var want = fold(words);
         var score = function (row) {
             var best = 0;
             [row.ar, row.en].forEach(function (name) {
