@@ -119,7 +119,7 @@
         input.setAttribute('aria-expanded', 'false');
         input.setAttribute('aria-controls', list.id);
 
-        var items = [], active = -1, timer = null, asked = 0, session = null, googleNote = '';
+        var items = [], active = -1, timer = null, blurTimer = null, asked = 0, session = null, googleNote = '';
 
         function place() {
             var box = input.getBoundingClientRect();
@@ -241,6 +241,7 @@
         }
 
         function search() {
+            clearTimeout(blurTimer);      // a Search button next to the box took the focus: the list stays open
             var q = input.value.trim();
             if (q.length < min) {
                 note('اكتب اسم المكان أو المشروع الأول.');
@@ -340,7 +341,13 @@
             }
         });
         input.addEventListener('blur', function () {
-            setTimeout(close, 150);
+            blurTimer = setTimeout(close, 150);
+        });
+        // a click anywhere else closes the list (also when it was opened by a Search button)
+        document.addEventListener('mousedown', function (event) {
+            if (!list.hidden && !list.contains(event.target) && event.target !== input) {
+                close();
+            }
         });
         window.addEventListener('resize', function () { if (!list.hidden) { place(); } });
         window.addEventListener('scroll', function () { if (!list.hidden) { place(); } }, true);
