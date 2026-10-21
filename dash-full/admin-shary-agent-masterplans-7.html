@@ -1,19 +1,182 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
+<!DOCTYPE html>
+<html lang="ar">
+  
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="preview">
-    <meta name="robots" content="noindex, nofollow">
-    <title>الماستر بلان على الخريطة — لوحة تحكم شاري</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-    <link rel="stylesheet" href="a/css/shary-admin/shell.css">
-    <link rel="stylesheet" href="a/css/shary-admin/agent.css">
-</head>
-<body class="ag sx" dir="rtl">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Shary">
+<meta name="keywords" content="Shary">
+<meta name="author" content="">
+<meta name="robots" content="noindex, nofollow">
+<meta name="csrf-token" content="preview">
 
-<a class="sx-skip" href="#sx-main">روح للمحتوى</a>
+<title>شارى</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="a/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+
+    <link rel="stylesheet" href="a/assets_rtl/css/bootstrap.rtl.min.css">
+
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="a/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- animation CSS -->
+<link rel="stylesheet" href="a/assets/css/animate.css">
+
+<!-- Datetimepicker CSS -->
+<link rel="stylesheet" href="a/assets/css/bootstrap-datetimepicker.min.css">
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="a/assets/plugins/owlcarousel/owl.theme.default.min.css">
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="a/assets/plugins/select2/css/select2.min.css">
+
+<!-- Dragula CSS -->
+<link rel="stylesheet" href="a/assets/plugins/dragula/css/dragula.min.css">
+
+
+
+
+
+
+<link rel="stylesheet" href="a/assets/plugins/summernote/summernote-bs4.min.css">
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="a/assets/css/dataTables.bootstrap4.min.css">
+
+<!-- Main CSS -->
+    <link rel="stylesheet" href="a/assets_rtl/css/style.css">
+<link rel="stylesheet" href="a/assets/css/admin-polish.css">
+
+<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
+<style type="text/css">
+    body, h1, h2, h3, h4, h5, h6, * {
+        font-family: 'Tajawal', serif;
+        font-weight: bold;
+    }
+</style>
+    
+    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
+     <script>
+    (function () {
+        try {
+            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
+                document.documentElement.classList.add('sx-embed');
+                
+                var params = new URLSearchParams(location.search);
+                document.addEventListener('DOMContentLoaded', function () {
+                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
+                    if (keep) {
+                        document.documentElement.classList.add('sx-focus');
+                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
+                            [].forEach.call(node.parentElement.children, function (sib) {
+                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
+                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
+                                sib.style.display = 'none';
+                            });
+                        }
+                    }
+                    
+                    String(params.get('hide') || '').split(',').forEach(function (id) {
+                        var drop = id && document.getElementById(id.trim());
+                        if (drop) drop.style.display = 'none';
+                    });
+                });
+                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
+                if (open) {
+                    var tries = 0, timer = setInterval(function () {
+                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
+                        var modal = document.getElementById(open);
+                        if ((button && window.bootstrap && modal) || ++tries > 40) {
+                            clearInterval(timer);
+                            if (button && modal) {
+                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
+                            }
+                        }
+                    }, 150);
+                }
+            }
+        } catch (e) {}
+    })();
+</script>
+<script>
+
+if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
+
+
+(function () {
+    var KEY = 'shary-app-mode', on = false;
+    try {
+        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
+        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
+        on = sessionStorage.getItem(KEY) === '1';
+    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
+    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
+})();
+
+window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
+window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
+    for (i = 0; i < els.length; i++) {
+        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
+        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
+    }
+    for (i = 0; i < jobs.length; i++) {
+        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
+        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
+        jobs[i][0].__fit = true;
+    }
+    for (i = 0; i < jobs.length; i++) {
+        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
+            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
+        }
+    }
+});
+document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
+    img.removeAttribute('srcset'); img.removeAttribute('sizes');
+    var alt = img.getAttribute('data-fallback');
+    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
+    img.removeAttribute('data-img-fallback');
+    img.src = "\/images\/shary\/placeholder.svg";
+}, true);
+</script>
+<style>
+    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
+    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
+    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
+    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
+    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
+    html.sx-embed body { background: #fff !important; }
+    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
+    html.sx-embed body { overflow-x: hidden; }
+    
+    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
+    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
+    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="a/css/shary-admin/shell.css">
+       </head>
+  <body class="sx" dir="rtl">
+ <div id="global-loader" >
+    <div class="whirly-loader"> </div>
+</div>  <!-- Main Wrapper -->
+<div class="main-wrapper">
+      <a class="sx-skip" href="#sx-main">روح للمحتوى</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="افتح القايمة"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -29,11 +192,11 @@
         <div class="sx-top__end">
                     <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="بحث في لوحة التحكم"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 60"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>60</b></a>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="الإيجنت — 63"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>63</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="افتح الموقع" title="افتح الموقع"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-        <a class="sx-lang" href="en/admin-shary-agent-masterplans_q_-f133a3.html" data-sx-lang="1" lang="en">English</a>
+        <a class="sx-lang" href="en/admin-shary-agent-masterplans-7.html" data-sx-lang="1" lang="en">English</a>
         <details class="sx-user" data-sx-user>
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
@@ -72,7 +235,7 @@
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>الأخطاء</span>
-                        <b class="sx-tag">2</b>                    </a>
+                        <b class="sx-tag">4</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>المسودات</span>
@@ -152,11 +315,11 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>الطلبات والرسائل</span>
-                            <b class="sx-tag">94</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">95</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">94</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>كل الطلبات (صندوق واحد)</span><b class="sx-tag">95</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>طلبات بيع عقار</span></a></li>
                                                             
@@ -209,15 +372,15 @@
                                                                 
                                                         </ul>
                     </div>
-                                                                <div class="sx-grp " data-sx-grp="projects">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-projects">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="projects">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-projects">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
                             <span>المشاريع</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-projects">
                                                             
-                                                                                                <li><a href="admin-compounds.html" class="" ><span>كل المشاريع</span></a></li>
+                                                                                                <li><a href="admin-compounds.html" class="is-on"  aria-current="page" ><span>كل المشاريع</span></a></li>
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>إضافة مشروع</span></a></li>
                                                             
@@ -682,120 +845,567 @@
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
+ <link rel="stylesheet" href="a/css/shary-admin/editor-popups.css">
+        <script>
+            window.SharyEditorConfig = {
+                token: "eGdpxG1HPGrJegJI8qOCjAOXuJupgOTp8ezHXiax",
+                lang: "ar",
+                linksUrl: "\/admin\/shary\/content-editor\/links",
+                previewUrl: "\/admin\/shary\/content-editor\/preview",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=eGdpxG1HPGrJegJI8qOCjAOXuJupgOTp8ezHXiax",
+                contentCss: "a/css/shary-admin/editor-content.css",
+                localEditor: true,
+                localBase: "a/vendor/shary-editor/",
+                types: {"project":"\u0645\u0634\u0631\u0648\u0639","unit":"\u0648\u062d\u062f\u0629","area":"\u0645\u0646\u0637\u0642\u0629","developer":"\u0645\u0637\u0648\u0631","blog":"\u0645\u0642\u0627\u0644","search":"\u0635\u0641\u062d\u0629 \u0628\u062d\u062b"},
+                labels: {"cta":"\u0632\u0631 \u062a\u0648\u0627\u0635\u0644","link":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview":"\u0645\u0639\u0627\u064a\u0646\u0629","cta_title":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644 \u0648\u0633\u0637 \u0627\u0644\u0645\u062d\u062a\u0648\u0649:","link_title":"\u0644\u064a\u0646\u0643 \u062f\u0627\u062e\u0644\u064a","preview_title":"\u0645\u0639\u0627\u064a\u0646\u0629 \u2014 \u0632\u064a \u0627\u0644\u0645\u0648\u0642\u0639","kind_cta":"\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u062a\u0648\u0627\u0635\u0644","kind_form":"\u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629","kind_channels":"\u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a","kind_project":"\u0643\u0627\u0631\u062a \u0645\u0634\u0631\u0648\u0639","kind_area":"\u0643\u0627\u0631\u062a \u0645\u0646\u0637\u0642\u0629","cta_buttons":"\u0627\u0644\u0623\u0632\u0631\u0627\u0631 \u0627\u0644\u0644\u064a \u062a\u0638\u0647\u0631","btn_meeting":"\u0637\u0644\u0628 \u0645\u0642\u0627\u0628\u0644\u0629","btn_call":"\u0627\u062a\u0635\u0627\u0644","btn_whatsapp":"\u0648\u0627\u062a\u0633\u0627\u0628","cta_heading":"\u0627\u0644\u062c\u0645\u0644\u0629 \u0627\u0644\u0644\u064a \u0641\u0648\u0642 \u0627\u0644\u0623\u0632\u0631\u0627\u0631 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","cta_ph_ar":"\u0645\u062b\u0627\u0644: \u0627\u062d\u062c\u0632 \u0648\u062d\u062f\u062a\u0643 \u0627\u0644\u064a\u0648\u0645 \u0648\u0627\u062d\u0635\u0644 \u0639\u0644\u0649 \u0623\u062d\u062f\u062b \u0642\u0627\u0626\u0645\u0629 \u0623\u0633\u0639\u0627\u0631","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"\u0628\u064a\u062d\u0637 \u0641\u0648\u0631\u0645 \u0627\u0644\u0627\u0633\u062a\u0634\u0627\u0631\u0629 (\u0627\u0644\u0627\u0633\u0645 \u060c \u0627\u0644\u0645\u0648\u0628\u0627\u064a\u0644 \u060c \u0627\u0644\u0645\u0646\u0637\u0642\u0629) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","channels_hint":"\u0628\u064a\u062d\u0637 \u0643\u0627\u0631\u062a \u0022\u0627\u0634\u062a\u0631\u0643 \u0641\u064a \u0642\u0646\u0648\u0627\u062a \u0634\u0627\u0631\u064a\u0022 (\u0648\u0627\u062a\u0633\u0627\u0628 \/ \u062a\u0644\u064a\u062c\u0631\u0627\u0645 \/ \u064a\u0648\u062a\u064a\u0648\u0628) \u0648\u0633\u0637 \u0627\u0644\u0645\u0642\u0627\u0644.","search_ph":"\u0627\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0645\u0634\u0631\u0648\u0639 \/ \u0627\u0644\u0645\u0646\u0637\u0642\u0629 \/ \u0627\u0644\u0645\u0637\u0648\u0631 \/ \u0627\u0644\u0645\u0642\u0627\u0644","insert":"\u0625\u0636\u0627\u0641\u0629","cta_note":"\u0628\u064a\u062a\u062d\u0637 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u2014 \u0648\u062a\u0642\u062f\u0631 \u062a\u0645\u0633\u062d\u0647 \u0632\u064a \u0623\u064a \u0633\u0637\u0631.","link_selected":"\u0627\u0644\u0644\u064a\u0646\u0643 \u0647\u064a\u062a\u062d\u0637 \u0639\u0644\u0649:","link_none":"\u0645\u0641\u064a\u0634 \u0643\u0644\u0627\u0645 \u0645\u062a\u0638\u0644\u0644: \u0647\u064a\u062a\u0643\u062a\u0628 \u0627\u0633\u0645 \u0627\u0644\u0635\u0641\u062d\u0629 \u0648\u064a\u0628\u0642\u0649 \u0647\u0648 \u0627\u0644\u0644\u064a\u0646\u0643.","all_types":"\u0643\u0644 \u0627\u0644\u0623\u0646\u0648\u0627\u0639","searching":"\u062c\u0627\u0631\u064a \u0627\u0644\u0628\u062d\u062b\u2026","nothing":"\u0645\u0641\u064a\u0634 \u0646\u062a\u0627\u064a\u062c.","failed":"\u062d\u0635\u0644\u062a \u0645\u0634\u0643\u0644\u0629 \u2014 \u062c\u0631\u0651\u0628 \u062a\u0627\u0646\u064a.","desktop":"\u062f\u064a\u0633\u0643 \u062a\u0648\u0628","mobile":"\u0645\u0648\u0628\u0627\u064a\u0644","preview_note":"\u0627\u0644\u0645\u0639\u0627\u064a\u0646\u0629 \u0642\u0628\u0644 \u0627\u0644\u062d\u0641\u0638 \u2014 \u0627\u062d\u0641\u0638 \u0639\u0634\u0627\u0646 \u064a\u0638\u0647\u0631 \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639.","w_h2":"\u0639\u0646\u0648\u0627\u0646 \u0631\u0626\u064a\u0633\u064a","w_h3":"\u0639\u0646\u0648\u0627\u0646 \u0641\u0631\u0639\u064a","w_p":"\u0646\u0635 \u0639\u0627\u062f\u064a","w_bullets":"\u0646\u0642\u0637","w_numbers":"\u0623\u0631\u0642\u0627\u0645","w_arrows":"\u0646\u0642\u0637 \u0628\u0633\u0647\u0645","w_line":"\u062e\u0637 \u0641\u0627\u0635\u0644","w_space":"\u0645\u0633\u0627\u0641\u0629","symbol":"\u0627\u0643\u062a\u0628","video":"\u0641\u064a\u062f\u064a\u0648","video_title":"\u0641\u064a\u062f\u064a\u0648 \u062c\u0648\u0647 \u0627\u0644\u0645\u0642\u0627\u0644 (\u0644\u064a\u0646\u0643)","video_hint":"\u062d\u0637 \u0644\u064a\u0646\u0643 \u0627\u0644\u0641\u064a\u062f\u064a\u0648 \u0645\u0646 \u064a\u0648\u062a\u064a\u0648\u0628 \u0623\u0648 \u062a\u064a\u0643 \u062a\u0648\u0643 \u0623\u0648 \u0641\u064a\u0633\u0628\u0648\u0643 \u0623\u0648 \u0625\u0646\u0633\u062a\u062c\u0631\u0627\u0645 \u0623\u0648 \u0623\u064a \u0645\u0643\u0627\u0646 \u2014 \u0628\u064a\u0638\u0647\u0631 \u0643\u0627\u0631\u062a \u0641\u064a\u062f\u064a\u0648 \u0641\u064a \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631 \u060c \u0648\u0644\u0645\u0627 \u0627\u0644\u0639\u0645\u064a\u0644 \u064a\u062f\u0648\u0633 \u0639\u0644\u064a\u0647 \u0628\u064a\u0641\u062a\u062d \u0627\u0644\u0641\u064a\u062f\u064a\u0648 \u0641\u064a \u0645\u0643\u0627\u0646\u0647 (\u0628\u0631\u0651\u0647 \u0627\u0644\u0645\u0648\u0642\u0639).","video_url":"\u0644\u064a\u0646\u0643 \u0627\u0644\u0641\u064a\u062f\u064a\u0648","video_caption":"\u0639\u0646\u0648\u0627\u0646 \u062a\u062d\u062a \u0627\u0644\u0641\u064a\u062f\u064a\u0648 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","video_bad":"\u0627\u0643\u062a\u0628 \u0627\u0644\u0644\u064a\u0646\u0643 \u0643\u0627\u0645\u0644 \u2014 \u0628\u064a\u0628\u062f\u0623 \u0628\u0640 https:\/\/","b_cards":"\u0643\u0631\u0648\u062a","b_button":"\u0632\u0631\u0627\u0631 \u0644\u064a\u0646\u0643","b_external":"\u0644\u064a\u0646\u0643 \u062e\u0627\u0631\u062c\u064a","b_note":"\u0645\u0644\u0627\u062d\u0638\u0629","b_places":"\u0623\u0645\u0627\u0643\u0646","note_ph":"\u0627\u0643\u062a\u0628 \u0627\u0644\u0645\u0644\u0627\u062d\u0638\u0629 \u0647\u0646\u0627","cards_title":"\u0643\u0627\u0631\u062a \u062c\u0648\u0647 \u0627\u0644\u0643\u0644\u0627\u0645","cards_hint":"\u0627\u062e\u062a\u0627\u0631 \u0627\u0644\u0646\u0648\u0639 \u0648\u0627\u0643\u062a\u0628 \u0627\u0644\u0627\u0633\u0645 \u0648\u062f\u0648\u0633 \u0639\u0644\u064a\u0647. \u0627\u0644\u0643\u0627\u0631\u062a \u0628\u064a\u062a\u062d\u0637 \u0645\u0643\u0627\u0646 \u0627\u0644\u0645\u0624\u0634\u0631\u060c \u0648\u0628\u064a\u0627\u062e\u062f \u0627\u0644\u0635\u0648\u0631\u0629 \u0648\u0627\u0644\u0633\u0639\u0631 \u0648\u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 \u0639\u0644\u0649 \u0637\u0648\u0644 (\u0644\u0648 \u0627\u062a\u063a\u064a\u0631\u062a \u0628\u062a\u062a\u063a\u064a\u0631 \u0644\u0648\u062d\u062f\u0647\u0627).","kind_units":"\u0648\u062d\u062f\u0627\u062a \u0627\u0644\u0645\u0646\u0637\u0642\u0629 (\u0644\u064a\u0646\u0643\u0627\u062a)","kind_article":"\u0627\u0642\u0631\u0623 \u0643\u0645\u0627\u0646 (\u0645\u0642\u0627\u0644)","button_title":"\u0632\u0631\u0627\u0631 \u0644\u064a\u0646\u0643 \u0639\u0631\u064a\u0636","button_hint":"\u0627\u062e\u062a\u0627\u0631 \u0635\u0641\u062d\u0629 \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 (\u0645\u0634\u0631\u0648\u0639\u060c \u0648\u062d\u062f\u0629\u060c \u0645\u0646\u0637\u0642\u0629\u060c \u0645\u0637\u0648\u0631\u060c \u0645\u0642\u0627\u0644\u060c \u0635\u0641\u062d\u0629 \u0628\u062d\u062b) \u0623\u0648 \u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643. \u0628\u064a\u0638\u0647\u0631 \u0632\u0631\u0627\u0631 \u0639\u0631\u064a\u0636 \u062c\u0648\u0647 \u0627\u0644\u0643\u0644\u0627\u0645\u060c \u0632\u064a \u00ab\u062a\u0627\u0628\u0639 \u0645\u062a\u0648\u0633\u0637 \u0633\u0639\u0631 \u0627\u0644\u0645\u062a\u0631 \u0639\u0644\u0649 \u0645\u0624\u0634\u0631 \u0634\u0627\u0631\u064a\u00bb.","button_text":"\u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0644\u064a \u0639\u0644\u0649 \u0627\u0644\u0632\u0631\u0627\u0631","button_url":"\u0623\u0648 \u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643","bad_url":"\u0627\u0643\u062a\u0628 \u0644\u064a\u0646\u0643 \u0643\u0627\u0645\u0644 (https:\/\/\u2026) \u0623\u0648 \u0644\u064a\u0646\u0643 \u0645\u0646 \u0627\u0644\u0645\u0648\u0642\u0639 \u0628\u064a\u0628\u062f\u0623 \u0628\u0640 \/","ext_title":"\u0644\u064a\u0646\u0643 \u0644\u0645\u0648\u0642\u0639 \u062a\u0627\u0646\u064a","ext_hint":"\u062d\u062f\u062f \u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0623\u0648\u0644 \u0648\u0628\u0639\u062f\u064a\u0646 \u062f\u0648\u0633 \u00ab\u0644\u064a\u0646\u0643 \u062e\u0627\u0631\u062c\u064a\u00bb. \u0627\u0644\u0644\u064a\u0646\u0643 \u0628\u064a\u0641\u062a\u062d \u0641\u064a \u062a\u0627\u0628 \u062c\u062f\u064a\u062f.","ext_url":"\u0627\u0644\u0644\u064a\u0646\u0643 (https:\/\/\u2026)","ext_text":"\u0627\u0644\u0643\u0644\u0627\u0645 \u0627\u0644\u0644\u064a \u0647\u064a\u0628\u0642\u0649 \u0644\u064a\u0646\u0643","places_title":"\u0642\u0627\u064a\u0645\u0629 \u0623\u0645\u0627\u0643\u0646","places_hint":"\u0643\u0644 \u0633\u0637\u0631 \u0645\u0643\u0627\u0646. \u0648\u0644\u0648 \u0639\u0627\u064a\u0632 \u0627\u0644\u0645\u0643\u0627\u0646 \u064a\u0628\u0642\u0649 \u0644\u064a\u0646\u0643 \u0627\u0643\u062a\u0628: \u0627\u0644\u0627\u0633\u0645 | \u0627\u0644\u0644\u064a\u0646\u0643 (\u0632\u064a: \u0643\u0627\u064a\u0631\u0648 \u0641\u064a\u0633\u062a\u064a\u0641\u0627\u0644 | \/ar\/area\/New-Cairo).","places_heading":"\u0627\u0644\u0639\u0646\u0648\u0627\u0646 (\u0632\u064a: \u0623\u064a\u0646 \u062a\u0630\u0647\u0628 \u0641\u064a \u0627\u0644\u0642\u0627\u0647\u0631\u0629 \u0627\u0644\u062c\u062f\u064a\u062f\u0629\u061f)","places_lines":"\u0627\u0644\u0623\u0645\u0627\u0643\u0646","places_caption":"\u0633\u0637\u0631 \u062a\u062d\u062a \u0627\u0644\u0642\u0627\u064a\u0645\u0629 (\u0627\u062e\u062a\u064a\u0627\u0631\u064a)","places_none":"\u0627\u0643\u062a\u0628 \u0645\u0643\u0627\u0646 \u0648\u0627\u062d\u062f \u0639\u0644\u0649 \u0627\u0644\u0623\u0642\u0644."}            };
+        </script>
+        <script src="a/js/shary-admin/editor.js"></script>
+        
+             
+    <template data-sx-crumb><div class="sx-crumb">المشاريع ‹ كل المشاريع</div></template>
 
+                
+    <link rel="stylesheet" href="a/css/shary-admin/project-hub.css">
+        <div class="page-wrapper shub">
+        <div class="content">
+            <div class="shub-head">
+                <div>
+                    <h4>أليفا</h4>
+                    <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/projects/7/flag">
+                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
+                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:launches" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أحدث الإطلاقات</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="home:top_projects" aria-pressed="false" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
+                <span>الرئيسية: أفضل المشاريع</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
+                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
+            </button>
+            </div>
+    <link rel="stylesheet" href="a/css/shary-admin/project-flags.css">
+    <script src="a/js/shary-admin/project-flags.js" data-conf="{&quot;token&quot;:&quot;eGdpxG1HPGrJegJI8qOCjAOXuJupgOTp8ezHXiax&quot;}"></script>
+                    <small>كل بيانات المشروع في الصفحة دي تحت بعض (17 أجزاء) — كل جزء ليه زرار حفظ ، وبيتحفظ في مكانه من غير ما تخرج من الصفحة.</small>
+                </div>
+                <div class="d-flex gap-2 flex-wrap align-items-center">
+                    
+                    <button type="button" class="btn btn-primary fw-bold" data-save-all disabled>💾 احفظ كل التعديلات</button>
+                    <span class="shub-dirty" data-dirty-note hidden></span>
+                    <a class="btn btn-outline-secondary" href="admin-compounds.html">← كل المشاريع</a>
+                                        <a class="btn btn-outline-primary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">شوفه على الموقع ↗</a>                </div>
+            </div>
 
-<div class="sx-page">
-    <main class="ag-main" id="sx-main">
-                                <div class="ag-head">
-    <div class="ag-col">
-        <h1>الماستر بلان على الخريطة</h1>
-        <p>انتوا بترفعوا الماستر بلان عادي، والإيجنت بيكمّل: يفرّغها، ويلاقي مكان المشروع وحدوده بالظبط على الخريطة (نفس الشكل والأبعاد والميل)، ويحطها فوقها. كل مشروع بيوصلك في صندوق المراجعة بصورة الماستر بلان على حدوده ونسبة التطابق — وانت اللي بتنشر.</p>
-    </div>
-            <div class="ag-row">
-            <form method="post" action="#preview/admin/shary/agent/masterplans/run" data-ag-slow="بيشتغل… (دقيقة)"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn">كمّل دلوقتي</button></form>
-            <a class="ag-btn ag-btn--primary" href="#all">اعمل كل الماستر بلانز</a>
+            <div class="shub-layout">
+                <aside class="shub-aside">
+                                            <div class="shub-box shub-checks-box">
+                            <h5>الصفحة محتاجة إيه؟ <span class="shub-pill" data-score>71% كامل</span></h5>
+                            <div class="shub-meter mb-2 " data-meter><i style="width: 71%"></i></div>
+                            <ul class="shub-checks" data-checks>
+                                                                    <li class=""><i>✓</i>
+                                        <span>صورة المشروع</span>                                    </li>
+                                                                    <li class="is-miss"><i>!</i>
+                                        <button type="button" data-go="basic">وصف عربي</button>                                    </li>
+                                                                    <li class="is-miss"><i>!</i>
+                                        <button type="button" data-go="basic">وصف إنجليزي</button>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>المنطقة</span>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>المطور</span>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>مكانه على الخريطة (الدبوس)</span>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>ميعاد الاستلام</span>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>3 صور أو أكتر في المعرض</span>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>وحدات منشورة</span>                                    </li>
+                                                                    <li class="is-miss"><i>!</i>
+                                        <button type="button" data-go="masterplans">المخطط العام</button>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>حدود المشروع على الخريطة</span>                                    </li>
+                                                                    <li class="is-miss"><i>!</i>
+                                        <button type="button" data-go="basic">أسئلة شائعة</button>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>مؤشر شاري (النمو / العائد)</span>                                    </li>
+                                                                    <li class=""><i>✓</i>
+                                        <span>وصف جوجل (السيو)</span>                                    </li>
+                                                            </ul>
+                            <small class="text-muted d-block mt-2">دوس على الناقص ← الصفحة تنزل للجزء بتاعه. القايمة بتتحدث لوحدها بعد كل حفظ.</small>
+                        </div>
+                                        <div class="shub-box">
+                        <h5>أجزاء الصفحة</h5>
+                        <nav class="shub-tabs" data-tabs aria-label="أجزاء الصفحة">
+                                                            <button type="button" data-tab="basic">
+                                    <b>1</b><span>البيانات الأساسية</span>
+                                    <em data-miss="basic" >ناقص 3</em>
+                                </button>
+                                                            <button type="button" data-tab="gallery">
+                                    <b>2</b><span>صور المشروع</span>
+                                    <em data-miss="gallery"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="masterplans">
+                                    <b>3</b><span>الماستر بلان والماستر بلان المفرّغ</span>
+                                    <em data-miss="masterplans" >ناقص 1</em>
+                                </button>
+                                                            <button type="button" data-tab="map">
+                                    <b>4</b><span>مكان المشروع والماستر بلان على الخريطة</span>
+                                    <em data-miss="map"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="labels">
+                                    <b>5</b><span>الكتابة والمراحل على الخريطة</span>
+                                    <em data-miss="labels"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="plans">
+                                    <b>6</b><span>خطط السداد على الموقع</span>
+                                    <em data-miss="plans"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="phases">
+                                    <b>7</b><span>المراحل</span>
+                                    <em data-miss="phases"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="indicators">
+                                    <b>8</b><span>مؤشر شاري للمشروع</span>
+                                    <em data-miss="indicators"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="nearby">
+                                    <b>9</b><span>الأماكن القريبة</span>
+                                    <em data-miss="nearby"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="units">
+                                    <b>10</b><span>وحدات المشروع</span>
+                                    <em data-miss="units"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="inherit">
+                                    <b>11</b><span>اللي بينزل على الوحدات لوحده</span>
+                                    <em data-miss="inherit"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="photosets">
+                                    <b>12</b><span>صور الوحدات حسب النوع</span>
+                                    <em data-miss="photosets"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="cta">
+                                    <b>13</b><span>زرار التواصل</span>
+                                    <em data-miss="cta"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="address">
+                                    <b>14</b><span>كود المشروع ورابطه</span>
+                                    <em data-miss="address"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="launch">
+                                    <b>15</b><span>كارت &quot;أحدث الإطلاقات&quot;</span>
+                                    <em data-miss="launch"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="links">
+                                    <b>16</b><span>لينكات داخلية (سيو)</span>
+                                    <em data-miss="links"  hidden >ناقص 0</em>
+                                </button>
+                                                            <button type="button" data-tab="landing">
+                                    <b>17</b><span>صفحة الهبوط للإعلانات</span>
+                                    <em data-miss="landing"  hidden >ناقص 0</em>
+                                </button>
+                                                    </nav>
+                    </div>
+                </aside>
+
+                <div class="shub-secs">
+                                            <section class="shub-sec" id="sec-basic" data-sec="basic" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">1</b>
+                                <div class="shub-sec__t">
+                                    <h5>البيانات الأساسية <em data-miss="basic" >ناقص 3</em></h5>
+                                    <small>الاسم · المطور · المنطقة · النوع · التسليم · السعر · الصورة واللوجو · الفيديو · خطط السداد والعروض · المواصفات والمرافق · رقم التواصل · الوصف (الكونتنت) · الأسئلة · الميتا تايتل والميتا ديسكريبشن</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-compounds-315-edit.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="البيانات الأساسية" data-src="admin-compounds-315-edit.html?hide=sx-map-block%2Csx-mp-field&embed=1"  src="admin-compounds-315-edit.html?hide=sx-map-block%2Csx-mp-field&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-gallery" data-sec="gallery" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">2</b>
+                                <div class="shub-sec__t">
+                                    <h5>صور المشروع <em data-miss="gallery"  hidden >ناقص 0</em></h5>
+                                    <small>معرض الصور · صور خطط السداد</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="gallery-315-1.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="صور المشروع" data-src="gallery-315-1.html?embed=1"  src="gallery-315-1.html?embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-masterplans" data-sec="masterplans" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">3</b>
+                                <div class="shub-sec__t">
+                                    <h5>الماستر بلان والماستر بلان المفرّغ <em data-miss="masterplans" >ناقص 1</em></h5>
+                                    <small>رفع الماستر بلان · النسخة المفرّغة جنبها · تفريغ تلقائي</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_masterplans.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="الماستر بلان والماستر بلان المفرّغ" data-src="admin-shary-projects-315_tab_masterplans.html?tab=masterplans&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-map" data-sec="map" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">4</b>
+                                <div class="shub-sec__t">
+                                    <h5>مكان المشروع والماستر بلان على الخريطة <em data-miss="map"  hidden >ناقص 0</em></h5>
+                                    <small>العنوان والدبوس · البحث عن المكان · حدود المشروع (بالنقط أو من الخريطة) · مكان الماستر بلان: تحريك وتكبير ولف وشفافية · حطها على الحدود أو بالإيجنت · التفريغ · القص · نسخة شفافة</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-compounds-315-edit.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="مكان المشروع والماستر بلان على الخريطة" data-src="admin-compounds-315-edit.html?focus=sx-map-block&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-labels" data-sec="labels" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">5</b>
+                                <div class="shub-sec__t">
+                                    <h5>الكتابة والمراحل على الخريطة <em data-miss="labels"  hidden >ناقص 0</em></h5>
+                                    <small>اسم المشروع · أسماء المراحل · العماير · الوحدات فوق الماستر بلان · المرحلة الظاهرة وباقي الماستر بلان متظلّل</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="#" data-sx-missing="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="الكتابة والمراحل على الخريطة" data-src="about:blank" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-plans" data-sec="plans" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">6</b>
+                                <div class="shub-sec__t">
+                                    <h5>خطط السداد على الموقع <em data-miss="plans"  hidden >ناقص 0</em></h5>
+                                    <small>المقدم · السنين · الخصم — زي ما بتظهر في صفحة المشروع</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="خطط السداد على الموقع" data-src="admin-shary-projects-315.html?tab=plans&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-phases" data-sec="phases" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">7</b>
+                                <div class="shub-sec__t">
+                                    <h5>المراحل <em data-miss="phases"  hidden >ناقص 0</em></h5>
+                                    <small>مراحل المشروع وتسليم كل مرحلة</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="المراحل" data-src="admin-shary-projects-315.html?tab=phases&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-indicators" data-sec="indicators" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">8</b>
+                                <div class="shub-sec__t">
+                                    <h5>مؤشر شاري للمشروع <em data-miss="indicators"  hidden >ناقص 0</em></h5>
+                                    <small>النمو · العائد · الطلب · متوسط سعر المتر · توقع الأسعار · نصيحة شاري</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-7_tab_indicators.html" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="مؤشر شاري للمشروع" data-src="admin-shary-projects-7_tab_indicators.html?tab=indicators&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-nearby" data-sec="nearby" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">9</b>
+                                <div class="shub-sec__t">
+                                    <h5>الأماكن القريبة <em data-miss="nearby"  hidden >ناقص 0</em></h5>
+                                    <small>المسافات للأماكن المهمة</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_nearby.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="الأماكن القريبة" data-src="admin-shary-projects-315_tab_nearby.html?tab=nearby&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-units" data-sec="units" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">10</b>
+                                <div class="shub-sec__t">
+                                    <h5>وحدات المشروع <em data-miss="units"  hidden >ناقص 0</em></h5>
+                                    <small>إضافة وتعديل الوحدات والأسعار والعروض</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-units_compound_id_315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="وحدات المشروع" data-src="admin-shary-units_compound_id_315.html?embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-inherit" data-sec="inherit" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">11</b>
+                                <div class="shub-sec__t">
+                                    <h5>اللي بينزل على الوحدات لوحده <em data-miss="inherit"  hidden >ناقص 0</em></h5>
+                                    <small>الصور · الوصف · المرافق · السداد … تتاخد من المشروع في صفحة الوحدة</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_inherit.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="اللي بينزل على الوحدات لوحده" data-src="admin-shary-projects-315_tab_inherit.html?tab=inherit&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-photosets" data-sec="photosets" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">12</b>
+                                <div class="shub-sec__t">
+                                    <h5>صور الوحدات حسب النوع <em data-miss="photosets"  hidden >ناقص 0</em></h5>
+                                    <small>صور لكل نوع (شقة · فيلا · …) ونموذج ونوع تعامل — بتظهر على الوحدات اللي مالهاش صور بتاعتها</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-units-photo-sets.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="صور الوحدات حسب النوع" data-src="admin-shary-units-photo-sets.html?embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-cta" data-sec="cta" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">13</b>
+                                <div class="shub-sec__t">
+                                    <h5>زرار التواصل <em data-miss="cta"  hidden >ناقص 0</em></h5>
+                                    <small>نص زرار التواصل في صفحة المشروع</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="زرار التواصل" data-src="admin-shary-projects-315.html?tab=cta&embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-address" data-sec="address" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">14</b>
+                                <div class="shub-sec__t">
+                                    <h5>كود المشروع ورابطه <em data-miss="address"  hidden >ناقص 0</em></h5>
+                                    <small>الكود اللي بيظهر في شريط صفحة المشروع ورسالة واتساب</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="#" data-sx-missing="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="كود المشروع ورابطه" data-src="about:blank" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-launch" data-sec="launch" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">15</b>
+                                <div class="shub-sec__t">
+                                    <h5>كارت &quot;أحدث الإطلاقات&quot; <em data-miss="launch"  hidden >ناقص 0</em></h5>
+                                    <small>لو المشروع إطلاق جديد: ضيف صورته ووصفه</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="#" data-sx-missing="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="كارت &quot;أحدث الإطلاقات&quot;" data-src="about:blank" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-links" data-sec="links" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">16</b>
+                                <div class="shub-sec__t">
+                                    <h5>لينكات داخلية (سيو) <em data-miss="links"  hidden >ناقص 0</em></h5>
+                                    <small>لينكات لصفحات تانية جوه الموقع</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="admin-shary-page-links-project-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="لينكات داخلية (سيو)" data-src="admin-shary-page-links-project-315.html?embed=1" ></iframe>
+                            </div>
+                        </section>
+                                            <section class="shub-sec" id="sec-landing" data-sec="landing" >
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">17</b>
+                                <div class="shub-sec__t">
+                                    <h5>صفحة الهبوط للإعلانات <em data-miss="landing"  hidden >ناقص 0</em></h5>
+                                    <small>صفحة Landing للحملات</small>                                </div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
+                                    <a class="btn btn-sm btn-light" href="project-landing-pages.html" target="_blank" rel="noopener">لوحدها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body">
+                                <div class="shub-loading" data-wait>بيحمّل…</div>
+                                <iframe name="sx-embed" title="صفحة الهبوط للإعلانات" data-src="#preview/project-landing-pages" ></iframe>
+                            </div>
+                        </section>
+                                        
+                                            <section class="shub-sec" id="sec-preview" data-preview>
+                            <header class="shub-sec__head">
+                                <b class="shub-sec__n">👁</b>
+                                <div class="shub-sec__t"><h5>معاينة على الموقع</h5><small>نفس الصفحة اللي العميل بيشوفها (بعد الحفظ دوس «حدّث المعاينة»)</small></div>
+                                <div class="shub-sec__acts">
+                                    <button type="button" class="btn btn-sm btn-light" data-preview-reload>حدّث المعاينة</button>
+                                    <a class="btn btn-sm btn-light" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">افتحها ↗</a>
+                                </div>
+                            </header>
+                            <div class="shub-sec__body"><iframe title="معاينة" data-src="#preview/ar/v2/project/Mostakbal-City/أليفا" style="height:780px"></iframe></div>
+                        </section>
+                                    </div>
+            </div>
         </div>
     </div>
-
-
-
-    <div class="ag-alert ag-alert--bad"><div class="ag-col">
-        <b>2 ماستر بلان مكانها محتاج تتصلّح — مش ظاهرة على الخريطة عشان ما تركبش على مشاريع تانية</b>
-        <ul style="margin:6px 0 0;padding-inline-start:18px">
-                            <li><b>ماونتن فيو آي سيتي</b> — داخلة في ماستر بلان «فيليت»
-                    · <a href="admin-shary-all-projects-1_tab_map.html" data-sx-sample="1"><u>اظبط مكانها</u></a>                    · <a href="admin-shary-agent-masterplans_q_-f133a3.html"><u>اعملها تاني أوتوماتيك</u></a></li>
-                            <li><b>كمبوند بلوم فيلدز</b> — داخلة في ماستر بلان «فيليت»
-                    · <a href="admin-shary-all-projects-1_tab_map.html" data-sx-sample="1"><u>اظبط مكانها</u></a>                    · <a href="admin-shary-agent-masterplans.html" data-sx-sample="1"><u>اعملها تاني أوتوماتيك</u></a></li>
-                    </ul>
-    </div></div>
-
-<ol class="ag-steps" aria-label="بيشتغل إزاي">
-    <li><b>1</b><span><span class="b8">بيفرّغها</span> — الخلفية والعنوان والـ legend بيتشالوا</span></li>
-    <li><b>2</b><span><span class="b8">بيلاقي الحدود</span> — المرسومة على الموقع، أو من OpenStreetMap بنفس شكل الماستر بلان</span></li>
-    <li><b>3</b><span><span class="b8">بيحطها</span> — يلفّها ويكبّرها لحد ما تغطي الحدود بالظبط</span></li>
-    <li><b>4</b><span><span class="b8">انت بتنشر</span> — من صندوق المراجعة، ولو عايز تلفّها شوية «عدّل»</span></li>
-</ol>
-
-<div class="ag-tiles">
-    <div class="ag-tile"><span>مشاريع ليها ماستر بلان</span><b class="num">24</b><a href="admin-shary-agent-masterplans.html">الكل</a></div>
-    <div class="ag-tile"><span>على الخريطة</span><b class="num">24</b><a href="admin-shary-agent-masterplans_status_published.html">هي إيه</a></div>
-    <div class="ag-tile"><span>مستنية مراجعتك</span><b class="blue num">0</b><a href="admin-shary-agent-review_section_content.html">صندوق المراجعة</a></div>
-    <div class="ag-tile"><span>في الدور</span><b class="num">0</b><span>كل 5 دقايق دفعة</span></div>
-    <div class="ag-tile"><span>محتاجة إيدك</span><b class="num">0</b><a href="admin-shary-agent-masterplans_status_needs_hand.html">ليه</a></div>
-    <div class="ag-tile"><span>لسه ما اتعملتش</span><b class="num">0</b><a href="#all">اعملها</a></div>
+    <style>
+        .shub-dirty { font-weight: 800; color: #b45309; font-size: 13px; }
+        .shub-sec.is-dirty .shub-sec__head { box-shadow: inset 4px 0 0 #f59e0b; }
+    </style>
+    <script src="a/js/shary-admin/project-hub.js" data-conf="{&quot;checksUrl&quot;:&quot;\/admin\/shary\/all\/projects\/7\/checks&quot;}"></script>
 </div>
+<!-- /Main Wrapper -->
+    <!-- jQuery -->
+<script src="a/assets/js/jquery-3.6.0.min.js"></script>
 
-<section class="ag-card" id="all">
-    <div class="ag-card__head"><h2>اعمل كل الماستر بلانز مرة واحدة</h2><span class="sm mute">وبعد كده أي مشروع يترفع له ماستر بلان بيتعمل لوحده.</span></div>
-    <form method="post" action="#preview/admin/shary/agent/masterplans/all" class="ag-card__body ag-col" style="gap:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <p class="sm">كل المشاريع اللي ليها ماستر بلان ومش متحطة على الخريطة هتدخل الدور، وبتتعمل في الخلفية (OpenStreetMap بيقبل طلب واحد في المرة) — وبتوصلك في صندوق المراجعة كل 12 مشروع مع بعض. دوس «كمّل دلوقتي» عشان تسرّعها.</p>
-        <label class="ag-check"><input type="checkbox" name="redo" value="1"> وكمان المشاريع المتحطة قبل كده — اعملها من الأول (اللي متحط فعلًا ما بيتغيّرش غير لما تنشر الجديد)</label>
-        <div class="ag-row"><button class="ag-btn ag-btn--primary">اعمل كل الماستر بلانز</button></div>
-    </form>
-</section>
+<!-- Bootstrap Core JS -->
+<script src="a/assets/js/bootstrap.bundle.min.js"></script>
 
-<nav class="ag-row" aria-label="الحالة">
-    <a class="ag-tab is-on" href="admin-shary-agent-masterplans_q_-f133a3.html">الكل</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">مستني مراجعتك</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">محتاج إيدك</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">في الدور</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">لسه ما اتعملش</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">على الخريطة ✓</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">متحط قبل كده</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">اترفض</a>
-        <form method="get" action="#preview/admin/shary/agent/masterplans" class="ag-row" style="gap:6px">
-                <input name="q" class="ag-input" style="max-width:200px;min-height:40px" value="ماونتن فيو آي سيتي" placeholder="اسم المشروع" aria-label="دوّر على مشروع">
-        <button class="ag-btn ag-btn--sm">دوّر</button>
-    </form>
-</nav>
+<!-- Feather Icon JS -->
+<script src="a/assets/js/feather.min.js"></script>
 
-<section class="ag-card">
-            <div class="ag-scroll"><table class="ag-stack">
-            <thead><tr><th>المشروع</th><th>الحالة</th><th>التطابق</th><th>الحدود من</th><th>آخر مرة</th><th></th></tr></thead>
-            <tbody>
-                                            <tr>
-                    <td class="full" style="min-width:200px"><a class="b8" href="admin-shary-agent-masterplans-22.html" data-sx-sample="1">ماونتن فيو آي سيتي</a> <span class="xs mute num">#5</span>
-                        </td>
-                    <td class="nowrap" data-l="الحالة"><span class="ag-pill ag-pill--ok">متحط قبل كده</span></td>
-                    <td class="nowrap" data-l="التطابق"> — </td>
-                    <td class="sm" data-l="الحدود من">—</td>
-                    <td class="sm nowrap" data-l="آخر مرة">—</td>
-                    <td class="end nowrap">
-                                                    <form method="post" action="#preview/admin/shary/agent/masterplans/5" data-ag-slow="بيفرّغ ويدوّر على الحدود…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm">اعملها تاني</button></form>
-                                                <a class="ag-btn ag-btn--sm" href="admin-shary-all-projects-1_tab_map.html" data-sx-sample="1">ظبّطها بإيدك</a>                    </td>
-                </tr>
-                        </tbody>
-        </table></div>
-            </section>
+<!-- Slimscroll JS -->
+<script src="a/assets/js/jquery.slimscroll.min.js"></script>
 
-<section class="ag-card" id="settings">
-    <div class="ag-card__head"><h2>الإعدادات وأماكن الحفظ</h2></div>
-    <div class="ag-card__body ag-col" style="gap:14px">
-        <ul class="ag-checks">
-            <li class="no"><i aria-hidden="true">!</i><span>خرائط جوجل: مش مربوطة — بيعتمد على إحداثيات المشروع وOpenStreetMap <a href="admin-shary-agent-keys.html#group-maps">اربطها</a></span></li>
-            <li class="no"><i aria-hidden="true">!</i><span>حدود المشاريع المرسومة على الموقع: compounds.coordinates — لسه مفيش حدود مرسومة نتعلم منها صيغتها</span></li>
-            <li><i aria-hidden="true">✓</i><span>مكان الماستر بلان (masterplan_corners) بيتكتب بنفس الصيغة اللي الموقع بيستخدمها: الصيغة الأساسية (tl / tr / br / bl)</span></li>
-            <li><i aria-hidden="true">✓</i><span>الحدود من OpenStreetMap (© OpenStreetMap contributors) — لو بتترسم على خريطة الموقع لازم الجملة دي تظهر على الخريطة.</span></li>
-        </ul>
-        <form method="post" action="#preview/admin/shary/agent/masterplans/settings" class="ag-col" style="gap:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">            <fieldset class="ag-col" style="gap:12px;border:0;padding:0;margin:0" >
-                <label class="ag-check"><input type="hidden" name="auto" value="0"><input type="checkbox" name="auto" value="1" checked> أي ماستر بلان تترفع أو تتغيّر تتعمل لوحدها</label>
-                <label class="ag-check"><input type="hidden" name="publish" value="0"><input type="checkbox" name="publish" value="1" checked> كل الماستر بلانز (المرفوعة قبل كده والجديدة) تتفرّغ وتتقص وتتحط على الخريطة لوحدها — واللي محتاجة تظبيط (مكان تقريبي أو تطابق أقل من «أقل تطابق») بتوصلكم في إشعار تكمّلوها بإيدكم ، وأي نشر ليه «تراجع» في سجل التغييرات</label>
-                <div class="ag-grid">
-                    <div class="ag-field"><label for="mp-score">أقل تطابق يتنشر من غير «اتأكدت» (%)</label>
-                        <input id="mp-score" name="min_score" type="number" min="50" max="95" class="ag-input" dir="ltr" style="text-align:start" value="75"></div>
-                    <div class="ag-field"><label for="mp-radius">يدوّر على الحدود حوالين المشروع لحد (متر)</label>
-                        <input id="mp-radius" name="radius" type="number" min="800" max="6000" step="100" class="ag-input" dir="ltr" style="text-align:start" value="2500"></div>
-                </div>
-            </fieldset>
-            <div class="ag-row"><button class="ag-btn ag-btn--primary">احفظ</button></div>        </form>
-    </div>
-</section>
-    </main>
-</div>
-<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"ماونتن فيو آي سيتي","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة","pick_search":"اكتب للبحث…","pick_none":"مفيش اختيار بالاسم ده","required_field":"الخانة دي مطلوبة","required_save":"فيه خانات مطلوبة فاضية — اتعلّمت بالأحمر. اكتبها وبعدين احفظ."}};</script>
+<!-- Datatable JS -->
+<script src="a/assets/js/jquery.dataTables.min.js"></script>
+<script src="a/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="a/assets/plugins/select2/js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
+<script src="a/assets/js/moment.min.js"></script>
+<script src="a/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Chart JS -->
+<script src="a/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="a/assets/plugins/apexchart/chart-data.js"></script>
+
+<script src="a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+
+
+
+<!-- Owl JS -->
+<script src="a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+<!-- Fileupload JS -->
+<script src="a/assets/plugins/fileupload/fileupload.min.js"></script>
+<!-- Sweetalert 2 -->
+<script src="a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<!-- Custom JS -->
+<script src="a/assets_rtl/js/script.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.confirm-text', function(e) {
+
+            var parentElement = $(this).parent().parent();
+        var deleteUrl = $(this);
+        Swal.fire({
+            title: "هل أنت متأكد؟",
+            text: "سيتم حذف البيانات ولا يمكن استرجاعها مرة اخرى",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "نعم، احذفه!",
+            cancelButtonText: "إلغاء", // Translate "Cancel" here
+            confirmButtonClass: "btn btn-primary",
+            cancelButtonClass: "btn btn-danger ml-1",
+            buttonsStyling: !1,
+        }).then(function (t) {
+
+            if (t.value) {
+                parentElement.hide();
+                deleted = deleteUrl.data("delete-url");
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: deleted,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
+                    },
+                    success: function (result) {
+                        // Hide the parent element (delete the row)
+                        parentElement.hide();
+                        // Display a success message
+                        Swal.fire({
+                            type: "success",
+                            title: "تم الحذف!",
+                            text: "تم الحذف بنجاح",
+                            confirmButtonClass: "btn btn-success",
+                        });
+                        // // Redirect to another URL
+                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
+                    },
+                    // User confirmed, hide the parent element (delete the row)
+                })
+            }
+        });
+    })
+    });
+</script>
+    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
+     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"مفيش نتيجة بالكلام ده","search_hint":"اكتب حرفين على الأقل","list_search":"ابحث في القايمة دي…","list_search_all":"ابحث في كل الصفحات…","list_count":"نتيجة","list_none":"مفيش صف فيه الكلام ده","list_clear":"امسح البحث","list_go":"بحث","menu_open":"افتح القايمة","menu_close":"اقفل القايمة","actions_edit":"تعديل","actions_delete":"حذف","actions_view":"عرض","actions_add":"إضافة","pick_search":"اكتب للبحث…","pick_none":"مفيش اختيار بالاسم ده","required_field":"الخانة دي مطلوبة","required_save":"فيه خانات مطلوبة فاضية — اتعلّمت بالأحمر. اكتبها وبعدين احفظ."}};</script>
 <script src="a/js/shary-admin/shell.js" defer></script>
-<script src="a/js/shary-admin/agent.js" defer></script>
-<link rel="stylesheet" href="a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"o4YeY0sy0RT3jcbeLP1Zwd5nRiUpZmBDL6XmileX","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
+     <link rel="stylesheet" href="a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"eGdpxG1HPGrJegJI8qOCjAOXuJupgOTp8ezHXiax","ok":false,"t":{"draft_save":"حفظ كمسودة","draft_saved":"اتحفظت مسودة","draft_saving":"بيحفظ المسودة…","draft_failed":"المسودة ما اتحفظتش — جرّب تاني","draft_found":"عندك مسودة محفوظة من :when","draft_open":"افتح المسودة","draft_drop":"امسح المسودة","draft_opened":"رجعت المسودة — راجعها واضغط حفظ عشان تتنشر","draft_auto":"بيتحفظ لوحده وانت بتكتب","draft_published":"اتنشر — والمسودة اتمسحت","draft_nothing":"مفيش تعديلات لسه عشان تتحفظ"}};</script>
     <script src="a/js/shary-admin/form-drafts.js" defer></script>
-<script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
+      <script src="a/preview-data.js"></script><script src="a/preview.js"></script></body>
 </html>

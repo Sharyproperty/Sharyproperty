@@ -1,19 +1,183 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
+<!DOCTYPE html>
+<html lang="en">
+  
+    <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="preview">
-    <meta name="robots" content="noindex, nofollow">
-    <title>الماستر بلان على الخريطة — لوحة تحكم شاري</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
-    <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-    <link rel="stylesheet" href="../a/css/shary-admin/agent.css">
-</head>
-<body class="ag sx" dir="rtl">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+<meta name="description" content="Shary">
+<meta name="keywords" content="Shary">
+<meta name="author" content="">
+<meta name="robots" content="noindex, nofollow">
+<meta name="csrf-token" content="preview">
 
-<a class="sx-skip" href="#sx-main">Skip to the content</a>
+<title>Shary</title>
+
+<!-- Favicon -->
+<link rel="shortcut icon" href="../a/images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+
+
+    <link rel="stylesheet" href="../a/assets/css/bootstrap.min.css">
+
+
+<!-- Fontawesome CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/fontawesome.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/fontawesome/css/all.min.css">
+
+<!-- animation CSS -->
+<link rel="stylesheet" href="../a/assets/css/animate.css">
+
+<!-- Datetimepicker CSS -->
+<link rel="stylesheet" href="../a/assets/css/bootstrap-datetimepicker.min.css">
+
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.carousel.min.css">
+<link rel="stylesheet" href="../a/assets/plugins/owlcarousel/owl.theme.default.min.css">
+<!-- Select2 CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/select2/css/select2.min.css">
+
+<!-- Dragula CSS -->
+<link rel="stylesheet" href="../a/assets/plugins/dragula/css/dragula.min.css">
+
+
+
+
+
+
+<link rel="stylesheet" href="../a/assets/plugins/summernote/summernote-bs4.min.css">
+
+<!-- Datatable CSS -->
+<link rel="stylesheet" href="../a/assets/css/dataTables.bootstrap4.min.css">
+
+<!-- Main CSS -->
+    <link rel="stylesheet" href="../a/assets/css/style.css">
+<link rel="stylesheet" href="../a/assets/css/admin-polish.css">
+
+<link href="https://fonts.googleapis.com/css?family=Tajawal" rel='stylesheet'>
+<style type="text/css">
+    body, h1, h2, h3, h4, h5, h6, * {
+        font-family: 'Tajawal', serif;
+        font-weight: bold;
+    }
+</style>
+    
+    <script>window.__sxReady = [];if (!window.jQuery) { window.$ = function (fn) { if (typeof fn === 'function') { window.__sxReady.push(fn); return; } return { ready: function (f) { window.__sxReady.push(f); } }; }; }</script>
+     <script>
+    (function () {
+        try {
+            if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
+                document.documentElement.classList.add('sx-embed');
+                
+                var params = new URLSearchParams(location.search);
+                document.addEventListener('DOMContentLoaded', function () {
+                    var keep = params.get('focus') && document.getElementById(params.get('focus'));
+                    if (keep) {
+                        document.documentElement.classList.add('sx-focus');
+                        for (var node = keep; node && node.parentElement && node.tagName !== 'BODY'; node = node.parentElement) {
+                            [].forEach.call(node.parentElement.children, function (sib) {
+                                if (sib === node || /^(SCRIPT|STYLE|TEMPLATE)$/.test(sib.tagName) || (sib.tagName === 'INPUT' && sib.type === 'hidden')) return;
+                                if (sib.matches('[type=submit],.modal,.overlay') || sib.querySelector('[type=submit]')) return;
+                                sib.style.display = 'none';
+                            });
+                        }
+                    }
+                    
+                    String(params.get('hide') || '').split(',').forEach(function (id) {
+                        var drop = id && document.getElementById(id.trim());
+                        if (drop) drop.style.display = 'none';
+                    });
+                });
+                var open = (location.hash.match(/open=(category_\d+)/) || [])[1];
+                if (open) {
+                    var tries = 0, timer = setInterval(function () {
+                        var button = document.querySelector('[data-bs-target="#' + open + '"]');
+                        var modal = document.getElementById(open);
+                        if ((button && window.bootstrap && modal) || ++tries > 40) {
+                            clearInterval(timer);
+                            if (button && modal) {
+                                try { window.bootstrap.Modal.getOrCreateInstance(modal).show(); } catch (e) { button.click(); }
+                            }
+                        }
+                    }, 150);
+                }
+            }
+        } catch (e) {}
+    })();
+</script>
+<script>
+
+if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
+
+
+(function () {
+    var KEY = 'shary-app-mode', on = false;
+    try {
+        if (/[?&]platform=app(&|$)/.test(location.search)) sessionStorage.setItem(KEY, '1');
+        else if (/[?&]platform=web(&|$)/.test(location.search)) sessionStorage.removeItem(KEY);
+        on = sessionStorage.getItem(KEY) === '1';
+    } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
+    if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
+})();
+
+window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
+window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
+    for (i = 0; i < els.length; i++) {
+        var cw = els[i].clientWidth, sw = els[i].scrollWidth;
+        if (cw && sw > cw + 1) jobs.push([els[i], cw, sw, parseFloat(getComputedStyle(els[i]).fontSize) || 16]);
+    }
+    for (i = 0; i < jobs.length; i++) {
+        var one = jobs[i][0].getAttribute('data-fit-line') === 'one';
+        jobs[i][0].style.fontSize = (one ? Math.max(9, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 4) / 4) : Math.max(10, Math.floor(jobs[i][3] * jobs[i][1] / jobs[i][2] * 2) / 2 - 0.5)) + 'px';
+        jobs[i][0].__fit = true;
+    }
+    for (i = 0; i < jobs.length; i++) {
+        for (var step = 0; step < 4 && jobs[i][0].getAttribute('data-fit-line') === 'one' && jobs[i][0].scrollWidth > jobs[i][0].clientWidth + 1 && parseFloat(jobs[i][0].style.fontSize) > 9; step++) {
+            jobs[i][0].style.fontSize = (parseFloat(jobs[i][0].style.fontSize) - 0.25) + 'px';
+        }
+    }
+});
+document.addEventListener('error', function (e) {
+    var img = e.target;
+    if (!img || img.tagName !== 'IMG' || !img.hasAttribute('data-img-fallback')) return;
+    img.removeAttribute('srcset'); img.removeAttribute('sizes');
+    var alt = img.getAttribute('data-fallback');
+    if (alt && img.getAttribute('src') !== alt && !img.__fbTried) { img.__fbTried = 1; img.src = alt; return; }
+    img.removeAttribute('data-img-fallback');
+    img.src = "\/images\/shary\/placeholder.svg";
+}, true);
+</script>
+<style>
+    html.sx-embed .sx-top, html.sx-embed .sx-side, html.sx-embed .sx-skip, html.sx-embed .sx-shade,
+    html.sx-embed .sx-pre .sx-tabs, html.sx-embed .sx-pre > .sx-crumb, html.sx-embed .sx-crumb, html.sx-embed .header, html.sx-embed .sidebar { display: none !important; }
+    html.sx-embed body.sx .page-wrapper, html.sx-embed body .page-wrapper { margin-inline-start: 0 !important; margin-left: 0 !important; margin-right: 0 !important; padding-top: 0 !important; }
+    html.sx-embed body.sx .page-wrapper > .content { padding-top: 12px !important; }
+    html.sx-embed body.sx .sx-pre { margin-inline-start: 0 !important; padding: 14px 16px 0 !important; }
+    html.sx-embed body.sx .sx-pre .sx-pre__home { margin-top: 0; }
+    html.sx-embed body { background: #fff !important; }
+    html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
+    html.sx-embed body { overflow-x: hidden; }
+    
+    html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
+    html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
+    html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="../a/css/shary-admin/shell.css">
+       </head>
+  <body class="sx" dir="ltr">
+ <div id="global-loader" >
+    <div class="whirly-loader"> </div>
+</div>  <!-- Main Wrapper -->
+<div class="main-wrapper">
+      <a class="sx-skip" href="#sx-main">Skip to the content</a>
 <header class="sx-top" data-sx-top>
     <button type="button" class="sx-ico sx-burger" data-sx-menu aria-controls="sx-side" aria-expanded="false" aria-label="Open the menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 6h16M4 12h16M4 18h16"/></svg>
 </button>
@@ -29,11 +193,11 @@
         <div class="sx-top__end">
                     <button type="button" class="sx-ico sx-find-open" data-sx-find-open aria-label="Search the dashboard"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg>
 </button>
-                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 60"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-<b>60</b></a>
+                            <a class="sx-ico sx-bell" href="admin-shary-agent.html#notifications" aria-label="Agent — 63"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<b>63</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-        <a class="sx-lang" href="../admin-shary-agent-masterplans_q_-f133a3.html" data-sx-lang="1" lang="ar">عربي</a>
+        <a class="sx-lang" href="../admin-shary-client-units-39.html" data-sx-lang="1" lang="ar">عربي</a>
         <details class="sx-user" data-sx-user>
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
@@ -72,7 +236,7 @@
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">2</b>                    </a>
+                        <b class="sx-tag">4</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
@@ -152,11 +316,11 @@
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>Requests &amp; messages</span>
-                            <b class="sx-tag">94</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">95</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">94</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">95</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
                                                             
@@ -431,8 +595,8 @@
                                                                                                 <li><a href="admin-shary-site-tags.html" class="" ><span>Search Console, Analytics and tracking tags</span></a></li>
                                                     </ul>
                     </div>
-                                                <h6 class="sx-nav__title">The app</h6>                                                <div class="sx-grp " data-sx-grp="app">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-app">
+                                                <h6 class="sx-nav__title">The app</h6>                                                <div class="sx-grp is-on is-open" data-sx-grp="app">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-app">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/></svg>
                             <span>App services</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
@@ -443,7 +607,7 @@
                                                             
                                                                                                 <li><a href="admin-shary-app-settings.html" class="" ><span>App status &amp; payment methods</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
+                                                                                                <li><a href="admin-shary-client-units.html" class="is-on"  aria-current="page" ><span>Client units &amp; tracking</span></a></li>
                                                             
                                                                 
                                                                 
@@ -682,120 +846,212 @@
 </aside>
 <div class="sx-shade" data-sx-shade hidden></div>
 
+ <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
+        <script>
+            window.SharyEditorConfig = {
+                token: "IouXcP3DhR3FQZn9usDZ6XPPLZg7hkIrv6BDqIJ7",
+                lang: "en",
+                linksUrl: "\/admin\/shary\/content-editor\/links",
+                previewUrl: "\/admin\/shary\/content-editor\/preview",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=IouXcP3DhR3FQZn9usDZ6XPPLZg7hkIrv6BDqIJ7",
+                contentCss: "../a/css/shary-admin/editor-content.css",
+                localEditor: true,
+                localBase: "../a/vendor/shary-editor/",
+                types: {"project":"Project","unit":"Unit","area":"Area","developer":"Developer","blog":"Article","search":"Search page"},
+                labels: {"cta":"Call to action","link":"Internal link","preview":"Preview","cta_title":"Contact buttons inside the content:","link_title":"Internal link","preview_title":"Preview \u2014 as on the website","kind_cta":"Contact buttons","kind_form":"Consultation form","kind_channels":"Shary channels","kind_project":"Project card","kind_area":"Area card","cta_buttons":"Buttons to show","btn_meeting":"Request a meeting","btn_call":"Call","btn_whatsapp":"WhatsApp","cta_heading":"Sentence above the buttons (optional)","cta_ph_ar":"e.g. Book your unit today and get the latest price list","cta_ph_en":"e.g. Book your unit today and get the latest price list","form_hint":"Adds the consultation form (name, phone, area) inside the article.","channels_hint":"Adds the \u0022Follow Shary channels\u0022 card (WhatsApp \/ Telegram \/ YouTube) inside the article.","search_ph":"Type the project \/ area \/ developer \/ article name","insert":"Insert","cta_note":"Inserted at the cursor \u2014 delete it like any line.","link_selected":"The link will be put on:","link_none":"No text selected: the page name will be written as the link.","all_types":"All types","searching":"Searching\u2026","nothing":"Nothing found.","failed":"Something went wrong \u2014 try again.","desktop":"Desktop","mobile":"Mobile","preview_note":"Preview before saving \u2014 save to publish on the site.","w_h2":"Heading","w_h3":"Sub-heading","w_p":"Normal text","w_bullets":"Bullets","w_numbers":"Numbers","w_arrows":"Arrow list","w_line":"Divider","w_space":"Space","symbol":"Insert","video":"Video","video_title":"A video in the text (link)","video_hint":"Paste the link of the video on YouTube, TikTok, Facebook, Instagram or anywhere \u2014 a video card shows where the cursor is, and it opens the video where it is (outside the website).","video_url":"Video link","video_caption":"Title under the video (optional)","video_bad":"Write the full link \u2014 it starts with https:\/\/","b_cards":"Cards","b_button":"Link button","b_external":"External link","b_note":"Note","b_places":"Places","note_ph":"Write the note here","cards_title":"A card inside the text","cards_hint":"Pick the kind, type the name and click it. The card is placed at the cursor and takes its picture, price and data from the website (it updates by itself).","kind_units":"Units of an area (links)","kind_article":"Read also (article)","button_title":"A wide link button","button_hint":"Pick a page of the website (project, unit, area, developer, article, search page) or write a link. A wide button shows inside the text, like \u201cFollow the average price per meter on the Shary Index\u201d.","button_text":"Button text","button_url":"Or write a link","bad_url":"Write a full link (https:\/\/\u2026) or a site link starting with \/","ext_title":"Link to another website","ext_hint":"Select the words first, then click \u201cExternal link\u201d. The link opens in a new tab.","ext_url":"Link (https:\/\/\u2026)","ext_text":"Linked words","places_title":"Places list","places_hint":"One place per line. To make a place a link write: name | link (e.g. Cairo Festival | \/en\/area\/New-Cairo).","places_heading":"Title (e.g. Where to go in New Cairo?)","places_lines":"Places","places_caption":"A line under the list (optional)","places_none":"Write at least one place."}            };
+        </script>
+        <script src="../a/js/shary-admin/editor.js"></script>
+        
+             
+    <template data-sx-crumb><div class="sx-crumb">App services ‹ Client units &amp; tracking</div></template>
 
+                
+        <link rel="stylesheet" href="../a/css/shary-admin/client-units.css">
+    <div class="page-wrapper cardhead">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>شقتي</h4>
+                    <h6><a href="admin-shary-client-units.html">← Client units &amp; tracking</a> · Demo Customer <span dir="ltr">01012345678</span></h6>
+                </div>
+            </div>
+                                    <nav class="cu-nav"><a href="#cu-data">1 · Data &amp; contract</a><a href="#cu-media">2 · Photos &amp; plans</a><a href="#cu-tracking">3 · Tracking: instalments, receipts, bank account and construction updates</a></nav>
 
-<div class="sx-page">
-    <main class="ag-main" id="sx-main">
-                                <div class="ag-head">
-    <div class="ag-col">
-        <h1>الماستر بلان على الخريطة</h1>
-        <p>انتوا بترفعوا الماستر بلان عادي، والإيجنت بيكمّل: يفرّغها، ويلاقي مكان المشروع وحدوده بالظبط على الخريطة (نفس الشكل والأبعاد والميل)، ويحطها فوقها. كل مشروع بيوصلك في صندوق المراجعة بصورة الماستر بلان على حدوده ونسبة التطابق — وانت اللي بتنشر.</p>
-    </div>
-            <div class="ag-row">
-            <form method="post" action="#preview/admin/shary/agent/masterplans/run" data-ag-slow="بيشتغل… (دقيقة)"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn">كمّل دلوقتي</button></form>
-            <a class="ag-btn ag-btn--primary" href="#all">اعمل كل الماستر بلانز</a>
+            <form method="post" action="#preview/admin/shary/client-units/39" enctype="multipart/form-data" class="card" id="cu-data">
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <div class="card-header"><h5 class="card-title">Data &amp; contract</h5></div>
+                <div class="card-body"><div class="row">
+                    <div class="col-lg-4 col-12"><div class="form-group"><label>Client</label>
+                        <select class="form-control" name="user_id" required><option value="69" >AUDIT mail 2 — 01218201697</option><option value="68" >AUDIT mail — 01106439580</option><option value="67" >AUDIT back — 01167951452</option><option value="62" >AUDIT mail 2 — 01224447692</option><option value="61" >AUDIT mail — 01100836643</option><option value="60" >AUDIT back — 01173287213</option><option value="58" >AUDIT Google — name@example.com</option><option value="59" >AUDIT Apple — name@example.com</option><option value="56" >AUDIT Google — name@example.com</option><option value="57" >AUDIT link — audit-link-a9e7d1@example.com</option><option value="55" >AUDIT mail 2 — 01255796126</option><option value="54" >AUDIT mail — 01151966886</option><option value="53" >AUDIT back — 01163392337</option><option value="52" >AUDIT mail 2 — 01262113626</option><option value="51" >AUDIT mail — 01122285536</option><option value="50" >AUDIT back — 01156198649</option><option value="49" >AUDIT mail 2 — 01210123499</option><option value="48" >AUDIT mail — 01157677509</option><option value="47" >AUDIT back — 01177216596</option><option value="46" >AUDIT mail 2 — 01255055765</option><option value="45" >AUDIT mail — 01175640777</option><option value="44" >AUDIT back — 01136052051</option><option value="43" >AUDIT Apple — name@example.com</option><option value="40" >AUDIT Google — name@example.com</option><option value="41" >AUDIT link — audit-link-7dfbea@example.com</option><option value="42" >AUDIT Google — name@example.com</option><option value="39" >AUDIT back — 01110007439</option><option value="38" >AUDIT back — 01106187928</option><option value="36" >AUDIT back — 01168911415</option><option value="35" >AUDIT back — 01181464277</option><option value="28" >AUDIT back — 01172092976</option><option value="27" >AUDIT renamed — 01161452495</option><option value="26" >AUDIT back — 01170898037</option><option value="23" >AUDIT link — audit-link-a466b5@example.com</option><option value="24" >AUDIT Google — name@example.com</option><option value="25" >AUDIT Apple — name@example.com</option><option value="22" >AUDIT Google — name@example.com</option><option value="21" >AUDIT Facebook — audit-fb-1@example.com</option><option value="18" >AUDIT link — audit-link-85e6db@example.com</option><option value="19" >AUDIT Google — name@example.com</option><option value="20" >AUDIT Apple — name@example.com</option><option value="17" >AUDIT Google — name@example.com</option><option value="15" >AUDIT Google — name@example.com</option><option value="16" >AUDIT Apple — name@example.com</option><option value="13" >AUDIT Google — name@example.com</option><option value="14" >AUDIT link — audit-link-77c019@example.com</option><option value="12" >AUDIT back — 01131672469</option><option value="11" >أحمد محمود — 01000000999</option><option value="3" >Suspended Customer — 01211112222</option><option value="2" >Demo Agent — 01112223344</option><option value="1" selected>Demo Customer — 01012345678</option></select></div></div>
+                    <div class="col-lg-4 col-6"><div class="form-group"><label>Unit name (Arabic)</label><input class="form-control" name="name_ar" value="شقتي" required maxlength="255"></div></div>
+                    <div class="col-lg-4 col-6"><div class="form-group"><label>Unit name (English)</label><input class="form-control" name="name_en" value="شقتي" maxlength="255" dir="ltr"></div></div>
+                    <div class="col-lg-4 col-12"><div class="form-group"><label>Project</label>
+                        <select class="form-control" name="compound_id"><option value="">—</option><option value="7" >Aliva</option><option value="309" >Antalya Coast</option><option value="22" >Athens Riviera Residences</option><option value="204" >Avelin</option><option value="243" >Azha</option><option value="10" >Badya</option><option value="9" >Belle Vie</option><option value="229" >Beyond Blue</option><option value="6" >Bloomfields</option><option value="206" >Blue Tree</option><option value="240" >Bo Islands</option><option value="308" >Bosphorus View</option><option value="230" >Caesar</option><option value="219" >Cairo Gate</option><option value="310" >Canary Quarter</option><option value="208" >Celia</option><option value="225" >City of Odyssia</option><option value="303" >Creek Gardens</option><option value="20" >Creek Harbour Residences</option><option value="23" >Crete Sea Villas</option><option value="232" >D-Bay</option><option value="90" >Demo Empty Project</option><option value="203" >Eastvale</option><option value="214" >El Patio 5 East</option><option value="213" >El Patio Casa</option><option value="212" >El Patio Prime</option><option value="218" >El Patio Sola</option><option value="209" >Etaje</option><option value="13" >Fouka Bay</option><option value="241" >Four</option><option value="205" >Garnet</option><option value="239" >Ghazala Bay</option><option value="227" >Grand Valleys</option><option value="12" >Hacienda Bay</option><option value="19" >Hidden Heights</option><option value="16" >IL Bosco</option><option value="15" >IL Monte Galala</option><option value="307" >Jeddah Waterfront</option><option value="14" >June</option><option value="221" >Karmell</option><option value="217" >Katameya Creeks</option><option value="224" >Kings Way</option><option value="238" >LVLS</option><option value="228" >La Vista Bay</option><option value="231" >La Vista Bay East</option><option value="314" >Lusail Marina</option><option value="311" >Manchester Central</option><option value="11" >Marassi</option><option value="18" >Marassi Marina</option><option value="302" >Marina Gate</option><option value="301" >Marina Heights</option><option value="237" >Mazarine</option><option value="226" >Midtown Sky</option><option value="1" >Mivida</option><option value="17" >Mivida Parks</option><option value="222" >Mountain View Hyde Park</option><option value="235" >Mountain View North Coast</option><option value="242" >Mountain View Sokhna</option><option value="5" >Mountain View iCity</option><option value="312" >Muscat Bay</option><option value="313" >Muscat Hills</option><option value="236" >North Edge</option><option value="223" >O West</option><option value="2" >Palm Hills New Cairo</option><option value="315" >Pearl Residences</option><option value="207" >Privado</option><option value="305" >Riyadh Boulevard</option><option value="306" >Riyadh Gardens</option><option value="21" >Saadiyat Lagoons</option><option value="304" >Saadiyat Villas</option><option value="201" >Scenes</option><option value="291" >Scenes - Phase one</option><option value="293" >Scenes - Phase three</option><option value="292" >Scenes - Phase two</option><option value="215" >Springs</option><option value="234" >Stella Heights</option><option value="211" >Swan Lake Residences</option><option value="233" >Telal</option><option value="244" selected>Telal Sokhna</option><option value="210" >The Brooks</option><option value="202" >The Butterfly</option><option value="220" >The Estates</option><option value="216" >The Pulse</option><option value="4" >Villette</option><option value="3" >ZED East</option><option value="8" >ZED West</option></select></div></div>
+                    <div class="col-lg-4 col-6"><div class="form-group"><label>Unit type</label>
+                        <select class="form-control" name="property_id"><option value="">—</option><option value="19" selected>Apartment</option><option value="20" >Villa</option><option value="21" >Townhouse</option><option value="22" >Twin House</option><option value="23" >Duplex</option><option value="24" >Penthouse</option><option value="25" >Studio</option><option value="30" >Chalet</option><option value="31" >Office</option><option value="32" >Shop</option><option value="33" >Clinic</option><option value="34" >Warehouse</option><option value="60" >Apartment</option><option value="61" >Apartment</option><option value="62" >Villa</option><option value="63" >Chalet</option><option value="64" >Chalet</option><option value="68" >Hotel Apartment</option></select></div></div>
+                    <div class="col-lg-4 col-6"><div class="form-group"><label>Finishing</label>
+                        <select class="form-control" name="finishing_type_id"><option value="">—</option><option value="7" selected>Fully Finished</option><option value="8" >Semi Finished</option><option value="9" >Core &amp; Shell</option><option value="10" >Furnished</option></select></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Area (m²)</label><input type="number" step="any" class="form-control" name="unit_area" value="155" dir="ltr"></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Garden (m²)</label><input type="number" step="any" class="form-control" name="garden" value="" dir="ltr"></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Roof (m²)</label><input type="number" step="any" class="form-control" name="roof" value="" dir="ltr"></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Contract price (EGP)</label><input type="number" step="any" class="form-control" name="contracted_price" value="6500000" dir="ltr"></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Payment years</label><input type="number" step="any" class="form-control" name="total_years" value="7" dir="ltr"></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Contract date</label><input type="date" class="form-control" name="contracted_date" value="2024-03-01" dir="ltr"></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Delivery</label>
+                        <select class="form-control" name="delivery_status"><option value="not_delivered" selected>Not delivered</option><option value="delivered" >Delivered</option></select></div></div>
+                    <div class="col-lg-3 col-6"><div class="form-group"><label>Payment</label>
+                        <select class="form-control" name="payment_status"><option value="installments" selected>Installments</option><option value="fully_paid" >Fully paid</option></select></div></div>
+                    <div class="col-lg-6 col-12"><div class="form-group"><label>Main photo</label>
+                                                <input type="file" class="form-control" name="image" accept="image/jpeg,image/png,image/webp"></div></div>
+                </div>
+                <button class="btn btn-submit">Save</button></div>
+            </form>
+
+            <form method="post" action="#preview/admin/shary/client-units/39/media" enctype="multipart/form-data" class="card" id="cu-media">
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <div class="card-header"><h5 class="card-title">Photos &amp; plans</h5></div>
+                <div class="card-body">
+                                        <div class="cu-note">These photos and plans are shown only to the client in their unit details (tracking) — they do not change sale units&#039; photos and do not publish the unit on the website. Construction update photos (dated, by stage) are below in tracking.</div>
+
+                    <h6 class="fw-bold">Unit photo gallery</h6>
+                    <div class="cu-media-grid">
+                                            </div>
+                    <input type="file" class="form-control mb-4" name="gallery[]" multiple accept="image/jpeg,image/png,image/webp">
+
+                    <h6 class="fw-bold">Floor plans — Floor Plans</h6>
+                    <div class="cu-media-grid">
+                                            </div>
+                                            <div class="cu-plan-new">
+                            <input type="file" class="form-control" name="floor[0][file]" accept="image/jpeg,image/png,image/webp,application/pdf">
+                            <input class="form-control" name="floor[0][name_ar]" placeholder="Plan name (Arabic)">
+                            <input class="form-control" name="floor[0][name_en]" placeholder="Plan name (English)" dir="ltr">
+                            <select class="form-control" name="floor[0][level]"><option value="">Level (optional)</option><option value="basement">Basement</option><option value="ground">Ground floor</option><option value="first">First floor</option><option value="second">Second floor</option><option value="third">Third floor</option><option value="typical">Typical floor</option><option value="lower">Lower level (duplex)</option><option value="upper">Upper level (duplex)</option><option value="roof">Roof</option><option value="garden">Garden</option></select>
+                        </div>
+                                            <div class="cu-plan-new">
+                            <input type="file" class="form-control" name="floor[1][file]" accept="image/jpeg,image/png,image/webp,application/pdf">
+                            <input class="form-control" name="floor[1][name_ar]" placeholder="Plan name (Arabic)">
+                            <input class="form-control" name="floor[1][name_en]" placeholder="Plan name (English)" dir="ltr">
+                            <select class="form-control" name="floor[1][level]"><option value="">Level (optional)</option><option value="basement">Basement</option><option value="ground">Ground floor</option><option value="first">First floor</option><option value="second">Second floor</option><option value="third">Third floor</option><option value="typical">Typical floor</option><option value="lower">Lower level (duplex)</option><option value="upper">Upper level (duplex)</option><option value="roof">Roof</option><option value="garden">Garden</option></select>
+                        </div>
+                    
+                    <h6 class="fw-bold mt-4">Master plan</h6>
+                                                                <div class="cu-note">No master plan (no linked project with one) — upload one if you have it.</div>
+                                        <input type="file" class="form-control" name="master" accept="image/jpeg,image/png,image/webp,application/pdf">
+                    <button class="btn btn-submit mt-3">Save</button>
+                </div>
+            </form>
+
+            
+            <div class="card" id="cu-tracking">
+                <div class="card-header"><h5 class="card-title">Tracking: instalments, receipts, bank account and construction updates</h5></div>
+                <div class="card-body">
+                                            <p class="text-muted">This unit has no tracking record yet.</p>
+                        <form method="post" action="#preview/admin/shary/client-units/39/track"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="btn btn-primary">Start tracking this unit</button></form>
+                                    </div>
+            </div>
         </div>
     </div>
-
-
-
-    <div class="ag-alert ag-alert--bad"><div class="ag-col">
-        <b>2 ماستر بلان مكانها محتاج تتصلّح — مش ظاهرة على الخريطة عشان ما تركبش على مشاريع تانية</b>
-        <ul style="margin:6px 0 0;padding-inline-start:18px">
-                            <li><b>ماونتن فيو آي سيتي</b> — داخلة في ماستر بلان «فيليت»
-                    · <a href="admin-shary-all-projects-1_tab_map.html" data-sx-sample="1"><u>اظبط مكانها</u></a>                    · <a href="admin-shary-agent-masterplans_q_-f133a3.html"><u>اعملها تاني أوتوماتيك</u></a></li>
-                            <li><b>كمبوند بلوم فيلدز</b> — داخلة في ماستر بلان «فيليت»
-                    · <a href="admin-shary-all-projects-1_tab_map.html" data-sx-sample="1"><u>اظبط مكانها</u></a>                    · <a href="admin-shary-agent-masterplans.html" data-sx-sample="1"><u>اعملها تاني أوتوماتيك</u></a></li>
-                    </ul>
-    </div></div>
-
-<ol class="ag-steps" aria-label="بيشتغل إزاي">
-    <li><b>1</b><span><span class="b8">بيفرّغها</span> — الخلفية والعنوان والـ legend بيتشالوا</span></li>
-    <li><b>2</b><span><span class="b8">بيلاقي الحدود</span> — المرسومة على الموقع، أو من OpenStreetMap بنفس شكل الماستر بلان</span></li>
-    <li><b>3</b><span><span class="b8">بيحطها</span> — يلفّها ويكبّرها لحد ما تغطي الحدود بالظبط</span></li>
-    <li><b>4</b><span><span class="b8">انت بتنشر</span> — من صندوق المراجعة، ولو عايز تلفّها شوية «عدّل»</span></li>
-</ol>
-
-<div class="ag-tiles">
-    <div class="ag-tile"><span>مشاريع ليها ماستر بلان</span><b class="num">24</b><a href="admin-shary-agent-masterplans.html">الكل</a></div>
-    <div class="ag-tile"><span>على الخريطة</span><b class="num">24</b><a href="admin-shary-agent-masterplans_status_published.html">هي إيه</a></div>
-    <div class="ag-tile"><span>مستنية مراجعتك</span><b class="blue num">0</b><a href="admin-shary-agent-review_section_content.html">صندوق المراجعة</a></div>
-    <div class="ag-tile"><span>في الدور</span><b class="num">0</b><span>كل 5 دقايق دفعة</span></div>
-    <div class="ag-tile"><span>محتاجة إيدك</span><b class="num">0</b><a href="admin-shary-agent-masterplans_status_needs_hand.html">ليه</a></div>
-    <div class="ag-tile"><span>لسه ما اتعملتش</span><b class="num">0</b><a href="#all">اعملها</a></div>
 </div>
+<!-- /Main Wrapper -->
+    <!-- jQuery -->
+<script src="../a/assets/js/jquery-3.6.0.min.js"></script>
 
-<section class="ag-card" id="all">
-    <div class="ag-card__head"><h2>اعمل كل الماستر بلانز مرة واحدة</h2><span class="sm mute">وبعد كده أي مشروع يترفع له ماستر بلان بيتعمل لوحده.</span></div>
-    <form method="post" action="#preview/admin/shary/agent/masterplans/all" class="ag-card__body ag-col" style="gap:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">        <p class="sm">كل المشاريع اللي ليها ماستر بلان ومش متحطة على الخريطة هتدخل الدور، وبتتعمل في الخلفية (OpenStreetMap بيقبل طلب واحد في المرة) — وبتوصلك في صندوق المراجعة كل 12 مشروع مع بعض. دوس «كمّل دلوقتي» عشان تسرّعها.</p>
-        <label class="ag-check"><input type="checkbox" name="redo" value="1"> وكمان المشاريع المتحطة قبل كده — اعملها من الأول (اللي متحط فعلًا ما بيتغيّرش غير لما تنشر الجديد)</label>
-        <div class="ag-row"><button class="ag-btn ag-btn--primary">اعمل كل الماستر بلانز</button></div>
-    </form>
-</section>
+<!-- Bootstrap Core JS -->
+<script src="../a/assets/js/bootstrap.bundle.min.js"></script>
 
-<nav class="ag-row" aria-label="الحالة">
-    <a class="ag-tab is-on" href="admin-shary-agent-masterplans_q_-f133a3.html">الكل</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">مستني مراجعتك</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">محتاج إيدك</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">في الدور</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">لسه ما اتعملش</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">على الخريطة ✓</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">متحط قبل كده</a>
-            <a class="ag-tab " href="admin-shary-agent-masterplans.html" data-sx-sample="1">اترفض</a>
-        <form method="get" action="#preview/admin/shary/agent/masterplans" class="ag-row" style="gap:6px">
-                <input name="q" class="ag-input" style="max-width:200px;min-height:40px" value="ماونتن فيو آي سيتي" placeholder="اسم المشروع" aria-label="دوّر على مشروع">
-        <button class="ag-btn ag-btn--sm">دوّر</button>
-    </form>
-</nav>
+<!-- Feather Icon JS -->
+<script src="../a/assets/js/feather.min.js"></script>
 
-<section class="ag-card">
-            <div class="ag-scroll"><table class="ag-stack">
-            <thead><tr><th>المشروع</th><th>الحالة</th><th>التطابق</th><th>الحدود من</th><th>آخر مرة</th><th></th></tr></thead>
-            <tbody>
-                                            <tr>
-                    <td class="full" style="min-width:200px"><a class="b8" href="admin-shary-agent-masterplans-22.html" data-sx-sample="1">ماونتن فيو آي سيتي</a> <span class="xs mute num">#5</span>
-                        </td>
-                    <td class="nowrap" data-l="الحالة"><span class="ag-pill ag-pill--ok">متحط قبل كده</span></td>
-                    <td class="nowrap" data-l="التطابق"> — </td>
-                    <td class="sm" data-l="الحدود من">—</td>
-                    <td class="sm nowrap" data-l="آخر مرة">—</td>
-                    <td class="end nowrap">
-                                                    <form method="post" action="#preview/admin/shary/agent/masterplans/5" data-ag-slow="بيفرّغ ويدوّر على الحدود…"><input type="hidden" name="_token" value="preview" autocomplete="off"><button class="ag-btn ag-btn--sm">اعملها تاني</button></form>
-                                                <a class="ag-btn ag-btn--sm" href="admin-shary-all-projects-1_tab_map.html" data-sx-sample="1">ظبّطها بإيدك</a>                    </td>
-                </tr>
-                        </tbody>
-        </table></div>
-            </section>
+<!-- Slimscroll JS -->
+<script src="../a/assets/js/jquery.slimscroll.min.js"></script>
 
-<section class="ag-card" id="settings">
-    <div class="ag-card__head"><h2>الإعدادات وأماكن الحفظ</h2></div>
-    <div class="ag-card__body ag-col" style="gap:14px">
-        <ul class="ag-checks">
-            <li class="no"><i aria-hidden="true">!</i><span>خرائط جوجل: مش مربوطة — بيعتمد على إحداثيات المشروع وOpenStreetMap <a href="admin-shary-agent-keys.html#group-maps">اربطها</a></span></li>
-            <li class="no"><i aria-hidden="true">!</i><span>حدود المشاريع المرسومة على الموقع: compounds.coordinates — لسه مفيش حدود مرسومة نتعلم منها صيغتها</span></li>
-            <li><i aria-hidden="true">✓</i><span>مكان الماستر بلان (masterplan_corners) بيتكتب بنفس الصيغة اللي الموقع بيستخدمها: الصيغة الأساسية (tl / tr / br / bl)</span></li>
-            <li><i aria-hidden="true">✓</i><span>الحدود من OpenStreetMap (© OpenStreetMap contributors) — لو بتترسم على خريطة الموقع لازم الجملة دي تظهر على الخريطة.</span></li>
-        </ul>
-        <form method="post" action="#preview/admin/shary/agent/masterplans/settings" class="ag-col" style="gap:12px"><input type="hidden" name="_token" value="preview" autocomplete="off">            <fieldset class="ag-col" style="gap:12px;border:0;padding:0;margin:0" >
-                <label class="ag-check"><input type="hidden" name="auto" value="0"><input type="checkbox" name="auto" value="1" checked> أي ماستر بلان تترفع أو تتغيّر تتعمل لوحدها</label>
-                <label class="ag-check"><input type="hidden" name="publish" value="0"><input type="checkbox" name="publish" value="1" checked> كل الماستر بلانز (المرفوعة قبل كده والجديدة) تتفرّغ وتتقص وتتحط على الخريطة لوحدها — واللي محتاجة تظبيط (مكان تقريبي أو تطابق أقل من «أقل تطابق») بتوصلكم في إشعار تكمّلوها بإيدكم ، وأي نشر ليه «تراجع» في سجل التغييرات</label>
-                <div class="ag-grid">
-                    <div class="ag-field"><label for="mp-score">أقل تطابق يتنشر من غير «اتأكدت» (%)</label>
-                        <input id="mp-score" name="min_score" type="number" min="50" max="95" class="ag-input" dir="ltr" style="text-align:start" value="75"></div>
-                    <div class="ag-field"><label for="mp-radius">يدوّر على الحدود حوالين المشروع لحد (متر)</label>
-                        <input id="mp-radius" name="radius" type="number" min="800" max="6000" step="100" class="ag-input" dir="ltr" style="text-align:start" value="2500"></div>
-                </div>
-            </fieldset>
-            <div class="ag-row"><button class="ag-btn ag-btn--primary">احفظ</button></div>        </form>
-    </div>
-</section>
-    </main>
-</div>
-<script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"ماونتن فيو آي سيتي","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
+<!-- Datatable JS -->
+<script src="../a/assets/js/jquery.dataTables.min.js"></script>
+<script src="../a/assets/js/dataTables.bootstrap4.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="../a/assets/plugins/select2/js/select2.min.js"></script>
+
+<!-- Datetimepicker JS -->
+<script src="../a/assets/js/moment.min.js"></script>
+<script src="../a/assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<!-- Chart JS -->
+<script src="../a/assets/plugins/apexchart/apexcharts.min.js"></script>
+<script src="../a/assets/plugins/apexchart/chart-data.js"></script>
+
+<script src="../a/assets/plugins/summernote/summernote-bs4.min.js"></script>
+
+
+
+
+<!-- Owl JS -->
+<script src="../a/assets/plugins/owlcarousel/owl.carousel.min.js"></script>
+<!-- Fileupload JS -->
+<script src="../a/assets/plugins/fileupload/fileupload.min.js"></script>
+<!-- Sweetalert 2 -->
+<script src="../a/assets/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="../a/assets/plugins/sweetalert/sweetalerts.min.js"></script>
+
+<!-- Custom JS -->
+<script src="../a/assets/js/script.js"></script>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on('click', '.confirm-text', function(e) {
+
+            var parentElement = $(this).parent().parent();
+        var deleteUrl = $(this);
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won&#039;t be able to revert this!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "Cancel", // Translate "Cancel" here
+            confirmButtonClass: "btn btn-primary",
+            cancelButtonClass: "btn btn-danger ml-1",
+            buttonsStyling: !1,
+        }).then(function (t) {
+
+            if (t.value) {
+                parentElement.hide();
+                deleted = deleteUrl.data("delete-url");
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajax({
+                    url: deleted,
+                    type: "DELETE",
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken // Include the CSRF token in headers
+                    },
+                    success: function (result) {
+                        // Hide the parent element (delete the row)
+                        parentElement.hide();
+                        // Display a success message
+                        Swal.fire({
+                            type: "success",
+                            title: "Deleted!",
+                            text: "Deleted successfully",
+                            confirmButtonClass: "btn btn-success",
+                        });
+                        // // Redirect to another URL
+                        // window.location.href = "https://example.com/success-page"; // Replace with your desired URL
+                    },
+                    // User confirmed, hide the parent element (delete the row)
+                })
+            }
+        });
+    })
+    });
+</script>
+    <script>if (window.jQuery) { (window.__sxReady || []).forEach(function (fn) { jQuery(fn); }); window.__sxReady = []; }</script>
+     <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
-<script src="../a/js/shary-admin/agent.js" defer></script>
-<link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"onUby2DsypZcfmXyqnDVgn2T2oSO2df4BelYAFOU","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+     <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"IouXcP3DhR3FQZn9usDZ6XPPLZg7hkIrv6BDqIJ7","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
-<script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
+      <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

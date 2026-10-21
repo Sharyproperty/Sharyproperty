@@ -92,6 +92,86 @@
         toast(NOTE_SAVE);
     }, true);
 
+    // ---- «تجهيز الماستر بلانز»: the card's numbers, moving forward like the server's background work
+    var drive = null;
+    function previewDrive() {
+        var num = function (key) { var el = doc.querySelector('[data-mpd="' + key + '"]'); return el ? Number(String(el.textContent).replace(/[^0-9]/g, '')) || 0 : 0; };
+        if (!drive) {
+            var names = Array.prototype.map.call(doc.querySelectorAll('.ag-stack a.b8'), function (a) { return a.textContent.trim(); }).filter(Boolean);
+            var log = Array.prototype.map.call(doc.querySelectorAll('[data-mpd-log] li'), function (li) {
+                var who = li.querySelector('a, b'), text = li.querySelector('span') ? li.querySelector('span').textContent : '';
+                return { ago: 60, id: 0, name: who ? who.textContent.trim() : '', text: text.split(' — ').slice(1).join(' — ').trim(), ok: !li.classList.contains('bad') };
+            });
+            drive = { projects: num('projects'), left: num('left'), on_map: num('on_map'), review: num('review'), needs_hand: num('needs_hand'), queued: num('queued'), waiting: num('waiting'), log: log, names: names, i: 0 };
+        }
+        drive.log.forEach(function (row) { row.ago += 6; });
+        if (drive.left > 0) {
+            drive.left--;
+            drive.on_map++;
+            if (drive.queued > 0) { drive.queued--; }
+            drive.i++;
+            var name = drive.names.length ? drive.names[(drive.i * 7) % drive.names.length] : 'مشروع';
+            drive.log.unshift({ ago: 0, id: 0, name: name, ok: true, text: drive.i % 3 === 0 ? 'اتفرّغت تاني بالطريقة الجديدة وبقت أوضح في الزوم — مكانها زي ما هو ✓' : 'اتحط على الخريطة ✓ (تطابق ' + (80 + (drive.i * 7) % 18) + '%)' });
+            drive.log = drive.log.slice(0, 12);
+        }
+        var ready = Math.max(0, drive.projects - drive.left);
+        return { ok: true, preview: true, projects: drive.projects, ready: ready, left: drive.left, percent: drive.projects ? Math.floor(100 * ready / drive.projects) : 100,
+            on_map: drive.on_map, review: drive.review, needs_hand: drive.needs_hand, queued: drive.queued, waiting: drive.waiting, refused: 0,
+            copies: { missing: 0, light: 0, outline: 0, upgrade: 0 }, running: drive.left > 0 ? { by: 'لوحده', for: 10 } : null,
+            last: { ago: 4, by: 'لوحده', seconds: 38 }, rest: 0, cron: 3, self: 'ok', log: drive.log };
+    }
+
+    // ---- the project page's place search (App\Shary\Masterplan\PlaceSuggest): the same ranking over the saved list
+    function previewPlaces(kind, qs) {
+        var P = D.places || { projects: [], areas: [] };
+        var want = fold(qs.get('q') || '');
+        var score = function (row) {
+            var best = 0;
+            [row.ar, row.en].forEach(function (name) {
+                name = fold(name);
+                if (!name || !want) { return; }
+                var s = name.indexOf(want) === 0 ? 3 : ((' ' + name).indexOf(' ' + want) > -1 ? 2 : (want.split(' ').every(function (w) { return name.indexOf(w) > -1; }) ? 1 : 0));
+                best = Math.max(best, s);
+            });
+            return best;
+        };
+        var pick = function (rows, limit) {
+            return rows.filter(function (r) { return r.lat !== null && score(r) > 0; })
+                .sort(function (a, b) { return score(b) - score(a) || (a.ar || a.en).length - (b.ar || b.en).length; }).slice(0, limit);
+        };
+        var projects = pick(P.projects, 5).map(function (r) {
+            return { id: 'p' + r.id, name: r.ar || r.en, address: [r.ar && r.en ? r.en : '', r.area, 'مشروع على شاري' + (r.live ? '' : ' (مش منشور)')].filter(Boolean).join(' · '), where: r.area, lat: r.lat, lng: r.lng, zoom: 16, kind: 'project', source: 'shary' };
+        });
+        var areas = pick(P.areas, 3).map(function (r) {
+            return { id: 'a' + r.id, name: r.ar || r.en, address: [r.ar && r.en ? r.en : '', r.parent, 'منطقة'].filter(Boolean).join(' · '), where: r.parent, lat: r.lat, lng: r.lng, zoom: 13, kind: 'area', source: 'shary' };
+        });
+        if (kind === 'suggest') {
+            return { ok: true, places: projects.concat(areas), google: 'preview', message: 'في لينك المعاينة الاقتراحات من مشاريع ومناطق شاري — اقتراحات جوجل بتظهر على السيرفر.' };
+        }
+        if (kind === 'search') {
+            var found = projects.concat(areas);
+            return found.length ? { ok: true, results: found } : { ok: false, message: 'في لينك المعاينة البحث في مشاريع ومناطق شاري بس — على السيرفر بيدوّر في جوجل وOpenStreetMap كمان.' };
+        }
+        if (kind === 'place') {
+            return { ok: false, message: NOTE_SAVE };
+        }
+        var id = Number((window.location.pathname.match(/compounds-(\d+)/) || [])[1] || 0);
+        var me = P.projects.filter(function (r) { return r.id === id; })[0];
+        if (me && me.lat !== null) {
+            return { ok: true, lat: me.lat, lng: me.lng, zoom: 16, viewport: null, source: 'pin', label: me.ar || me.en, sure: true };
+        }
+        var area = me ? P.areas.filter(function (r) { return r.id === me.area_id; })[0] : null;
+        if (area) {
+            return { ok: true, lat: area.lat, lng: area.lng, zoom: 13, viewport: null, source: 'area', label: area.ar || area.en, sure: false };
+        }
+        var near = me ? P.projects.filter(function (r) { return r.area_id === me.area_id && r.lat !== null && r.id !== me.id; }) : [];
+        if (near.length) {
+            var lat = near.reduce(function (sum, r) { return sum + r.lat; }, 0) / near.length, lng = near.reduce(function (sum, r) { return sum + r.lng; }, 0) / near.length;
+            return { ok: true, lat: lat, lng: lng, zoom: 14, viewport: null, source: 'area_projects', label: me.area || 'منطقته', sure: false };
+        }
+        return { ok: true, lat: 26.8206, lng: 30.8025, zoom: 6, viewport: null, source: 'egypt', label: 'مصر', sure: false };
+    }
+
     // ---- requests the page makes by script
     var SERVER = /update-|status|display|delete|destroy|remove|store|create-|save|reorder|sort|upload|photo/i;
     if (window.fetch) {
@@ -147,6 +227,16 @@
                     if (r.ok) { return r; }
                     return new Response('<p style="font-family:Cairo,Tahoma;font-weight:700;padding:24px;direction:rtl">' + NOTE_SAVE + '</p>', { status: 200, headers: { 'Content-Type': 'text/html' } });
                 });
+            }
+            // «الماستر بلان على الخريطة»: how far the background work got — here it moves on by itself, one master plan per
+            // ask, like the server's runs
+            if (/masterplans\/drive/.test(url)) {
+                return Promise.resolve(new Response(JSON.stringify(previewDrive()), { status: 200, headers: { 'Content-Type': 'application/json' } }));
+            }
+            // the project page's place search: Shary's projects and areas (saved with this copy); Google's come from the server
+            var pl = /masterplan\/(suggest|search|place|locate)(\?[^#]*)?/.exec(url);
+            if (pl && method === 'GET') {
+                return Promise.resolve(new Response(JSON.stringify(previewPlaces(pl[1], new URLSearchParams((pl[2] || '').slice(1)))), { status: 200, headers: { 'Content-Type': 'application/json' } }));
             }
             if (method !== 'GET' || /#preview/.test(url)) {
                 toast(NOTE_SAVE);
