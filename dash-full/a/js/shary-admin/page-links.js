@@ -1,14 +1,8 @@
-/**
- * لينكات الصفحات: البحث عن صفحة وترتيب اللينكات
- * الصفحة: resources/views/shary_admin/page_links/edit.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var url = CONF.searchUrl;
     var L = CONF.texts;
     function escapeHtml(value) { return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
-    // search → pick → added to "chosen by hand"
     document.querySelectorAll('[data-pl-search]').forEach(function (box) {
         var input = box.querySelector('[data-pl-q]');
         var results = box.querySelector('[data-pl-results]');

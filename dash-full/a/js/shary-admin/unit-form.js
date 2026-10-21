@@ -1,14 +1,3 @@
-// ── unit-form.js · جزء 1 من 3: أقسام الفورم والطي والتنقل (المصدر: resources/js/shary-admin/unit-form/01-sections-and-folding.js — عدّل هنا وشغّل tools/minify-assets.sh)
-/*
- | Shary dashboard — the unit form on ONE page (resources/views/shary_admin/units/form.blade.php):
- |
- |   the sections      the seven parts one under the other; each folds / opens from its title (all open at first) — «فتح الكل / قفل الكل»
- |   the sections bar  stays on top while the page scrolls; a click glides to its section (and opens it); the section on screen is lit
- |   the mistakes      a field the browser stops at (or the server sent back) opens its section; each section counts its fields to look at
- |   «المسودات»        the form saves itself as a draft while it is filled (the fields, and the photos / files picked — kept with the draft),
- |                     «حفظ كمسودة» saves now; the bar says what is happening: جارٍ الحفظ / تم الحفظ / فشل الحفظ. Nothing of a draft
- |                     reaches the website; the unit is saved by «حفظ» only.
- */
 (function () {
     'use strict';
     var form = document.querySelector('[data-unit-form]');
@@ -25,7 +14,6 @@
 
     function byKey(key) { return form.querySelector('.sx-unit-sec[data-unit-pane="' + key + '"]'); }
 
-    // ------------------------------------------------------------------ the top of the screen (fixed header + the sections bar)
     function headerBottom() {
         var top = document.querySelector('.sx-top') || document.querySelector('.header');
         if (!top) { return 0; }
@@ -40,7 +28,6 @@
     offsets();
     window.addEventListener('resize', offsets);
 
-    // ------------------------------------------------------------------ folding
     function fold(section, open) {
         if (!section) { return; }
         section.classList.toggle('is-closed', !open);
@@ -69,7 +56,6 @@
         }
     });
 
-    // ------------------------------------------------------------------ the sections bar: glide to a section, light the one on screen
     var quietUntil = 0;
     function setActive(key) {
         links.forEach(function (link) {
@@ -91,7 +77,7 @@
         quietUntil = Date.now() + (smooth ? 900 : 120);
         setActive(key);
         section.scrollIntoView({ behavior: smooth && !still ? 'smooth' : 'auto', block: 'start' });
-        try { history.replaceState(null, '', '#' + key); } catch (e) { /* ignore */ }
+        try { history.replaceState(null, '', '#' + key); } catch (e) { }
     }
     links.forEach(function (link) {
         link.addEventListener('click', function (event) {
@@ -116,12 +102,9 @@
     }, { passive: true });
     window.addEventListener('scrollend', function () { quietUntil = 0; spy(); });
 
-    // a link to one section (#price, #sec-price — also the old tabs' addresses)
     var start = (window.location.hash || '').replace('#', '').replace(/^sec-/, '');
     if (start && byKey(start)) { window.setTimeout(function () { goTo(start, false); }, 80); } else { spy(); }
 
-// ── unit-form.js · جزء 2 من 3: الحقول اللي محتاجة مراجعة (المصدر: resources/js/shary-admin/unit-form/02-fields-to-check.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ the fields to look at: open their section, count them
     function sectionOf(field) { return field && field.closest ? field.closest('.sx-unit-sec') : null; }
     function recount() {
         sections.forEach(function (section) {
@@ -154,7 +137,6 @@
     }
     form.addEventListener('input', clearMark, true);
     form.addEventListener('change', clearMark, true);
-    // what the server sent back (the form came back after a mistake): mark the fields, open their sections
     var sent = [];
     try { sent = JSON.parse(form.getAttribute('data-errors') || '[]') || []; } catch (e) { sent = []; }
     var firstBad = null;
@@ -175,8 +157,6 @@
         }
     }
 
-// ── unit-form.js · جزء 3 من 3: المسودات والحفظ (المصدر: resources/js/shary-admin/unit-form/03-drafts.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ «المسودات»: the form saves itself
     var url = form.getAttribute('data-autosave');
     var statusBox = form.querySelector('[data-draft-status]');
     var statusText = statusBox ? statusBox.querySelector('[data-draft-status-text]') : null;
@@ -211,7 +191,7 @@
     function syncEditors() {
         if (!window.CKEDITOR || !window.CKEDITOR.instances) { return; }
         Object.keys(window.CKEDITOR.instances).forEach(function (name) {
-            try { window.CKEDITOR.instances[name].updateElement(); } catch (e) { /* ignore */ }
+            try { window.CKEDITOR.instances[name].updateElement(); } catch (e) { }
         });
     }
     function picked() {
@@ -332,7 +312,6 @@
         return inflight;
     }
 
-    // what counts as a change: typing, choosing, the lists and editors, adding / removing rows, a file picked or taken out
     form.addEventListener('input', function (event) { if (event.target && event.target.type !== 'file') { changed(); } }, true);
     form.addEventListener('change', function (event) {
         if (event.target && event.target.type === 'file') { changed(); schedule(800); return; }
@@ -367,7 +346,6 @@
         var wait = window.setInterval(function () { if (hookEditors() || ++tries > 60) { window.clearInterval(wait); } }, 250);
     }
 
-    // «حفظ كمسودة»: save now, stay on the page (without a script the button sends the form to the drafts' own address)
     var draftButton = form.querySelector('[data-draft-save]');
     if (draftButton) {
         draftButton.addEventListener('click', function (event) {
@@ -378,7 +356,6 @@
     }
     if (retry) { retry.addEventListener('click', function () { save(true); }); }
 
-    // «حفظ»: the photos still on their way to the draft finish first, so they go with the unit (and only once)
     form.addEventListener('submit', function (event) {
         var submitter = event.submitter;
         if (submitter && submitter.hasAttribute && submitter.hasAttribute('data-draft-save')) { return; }
@@ -396,10 +373,9 @@
         window.clearTimeout(timer);
     });
 
-    // leaving the page with changes not saved yet: one last save (no files), and the browser asks first
     window.addEventListener('pagehide', function () {
         if (!dirty || leaving || finished || !navigator.sendBeacon) { return; }
-        try { navigator.sendBeacon(url, build(false).body); dirty = false; } catch (e) { /* ignore */ }
+        try { navigator.sendBeacon(url, build(false).body); dirty = false; } catch (e) { }
     });
     window.addEventListener('beforeunload', function (event) {
         if (!dirty || leaving || finished) { return; }

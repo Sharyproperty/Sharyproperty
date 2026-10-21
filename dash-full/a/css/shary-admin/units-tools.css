@@ -1,7 +1,9 @@
 /*
- * Shary dashboard — the units manager's tools: the unit form on one page (sections, the sections bar, the save bar),
- * «المسودات» (the drafts screen, the draft notes, the photos kept in a draft) and the review of a units sheet before saving.
- * Loaded by resources/views/shary_admin/units/tools-assets.blade.php. Works with the dashboard shell (body.sx) and without it.
+ * Units manager tools: the single-page unit form (sections, sections bar, save bar), the Drafts screen (draft notes,
+ * photos kept in a draft) and the review of a units sheet before saving.
+ *
+ * Loaded by resources/views/shary_admin/units/tools-assets.blade.php; works with or without the dashboard shell
+ * (body.sx).
  */
 :root {
     --ut-navy: #123a5c; --ut-ink: #1e4166; --ut-blue: #1f63c6; --ut-teal: #17734f; --ut-gold: #b7791f; --ut-red: #b3261e;
@@ -254,7 +256,7 @@ textarea.sx-rv-input { min-height: 36px; resize: vertical; line-height: 1.6; }
     .sx-unit-sec__hint { display: none; }
     .sx-unit-savebar, .sx-rv-savebar { padding: 10px; gap: 8px; }
     .sx-unit-savebar .btn, .sx-rv-savebar .btn { flex: 1 1 auto; }
-    /* the state takes its own line under the buttons; «حاول تاني» sits next to it (the buttons keep their line) */
+    /* The status takes its own line under the buttons; Try again sits next to it and the buttons keep their line. */
     .sx-unit-status { flex: 1 1 200px; justify-content: center; order: 3; }
     .sx-unit-savebar .sx-unit-retry, .sx-rv-savebar .sx-unit-retry { flex: 0 0 auto; order: 3; min-height: 36px; }
     .sx-unit-cancel, .sx-rv-savebar .btn-cancel { margin-inline-start: 0; }
@@ -265,11 +267,17 @@ textarea.sx-rv-input { min-height: 36px; resize: vertical; line-height: 1.6; }
     .sx-rv-intro .sx-rv-publish { display: flex; flex-direction: column; align-items: stretch; gap: 4px; width: 100%; white-space: normal; }
     .sx-rv-intro .sx-rv-publish select { width: 100%; }
     .sx-rv-savebar .sx-rv-later { display: none !important; }
-    /* «احفظ الوحدات الجاهزة» and «حفظ كمسودة» share one line, the state under them: the bar stays short and the sheet keeps the screen */
+    /*
+     * Save the ready units and Save as draft share one line with the status under them: the bar stays short and the
+     * sheet keeps the screen.
+     */
     .sx-rv-savebar form { flex: 1 1 0; min-width: 0; }
     .sx-rv-savebar form .btn { width: 100%; padding-inline: 10px; white-space: normal; line-height: 1.35; }
     .sx-rv-savebar .sx-unit-draftbtn { flex: 0 0 auto; padding-inline: 12px; }
-    /* the sheet's own box ends above the save bar, and a cell that gets the focus (typing, «قايمة الأخطاء») is never left under the bars */
+    /*
+     * The sheet's scroll box ends above the save bar, and a focused cell (typing, List of errors) is never left under
+     * the bars.
+     */
     .sx-rv-scroll { max-height: calc(100vh - 240px); scroll-padding: 44px 8px 8px; }
     html:has(.sx-rv-savebar) { scroll-padding-top: 72px; scroll-padding-bottom: 190px; }
     html:has(.sx-unit-savebar) { scroll-padding-bottom: 140px; }

@@ -1,27 +1,3 @@
-// ── editor.js · جزء 1 من 5: ربط أدوات المحرر بـ CKEditor (المصدر: resources/js/shary-admin/editor/01-setup.js — عدّل هنا وشغّل tools/minify-assets.sh)
-/*
- | Shary dashboard — writing tools for EVERY rich-text box (CKEditor 4) of the dashboard: articles, projects, units, areas, developers …
- |
- | Adds to the editor toolbar:
- |   زرار تواصل   inserts a call-to-action block in the middle of the text ([shary-cta], form, channels, project / area card)
- |   لينك داخلي   search projects / areas / developers / articles / search pages and link the selected words to one of them
- |   معاينة       shows the text exactly as the website prints it (desktop / mobile)
- | a row of the blocks the website's articles are made of (the same markup as the approved article design):
- |   كروت        a project card / an area card / "units of an area" links / "اقرأ كمان" (another article) — [shary-project] [shary-area] [shary-units] [shary-article]
- |   زرار لينك   a wide link button to any page of the site or any address (a.article-cta)
- |   لينك خارجي  the selected words link to another website (opens in a new tab)
- |   ملاحظة      the paragraph becomes a note box (p.article-note)
- |   أماكن       a "where to go" list: a title, the places (each with its link if any) and a line under it (figure.article-places)
- | and a row of plain-named writing buttons for a beginner (no icons to guess):
- |   عنوان رئيسي (h2) · عنوان فرعي (h3) · نص عادي · نقط · أرقام · نقط بسهم (ul.shary-arrows) · خط فاصل (hr) · مسافة (p.shary-space)
- |   and quick symbols: ،  ؟  —  •  ←
- | The editor library itself is served from the site (public/vendor/shary-editor — CKEditor 4.22.1 standard, open source) when
- | SharyEditorConfig.localEditor is set, so no screen depends on an outside CDN; the CDN line of the old screens then does nothing.
- | and gives the writer free hands: headings (H2 / H3 / H4), text size, tables, images (upload), alignment.
- |
- | Loaded on every dashboard page by resources/views/shary_admin/partials/editor-loader.blade.php (window.SharyEditorConfig = urls + labels).
- | It hooks CKEditor the moment the library is loaded, so the existing forms get the tools without being edited.
- */
 (function () {
     'use strict';
     if (window.__sharyEditorTools) { return; }
@@ -30,34 +6,25 @@
     var CFG = window.SharyEditorConfig || {};
     var L = CFG.labels || {};
     var FONT_SIZES = '14/14px;16/16px;18/18px;20/20px;24/24px;28/28px;32/32px';
-    // [button, command, label key, fallback label]
     var WRITE = [['SharyH2', 'sharyH2', 'w_h2', 'Heading'], ['SharyH3', 'sharyH3', 'w_h3', 'Sub-heading'], ['SharyP', 'sharyP', 'w_p', 'Text'], ['SharyBullets', 'sharyBullets', 'w_bullets', 'Bullets'],
         ['SharyNumbers', 'sharyNumbers', 'w_numbers', 'Numbers'], ['SharyArrows', 'sharyArrows', 'w_arrows', 'Arrows'], ['SharyLine', 'sharyLine', 'w_line', 'Line'], ['SharySpace', 'sharySpace', 'w_space', 'Space']];
     var SYMBOLS = ['،', '؟', '—', '•', '←'];
-    // the blocks of the website's articles: [button, command, label key, fallback label]
     var BLOCKS = [['SharyCards', 'sharyCards', 'b_cards', 'Cards'], ['SharyButton', 'sharyButton', 'b_button', 'Link button'], ['SharyExternal', 'sharyExternal', 'b_external', 'External link'],
         ['SharyNote', 'sharyNote', 'b_note', 'Note'], ['SharyPlaces', 'sharyPlaces', 'b_places', 'Places']];
 
-    // ------------------------------------------------------------------ hook CKEditor
     function setup(CK) {
         if (!CK || CK.__sharyTools || !CK.plugins || !CK.plugins.add || !CK.on) { return false; }
         CK.__sharyTools = true;
 
-        // Older list screens start an editor on every "description" box of every pop-up, all with the same name (desc_ar, desc_en …).
-        // The editor names its parts after the box, so boxes sharing a name fight over the same parts and the later ones break.
-        // Each such box gets its own id first — the name the form sends is not touched.
         try {
             var plainReplace = CK.replace, boxCount = 0;
             CK.replace = function (target, config) {
                 try {
-                    // a box that already has its editor (the screen asked twice): hand back the same editor instead of breaking
                     if (target && typeof target !== 'string' && target.tagName === 'TEXTAREA') {
                         for (var key in CK.instances) {
                             if (CK.instances[key] && CK.instances[key].element && CK.instances[key].element.$ === target) { return CK.instances[key]; }
                         }
                     }
-                    // a box inside the edit pop-up of a table row (old list screens): the table moves the rows of its other pages out of the page,
-                    // and an editor started there breaks (its pop-up then can't be written in). Such an editor starts when its pop-up opens.
                     if (target && typeof target !== 'string' && target.tagName === 'TEXTAREA' && !target.__sxLazy && target.closest) {
                         var rowModal = target.closest('.modal');
                         if (rowModal && rowModal.closest('table') && !rowModal.classList.contains('show')) {
@@ -84,17 +51,14 @@
             };
         } catch (error) {}
 
-        // text size: the "font" plugin is not part of the standard build — load it from the same CDN version
         var hasFont = false;
         try {
-            // which copy of the editor is really running? (an older screen may have loaded its own copy before this file)
             var base = String(CK.basePath || '');
             var localBase = String(CFG.localBase || '');
-            if (localBase) { try { var probe = document.createElement('a'); probe.href = localBase; localBase = probe.href; } catch (error) {} }   // a full address, whatever form the page gave
+            if (localBase) { try { var probe = document.createElement('a'); probe.href = localBase; localBase = probe.href; } catch (error) {} }
             if (CFG.localEditor && localBase && base.indexOf(localBase) === 0) {
-                hasFont = true;      // the local build carries "font" and "justify" in its own plugins folder
+                hasFont = true;
             } else if (localBase && CK.plugins.addExternal) {
-                // another copy is running (a CDN "standard" build has no font / justify): take the two plugins from the site's own folder
                 CK.plugins.addExternal('font', localBase + 'plugins/font/', 'plugin.js');
                 CK.plugins.addExternal('justify', localBase + 'plugins/justify/', 'plugin.js');
                 hasFont = true;
@@ -115,7 +79,6 @@
                 editor.addCommand('sharyButton', { exec: function (target) { openButton(target); } });
                 editor.addCommand('sharyExternal', { exec: function (target) { openExternal(target); } });
                 editor.addCommand('sharyPlaces', { exec: function (target) { openPlaces(target); } });
-                // plain-named writing buttons
                 var snap = function (target, run) { target.focus(); target.fire('saveSnapshot'); run(); setTimeout(function () { target.fire('saveSnapshot'); }, 0); };
                 var block = function (tag) {
                     return { exec: function (target) {
@@ -142,7 +105,6 @@
                         if (list) { list.addClass('shary-arrows'); }
                     });
                 } });
-                // ملاحظة: the paragraph under the cursor becomes a note box (again = back to a plain paragraph)
                 editor.addCommand('sharyNote', { exec: function (target) {
                     snap(target, function () {
                         var path = target.elementPath();
@@ -183,11 +145,9 @@
                 var config = editor.config;
                 var add = function (key, value, separator) { config[key] = config[key] ? config[key] + separator + value : value; };
                 add('extraPlugins', 'sharytools' + (hasFont ? ',font,justify' : ''), ',');
-                // free writing: headings the page can style (the page title is the only H1), sizes, classes of the inserted blocks
                 config.format_tags = 'p;h2;h3;h4';
                 config.fontSize_sizes = FONT_SIZES;
                 add('extraAllowedContent', 'ul(shary-arrows);p(shary-space);hr;p(shary-shortcode);span{font-size,color};p h2 h3 h4{text-align};a[!href,target,rel,title];img[!src,alt,width,height]{width,height,float};table tr td th thead tbody[*]{*}', ';');
-                // the blocks of the article design: note box, wide link button, places list, live index values in tables
                 add('extraAllowedContent', 'p(article-note);a(article-cta)[!href,target,rel];figure(article-places)[id];div(article-places__box,article-places__title,article-places__list);figcaption;span(article-index,article-change)[data-index,dir]', ';');
                 add('removeButtons', 'Font', ',');
                 var group = { name: 'shary', items: ['SharyCta', 'SharyVideo', 'SharyLink', 'SharyPreview'] };
@@ -214,7 +174,6 @@
                 }
                 if (!config.height || parseInt(config.height, 10) < 320) {
                     var area = editor.element && editor.element.$;
-                    // long texts (articles, descriptions) get a tall box; small repeater boxes keep their size
                     if (area && !/shary-editor-lazy/.test(area.className || '') && !(area.getAttribute('data-height'))) { config.height = 420; }
                 }
             });
@@ -223,7 +182,6 @@
         return true;
     }
 
-    // CKEditor is loaded by each page after this file: set up the moment window.CKEDITOR is assigned (before any CKEDITOR.replace runs)
     if (!setup(window.CKEDITOR)) {
         var current = window.CKEDITOR;
         try {
@@ -233,7 +191,7 @@
                 get: function () { return current; },
                 set: function (value) {
                     current = value;
-                    if (!setup(value)) { Promise.resolve().then(function () { setup(current); }); }   // runs right after ckeditor.js, before the next <script>
+                    if (!setup(value)) { Promise.resolve().then(function () { setup(current); }); }
                 }
             });
         } catch (error) {
@@ -242,14 +200,11 @@
         }
     }
 
-// ── editor.js · جزء 2 من 5: مساعدات: النافذة والبحث (المصدر: resources/js/shary-admin/editor/02-helpers.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ helpers
     function escapeHtml(value) {
         return String(value == null ? '' : value).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
     function attr(value) { return String(value == null ? '' : value).replace(/["\[\]]/g, "'").replace(/\s+/g, ' ').trim(); }
 
-    /** ar | en — from the box itself (data-shary-lang, name ending _ar / _en / [ar]) or the dashboard language */
     function langOf(editor) {
         var area = editor.element && editor.element.$;
         var name = area ? (area.getAttribute('data-shary-lang') || area.name || area.id || '') : '';
@@ -285,7 +240,6 @@
         return fetch(url, options);
     }
 
-    /** live search list: input[data-q] → results in [data-results]; onPick(item) */
     function search(box, lang, types, onPick) {
         var input = box.querySelector('[data-q]');
         var list = box.querySelector('[data-results]');
@@ -326,8 +280,6 @@
             .map(function (key) { return '<option value="' + key + '">' + escapeHtml(types[key]) + '</option>'; }).join('');
     }
 
-// ── editor.js · جزء 3 من 5: زرار التواصل والفيديو واللينك الداخلي (المصدر: resources/js/shary-admin/editor/03-cta-video-link.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ 1) call-to-action block
     function openCta(editor) {
         var lang = langOf(editor);
         var box = open(L.cta_title || 'CTA',
@@ -377,7 +329,6 @@
         show();
     }
 
-    // ------------------------------------------------------------------ 1-b) a video by its link (YouTube / TikTok / Facebook / Instagram …): a card that opens the video where it is
     function openVideo(editor) {
         var lang = langOf(editor);
         var box = open(L.video_title || 'Video',
@@ -399,7 +350,6 @@
         });
     }
 
-    // ------------------------------------------------------------------ 2) internal link
     function openLink(editor) {
         var lang = langOf(editor);
         var selection = editor.getSelection();
@@ -415,8 +365,6 @@
         });
     }
 
-// ── editor.js · جزء 4 من 5: بلوكات الموقع: الكروت والزرار واللينك الخارجي والأماكن (المصدر: resources/js/shary-admin/editor/04-site-blocks.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ 2-b) the blocks of the website's articles
     function dirOf(lang) { return lang === 'ar' ? 'rtl' : 'ltr'; }
     function selectedText(editor) { var selection = editor.getSelection(); return selection ? (selection.getSelectedText() || '') : ''; }
     function insertBlock(editor, html) { editor.focus(); editor.fire('saveSnapshot'); editor.insertHtml(html); editor.fire('saveSnapshot'); close(); }
@@ -426,7 +374,6 @@
         try { var host = new URL(url).hostname.replace(/^www\./, ''); return host !== location.hostname.replace(/^www\./, '') && host !== 'shary.eg'; } catch (error) { return true; }
     }
 
-    // كروت: a project card · an area card · "units of an area" links · "اقرأ كمان" (another article) — the website draws them from the live data
     function openCards(editor) {
         var lang = langOf(editor);
         var kinds = ['project', 'area', 'units', 'article'];
@@ -446,7 +393,6 @@
         box.querySelectorAll('input[name="shary_ed_card"]').forEach(function (radio) { radio.addEventListener('change', function () { run(); }); });
     }
 
-    // زرار لينك: a wide button to a page of the site (searched) or to any address
     function openButton(editor) {
         var lang = langOf(editor);
         var box = open(L.button_title || 'Link button',
@@ -461,7 +407,6 @@
             insertBlock(editor, '<p><a href="' + escapeHtml(url) + '" class="article-cta"' + (external(url) ? ' target="_blank" rel="noopener"' : '') + '>' + escapeHtml(text) + '</a></p><p>&nbsp;</p>');
         }
         search(box, lang, '', function (item) { insert(item.url, item.label); });
-        // the first thing to write is the button's words (the search box takes the focus otherwise)
         var words = box.querySelector('[data-text]');
         if (!words.value) { setTimeout(function () { words.focus(); }, 60); }
         box.querySelector('[data-insert]').addEventListener('click', function () {
@@ -472,7 +417,6 @@
         });
     }
 
-    // لينك خارجي: the selected words link to another website (a new tab)
     function openExternal(editor) {
         var lang = langOf(editor);
         var selected = selectedText(editor);
@@ -493,7 +437,6 @@
         });
     }
 
-    // أماكن: "where to go in …" — a title, the places (each with its link if any), a line under the list
     function openPlaces(editor) {
         var lang = langOf(editor);
         var box = open(L.places_title || 'Places',
@@ -521,8 +464,6 @@
         });
     }
 
-// ── editor.js · جزء 5 من 5: المعاينة زي الموقع (المصدر: resources/js/shary-admin/editor/05-preview.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ 3) preview as the website shows it
     function openPreview(editor) {
         var box = open(L.preview_title || 'Preview',
             '<div class="shary-ed__bar"><button type="button" class="btn btn-sm btn-primary" data-width="100%">' + escapeHtml(L.desktop || 'Desktop') + '</button>' +

@@ -1,7 +1,9 @@
 /*
- * «شاري معاك» — the few things the section needs on top of the dashboard shell (shell.css draws everything else:
- * cards, tables, forms, buttons, badges, tabs, modals). Same tokens (--sx-*), scoped to body.sx.
- * Loaded once by resources/views/shary_admin/ma3ak/partials/head.blade.php.
+ * Shary Ma3ak: the few rules this section needs on top of the dashboard shell (shell.css draws cards, tables, forms,
+ * buttons, badges, tabs and modals).
+ *
+ * Uses the shell tokens (--sx-*), scoped to body.sx. Loaded once by
+ * resources/views/shary_admin/ma3ak/partials/head.blade.php.
  */
 
 /* a button inside a small form, beside others (table actions, side cards) */
@@ -175,7 +177,10 @@ body.sx .ma3ak-place-add .btn { margin-bottom: 4px; }
     body.sx .page-wrapper table.table:not(.sx-stack) > tbody > tr:only-child > td[colspan] { white-space: normal !important; padding-inline: 4px !important; }
 }
 
-/* «اختار من الوحدات»: the unit's picture in its row, the add bar stays at the bottom of the screen while the list is scrolled */
+/*
+ * Pick from the units: the unit's picture in its row; the add bar stays at the bottom of the screen while the list
+ * scrolls.
+ */
 .ma3ak-pick-thumb { width: 56px; height: 42px; object-fit: cover; border-radius: 8px; border: 1px solid #dfe6ee; float: inline-start; margin-inline-end: 8px; }
 .ma3ak-pick-add { position: sticky; bottom: 0; z-index: 20; border: 2px solid #1D5FD1 !important; box-shadow: 0 -6px 18px rgba(16, 38, 63, .12); }
 .ma3ak-pick-add .card-body { padding: 12px 16px; }
@@ -187,7 +192,7 @@ body.sx .ma3ak-place-add .btn { margin-bottom: 4px; }
     .ma3ak-pick-add .btn { padding-block: 6px; }
 }
 
-/* «الوحدات حسب الهدف» (the opportunities screen): what the daily ranking does, its numbers and its two buttons */
+/* Units by goal (the opportunities screen): what the daily ranking does, its figures and its two buttons. */
 body.sx .ma3ak-auto { border-inline-start: 4px solid var(--sx-navy); }
 body.sx .ma3ak-auto__row { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px; }
 body.sx .ma3ak-auto__text { flex: 1 1 520px; min-width: 0; }
@@ -201,10 +206,10 @@ body.sx .ma3ak-auto__buttons { display: flex; flex-wrap: wrap; gap: 8px; }
 /* a long note inside a choice («Needs a payment gateway connected by the developer») wraps instead of pushing the page sideways */
 body.sx .ma3ak-check .badges, body.sx .ma3ak-check .badge { white-space: normal; text-align: start; line-height: 1.5; }
 body.sx .ma3ak-auto__buttons .btn-link.ma3ak-auto__optin { padding-inline: 4px; font-weight: 800; color: var(--sx-navy); text-decoration: underline; }
-/* «الأنسب للهدف» in «اختار من الوحدات»: the fit and its reasons under the unit's name */
+/* Best for the goal, inside Pick from the units: the fit and its reasons under the unit name. */
 body.sx .ma3ak-fit .badge { margin-inline-end: 4px; }
 
-/* ---------------------------------------------------------------- «تأثير شاري» (resources/views/shary_admin/impact) */
+/* Shary Impact (resources/views/shary_admin/impact). */
 body.sx .impact-thumb { width: 64px; height: 46px; object-fit: cover; border-radius: 10px; border: 1px solid var(--sx-line); }
 body.sx .impact-initial { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #e8f6f4; color: #1b9c8d; font-weight: 800; font-size: 17px; }
 body.sx .impact-parts td { vertical-align: middle; }
@@ -231,7 +236,7 @@ body.sx .impact-bar { display: inline-block; width: 120px; max-width: 100%; heig
 body.sx .impact-bar > span { display: block; height: 100%; background: #3fc9be; }
 body.sx .impact-chip { margin: 2px; white-space: normal; }
 
-/* «اختار من الوحدات»: the smart search box · «المحفوظ تحت الهدف» · unit-type chips · tick all / none */
+/* Pick from the units: the smart search box, units saved under the goal, unit-type chips, tick all / none. */
 body.sx .ma3ak-smart { border: 2px solid var(--sx-navy); }
 body.sx .page-wrapper .ma3ak-smart__label { display: block; margin: 0 0 8px; font-size: 16px; font-weight: 800; color: var(--sx-navy); }
 body.sx .ma3ak-smart__box { position: relative; }

@@ -1,15 +1,3 @@
-/*
- * «شاري معاك» — small behaviour of the section's screens (no library; SweetAlert is used when the dashboard template has it).
- *   1 a question before a decision: <form data-ma3ak-confirm="…"> or <button data-ma3ak-confirm="…"> (money, and what cannot be undone)
- *   2 a form is sent once: its buttons are switched off while it is being sent (no double payment by a double click)
- *   3 parts of a form shown for one choice only: <div data-ma3ak-when="field_name=value1,value2">
- *   4 rows added / removed in a form: data-ma3ak-repeater · data-ma3ak-rows · data-ma3ak-row · <template> with __i__ · data-ma3ak-add · data-ma3ak-remove
- *   5 copy a text: data-ma3ak-copy="…"      6 a chosen picture shows at once: <input type="file" data-ma3ak-preview="#img-id">
- *   7 tick rows and add them («اختار من الوحدات»): <form data-ma3ak-pick> · row boxes data-ma3ak-pick-row (form="…") · data-ma3ak-pick-all · data-ma3ak-pick-count
- *     + «علّم الكل» / «شيل التعليم»: data-ma3ak-pick-mark="all|none" (every data-ma3ak-pick-count on the page shows the ticked count)
- *   8 the smart search box: <div data-ma3ak-suggest="JSON url" data-ma3ak-suggest-url="pick url" data-ma3ak-suggest-texts='{…}'> + input + [data-ma3ak-suggest-menu]
- * Loaded once by resources/views/shary_admin/ma3ak/partials/head.blade.php (texts: window.SharyMa3ak).
- */
 (function () {
     'use strict';
     var T = window.SharyMa3ak || {};
@@ -33,11 +21,9 @@
 
     function lock(form) {
         Array.prototype.forEach.call(form.querySelectorAll('button[type=submit], input[type=submit]'), function (button) { button.disabled = true; });
-        // a form whose page is kept by the browser's back button comes back usable
         window.addEventListener('pageshow', function () { Array.prototype.forEach.call(form.querySelectorAll('button[type=submit], input[type=submit]'), function (button) { button.disabled = false; }); }, { once: true });
     }
 
-    // ---- 1 + 2
     doc.addEventListener('submit', function (event) {
         var form = event.target;
         if (!form || form.tagName !== 'FORM' || !form.closest('.page-wrapper, .modal')) { return; }
@@ -47,7 +33,6 @@
         var asked = form.__ma3akAsked === true;
         form.__ma3akAsked = false;
         if (!question || asked) {
-            // sent: a confirmed decision (or a form marked data-ma3ak-once) cannot be sent a second time by a double click
             if (asked || question || form.hasAttribute('data-ma3ak-once')) { form.__ma3akSending = true; setTimeout(function () { lock(form); }, 0); }
             return;
         }
@@ -56,7 +41,6 @@
             if (!yes) { return; }
             form.__ma3akAsked = true;
             if (submitter && submitter.name) {
-                // keep the clicked button's own value (requestSubmit is not everywhere)
                 var keep = doc.createElement('input');
                 keep.type = 'hidden';
                 keep.name = submitter.name;
@@ -73,7 +57,6 @@
         });
     }, true);
 
-    // ---- 3
     function field(form, name) {
         var all = form ? form.querySelectorAll('[name="' + name + '"]') : [];
         for (var i = 0; i < all.length; i++) {
@@ -100,11 +83,6 @@
     doc.addEventListener('input', function (event) { if (event.target && event.target.type === 'radio') { when(); } });
     if (doc.readyState === 'loading') { doc.addEventListener('DOMContentLoaded', when); } else { when(); }
 
-    // ---- 4 rows added and removed in a form (payment plan, images, package blocks …)
-    //   <div data-ma3ak-repeater data-next="3" data-max="60">
-    //     <div data-ma3ak-rows> <div data-ma3ak-row> … <button type="button" data-ma3ak-remove> </div> … </div>
-    //     <template> one row, with __i__ where the row number goes </template>
-    //     <button type="button" data-ma3ak-add>
     doc.addEventListener('click', function (event) {
         var add = event.target.closest ? event.target.closest('[data-ma3ak-add]') : null;
         if (add) {
@@ -133,7 +111,6 @@
             if (row) { row.parentNode.removeChild(row); }
             return;
         }
-        // ---- 5 copy a text: <button type="button" data-ma3ak-copy="text" data-ma3ak-copied="Copied">
         var copy = event.target.closest ? event.target.closest('[data-ma3ak-copy]') : null;
         if (copy && navigator.clipboard && navigator.clipboard.writeText) {
             event.preventDefault();
@@ -145,7 +122,6 @@
         }
     });
 
-    // ---- 6 a picture chosen in a file field shows at once: <input type="file" data-ma3ak-preview="#img-id">
     doc.addEventListener('change', function (event) {
         var input = event.target;
         if (!input || !input.matches || !input.matches('input[type=file][data-ma3ak-preview]') || !input.files || !input.files[0]) { return; }
@@ -153,7 +129,6 @@
         if (image && /^image\//.test(input.files[0].type)) { image.src = URL.createObjectURL(input.files[0]); image.hidden = false; }
     });
 
-    // ---- 7 tick units and add them: nothing is sent without a ticked row and a goal
     var pick = doc.querySelector('form[data-ma3ak-pick]');
     if (pick) {
         var pickRows = function () { return Array.prototype.slice.call(doc.querySelectorAll('[data-ma3ak-pick-row]')); };
@@ -186,7 +161,6 @@
         pickRefresh();
     }
 
-    // ---- 8 the smart search box: projects / developers / units as you type; a choice opens the list on it
     var smart = doc.querySelector('[data-ma3ak-suggest]');
     if (smart) {
         var smartInput = smart.querySelector('input');

@@ -1,7 +1,3 @@
-/**
- * لوحة التحكم: نافذة البحث / القايمة الجانبية على الموبايل
- * الصفحة: resources/views/shary_admin/shell/sheet.blade.php
- */
 (function () {
     var form = document.getElementById('sx-sheet');
     var find = document.getElementById('sx-sheet-find');
@@ -15,7 +11,7 @@
     var syncKind = function () {
         var kind = (form.querySelector('input[name=sheet_kind]:checked') || {}).value || 'developer';
         if (dl) dl.href = dl.getAttribute('data-base') + '?kind=' + kind;
-        if (addedBox) addedBox.hidden = kind === 'rent';     // الأعمدة الجديدة في آخر الشيت القديم: مالهاش لازمة لشيت الإيجار
+        if (addedBox) addedBox.hidden = kind === 'rent';
     };
     form.addEventListener('change', function (event) { if (event.target.name === 'sheet_kind') syncKind(); });
     syncKind();
@@ -26,7 +22,6 @@
         none.hidden = shown > 0;
     });
     var say = function (text, kind) { message.textContent = text; message.className = 'alert alert-' + kind; message.hidden = false; };
-    // نفس رفع صفحة وحدات المشروع القديمة: الملف بيروح على create-excel-unit والوحدات بتتضاف على طول
     form.addEventListener('submit', function (event) {
         event.preventDefault();
         open.hidden = true;

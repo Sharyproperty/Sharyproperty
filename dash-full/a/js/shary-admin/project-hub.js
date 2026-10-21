@@ -1,8 +1,3 @@
-/**
- * صفحة المشروع في لوحة التحكم: الأقسام ، الفحص ، الخرايط
- * الصفحة: resources/views/shary_admin/hub/show.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var checksUrl = CONF.checksUrl;
@@ -25,7 +20,6 @@
         if (f) { var sec = f.closest('[data-sec]'); var folded = sec.classList.toggle('is-folded'); f.textContent = folded ? 'افتح' : 'طيّ'; f.setAttribute('aria-expanded', folded ? 'false' : 'true'); if (!folded) load(sec); }
     });
 
-    // الأجزاء بتتحمل وإنت نازل (عشان الصفحة تفتح بسرعة)
     if ('IntersectionObserver' in window) {
         var io = new IntersectionObserver(function (entries) {
             entries.forEach(function (en) { if (en.isIntersecting) { load(en.target); io.unobserve(en.target); } });
@@ -33,7 +27,6 @@
         secs.forEach(function (sec) { io.observe(sec); });
     } else { secs.forEach(load); }
 
-    // الجزء المعروض دلوقتي يتعلّم في القايمة
     var tabs = document.querySelectorAll('[data-tabs] [data-tab]');
     function mark() {
         var current = secs[0];
@@ -42,7 +35,6 @@
     }
     window.addEventListener('scroll', mark, { passive: true }); mark();
 
-    // كل جزء طوله على قد محتواه — ولو فتح نافذة (تعديل / تأكيد) ياخد طول الشاشة عشان النافذة تبان
     function size(sec) {
         var frame = sec.querySelector('iframe'), doc;
         try { doc = frame.contentDocument; } catch (e) { return; }
@@ -66,13 +58,11 @@
             } catch (e) {}
             var key = sec.getAttribute('data-sec');
             if (key === 'map') kickMap(sec, frame);
-            if (first[key]) { refresh(); sync(sec); } else first[key] = true;      // أول تحميل مش حفظ
+            if (first[key]) { refresh(); sync(sec); } else first[key] = true;
         });
     });
     window.addEventListener('resize', function () { secs.forEach(size); });
 
-    // خرايط جوجل جوه جزء «مكان المشروع والماستر بلان»: الإطار بيكبر بعد ما الخريطة اتعملت ، فبنقول للخرايط تعيد رسم نفسها على المقاس الجديد.
-    // ولو جوجل ما حمّلش خالص بعد 12 ثانية: رسالة وزرار يفتح الجزء ده في صفحة لوحده (الخرايط بتشتغل هناك)
     function kickMap(sec, frame) {
         var win; try { win = frame.contentWindow; } catch (e) { return; }
         [600, 1500, 3000, 6000, 10000].forEach(function (ms) {
@@ -104,7 +94,6 @@
         }, 12000);
     }
 
-    // نفس الفورم مفتوح في جزئين (البيانات الأساسية + مكان الخريطة): لما واحد يتحفظ التاني يتحمّل من جديد عشان مايرجعش يكتب بيانات قديمة
     function path(frame) { try { return frame.contentWindow.location.pathname; } catch (e) { return ''; } }
     function sync(saved) {
         var p = path(saved.querySelector('iframe'));
@@ -115,7 +104,6 @@
         });
     }
 
-    // "الصفحة محتاجة إيه" بتتحدث بعد كل حفظ
     var list = document.querySelector('[data-checks]');
     function refresh() {
         if (!list) return;
@@ -141,7 +129,6 @@
                 });
             }).catch(function () {});
     }
-    // ---- حفظ موحّد
     var saveAll = document.querySelector('[data-save-all]');
     var note = document.querySelector('[data-dirty-note]');
     var saving = false;
@@ -169,9 +156,8 @@
         var mark = function (e) {
             var form = e.target && e.target.form ? e.target.form : (e.target && e.target.closest ? e.target.closest('form') : null);
             if (!form || (form.method || '').toLowerCase() !== 'post' || form.hasAttribute('data-shary-confirm')) return;
-            if (form.querySelector('input[name="delete"]')) return;   // فورم مسح — مايتبعتش مع الحفظ الموحّد
+            if (form.querySelector('input[name="delete"]')) return;
             form.setAttribute('data-sx-dirty', '1');
-            // الحقول اللي اتغيرت بس (عشان الدمج ما يرجّعش قيم قديمة)
             var names = (form.getAttribute('data-sx-changed') || '').split('|').filter(Boolean);
             if (e.target.name && names.indexOf(e.target.name) === -1) names.push(e.target.name);
             form.setAttribute('data-sx-changed', names.join('|'));
@@ -183,7 +169,6 @@
     }
     secs.forEach(function (sec) { sec.querySelector('iframe').addEventListener('load', function () { watch(sec); paintDirty(); }); });
 
-    // نفس الفورم مفتوح في جزئين (البيانات الأساسية + الخريطة): القيم المتعدلة في التاني بتتنقل للأول ويتبعت مرة واحدة
     function merge(list) {
         var byPath = {}, out = [];
         list.forEach(function (d) {
@@ -191,7 +176,6 @@
             if (!byPath[key]) { byPath[key] = d; out.push(d); return; }
             var main = byPath[key].form;
             var changed = (d.form.getAttribute('data-sx-changed') || '').split('|');
-            // الخريطة بتكتب في حقول مخفية (الحدود ، مكان الماستر بلان ، الإحداثيات) — دي بتتنقل دايماً
             ['lat', 'lng', 'address', 'bounds', 'coordinates', 'masterplan_corners'].forEach(function (n) { if (changed.indexOf(n) === -1) changed.push(n); });
             [].forEach.call(d.form.elements, function (el) {
                 if (changed.indexOf(el.name) === -1) return;
@@ -230,7 +214,6 @@
     });
     window.addEventListener('beforeunload', function (e) { if (!saving && dirtyForms().length) { e.preventDefault(); e.returnValue = ''; } });
 
-    // ---- المعاينة
     var preview = document.querySelector('[data-preview] iframe');
     function reloadPreview() { if (preview && preview.getAttribute('src')) preview.setAttribute('src', preview.getAttribute('data-src') + (preview.getAttribute('data-src').indexOf('?') === -1 ? '?' : '&') + 'sxp=' + Date.now()); }
     if (preview) {
@@ -243,7 +226,6 @@
 
     var start = new URLSearchParams(location.search).get('tab');
     if (start) {
-        // الأجزاء اللي فوق بتطول وهي بتتحمل — نرجع نظبط المكان لحد ما المستخدم يتحرك بنفسه
         var moved = false, auto = false;
         window.addEventListener('wheel', function () { moved = true; }, { passive: true });
         window.addEventListener('touchstart', function () { moved = true; }, { passive: true });

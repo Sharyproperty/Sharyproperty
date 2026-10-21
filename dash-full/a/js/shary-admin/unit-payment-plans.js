@@ -1,8 +1,3 @@
-/**
- * فورم الوحدة: خطط السداد (تواريخ العرض والخطة الأساسية)
- * الصفحة: resources/views/shary_admin/units/form.blade.php
- */
-// «خطط السداد»: تواريخ العرض بتظهر لما الخطة «عرض» ، و«اجعلها الأساسية» بتبدّل أرقام الخطة دي مع الخطة الأساسية (بتتحفظ مع الوحدة)
 (function () {
     function syncDates(scope) {
         scope.querySelectorAll('[data-plan-offer]').forEach(function (select) {

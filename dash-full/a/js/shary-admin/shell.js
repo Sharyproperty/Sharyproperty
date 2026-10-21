@@ -1,13 +1,3 @@
-// ── shell.js · جزء 1 من 6: الشرح وتوحيد الحروف والقايمة (المصدر: resources/js/shary-admin/shell/01-start-menu.js — عدّل هنا وشغّل tools/minify-assets.sh)
-/*
- * Shary dashboard shell — the behaviour of the one menu, the header search and the search box above every list.
- * No library is needed; when the old template's DataTables is on a table, the list search drives it.
- *
- *   1 menu (groups, phone drawer)      3 tables: sideways scroll, action buttons
- *   2 header search                    4 list search (rows in the browser · DataTables · the server with ?q=)
- *   5 choice lists: a search box inside every <select> (our own small list, or the template's select2 with its search switched on)
- *   6 pop-ups   7 required fields   8 every press gets an answer (pressed look on phones, «working…» spinner, the line on top — part 6)
- */
 (function () {
     'use strict';
     var cfg = window.SharyShell || {};
@@ -17,10 +7,9 @@
     var $$ = function (selector, root) { return Array.prototype.slice.call((root || doc).querySelectorAll(selector)); };
     var store = {
         get: function (key) { try { return window.localStorage.getItem(key); } catch (e) { return null; } },
-        set: function (key, value) { try { window.localStorage.setItem(key, value); } catch (e) { /* private mode */ } }
+        set: function (key, value) { try { window.localStorage.setItem(key, value); } catch (e) { } }
     };
 
-    /** Letters that are typed in more than one way are folded, so "اسكان" finds "إسكان" and "١٢" finds "12" */
     function fold(text) {
         return String(text == null ? '' : text).toLowerCase()
             .replace(/[ً-ْـ]/g, '')
@@ -40,7 +29,6 @@
     var ICON_SEARCH = '<circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/>';
     var ICON_X = '<path d="M6 6l12 12M18 6 6 18"/>';
 
-    // ------------------------------------------------------------------ 1 menu
     var side = $('[data-sx-side]');
     var shade = $('[data-sx-shade]');
     var burger = $('[data-sx-menu]');
@@ -97,8 +85,6 @@
         if (user && user.open && !user.contains(event.target)) { user.open = false; }
     });
 
-// ── shell.js · جزء 2 من 6: بحث الهيدر (المصدر: resources/js/shary-admin/shell/02-header-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ 2 header search
     var top = $('[data-sx-top]');
     var find = $('[data-sx-find]');
     if (find && cfg.search) {
@@ -197,8 +183,6 @@
         if (event.key === 'Escape' && side && side.classList.contains('is-open')) { drawer(false); }
     });
 
-// ── shell.js · جزء 3 من 6: الجداول (كروت على الموبايل) والبحث في القوايم والصور الناقصة (المصدر: resources/js/shary-admin/shell/03-tables-list-search.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ 3 tables
     var page = $('.page-wrapper') || $('.sx-page');
     var ACTIONS = [[/edit/i, T.actions_edit], [/delete|trash|close-circle/i, T.actions_delete], [/eye|view/i, T.actions_view], [/plus/i, T.actions_add]];
 
@@ -233,8 +217,6 @@
         });
     }
 
-    // On a phone a wide table is hard to read sideways: every row becomes a small card, each value under the name of its column.
-    // The table itself is untouched (same rows, same buttons) — only labels are added and the stylesheet does the rest below 700px.
     function label(table, row) {
         var heads = table.__sxHeads;
         if (!heads || row.classList.contains('sx-list__none')) { return; }
@@ -262,7 +244,6 @@
         });
     }
 
-    // ------------------------------------------------------------------ 4 list search
     function bodyRows(table) {
         var rows = [];
         Array.prototype.forEach.call(table.tBodies, function (body) {
@@ -273,15 +254,12 @@
     function wantsSearch(table) {
         if (table.closest('.modal, form .sx-no-search, .sx-no-search, .note-editor, .cke, .ag-detail') || table.classList.contains('sx-no-search') || table.classList.contains('ag-stack') || table.hasAttribute('data-sx-searched')) { return false; }
         if (!table.tHead && !$('th', table)) { return false; }
-        if (!table.offsetParent && !table.getClientRects().length) { return false; }   // inside a closed tab: it gets its box when the tab opens
+        if (!table.offsetParent && !table.getClientRects().length) { return false; }
         var rows = bodyRows(table);
         var paged = !!dataTable(table) || !!serverPager(table);
-        // every list gets its search box (even a short one: the box is where people look first) — only an empty table has none
         if (rows.length < 1 && !paged && !(cfg.serverList && cfg.q)) { return false; }
-        // a grid that is filled in (inputs in its rows) is a form, not a list
         if (rows[0] && $$('input:not([type=hidden]):not([type=checkbox]):not([type=radio]), select, textarea', rows[0]).some(function (field) { return !field.closest('.modal'); })) { return false; }
         var scope = table.closest('.card, .ag-card, .tab-pane, .content') || page;
-        // the screen already has its own search (a ?q= form, or the old screens' own search field): leave it alone
         var own = scope ? $$('input[name="q"], input[name="query"], input[name="search"], .search-set input, input[type="search"]', scope) : [];
         if (own.some(function (field) { return !field.closest('.dataTables_filter, .modal, .sx-list') && field.id !== 'sx-q'; })) { return false; }
         return true;
@@ -314,7 +292,6 @@
         count.setAttribute('aria-live', 'polite');
 
         if (server) {
-            // the list is split into pages by the server: the box asks the server (?q=), keeping the other filters of the address
             bar.method = 'get';
             bar.action = window.location.pathname;
             field.name = 'q';
@@ -369,7 +346,6 @@
             field.addEventListener('input', function () { clearTimeout(wait); wait = setTimeout(run, 120); });
             field.addEventListener('keydown', function (event) { if (event.key === 'Enter') { event.preventDefault(); run(); } });
             clear.addEventListener('click', function () { field.value = ''; run(); field.focus(); });
-            // a link from the header search ("…?q=name") opens the list already filtered
             var asked = new URLSearchParams(window.location.search).get('q');
             if (asked && !table.closest('.tab-pane:not(.active)')) { field.value = asked; setTimeout(run, 0); }
         }
@@ -385,7 +361,6 @@
         $$('table', page).forEach(function (table) { if (wantsSearch(table)) { addSearch(table); } });
     }
 
-    // a picture whose file is missing shows a quiet placeholder instead of a broken-image mark
     var BLANK = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 56"><rect width="72" height="56" rx="8" fill="#e8f0fb"/><path d="M22 38l9-10 7 7 5-5 8 8z" fill="#b9cbe2"/><circle cx="27" cy="21" r="4" fill="#b9cbe2"/></svg>');
     function blank(image) {
         if (image.getAttribute('data-sx-blank') || /^data:/.test(image.getAttribute('src') || '')) { return; }
@@ -406,7 +381,6 @@
         if (target && target.tagName === 'IMG' && page && page.contains(target)) { blank(target); }
     }, true);
 
-    // the hint "this screen controls …" goes right under the screen's own title
     (function hint() {
         var template = $('template[data-sx-hint]');
         var header = page && ($('.page-header', page) || $('.ag-head', page));
@@ -417,11 +391,6 @@
     })();
 
 
-// ── shell.js · جزء 4 من 6: قوايم الاختيار بالبحث (المصدر: resources/js/shary-admin/shell/04-choice-lists.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ 5 choice lists: a search box inside every list of choices
-    //   · lists the old template turns into "select2": its own search box is switched on (the template hides it)
-    //   · plain <select> lists: a small searchable list of our own (the <select> stays in the form and keeps its name, value and events)
-    //   opt out: <select data-sx-pick="off">   always (even with 2 choices): data-sx-pick="always"
     var RECORD = /area|city|country|developer|compound|project|unit_id|units|property_id|categor|blog|article|user|admin|owner|parent/i;
     var picks = [];
     var openPick = null;
@@ -433,7 +402,6 @@
             if (instance && instance.options && instance.options.options) {
                 var options = instance.options.options;
                 options.minimumResultsForSearch = 0;
-                // typing "اعمار" finds "إعمار" (the same folding as the other searches) — lists that ask the server keep their own search
                 if (!options.ajax && !options.__sxMatcher) {
                     options.__sxMatcher = true;
                     options.matcher = function (params, data) {
@@ -451,7 +419,7 @@
                 var dict = options.translations && options.translations.dict;
                 if (dict && T.pick_none) { dict.noResults = function () { return T.pick_none; }; }
             }
-        } catch (e) { /* another select2 build: its own search stays as it is */ }
+        } catch (e) { }
     }
     function hookSelect2() {
         if (!select2On() || window.jQuery.fn.select2.__sx) { return; }
@@ -474,7 +442,6 @@
         var mode = select.getAttribute('data-sx-pick');
         if (mode === 'off' || select.multiple || select.size > 1 || select.__sxPick) { return false; }
         if (select.classList.contains('select2-hidden-accessible') || select.closest('.dataTables_length, .cke, .note-editor, .sx-choice, .flatpickr-calendar, .ui-datepicker')) { return false; }
-        // the template turns these into select2 itself (their search is switched on above)
         if (select2On() && /(^|\s)(select|select2|js-example-basic-single)(\s|$)/.test(select.className)) { return false; }
         if (mode === 'always') { return true; }
         var count = 0;
@@ -571,7 +538,6 @@
         placePick(pick);
         var on = $('.sx-choice__item.is-on', pick.list);
         if (on) { on.scrollIntoView({ block: 'nearest' }); }
-        // on a phone the keyboard would cover a short list: the search takes the focus only when the list is long
         if (pick.select.options.length > 7 || window.innerWidth > 700) { pick.search.focus(); }
     }
     function makePick(select) {
@@ -637,7 +603,6 @@
             var item = event.target.closest('.sx-choice__item');
             if (item) { choosePick(pick, item.__sxOption); }
         });
-        // choices that arrive later (a project list filled after picking the area …) and values set by the page's own scripts
         if (window.MutationObserver) {
             pick.observer = new MutationObserver(function () { labelPick(pick); if (openPick === pick) { fillPick(pick, search.value); } });
             pick.observer.observe(select, { childList: true, subtree: true, attributes: true, attributeFilter: ['disabled', 'selected', 'label'] });
@@ -647,7 +612,6 @@
     }
     function choiceLists() {
         hookSelect2();
-        // the old screens' own search fields say "Search..." in every language
         if (T.list_search) { $$('.search-set input, input#search', page || doc.body).forEach(function (field) { if (/^search\.{0,3}$/i.test((field.placeholder || '').trim())) { field.placeholder = T.list_search; } }); }
         if (select2On()) { $$('select.select2-hidden-accessible').forEach(searchInSelect2); }
         $$('select', page || doc.body).forEach(function (select) { if (!select.__sxPick) { makePick(select); } });
@@ -657,7 +621,6 @@
     doc.addEventListener('touchstart', function (event) { if (openPick && !openPick.wrap.contains(event.target)) { closePick(); } }, { passive: true });
     window.addEventListener('resize', function () { if (openPick) { placePick(openPick); } });
     window.addEventListener('scroll', function (event) { if (openPick && !(event.target && openPick.panel.contains(event.target))) { placePick(openPick); } }, true);
-    // values the page's scripts set without an event ($(select).val(5)) and lists added by AJAX
     setInterval(function () {
         if (doc.hidden) { return; }
         picks.forEach(function (pick) {
@@ -669,11 +632,6 @@
     }, 600);
     doc.addEventListener('shown.bs.modal', function () { setTimeout(choiceLists, 30); setTimeout(markRequired, 30); });
 
-// ── shell.js · جزء 5 من 6: النوافذ والحقول المطلوبة (المصدر: resources/js/shary-admin/shell/05-popups-required.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ------------------------------------------------------------------ 6 pop-ups: lists and editors inside them work
-    //   · the template's select2 opens its list at the end of the page — under Bootstrap's pop-up layer: shell.css lifts an open list above it
-    //   · Bootstrap's pop-up pulls the focus back inside itself — the list's search box (and an editor's link window) could not be typed in:
-    //     the pop-ups do not hold the focus (data-bs-focus="false" — read when Bootstrap makes the pop-up, and set on one made already)
     function modalsLetGo() { $$('.modal').forEach(function (modal) { if (!modal.hasAttribute('data-bs-focus')) { modal.setAttribute('data-bs-focus', 'false'); } }); }
     modalsLetGo();
     doc.addEventListener('show.bs.modal', function (event) {
@@ -682,13 +640,9 @@
             var B = window.bootstrap;
             var instance = B && B.Modal && B.Modal.getInstance ? B.Modal.getInstance(event.target) : null;
             if (instance && instance._config) { instance._config.focus = false; }
-        } catch (e) { /* another Bootstrap build: its own behaviour */ }
+        } catch (e) { }
     }, true);
 
-    // ------------------------------------------------------------------ 7 required fields
-    //   · a red * next to the title of every required field (an * written in the title becomes the red one)
-    //   · saving with a required field empty: the field turns red with "this field is required" under it, and the screen goes to it —
-    //     even when it sits in a tab that is not open or in a closed part (the browser alone would just not save, without saying where)
     var SKIP = 'input[type=hidden], input[type=submit], input[type=button], input[type=reset], input[type=image]';
     function fieldBox(control) {
         return control.closest('.form-group, .input-blocks, .sx-field, .mb-3, .mb-2, .mb-4, [class*="col-"], td') || control.parentElement;
@@ -771,13 +725,11 @@
         toastTimer = setTimeout(function () { box.style.display = 'none'; }, 5000);
     }
     function revealField(control) {
-        // a tab that is not open: open it
         var pane = control.closest('.tab-pane');
         if (pane && !pane.classList.contains('active') && pane.id) {
             var trigger = $('[data-bs-toggle="tab"][href="#' + pane.id + '"], [data-bs-toggle="tab"][data-bs-target="#' + pane.id + '"], [data-bs-toggle="pill"][href="#' + pane.id + '"], [data-bs-toggle="pill"][data-bs-target="#' + pane.id + '"]');
             if (trigger) { trigger.click(); }
         }
-        // a closed part: open it
         var closed = control.closest('.collapse:not(.show)');
         if (closed && window.bootstrap && window.bootstrap.Collapse) { try { window.bootstrap.Collapse.getOrCreateInstance(closed).show(); } catch (e) { closed.classList.add('show'); } }
         setTimeout(function () {
@@ -785,7 +737,7 @@
             var seen = !!(target.offsetParent || target.getClientRects().length);
             if (seen) {
                 target.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                if (target === control && control.focus) { try { control.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+                if (target === control && control.focus) { try { control.focus({ preventScroll: true }); } catch (e) { } }
             }
             var label = titleOf(control);
             var name = label ? label.textContent.replace(/\*/g, '').replace(/\s+/g, ' ').trim() : '';
@@ -815,34 +767,21 @@
         modalsLetGo();
         markRequired();
     }
-    // after the template's own scripts (DataTables is created on document ready)
     if (doc.readyState === 'complete') { setTimeout(ready, 0); } else { window.addEventListener('load', function () { setTimeout(ready, 0); }); }
-    // screens that load a tab or a list later (modals, AJAX) get the same treatment
     doc.addEventListener('shown.bs.tab', function () { setTimeout(ready, 30); });
     cfg.refresh = ready;
     window.SharyShell = cfg;
 })();
-// ── shell.js · جزء 6 من 6: الضغطة ليها رد (المصدر: resources/js/shary-admin/shell/06-press-feedback.js — عدّل هنا وشغّل tools/minify-assets.sh)
-/*
- * 8 every press gets an answer (the looks are in shell.css · 8):
- *   · phones: the pressed look shows while the finger is on a button (an iPhone applies :active only when the page listens to touches)
- *   · «working…»: the button that was just pressed turns into a spinner until its action is done —
- *       a form that is sent (until the next page opens), or a request the page sends because of the press (fetch / jQuery AJAX).
- *       A button the page already marks itself (disabled / aria-busy / data-state="busy") keeps the page's own look.
- *   · a line runs along the top of the screen from a press on a link or a sent form until the next page opens
- *   Never stuck: a download (the page stays) clears it after a few seconds, and so does coming back with the browser's back button.
- */
 (function () {
     'use strict';
     var doc = document;
     var BUSY = 'sx-busy';
     var CONTROL = 'button, .btn, .ag-btn, [role="button"], input[type="submit"], input[type="button"]';
-    var LEAVE_WAIT = 10000;          // a download keeps the page: the spinner and the line go away by themselves
-    var REQUEST_WAIT = 60000;        // a request that never answers
+    var LEAVE_WAIT = 10000;
+    var REQUEST_WAIT = 60000;
 
     doc.addEventListener('touchstart', function () {}, { passive: true });
 
-    // ---- the line on top of the screen
     var bar = null;
     var barTimer = 0;
     var barSince = 0;
@@ -862,7 +801,6 @@
         }
     }
 
-    // ---- the spinner on the pressed button
     function ownBusy(control) {
         return control.disabled || control.getAttribute('aria-busy') === 'true' || control.matches('[data-state="busy"], .is-busy, .is-loading');
     }
@@ -872,7 +810,7 @@
         if (count && !control.classList.contains(BUSY)) {
             if (window.getComputedStyle(control).position === 'static') {
                 control.__sxPosition = control.style.position;
-                control.style.position = 'relative';                            // the spinner sits in the middle of the button
+                control.style.position = 'relative';
             }
             control.classList.add(BUSY);
             control.setAttribute('aria-busy', 'true');
@@ -891,8 +829,6 @@
         setTimeout(function () { busy(control, false); }, LEAVE_WAIT);
     }
 
-    // ---- a request the page sends because of a press belongs to that press:
-    //      sent while the press is being handled (also after a confirm() inside it), or within a moment after it
     var pressed = null;
     var pressedAt = 0;
     var sameTask = false;
@@ -912,7 +848,6 @@
         var shown = false;
         var since = 0;
         var over = false;
-        // decided after the page's own click code ran: a button the page marks itself keeps the page's look
         var start = setTimeout(function () {
             if (over || ownBusy(control)) { return; }
             shown = true;
@@ -923,7 +858,7 @@
             if (over) { return; }
             over = true;
             clearTimeout(start);
-            if (shown) { setTimeout(function () { busy(control, false); }, Math.max(0, 300 - (Date.now() - since))); }   // long enough to be seen
+            if (shown) { setTimeout(function () { busy(control, false); }, Math.max(0, 300 - (Date.now() - since))); }
         }
         finished.then(end, end);
         setTimeout(end, REQUEST_WAIT);
@@ -949,13 +884,12 @@
         };
     }
 
-    // ---- leaving the page: a form that is sent, a link to another screen (after every other script had its say)
     window.addEventListener('submit', function (event) {
         if (event.defaultPrevented) { return; }
         var form = event.target;
         var control = event.submitter || (form.querySelector ? form.querySelector('[type="submit"]') : null);
         var target = (control && control.getAttribute('formtarget')) || form.getAttribute('target') || '';
-        if (target && target.toLowerCase() !== '_self') { return; }                  // opens in a new tab: this page stays as it is
+        if (target && target.toLowerCase() !== '_self') { return; }
         loading(true);
         leaving(control);
     });
@@ -965,16 +899,14 @@
         if (!link || link.hasAttribute('download') || (link.target && link.target.toLowerCase() !== '_self')) { return; }
         var href = link.getAttribute('href') || '';
         if (href.charAt(0) === '#' || /^\s*javascript:/i.test(href) || link.origin !== window.location.origin || !/^https?:$/.test(link.protocol)) { return; }
-        if (link.pathname === window.location.pathname && link.search === window.location.search && link.hash) { return; }   // a place on the same page
-        if (/(export|download|\.(pdf|xlsx?|csv|zip|docx?))$/i.test(link.pathname)) { return; }                                // a file: the page stays
+        if (link.pathname === window.location.pathname && link.search === window.location.search && link.hash) { return; }
+        if (/(export|download|\.(pdf|xlsx?|csv|zip|docx?))$/i.test(link.pathname)) { return; }
         loading(true);
         if (link.matches('.btn, .ag-btn')) { leaving(link); }
     });
-    // a «leave this page?» question that was answered «stay»: the next press or key on the page puts the line away
     ['pointerdown', 'keydown'].forEach(function (type) {
         doc.addEventListener(type, function () { if (bar && bar.classList.contains('is-on') && Date.now() - barSince > 1000) { loading(false); } }, true);
     });
-    // back to this page from the browser's memory (back button): nothing is loading any more
     window.addEventListener('pageshow', function (event) {
         if (!event.persisted) { return; }
         loading(false);

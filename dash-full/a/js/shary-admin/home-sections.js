@@ -1,15 +1,9 @@
-/**
- * أقسام الرئيسية: الترتيب ، الإخفاء ، قص الصور
- * الصفحة: resources/views/shary_admin/home_sections/scripts.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     'use strict';
     var T = CONF.texts;
     function make(tag, className, text) { var node = document.createElement(tag); if (className) { node.className = className; } if (text != null) { node.textContent = text; } return node; }
 
-    // ---- search the data inside → "add"
     document.querySelectorAll('[data-hs-search]').forEach(function (box) {
         var input = box.querySelector('[data-hs-input]');
         var list = box.querySelector('[data-hs-results]');
@@ -72,12 +66,10 @@
         });
     });
 
-    // ---- "remove from the slider": asks first
     document.querySelectorAll('form[data-hs-confirm]').forEach(function (form) {
         form.addEventListener('submit', function (event) { if (!window.confirm(form.getAttribute('data-hs-confirm'))) { event.preventDefault(); event.stopImmediatePropagation(); } });
     });
 
-    // ---- the tab in the address (#slide-12 → the slider tab, #hs-launches-5 → its tab) and the address follows the open tab
     function openTabOf(hash) {
         if (!hash) { return; }
         var target = null;
@@ -91,11 +83,10 @@
     openTabOf(window.location.hash);
     document.querySelectorAll('[data-hs-tab]').forEach(function (link) {
         link.addEventListener('shown.bs.tab', function () {
-            try { var url = new URL(window.location.href); url.searchParams.set('tab', link.getAttribute('data-hs-tab')); url.hash = ''; window.history.replaceState(null, '', url.toString()); } catch (e) { /* old browser */ }
+            try { var url = new URL(window.location.href); url.searchParams.set('tab', link.getAttribute('data-hs-tab')); url.hash = ''; window.history.replaceState(null, '', url.toString()); } catch (e) { }
         });
     });
 
-    // ---- crop box (slider): the photo is moved / zoomed inside a frame of the exact shape, then saved as a JPEG of that size
     var box = document.querySelector('[data-hero-crop]');
     if (!box) { return; }
     var stage = box.querySelector('[data-crop-stage]');

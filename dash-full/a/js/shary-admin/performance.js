@@ -1,7 +1,3 @@
-/*
- * «لوحة الأداء»: بيرسم المؤشرات والدواير والخطوط من الأرقام اللي في الصفحة (data-pf-json) — من غير مكتبات.
- * التبديل بين اليوم / الأسبوع / الشهر / ربع سنة من غير تحميل (الأرقام الأربعة جاهزة في الصفحة).
- */
 (function () {
   'use strict';
   var root = document.querySelector('[data-pf]');
@@ -45,16 +41,14 @@
     el('path', { d: d, fill: 'none', stroke: 'var(--pf-c1)', 'stroke-width': '2', 'stroke-linejoin': 'round', 'stroke-linecap': 'round', 'vector-effect': 'non-scaling-stroke' }, svg);
   }
 
-  /* خط: سلسلة الفترة + الفترة اللي قبلها (متقطع) ، مع خط رأسي ومعلومة عند اللمس */
   function line(box, days, now, before, label) {
     box.textContent = '';
     var W = box.clientWidth || 600, H = box.clientHeight || 220, L = 34, R = 8, T = 10, B = 26;
     var max = Math.max.apply(null, now.concat(before || [], [4]));
-    // تدريج مقروء: 4 خطوط بأرقام مدوّرة (1 / 2 / 2.5 / 5 × 10ⁿ)
     var raw = max / 4, mag = Math.pow(10, Math.floor(Math.log10(raw))), step = [1, 2, 2.5, 5, 10].map(function (m) { return m * mag; }).filter(function (v) { return v >= raw; })[0];
     if (step < 1) step = 1;
     max = step * 4;
-    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label, direction: 'ltr' }, box);   // الرسم نفسه من الشمال لليمين (الزمن) — الأرقام بتتحط صح
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': label, direction: 'ltr' }, box);
     var x = function (i) { return L + (now.length < 2 ? 0 : i * (W - L - R) / (now.length - 1)); };
     var y = function (n) { return T + (H - T - B) * (1 - n / max); };
     for (var g = 0; g <= 4; g++) {
@@ -65,7 +59,7 @@
     var every = Math.max(1, Math.ceil(days.length / (W < 420 ? 4 : 7)));
     days.forEach(function (d, i) {
       var lastOne = i === days.length - 1;
-      if (!(i % every === 0 || lastOne) || (!lastOne && days.length - 1 - i < every * 0.75)) return;   // ما يتلزقش في آخر تاريخ
+      if (!(i % every === 0 || lastOne) || (!lastOne && days.length - 1 - i < every * 0.75)) return;
       el('text', { x: x(i), y: H - 6, 'text-anchor': lastOne ? 'end' : (i === 0 ? 'start' : 'middle'), class: 'pf-axis' }, svg).textContent = short(d);
     });
     var path = function (arr) { return arr.map(function (n, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(n).toFixed(1); }).join(' '); };
@@ -74,7 +68,6 @@
     el('path', { d: path(now), fill: 'none', stroke: 'var(--pf-c1)', 'stroke-width': 2.5, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }, svg);
     var last = now.length - 1;
     el('circle', { cx: x(last), cy: y(now[last]), r: 4.5, fill: 'var(--pf-c1)', stroke: '#fff', 'stroke-width': 2 }, svg);
-    // اللمس / الماوس
     var cross = el('line', { y1: T, y2: H - B, stroke: 'var(--pf-ink2)', 'stroke-width': 1, opacity: 0 }, svg);
     var dot = el('circle', { r: 5, fill: 'var(--pf-c1)', stroke: '#fff', 'stroke-width': 2, opacity: 0 }, svg);
     var tip = document.createElement('div'); tip.className = 'pf-tip'; tip.hidden = true; box.appendChild(tip);
@@ -93,7 +86,6 @@
     hit.addEventListener('mouseleave', out); hit.addEventListener('touchend', function () { setTimeout(out, 1600); });
   }
 
-  /* دايرة (دونت) + مفتاح فيه الرقم والنسبة */
   function donut(box, data, center) {
     box.textContent = '';
     var keys = Object.keys(data || {}), total = keys.reduce(function (s, k) { return s + (+data[k] || 0); }, 0);
@@ -159,7 +151,6 @@
     note.hidden = !!D.site.tracking;
     note.textContent = D.site.tracking ? '' : 'عدّاد زيارات الموقع لسه بادئ — أرقام الزوار والمصادر والأجهزة هتبدأ تظهر من أول زيارة. باقي الأرقام (الطلبات ، Shary AI ، الإيجنت) شغالة.';
 
-    // المؤشرات
     var sparks = { 'site.visitors': D.site.series, 'site.views': D.site.series_views, 'leads.total': D.leads.series, 'leads.meetings': D.leads.series, 'ai.conversations': D.ai.series, 'agent.prepared': D.agent.series };
     root.querySelectorAll('[data-kpi]').forEach(function (k) {
       var path = k.getAttribute('data-kpi'), pair = get(D, path);
@@ -168,17 +159,14 @@
       spark(k.querySelector('[data-spark]'), path === 'leads.meetings' ? null : sparks[path]);
     });
 
-    // الخطوط
     var days = D.chart_days || Object.keys(D.site.series || {});
     line(root.querySelector('[data-chart="visits"]'), days, values(D.site.series), D.site.series_before, 'زائر');
     html(root.querySelector('[data-legend="visits"]'), '<span><i></i>الفترة دي</span><span><i class="is-prev"></i>الفترة اللي قبلها</span>');
     line(root.querySelector('[data-chart="leads"]'), Object.keys(D.leads.series || {}), values(D.leads.series), null, 'طلب');
 
-    // الدواير
     root.querySelectorAll('[data-donut]').forEach(function (b) { donut(b, get(D, b.getAttribute('data-donut')), b.getAttribute('data-center')); });
     root.querySelectorAll('[data-bars]').forEach(function (b) { bars(b, get(D, b.getAttribute('data-bars'))); });
 
-    // السرعة
     var sp = root.querySelector('[data-speed]'); sp.textContent = '';
     var S = D.speed;
     root.querySelector('[data-speed-at]').textContent = S ? 'آخر قياس ' + S.at : '';
@@ -190,7 +178,6 @@
       sp.appendChild(g);
     });
 
-    // جوجل
     var G = D.google, gb = root.querySelector('[data-google]');
     if (!G) html(gb, '<p class="pf-empty">اربط «سيرش كونسول» من الإيجنت ← المفاتيح والربط ، وهتظهر هنا الضغطات والظهور وترتيبك في جوجل.</p>');
     else if (G.error) html(gb, '<p class="pf-empty">' + esc(G.error) + '</p>');
@@ -200,7 +187,6 @@
       var top = {}; (G.top || []).forEach(function (r) { top[r.key] = r.clicks; }); bars(gb.querySelector('.pf-bars'), top);
     }
 
-    // من زائر لعميل
     var steps = [['الزوار', D.site.visitors.now], ['طلبات', D.leads.total.now], ['ميتنجات', D.leads.meetings.now]];
     var top1 = Math.max.apply(null, steps.map(function (s) { return s[1]; }).concat([1]));
     root.querySelector('[data-funnel]').innerHTML = steps.map(function (s, i) {
@@ -208,7 +194,6 @@
     }).join('');
     root.querySelector('[data-conversion]').textContent = D.leads.conversion === null ? '' : 'معدل التحويل ' + D.leads.conversion + '%';
 
-    // Shary AI
     stats(root.querySelector('[data-stats="ai"]'), [
       { label: 'محادثات', value: D.ai.conversations.now, pair: D.ai.conversations },
       { label: 'رسايل', value: D.ai.messages.now, pair: D.ai.messages },
@@ -217,7 +202,6 @@
     ]);
     root.querySelector('[data-ai-speed]').textContent = D.ai.answer_ms ? 'متوسط وقت الرد ' + (D.ai.answer_ms / 1000).toFixed(1) + ' ثانية' : '';
 
-    // الإيجنت
     var rb = root.querySelector('[data-agent-ring]'); rb.textContent = '';
     ring(rb, D.agent.success, 'نجاح المهام', '%', 'var(--pf-c2)');
     rb.insertAdjacentHTML('beforeend', '<ul class="pf-keys"><li><span class="sw" style="background:var(--pf-c2)"></span><span class="nm">خلصت</span><span class="vl">' + fmt(D.agent.done) + '</span><span></span></li><li><span class="sw" style="background:var(--pf-c5)"></span><span class="nm">ما كملتش</span><span class="vl">' + fmt(D.agent.failed) + '</span><span></span></li><li><span class="sw" style="background:var(--pf-c6)"></span><span class="nm">مهام شغالة لوحدها</span><span class="vl">' + fmt(D.agent.tasks_on) + '</span><span></span></li></ul>');
@@ -234,7 +218,6 @@
     var plan = D.agent.seo_plan, doneAll = D.agent.seo_all_done, pct = plan ? Math.round(doneAll / plan * 100) : 0;
     root.querySelector('[data-seo-progress]').innerHTML = '<div class="pf-progress__head"><span>خطة السيو</span><span>' + fmt(doneAll) + ' من ' + fmt(plan) + ' خطوة (' + pct + '%)</span></div><div class="pf-progress__track"><div class="pf-progress__fill" style="width:' + Math.max(pct, plan ? 1 : 0) + '%"></div></div>';
 
-    // الصفحات
     var pages = D.site.pages || {}, pl = root.querySelector('[data-pages]');
     pl.innerHTML = Object.keys(pages).length ? Object.keys(pages).map(function (p) { return '<li><span class="nm" title="' + esc(p) + '">' + esc(decodeURI(p)) + '</span><span class="vl">' + fmt(pages[p]) + '</span></li>'; }).join('') : '<p class="pf-empty">لسه مفيش أرقام في الفترة دي</p>';
 

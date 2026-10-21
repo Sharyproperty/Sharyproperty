@@ -1,8 +1,3 @@
-/**
- * محتوى الصفحات: رفع صورة الهيدر
- * الصفحة: resources/views/shary_admin/content/edit.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var filter = document.querySelector('[data-sc-filter]');
@@ -33,7 +28,7 @@
                     box.querySelector('[data-sc-url]').value = json.url;
                     var preview = box.querySelector('[data-sc-preview]');
                     preview.src = json.preview || json.url;
-                    preview.hidden = false;      // مكان صورة كان فاضي (زي صورة «عن شاري»)
+                    preview.hidden = false;
                 })
                 .catch(function () { window.alert(CONF.failed); });
         });

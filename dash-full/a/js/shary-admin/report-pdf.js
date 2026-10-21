@@ -1,27 +1,13 @@
-// ── report-pdf.js · جزء 1 من 3: صفحة الطباعة والستايل والخطوط (المصدر: resources/js/shary-admin/report-pdf/01-print-frame-and-styles.js — عدّل هنا وشغّل tools/minify-assets.sh)
-/*
- * Shary dashboard — "شير PDF على واتساب" for any agent report / analysis (daily · weekly · monthly).
- *
- * Makes a real PDF file of the report on the device itself — no package on the server and no outside library:
- *   1) the clean print page of the report opens in a hidden frame at a fixed document width,
- *   2) every A4 page of it is drawn into a picture (the page's own styles and the Cairo font go inside the picture),
- *   3) the pictures are written into a PDF file (one picture per A4 page, page number under each),
- *   4) the phone's share list opens with the file (WhatsApp, …). A browser that can't share files (some computers)
- *      downloads the file instead and shows a WhatsApp link, to send it from WhatsApp Web / Desktop.
- *
- * Button: <button data-pdf-share data-pdf-src="{print url}?noprint=1" data-pdf-name="file.pdf" data-pdf-title="…">
- *         <span data-pdf-label>…</span></button> inside [data-pdf-box] with a <p data-pdf-note> for the status line.
- */
 (function () {
     'use strict';
 
-    var WIDTH = 860;                  // CSS px — the width the report is laid out at inside the PDF
-    var SCALE = 2;                    // sharpness of the pictures
-    var PAGE = [595.28, 841.89];      // A4 in points
-    var MARGIN = 24;                  // points around every page
-    var FOOT = 34;                    // CSS px under every page for the page number
-    var made = {};                    // src -> File, made once per page view
-    var fonts = null;                 // the inlined @font-face rules (fetched once)
+    var WIDTH = 860;
+    var SCALE = 2;
+    var PAGE = [595.28, 841.89];
+    var MARGIN = 24;
+    var FOOT = 34;
+    var made = {};
+    var fonts = null;
 
     var LABELS = {
         idle: 'شير PDF على واتساب',
@@ -42,7 +28,6 @@
     function wait(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
     function each(list, fn) { Array.prototype.forEach.call(list, fn); }
 
-    // ---------- 1) the clean print page in a hidden frame ----------
     function openFrame(src) {
         return new Promise(function (resolve, reject) {
             var frame = document.createElement('iframe');
@@ -57,7 +42,7 @@
                 var doc = frame.contentDocument;
                 if (!doc || !doc.querySelector('.pr-page')) { frame.remove(); reject(new Error('page')); return; }
                 doc.documentElement.style.overflow = 'hidden';
-                each(doc.querySelectorAll('details'), function (box) { box.open = true; });   // everything shows in the file
+                each(doc.querySelectorAll('details'), function (box) { box.open = true; });
                 var ready = doc.fonts && doc.fonts.ready ? doc.fonts.ready : Promise.resolve();
                 ready.then(function () { return wait(150); }).then(function () { resolve(frame); });
             };
@@ -66,7 +51,6 @@
         });
     }
 
-    // ---------- 2) styles + fonts inlined (a picture can't load anything from outside) ----------
     function getText(url) {
         return fetch(url, { credentials: 'same-origin' }).then(function (response) {
             if (!response.ok) { throw new Error('css ' + response.status); }
@@ -88,7 +72,6 @@
         });
     }
 
-    // Google's Cairo is one variable font file per script (arabic / latin …): one @font-face per file with the full weight range
     function inlineFonts(css) {
         var blocks = css.match(/@font-face\s*{[^}]*}/g) || [];
         var files = {};
@@ -118,7 +101,6 @@
         })).then(function (rules) { return rules.join('\n'); });
     }
 
-    // the page's own rules, made to work on the picture's root (no html / body / :root inside a picture)
     function scope(css) {
         return css
             .replace(/@import[^;]+;/g, '')
@@ -126,7 +108,6 @@
             .replace(/(^|[\s,{}>+~(])(?:html|body|:root)(?=[\s.#:\[,{>+~)])/g, '$1.pdf-root');
     }
 
-    // the printed copy's own rules (@media print) — the file looks like "احفظه PDF", not like the screen
     function printRules(css) {
         var out = [];
         var start = /@media\s+print\s*{/g;
@@ -141,7 +122,6 @@
         return out.join('\n').replace(/@page\s*{[^}]*}/g, '');
     }
 
-    // the report always fits the page width (wide tables wrap instead of running off the side)
     var FIT = '.pr-page { max-width: none !important; width: auto !important; min-width: 0 !important; margin: 0 !important; padding: 0 0 6px !important; }' +
         ' .ag-scroll { overflow: visible !important; } table { max-width: 100% !important; } th, td { overflow-wrap: anywhere; }';
 
@@ -170,7 +150,6 @@
         });
     }
 
-    // pictures inside the report become data (a picture inside a picture can't load from outside)
     function pictures(root) {
         var jobs = [];
         each(root.querySelectorAll('img'), function (img) {
@@ -181,8 +160,6 @@
         return Promise.all(jobs).then(function () { return root; });
     }
 
-// ── report-pdf.js · جزء 2 من 3: تقطيع الصفحات ورسمها صور (المصدر: resources/js/shary-admin/report-pdf/02-pages-to-pictures.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ---------- 3) where every page ends (never through a line, a row or a box) ----------
     function pageCuts(root, limit) {
         var box = root.getBoundingClientRect();
         var total = Math.ceil(box.height);
@@ -195,7 +172,6 @@
             var bottom = rect.bottom - box.top;
             ends.push(bottom);
             if (bottom - top < limit * 0.5) { atoms.push([top, bottom]); }
-            // a title never stays alone at the bottom of a page: it goes with the first lines under it
             if (/^H[1-5]$/.test(node.tagName) || node.classList.contains('ag-card__head')) { atoms.push([top, bottom + 90]); }
         });
         ends.sort(function (a, b) { return a - b; });
@@ -220,7 +196,6 @@
         return cuts;
     }
 
-    // ---------- 4) every page drawn into a picture ----------
     function escapeXml(text) { return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
     function svgFor(job, top, slice) {
@@ -262,14 +237,13 @@
         ctx.font = '700 ' + (12 * SCALE) + 'px Cairo, Tahoma, Arial, sans-serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        try { ctx.direction = 'rtl'; } catch (e) { /* older browsers */ }
+        try { ctx.direction = 'rtl'; } catch (e) { }
         ctx.fillText('صفحة ' + page + ' من ' + pages + ' — شاري', width / 2, y + 21 * SCALE);
     }
 
     function drawPages(job) {
         var pages = [];
         var count = job.cuts.length - 1;
-        // Safari draws a picture's own font only from the second time: one small first drawing to warm it up
         var chain = picture(svgFor(job, 0, Math.min(job.cuts[1], 300))).then(function (img) {
             var warm = document.createElement('canvas');
             warm.width = 8; warm.height = 8;
@@ -298,8 +272,6 @@
         return chain.then(function () { return pages; });
     }
 
-// ── report-pdf.js · جزء 3 من 3: ملف الـ PDF والزرار (المصدر: resources/js/shary-admin/report-pdf/03-pdf-and-button.js — عدّل هنا وشغّل tools/minify-assets.sh)
-    // ---------- 5) the PDF file (one picture per A4 page) ----------
     function hexTitle(text) {
         var hex = 'FEFF';
         for (var i = 0; i < text.length; i++) { hex += ('000' + text.charCodeAt(i).toString(16)).slice(-4); }
@@ -345,7 +317,6 @@
         return new Blob(parts, { type: 'application/pdf' });
     }
 
-    // ---------- the whole way: print page → pages → PDF ----------
     function build(src, title) {
         var frame = null;
         return openFrame(src).then(function (opened) {
@@ -353,15 +324,12 @@
             var doc = frame.contentDocument;
             return styles(doc).then(function (got) {
                 var extra = '';
-                // the buttons / bars of the print page are not part of the file (removed before measuring, so the pages line up)
                 each(doc.querySelectorAll('.no-print, script, noscript, [data-pdf-box]'), function (node) { node.remove(); });
-                // the frame gets the printed copy's look too, so where the pages end is measured on what is drawn
                 var look = doc.createElement('style');
                 look.setAttribute('data-pdf-style', '1');
                 look.textContent = got.printed;
                 doc.head.appendChild(look);
                 if (!got.fonts) {
-                    // no Cairo inside the picture: lay the page out with the same system font the picture will use
                     extra = '.pdf-root, .pdf-root * { font-family: Tahoma, "Segoe UI", Arial, sans-serif !important; }';
                     var fix = doc.createElement('style');
                     fix.textContent = 'body, body * { font-family: Tahoma, "Segoe UI", Arial, sans-serif !important; }';
@@ -370,8 +338,8 @@
                 return wait(60).then(function () {
                     var root = doc.querySelector('.pr-page');
                     var width = doc.documentElement.clientWidth || WIDTH;
-                    var ratio = (PAGE[0] - 2 * MARGIN) / width;               // points per CSS px
-                    var limit = (PAGE[1] - 2 * MARGIN) / ratio - FOOT;        // CSS px of report per page
+                    var ratio = (PAGE[0] - 2 * MARGIN) / width;
+                    var limit = (PAGE[1] - 2 * MARGIN) / ratio - FOOT;
                     var cuts = pageCuts(root, limit);
                     var clone = root.cloneNode(true);
                     return pictures(clone).then(function () {
@@ -397,7 +365,6 @@
         });
     }
 
-    // ---------- the button ----------
     function canShare(file) {
         try { return !!(navigator.share && navigator.canShare && navigator.canShare({ files: [file] })); } catch (e) { return false; }
     }
@@ -470,14 +437,13 @@
             try { file = new File([blob], name, { type: 'application/pdf', lastModified: Date.now() }); } catch (e) { file = blob; file.name = name; }
             made[src] = file;
             var active = navigator.userActivation ? navigator.userActivation.isActive : false;
-            if (!canShare(file)) { deliver(button, file); return; }          // computer: download + WhatsApp link
-            if (active) { deliver(button, file); return; }                   // still inside the tap: share right away
-            setState(button, 'ready', file);                                 // otherwise one more tap opens the share list
+            if (!canShare(file)) { deliver(button, file); return; }
+            if (active) { deliver(button, file); return; }
+            setState(button, 'ready', file);
         }, function () {
             setState(button, 'error');
         });
     });
 
-    // for the tests on the server copy: window.SharyReportPdf.build(src, title) → Blob
     window.SharyReportPdf = { build: build };
 })();

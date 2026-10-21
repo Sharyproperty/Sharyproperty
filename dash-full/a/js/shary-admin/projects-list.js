@@ -1,8 +1,3 @@
-/**
- * قايمة المشاريع: تأكيد الحذف والأوامر
- * الصفحة: resources/views/shary_admin/projects/scripts.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var TEXT = {
@@ -37,7 +32,6 @@
         scope.querySelectorAll('input[type=checkbox][data-shary-switch]').forEach(function (box) { box.checked = on; });
     });
 
-    // ---- client-side tabs of one long form (tabbed "extra fields" screens): [data-shary-tabset] > a[data-shary-tab], panes [data-shary-pane]
     document.querySelectorAll('[data-shary-tabset]').forEach(function (bar) {
         var scope = bar.closest('[data-shary-tabbed]') || document;
         var memory = scope.querySelector('input[name=_tab]');

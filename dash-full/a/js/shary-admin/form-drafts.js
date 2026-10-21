@@ -1,22 +1,3 @@
-/**
- * «المسودات» لأي فورم نصوص في لوحة التحكم (مقالات ، مطورين ، مشاريع ، مناطق ، نصوص الصفحات …) — App\Shary\FormDrafts.
- *
- *  - فوق زرار الحفظ: «حفظ كمسودة» + حالة الحفظ. وكمان بيتحفظ لوحده على السيرفر وانت بتكتب (بعد ثواني من آخر تعديل) ،
- *    فالمسودة بتفضل موجودة لو قفلت الجهاز أو الداشبورد ، وبتلاقيها من أي جهاز بنفس الحساب.
- *  - المسودة فيها اللي انت غيّرته بس (مش الفورم كله) ، والسيرفر بيضمّه على اللي قبله: نفس الفورم مفتوح في جزئين
- *    (زي «البيانات الأساسية» و«مكان المشروع على الخريطة» في صفحة المشروع) — تعديلات الاتنين بتتجمع في نفس المسودة ومحدش بيمسح التاني.
- *  - لما تفتح نفس الفورم تاني: شريط «عندك مسودة محفوظة» ← «افتح المسودة» بيرجّع كل اللي اتكتب (حتى محرر النصوص CKEditor / Summernote ،
- *    والصفوف اللي بتتزود بزرار زي خطط السداد والأسئلة ، ومكان المشروع وحدوده ومكان الماستر بلان على الخريطة).
- *    من صفحة «المسودات» زرار «كمّل» بيفتح الفورم والمسودة بترجع لوحدها (?open_draft=1).
- *  - النشر = زرار الحفظ العادي: لو الحفظ نجح المسودة بتتمسح لوحدها ، ولو رجع بغلط بتفضل زي ما هي —
- *    حتى في الفورمات اللي بتتحفظ من غير ما الصفحة تتغير (AJAX — المشروع ، المطور …): النجاح بيتعرف من رد السيرفر نفسه.
- *  - مش بيشتغل على: فورم الوحدة (ليه مسوداته بالصور) ، شيت الوحدات ، فورمات المسح / البحث / الدخول ، وأي فورم عليه data-no-draft.
- *  - الصفحة تقدر تقول (من غير ما تغيّر حاجة في الحفظ نفسه):
- *      data-draft على خانة مخفية        ← تتحفظ في المسودة (الخانات المخفية مش بتتحفظ من غير كده)
- *      data-draft-rows="name[]" على زرار «إضافة صف» (+ data-draft-row=".row-class") ← الصفوف بتتظبط على عدد صفوف المسودة
- *      حدث sx:draft-restored على الفورم بعد ما المسودة ترجع ← الصفحة ترسم الخريطة من جديد مثلاً
- * الإعدادات: window.SharyDrafts = { find, save, forget, token, ok (الصفحة دي جاية بعد حفظ ناجح) , t: { … } }
- */
 (function () {
     var C = window.SharyDrafts;
     if (!C || !C.save || !window.fetch) return;
@@ -29,7 +10,6 @@
         if (form.hasAttribute('data-no-draft') || form.hasAttribute('data-unit-form') || form.getAttribute('id') === 'sx-sheet') return false;
         var action = (form.getAttribute('action') || '').toLowerCase();
         if (/delete|destroy|logout|signin|login|drafts\/|search|filter|toggle|bulk|status|import|upload/.test(action)) return false;
-        // مفاتيح الربط وكلمات السر وأوامر الإيجنت (سطر بيتبعت على طول) — مش نصوص بتتكتب
         if (/\/keys\/|social-login|agent\/commands|\/better$|agent\/(.*\/)?settings|smtp|password|token|secret/.test(action)) return false;
         if (form.querySelector('input[type="password"]')) return false;
         var texts = form.querySelectorAll('textarea, input[type="text"], input:not([type])');
@@ -37,7 +17,6 @@
         return big > 0 || texts.length >= 2;
     }
 
-    // ---- read / write the fields
     function editors(form) {
         var list = [];
         if (window.CKEDITOR && window.CKEDITOR.instances) {
@@ -57,12 +36,11 @@
     function skip(el) {
         var type = (el.type || '').toLowerCase();
         if (!el.name || el.disabled || el.name === '_token' || el.name === '_method') return true;
-        // الخانة المخفية بتتحفظ بس لو الصفحة طالبة كده (data-draft) — زي مكان المشروع وحدوده ومكان الماستر بلان على الخريطة
         if (type === 'hidden') return !el.hasAttribute('data-draft');
         return ['file', 'password', 'submit', 'button', 'reset', 'image'].indexOf(type) > -1;
     }
     function collect(form) {
-        editors(form).forEach(function (e) { try { if (e.kind === 'ck') e.api.updateElement(); else e.el.value = e.api.summernote('code'); } catch (error) { /* محرر مش جاهز */ } });
+        editors(form).forEach(function (e) { try { if (e.kind === 'ck') e.api.updateElement(); else e.el.value = e.api.summernote('code'); } catch (error) { } });
         var fields = {};
         Array.prototype.forEach.call(form.elements, function (el) {
             if (skip(el)) return;
@@ -75,13 +53,11 @@
             } else if (el.tagName === 'SELECT' && el.multiple) {
                 fields[el.name] = Array.prototype.filter.call(el.options, function (o) { return o.selected; }).map(function (o) { return o.value; });
             } else {
-                // نفس الاسم أكتر من مرة (name[]) — قايمة بالترتيب
                 if (/\[\]$/.test(el.name)) { (fields[el.name] = fields[el.name] || []).push(el.value); } else { fields[el.name] = el.value; }
             }
         });
         return fields;
     }
-    // اللي اتغيّر عن الفورم وهو بيتفتح (+ أي خانة اتغيّرت قبل كده في نفس الفتحة ، حتى لو رجعت زي ما كانت — عشان ترجع في المسودة كمان)
     function changes(base, now, dirty) {
         var out = {};
         Object.keys(now).forEach(function (name) {
@@ -89,7 +65,7 @@
         });
         Object.keys(base).forEach(function (name) {
             if (name in now || !Array.isArray(base[name])) return;
-            dirty[name] = true;                       // كل صفوفها اتشالت (خطط السداد ، الأسئلة …)
+            dirty[name] = true;
             out[name] = [];
         });
         return out;
@@ -101,7 +77,6 @@
     function byName(form, name) {
         return Array.prototype.filter.call(form.elements, function (el) { return el.name === name; });
     }
-    // الصفوف اللي بتتزود بزرار (خطط السداد ، خصومات الكاش ، الأسئلة …): نفس عدد صفوف المسودة
     function rows(form, fields) {
         Array.prototype.forEach.call(form.querySelectorAll('[data-draft-rows]'), function (button) {
             var name = button.getAttribute('data-draft-rows');
@@ -138,13 +113,11 @@
         editors(form).forEach(function (e) {
             var value = fields[e.el.name];
             if (value == null) return;
-            try { if (e.kind === 'ck') e.api.setData(value); else e.api.summernote('code', value); } catch (error) { /* محرر مش جاهز */ }
+            try { if (e.kind === 'ck') e.api.setData(value); else e.api.summernote('code', value); } catch (error) { }
         });
-        // الصفحة ترسم اللي مش خانات (الخريطة: الدبوس والحدود ومكان الماستر بلان)
-        try { form.dispatchEvent(new CustomEvent('sx:draft-restored', { bubbles: true, detail: { fields: fields } })); } catch (error) { /* */ }
+        try { form.dispatchEvent(new CustomEvent('sx:draft-restored', { bubbles: true, detail: { fields: fields } })); } catch (error) { }
     }
     function titleOf(form, fields) {
-        // اسم الحاجة باللغة اللي الداشبورد مفتوح بيها
         var keys = /^en/i.test(document.documentElement.getAttribute('lang') || '')
             ? ['title_en', 'name_en', 'title', 'name', 'title_ar', 'name_ar', 'meta_title_en']
             : ['title_ar', 'name_ar', 'title', 'name', 'title_en', 'name_en', 'meta_title_ar'];
@@ -156,7 +129,6 @@
         var h = document.querySelector('.page-header h4, .page-title h4, h4.page-title, .content h4, h1');
         return (h && h.textContent.trim()) || document.title || '';
     }
-    // العنوان من غير ?open_draft و ?embed (الجزء اللي جوه «كل بيانات المشروع») — «كمّل» بيفتح الشاشة كاملة
     function cleanUrl() {
         var q = new URLSearchParams(window.location.search);
         ['open_draft', 'embed', 'focus', 'hide'].forEach(function (name) { q.delete(name); });
@@ -177,19 +149,16 @@
             .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok && j.ok !== false, json: j }; }); });
     }
 
-    // ---- بعد الحفظ (النشر): لو الصفحة دي جاية بعد حفظ ناجح ، مسودة الفورم اللي اتبعت بتتمسح
     try {
         var sent = JSON.parse(window.sessionStorage.getItem(PENDING) || 'null');
         if (sent && sent.key) {
             window.sessionStorage.removeItem(PENDING);
             var recent = !sent.at || (Date.now() - sent.at) < 30 * 60 * 1000;
             var moved = sent.path && sent.path !== window.location.pathname;
-            // الفورم اللي بيتحفظ من غير ما الصفحة تتغير (AJAX) نجاحه بيتعرف من رد السيرفر (تحت) — مش من الصفحة اللي بعده
             if (!sent.ajax && recent && (C.ok || moved)) post(C.forget, { key: sent.key });
         }
-    } catch (error) { /* التخزين مقفول */ }
+    } catch (error) { }
 
-    // رد السيرفر على الحفظ (jQuery AJAX): الطلب اللي اتبعت مع زرار الحفظ (أو اللي رايح لعنوان الفورم نفسه)
     var watchers = [], lastSend = null;
     function writes(settings) { return String((settings && (settings.type || settings.method)) || 'GET').toUpperCase() !== 'GET'; }
     if ($) {
@@ -210,9 +179,8 @@
         var key = window.location.pathname.replace(/^\/+/, '') + '#' + index;
         var url = cleanUrl();
         var timer = null, last = '', busy = false, touched = false, base = {}, dirty = {}, note = null, waiting = null, publishedAt = 0;
-        try { base = collect(form); last = JSON.stringify(base); } catch (error) { /* */ }
+        try { base = collect(form); last = JSON.stringify(base); } catch (error) { }
 
-        // ---- الشريط: «حفظ كمسودة» + الحالة
         var bar = document.createElement('div');
         bar.className = 'sx-draftbar';
         bar.innerHTML = '<button type="button" class="sx-draftbar__save"></button><span class="sx-draftbar__state"></span>';
@@ -223,7 +191,7 @@
         if (submit && submit.parentNode) submit.parentNode.insertBefore(bar, submit); else form.appendChild(bar);
 
         function save(manual) {
-            if (waiting && Date.now() - waiting.at < 20000) return;      // بيتنشر دلوقتي
+            if (waiting && Date.now() - waiting.at < 20000) return;
             var fields = collect(form);
             var json = JSON.stringify(fields);
             if (!manual && json === last) return;
@@ -235,7 +203,7 @@
             state.textContent = T.draft_saving || '…';
             post(C.save, { key: key, url: url, title: titleOf(form, fields), screen: screenName(), fields: JSON.stringify(diff), merge: 1 }).then(function (res) {
                 busy = false;
-                if (publishedAt && startedAt <= publishedAt) { post(C.forget, { key: key }, true); return; }     // اتنشر وهي بتتحفظ
+                if (publishedAt && startedAt <= publishedAt) { post(C.forget, { key: key }, true); return; }
                 if (res.ok) { last = json; state.textContent = (T.draft_saved || 'Draft saved') + ' ' + (res.json.when || ''); bar.classList.add('is-saved'); }
                 else { state.textContent = (res.json && res.json.message) || T.draft_failed || ''; bar.classList.remove('is-saved'); }
             }).catch(function () { busy = false; state.textContent = T.draft_failed || ''; });
@@ -244,16 +212,13 @@
         function changed() { touched = true; clearTimeout(timer); timer = setTimeout(function () { save(false); }, 4000); }
         form.addEventListener('input', changed);
         form.addEventListener('change', changed);
-        // محررات النصوص: التعديل جوه المحرر نفسه
         setTimeout(function () {
             editors(form).forEach(function (e) {
-                try { if (e.kind === 'ck') e.api.on('change', changed); else e.api.on('summernote.change', changed); } catch (error) { /* */ }
+                try { if (e.kind === 'ck') e.api.on('change', changed); else e.api.on('summernote.change', changed); } catch (error) { }
             });
-            if (!touched) { base = collect(form); last = JSON.stringify(base); }      // اللي في الفورم وهو بيتفتح (والمحررات بتجهز) مش "تعديل"
+            if (!touched) { base = collect(form); last = JSON.stringify(base); }
         }, 1200);
 
-        // الخانات المخفية (data-draft) بتتغيّر من الخريطة مش من الكيبورد: ضغطة / سحب بدأ جوه الفورم (الدبوس ، نقط الحدود ، الماستر بلان ، أدواتها)
-        // ← نقارن قيمها من أول الضغطة لحد بعدها بشوية (الأدوات اللي بتسأل السيرفر بترد بعد ثواني). اللي الصفحة بتكتبه لوحدها وهي بتفتح مش «تعديل»
         var hidden = form.querySelectorAll('input[type="hidden"][data-draft]');
         if (hidden.length) {
             var snap = function () { return Array.prototype.map.call(hidden, function (h) { return h.value; }).join('\u0001'); };
@@ -272,19 +237,16 @@
             }, true);
         }
 
-        // ---- النشر (زرار الحفظ العادي)
         function sending(ajax) {
             clearTimeout(timer);
-            // طلب الحفظ ممكن يكون اتبعت قبل ما الحدث يوصل هنا (الصفحة ماسكة الـ submit قبلنا) — أو هيتبعت بعد شوية
             var xhr = (waiting && waiting.xhr) || (lastSend && Date.now() - lastSend.at < 400 ? lastSend.xhr : null);
             waiting = { at: Date.now(), xhr: xhr };
-            try { window.sessionStorage.setItem(PENDING, JSON.stringify({ key: key, path: window.location.pathname, at: Date.now(), ajax: !!ajax })); } catch (error) { /* */ }
+            try { window.sessionStorage.setItem(PENDING, JSON.stringify({ key: key, path: window.location.pathname, at: Date.now(), ajax: !!ajax })); } catch (error) { }
         }
         form.addEventListener('submit', function (event) {
             sending(false);
             setTimeout(function () { if (event.defaultPrevented) sending(true); }, 0);
         });
-        // الصفحات اللي بتبعت الفورم بـ $('#form').submit() (من غير حدث submit حقيقي) ، وبعدين AJAX
         if ($) {
             $(form).on('submit.sxdraft', function (event) {
                 if (event.originalEvent) return;
@@ -301,9 +263,8 @@
             if (body === undefined) { try { body = JSON.parse(xhr.responseText); } catch (error) { body = null; } }
             if (ok && body && typeof body === 'object' && (body.type === 'error' || body.status === 0 || body.status === false || body.success === false || body.ok === false || body.errors)) ok = false;
             waiting = null;
-            try { var pending = JSON.parse(window.sessionStorage.getItem(PENDING) || 'null'); if (pending && pending.key === key) window.sessionStorage.removeItem(PENDING); } catch (error) { /* */ }
-            if (!ok) return;                      // الحفظ ما نجحش: المسودة زي ما هي
-            // اتنشر: المسودة بتتمسح ، واللي في الفورم دلوقتي هو الأساس الجديد (لو الصفحة فضلت مفتوحة وكمّلت تعديل ، المسودة الجديدة فيها الجديد بس)
+            try { var pending = JSON.parse(window.sessionStorage.getItem(PENDING) || 'null'); if (pending && pending.key === key) window.sessionStorage.removeItem(PENDING); } catch (error) { }
+            if (!ok) return;
             publishedAt = Date.now();
             clearTimeout(timer);
             base = collect(form);
@@ -315,7 +276,6 @@
             bar.classList.remove('is-saved');
         } });
 
-        // ---- فيه مسودة؟
         fetch(C.find + '?key=' + encodeURIComponent(key), { credentials: 'same-origin', headers: { 'Accept': 'application/json' } })
             .then(function (r) { return r.json(); }).then(function (j) {
                 var draft = j && j.draft;
@@ -336,7 +296,7 @@
                 note.children[1].addEventListener('click', function () { setTimeout(apply, 0); });
                 note.children[2].addEventListener('click', function () { post(C.forget, { key: key }); note.parentNode.removeChild(note); });
                 form.insertBefore(note, form.firstChild);
-                if (params.get('open_draft') === '1') setTimeout(apply, 1500);   // من صفحة «المسودات»: بترجع لوحدها (بعد ما المحررات تجهز)
-            }).catch(function () { /* */ });
+                if (params.get('open_draft') === '1') setTimeout(apply, 1500);
+            }).catch(function () { });
     });
 })();

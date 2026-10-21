@@ -69,7 +69,7 @@
         try {
             if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
                 document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
+                
                 var params = new URLSearchParams(location.search);
                 document.addEventListener('DOMContentLoaded', function () {
                     var keep = params.get('focus') && document.getElementById(params.get('focus'));
@@ -83,7 +83,7 @@
                             });
                         }
                     }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    
                     String(params.get('hide') || '').split(',').forEach(function (id) {
                         var drop = id && document.getElementById(id.trim());
                         if (drop) drop.style.display = 'none';
@@ -107,10 +107,10 @@
     })();
 </script>
 <script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
+
 if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
+
+
 (function () {
     var KEY = 'shary-app-mode', on = false;
     try {
@@ -120,11 +120,11 @@ if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.te
     } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
     if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
 })();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
+
 window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
 window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+
+
 document.addEventListener('DOMContentLoaded', function () {
     var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
     for (i = 0; i < els.length; i++) {
@@ -162,7 +162,7 @@ document.addEventListener('error', function (e) {
     html.sx-embed body { background: #fff !important; }
     html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
     html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
+    
     html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
     html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
     html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
@@ -197,7 +197,7 @@ document.addEventListener('error', function (e) {
 <b>57</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-        <a class="sx-lang" href="../admin-shary-ai-conversations-721.html" data-sx-lang="1" lang="ar">عربي</a>
+        <a class="sx-lang" href="../admin-shary-ai-conversations-725.html" data-sx-lang="1" lang="ar">عربي</a>
         <details class="sx-user" data-sx-user>
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
@@ -236,11 +236,11 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">10</b>                    </a>
+                        <b class="sx-tag">8</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
-                        <b class="sx-tag">106</b>                    </a>
+                        <b class="sx-tag">107</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -316,11 +316,11 @@ document.addEventListener('error', function (e) {
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>Requests &amp; messages</span>
-                            <b class="sx-tag">64</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">72</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">64</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">72</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
                                                             
@@ -385,7 +385,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">2</b></a></li>
+                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">3</b></a></li>
                                                             
                                                                                                 <li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
                                                     </ul>
@@ -571,7 +571,7 @@ document.addEventListener('error', function (e) {
                         <button type="button" aria-expanded="true" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">48</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">60</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
@@ -579,7 +579,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-ai-conversations.html" class="is-on"  aria-current="page" ><span>Customer conversations</span><b class="sx-tag">41</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">7</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">19</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -604,6 +604,8 @@ document.addEventListener('error', function (e) {
                         <ul id="sx-grp-app">
                                                             
                                                                                                 <li><a href="admin-shary-app-pages.html" class="" ><span>Service pages on the website</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-app-settings.html" class="" ><span>App status &amp; payment methods</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
                                                             
@@ -847,11 +849,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                token: "lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -879,42 +881,39 @@ document.addEventListener('error', function (e) {
             
             <div class="crm-grid">
                 <div>
-                    
                     <div class="card">
                         <div class="card-header"><h5 class="card-title">Shary AI summary for the team</h5></div>
                         <div class="card-body">
-                            <div class="crm-next mb-3">👉 No phone yet — Shary AI will ask if they come back to the chat</div>                            <div class="crm-sum">Wants: Emaar Misr
-Saw: Bo Islands (12,330,000)، North Edge (13,490,000)، Stella Heights (16,970,000)
-Stopped at: Saw recommendations
-Next step: No phone yet — Shary AI will ask if they come back to the chat
-What to say on the call: Ask which unit they saw is closest and what does not fit; offer a meeting.</div>
+                            <div class="crm-next mb-3">👉 لسه ماسابش رقم — لو رجع الشات Shary AI هيطلبه</div>                            <div class="crm-sum">عايز: التجمع الخامس · شقة · في حدود 5 مليون
+شاف: شقة 120 م² في جارنيت (6,715,000)
+وقف عند: شاف ترشيحات
+الخطوة الجاية: لسه ماسابش رقم — لو رجع الشات Shary AI هيطلبه
+قوله إيه في المكالمة: اسأله أنهي وحدة من اللي شافها أقرب ليه وإيه اللي مش مناسب فيها، واعرض ميتنج.</div>
                                                                                 </div>
                     </div>
 
-                    
                     <div class="card">
                         <div class="card-header"><h5 class="card-title">Full conversation</h5></div>
                         <div class="card-body">
                             <div class="crm-chat">
-                                                                    <div class="crm-msg crm-msg--u">Emaar projects<small>Customer  · 2026-10-20 17:07 </small></div>
-                                                                    <div class="crm-msg crm-msg--a">I found 10 projects that match your request.
-These are the best options for you 👇 To narrow it down, pick a suggestion below.
-To recommend the best fit: is this unit for you to live in, an investment, or a holiday home?
-With Shary you deal with the developer directly at the developer price and plan, and track your unit in the app. Leave your name and number 👇 and the developer team will call you and book for you.<small>Shary AI  · 2026-10-20 17:07 </small></div>
+                                                                    <div class="crm-msg crm-msg--u">عايز شقة في التجمع ب 5 مليون<small>Customer  · 2026-10-21 19:28 </small></div>
+                                                                    <div class="crm-msg crm-msg--a">لقيت وحدة واحدة مناسبة لطلبك.
+دي أنسب الاختيارات ليك 👇 ولو حابب تظبط أكتر اختار من الترشيحات تحت.
+وعشان أرشحلك الأنسب: الوحدة دي ليك إنت تسكن فيها، ولا استثمار، ولا مصيف؟
+مع شاري بتتعامل مع المطور مباشرة بنفس سعره وخطة سداده، وتتابع وحدتك من التطبيق. سيبلي اسمك ورقمك 👇 وفريق المطور يكلمك ويحجزلك.<small>Shary AI  · 2026-10-21 19:28 </small></div>
                                                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div>
-                    
                     <div class="card">
                         <div class="card-header"><h5 class="card-title">Follow-ups</h5></div>
                         <div class="card-body">
                                                             <p class="text-muted fw-bold">No follow-ups yet.</p>
                             
-                            <form method="post" action="#preview/admin/shary/ai/conversations/721/follow" class="row g-2 mt-2" data-no-draft>
-                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <div class="col-6"><label class="form-label fw-bold">Day</label><input type="date" name="date" class="form-control" required value="2026-10-21"></div>
+                            <form method="post" action="#preview/admin/shary/ai/conversations/725/follow" class="row g-2 mt-2" data-no-draft>
+                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <div class="col-6"><label class="form-label fw-bold">Day</label><input type="date" name="date" class="form-control" required value="2026-10-22"></div>
                                 <div class="col-6"><label class="form-label fw-bold">Time</label><input type="time" name="time" class="form-control" required value="12:00"></div>
                                 <div class="col-12"><label class="form-label fw-bold">Type</label>
                                     <select name="kind" class="form-control" data-sx-pick="off"><option value="call">Call</option><option value="whatsapp">WhatsApp</option><option value="meeting">Meeting</option><option value="chat">Chat message</option></select></div>
@@ -924,12 +923,11 @@ With Shary you deal with the developer directly at the developer price and plan,
                         </div>
                     </div>
 
-                    
                     <div class="card">
                         <div class="card-header"><h5 class="card-title">Customer profile</h5></div>
                         <div class="card-body">
                             <dl class="crm-kv">
-                                <dt>Wants</dt><dd>Emaar Misr</dd>
+                                <dt>Wants</dt><dd>التجمع الخامس · شقة · في حدود 5 مليون</dd>
                                 <dt>نوع العميل</dt><dd>—</dd>
                                                                 <dt>Purpose</dt><dd>—</dd>
                                 <dt>When</dt><dd>—</dd>
@@ -937,15 +935,14 @@ With Shary you deal with the developer directly at the developer price and plan,
                                 <dt>Follow-up</dt><dd>—</dd>
                             </dl>
                                                             <p class="fw-bold mt-3 mb-1">Saw</p>
-                                <ul class="mb-0"><li class="fw-bold"><a href="https://shary.eg/en/v2/project/Ghazala-Bay/bo-islands" target="_blank" rel="noopener">Bo Islands</a> — 12,330,000</li><li class="fw-bold"><a href="https://shary.eg/en/v2/project/Al-Alamein/north-edge" target="_blank" rel="noopener">North Edge</a> — 13,490,000</li><li class="fw-bold"><a href="https://shary.eg/en/v2/project/Sidi-Abdel-Rahman/stella-heights" target="_blank" rel="noopener">Stella Heights</a> — 16,970,000</li><li class="fw-bold"><a href="https://shary.eg/en/v2/project/Sheikh-Zayed-City-10/cairo-gate" target="_blank" rel="noopener">Cairo Gate</a> — 14,980,000</li><li class="fw-bold"><a href="https://shary.eg/en/v2/project/Madinaty/celia" target="_blank" rel="noopener">Celia</a> — 9,270,000</li></ul>
+                                <ul class="mb-0"><li class="fw-bold"><a href="https://shary.eg/ar/for-sale/شقة/Fifth-Settlement/شقة-120م-للبيع-جارنيت-5012" target="_blank" rel="noopener">شقة 120 م² في جارنيت</a> — 6,715,000</li></ul>
                                                     </div>
                     </div>
 
-                    
                     <div class="card">
                         <div class="card-header"><h5 class="card-title">Status & team note</h5></div>
                         <div class="card-body">
-                            <form method="post" action="#preview/admin/shary/ai/conversations/721" class="row g-2" data-no-draft>
+                            <form method="post" action="#preview/admin/shary/ai/conversations/725" class="row g-2" data-no-draft>
                                 <input type="hidden" name="_token" value="preview" autocomplete="off">                                <div class="col-6"><label class="form-label fw-bold">Status</label>
                                     <select name="status" class="form-control" data-sx-pick="off"><option value="open" selected>Open</option><option value="follow" >Following up</option><option value="won" >Deal closed 🎉</option><option value="lost" >Not interested</option><option value="done" >Done</option></select></div>
                                 <div class="col-6"><label class="form-label fw-bold">Owner</label><input name="assigned" class="form-control" maxlength="120" value=""></div>
@@ -1060,7 +1057,7 @@ With Shary you deal with the developer directly at the developer price and plan,
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

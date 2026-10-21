@@ -1,13 +1,3 @@
-/*
- * «التصميمات» — draws a design of the agent (its «spec»: App\Shary\Agent\Designs::build) on a canvas, in the browser:
- * the photo, the shapes, the stack of words (Cairo, bold, right to left) and the logo. The same drawing is made in Figma by «بلجن شاري».
- *
- *   <canvas data-sh-design="{spec, assets: {photo, logo}}">   drawn when the page opens (a small canvas = a thumbnail, same drawing scaled)
- *   ShDesign.draw(canvas, spec, assets, width)                   → Promise
- *   ShDesign.blob(spec, assets)                                  → Promise<Blob> the full-size PNG («ارفعه على الموقع», «نزّله»)
- *   <form data-sh-upload="url">                                  «ارفعه»: the full-size picture is drawn and sent with the form
- *   <div data-sh-store="url">                                    the page sends the picture of a version drawn for the first time
- */
 (function () {
     'use strict';
 
@@ -48,7 +38,6 @@
     };
     var fillOf = function (ctx, fill, layer) {
         if (!fill || typeof fill === 'string') { return rgba(fill || '#000000', 1); }
-        // linear: angle as in CSS (0 = towards the top, 90 = towards the right …), stops [colour, alpha, position]
         var angle = (fill.angle || 0) * Math.PI / 180;
         var cx = layer.x + layer.w / 2, cy = layer.y + layer.h / 2;
         var dx = Math.sin(angle), dy = -Math.cos(angle);
@@ -58,7 +47,6 @@
         return gradient;
     };
 
-    /* the lines of a text in a width (by words), the size made smaller until it fits its lines */
     var wrap = function (ctx, text, size, weight, width, maxLines) {
         var words = String(text || '').split(/\s+/).filter(Boolean);
         var tries = 0;
@@ -95,7 +83,6 @@
                 return { item: item, lines: fit.lines, size: fit.size, h: fit.lines.length * fit.size * (item.lh || 1.3) };
             });
         };
-        // everything smaller together until the words fit their box (the same rule as «بلجن شاري» in Figma)
         var k = 1, gap, total, parts;
         for (var round = 0; round < 8; round++) {
             parts = measure(k);
@@ -140,7 +127,6 @@
             ctx.drawImage(logo, layer.align === 'left' ? layer.x : layer.x + layer.w - w, layer.y + (layer.h - h) / 2, w, h);
             return;
         }
-        // Shary's mark (as in the dashboard) and its name
         var r = layer.h / 2;
         var name = layer.lang === 'en' ? 'Shary' : 'شاري';
         ctx.save();
@@ -204,7 +190,6 @@
         });
     };
 
-    // the full-size picture: JPEG 92% to send (small enough for any upload limit, made WebP by the server), PNG to download
     var blob = function (spec, assets, type, quality) {
         var canvas = document.createElement('canvas');
         return draw(canvas, spec, assets, spec.w).then(function () {
@@ -217,7 +202,6 @@
     var token = (document.querySelector('meta[name=csrf-token]') || {}).content || '';
     var data = function (node, name) { try { return JSON.parse(node.getAttribute(name) || '{}'); } catch (error) { return {}; } };
 
-    // every design on the page
     Array.prototype.forEach.call(document.querySelectorAll('canvas[data-sh-design]'), function (canvas) {
         var design = data(canvas, 'data-sh-design');
         if (!design.spec) { return; }
@@ -225,7 +209,6 @@
         draw(canvas, design.spec, design.assets, width).then(function () { canvas.classList.add('is-drawn'); });
     });
 
-    // a version drawn for the first time: its picture goes to the server (the list, Figma-less «ارفعه», the WhatsApp line)
     var store = document.querySelector('[data-sh-store]');
     if (store) {
         var first = data(store, 'data-sh-design');
@@ -239,7 +222,6 @@
         }
     }
 
-    // «ارفعه على الموقع»: the full-size picture is drawn now and sent with the choice of place
     Array.prototype.forEach.call(document.querySelectorAll('form[data-sh-upload]'), function (form) {
         form.addEventListener('submit', function (event) {
             event.preventDefault();
@@ -262,7 +244,6 @@
         });
     });
 
-    // a ready order of «اطلب تصميم»: its words and its kind into the form
     document.addEventListener('click', function (event) {
         var chip = event.target.closest('[data-sh-brief]');
         if (!chip || !chip.form && !chip.closest('form')) { return; }
@@ -271,7 +252,6 @@
         if (form.elements.kind && chip.getAttribute('data-sh-kind')) { form.elements.kind.value = chip.getAttribute('data-sh-kind'); }
     });
 
-    // «نزّله»: the full-size PNG
     document.addEventListener('click', function (event) {
         var link = event.target.closest('[data-sh-download]');
         if (!link) { return; }

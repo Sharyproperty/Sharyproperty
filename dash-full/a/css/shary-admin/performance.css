@@ -1,4 +1,7 @@
-/* «لوحة الأداء» (shary_admin/agent/performance-board.blade.php) — نفس ألوان لوحة التحكم ، خط Cairo بولد ، موبايل وديسكتوب */
+/*
+ * Performance board (shary_admin/agent/performance-board.blade.php): dashboard colours, bold Cairo font, mobile and
+ * desktop layouts.
+ */
 .pf {
   --pf-ink: #0f2233;
   --pf-ink2: #3f5164;
@@ -9,7 +12,7 @@
   --pf-bg: #f4f7fb;
   --pf-navy: #1E4266;
   --pf-teal: #4CBFB2;
-  /* ألوان الرسومات (متراجعة لعمى الألوان): أزرق ، تيل ، دهبي ، بنفسجي ، وردي + رمادي لـ «تاني» */
+  /* Chart palette, checked for colour blindness: blue, teal, gold, purple, pink, plus grey for the Other bucket. */
   --pf-c1: #2B5C99;
   --pf-c2: #2FA396;
   --pf-c3: #D68A12;
@@ -39,7 +42,7 @@
 
 .pf-note { background: #fff8e6; border: 1px solid #f3dca4; color: #6b4a00; border-radius: 12px; padding: 10px 14px; font-size: 14px; margin-bottom: 14px; }
 
-/* المؤشرات */
+/* KPI tiles */
 .pf-kpis { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-bottom: 14px; }
 .pf-kpi { position: relative; background: var(--pf-card); border: 1px solid var(--pf-line); border-radius: 16px; padding: 14px 14px 10px; display: flex; flex-direction: column; gap: 2px; overflow: hidden; min-height: 132px; }
 .pf-kpi__label { font-size: 13px; color: var(--pf-muted); font-weight: 700; }
@@ -49,7 +52,7 @@
 .pf-delta--down { background: var(--pf-bad-bg); color: var(--pf-bad); }
 .pf-spark { width: 100%; height: 32px; margin-top: auto; overflow: visible; }
 
-/* الكروت */
+/* Cards */
 .pf-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .pf-card { background: var(--pf-card); border: 1px solid var(--pf-line); border-radius: 18px; padding: 16px 18px; min-width: 0; }
 .pf-span2 { grid-column: span 2; }
@@ -58,7 +61,7 @@
 .pf-muted { color: var(--pf-muted); font-size: 13px; font-weight: 700; }
 .pf-empty { color: var(--pf-muted); font-size: 14px; padding: 26px 6px; text-align: center; }
 
-/* الخط */
+/* Line chart */
 .pf-line { position: relative; height: 230px; }
 .pf-line--sm { height: 130px; margin-top: 10px; }
 .pf-line svg { width: 100%; height: 100%; display: block; overflow: visible; }
@@ -69,7 +72,7 @@
 .pf-legend i { display: inline-block; width: 16px; height: 0; border-top: 3px solid var(--pf-c1); vertical-align: middle; margin-inline-end: 6px; border-radius: 2px; }
 .pf-legend i.is-prev { border-top: 2px dashed var(--pf-c6); }
 
-/* الدواير */
+/* Donut charts */
 .pf-donut { display: flex; align-items: center; gap: 16px; }
 .pf-donut svg { width: 136px; height: 136px; flex: none; }
 .pf-donut__total { font-size: 19px; font-weight: 800; fill: var(--pf-ink); font-family: inherit; }
@@ -83,7 +86,7 @@
 .pf-donut path { transition: opacity .15s; }
 .pf-donut path:hover { opacity: .85; }
 
-/* السرعة */
+/* Speed gauges */
 .pf-speed { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .pf-gauge { text-align: center; }
 .pf-gauge svg { width: 104px; height: 104px; }
@@ -92,14 +95,14 @@
 .pf-gauge__tag { display: inline-block; font-size: 11px; font-weight: 800; border-radius: 999px; padding: 0 8px; margin-top: 3px; }
 .pf-gauge__meta { font-size: 11px; color: var(--pf-muted); margin-top: 4px; line-height: 1.6; }
 
-/* أرقام صغيرة */
+/* Small stats */
 .pf-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
 .pf-stat { background: var(--pf-bg); border-radius: 12px; padding: 10px 12px; }
 .pf-stat span { display: block; font-size: 12px; color: var(--pf-muted); font-weight: 700; }
 .pf-stat strong { font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .pf-stat small { font-size: 11px; font-weight: 800; margin-inline-start: 4px; }
 
-/* أعمدة أفقية */
+/* Horizontal bars */
 .pf-bars { display: grid; gap: 9px; }
 .pf-bar { display: grid; grid-template-columns: minmax(90px, 34%) minmax(0, 1fr) auto; align-items: center; gap: 10px; font-size: 13px; }
 .pf-bar .nm { color: var(--pf-ink2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -107,13 +110,13 @@
 .pf-bar .fl { display: block; height: 100%; background: var(--pf-c1); border-radius: 0 6px 6px 0; min-width: 2px; }
 .pf-bar .vl { font-weight: 800; font-variant-numeric: tabular-nums; min-width: 40px; text-align: left; }
 
-/* القمع */
+/* Funnel */
 .pf-funnel { display: grid; gap: 8px; }
 .pf-step { display: grid; grid-template-columns: 120px minmax(0, 1fr); align-items: center; gap: 10px; font-size: 13px; }
 .pf-step .nm { color: var(--pf-ink2); font-weight: 700; }
 .pf-step .fl { height: 30px; border-radius: 8px; background: var(--pf-c1); color: #fff; font-weight: 800; display: flex; align-items: center; padding-inline: 10px; min-width: 64px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-/* الحلقة والتقدم */
+/* Ring and progress */
 .pf-ring { display: flex; align-items: center; gap: 16px; }
 .pf-ring svg { width: 128px; height: 128px; flex: none; }
 .pf-progress { margin-top: 2px; }
@@ -121,7 +124,7 @@
 .pf-progress__track { height: 12px; border-radius: 6px; background: var(--pf-grid); overflow: hidden; }
 .pf-progress__fill { height: 100%; background: var(--pf-c2); border-radius: 6px; }
 
-/* الصفحات */
+/* Pages list */
 .pf-pages { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; counter-reset: pf; }
 .pf-pages li { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto; gap: 10px; align-items: center; font-size: 13px; padding: 7px 10px; border-radius: 10px; background: var(--pf-bg); counter-increment: pf; }
 .pf-pages li::before { content: counter(pf); font-weight: 800; color: var(--pf-muted); text-align: center; }
@@ -152,7 +155,7 @@
   .pf-step { grid-template-columns: 92px minmax(0, 1fr); }
 }
 
-/* إعدادات اللينك والإيميل (جوه لوحة التحكم بس) */
+/* Link and email settings (dashboard only). */
 .pf-settings { font-family: Cairo, Tahoma, Arial, sans-serif; }
 .pf-set-title { font-size: 17px; font-weight: 800; color: #1E4266; margin: 0 0 12px; }
 .pf-set-grid { display: grid; grid-template-columns: 1.3fr 1fr 0.9fr; gap: 22px; }

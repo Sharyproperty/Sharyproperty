@@ -1,7 +1,3 @@
-/**
- * شاشة Shary AI: سؤال تجريبي
- * الصفحة: resources/views/shary_admin/ai/index.blade.php
- */
 (function () {
     var go = document.getElementById('saiGo'), input = document.getElementById('saiQuestion');
     if (!go || !input) return;

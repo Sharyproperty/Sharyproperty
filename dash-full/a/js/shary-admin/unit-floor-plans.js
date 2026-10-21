@@ -1,8 +1,3 @@
-/**
- * فورم الوحدة: صور الدور / المسقط ومعاينتها
- * الصفحة: resources/views/shary_admin/units/form.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var card = document.getElementById('unit-floor-plans');
@@ -10,7 +5,6 @@
     var box = card.querySelector('[data-floor-rows]'), add = card.querySelector('[data-floor-add]'), list = card.querySelector('[data-floor-list]');
     var max = +box.getAttribute('data-floor-max') || 12;
     var noPreview = CONF.noPreview;
-    // معاينة الملف قبل الحفظ: صورة مصغّرة ، أو اسم ملف الـ PDF
     function preview(input) {
         var item = input.closest('[data-floor-item], [data-floor-row]');
         var holder = item && item.querySelector('[data-floor-preview-box]');
@@ -28,7 +22,6 @@
         holder.appendChild(img);
     }
     card.addEventListener('change', function (event) { if (event.target.matches('[data-floor-preview]')) preview(event.target); });
-    // الترتيب: ▲ / ▼ بيحرّكوا المخطط ، والرقم المخفي بيتعاد على حسب مكانه
     function renumber() { if (!list) return; list.querySelectorAll('[data-floor-item]').forEach(function (item, i) { var sort = item.querySelector('[data-floor-sort]'); if (sort) sort.value = i; }); }
     card.addEventListener('click', function (event) {
         var move = event.target.closest('[data-floor-move]');

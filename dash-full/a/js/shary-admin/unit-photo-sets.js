@@ -1,8 +1,3 @@
-/**
- * صور الوحدات حسب المشروع: اختيار المشروع / النوع / الوحدات والمعاينة
- * الصفحة: resources/views/shary_admin/unit_photo_sets/form.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var form = document.querySelector('[data-ps-form]');
@@ -17,14 +12,11 @@
         form.querySelectorAll('[name="unit_ids[]"]:checked').forEach(function (c) { q.append('unit_ids[]', c.value); });
         return q;
     }
-    // البحث في المشاريع
     form.querySelector('[data-ps-find]').addEventListener('input', function () {
         var q = this.value.trim().toLowerCase();
         Array.prototype.forEach.call(project.options, function (o) { o.hidden = q !== '' && o.text.toLowerCase().indexOf(q) === -1; });
     });
-    // تسويقية: لوحدات إعادة البيع / الإيجار بس
     function marketing() { var sale = (form.querySelector('[name=sale_type]:checked') || {}).value; form.querySelector('[data-ps-marketing]').hidden = sale === 'developer_sale'; }
-    // وحدات المشروع (للاختيار)
     function loadUnits() {
         if (!project.value) return;
         fetch(form.getAttribute('data-units') + '?compound_id=' + project.value, { credentials: 'same-origin', headers: { Accept: 'application/json' } }).then(function (r) { return r.json(); }).then(function (data) {
@@ -34,7 +26,6 @@
             preview();
         });
     }
-    // صور المشروع: بتتحمّل لما المشروع يتختار — مجمّعة: الصور العامة ، وبعدين صور كل نوع
     var proj = form.querySelector('[data-ps-proj]'), projList = proj.querySelector('[data-ps-proj-list]'), projCount = proj.querySelector('[data-ps-proj-count]');
     var projPicked = CONF.picked;
     function projCounter() { var n = projList.querySelectorAll('input:checked').length; projCount.textContent = n ? T.projPicked.replace(':n', n) : ''; }
@@ -54,7 +45,6 @@
     proj.addEventListener('change', projCounter);
     proj.querySelector('[data-ps-proj-all]').addEventListener('click', function () { projList.querySelectorAll('input').forEach(function (c) { c.checked = true; }); projCounter(); });
     proj.querySelector('[data-ps-proj-none]').addEventListener('click', function () { projList.querySelectorAll('input').forEach(function (c) { c.checked = false; }); projCounter(); });
-    // المعاينة: الوحدات اللي هتاخد الصور
     var timer;
     function preview() {
         clearTimeout(timer);
@@ -78,7 +68,6 @@
         if (event.target.matches('[data-ps-watch], [name="unit_ids[]"]')) preview();
     });
     form.querySelector('[name=model]').addEventListener('input', preview);
-    // ترتيب الصور (الأولى = الرئيسية)
     form.addEventListener('click', function (event) {
         var move = event.target.closest('[data-ps-move]');
         if (!move) return;
@@ -86,7 +75,6 @@
         if (step < 0 && item.previousElementSibling) list.insertBefore(item, item.previousElementSibling);
         if (step > 0 && item.nextElementSibling) list.insertBefore(item.nextElementSibling, item);
     });
-    // معاينة الصور الجديدة قبل الحفظ
     form.querySelector('[data-ps-new]').addEventListener('change', function () {
         var box = form.querySelector('[data-ps-new-thumbs]'); box.innerHTML = '';
         Array.prototype.forEach.call(this.files || [], function (f) { var img = document.createElement('img'); img.src = URL.createObjectURL(f); img.alt = ''; box.appendChild(img); });

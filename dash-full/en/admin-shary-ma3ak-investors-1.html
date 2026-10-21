@@ -69,7 +69,7 @@
         try {
             if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
                 document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
+                
                 var params = new URLSearchParams(location.search);
                 document.addEventListener('DOMContentLoaded', function () {
                     var keep = params.get('focus') && document.getElementById(params.get('focus'));
@@ -83,7 +83,7 @@
                             });
                         }
                     }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    
                     String(params.get('hide') || '').split(',').forEach(function (id) {
                         var drop = id && document.getElementById(id.trim());
                         if (drop) drop.style.display = 'none';
@@ -107,10 +107,10 @@
     })();
 </script>
 <script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
+
 if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
+
+
 (function () {
     var KEY = 'shary-app-mode', on = false;
     try {
@@ -120,11 +120,11 @@ if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.te
     } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
     if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
 })();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
+
 window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
 window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+
+
 document.addEventListener('DOMContentLoaded', function () {
     var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
     for (i = 0; i < els.length; i++) {
@@ -162,7 +162,7 @@ document.addEventListener('error', function (e) {
     html.sx-embed body { background: #fff !important; }
     html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
     html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
+    
     html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
     html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
     html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
@@ -171,7 +171,18 @@ document.addEventListener('error', function (e) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
 <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-       </head>
+             <style>
+            body.sx .ma3ak-money-review { border: 2px solid #f0d49a !important; }
+            body.sx .ma3ak-money-review > .card-header { background: #fffaee; }
+            body.sx .ma3ak-money-doc { height: 100%; padding: 12px; border: 1px solid var(--sx-line); border-radius: 14px; background: #fbfcfe; }
+            body.sx .ma3ak-money-doc img.ma3ak-file { width: 100%; max-height: 240px; object-fit: contain; }
+            body.sx .ma3ak-money-doc .ma3ak-file-box { min-height: 150px; }
+            body.sx .ma3ak-money-place + .ma3ak-money-place { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--sx-line); }
+            body.sx .page-wrapper label.ma3ak-money-choice { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-weight: 700; cursor: pointer; }
+            body.sx .ma3ak-money-choice input { flex: none; width: 19px; height: 19px; margin: 0; accent-color: var(--sx-navy); }
+        </style>
+            <link rel="stylesheet" href="../a/css/shary-admin/ma3ak.css">
+      </head>
   <body class="sx" dir="ltr">
  <div id="global-loader" >
     <div class="whirly-loader"> </div>
@@ -197,7 +208,7 @@ document.addEventListener('error', function (e) {
 <b>57</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-        <a class="sx-lang" href="../admin-shary-leads-79.html" data-sx-lang="1" lang="ar">عربي</a>
+        <a class="sx-lang" href="../admin-shary-ma3ak-investors-1.html" data-sx-lang="1" lang="ar">عربي</a>
         <details class="sx-user" data-sx-user>
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
@@ -236,11 +247,11 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">10</b>                    </a>
+                        <b class="sx-tag">8</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
-                        <b class="sx-tag">106</b>                    </a>
+                        <b class="sx-tag">107</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -312,15 +323,15 @@ document.addEventListener('error', function (e) {
                                                                 
                                                         </ul>
                     </div>
-                                                <h6 class="sx-nav__title">Daily work</h6>                                                <div class="sx-grp is-on is-open" data-sx-grp="requests">
-                        <button type="button" aria-expanded="true" aria-controls="sx-grp-requests">
+                                                <h6 class="sx-nav__title">Daily work</h6>                                                <div class="sx-grp " data-sx-grp="requests">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>Requests &amp; messages</span>
-                            <b class="sx-tag">64</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">72</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="is-on"  aria-current="page" ><span>All requests (one inbox)</span><b class="sx-tag">64</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">72</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
                                                             
@@ -385,7 +396,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">2</b></a></li>
+                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">3</b></a></li>
                                                             
                                                                                                 <li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
                                                     </ul>
@@ -571,7 +582,7 @@ document.addEventListener('error', function (e) {
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">48</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">60</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
@@ -579,7 +590,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">41</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">7</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">19</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -604,6 +615,8 @@ document.addEventListener('error', function (e) {
                         <ul id="sx-grp-app">
                                                             
                                                                                                 <li><a href="admin-shary-app-pages.html" class="" ><span>Service pages on the website</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-app-settings.html" class="" ><span>App status &amp; payment methods</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
                                                             
@@ -732,15 +745,15 @@ document.addEventListener('error', function (e) {
                                                                                                 <li><a href="admin-shary-ma3ak-transactions.html" class="" ><span>Wallet transactions</span></a></li>
                                                     </ul>
                     </div>
-                                                                <div class="sx-grp " data-sx-grp="ma3ak_investors">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_investors">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="ma3ak_investors">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-ma3ak_investors">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 10.5-5.1"/><path d="m14.5 19.5 3-3 2 2 3-3.5"/></svg>
                             <span>Investors</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ma3ak_investors">
                                                             
-                                                                                                <li><a href="admin-shary-ma3ak-investors.html" class="" ><span>All investors</span></a></li>
+                                                                                                <li><a href="admin-shary-ma3ak-investors.html" class="is-on"  aria-current="page" ><span>All investors</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-ma3ak-investors_identity_pending.html" class="" ><span>Identity review</span></a></li>
                                                             
@@ -847,11 +860,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                token: "lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -861,144 +874,285 @@ document.addEventListener('error', function (e) {
         <script src="../a/js/shary-admin/editor.js"></script>
         
              
-    <template data-sx-crumb><div class="sx-crumb">Requests &amp; messages ‹ All requests (one inbox)</div></template>
+    <template data-sx-crumb><div class="sx-crumb">Investors ‹ All investors</div></template>
 
-                    <div class="page-wrapper">
+                
+            <div class="page-wrapper" id="sx-main">
         <div class="content">
-            <div class="page-title">
-                <h4>Request details — #79</h4>
-                <h6><a href="admin-shary-leads.html">← Back to the inbox</a></h6>
+            <div class="page-header">
+    <div class="page-title">
+        <h4>Demo Customer</h4>
+        <h6>The investor’s file: identity, wallet, investments and everything done on the account.</h6>        <h6><a href="admin-shary-ma3ak-investors.html">← Back to the investors</a></h6>    </div>
+            <div class="page-btn">
+                            <a class="btn btn btn-added" href="admin-shary-ma3ak-investments-create_user_id_1.html">+ Record an investment for this investor</a>
+                    </div>
+    </div>
+
+                        
+            
+            <div class="sx-grid">
+                <div class="sx-tile">
+                    <span class="n">0</span>
+                    <b>Wallet balance (EGP)</b>
+                                    </div>
+                <div class="sx-tile">
+                    <span class="ma3ak-label">Identity</span>
+                    <b>Not uploaded</b>
+                                    </div>
+                <div class="sx-tile">
+                    <span class="ma3ak-label">Shary Ma3ak sign-up</span>
+                    <b>Not finished yet</b>
+                    <small>Missing: Mobile verification, Secret code (PIN), Identity documents, Address</small>                </div>
+                <div class="sx-tile">
+                    <span class="n">0</span>
+                    <b>His investments</b>
+                                    </div>
             </div>
 
-            
             <div class="row">
-                <div class="col-lg-8">
-                    <div class="card mb-3">
-                        <div class="card-header"><strong>Customer</strong></div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6"><p><b>Name:</b> عايز اكلم حد</p></div>
-                                <div class="col-sm-6">
-                                    <p><b>Mobile:</b>
-                                                                                    <a href="tel:+201001234567" dir="ltr">+201001234567</a>
-                                            &nbsp;·&nbsp;<a href="https://wa.me/201001234567" target="_blank" rel="noopener">WhatsApp</a>
-                                                                            </p>
-                                </div>
-                                <div class="col-sm-6"><p><b>Form:</b> Shary AI — &quot;have an advisor call me&quot;</p></div>
-                                <div class="col-sm-6"><p><b>Date:</b> 2026-10-20 03:20</p></div>
-                                <div class="col-sm-12">
-                                    <p><b>Sent from page:</b>
-                                        
-                                                                                    <a href="https://shary.eg/ar" target="_blank" rel="noopener" dir="ltr" style="word-break: break-all;">https://shary.eg/ar</a>
-                                                                            </p>
-                                </div>
+                <div class="col-lg-7">
+                    <div class="card" id="identity">
+    <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <strong>Identity documents</strong>
+        <span class="badge bg-secondary">Not uploaded</span>
+    </div>
+    <div class="card-body">
+                    <p class="text-muted mb-0">He has not uploaded identity documents from the app yet.</p>
+        
+            </div>
+</div>
+
+                    <div class="card">
+    <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <strong>His investments</strong>
+            </div>
+    <div class="card-body">
+                    <p class="text-muted mb-0">No investments yet.</p>
+            </div>
+</div>
+
+                    <div class="card">
+    <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <strong>His receipts</strong>
+            </div>
+    <div class="card-body">
+                    <p class="text-muted mb-0">He has not sent transfer receipts yet.</p>
+            </div>
+</div>
+
+                    <div class="card">
+    <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <strong>Latest wallet movements</strong>
+            </div>
+    <div class="card-body">
+                    <p class="text-muted mb-0">No wallet movements yet.</p>
+            </div>
+</div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card">
+    <div class="card-header"><strong>Investor details</strong></div>
+    <div class="card-body">
+        <table class="table mb-0 ma3ak-kv sx-no-search">
+            <tbody>
+            <tr><th>Name</th><td>Demo Customer</td></tr>
+            <tr>
+                <th>Shary account</th>
+                <td>
+                    Demo Customer
+                    <span class="ma3ak-sub">User number 1</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Mobile</th>
+                <td>
+                                            <span dir="ltr">+201012345678</span>
+                                                    <span class="badge bg-secondary">Not verified</span>
+                                                                                    </td>
+            </tr>
+            <tr><th>Email</th><td><span dir="ltr">name@example.com</span></td></tr>
+            <tr><th>Joined</th><td><span dir="ltr">2026-10-21 18:30</span></td></tr>
+            <tr>
+                <th>Invitation code</th>
+                <td>
+                    <span dir="ltr">DEMO-BYLD</span>                                    </td>
+            </tr>
+            <tr><th>Invited by</th><td> — </td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+                    <div class="card" id="wallet">
+    <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <strong>Wallet</strong>
+        <a class="btn btn-sm btn-secondary" href="admin-shary-ma3ak-transactions_profile_id_1.html">Movements</a>
+    </div>
+    <div class="card-body">
+        <span class="ma3ak-label">Current balance</span>
+        <div class="ma3ak-figure">0 <small>EGP</small></div>
+        
+                    <form method="post" action="#preview/admin/shary/ma3ak/investors/1/wallet/adjust" class="ma3ak-split">
+                <input type="hidden" name="_token" value="preview" autocomplete="off">                <span class="ma3ak-label">Balance correction</span>
+                <small class="text-muted d-block mb-2">For corrections by hand only: a compensation, refunding a cancelled investment, or fixing a mistake. Every correction is recorded under your name.</small>
+                <div class="form-group">
+                    <label for="ma3ak-adjust-amount">Amount (EGP) <span class="manitory">*</span></label>
+                    <input type="number" class="form-control" id="ma3ak-adjust-amount" name="amount" value="" step="0.01" min="0.01" dir="ltr" required>
+                </div>
+                <div class="form-group">
+                    <label id="ma3ak-adjust-direction">Correction type <span class="manitory">*</span></label>
+                    <div class="ma3ak-row gap-3" role="radiogroup" aria-labelledby="ma3ak-adjust-direction">
+                        <label class="ma3ak-money-choice"><input type="radio" name="direction" value="add" required > Add to the balance</label>
+                        <label class="ma3ak-money-choice"><input type="radio" name="direction" value="deduct" > Deduct from the balance</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ma3ak-adjust-reason">Correction reason <span class="manitory">*</span></label>
+                    <input type="text" class="form-control" id="ma3ak-adjust-reason" name="reason" value="" maxlength="170" required placeholder="Example: refund of a cancelled investment">
+                    <small class="text-muted d-block mt-1">The investor sees it in his wallet movements in the app, so write it so it reads well.</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Review the correction</button>
+                <small class="text-muted d-block mt-2">Nothing happens yet: you will see a summary of the correction first and confirm it.</small>
+            </form>
+            </div>
+</div>
+
+                    <div class="card">
+    <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+        <strong>Sign-up steps</strong>
+                    <span class="badges bg-lightyellow">Incomplete</span>
+            </div>
+    <div class="card-body">
+        <table class="table mb-0 ma3ak-kv sx-no-search">
+            <tbody>
+                            <tr>
+                    <th>Personal details</th>
+                    <td>
+                                                    <span class="badges bg-lightgreen">Done</span>
+                                            </td>
+                </tr>
+                            <tr>
+                    <th>Mobile verification</th>
+                    <td>
+                                                    <span class="badges bg-lightyellow">Missing, required</span>
+                                            </td>
+                </tr>
+                            <tr>
+                    <th>Email</th>
+                    <td>
+                                                    <span class="badges bg-lightgreen">Done</span>
+                                            </td>
+                </tr>
+                            <tr>
+                    <th>Secret code (PIN)</th>
+                    <td>
+                                                    <span class="badges bg-lightyellow">Missing, required</span>
+                                            </td>
+                </tr>
+                            <tr>
+                    <th>Face / fingerprint</th>
+                    <td>
+                                                    <span class="badge bg-secondary">Missing (optional)</span>
+                                            </td>
+                </tr>
+                            <tr>
+                    <th>Identity documents</th>
+                    <td>
+                                                    <span class="badges bg-lightyellow">Missing, required</span>
+                                            </td>
+                </tr>
+                            <tr>
+                    <th>Payment card</th>
+                    <td>
+                                                    <span class="badge bg-secondary">Missing (optional)</span>
+                                            </td>
+                </tr>
+                            <tr>
+                    <th>Address</th>
+                    <td>
+                                                    <span class="badges bg-lightyellow">Missing, required</span>
+                                            </td>
+                </tr>
+                        </tbody>
+        </table>
+            </div>
+</div>
+
+                    <div class="card">
+    <div class="card-header"><strong>Address</strong></div>
+    <div class="card-body">
+                    <p class="text-muted mb-0">No address written yet.</p>
+            </div>
+</div>
+
+                    <div class="card">
+    <div class="card-header"><strong>Saved cards</strong></div>
+    <div class="card-body">
+                    <p class="text-muted mb-0">No saved cards.</p>
+                <small class="text-muted d-block mt-2">We keep only the last 4 digits and the expiry date, never the full card number.</small>
+    </div>
+</div>
+
+                    <div class="card">
+    <div class="card-header"><strong>Account control</strong></div>
+    <div class="card-body">
+        <span class="ma3ak-label">Secret code (PIN)</span>
+                    <p class="text-muted mb-0">The investor has not created a secret code yet.</p>
+        
+        
+        <div class="ma3ak-split" id="phone">
+            <span class="ma3ak-label">Change the mobile number (support)</span>
+            <p class="text-muted mb-2">For an investor who lost the old number and cannot receive its code in the app. First make sure this is the account holder (identity documents, a call), then type the new number.</p>
+                            <form method="post" action="#preview/admin/shary/ma3ak/investors/1/phone" data-ma3ak-confirm="You are changing the mobile number of Demo Customer, and the old number will no longer work on this account.
+Did you check the identity?">
+                    <input type="hidden" name="_token" value="preview" autocomplete="off">                    <div class="row g-2">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label for="ma3ak-phone-cc">Country code <span class="manitory">*</span></label>
+                                <input type="text" class="form-control" id="ma3ak-phone-cc" name="country_code" value="+20" maxlength="6" dir="ltr" required>
+                            </div>
+                        </div>
+                        <div class="col-8">
+                            <div class="form-group">
+                                <label for="ma3ak-phone-new">New number <span class="manitory">*</span></label>
+                                <input type="tel" class="form-control" id="ma3ak-phone-new" name="phone" value="" maxlength="20" dir="ltr" inputmode="tel" required placeholder="01xxxxxxxxx">
                             </div>
                         </div>
                     </div>
-
-                    <div class="card mb-3">
-                        <div class="card-header"><strong>Form data</strong></div>
-                        <div class="card-body">
-                                                            <div class="table-responsive">
-                                    <table class="table mb-0">
-                                        <tbody>
-                                                                                    <tr>
-                                                <th style="width: 30%; white-space: normal;">Source</th>
-                                                <td style="white-space: pre-line; word-break: break-word;">shary-ai</td>
-                                            </tr>
-                                                                                    <tr>
-                                                <th style="width: 30%; white-space: normal;">Page language</th>
-                                                <td style="white-space: pre-line; word-break: break-word;">ar</td>
-                                            </tr>
-                                                                                </tbody>
-                                    </table>
-                                </div>
-                            
-                                                            <details class="mt-3">
-                                    <summary>Raw form values</summary>
-                                    <pre dir="ltr" class="text-start mt-2 mb-0" style="white-space: pre-wrap; word-break: break-word;">{
-    &quot;name&quot;: &quot;عايز اكلم حد&quot;,
-    &quot;phone&quot;: &quot;01001234567&quot;,
-    &quot;country_code&quot;: &quot;+20&quot;,
-    &quot;message&quot;: &quot;&quot;,
-    &quot;source&quot;: &quot;shary-ai&quot;,
-    &quot;form&quot;: &quot;ai-lead&quot;,
-    &quot;session&quot;: &quot;httptest1go8ekbd8t&quot;,
-    &quot;context&quot;: [],
-    &quot;answers&quot;: []
-}</pre>
-                                </details>
-                            
-                                                    </div>
+                    <div class="form-group">
+                        <label class="ma3ak-money-choice"><input type="checkbox" name="identity_checked" value="1" required> I made sure this is the account holder (identity documents / a call)</label>
+                    </div>
+                    <p class="ma3ak-effect">The new number is saved as verified at once, &quot;Forgot PIN&quot; stays closed for 24 hours after it, and the change is written in the activity log.</p>
+                    <button type="submit" class="btn btn-secondary">Change the number</button>
+                </form>
                     </div>
 
-                                            <div class="card mb-3">
-                            <div class="card-header"><strong>Record in the existing system</strong></div>
-                            <div class="card-body">
-                                <p>
-                                    <b>Table:</b> <span dir="ltr">contact_us_messages #30</span>
-                                                                            &nbsp;—&nbsp;<a href="ContactUs.html" target="_blank">Open its screen in the dashboard</a>
-                                                                    </p>
-                                                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <tbody>
-                                                                                            <tr>
-                                                    <th style="width: 30%;" dir="ltr">id</th>
-                                                    <td style="white-space: pre-line; word-break: break-word;">30</td>
-                                                </tr>
-                                                                                            <tr>
-                                                    <th style="width: 30%;" dir="ltr">name</th>
-                                                    <td style="white-space: pre-line; word-break: break-word;">عايز اكلم حد</td>
-                                                </tr>
-                                                                                            <tr>
-                                                    <th style="width: 30%;" dir="ltr">phone</th>
-                                                    <td style="white-space: pre-line; word-break: break-word;">01001234567</td>
-                                                </tr>
-                                                                                            <tr>
-                                                    <th style="width: 30%;" dir="ltr">message</th>
-                                                    <td style="white-space: pre-line; word-break: break-word;">Shary AI — طلب إن مستشار يكلمه</td>
-                                                </tr>
-                                                                                            <tr>
-                                                    <th style="width: 30%;" dir="ltr">contact_type</th>
-                                                    <td style="white-space: pre-line; word-break: break-word;">consultations</td>
-                                                </tr>
-                                                                                            <tr>
-                                                    <th style="width: 30%;" dir="ltr">created_at</th>
-                                                    <td style="white-space: pre-line; word-break: break-word;">2026-10-20 03:20:28</td>
-                                                </tr>
-                                                                                            <tr>
-                                                    <th style="width: 30%;" dir="ltr">updated_at</th>
-                                                    <td style="white-space: pre-line; word-break: break-word;">2026-10-20 03:20:28</td>
-                                                </tr>
-                                                                                        </tbody>
-                                        </table>
+        <div class="ma3ak-split">
+            <span class="ma3ak-label">Block the account</span>
+            <p class="text-muted mb-2">A blocked account cannot buy shares, top up or withdraw from the wallet in the app. His current investments and installments stay as they are.</p>
+                                                <form method="post" action="#preview/admin/shary/ma3ak/investors/1/block" class="ma3ak-inline"  data-ma3ak-confirm="You will block the account of Demo Customer: he cannot buy shares, top up or withdraw from the wallet in the app until you unblock it.
+Are you sure?" >
+    <input type="hidden" name="_token" value="preview" autocomplete="off">                <input type="hidden" name="blocked" value="1">
+                <button type="submit" class="btn btn-danger">Block the account</button>
+    </form>
                                     </div>
-                                                            </div>
-                        </div>
-                                    </div>
+    </div>
+</div>
 
-                <div class="col-lg-4">
-                    <div class="card mb-3">
-                        <div class="card-header"><strong>Follow-up</strong></div>
-                        <div class="card-body">
-                            <form action="#preview/admin/shary/leads/79/status" method="POST">
-                                <input type="hidden" name="_token" value="preview" autocomplete="off">                                <div class="form-group">
-                                    <label>Status <span class="manitory">*</span></label>
-                                    <select class="select form-control" name="status" required>
-                                                                                    <option value="new" selected>New</option>
-                                                                                    <option value="contacted" >Contacted</option>
-                                                                                    <option value="closed" >Closed</option>
-                                                                            </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Note</label>
-                                    <textarea class="form-control" name="note" rows="6" maxlength="5000"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-submit w-100">Save</button>
-                            </form>
-                            <p class="mt-3 mb-0 text-muted"><small>Last update: 2026-10-20 03:20</small></p>
-                        </div>
-                    </div>
+                    <div class="card">
+    <div class="card-header"><strong>Internal notes</strong></div>
+    <div class="card-body">
+        <form method="post" action="#preview/admin/shary/ma3ak/investors/1/note">
+            <input type="hidden" name="_token" value="preview" autocomplete="off">            <div class="form-group">
+                <label for="ma3ak-notes">The team’s notes about the investor</label>
+                <textarea class="form-control" id="ma3ak-notes" name="notes" rows="4" maxlength="5000"></textarea>
+                <small class="text-muted d-block mt-1">For the team only — the investor never sees them.</small>
+            </div>
+            <button type="submit" class="btn btn-secondary">Save the notes</button>
+        </form>
+    </div>
+</div>
                 </div>
             </div>
         </div>
@@ -1105,7 +1259,9 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
+            <script>window.SharyMa3ak = {"title":"Are you sure?","yes":"Yes, go ahead","no":"No, go back"};</script>
+        <script src="../a/js/shary-admin/ma3ak.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

@@ -1,11 +1,9 @@
-/* Shary dashboard agent — small behaviours of the screens (no library). */
 (function () {
     'use strict';
     var $ = function (selector, root) { return (root || document).querySelector(selector); };
     var $$ = function (selector, root) { return Array.prototype.slice.call((root || document).querySelectorAll(selector)); };
     var token = ($('meta[name="csrf-token"]') || {}).content || '';
 
-    // phone menu
     var burger = $('[data-ag-menu]');
     if (burger) {
         burger.addEventListener('click', function () {
@@ -14,7 +12,6 @@
         });
     }
 
-    // open / close dialogs: <button data-ag-open="id">, <button data-ag-close>
     document.addEventListener('click', function (event) {
         var opener = event.target.closest('[data-ag-open]');
         if (opener) {
@@ -30,19 +27,16 @@
             var parent = closer.closest('dialog');
             if (parent) { parent.close ? parent.close() : parent.removeAttribute('open'); }
         }
-        // show / hide a block: <button data-ag-toggle="id">
         var toggle = event.target.closest('[data-ag-toggle]');
         if (toggle) {
             var block = document.getElementById(toggle.getAttribute('data-ag-toggle'));
             if (block) { block.classList.toggle('hide'); if (!block.classList.contains('hide')) { var first = $('textarea, input:not([type=hidden])', block); if (first) { first.focus(); } } }
         }
-        // a ready phrase into a text box: <button data-ag-say="text" data-ag-into="id">
         var say = event.target.closest('[data-ag-say]');
         if (say) {
             var box = document.getElementById(say.getAttribute('data-ag-into') || 'ag-command');
             if (box) { box.value = say.getAttribute('data-ag-say'); box.focus(); box.setSelectionRange(box.value.length, box.value.length); }
         }
-        // copy a drafted reply
         var copy = event.target.closest('[data-ag-copy]');
         if (copy && navigator.clipboard) {
             navigator.clipboard.writeText(copy.getAttribute('data-ag-copy')).then(function () {
@@ -51,7 +45,6 @@
         }
     });
 
-    // one press only on forms that take time; a question first on forms that publish / cancel
     document.addEventListener('submit', function (event) {
         var form = event.target;
         var ask = form.getAttribute('data-ag-confirm');
@@ -63,10 +56,8 @@
         }
     });
 
-    // switches that save themselves
     $$('[data-ag-autosubmit]').forEach(function (input) { input.addEventListener('change', function () { input.form.submit(); }); });
 
-    // names of the chosen files
     $$('[data-ag-filelist]').forEach(function (input) {
         input.addEventListener('change', function () {
             var list = document.getElementById(input.getAttribute('data-ag-filelist'));
@@ -76,7 +67,6 @@
         });
     });
 
-    // the commands chat: send the order, then ask the agent to answer (the answer can take a minute or two)
     var chatForm = $('[data-ag-chat]');
     if (chatForm) {
         var thread = $('[data-ag-thread]');
@@ -113,11 +103,9 @@
                 .catch(function (error) { window.alert('الأمر ما اتبعتش: ' + error.message); })
                 .then(function () { button.disabled = false; });
         });
-        // an order that came from another screen (today / new page) and still waits for its answer
         if (chatForm.getAttribute('data-ag-pending')) { run(chatForm.getAttribute('data-ag-pending')); }
     }
 
-    // the row of the parts on a phone scrolls sideways: the part you are in is brought into view
     $$('.ag-hubnav').forEach(function (nav) {
         var on = $('a.is-on', nav);
         if (on && nav.scrollWidth > nav.clientWidth + 2) {

@@ -1,18 +1,11 @@
-/**
- * فورم الوحدة: الأجزاء الصغيرة اللي حوالين unit-form.js
- * الصفحة: resources/views/shary_admin/units/form.blade.php
- */
 (function () {
     var form = document.querySelector('[data-unit-form]');
     if (!form) { return; }
-    // ---- the sections (one page), the sections bar, folding, the drafts: public/js/shary-admin/unit-form.js
 
-    // ---- sale / rent: show the fields of the chosen type
     function type() {
         var checked = form.querySelector('[data-unit-type]:checked');
         var rent = checked && checked.value === 'rent';
         form.querySelectorAll('[data-unit-when]').forEach(function (el) { el.style.display = (el.getAttribute('data-unit-when') === 'rent') === rent ? '' : 'none'; });
-        // resale only / everything except resale (inside the sale fields)
         var resale = checked && checked.value === 'resale';
         form.querySelectorAll('[data-unit-sale]').forEach(function (el) {
             var show = (el.getAttribute('data-unit-sale') === 'resale') === resale;
@@ -20,7 +13,6 @@
             el.style.display = show ? '' : 'none';
         });
     }
-    // ---- the fields of each type: data-unit-show="developer_sale resale" (one or more types) — and the payment of a resale
     var pay = form.querySelector('[data-resale-pay]');
     var frequency = form.querySelector('[data-plan-frequency]');
     function show() {
@@ -42,11 +34,9 @@
     type();
     show();
 
-    // ---- down payment ⇄ its percent of the price (the percent is a helper: the amount is what is saved)
     var price = form.querySelector('[name="price"]');
     var amount = form.querySelector('[data-down-amount]');
     var percent = form.querySelector('[data-down-percent]');
-    // النسبة خانة مساعدة بس: لو الحساب طلع أكتر من 100% (مقدم أكبر من السعر في داتا قديمة) بتفضل فاضية — ما توقفش الحفظ
     function toPercent() { var p = parseFloat(price && price.value), a = parseFloat(amount && amount.value), r = p > 0 && a >= 0 && !isNaN(a) ? Math.round(a / p * 1000) / 10 : NaN; percent.value = r >= 0 && r <= 100 ? r : ''; }
     function toAmount() { var p = parseFloat(price && price.value), r = parseFloat(percent.value); if (p > 0 && r >= 0) { amount.value = Math.round(p * r / 100); } }
     if (price && amount && percent) {
@@ -56,7 +46,6 @@
         percent.addEventListener('input', toAmount);
     }
 
-    // ---- more payment plans: add / remove a row
     var plans = form.querySelector('[data-more-plans]');
     if (plans) {
         var rows = plans.querySelector('[data-more-plans-rows]');
@@ -77,7 +66,6 @@
         number();
     }
 
-    // ---- choosing a project fills its area and developer (both can still be changed)
     var project = form.querySelector('[data-unit-project]');
     function fill() {
         var option = project.options[project.selectedIndex];

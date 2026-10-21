@@ -69,7 +69,7 @@
         try {
             if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
                 document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
+                
                 var params = new URLSearchParams(location.search);
                 document.addEventListener('DOMContentLoaded', function () {
                     var keep = params.get('focus') && document.getElementById(params.get('focus'));
@@ -83,7 +83,7 @@
                             });
                         }
                     }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    
                     String(params.get('hide') || '').split(',').forEach(function (id) {
                         var drop = id && document.getElementById(id.trim());
                         if (drop) drop.style.display = 'none';
@@ -107,10 +107,10 @@
     })();
 </script>
 <script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
+
 if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
+
+
 (function () {
     var KEY = 'shary-app-mode', on = false;
     try {
@@ -120,11 +120,11 @@ if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.te
     } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
     if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
 })();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
+
 window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
 window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+
+
 document.addEventListener('DOMContentLoaded', function () {
     var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
     for (i = 0; i < els.length; i++) {
@@ -162,7 +162,7 @@ document.addEventListener('error', function (e) {
     html.sx-embed body { background: #fff !important; }
     html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
     html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
+    
     html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
     html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
     html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
@@ -171,7 +171,17 @@ document.addEventListener('error', function (e) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800&display=swap">
 <link rel="stylesheet" href="../a/css/shary-admin/shell.css">
-       </head>
+             <style>
+            body.sx .ma3ak-record-review { border: 2px solid #f0d49a !important; }
+            body.sx .ma3ak-record-review > .card-header { background: #fffaee; }
+            body.sx .ma3ak-record-list { margin: 6px 0 0; padding-inline-start: 20px; }
+            body.sx .ma3ak-record-pick { width: 19px; height: 19px; accent-color: var(--sx-navy); }
+            body.sx .page-wrapper label.ma3ak-record-name { margin: 0; font-weight: 800; cursor: pointer; }
+            body.sx .page-wrapper label.ma3ak-record-check { display: inline-flex; align-items: center; gap: 8px; margin: 0; font-weight: 800; cursor: pointer; }
+            body.sx .ma3ak-record-check input { width: 19px; height: 19px; accent-color: var(--sx-navy); }
+        </style>
+            <link rel="stylesheet" href="../a/css/shary-admin/ma3ak.css">
+      </head>
   <body class="sx" dir="ltr">
  <div id="global-loader" >
     <div class="whirly-loader"> </div>
@@ -197,7 +207,7 @@ document.addEventListener('error', function (e) {
 <b>57</b></a>
                 <a class="sx-ico" href="" target="_blank" rel="noopener" aria-label="Open the website" title="Open the website"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M14 5h5v5M19 5l-8 8"/><path d="M11 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-5"/></svg>
 </a>
-        <a class="sx-lang" href="../admin-shary-all-projects-5_tab_map.html" data-sx-lang="1" lang="ar">عربي</a>
+        <a class="sx-lang" href="../admin-shary-ma3ak-investments-create_user_id_1.html" data-sx-lang="1" lang="ar">عربي</a>
         <details class="sx-user" data-sx-user>
             <summary aria-label="Demo Admin"><i aria-hidden="true">D</i><span>Demo Admin</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="m6 9 6 6 6-6"/></svg>
 </summary>
@@ -236,11 +246,11 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">10</b>                    </a>
+                        <b class="sx-tag">8</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
-                        <b class="sx-tag">106</b>                    </a>
+                        <b class="sx-tag">107</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -316,11 +326,11 @@ document.addEventListener('error', function (e) {
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>Requests &amp; messages</span>
-                            <b class="sx-tag">64</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">72</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">64</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">72</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
                                                             
@@ -373,19 +383,19 @@ document.addEventListener('error', function (e) {
                                                                 
                                                         </ul>
                     </div>
-                                                                <div class="sx-grp is-on is-open" data-sx-grp="projects">
-                        <button type="button" aria-expanded="true" aria-controls="sx-grp-projects">
+                                                                <div class="sx-grp " data-sx-grp="projects">
+                        <button type="button" aria-expanded="false" aria-controls="sx-grp-projects">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 20V8l8-4 8 4v12"/><path d="M9 20v-6h6v6"/></svg>
                             <span>Projects</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-projects">
                                                             
-                                                                                                <li><a href="admin-compounds.html" class="is-on"  aria-current="page" ><span>All projects</span></a></li>
+                                                                                                <li><a href="admin-compounds.html" class="" ><span>All projects</span></a></li>
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">2</b></a></li>
+                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">3</b></a></li>
                                                             
                                                                                                 <li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
                                                     </ul>
@@ -571,7 +581,7 @@ document.addEventListener('error', function (e) {
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">48</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">60</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
@@ -579,7 +589,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">41</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">7</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">19</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -604,6 +614,8 @@ document.addEventListener('error', function (e) {
                         <ul id="sx-grp-app">
                                                             
                                                                                                 <li><a href="admin-shary-app-pages.html" class="" ><span>Service pages on the website</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-app-settings.html" class="" ><span>App status &amp; payment methods</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
                                                             
@@ -732,8 +744,8 @@ document.addEventListener('error', function (e) {
                                                                                                 <li><a href="admin-shary-ma3ak-transactions.html" class="" ><span>Wallet transactions</span></a></li>
                                                     </ul>
                     </div>
-                                                                <div class="sx-grp " data-sx-grp="ma3ak_investors">
-                        <button type="button" aria-expanded="false" aria-controls="sx-grp-ma3ak_investors">
+                                                                <div class="sx-grp is-on is-open" data-sx-grp="ma3ak_investors">
+                        <button type="button" aria-expanded="true" aria-controls="sx-grp-ma3ak_investors">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><circle cx="9" cy="7.5" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 10.5-5.1"/><path d="m14.5 19.5 3-3 2 2 3-3.5"/></svg>
                             <span>Investors</span>
                                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
@@ -746,7 +758,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-ma3ak-investments.html" class="" ><span>Investments</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ma3ak-investments-create.html" class="" ><span>Record a deal (new investment)</span></a></li>
+                                                                                                <li><a href="admin-shary-ma3ak-investments-create.html" class="is-on"  aria-current="page" ><span>Record a deal (new investment)</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-ma3ak-referrals.html" class="" ><span>Referrals &amp; rewards</span></a></li>
                                                     </ul>
@@ -847,11 +859,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                token: "lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -861,447 +873,63 @@ document.addEventListener('error', function (e) {
         <script src="../a/js/shary-admin/editor.js"></script>
         
              
-    <template data-sx-crumb><div class="sx-crumb">Projects ‹ All projects</div></template>
+    <template data-sx-crumb><div class="sx-crumb">Investors ‹ Record a deal (new investment)</div></template>
 
                 
-    <link rel="stylesheet" href="../a/css/shary-admin/project-hub.css">
-        <div class="page-wrapper shub">
+            <div class="page-wrapper" id="sx-main">
         <div class="content">
-            <div class="shub-head">
-                <div>
-                    <h4>ماونتن فيو آي سيتي</h4>
-                    <div class="shub-flags" data-flags data-url="#preview/admin/shary/all/projects/5/flag">
-                    <button type="button" class="shub-flag is-on is-site" data-flag="site" aria-pressed="true" title="لو اتشال: الصفحة تختفي من الموقع والتطبيق والبحث">
-                <span>على الموقع والتطبيق</span><i class="shub-sw" aria-hidden="true"></i>
-            </button>
-                    <button type="button" class="shub-flag is-on " data-flag="home:launches" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
-                <span>الرئيسية: أحدث الإطلاقات</span><i class="shub-sw" aria-hidden="true"></i>
-            </button>
-                    <button type="button" class="shub-flag is-on " data-flag="home:top_projects" aria-pressed="true" title="بيظهر الأول في القسم ده على الصفحة الرئيسية">
-                <span>الرئيسية: أفضل المشاريع</span><i class="shub-sw" aria-hidden="true"></i>
-            </button>
-                    <button type="button" class="shub-flag  " data-flag="footer" aria-pressed="false" title="لينك ليه في آخر كل صفحات الموقع">
-                <span>روابط الفوتر</span><i class="shub-sw" aria-hidden="true"></i>
-            </button>
-            </div>
-    <link rel="stylesheet" href="../a/css/shary-admin/project-flags.css">
-    <script src="../a/js/shary-admin/project-flags.js" data-conf="{&quot;token&quot;:&quot;lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6&quot;}"></script>
-                    <small>كل بيانات المشروع في الصفحة دي تحت بعض (17 أجزاء) — كل جزء ليه زرار حفظ ، وبيتحفظ في مكانه من غير ما تخرج من الصفحة.</small>
-                </div>
-                <div class="d-flex gap-2 flex-wrap align-items-center">
-                    
-                    <button type="button" class="btn btn-primary fw-bold" data-save-all disabled>💾 احفظ كل التعديلات</button>
-                    <span class="shub-dirty" data-dirty-note hidden></span>
-                    <a class="btn btn-outline-secondary" href="admin-compounds.html">← كل المشاريع</a>
-                                        <a class="btn btn-outline-primary" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">شوفه على الموقع ↗</a>                </div>
-            </div>
-
-            <div class="shub-layout">
-                <aside class="shub-aside">
-                                            <div class="shub-box shub-checks-box">
-                            <h5>الصفحة محتاجة إيه؟ <span class="shub-pill" data-score>79% كامل</span></h5>
-                            <div class="shub-meter mb-2 " data-meter><i style="width: 79%"></i></div>
-                            <ul class="shub-checks" data-checks>
-                                                                    <li class=""><i>✓</i>
-                                        <span>صورة المشروع</span>                                    </li>
-                                                                    <li class="is-miss"><i>!</i>
-                                        <button type="button" data-go="basic">وصف عربي</button>                                    </li>
-                                                                    <li class="is-miss"><i>!</i>
-                                        <button type="button" data-go="basic">وصف إنجليزي</button>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>المنطقة</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>المطور</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>مكانه على الخريطة (الدبوس)</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>ميعاد الاستلام</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>3 صور أو أكتر في المعرض</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>وحدات منشورة</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>المخطط العام</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>حدود المشروع على الخريطة</span>                                    </li>
-                                                                    <li class="is-miss"><i>!</i>
-                                        <button type="button" data-go="basic">أسئلة شائعة</button>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>مؤشر شاري (النمو / العائد)</span>                                    </li>
-                                                                    <li class=""><i>✓</i>
-                                        <span>وصف جوجل (السيو)</span>                                    </li>
-                                                            </ul>
-                            <small class="text-muted d-block mt-2">دوس على الناقص ← الصفحة تنزل للجزء بتاعه. القايمة بتتحدث لوحدها بعد كل حفظ.</small>
-                        </div>
-                                        <div class="shub-box">
-                        <h5>أجزاء الصفحة</h5>
-                        <nav class="shub-tabs" data-tabs aria-label="أجزاء الصفحة">
-                                                            <button type="button" data-tab="basic">
-                                    <b>1</b><span>البيانات الأساسية</span>
-                                    <em data-miss="basic" >ناقص 3</em>
-                                </button>
-                                                            <button type="button" data-tab="gallery">
-                                    <b>2</b><span>صور المشروع</span>
-                                    <em data-miss="gallery"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="masterplans">
-                                    <b>3</b><span>الماستر بلان والماستر بلان المفرّغ</span>
-                                    <em data-miss="masterplans"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="map">
-                                    <b>4</b><span>مكان المشروع والماستر بلان على الخريطة</span>
-                                    <em data-miss="map"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="labels">
-                                    <b>5</b><span>الكتابة والمراحل على الخريطة</span>
-                                    <em data-miss="labels"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="plans">
-                                    <b>6</b><span>خطط السداد على الموقع</span>
-                                    <em data-miss="plans"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="phases">
-                                    <b>7</b><span>المراحل</span>
-                                    <em data-miss="phases"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="indicators">
-                                    <b>8</b><span>مؤشر شاري للمشروع</span>
-                                    <em data-miss="indicators"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="nearby">
-                                    <b>9</b><span>الأماكن القريبة</span>
-                                    <em data-miss="nearby"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="units">
-                                    <b>10</b><span>وحدات المشروع</span>
-                                    <em data-miss="units"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="inherit">
-                                    <b>11</b><span>اللي بينزل على الوحدات لوحده</span>
-                                    <em data-miss="inherit"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="photosets">
-                                    <b>12</b><span>صور الوحدات حسب النوع</span>
-                                    <em data-miss="photosets"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="cta">
-                                    <b>13</b><span>زرار التواصل</span>
-                                    <em data-miss="cta"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="address">
-                                    <b>14</b><span>كود المشروع ورابطه</span>
-                                    <em data-miss="address"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="launch">
-                                    <b>15</b><span>كارت &quot;أحدث الإطلاقات&quot;</span>
-                                    <em data-miss="launch"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="links">
-                                    <b>16</b><span>لينكات داخلية (سيو)</span>
-                                    <em data-miss="links"  hidden >ناقص 0</em>
-                                </button>
-                                                            <button type="button" data-tab="landing">
-                                    <b>17</b><span>صفحة الهبوط للإعلانات</span>
-                                    <em data-miss="landing"  hidden >ناقص 0</em>
-                                </button>
-                                                    </nav>
-                    </div>
-                </aside>
-
-                <div class="shub-secs">
-                                            <section class="shub-sec" id="sec-basic" data-sec="basic" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">1</b>
-                                <div class="shub-sec__t">
-                                    <h5>البيانات الأساسية <em data-miss="basic" >ناقص 3</em></h5>
-                                    <small>الاسم · المطور · المنطقة · النوع · التسليم · السعر · الصورة واللوجو · الفيديو · خطط السداد والعروض · المواصفات والمرافق · رقم التواصل · الوصف (الكونتنت) · الأسئلة · الميتا تايتل والميتا ديسكريبشن</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-compounds-315-edit.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="البيانات الأساسية" data-src="admin-compounds-315-edit.html?hide=sx-map-block%2Csx-mp-field&embed=1"  src="admin-compounds-315-edit.html?hide=sx-map-block%2Csx-mp-field&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-gallery" data-sec="gallery" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">2</b>
-                                <div class="shub-sec__t">
-                                    <h5>صور المشروع <em data-miss="gallery"  hidden >ناقص 0</em></h5>
-                                    <small>معرض الصور · صور خطط السداد</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="gallery-315-1.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="صور المشروع" data-src="gallery-315-1.html?embed=1"  src="gallery-315-1.html?embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-masterplans" data-sec="masterplans" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">3</b>
-                                <div class="shub-sec__t">
-                                    <h5>الماستر بلان والماستر بلان المفرّغ <em data-miss="masterplans"  hidden >ناقص 0</em></h5>
-                                    <small>رفع الماستر بلان · النسخة المفرّغة جنبها · تفريغ تلقائي</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_masterplans.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="الماستر بلان والماستر بلان المفرّغ" data-src="admin-shary-projects-315_tab_masterplans.html?tab=masterplans&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-map" data-sec="map" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">4</b>
-                                <div class="shub-sec__t">
-                                    <h5>مكان المشروع والماستر بلان على الخريطة <em data-miss="map"  hidden >ناقص 0</em></h5>
-                                    <small>العنوان والدبوس · البحث عن المكان · حدود المشروع (بالنقط أو من الخريطة) · مكان الماستر بلان: تحريك وتكبير ولف وشفافية · حطها على الحدود أو بالإيجنت · التفريغ · القص · نسخة شفافة</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-compounds-315-edit.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="مكان المشروع والماستر بلان على الخريطة" data-src="admin-compounds-315-edit.html?focus=sx-map-block&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-labels" data-sec="labels" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">5</b>
-                                <div class="shub-sec__t">
-                                    <h5>الكتابة والمراحل على الخريطة <em data-miss="labels"  hidden >ناقص 0</em></h5>
-                                    <small>اسم المشروع · أسماء المراحل · العماير · الوحدات فوق الماستر بلان · المرحلة الظاهرة وباقي الماستر بلان متظلّل</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="#" data-sx-missing="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="الكتابة والمراحل على الخريطة" data-src="about:blank" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-plans" data-sec="plans" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">6</b>
-                                <div class="shub-sec__t">
-                                    <h5>خطط السداد على الموقع <em data-miss="plans"  hidden >ناقص 0</em></h5>
-                                    <small>المقدم · السنين · الخصم — زي ما بتظهر في صفحة المشروع</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="خطط السداد على الموقع" data-src="admin-shary-projects-315.html?tab=plans&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-phases" data-sec="phases" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">7</b>
-                                <div class="shub-sec__t">
-                                    <h5>المراحل <em data-miss="phases"  hidden >ناقص 0</em></h5>
-                                    <small>مراحل المشروع وتسليم كل مرحلة</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="المراحل" data-src="admin-shary-projects-315.html?tab=phases&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-indicators" data-sec="indicators" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">8</b>
-                                <div class="shub-sec__t">
-                                    <h5>مؤشر شاري للمشروع <em data-miss="indicators"  hidden >ناقص 0</em></h5>
-                                    <small>النمو · العائد · الطلب · متوسط سعر المتر · توقع الأسعار · نصيحة شاري</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-7_tab_indicators.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="مؤشر شاري للمشروع" data-src="admin-shary-projects-7_tab_indicators.html?tab=indicators&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-nearby" data-sec="nearby" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">9</b>
-                                <div class="shub-sec__t">
-                                    <h5>الأماكن القريبة <em data-miss="nearby"  hidden >ناقص 0</em></h5>
-                                    <small>المسافات للأماكن المهمة</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_nearby.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="الأماكن القريبة" data-src="admin-shary-projects-315_tab_nearby.html?tab=nearby&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-units" data-sec="units" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">10</b>
-                                <div class="shub-sec__t">
-                                    <h5>وحدات المشروع <em data-miss="units"  hidden >ناقص 0</em></h5>
-                                    <small>إضافة وتعديل الوحدات والأسعار والعروض</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-units_compound_id_315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="وحدات المشروع" data-src="admin-shary-units_compound_id_315.html?embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-inherit" data-sec="inherit" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">11</b>
-                                <div class="shub-sec__t">
-                                    <h5>اللي بينزل على الوحدات لوحده <em data-miss="inherit"  hidden >ناقص 0</em></h5>
-                                    <small>الصور · الوصف · المرافق · السداد … تتاخد من المشروع في صفحة الوحدة</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315_tab_inherit.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="اللي بينزل على الوحدات لوحده" data-src="admin-shary-projects-315_tab_inherit.html?tab=inherit&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-photosets" data-sec="photosets" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">12</b>
-                                <div class="shub-sec__t">
-                                    <h5>صور الوحدات حسب النوع <em data-miss="photosets"  hidden >ناقص 0</em></h5>
-                                    <small>صور لكل نوع (شقة · فيلا · …) ونموذج ونوع تعامل — بتظهر على الوحدات اللي مالهاش صور بتاعتها</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-units-photo-sets.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="صور الوحدات حسب النوع" data-src="admin-shary-units-photo-sets.html?embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-cta" data-sec="cta" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">13</b>
-                                <div class="shub-sec__t">
-                                    <h5>زرار التواصل <em data-miss="cta"  hidden >ناقص 0</em></h5>
-                                    <small>نص زرار التواصل في صفحة المشروع</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-projects-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="زرار التواصل" data-src="admin-shary-projects-315.html?tab=cta&embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-address" data-sec="address" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">14</b>
-                                <div class="shub-sec__t">
-                                    <h5>كود المشروع ورابطه <em data-miss="address"  hidden >ناقص 0</em></h5>
-                                    <small>الكود اللي بيظهر في شريط صفحة المشروع ورسالة واتساب</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="#" data-sx-missing="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="كود المشروع ورابطه" data-src="about:blank" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-launch" data-sec="launch" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">15</b>
-                                <div class="shub-sec__t">
-                                    <h5>كارت &quot;أحدث الإطلاقات&quot; <em data-miss="launch"  hidden >ناقص 0</em></h5>
-                                    <small>لو المشروع إطلاق جديد: ضيف صورته ووصفه</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="#" data-sx-missing="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="كارت &quot;أحدث الإطلاقات&quot;" data-src="about:blank" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-links" data-sec="links" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">16</b>
-                                <div class="shub-sec__t">
-                                    <h5>لينكات داخلية (سيو) <em data-miss="links"  hidden >ناقص 0</em></h5>
-                                    <small>لينكات لصفحات تانية جوه الموقع</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="admin-shary-page-links-project-315.html" data-sx-sample="1" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="لينكات داخلية (سيو)" data-src="admin-shary-page-links-project-315.html?embed=1" ></iframe>
-                            </div>
-                        </section>
-                                            <section class="shub-sec" id="sec-landing" data-sec="landing" >
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">17</b>
-                                <div class="shub-sec__t">
-                                    <h5>صفحة الهبوط للإعلانات <em data-miss="landing"  hidden >ناقص 0</em></h5>
-                                    <small>صفحة Landing للحملات</small>                                </div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-fold aria-expanded="true">طيّ</button>
-                                    <a class="btn btn-sm btn-light" href="project-landing-pages.html" target="_blank" rel="noopener">لوحدها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body">
-                                <div class="shub-loading" data-wait>بيحمّل…</div>
-                                <iframe name="sx-embed" title="صفحة الهبوط للإعلانات" data-src="#preview/project-landing-pages" ></iframe>
-                            </div>
-                        </section>
-                                        
-                                            <section class="shub-sec" id="sec-preview" data-preview>
-                            <header class="shub-sec__head">
-                                <b class="shub-sec__n">👁</b>
-                                <div class="shub-sec__t"><h5>معاينة على الموقع</h5><small>نفس الصفحة اللي العميل بيشوفها (بعد الحفظ دوس «حدّث المعاينة»)</small></div>
-                                <div class="shub-sec__acts">
-                                    <button type="button" class="btn btn-sm btn-light" data-preview-reload>حدّث المعاينة</button>
-                                    <a class="btn btn-sm btn-light" href="https://sharyproperty.github.io/Sharyproperty/" data-sx-site="1" target="_blank" rel="noopener">افتحها ↗</a>
-                                </div>
-                            </header>
-                            <div class="shub-sec__body"><iframe title="معاينة" data-src="#preview/en/v2/project/Fifth-Settlement-6/mountain-view-icity" style="height:780px"></iframe></div>
-                        </section>
-                                    </div>
-            </div>
-        </div>
+            <div class="page-header">
+    <div class="page-title">
+        <h4>Record an investment</h4>
+        <h6>For deals the sales team closed with the client outside the app.</h6>        <h6><a href="admin-shary-ma3ak-investments.html">← Back to investments</a></h6>    </div>
     </div>
-    <style>
-        .shub-dirty { font-weight: 800; color: #b45309; font-size: 13px; }
-        .shub-sec.is-dirty .shub-sec__head { box-shadow: inset 4px 0 0 #f59e0b; }
-    </style>
-    <script src="../a/js/shary-admin/project-hub.js" data-conf="{&quot;checksUrl&quot;:&quot;\/admin\/shary\/all\/projects\/5\/checks&quot;}"></script>
+
+            <div class="alert alert-info">
+                What happens when you record the deal:
+                <ul class="ma3ak-record-list">
+                    <li>The shares are reserved in the investor&#039;s name and taken from the property&#039;s available shares at once.</li>
+                    <li>The installments are created by themselves from the property&#039;s payment plan, multiplied by the number of shares.</li>
+                    <li>The investor finds the investment in the app, follows it and pays the installments there.</li>
+                    <li>The investor does not need to have finished signing up to &quot;Shary Ma3ak&quot;: a Shary app account is enough.</li>
+                </ul>
+            </div>
+
+                            
+                
+                
+                <div class="card">
+                    <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-2">
+                        <strong>Step 1: The investor</strong>
+                        <a class="btn btn-sm btn-secondary" href="admin-shary-ma3ak-investments-create.html">Change the investor</a>                    </div>
+                    <div class="card-body">
+                                                                                <table class="table mb-0 ma3ak-kv sx-no-search">
+                                <tbody>
+                                <tr><th>Name</th><td><a href="admin-shary-ma3ak-investors-1.html">Demo Customer</a></td></tr>
+                                <tr><th>Mobile</th><td><span dir="ltr">01012345678</span></td></tr>
+                                <tr><th>Email</th><td><span dir="ltr">name@example.com</span></td></tr>
+                                <tr>
+                                    <th>In &quot;Shary Ma3ak&quot;</th>
+                                    <td>
+                                                                                    <span class="badge bg-secondary">Has not finished signing up</span>
+                                                                            </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                                            </div>
+                </div>
+
+                
+                                    <form method="post" action="#preview/admin/shary/ma3ak/investments">
+                        <input type="hidden" name="_token" value="preview" autocomplete="off">                        <input type="hidden" name="user_id" value="1">
+                        <div class="card">
+                            <div class="card-header"><strong>Step 2: The property and the shares</strong></div>
+                            <div class="card-body">
+                                                                    <p class="text-muted mb-0">No property is available for shares right now. A property must be &quot;Available&quot; to record an investment on it.</p>
+                                                            </div>
+                        </div>
+                    </form>
+                                    </div>
+    </div>
 </div>
 <!-- /Main Wrapper -->
     <!-- jQuery -->
@@ -1404,7 +1032,9 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
+            <script>window.SharyMa3ak = {"title":"Are you sure?","yes":"Yes, go ahead","no":"No, go back"};</script>
+        <script src="../a/js/shary-admin/ma3ak.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

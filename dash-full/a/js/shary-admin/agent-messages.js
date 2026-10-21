@@ -1,9 +1,3 @@
-/**
- * الإيجنت: رسايل العملاء ومعاينتها
- * الصفحة: resources/views/shary_admin/agent/messages.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
-// «رسايل العملاء»: the audience's fields, the live count, the preview while typing, the SMS length, the confirm of «ابعت دلوقتي»
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var form = document.getElementById('mx-form');
@@ -50,14 +44,12 @@
     }
     function say(text) { return (text || '').replace(/\{name\}/g, 'محمد').replace(/\{link\}/g, CONF.sampleLink).replace(/\{stop\}/g, CONF.smsStop).replace(/[ \t]{2,}/g, ' ').trim(); }
     function preview() {
-        // an empty form shows an example (lighter) — the real words replace it while typing
         var example = !$('[data-mx-text=title]').value.trim() && !$('[data-mx-text=text]').value.trim();
         var value = function (key) { var field = $('[data-mx-text=' + key + ']'); return field.value.trim() || !example ? field.value : (field.getAttribute('data-mx-example') || ''); };
         var title = value('title'), text = value('text'), sms = value('sms'),
             subject = $('[data-mx-text=subject]').value, email = $('[data-mx-text=email]').value;
         document.querySelectorAll('[data-pv-root]').forEach(function (root) { root.classList.toggle('is-example', example); });
         if (!sms.trim()) { sms = text.replace(/\{link\}/g, '').replace(/\s+/g, ' ').trim().slice(0, 280); if (sms && $('[name=link_kind]').value !== 'none') { sms += ' {link}'; } }
-        // a list of «قوايمي»: every SMS ends with how to stop (the server adds it too)
         if (sms.trim() && segment() === 'list' && sms.indexOf('{stop}') === -1) { sms += ' {stop}'; }
         var set = function (key, value) { document.querySelectorAll('[data-pv-root] [data-pv=' + key + ']').forEach(function (node) { node.textContent = value; }); };
         set('title', say(title || text.slice(0, 60)));

@@ -141,7 +141,7 @@
                 success: function (response) {
                     // Assuming response contains the updated product data
 
-                    // Shary: رسالة الماستر بلان على الخريطة التفاعلية تفضل ظاهرة لحد ما تدوس OK (بدل ما الصفحة تتقفل على طول)
+                    
                     if (response && response.map_note) {
                         $(".overlay").toggleClass('d-none');
                         submitButton.prop('disabled', false).html('Submit');
@@ -161,7 +161,7 @@
                     $('.progress').hide();
                     $('#upload-progress-bar').css('width', '0%').text('0%');
 
-                    // Shary: جوه صفحة "كل بيانات المشروع" يفضل على نفس الفورم بعد الحفظ (مش يروح لقايمة المشاريع)
+                    
                     if (document.documentElement.classList.contains('sx-embed')) { setTimeout(function () { window.location.reload(); }, 900); return; }
                     window.location.replace(response.route);
                     // Optionally show a success message
@@ -393,7 +393,7 @@
         try {
             if (window.name === 'sx-embed' || /[?&]embed=1(&|$)/.test(location.search)) {
                 document.documentElement.classList.add('sx-embed');
-                // ?focus=ID: الجزء ده بس من الفورم (والباقي بيتخفى بس بيتبعت زي ما هو) — ?hide=ID: الجزء ده يتخفى
+                
                 var params = new URLSearchParams(location.search);
                 document.addEventListener('DOMContentLoaded', function () {
                     var keep = params.get('focus') && document.getElementById(params.get('focus'));
@@ -407,7 +407,7 @@
                             });
                         }
                     }
-                    // ?hide=ID أو أكتر من جزء: ?hide=ID1,ID2
+                    
                     String(params.get('hide') || '').split(',').forEach(function (id) {
                         var drop = id && document.getElementById(id.trim());
                         if (drop) drop.style.display = 'none';
@@ -431,10 +431,10 @@
     })();
 </script>
 <script>
-// الموقع مفتوح من جوه تطبيق (تطبيق شاري أو أي WebView أندرويد «; wv)» أو لينك ?from=app): html.in-app — التطبيق شايل مساحة شريط الموبايل اللي تحت (16-overrides.css)
+
 if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.test(location.search)) document.documentElement.classList.add('in-app');
-// «وضع التطبيق» (html.app-mode): الصفحة متفتحة جوه شاشة في تطبيق شاري (?platform=app) — من غير هيدر وفوتر الموقع ومسار الصفحة وشريط المؤشر
-// وزراير / بوب أب «حمّل التطبيق» (16-overrides.css). بيفضل شغال لأي صفحة تتفتح من جواها في نفس الشاشة (sessionStorage) — ?platform=web بيقفله.
+
+
 (function () {
     var KEY = 'shary-app-mode', on = false;
     try {
@@ -444,11 +444,11 @@ if (/; wv\)|SharyApp/i.test(navigator.userAgent || '') || /[?&]from=app(&|$)/.te
     } catch (e) { on = /[?&]platform=app(&|$)/.test(location.search); }
     if (on || /SharyApp/i.test(navigator.userAgent || '')) document.documentElement.classList.add('app-mode', 'in-app');
 })();
-// نفس قواعد App\Shary\Support\Arabic::fold في السيرفر
+
 window.SharyPlain = function (text) { return String(text || '').toLowerCase().replace(/[\u064B-\u065F\u0670\u0640]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ة/g, 'ه').replace(/[ىئ]/g, 'ي').replace(/ؤ/g, 'و').replace(/\s+/g, ' ').trim(); };
 window.SharyCsrf = function () { var meta = document.querySelector('meta[name="csrf-token"]'); return meta ? meta.getAttribute('content') : ''; };
-// سطر واحد [data-fit-line] من أول ما الصفحة تظهر (قبل سكربتات الموقع اللي بتتحمّل بعدين): الكلام الأطول من مكانه الخط بتاعه بيصغر لحد ما يدخل —
-// نفس حساب js/shary/site-chrome.js (اللي بيكمّل بعدين: تغيير مقاس الشاشة ، الخط لما يحمل ، الكروت الجديدة)
+
+
 document.addEventListener('DOMContentLoaded', function () {
     var els = document.querySelectorAll('[data-fit-line]'), jobs = [], i;
     for (i = 0; i < els.length; i++) {
@@ -486,7 +486,7 @@ document.addEventListener('error', function (e) {
     html.sx-embed body { background: #fff !important; }
     html.sx-embed, html.sx-embed body, html.sx-embed .main-wrapper, html.sx-embed .page-wrapper { min-height: 0 !important; height: auto !important; }
     html.sx-embed body { overflow-x: hidden; }
-    /* جوه صفحة "كل البيانات": زراير الظهور فوق في الصفحة الكبيرة ، وعنوان كل جزء مكتوب فوقه — مفيش داعي يتكرروا */
+    
     html.sx-embed [data-home-box], html.sx-embed .sx-pre__home, html.sx-embed ul.shary-tabs, html.sx-embed .page-header .page-title { display: none !important; }
     html.sx-embed .page-header { margin-bottom: 12px !important; justify-content: flex-start !important; }
     html.sx-embed .page-header:not(:has(.page-btn > *, .btn)) { display: none !important; }
@@ -560,11 +560,11 @@ document.addEventListener('error', function (e) {
                                                                 <a class="sx-one " href="admin-shary-errors.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 4 3 20h18z"/><path d="M12 10v4.5M12 17.5h.01"/></svg>
                         <span>Errors</span>
-                        <b class="sx-tag">10</b>                    </a>
+                        <b class="sx-tag">8</b>                    </a>
                                                                 <a class="sx-one " href="admin-shary-drafts.html" >
                         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M5 4h9a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9M9 8h5M9 11h3"/></svg>
                         <span>Drafts</span>
-                        <b class="sx-tag">106</b>                    </a>
+                        <b class="sx-tag">107</b>                    </a>
                                                                 <div class="sx-grp " data-sx-grp="agent">
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-agent">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><rect x="5" y="8" width="14" height="11" rx="3"/><path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5"/></svg>
@@ -640,11 +640,11 @@ document.addEventListener('error', function (e) {
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-requests">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M4 13h4l2 3h4l2-3h4"/><path d="M5 5h14l1 8v6H4v-6z"/></svg>
                             <span>Requests &amp; messages</span>
-                            <b class="sx-tag">64</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">72</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-requests">
                                                             
-                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">64</b></a></li>
+                                                                                                <li><a href="admin-shary-leads.html" class="" ><span>All requests (one inbox)</span><b class="sx-tag">72</b></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-owner-requests_type_sale.html" class="" ><span>Sell-property requests</span></a></li>
                                                             
@@ -709,7 +709,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-compounds-create.html" class="" ><span>Add a project</span></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">2</b></a></li>
+                                                                                                <li><a href="admin-shary-drafts_only_projects.html" class="" ><span>Drafts</span><b class="sx-tag">3</b></a></li>
                                                             
                                                                                                 <li><a href="project-landing-pages.html" class="" ><span>Landing pages</span></a></li>
                                                     </ul>
@@ -895,7 +895,7 @@ document.addEventListener('error', function (e) {
                         <button type="button" aria-expanded="false" aria-controls="sx-grp-ai">
                             <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" ><path d="M12 3l1.8 4.6L18.5 9l-4.7 1.4L12 15l-1.8-4.6L5.5 9l4.7-1.4z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>
                             <span>Shary AI</span>
-                            <b class="sx-tag">48</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
+                            <b class="sx-tag">60</b>                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"  class="sx-chev" ><path d="m6 9 6 6 6-6"/></svg>
                         </button>
                         <ul id="sx-grp-ai">
                                                             
@@ -903,7 +903,7 @@ document.addEventListener('error', function (e) {
                                                             
                                                                                                 <li><a href="admin-shary-ai-conversations.html" class="" ><span>Customer conversations</span><b class="sx-tag">41</b></a></li>
                                                             
-                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">7</b></a></li>
+                                                                                                <li><a href="admin-shary-ai-calendar.html" class="" ><span>Follow-up calendar</span><b class="sx-tag">19</b></a></li>
                                                     </ul>
                     </div>
                                                                 <div class="sx-grp " data-sx-grp="seo">
@@ -928,6 +928,8 @@ document.addEventListener('error', function (e) {
                         <ul id="sx-grp-app">
                                                             
                                                                                                 <li><a href="admin-shary-app-pages.html" class="" ><span>Service pages on the website</span></a></li>
+                                                            
+                                                                                                <li><a href="admin-shary-app-settings.html" class="" ><span>App status &amp; payment methods</span></a></li>
                                                             
                                                                                                 <li><a href="admin-shary-client-units.html" class="" ><span>Client units &amp; tracking</span></a></li>
                                                             
@@ -1171,11 +1173,11 @@ document.addEventListener('error', function (e) {
  <link rel="stylesheet" href="../a/css/shary-admin/editor-popups.css">
         <script>
             window.SharyEditorConfig = {
-                token: "lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                token: "lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 lang: "en",
                 linksUrl: "\/admin\/shary\/content-editor\/links",
                 previewUrl: "\/admin\/shary\/content-editor\/preview",
-                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6",
+                uploadUrl: "\/admin\/shary\/content-editor\/upload?_token=lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh",
                 contentCss: "../a/css/shary-admin/editor-content.css",
                 localEditor: true,
                 localBase: "../a/vendor/shary-editor/",
@@ -1215,12 +1217,12 @@ document.addEventListener('error', function (e) {
             border: 1px solid #d9d9d9;
             border-radius: 6px;
         }
-        /* Shary: حالة الماستر بلان على الخريطة التفاعلية */
+        
         .sx-mp-status { margin: 6px 0 8px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 700; line-height: 1.7; background: #f1f5f9; color: #334155; }
         .sx-mp-status--ok { background: #e2f3ef; color: #1f6f63; }
         .sx-mp-status--todo, .sx-mp-status--moved, .sx-mp-status--busy, .sx-mp-status--none { background: #fff4dc; color: #8a5a00; }
         .sx-mp-status--bad { background: #fde8e8; color: #9b1c1c; }
-        /* Shary: أدوات الماستر بلان + القص */
+        
         .sx-mp-tools { border: 1.5px solid #dfe6ee; border-radius: 12px; background: #f8fafc; padding: 12px 14px; margin: 4px 0 10px; display: grid; gap: 12px; }
         .sx-mp-tools__title { margin: 0; font-weight: 800; color: #123a5c; font-size: 14px; }
         .sx-mp-tools__title small { font-weight: 700; color: #4c6178; font-size: 12.5px; }
@@ -1307,11 +1309,12 @@ document.addEventListener('error', function (e) {
         }
 
         function initMap() {
-            // Shary: سيرش جوجل للمكان — لو وقع (خدمة Places مش مفعّلة للمفتاح) الخريطتين والماستر بلان بيكمّلوا عادي
+            
             try {
+                
                 autocomplete =
                     new google.maps.places.Autocomplete((document.getElementById('autocomplete')),
-                        {types: ['geocode']});
+                        {fields: ['geometry', 'name', 'formatted_address']});
             } catch (error) {
                 autocomplete = null;
             }
@@ -1320,7 +1323,7 @@ document.addEventListener('error', function (e) {
             var initialLng = parseFloat(document.getElementById('lng').value) || 55.348;
             var map = new google.maps.Map(document.getElementById('shoplocation'), {
                 zoom: 10,
-                mapTypeId: 'hybrid',   // Shary: قمر صناعي + أسماء الأماكن (زي جوجل إيرث)
+                mapTypeId: 'hybrid',   
                 center: {
                     lat: initialLat,
                     lng: initialLng
@@ -1337,23 +1340,118 @@ document.addEventListener('error', function (e) {
             initBoundsMap(initialLat, initialLng);
             autocomplete && autocomplete.addListener('place_changed', function () {
                 var place = autocomplete.getPlace();
-                if (!place.geometry) {
+                if (!place || !place.geometry) {
+                    
+                    sxFindPlace(document.getElementById('autocomplete').value, map);
                     return;
                 }
 
-                placeMarkerAndPanTo(place.geometry.location, map);
-                syncProjectLocation(place.geometry.location);
+                sxGoToPlace(place.geometry.location, place.geometry.viewport, map, place.name);
             });
             map.addListener('click', function (e) {
                 placeMarkerAndPanTo(e.latLng, map);
                 syncProjectLocation(e.latLng);
             });
+            
+            var sxAddress = document.getElementById('autocomplete'), sxGo = document.getElementById('sxAddressGo');
+            if (sxGo) {
+                sxGo.addEventListener('click', function () { sxFindPlace(sxAddress.value, map); });
+            }
+            sxAddress.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (!autocomplete) {
+                        sxFindPlace(sxAddress.value, map);
+                    }
+                }
+            });
         }
 
         function placeMarkerAndPanTo(latLng, map) {
-            map.setZoom(9);
+            
+            if (map.getZoom() < 9) {
+                map.setZoom(9);
+            }
             marker.setPosition(latLng);
             map.panTo(latLng);
+        }
+
+        
+        function sxGoToPlace(latLng, viewport, map, name) {
+            marker.setPosition(latLng);
+            if (viewport) {
+                map.fitBounds(viewport);
+            } else {
+                map.setCenter(latLng);
+                map.setZoom(17);
+            }
+            syncProjectLocation(latLng);
+            if (boundsMap) {
+                if (viewport) {
+                    boundsMap.fitBounds(viewport);
+                } else {
+                    boundsMap.setCenter(latLng);
+                    boundsMap.setZoom(17);
+                }
+            }
+            sxAddressSay('الخريطة راحت على ' + (name ? '«' + name + '»' : 'المكان') + ' ✓ — اضغط على مكان البناية بالظبط على الخريطة لو محتاج تظبطه ، وبعدين «تحديث».');
+        }
+
+        function sxAddressSay(text) {
+            var hint = document.getElementById('sxAddressHint');
+            if (hint) {
+                hint.textContent = text;
+            }
+        }
+
+        
+        function sxFindPlace(text, map) {
+            var q = String(text || '').trim();
+            var go = document.getElementById('sxAddressGo'), url = go ? (go.getAttribute('data-search') || '') : '';
+            if (q.length < 2) {
+                sxAddressSay('اكتب اسم المشروع أو المنطقة الأول.');
+                return;
+            }
+            sxAddressSay('بيدوّر على «' + q + '»…');
+            function fromServer() {
+                if (!url || !window.fetch) {
+                    sxAddressSay('ما لقيتش مكان بالاسم ده — اختار من الاقتراحات أو اضغط على المكان في الخريطة.');
+                    return;
+                }
+                fetch(url + (url.indexOf('?') > -1 ? '&' : '?') + 'q=' + encodeURIComponent(q), {credentials: 'same-origin', headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest'}})
+                    .then(function (r) { return r.ok ? r.json() : {}; })
+                    .then(function (data) {
+                        var p = data && data.ok && data.results && data.results[0];
+                        if (!p || !isFinite(Number(p.lat)) || !isFinite(Number(p.lng))) {
+                            sxAddressSay((data && data.message) || 'ما لقيتش مكان بالاسم ده — جرّب اسم الكمبوند بالإنجليزي أو اسم المنطقة.');
+                            return;
+                        }
+                        var v = Array.isArray(p.viewport) && p.viewport.length === 4
+                            ? new google.maps.LatLngBounds({lat: Number(p.viewport[0]), lng: Number(p.viewport[1])}, {lat: Number(p.viewport[2]), lng: Number(p.viewport[3])}) : null;
+                        sxGoToPlace(new google.maps.LatLng(Number(p.lat), Number(p.lng)), v, map, p.name || q);
+                    })
+                    .catch(function () { sxAddressSay('السيرش ما اشتغلش دلوقتي — جرّب تاني.'); });
+            }
+            var service = null;
+            try {
+                if (google.maps.places && google.maps.places.PlacesService) {
+                    service = new google.maps.places.PlacesService(map);
+                }
+            } catch (error) {
+                service = null;
+            }
+            if (!service || !service.findPlaceFromQuery) {
+                fromServer();
+                return;
+            }
+            service.findPlaceFromQuery({query: q, fields: ['geometry', 'name', 'formatted_address']}, function (found, status) {
+                var place = status === google.maps.places.PlacesServiceStatus.OK && found && found[0];
+                if (place && place.geometry) {
+                    sxGoToPlace(place.geometry.location, place.geometry.viewport, map, place.name);
+                } else {
+                    fromServer();
+                }
+            });
         }
 
         function panSearchMap(autocompleteInstance, mapInstance) {
@@ -1412,10 +1510,16 @@ document.addEventListener('error', function (e) {
             });
 
             try {
+                
                 boundsAutocomplete = new google.maps.places.Autocomplete(
                     document.getElementById('boundsSearch'),
-                    {types: ['geocode']}
+                    {fields: ['geometry', 'name', 'formatted_address']}
                 );
+                document.getElementById('boundsSearch').addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();     
+                    }
+                });
 
                 boundsAutocomplete.addListener('place_changed', function () {
                     panSearchMap(boundsAutocomplete, boundsMap);
@@ -1436,7 +1540,6 @@ document.addEventListener('error', function (e) {
                 );
                 loadExistingBounds();
             });
-            // Shary: «امسح آخر نقطة»
             var undoPoint = document.getElementById('sxUndoPoint');
             if (undoPoint) {
                 undoPoint.addEventListener('click', function () {
@@ -1462,7 +1565,7 @@ document.addEventListener('error', function (e) {
         
                 var masterplanPlaced = false;
         var masterplanMoved = false;
-        var masterplanRatio = null; // ارتفاع الصورة ÷ عرضها
+        var masterplanRatio = null; 
         var masterplanState = null; // {center:{lat,lng}, halfWidth, halfHeight, rotation}
         var masterplanOverlayView = null;
         var masterplanCenterMarker = null;
@@ -1571,7 +1674,8 @@ document.addEventListener('error', function (e) {
             var br = mpCornerLatLng([s.halfWidth, -s.halfHeight]);
             masterplanResizeMarker.setPosition(new google.maps.LatLng(br.lat, br.lng));
 
-            var gap = Math.max(15, s.halfHeight * 0.35);
+            
+            var gap = Math.min(Math.max(15, s.halfHeight * 0.12), 120);
             var rot = mpCornerLatLng([0, s.halfHeight + gap]);
             masterplanRotateMarker.setPosition(new google.maps.LatLng(rot.lat, rot.lng));
 
@@ -1580,7 +1684,7 @@ document.addEventListener('error', function (e) {
 
         function afterMasterplanChange() {
             repositionMasterplanHandles();
-            // Shary: المكان بيتكتب في الفورم بس لو الماستر بلان متحطة قبل كده أو الفريق حرّكها دلوقتي (المربع الافتراضي مش مكان)
+            
             if (masterplanPlaced || masterplanMoved) {
                 syncMasterplanCornersInput();
             }
@@ -1589,7 +1693,7 @@ document.addEventListener('error', function (e) {
             }
         }
 
-        // Shary: الفريق حرّك / كبّر / لف الماستر بلان — المكان ده هو اللي هيتحفظ ويظهر على الخريطة التفاعلية بعد «تحديث»
+        
         function markMasterplanMoved() {
             if (masterplanMoved) {
                 return;
@@ -1615,7 +1719,7 @@ document.addEventListener('error', function (e) {
             box.className = 'sx-mp-status sx-mp-status--' + kind;
         }
 
-        // نسبة الصورة (الارتفاع ÷ العرض) — عشان الماستر بلان ما تتمطّش
+        
         function sxMasterplanRatio(url, done) {
             if (!url) {
                 return;
@@ -1629,7 +1733,7 @@ document.addEventListener('error', function (e) {
             img.src = url;
         }
 
-        // حدود المشروع الحقيقية [[lng, lat], ...] من الفورم — المربع الأوتوماتيك حوالين الدبوس مش حدود
+        
         function sxRealBoundsRing() {
             var parsed = parseMapJson((document.getElementById('bounds') || {}).value || '');
             if (!parsed) {
@@ -1648,7 +1752,7 @@ document.addEventListener('error', function (e) {
             return ring;
         }
 
-        // بداية الماستر بلان اللي لسه ما اتحطتش: جوه حدود المشروع (لو مرسومة) بنفس نسبة الصورة ، وإلا 600 متر عرض حوالين الدبوس
+        
         function defaultMasterplanState(initialLat, initialLng) {
             var ratio = masterplanRatio || 0.75;
             var ring = sxRealBoundsRing();
@@ -1743,7 +1847,7 @@ document.addEventListener('error', function (e) {
         }
 
         function initMasterplanOverlay(initialLat, initialLng) {
-            // Shary: المكان المحفوظ بجد بس — غير كده الماستر بلان بتبدأ جوه حدود المشروع بنفس نسبة صورتها (ومش بتتحفظ لحد ما تتحرك)
+            
             var saved = masterplanPlaced ? currentMasterplanCorners() : null;
             masterplanState = saved
                 ? masterplanStateFromCorners(saved)
@@ -1782,7 +1886,7 @@ document.addEventListener('error', function (e) {
             });
 
             repositionMasterplanHandles();
-            // Shary: مفيش مكان بيتكتب في الفورم هنا — بيتكتب أول ما الفريق يحرّك الماستر بلان (afterMasterplanChange)
+            
 
             masterplanCenterMarker.addListener('drag', function () {
                 var pos = masterplanCenterMarker.getPosition();
@@ -1824,7 +1928,7 @@ document.addEventListener('error', function (e) {
                     if (this.files && this.files[0]) {
                         masterplanImageUrl = URL.createObjectURL(this.files[0]);
                         masterplanOverlayView.draw();
-                        // Shary: الصورة الجديدة بنسبتها هي (من غير مط): نفس العرض والمكان واللفّة لو كانت متحطة ، وإلا جوه حدود المشروع
+                        
                         sxMasterplanRatio(masterplanImageUrl, function (ratio) {
                             masterplanRatio = ratio;
                             if (masterplanPlaced || masterplanMoved) {
@@ -1838,6 +1942,20 @@ document.addEventListener('error', function (e) {
                     }
                 });
             }
+
+            
+            document.querySelectorAll('[data-mp-turn]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    if (!masterplanState) {
+                        return;
+                    }
+                    var turn = Number(button.getAttribute('data-mp-turn')) || 0;
+                    
+                    masterplanState.rotation = (((masterplanState.rotation - turn) % 360) + 360) % 360;
+                    markMasterplanMoved();
+                    afterMasterplanChange();
+                });
+            });
 
             var toggleBtn = document.getElementById('toggleMasterplanRect');
             if (toggleBtn) {
@@ -1870,7 +1988,7 @@ document.addEventListener('error', function (e) {
                 syncBoundsInput();
             });
 
-            // Shary: كليك يمين (أو دبل كليك) على نقطة بيمسحها
+            
             markerInstance.addListener('rightclick', function () {
                 removeBoundsPoint(markerInstance);
             });
@@ -1883,7 +2001,7 @@ document.addEventListener('error', function (e) {
             syncBoundsInput();
         }
 
-        // Shary: مسح نقطة من حدود المشروع (والترقيم بيتظبط)
+        
         function removeBoundsPoint(markerInstance) {
             var index = boundsMarkers.indexOf(markerInstance);
             if (index < 0) {
@@ -1955,7 +2073,7 @@ document.addEventListener('error', function (e) {
                 coordinates: [coordinates]
             });
             syncMapDerivedInputs();
-            // Shary: الماستر بلان اللي لسه ما اتحطتش بتتنقل جوه الحدود الجديدة
+            
             if (masterplanState && !masterplanPlaced && !masterplanMoved && masterplanCenterMarker) {
                 masterplanState = defaultMasterplanState(parseFloat(document.getElementById('lat').value) || 0, parseFloat(document.getElementById('lng').value) || 0);
                 afterMasterplanChange();
@@ -2057,7 +2175,7 @@ document.addEventListener('error', function (e) {
             (function draw() {
                 if (!window.google || !google.maps || !boundsMap || !marker) {
                     if (++tries < 60) {
-                        setTimeout(draw, 500);      // الخريطة لسه بتحمّل
+                        setTimeout(draw, 500);      
                     }
                     return;
                 }
@@ -2110,7 +2228,7 @@ document.addEventListener('error', function (e) {
             mapbox: "",
             js: "\/vendor\/maplibre\/maplibre-gl.js?v=tmesu5",
             css: "\/vendor\/maplibre\/maplibre-gl.css?v=tmesu5",
-            lite: "\/js\/shary-admin\/gmaps-lite.js?v=tn61l4"        };
+            lite: "\/js\/shary-admin\/gmaps-lite.js?v=tn9a43"        };
         var MEMO = 'sx-admin-maps-lite';
         var googleReady = false, lite = false, started = false;
 
@@ -2167,7 +2285,7 @@ document.addEventListener('error', function (e) {
                 }
             }
         }
-        // المتصفح فاكر إن جوجل رفض المفتاح ده قريب؟ (عشان كل صفحة ما تجرّبش جوجل وتستنى الرفض)
+        
         function remembered() {
             try {
                 var v = JSON.parse(sessionStorage.getItem(MEMO) || localStorage.getItem(MEMO) || 'null');
@@ -2182,7 +2300,7 @@ document.addEventListener('error', function (e) {
             try { sessionStorage.setItem(MEMO, value); saved = true; } catch (error) {}
             return saved;
         }
-        // الخريطة البديلة (من غير جوجل): نفس دالة الصفحة بتشتغل عليها
+        
         window.sxMapsLite = function (reason) {
             if (lite) {
                 return;
@@ -2203,13 +2321,13 @@ document.addEventListener('error', function (e) {
                 });
             });
         };
-        // جوجل رفض المفتاح على الدومين ده (أو الخدمة / الفوترة واقفة)
+        
         window.gm_authFailure = function () {
             if (lite) {
                 return;
             }
             if (started && remember()) {
-                location.reload();      // مرة واحدة: الصفحة بتفتح على البديلة على طول
+                location.reload();      
                 return;
             }
             window.sxMapsLite('google-refused');
@@ -2228,7 +2346,7 @@ document.addEventListener('error', function (e) {
             s.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(conf.gkey) + '&libraries=places&callback=sxGmReady';
             s.onerror = function () { window.sxMapsLite('google-blocked'); };
             document.head.appendChild(s);
-            // جوجل ما ردّش خالص (اتمنع / النت): البديلة بعد 12 ثانية
+            
             setTimeout(function () {
                 if (!googleReady) {
                     window.sxMapsLite('google-timeout');
@@ -3007,10 +3125,16 @@ document.addEventListener('error', function (e) {
                             <div class="col-lg-6 col-sm-6 col-12">
                                 <div class="form-group">
                                     <label>Project Address </label>
-                                    <input type="text" class="form-control" name="address"
-                                           value="The Pearl, Qatar"
-                                           id="autocomplete"
-                                           placeholder="Search for a Place" required>
+                                    
+                                    <div class="sx-mp-search">
+                                        <input type="text" class="form-control" name="address"
+                                               value="The Pearl, Qatar"
+                                               id="autocomplete"
+                                               placeholder="Search for a Place" required>
+                                        <button type="button" class="btn btn-primary fw-bold" id="sxAddressGo"
+                                                data-search="/admin/shary/projects/315/masterplan/search">بحث</button>
+                                    </div>
+                                    <small class="text-muted d-block mt-1" id="sxAddressHint" role="status" aria-live="polite">اكتب اسم المشروع أو المنطقة واختار من الاقتراحات ، أو دوس «بحث» — الخريطة هتروح على مكان المشروع ، وبعدين اضغط على مكان البناية بالظبط.</small>
                                 </div>
                             </div>
 
@@ -3034,7 +3158,6 @@ document.addEventListener('error', function (e) {
                                     <div id="boundsMap" class="mb-2"></div>
                                     <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
                                         <button type="button" id="resetBounds" class="btn btn-sm btn-outline-danger">إعادة رسم الحدود</button>
-                                        
                                         <button type="button" id="sxUndoPoint" class="btn btn-sm btn-outline-secondary">امسح آخر نقطة</button>
                                         <small id="boundsStatus" class="text-muted">اختر نقاط حدود المشروع من الخريطة.</small>
                                         <small class="text-muted">(كليك يمين أو دبل كليك على أي نقطة بيمسحها)</small>
@@ -3044,10 +3167,14 @@ document.addEventListener('error', function (e) {
                                         <span style="color:#ff6a00; font-weight:bold;">النقطة البرتقالية</span> تحرك الماستر بلان بالكامل،
                                         <span style="color:#1b84ff; font-weight:bold;">النقطة الزرقاء</span> تكبّر/تصغّر,
                                         <span style="color:#22c55e; font-weight:bold;">النقطة الخضراء</span> تدوّر الصورة عشان تتظبط فوق حدود المشروع حتى لو الماستر بلان مايل.
+                                        وزرارين «لف» بيلفّوها ربع لفة كل ضغطة (يمين أو شمال) — لأي اتجاه من الأربعة ، حتى بعد التفريغ.
                                     </p>
-                                    <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="d-flex align-items-center gap-2 mb-2 flex-wrap">
                                         <label class="mb-0" style="font-size: 13px;">الشفافية</label>
                                         <input type="range" id="masterplanOpacity" min="20" max="100" value="75" style="max-width: 200px;">
+                                        
+                                        <button type="button" class="btn btn-sm btn-outline-primary fw-bold" data-mp-turn="-90" title="لف ربع لفة عكس عقارب الساعة">↺ لف شمال</button>
+                                        <button type="button" class="btn btn-sm btn-outline-primary fw-bold" data-mp-turn="90" title="لف ربع لفة مع عقارب الساعة">↻ لف يمين</button>
                                         <button type="button" id="toggleMasterplanRect" class="btn btn-sm btn-outline-secondary">إخفاء أدوات الماستر بلان</button>
                                     </div>
                                     
@@ -3059,7 +3186,7 @@ document.addEventListener('error', function (e) {
                                              data-fit="/admin/shary/projects/315/masterplan/fit"
                                              data-agent="/admin/shary/projects/315/masterplan/agent"
                                              data-crop="/admin/shary/projects/315/masterplan/crop"
-                                             data-token="lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6">
+                                             data-token="lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh">
                                             <p class="sx-mp-tools__title">أدوات الماستر بلان <small>— النتيجة بتظهر على الخريطة اللي فوق ، وتقدر تظبّطها بالنقط. المكان بيتحفظ بزرار «تحديث» تحت.</small></p>
 
                                             <div class="sx-mp-tools__group">
@@ -3532,7 +3659,7 @@ document.addEventListener('error', function (e) {
                             <input type="hidden" name="_token" value="preview" autocomplete="off">                            <input type="hidden" name="action" value="cutout">
                         </form>
                         <script>
-                            // Shary: «فرّغها للخريطة» من غير ما تسيب الصفحة: النسخة المفرّغة (بنفس كادر الصورة) بتظهر على الخريطة فوق مكانها
+                            
                             document.addEventListener('click', function (event) {
                                 var button = event.target.closest ? event.target.closest('.sx-mp-cutout') : null;
                                 if (!button) {
@@ -3545,7 +3672,8 @@ document.addEventListener('error', function (e) {
                                 if (typeof sxMasterplanStatus === 'function') {
                                     sxMasterplanStatus('busy');
                                 }
-                                fetch(form.action, {method: 'POST', body: new FormData(form), headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest'}, credentials: 'same-origin'})
+                                
+                                fetch(form.getAttribute('action'), {method: 'POST', body: new FormData(form), headers: {'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest'}, credentials: 'same-origin'})
                                     .then(function (response) { return response.json().catch(function () { return {ok: false, message: 'حصلت مشكلة — جرّب تاني.'}; }); })
                                     .then(function (data) {
                                         if (data && data.overlay && typeof masterplanOverlayView !== 'undefined' && masterplanOverlayView) {
@@ -3567,8 +3695,7 @@ document.addEventListener('error', function (e) {
                             });
                         </script>
                                         <script>
-                        // Shary: أدوات الماستر بلان على خريطة جوجل اللي فوق: دوّر على مكان · حدود المشروع · حطها على الحدود · الإيجنت · قص · نسخة شفافة.
-                        // كل نتيجة بتظهر على الخريطة وتتسحب بالنقط زي ما هي — والمكان بيتحفظ بزرار «تحديث» (القص بس بيتحفظ على طول).
+                        
                         (function () {
                             var tools = document.getElementById('sxMpTools');
                             if (!tools) {
@@ -3667,7 +3794,7 @@ document.addEventListener('error', function (e) {
                                 points.forEach(function (p) { box.extend(new google.maps.LatLng(Number(p[1]), Number(p[0]))); });
                                 boundsMap.fitBounds(box);
                             }
-                            // حدود المشروع (نفس نقط «Project Bounds» — بتتسحب وتتعدل زي ما هي)
+                            
                             function useRing(ring) {
                                 var points = ring.slice();
                                 if (points.length > 1 && points[0][0] === points[points.length - 1][0] && points[0][1] === points[points.length - 1][1]) {
@@ -3677,7 +3804,7 @@ document.addEventListener('error', function (e) {
                                 points.forEach(function (p) { addBoundsPoint(new google.maps.LatLng(Number(p[1]), Number(p[0]))); });
                                 fitTo(points);
                             }
-                            // مكان الماستر بلان (4 أركان [lng, lat]) — بيتحفظ مع «تحديث»
+                            
                             function useCorners(corners) {
                                 masterplanState = masterplanStateFromCorners(corners);
                                 markMasterplanMoved();
@@ -3702,7 +3829,7 @@ document.addEventListener('error', function (e) {
                                 boundsMap.setZoom(16);
                             }
 
-                            // ---- ١ · دوّر على مكان المشروع — وانت بتكتب الخريطة (قمر صناعي) بتروح على أقرب نتيجة
+                            
                             var query = document.getElementById('sxPlaceQuery');
                             var results = document.getElementById('sxPlaceResults');
                             var typingTimer = null, serverBusy = false, session = null, predictions = null, details = null;
@@ -3717,7 +3844,7 @@ document.addEventListener('error', function (e) {
                                 }
                                 return false;
                             }
-                            // [جنوب ، غرب ، شمال ، شرق] من حدود المكان أو مساحته
+                            
                             function boxOf(place) {
                                 if (place.viewport) {
                                     return place.viewport;
@@ -3728,7 +3855,7 @@ document.addEventListener('error', function (e) {
                                 }
                                 return null;
                             }
-                            // الخريطة بتروح على المكان (من غير ما حاجة تتغير)
+                            
                             function look(place) {
                                 var box = boxOf(place);
                                 if (box) {
@@ -3738,7 +3865,7 @@ document.addEventListener('error', function (e) {
                                     boundsMap.setZoom(16);
                                 }
                             }
-                            // اقتراح جوجل ← مكانه (الإحداثيات وحدوده التقريبية)
+                            
                             function resolve(place, done) {
                                 if (place.lat !== undefined && place.lat !== null) {
                                     done(place);
@@ -3751,7 +3878,7 @@ document.addEventListener('error', function (e) {
                                     if (status !== google.maps.places.PlacesServiceStatus.OK || !found || !found.geometry) {
                                         return;
                                     }
-                                    session = null;     // جلسة البحث خلصت
+                                    session = null;     
                                     var v = found.geometry.viewport;
                                     place.lat = found.geometry.location.lat();
                                     place.lng = found.geometry.location.lng();
@@ -3760,7 +3887,7 @@ document.addEventListener('error', function (e) {
                                     done(place);
                                 });
                             }
-                            // الماستر بلان اللي لسه ما اتحطتش: تقريبي على المكان (بنسبة صورتها ، جوه حدوده لو معروفة)
+                            
                             function approxPlace(lat, lng, box) {
                                 if (masterplanPlaced || masterplanMoved || !masterplanImageUrl || !masterplanState) {
                                     return false;
@@ -3778,7 +3905,7 @@ document.addEventListener('error', function (e) {
                                 afterMasterplanChange();
                                 return true;
                             }
-                            // «اختار المكان ده»: الدبوس + الحدود (لو معروفة) + الماستر بلان تقريبي — وبعدين الفريق بيظبّط بالنقط
+                            
                             function choose(place) {
                                 resolve(place, function (spot) {
                                     setPin(spot.lat, spot.lng);
@@ -3812,7 +3939,7 @@ document.addEventListener('error', function (e) {
                                 });
                                 results.hidden = !list.length;
                             }
-                            // من السيرفر: جوجل (مفتاح السيرفر) + OpenStreetMap (ومعاه حدود المكان لو مرسومة)
+                            
                             function serverSearch(q, quiet) {
                                 if (serverBusy) {
                                     return;
@@ -3853,7 +3980,7 @@ document.addEventListener('error', function (e) {
                                 }
                                 predictions.getPlacePredictions({input: q, sessionToken: session || undefined}, function (found, status) {
                                     if (q !== query.value.trim()) {
-                                        return;      // اتكتب غيره
+                                        return;      
                                     }
                                     if (status !== google.maps.places.PlacesServiceStatus.OK || !found || !found.length) {
                                         serverSearch(q, true);
@@ -3894,12 +4021,12 @@ document.addEventListener('error', function (e) {
                             document.getElementById('sxPlaceGo').addEventListener('click', searchNow);
                             query.addEventListener('keydown', function (e) {
                                 if (e.key === 'Enter') {
-                                    e.preventDefault();      // Enter هنا ما يبعتش فورم المشروع
+                                    e.preventDefault();      
                                     searchNow();
                                 }
                             });
 
-                            // ---- ٢ · حدود المشروع ومكان الماستر بلان
+                            
                             document.getElementById('sxOutlineGo').addEventListener('click', function () {
                                 if (!mapReady()) {
                                     return;
@@ -3967,7 +4094,7 @@ document.addEventListener('error', function (e) {
                                 });
                             }
 
-                            // ---- ٣ · صورة الماستر بلان: ماستر بلان جديدة / نسخة شفافة
+                            
                             var chosen = document.getElementById('sxFileChosen');
                             var planInput = document.querySelector('input[name="master_plan"]');
                             document.getElementById('sxPlanPick').addEventListener('click', function () {
@@ -3983,7 +4110,7 @@ document.addEventListener('error', function (e) {
                                     }
                                 });
                             }
-                            // اسحب صورة الماستر بلان وسيبها على الخريطة ← نفس خانة «الماستر بلان» في الفورم
+                            
                             var dropZone = document.getElementById('boundsMap');
                             if (dropZone && planInput && window.DataTransfer) {
                                 var hasFiles = function (e) {
@@ -4043,7 +4170,7 @@ document.addEventListener('error', function (e) {
                                 }
                             });
 
-                            // ---- ٣ · قص الماستر بلان
+                            
                             var modal = document.getElementById('sxCrop');
                             var stage = document.getElementById('sxCropStage');
                             var img = document.getElementById('sxCropImg');
@@ -4161,7 +4288,7 @@ document.addEventListener('error', function (e) {
                                     return;
                                 }
                                 var r = norm(rect);
-                                // مكان الماستر بلان اللي على الخريطة دلوقتي (لو متحطة): الجزء اللي هيتساب بيفضل في نفس مكانه
+                                
                                 var corners = (masterplanPlaced || masterplanMoved) && masterplanState ? masterplanCorners() : null;
                                 run(tools.getAttribute('data-crop'), {rect: [r.x0, r.y0, r.x1, r.y1], corners: corners}, 'POST', 'بيقص الماستر بلان…', function (data) {
                                     close();
@@ -4170,7 +4297,7 @@ document.addEventListener('error', function (e) {
                                     }
                                     if (data.corners) {
                                         masterplanState = masterplanStateFromCorners(data.corners);
-                                        masterplanPlaced = true;          // القص بيحفظ المكان الجديد على طول
+                                        masterplanPlaced = true;          
                                         syncMasterplanCornersInput();
                                         afterMasterplanChange();
                                     } else {
@@ -4297,7 +4424,7 @@ document.addEventListener('error', function (e) {
      <script>window.SharyShell = {"search":"\/admin\/shary\/search","serverList":false,"q":"","t":{"search_empty":"Nothing matches","search_hint":"Type at least two letters","list_search":"Search this list…","list_search_all":"Search all pages…","list_count":"results","list_none":"No row matches","list_clear":"Clear the search","list_go":"Search","menu_open":"Open the menu","menu_close":"Close the menu","actions_edit":"Edit","actions_delete":"Delete","actions_view":"View","actions_add":"Add","pick_search":"Type to search…","pick_none":"Nothing matches","required_field":"This field is required","required_save":"Some required fields are empty — they are marked in red. Fill them, then save."}};</script>
 <script src="../a/js/shary-admin/shell.js" defer></script>
      <link rel="stylesheet" href="../a/css/shary-admin/drafts.css">
-    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lbQbZHhx8EWP0y2ZUeoacRVbf1np4MASrTEZGPL6","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
+    <script>window.SharyDrafts = {"find":"\/admin\/shary\/drafts\/find","save":"\/admin\/shary\/drafts\/save","forget":"\/admin\/shary\/drafts\/forget","token":"lZe1m0JLlJkpdGbjDxPhYrPFVWjv5p0Ydmw6Jndh","ok":false,"t":{"draft_save":"Save as draft","draft_saved":"Draft saved","draft_saving":"Saving the draft…","draft_failed":"The draft was not saved — try again","draft_found":"You have a saved draft from :when","draft_open":"Open the draft","draft_drop":"Delete the draft","draft_opened":"Draft restored — review it and press Save to publish","draft_auto":"Saves by itself while you type","draft_published":"Published — the draft was removed","draft_nothing":"Nothing changed yet to save"}};</script>
     <script src="../a/js/shary-admin/form-drafts.js" defer></script>
       <script src="../a/preview-data-en.js"></script><script src="../a/preview.js"></script></body>
 </html>

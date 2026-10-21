@@ -1,10 +1,3 @@
-/*
- * لوحة التحكم — تفاصيل خطط السداد الزيادة في فورم الوحدة (القديم والجديد): resources/views/shary_admin/partials/unit-plan-extras.blade.php
- *   - لكل خطة سداد في الفورم (الخطة الأساسية + أي خطة مضافة): مقدم 2 ، مقدم 3 ... (إضافة / حذف) + عدد الشهور بين كل دفعة والتانية.
- *   - إجمالي الأقساط ودفعة الاستلام بيتحسبوا قدامك تلقائي من بيانات الخطة (السعر − المقدمات ، القسط × عدد الدفعات) — مش بيتكتبوا.
- *   - الكل بيتحفظ نص JSON في الخانة المخفية shary_plan_extras (units.shary_plan_extras) ؛ كل بند مربوط بخطته ببصمتها
- *     (المقدم|القسط|السنين|الدورية) — نفس حسبة App\Shary\PlanExtras::sig / compute.
- */
 (function () {
     'use strict';
     var box = document.querySelector('[data-plan-extras]');
@@ -27,7 +20,6 @@
     function money(value) { return Math.round(value).toLocaleString('en-US'); }
     function freq(value) { return ({ monthly: 1, quarterly: 1, semi_annual: 1, annual: 1, cash: 1 })[value] ? value : 'quarterly'; }
 
-    // ---- خطط الفورم: الأساسية (خانات الفورم نفسها) + كل صف خطة مضافة (.payment-plan-row)
     var mainState = { downs: [], months: '' };
     var rowState = new WeakMap();
     function field(scope, name, nested) {
@@ -60,7 +52,6 @@
         return { down: down, periods: periods, amount: amount, total: total, delivery: delivery };
     }
 
-    // ---- القيم المحفوظة ← حالة كل خطة (بالبصمة)
     (function load() {
         var saved = [];
         try { saved = JSON.parse(hidden.value || '[]') || []; } catch (error) { saved = []; }
@@ -182,14 +173,11 @@
         totals();
         serialize();
     });
-    // أي تغيير في خانات الخطة نفسها (السعر / المقدم / القسط / السنين / الدورية): الحسابات والبصمة بتتحدّث
     form.addEventListener('input', function (event) { if (!list.contains(event.target)) { totals(); serialize(); } });
     form.addEventListener('change', function (event) { if (!list.contains(event.target)) { totals(); serialize(); } });
     form.addEventListener('submit', serialize, true);
-    // زرار الحفظ في الفورم القديم بيبعت بـ AJAX من غير حدث submit: القيمة بتتحدّث مع كل تغيير (فوق) وكمان قبل أي ضغطة على زرار في الفورم
     form.addEventListener('click', function (event) { if (event.target.closest('button, input[type="submit"]') && !list.contains(event.target)) serialize(); }, true);
 
-    // خطة اتضافت أو اتحذفت من الفورم (زرار "إضافة خطة سداد")
     var container = form.querySelector('#payment-plans-container');
     if (container && window.MutationObserver) {
         new MutationObserver(function () { render(); }).observe(container, { childList: true });

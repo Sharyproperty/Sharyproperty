@@ -1,8 +1,3 @@
-/**
- * فورمات لوحة التحكم: الخانات اللي بتتكرر (إضافة / حذف صف)
- * الصفحة: resources/views/shary_admin/partials/form-scripts.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     var LANG = CONF.lang;
@@ -31,7 +26,6 @@
         scope.querySelectorAll('textarea.shary-editor-lazy').forEach(function (el) {
             if (el.getAttribute('data-shary-lazy') === '1') { return; }
             el.setAttribute('data-shary-lazy', '1');
-            // a field that already holds HTML opens in the editor straight away, an empty one when it is clicked
             if (el.value.replace(/\s+/g, '') !== '') { editor(el, false); }
             el.addEventListener('focus', function () { editor(el, true); });
         });
@@ -75,7 +69,6 @@
                     var up = button.hasAttribute('data-shary-up');
                     var other = up ? row.previousElementSibling : row.nextElementSibling;
                     if (!other) { return; }
-                    // an editor does not survive being moved in the page: close it, move the row, open it again
                     var reopen = [];
                     row.querySelectorAll('textarea').forEach(function (el) { if (dropEditor(el)) { reopen.push(el); } });
                     list.insertBefore(row, up ? other : other.nextElementSibling);

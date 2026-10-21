@@ -1,14 +1,8 @@
-/**
- * قسم «استكشف» في الرئيسية: اختيار المشاريع والوحدات والمطورين
- * الصفحة: resources/views/shary_admin/home_explore/edit.blade.php
- * اللي جاي من السيرفر (لينكات / كلام): data-conf على وسم السكربت ← CONF
- */
 (function () {
     var CONF = JSON.parse(document.currentScript.getAttribute('data-conf') || '{}');
     document.querySelectorAll('input[name="mode"]').forEach(function (radio) {
         radio.addEventListener('change', function () { document.querySelector('[data-hex-auto]').hidden = radio.value !== 'auto' || !radio.checked; });
     });
-    // قوايم المناطق / المطورين: بحث بالاسم + اسكرول
     document.querySelectorAll('[data-hex-filter]').forEach(function (box) {
         var q = box.querySelector('[data-hex-filter-q]');
         q.addEventListener('input', function () {
@@ -17,7 +11,6 @@
         });
         box.addEventListener('change', function (e) { var l = e.target.closest('label'); if (l) l.classList.toggle('is-on', e.target.checked); });
     });
-    // البحث الواحد: مشاريع + وحدات + مطورين
     var input = document.querySelector('[data-hex-search]'), box = document.querySelector('[data-hex-results]'), form = document.querySelector('[data-hex-add]'), timer, only = '', last = [];
     var kinds = { project: CONF.kinds.project, unit: CONF.kinds.unit, developer: CONF.kinds.developer };
     function draw() {
